@@ -1120,6 +1120,17 @@ async function addNote(id, type, details) {
   catch (e) { toast('Save nahi hua: ' + e.message, true); }
 }
 
+/* ================= WhatsApp send (Cloud API) ================= */
+async function sendWa(id) {
+  const box = $('#watext'), text = box.value.trim(), btn = $('#wasend');
+  if (!text) return toast('Message likho', true);
+  if (demo) return toast('Demo mode mein WhatsApp nahi jaata. Settings mein Sheet connect karo.', true);
+  btn.disabled = true; btn.textContent = 'Sending…';
+  try { await api('sendText', { leadId: id, text, by: me() }); toast('WhatsApp message chala gaya ✓'); box.value = ''; await load(true); }
+  catch (e) { toast(e.message, true); }
+  finally { const b = $('#wasend'); if (b) { b.disabled = false; b.innerHTML = I.wa + 'Send'; } }
+}
+
 /* ================= lead panel ================= */
 function openPanel(id) { ui.openId = id; renderPanel(id); $('#panel').classList.add('show'); $('#scrim').classList.add('show'); }
 function closePanel() { ui.openId = null; $('#panel').classList.remove('show'); $('#scrim').classList.remove('show'); }
@@ -1157,6 +1168,10 @@ function renderPanel(id) {
         <div><small>Follow-up</small><b style="${isDue(l) ? 'color:var(--coral)' : ''}">${esc(l.followUpDate ? fmtDate(l.followUpDate) : '-')}</b></div>
         ${l.notes ? `<div style="grid-column:1/-1"><small>Notes</small><b style="font-weight:500">${esc(l.notes)}</b></div>` : ''}
       </div>
+      <div class="notebox wa-box">
+        <div style="display:flex;align-items:center;gap:8px;font-weight:700;font-size:13px;color:var(--wa)">${I.wa}<span style="color:var(--text)">CRM number se WhatsApp bhejo</span></div>
+        <textarea class="input" id="watext" rows="2" style="min-height:64px" placeholder="Hi ${esc((l.name || '').split(' ')[0])}, …"></textarea>
+        <div class="row" style="justify-content:space-between;align-items:center"><small class="muted" style="font-size:11.5px">Free text tabhi jaata hai jab customer ne pichhle 24 ghante mein message kiya ho.</small><button class="btn wa sm" id="wasend">${I.wa}Send</button></div></div>
       <div class="notebox"><div class="row"><select class="input" id="ntype" style="width:150px">${types.map(t => `<option>${esc(t)}</option>`).join('')}</select>
         <input class="input" id="ntext" placeholder="Kya hua? (e.g. call pe baat hui)"></div>
         <div class="row" style="justify-content:flex-end"><button class="btn primary sm" id="nsave">Add to Journey</button></div></div>
@@ -1168,6 +1183,7 @@ function renderPanel(id) {
       ${nextStage ? `<button class="btn primary" data-move="${esc(nextStage)}">Move to ${esc(nextStage)} →</button>` : `<button class="btn" data-move="${esc(op[0] || 'New Lead')}">Re-open lead</button>`}
     </div>`;
   $('#nsave').onclick = () => addNote(id, $('#ntype').value, $('#ntext').value);
+  $('#wasend').onclick = () => sendWa(id);
   $('#ntext').onkeydown = e => { if (e.key === 'Enter') $('#nsave').click(); };
 }
 
