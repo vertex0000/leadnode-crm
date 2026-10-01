@@ -224,6 +224,83 @@ textarea.input{min-height:84px;resize:vertical}
 .lg i{display:inline-block;width:22px;border-top:2px solid var(--blue)}
 .lg i.p{border-color:var(--coral)}.lg i.w{border-top-style:dashed;border-color:var(--coral)}
 
+/* ---------- v4: node manage, presets, scale ---------- */
+.col.sel .col-head{border-color:var(--blue-2);box-shadow:0 0 0 3px var(--blue-soft),0 4px 14px rgba(30,40,70,.06)}
+.col-head .nmenu{flex:none;width:26px;height:24px;border:0;border-radius:6px;background:transparent;color:var(--muted);display:grid;place-items:center;opacity:.45;cursor:pointer;transition:opacity .15s,background .15s;margin-right:-6px}
+.col-head:hover .nmenu,.col.sel .nmenu{opacity:1}
+.col-head .nmenu:hover{background:var(--line);color:var(--text)}
+@media (hover:none){.col-head .nmenu{opacity:1}}
+.col-head .r1 .nm{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.more{margin-top:22px;width:100%;border:0;background:var(--blue-soft);color:var(--blue-2);border-radius:var(--r-ctl);padding:9px;font-weight:700;font-size:12.5px;cursor:pointer}
+.more:hover{filter:brightness(.97)}
+.more-row{display:flex;gap:8px;margin-top:22px}.more-row .more{margin-top:0}
+.canvas.far .col-body{display:none}
+.farhint{position:absolute;left:14px;bottom:62px;z-index:5;font-size:12px;font-weight:600;color:var(--muted);background:var(--glass-3);border:1px solid var(--line-2);padding:6px 12px;border-radius:var(--r-ctl);box-shadow:var(--shadow);display:none;white-space:nowrap}
+.canvas.far .farhint{display:block}
+.canvas.far .col{padding:0}
+.canvas.far .col-head .r1{font-size:24px}
+.canvas.far .col-head .r1 .n{font-size:22px;padding:3px 12px;background:var(--blue-soft);color:var(--blue-2)}
+.canvas.far .col-head .nmenu{display:none}
+.canvas.far .col-head .r2{font-size:19px}
+.avatar.more-av{background:var(--line-2);color:var(--text)}
+.pop{position:fixed;z-index:70;min-width:220px;background:var(--glass-3);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid var(--stroke);border-radius:10px;box-shadow:var(--shadow-2);padding:6px;opacity:0;transform:translateY(-4px) scale(.98);transform-origin:top left;pointer-events:none;transition:opacity .16s,transform .16s}
+.pop.show{opacity:1;transform:none;pointer-events:auto}
+.pop .mi{display:flex;align-items:center;gap:10px;width:100%;border:0;background:transparent;padding:8px 10px;border-radius:7px;font-weight:600;color:var(--text);text-align:left;cursor:pointer;font-size:13.5px}
+.pop .mi:hover{background:var(--line)}
+.pop .mi.danger{color:var(--coral)}
+.pop .mi:disabled{opacity:.45;cursor:not-allowed;background:transparent}
+.pop .sep{height:1px;background:var(--line);margin:5px 4px}
+.pop .ttl{font-size:11.5px;font-weight:700;color:var(--faint);padding:6px 10px 4px;text-transform:uppercase;letter-spacing:.04em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.swatches{display:flex;flex-wrap:wrap;gap:7px;padding:4px 10px 8px}
+.sw{width:24px;height:24px;border-radius:6px;border:2px solid transparent;cursor:pointer;box-shadow:inset 0 0 0 1px rgba(0,0,0,.14);padding:0}
+.sw.on{border-color:var(--text)}
+.pal{width:340px;max-width:calc(100vw - 24px);padding:0;display:flex;flex-direction:column;max-height:min(580px,78vh)}
+.pal .ph{padding:10px;border-bottom:1px solid var(--line)}
+.pal .ph .note{font-size:11.5px;color:var(--muted);margin-top:7px;line-height:1.4}
+.pal .pb{overflow:auto;padding:6px}
+.pal summary{list-style:none;display:flex;align-items:center;gap:8px;padding:8px 10px;font-weight:700;font-size:13px;cursor:pointer;border-radius:7px;color:var(--text);user-select:none}
+.pal summary::-webkit-details-marker{display:none}
+.pal summary:hover{background:var(--line)}
+.pal summary .c{font-size:11px;color:var(--muted);background:var(--line);padding:1px 7px;border-radius:5px}
+.pal summary .chev{margin-left:auto;transition:transform .15s;color:var(--faint);width:14px;height:14px}
+.pal details[open] summary .chev{transform:rotate(90deg)}
+.pal .ni{display:flex;align-items:center;gap:10px;width:100%;border:0;background:transparent;padding:7px 10px 7px 30px;border-radius:7px;text-align:left;cursor:pointer;color:var(--text);font-size:13.5px;font-weight:600}
+.pal .ni:hover,.pal .ni.kb{background:var(--blue-soft)}
+.pal .ni .tx{min-width:0;flex:1}
+.pal .ni small{color:var(--muted);font-size:11.5px;display:block;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pal .ni:disabled{opacity:.5;cursor:not-allowed;background:transparent}
+.pal .chain{display:flex;gap:3px;margin-top:5px}.pal .chain i{width:14px;height:5px;border-radius:2px}
+.pal .pf{border-top:1px solid var(--line);padding:8px;display:flex;gap:8px}
+.pal .pf .btn{flex:1;justify-content:center}
+.badge{font-size:10.5px;font-weight:700;color:var(--muted);background:var(--line);padding:1px 6px;border-radius:5px;flex:none}
+.badge.mine{color:var(--blue-2);background:var(--blue-soft)}
+.cswatch{display:flex;flex-wrap:wrap;gap:8px}
+.cswatch .sw{width:30px;height:30px;border-radius:8px}
+.scr{display:grid;grid-template-columns:290px minmax(0,1fr);gap:16px;align-items:start}
+.scr-list{padding:10px}
+.scr-list .fold{font-size:11.5px;font-weight:700;color:var(--faint);text-transform:uppercase;letter-spacing:.04em;padding:12px 8px 4px;display:flex;gap:6px;align-items:center}
+.scr-item{display:flex;align-items:center;gap:8px;width:100%;border:1px solid transparent;background:transparent;padding:8px 10px;border-radius:8px;cursor:pointer;text-align:left;color:var(--text);font-weight:600;font-size:13.5px}
+.scr-item:hover{background:var(--line)}
+.scr-item.active{background:var(--blue-soft);color:var(--blue-2);border-color:var(--stroke)}
+.scr-item .nm{min-width:0;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.scr-ed{padding:16px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.scr-ed .top{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.scr-ed .top h3{margin:0;font-size:17px;flex:1;min-width:0}
+textarea.input.code{min-height:320px}
+.code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13px;line-height:1.55;min-height:320px;resize:vertical;tab-size:2;white-space:pre;overflow:auto}
+.scr-prev{display:flex;align-items:center;overflow-x:auto;padding:16px 12px;background:var(--glass);border:1px dashed var(--line-2);border-radius:var(--r-panel);min-height:78px}
+.mnode{flex:none;display:flex;align-items:center;gap:7px;padding:9px 12px;border-radius:8px;background:var(--glass-3);border:1px solid var(--line-2);font-weight:700;font-size:12.5px;box-shadow:0 3px 10px rgba(30,40,70,.06)}
+.mnode.ex{opacity:.65;border-style:dashed}
+.mwire{flex:none;width:28px;border-top:2px solid var(--blue)}
+.scr-msg{font-size:12.5px;font-weight:600;min-height:18px}.scr-msg.ok{color:var(--green)}.scr-msg.err{color:var(--coral)}
+.kbd{font-family:ui-monospace,Menlo,monospace;font-size:11px;border:1px solid var(--line-2);border-bottom-width:2px;border-radius:5px;padding:0 5px;background:var(--glass-3)}
+@media (max-width:820px){.scr{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:no-preference){
+  .col.born{animation:nodeIn .55s cubic-bezier(.2,.7,.2,1) both}
+  .col.born .col-head{animation:flashIn 1.2s ease-out .2s}
+  .pal .pb details[open]>.ni{animation:cardIn .3s both}
+}
+
 /* ---------- side panel ---------- */
 .scrim{position:fixed;inset:0;background:rgba(15,18,28,.25);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);opacity:0;pointer-events:none;transition:.2s;z-index:40}
 .scrim.show{opacity:1;pointer-events:auto}
@@ -475,6 +552,7 @@ textarea.input{min-height:84px;resize:vertical}
     <button class="sbtn" data-go="broadcast"><svg class="i" viewBox="0 0 24 24"><path d="m3 11 18-8-8 18-2-8Z"/></svg><span class="lbl">Broadcast</span></button>
     <button class="sbtn" data-go="templates"><svg class="i" viewBox="0 0 24 24"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9Z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></svg><span class="lbl">Templates</span></button>
     <button class="sbtn" data-go="automation"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="4" width="6" height="5" rx="1.2"/><rect x="15" y="4" width="6" height="5" rx="1.2"/><rect x="9" y="15" width="6" height="5" rx="1.2"/><path d="M9 6.5h6M6 9v3a3 3 0 0 0 3 3M18 9v3a3 3 0 0 1-3 3"/></svg><span class="lbl">Automation</span></button>
+    <button class="sbtn" data-go="scripts"><svg class="i" viewBox="0 0 24 24"><path d="m8 7-5 5 5 5M16 7l5 5-5 5M13.5 4l-3 16"/></svg><span class="lbl">Scripts & Presets</span></button>
     <div class="sgrp">Insights</div>
     <button class="sbtn" data-go="reports"><svg class="i" viewBox="0 0 24 24"><path d="M3 3v18h18"/><rect x="7" y="12" width="3" height="6" rx=".8"/><rect x="12" y="8" width="3" height="10" rx=".8"/><rect x="17" y="5" width="3" height="13" rx=".8"/></svg><span class="lbl">Reports</span></button>
     <button class="sbtn" data-go="team"><svg class="i" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4.5a3.5 3.5 0 0 1 0 7M18 14a6 6 0 0 1 3.5 6"/></svg><span class="lbl">Team</span></button>
@@ -496,6 +574,7 @@ textarea.input{min-height:84px;resize:vertical}
         <a href="#reports" data-go="reports">Reports</a>
         <a href="#team" data-go="team" class="mob">Team</a>
         <a href="#templates" data-go="templates" class="mob">Templates</a>
+        <a href="#scripts" data-go="scripts" class="mob">Scripts</a>
       </nav>
       <div class="grow"></div>
       <label class="search"><svg class="i" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="gsearch" placeholder="Search leads, business, city…"></label>
@@ -536,6 +615,7 @@ textarea.input{min-height:84px;resize:vertical}
         <h1>Pipeline</h1>
         <div class="team glass" id="pteam"></div>
         <div class="grow"></div>
+        <button class="btn" id="addNodeBtn" data-tip="Naya stage / preset node (shortcut: Tab)"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="7" width="8" height="10" rx="1.5"/><path d="M11 12h4M18 9v6M15 12h6"/></svg>Node</button>
         <button class="btn" id="autoBtn" data-tip="Nodes ko wires ke hisaab se set karo"><svg class="i" viewBox="0 0 24 24"><path d="m15 4 1.5 3L20 8.5 16.5 10 15 13l-1.5-3L10 8.5 13.5 7ZM6 13l1 2 2 1-2 1-1 2-1-2-2-1 2-1Z"/></svg>Auto Arrange</button>
         <select class="input" id="pfilter" style="width:auto"></select>
         <button class="btn primary" data-add><svg class="i" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Add Lead</button>
@@ -545,7 +625,8 @@ textarea.input{min-height:84px;resize:vertical}
           <svg class="wires" id="wires"></svg>
           <div id="cols"></div>
         </div>
-        <div class="hint"><span><b>●</b> Port se drag = wire · Header drag = node · Scroll = zoom</span>
+        <div class="farhint">Door se sirf count dikh raha hai — zoom in karo to lead cards dikhenge</div>
+        <div class="hint"><span><span class="kbd">Tab</span> / Right-click = node add · Port drag = wire · <span class="kbd">Del</span> = hatao · Scroll = zoom</span>
           <span class="lg"><i></i>Flow</span><span class="lg"><i class="w"></i>Lost</span></div>
         <div class="ctrls">
           <div class="minimap" id="minimap"><div class="vp" id="mmvp"></div></div>
@@ -604,6 +685,28 @@ textarea.input{min-height:84px;resize:vertical}
       <div class="tplgrid" id="tplgrid"></div>
     </section>
 
+    <!-- SCRIPTS & PRESETS -->
+    <section class="view" id="v-scripts">
+      <div class="head"><div><div class="eyebrow">Pipeline</div><h1>Scripts & Presets</h1><p class="sub">Apne node presets banao. Save karte hi ye Pipeline ke <b>+ Node</b> menu mein apne folder mein dikhenge.</p></div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" id="scrFromPipe">Current pipeline se banao</button><button class="btn primary" id="scrNew"><svg class="i" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Naya Preset</button></div></div>
+      <div class="scr">
+        <div class="scr-list glass" id="scrList"></div>
+        <div class="scr-ed glass">
+          <div class="top"><h3 id="scrTitle">Naya Preset</h3><span class="badge" id="scrBadge">Draft</span></div>
+          <div class="field"><label>Script (JSON) — name, folder, nodes, wires</label><textarea class="input code" id="scrCode" spellcheck="false" autocomplete="off"></textarea></div>
+          <div class="field"><label>Preview</label><div class="scr-prev" id="scrPrev"></div><div class="scr-msg" id="scrMsg"></div></div>
+          <p class="help"><b>wires</b>: <code>"chain"</code> = upar se neeche line mein jodo · <code>"none"</code> = mat jodo · ya <code>[["A","B"]]</code> jodiyan. Pipeline mein koi node select ho to preset uske <b>baad</b> beech mein jud jaata hai (Nuke jaisa).</p>
+          <div class="m-foot" style="margin-top:0;flex-wrap:wrap">
+            <button class="btn danger" id="scrDel">Delete</button>
+            <button class="btn ghost" id="scrAi" data-tip="ChatGPT / Gemini ke liye prompt copy karo">AI prompt copy</button>
+            <div class="grow"></div>
+            <button class="btn" id="scrTry">Pipeline mein lagao</button>
+            <button class="btn primary" id="scrSave">Save</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- COMING SOON -->
     <section class="view" id="v-whatsapp"><div class="soon glass">
       <div class="big"><svg class="i" viewBox="0 0 24 24"><path d="M3.5 20.5 5 16a8.5 8.5 0 1 1 3.2 3.2Z"/></svg></div>
@@ -653,6 +756,11 @@ textarea.input{min-height:84px;resize:vertical}
     </div>
   </div>
 </div></div>
+
+<!-- STAGE NODE MODAL -->
+<div class="modal" id="stageModal"><div class="box narrow" id="stageBox"></div></div>
+<div class="pop" id="nodeMenu"></div>
+<div class="pop pal" id="nodePal"></div>
 
 <!-- TEAM MEMBER MODAL -->
 <div class="modal" id="memModal"><div class="box narrow" id="memBox"></div></div>
@@ -711,7 +819,7 @@ const DEFAULT_LISTS = { stages: ['New Lead', 'Contacted', 'Interested', 'Quotati
 let settings = store.get('leadnode.settings') || {};
 let S = { leads: [], activities: [], team: [], lists: DEFAULT_LISTS, templates: [], flows: [] };
 let demo = !(settings.url && settings.key);
-const ui = { tab: 'all', q: '', stage: '', pfilter: '', openId: null };
+const ui = { tab: 'all', q: '', stage: '', pfilter: '', openId: null, expanded: new Set() };
 
 /* ================= demo data ================= */
 function demoData() {
@@ -738,7 +846,7 @@ function demoData() {
     A('L007', 0, 'Lead Added', 'Website form'),
     A('L008', 25, 'Lead Added', 'Meta ad'), A('L008', 9, 'Stage Changed', 'Quotation Sent → Lost'),
   ];
-  return { leads, activities: acts, team: [{ memberId: 'T001', name: 'Shivam', role: 'Admin', active: true }, { memberId: 'T002', name: 'Riya Patil', role: 'Sales', active: true }, { memberId: 'T003', name: 'Amit Rao', role: 'Sales', active: true }], lists: DEFAULT_LISTS, templates: [], flows: [] };
+  return { leads, activities: acts, team: [{ memberId: 'T001', name: 'Shivam', role: 'Admin', active: true }, { memberId: 'T002', name: 'Riya Patil', role: 'Sales', active: true }, { memberId: 'T003', name: 'Amit Rao', role: 'Sales', active: true }], lists: DEFAULT_LISTS, templates: [], flows: store.get('leadnode.demoFlows') || [] };
 }
 function nextId(arr, key, prefix) { let m = 0; arr.forEach(o => { const x = String(o[key] || '').match(new RegExp('^' + prefix + '(\\d+)$')); if (x) m = Math.max(m, +x[1]); }); return prefix + String(m + 1).padStart(3, '0'); }
 function demoApi(action, d) {
@@ -753,6 +861,8 @@ function demoApi(action, d) {
     case 'addActivity': { const a = log(d.leadId, d.type, d.details, d.doneBy); try { find(d.leadId).lastContact = todayStr(); } catch (e) { } return a; }
     case 'deleteLead': { S.leads = S.leads.filter(l => l.leadId !== d.id); return { deleted: d.id }; }
     case 'addTeamMember': { const m = Object.assign({ active: true }, d, { memberId: nextId(S.team, 'memberId', 'T') }); S.team.push(m); return m; }
+    case 'saveFlow': { const f = Object.assign({}, d, { updatedOn: nowStr() }); if (!f.flowId) f.flowId = nextId(S.flows, 'flowId', 'F'); const i = S.flows.findIndex(x => String(x.flowId) === String(f.flowId)); if (i > -1) S.flows[i] = f; else S.flows.push(f); store.set('leadnode.demoFlows', S.flows.filter(x => x.trigger === 'preset')); return f; }
+    case 'deleteFlow': { S.flows = S.flows.filter(x => String(x.flowId) !== String(d.id)); store.set('leadnode.demoFlows', S.flows.filter(x => x.trigger === 'preset')); return { deleted: d.id }; }
     case 'updateTeamMember': { const m = S.team.find(x => x.memberId === d.id); if (!m) throw new Error('Member not found'); Object.assign(m, d); delete m.id; return m; }
   }
   throw new Error('Unknown action: ' + action);
@@ -776,14 +886,21 @@ async function callApi(conf, action, data = {}) {
 async function api(action, data) { if (demo) return JSON.parse(JSON.stringify(demoApi(action, data))); return callApi(settings, action, data); }
 
 /* ================= data helpers ================= */
-const stages = () => (S.lists.stages && S.lists.stages.length ? S.lists.stages : DEFAULT_LISTS.stages);
+const LOCKED = ['Won', 'Lost'];
+const DEFAULT_COLORS = { 'New Lead': '#8FA3D9', 'Contacted': '#6F8FE8', 'Interested': '#F2C94C', 'Quotation Sent': '#B08CEB', 'Negotiation': '#F29A5C', 'Won': '#2FA36B', 'Lost': '#E8707E' };
+const STAGE_COLORS = ['#8FA3D9', '#6F8FE8', '#4FB3D9', '#3CB4A0', '#2FA36B', '#9BC53D', '#F2C94C', '#F29A5C', '#E8707E', '#D77FC4', '#B08CEB', '#9AA0A6'];
+const autoColor = n => DEFAULT_COLORS[n] || STAGE_COLORS[hue(n) % STAGE_COLORS.length];
+const listDefs = () => (S.lists.stages && S.lists.stages.length ? S.lists.stages : DEFAULT_LISTS.stages).map(n => ({ name: String(n), color: autoColor(String(n)) }));
+/** Stages ab pipeline layout (Flows sheet → PIPELINE) mein rehte hain: [{name, color}] */
+const stageDefs = () => (layout && layout.stages && layout.stages.length ? layout.stages : listDefs());
+const stages = () => stageDefs().map(d => d.name);
 const openStages = () => stages().filter(s => s !== 'Won' && s !== 'Lost');
 const isClosed = l => l.stage === 'Won' || l.stage === 'Lost';
 const progress = l => { if (l.stage === 'Won') return 100; if (l.stage === 'Lost') return 0; const o = openStages(); const i = o.indexOf(l.stage); return i < 0 ? 0 : Math.round((i + 1) / (o.length + 1) * 100); };
 const actsOf = id => S.activities.filter(a => a.leadId === id).sort((a, b) => String(a.dateTime).localeCompare(String(b.dateTime)));
 const touchCount = id => actsOf(id).filter(a => a.type !== 'Lead Added' && a.type !== 'Stage Changed').length;
 const isDue = l => !isClosed(l) && l.followUpDate && dOnly(l.followUpDate) <= todayStr();
-const stageColor = s => ({ 'New Lead': '#8FA3D9', 'Contacted': '#6F8FE8', 'Interested': '#F2C94C', 'Quotation Sent': '#B08CEB', 'Negotiation': '#F29A5C', 'Won': '#2FA36B', 'Lost': '#E8707E' }[s] || '#8FA3D9');
+const stageColor = s => { const d = stageDefs().find(x => x.name === s); return (d && /^#[0-9a-f]{6}$/i.test(d.color) ? d.color : '') || autoColor(String(s || '')); };
 const tagCls = t => ({ Hot: 'hot', Warm: 'warm', Cold: 'cold' }[t] || 'stage');
 function matchQ(l, q) { if (!q) return true; q = q.toLowerCase(); return [l.name, l.businessName, l.city, l.phone, l.businessType, l.notes, l.leadId].some(v => String(v || '').toLowerCase().includes(q)); }
 function ring(pct, label, val, color) {
@@ -812,12 +929,12 @@ async function load(silent) {
   applyBranding();
   renderAll(!silent);
 }
-function renderAll(anim) { fillSelects(); renderDashboard(anim); renderPipeline(anim); renderLeads(); renderTeam(); renderReports(); renderTemplates(); if (ui.openId) renderPanel(ui.openId); $('#bellDot').hidden = !S.leads.some(isDue); }
+function renderAll(anim) { fillSelects(); renderDashboard(anim); renderPipeline(anim); renderLeads(); renderTeam(); renderReports(); renderTemplates(); if ($('#v-scripts').classList.contains('active')) renderScripts(true); if (ui.openId) renderPanel(ui.openId); $('#bellDot').hidden = !S.leads.some(isDue); }
 function fillSelects() {
   const opts = ['<option value="">All stages</option>'].concat(stages().map(s => `<option ${ui.stage === s ? 'selected' : ''}>${esc(s)}</option>`)).join('');
   $('#dstage').innerHTML = opts;
   const people = [...new Set(S.team.filter(t => t.active !== false && t.name).map(t => t.name))];
-  $('#pfilter').innerHTML = '<option value="">All team members</option>' + people.map(p => `<option ${ui.pfilter === p ? 'selected' : ''}>${esc(p)}</option>`).join('');
+  $('#pfilter').innerHTML = '<option value="">All team members</option>' + `<option value="__me" ${ui.pfilter === '__me' ? 'selected' : ''}>Sirf mere leads</option>` + people.map(p => `<option ${ui.pfilter === p ? 'selected' : ''}>${esc(p)}</option>`).join('');
 }
 
 /* ================= dashboard ================= */
@@ -867,26 +984,41 @@ function leadCard(l, i = 0) {
 const COL_W = 280, GAP = 120, LEFT = 60, TOP = 50, HEAD_H = 78, PORT_Y = HEAD_H / 2, OFF = 5000;
 const view = { x: 0, y: 0, k: 1, fitted: false };
 let layout = null;               // { pos: {stage: {x, y}}, links: [[from, to], ...] }
-let selWire = null, animNodes = false, flashId = null, saveTimer = null;
+let selWire = null, animNodes = false, flashId = null, saveTimer = null, selNode = null;
+const bornNodes = new Set();
+const CARD_LIMIT = 5;
+/** Node mein kaunse cards upar: follow-up due → Hot → sabse recent */
+const byPriority = (a, b) => (isDue(b) - isDue(a)) || ((b.tag === 'Hot' && !isClosed(b)) - (a.tag === 'Hot' && !isClosed(a))) || String(b.lastContact || b.createdOn || '').localeCompare(String(a.lastContact || a.createdOn || ''));
 
-function defaultLayout() {
-  const st = stages(), pos = {}, links = [], main = st.filter(s => s !== 'Lost');
+function defaultLayout(st = stages()) {
+  const pos = {}, links = [], main = st.filter(s => s !== 'Lost');
   st.forEach((s, i) => pos[s] = { x: LEFT + i * (COL_W + GAP), y: TOP });
   for (let i = 0; i < main.length - 1; i++) links.push([main[i], main[i + 1]]);
   if (st.includes('Lost')) links.push([st.includes('Negotiation') ? 'Negotiation' : (main[main.length - 2] || main[0]), 'Lost']);
-  return { pos, links };
+  return { pos, links, stages: st.map(n => ({ name: n, color: stageColor(n) })) };
 }
 /** Layout Sheet (Flows tab, ID "PIPELINE") se, warna browser se, warna default */
 function loadLayout(keepCurrent) {
-  const st = stages(), d = defaultLayout();
   let l = keepCurrent && layout ? layout : null;
   if (!l) { const f = (S.flows || []).find(x => String(x.flowId) === 'PIPELINE'); if (f) { try { l = JSON.parse(f.flowJson); } catch (e) { } } }
   if (!l) l = store.get('leadnode.layout');
-  if (!l || !l.pos) return d;
+  if (!l || typeof l !== 'object') l = {};
+  // stage list: layout mein ho to wahi, warna Lists sheet se
+  let defs = Array.isArray(l.stages) ? l.stages.filter(x => x && x.name).map(x => ({ name: String(x.name), color: /^#[0-9a-f]{6}$/i.test(x.color) ? x.color : autoColor(String(x.name)) })) : [];
+  if (!defs.length) defs = listDefs();
+  const have = new Set(defs.map(x => x.name));
+  LOCKED.forEach(n => { if (!have.has(n)) { defs.push({ name: n, color: autoColor(n) }); have.add(n); } });
+  // Sheet mein kisi lead ka stage list mein nahi hai? use bhi node bana do (lead gayab na ho)
+  [...new Set(S.leads.map(x => x.stage).filter(Boolean))].forEach(n => { if (!have.has(n)) { defs.splice(closedIdx(defs), 0, { name: n, color: autoColor(n) }); have.add(n); } });
+  const st = defs.map(x => x.name), d = defaultLayout(st);
+  const fresh = !l.pos;
+  l.pos = l.pos || {}; l.stages = defs;
   st.forEach(s => { if (!l.pos[s]) l.pos[s] = d.pos[s]; });
-  l.links = (l.links || []).filter(([a, b]) => st.includes(a) && st.includes(b) && a !== b);
+  Object.keys(l.pos).forEach(s => { if (!have.has(s)) delete l.pos[s]; });
+  l.links = (fresh || !Array.isArray(l.links) ? d.links : l.links).filter(([a, b]) => have.has(a) && have.has(b) && a !== b);
   return l;
 }
+const closedIdx = defs => { const i = defs.findIndex(x => LOCKED.includes(x.name)); return i < 0 ? defs.length : i; };
 function saveLayout() {
   store.set('leadnode.layout', layout);
   if (demo) return;
@@ -904,24 +1036,30 @@ function nextStageOf(s) {
 
 function renderPipeline(anim) {
   if (!layout) layout = loadLayout();
-  const st = stages(), leads = S.leads.filter(l => !ui.pfilter || l.assignedTo === ui.pfilter).filter(l => matchQ(l, ui.q));
+  const st = stages(), who = ui.pfilter === '__me' ? me() : ui.pfilter;
+  const leads = S.leads.filter(l => !who || l.assignedTo === who).filter(l => matchQ(l, ui.q));
   const incoming = new Set(layout.links.map(([, b]) => b));
-  $('#pteam').innerHTML = `<span class="muted" style="font-size:12.5px;font-weight:600">Team</span><div class="stack">${S.team.filter(t => t.active !== false).map(t => avatar(t.name, 'sm')).join('')}</div>`;
+  const tm = S.team.filter(t => t.active !== false && t.name);
+  $('#pteam').innerHTML = `<span class="muted" style="font-size:12.5px;font-weight:600">Team</span><div class="stack">${tm.slice(0, 5).map(t => avatar(t.name, 'sm', memberPhoto(t.name))).join('')}${tm.length > 5 ? `<div class="avatar sm more-av" title="${esc(tm.slice(5).map(t => t.name).join(', '))}">+${tm.length - 5}</div>` : ''}</div>`;
   $('#world').classList.toggle('stagger-nodes', !!anim);
   $('#cols').innerHTML = st.map((s, i) => {
-    const items = leads.filter(l => l.stage === s), p = layout.pos[s];
+    const items = leads.filter(l => l.stage === s).sort(byPriority), p = layout.pos[s];
     const total = items.reduce((a, l) => a + (+l.budget || 0), 0), lost = s === 'Lost';
-    return `<div class="col ${items.length ? '' : 'emptycol'}" data-stage="${esc(s)}" style="left:${p.x}px;top:${p.y}px;--i:${i}">
+    const open = ui.expanded.has(s), shown = open ? items : items.slice(0, CARD_LIMIT), extra = items.length - shown.length;
+    const more = extra > 0 ? `<button class="more" data-expand="${esc(s)}">+${extra} aur lead${extra > 1 ? 's' : ''} dekho</button>`
+      : open && items.length > CARD_LIMIT ? `<div class="more-row"><button class="more" data-expand="${esc(s)}">Kam dikhao</button><button class="more" data-stagelist="${esc(s)}">Table mein kholo</button></div>` : '';
+    return `<div class="col ${shown.length ? '' : 'emptycol'} ${selNode === s ? 'sel' : ''} ${bornNodes.has(s) ? 'born' : ''}" data-stage="${esc(s)}" style="left:${p.x}px;top:${p.y}px;--i:${i}">
       <div class="col-head" data-node="${esc(s)}" title="Pakad ke node hilao">
         <span class="port l in ${lost ? 'coral' : ''} ${incoming.has(s) ? 'on' : ''}" data-in="${esc(s)}" title="Input: yahan wire chhodo / kheench ke hatao"></span>
         <span class="port r out" data-out="${esc(s)}" title="Output: drag karke wire jodo"></span>
-        <div class="r1"><span class="sdot" style="background:${stageColor(s)}"></span>${esc(s)}<span class="n">${items.length}</span></div>
+        <div class="r1"><span class="sdot" style="background:${stageColor(s)}"></span><span class="nm">${esc(s)}</span><span class="n">${items.length}</span><button class="nmenu" data-nmenu="${esc(s)}" title="Node options">${I.dots || '⋯'}</button></div>
         <div class="r2">${inr(total)}</div></div>
-      <div class="col-body">${items.map(pCard).join('')}
+      <div class="col-body">${shown.map(pCard).join('')}${more}
         <button class="addcard" data-add="${esc(s)}">+ Add Lead</button></div></div>`;
   }).join('');
   drawWires(anim);
   bindDrop();
+  if (bornNodes.size) setTimeout(() => bornNodes.clear(), 1500);
   if (anim) setTimeout(() => $('#world').classList.remove('stagger-nodes'), 1200);
   if (!view.fitted && $('#v-pipeline').classList.contains('active')) { initialView(); view.fitted = true; } else applyView();
 }
@@ -959,6 +1097,7 @@ const colEl = s => $$('.col').find(c => c.dataset.stage === s);
 /** Nodes ko wires ke hisaab se layers mein set karna (left → right), branches upar-neeche */
 function autoArrange() {
   const st = stages(), links = layout.links, depth = {};
+  const cvEl = $('#canvas'), wasFar = cvEl.classList.contains('far'); cvEl.classList.remove('far'); // asli height naapne ke liye
   st.forEach(s => depth[s] = 0);
   for (let it = 0; it < st.length; it++) { let ch = false; links.forEach(([a, b]) => { if (depth[a] + 1 > depth[b] && depth[a] + 1 < st.length) { depth[b] = depth[a] + 1; ch = true; } }); if (!ch) break; }
   const linked = new Set(links.flat()); let maxD = 0;
@@ -969,13 +1108,14 @@ function autoArrange() {
   Object.keys(layers).map(Number).sort((a, b) => a - b).forEach((d, i) => {
     let y = TOP; layers[d].forEach(s => { target[s] = { x: LEFT + i * (COL_W + GAP), y }; const c = colEl(s); y += (c ? c.offsetHeight : 200) + 70; });
   });
+  cvEl.classList.toggle('far', wasFar);
   const from = {}; st.forEach(s => from[s] = Object.assign({}, layout.pos[s]));
   const t0 = performance.now(), dur = reduceMotion() ? 0 : 650; selWire = null;
   const step = t => {
     const p = dur ? Math.min(1, (t - t0) / dur) : 1, e = p < .5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
     st.forEach(s => { const a = from[s], b = target[s]; layout.pos[s] = { x: a.x + (b.x - a.x) * e, y: a.y + (b.y - a.y) * e }; const c = colEl(s); if (c) { c.style.left = layout.pos[s].x + 'px'; c.style.top = layout.pos[s].y + 'px'; } });
     drawWires();
-    if (p < 1) requestAnimationFrame(step); else { st.forEach(s => layout.pos[s] = target[s]); drawWires(); saveLayout(); fit(); toast('Nodes auto arrange ho gaye ✨'); }
+    if (p < 1) requestAnimationFrame(step); else { st.forEach(s => layout.pos[s] = target[s]); sortDefsByPos(); drawWires(); saveLayout(); fit(); toast('Nodes auto arrange ho gaye ✨'); }
   };
   requestAnimationFrame(step);
 }
@@ -992,6 +1132,7 @@ function applyView() {
   $('#world').style.transform = `translate(${view.x}px,${view.y}px) scale(${view.k})`;
   const cv = $('#canvas'); cv.style.backgroundSize = `${22 * view.k}px ${22 * view.k}px`; cv.style.backgroundPosition = `${view.x}px ${view.y}px`;
   $('#zPct').textContent = Math.round(view.k * 100) + '%';
+  cv.classList.toggle('far', view.k < 0.5);
   drawMinimap();
 }
 function zoomAt(cx, cy, nk) { nk = Math.max(0.25, Math.min(2, nk)); view.x = cx - (cx - view.x) * (nk / view.k); view.y = cy - (cy - view.y) * (nk / view.k); view.k = nk; applyView(); }
@@ -1031,8 +1172,9 @@ function drawMinimap() {
   cv.addEventListener('wheel', e => { e.preventDefault(); const r = cv.getBoundingClientRect(); zoomAt(e.clientX - r.left, e.clientY - r.top, view.k * Math.exp(-e.deltaY * 0.0015)); }, { passive: false });
   cv.addEventListener('pointerdown', e => {
     const t = e.target;
-    if (t.closest('.ctrls,.hint')) return;
+    if (t.closest('.ctrls,.hint') || e.button === 2) return;
     const del = t.closest('[data-del]'); if (del) { deleteWire(+del.dataset.del); return; }
+    const nm = t.closest('[data-nmenu]'); if (nm) { const r = nm.getBoundingClientRect(); openNodeMenu(nm.dataset.nmenu, r.left, r.bottom + 6); return; }
     const out = t.closest('.port.out'), inn = t.closest('.port.in'), head = t.closest('.col-head'), wire = t.closest('.wire');
     if (out) { act = { type: 'wire', from: out.dataset.out }; }
     else if (inn) {
@@ -1044,7 +1186,7 @@ function drawMinimap() {
     else if (head) { const s = head.dataset.node, p = layout.pos[s]; act = { type: 'node', stage: s, sx: e.clientX, sy: e.clientY, ox: p.x, oy: p.y, col: head.parentElement, moved: false }; act.col.classList.add('lifting'); }
     else if (wire) { selWire = +wire.dataset.wire; drawWires(); return; }
     else if (t.closest('.pcard,button,a')) return;
-    else { if (selWire !== null) { selWire = null; drawWires(); } }
+    else { if (selWire !== null) { selWire = null; drawWires(); } if (selNode) selectNode(null); }
     e.preventDefault();
     ptrs.set(e.pointerId, { x: e.clientX, y: e.clientY }); cv.setPointerCapture(e.pointerId);
     if (!act && ptrs.size === 1) { act = { type: 'pan', x: e.clientX, y: e.clientY, vx: view.x, vy: view.y }; cv.classList.add('panning'); }
@@ -1073,6 +1215,7 @@ function drawMinimap() {
     if (act && act.type === 'node') {
       act.col.classList.remove('lifting');
       if (act.moved) { const p = layout.pos[act.stage]; p.x = Math.round(p.x / 11) * 11; p.y = Math.round(p.y / 11) * 11; act.col.style.left = p.x + 'px'; act.col.style.top = p.y + 'px'; drawWires(); drawMinimap(); saveLayout(); }
+      else selectNode(act.stage);
     }
     if (act && act.type === 'wire') {
       hotPort(null); const target = inPortAt(e.clientX, e.clientY);
@@ -1081,11 +1224,21 @@ function drawMinimap() {
     act = null;
   };
   cv.addEventListener('pointerup', up); cv.addEventListener('pointercancel', up);
-  cv.addEventListener('dblclick', e => { const w = e.target.closest('.wire'); if (w) deleteWire(+w.dataset.wire); });
+  cv.addEventListener('dblclick', e => { const w = e.target.closest('.wire'); if (w) { deleteWire(+w.dataset.wire); return; } const h = e.target.closest('.col-head'); if (h && !e.target.closest('.port,[data-nmenu]')) openStageForm('edit', h.dataset.node); });
+  cv.addEventListener('pointermove', e => { lastMouse = { x: e.clientX, y: e.clientY, in: true }; });
+  cv.addEventListener('pointerleave', () => { lastMouse.in = false; });
+  cv.addEventListener('contextmenu', e => {
+    if (e.target.closest('.ctrls,.hint')) return;
+    e.preventDefault();
+    const h = e.target.closest('.col-head'); if (h) { selectNode(h.dataset.node); openNodeMenu(h.dataset.node, e.clientX, e.clientY); return; }
+    if (e.target.closest('.pcard')) return;
+    selectNode(null); openPalette(e.clientX, e.clientY, screenToWorld(e.clientX, e.clientY));
+  });
   $('#zIn').onclick = () => zoomAt(cv.clientWidth / 2, cv.clientHeight / 2, view.k * 1.2);
   $('#zOut').onclick = () => zoomAt(cv.clientWidth / 2, cv.clientHeight / 2, view.k / 1.2);
   $('#zFit').onclick = fit;
   $('#zAuto').onclick = autoArrange; $('#autoBtn').onclick = autoArrange;
+  $('#addNodeBtn').onclick = e => { e.stopPropagation(); const r = e.currentTarget.getBoundingClientRect(); openPalette(r.left, r.bottom + 6); };
   $('#zReset').onclick = () => { if (confirm('Nodes aur wires default layout pe wapas le jaayein?')) resetLayout(); };
   $('#minimap').addEventListener('click', e => { const mm = $('#minimap'), r = mm.getBoundingClientRect(), s = mm._s || 1, b = mm._b || { x1: 0, y1: 0 }; const wx = (e.clientX - r.left) / s + b.x1, wy = (e.clientY - r.top) / s + b.y1; animateView(view.k, cv.clientWidth / 2 - wx * view.k, cv.clientHeight / 2 - wy * view.k); });
   window.addEventListener('resize', () => { sizeCanvas(); drawMinimap(); });
@@ -1101,6 +1254,369 @@ function bindDrop() {
     col.addEventListener('drop', e => { e.preventDefault(); col.classList.remove('drop'); const id = e.dataTransfer.getData('text/plain'); if (id) moveStage(id, col.dataset.stage); });
   });
 }
+
+/* ================= v4: stage nodes (add / rename / delete), presets, scripts ================= */
+Object.assign(I, {
+  dots: '<svg class="i" viewBox="0 0 24 24" style="width:16px;height:16px"><circle cx="5" cy="12" r="1.4" fill="currentColor"/><circle cx="12" cy="12" r="1.4" fill="currentColor"/><circle cx="19" cy="12" r="1.4" fill="currentColor"/></svg>',
+  folder: '<svg class="i" viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/></svg>',
+  chev: '<svg class="i chev" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></svg>',
+  trash: '<svg class="i" viewBox="0 0 24 24" style="width:16px;height:16px"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v6M14 11v6"/></svg>',
+  plus: '<svg class="i" viewBox="0 0 24 24" style="width:16px;height:16px"><path d="M12 5v14M5 12h14"/></svg>',
+  list: '<svg class="i" viewBox="0 0 24 24" style="width:16px;height:16px"><path d="M8 6h13M8 12h13M8 18h13"/><circle cx="3.5" cy="6" r="1"/><circle cx="3.5" cy="12" r="1"/><circle cx="3.5" cy="18" r="1"/></svg>',
+  code: '<svg class="i" viewBox="0 0 24 24" style="width:16px;height:16px"><path d="m8 7-5 5 5 5M16 7l5 5-5 5M13.5 4l-3 16"/></svg>',
+});
+let lastMouse = { x: 0, y: 0, in: false };
+const cleanName = v => String(v ?? '').replace(/\s+/g, ' ').trim();
+function screenToWorld(cx, cy) { const r = $('#canvas').getBoundingClientRect(); return { x: (cx - r.left - view.x) / view.k, y: (cy - r.top - view.y) / view.k }; }
+function viewCenterWorld() { const cv = $('#canvas'), r = cv.getBoundingClientRect(); const w = screenToWorld(r.left + cv.clientWidth / 2, r.top + 70); return { x: w.x - COL_W / 2, y: w.y }; }
+/** Bina selection ke naya node: sabse right mein khaali jagah (columns neeche badhte hain, right hamesha khaali) */
+function freeSpot() { if (!$('.col')) return viewCenterWorld(); const b = worldBounds(); return { x: b.x1 + b.w - 40 + GAP, y: b.y1 + 60 }; }
+function focusNode(s) { const cv = $('#canvas'), p = layout.pos[s]; if (!p || !cv.clientWidth) return; animateView(view.k, cv.clientWidth / 2 - (p.x + COL_W / 2) * view.k, Math.min(90, cv.clientHeight / 4) - p.y * view.k); }
+function selectNode(s) { selNode = s && layout && layout.pos[s] ? s : null; $$('.col').forEach(c => c.classList.toggle('sel', c.dataset.stage === selNode)); }
+function sortDefsByPos() {
+  const d = layout.stages, P = n => layout.pos[n] || { x: 0, y: 0 };
+  const open = d.filter(x => !LOCKED.includes(x.name)).sort((a, b) => (P(a.name).x - P(b.name).x) || (P(a.name).y - P(b.name).y));
+  layout.stages = open.concat(LOCKED.map(n => d.find(x => x.name === n)).filter(Boolean));
+}
+async function runBatch(items, fn, size = 4) { for (let i = 0; i < items.length; i += size) await Promise.all(items.slice(i, i + size).map(fn)); }
+function nameErr(n, except) {
+  if (!n) return 'Stage ka naam likho';
+  if (n.length > 30) return 'Naam 30 akshar se chhota rakho';
+  if (/[<>|"]/.test(n) || /^__/.test(n)) return 'Naam mein < > | " mat likho';
+  if (stages().some(s => s.toLowerCase() === n.toLowerCase() && s !== except)) return 'Is naam ka stage pehle se hai';
+  return '';
+}
+
+/* ---- popovers ---- */
+function closePops() { $$('.pop.show').forEach(p => p.classList.remove('show')); }
+function placePop(el, x, y) {
+  el.style.left = '0px'; el.style.top = '0px'; el.classList.add('show');
+  const w = el.offsetWidth, h = el.offsetHeight;
+  el.style.left = Math.max(10, Math.min(x, innerWidth - w - 10)) + 'px';
+  el.style.top = Math.max(10, Math.min(y, innerHeight - h - 10)) + 'px';
+}
+function openNodeMenu(s, x, y) {
+  closePops(); selectNode(s);
+  const d = stageDefs().find(z => z.name === s); if (!d) return;
+  const locked = LOCKED.includes(s), n = S.leads.filter(l => l.stage === s).length;
+  const m = $('#nodeMenu');
+  m.innerHTML = `<div class="ttl">${esc(s)} · ${n} lead${n === 1 ? '' : 's'}</div>
+    <button class="mi" data-nm="edit">${I.edit}${locked ? 'Colour badlo' : 'Rename / colour'}</button>
+    <div class="swatches">${STAGE_COLORS.map(c => `<button class="sw ${c.toLowerCase() === String(d.color).toLowerCase() ? 'on' : ''}" style="background:${c}" data-nmc="${c}" title="${c}"></button>`).join('')}</div>
+    <button class="mi" data-nm="after" ${locked ? 'disabled' : ''}>${I.plus}Iske baad naya node</button>
+    <button class="mi" data-nm="list">${I.list}Leads table mein dekho</button>
+    <div class="sep"></div>
+    <button class="mi danger" data-nm="del" ${locked ? 'disabled title="Won aur Lost locked hain"' : ''}>${I.trash}Node delete karo</button>`;
+  m.onclick = e => {
+    const c = e.target.closest('[data-nmc]'); if (c) { closePops(); renameStage(s, s, c.dataset.nmc, true); return; }
+    const b = e.target.closest('[data-nm]'); if (!b || b.disabled) return;
+    closePops(); const a = b.dataset.nm;
+    if (a === 'edit') openStageForm('edit', s);
+    else if (a === 'after') { const col = colEl(s), r = col && col.getBoundingClientRect(); openPalette(r ? r.right + 12 : x, r ? r.top : y); }
+    else if (a === 'list') { ui.lf.stage = s; go('leads'); }
+    else if (a === 'del') requestDeleteStage(s);
+  };
+  placePop(m, x, y);
+}
+
+/* ---- presets: built-in ---- */
+const BUILTIN = [
+  ...[['Follow-up', '#6F8FE8', 'Dobara baat karni hai'], ['Site Visit', '#4FB3D9', 'Client ki jagah jaakar naap / dekhna'], ['Demo / Meeting', '#3CB4A0', 'Showroom visit ya video call'],
+    ['Sample Sent', '#B08CEB', 'Fabric / design sample bheja'], ['Payment Pending', '#F2C94C', 'Advance ya baaki payment ka intezaar'], ['Order Confirmed', '#9BC53D', 'Advance mil gaya, order pakka'],
+    ['In Production', '#F29A5C', 'Factory mein ban raha hai'], ['Delivered', '#2FA36B', 'Maal pahunch gaya'], ['Installation', '#D77FC4', 'Fitting / setup'], ['Feedback', '#9AA0A6', 'Review aur photos maango']]
+    .map(([name, color, description]) => ({ folder: 'Sales Stages', name, description, nodes: [{ name, color }], wires: 'chain' })),
+  { folder: 'Pipeline Presets', name: 'Furniture B2B (Cafe / Hotel)', description: 'Bulk seating order: visit se installation tak', wires: 'chain',
+    nodes: [{ name: 'Site Visit', color: '#4FB3D9' }, { name: 'Sample Sent', color: '#B08CEB' }, { name: 'Order Confirmed', color: '#9BC53D' }, { name: 'In Production', color: '#F29A5C' }, { name: 'Delivered', color: '#2FA36B' }, { name: 'Installation', color: '#D77FC4' }] },
+  { folder: 'Pipeline Presets', name: 'Jewelry D2C (Instagram)', description: 'DM se delivery tak', wires: 'chain',
+    nodes: [{ name: 'DM Received', color: '#4FB3D9' }, { name: 'Catalogue Sent', color: '#B08CEB' }, { name: 'Payment Pending', color: '#F2C94C' }, { name: 'Order Packed', color: '#F29A5C' }, { name: 'Shipped', color: '#6F8FE8' }, { name: 'Delivered', color: '#2FA36B' }] },
+  { folder: 'Pipeline Presets', name: 'Service / Agency', description: 'Call se project delivery tak', wires: 'chain',
+    nodes: [{ name: 'Discovery Call', color: '#4FB3D9' }, { name: 'Proposal Sent', color: '#B08CEB' }, { name: 'Advance Paid', color: '#9BC53D' }, { name: 'Work in Progress', color: '#F29A5C' }, { name: 'Delivered', color: '#2FA36B' }] },
+];
+const AUTOMATION_SOON = [['Send WhatsApp', 'Stage mein aate hi template bhejo'], ['Wait / Delay', '1 din baad agla kaam'], ['Assign Member', 'Lead kisi ko de do'], ['Add Tag', 'Hot / Warm / Cold'], ['AI Reply', 'Gemini se jawab']];
+
+/** Script (JSON) → saaf preset, ya Hinglish error */
+function parsePreset(text) {
+  const err = e => ({ ok: false, error: e });
+  let o; try { o = typeof text === 'string' ? JSON.parse(text) : text; } catch (e) { return err('JSON galat hai — ' + e.message); }
+  if (!o || typeof o !== 'object' || Array.isArray(o)) return err('Script ek { } object hona chahiye');
+  const name = cleanName(o.name); if (!name) return err('"name" likho'); if (name.length > 40) return err('"name" 40 akshar se chhota rakho');
+  const folder = cleanName(o.folder) || 'My Presets'; if (folder.length > 30) return err('"folder" 30 akshar se chhota rakho');
+  if (!Array.isArray(o.nodes) || !o.nodes.length) return err('"nodes" mein kam se kam 1 node chahiye');
+  if (o.nodes.length > 15) return err('Ek preset mein 15 se zyada nodes nahi');
+  const nodes = [];
+  for (let i = 0; i < o.nodes.length; i++) {
+    const n = o.nodes[i], nm = cleanName(typeof n === 'string' ? n : n && n.name);
+    if (!nm) return err(`nodes[${i}] ka "name" khaali hai`);
+    if (nm.length > 30 || /[<>|"]/.test(nm)) return err(`"${nm.slice(0, 30)}": naam 30 akshar tak, < > | " ke bina`);
+    if (nodes.some(x => x.name.toLowerCase() === nm.toLowerCase())) return err(`"${nm}" do baar likha hai`);
+    const c = n && typeof n === 'object' ? n.color : '';
+    if (c && !/^#[0-9a-f]{6}$/i.test(c)) return err(`"${nm}" ka colour #RRGGBB jaisa ho (jaise #4FB3D9)`);
+    nodes.push({ name: nm, color: c || autoColor(nm) });
+  }
+  let wires = o.wires === undefined ? 'chain' : o.wires;
+  if (Array.isArray(wires)) {
+    if (wires.length > 40) return err('Bahut zyada wires (40 tak)');
+    for (const w of wires) if (!Array.isArray(w) || w.length !== 2 || !cleanName(w[0]) || !cleanName(w[1])) return err('"wires" ka har item ["A","B"] jaisa ho');
+    wires = wires.map(([a, b]) => [cleanName(a), cleanName(b)]);
+  } else if (wires !== 'chain' && wires !== 'none') return err('"wires" = "chain", "none" ya [["A","B"]] hona chahiye');
+  return { ok: true, preset: { name, folder, description: cleanName(o.description).slice(0, 120), nodes, wires } };
+}
+function userPresets() {
+  return (S.flows || []).filter(f => String(f.trigger) === 'preset').map(f => { const r = parsePreset(f.flowJson); return r.ok ? Object.assign(r.preset, { id: String(f.flowId) }) : null; }).filter(Boolean);
+}
+
+/** Preset / naya node pipeline mein lagao. Node select ho to uske baad beech mein (Nuke jaisa). */
+function applyPreset(p, at) {
+  if (!layout) layout = loadLayout();
+  const defs = layout.stages, canon = n => { const d = defs.find(x => x.name.toLowerCase() === cleanName(n).toLowerCase()); return d ? d.name : null; };
+  const sel = selNode && layout.pos[selNode] && !LOCKED.includes(selNode) ? selNode : null;
+  const fresh = p.nodes.filter(n => !canon(n.name));
+  if (!fresh.length && p.nodes.length === 1) { const ex = canon(p.nodes[0].name); selectNode(ex); focusNode(ex); toast(`"${ex}" pehle se pipeline mein hai`); return; }
+  const base = sel ? { x: layout.pos[sel].x + COL_W + GAP, y: layout.pos[sel].y + 160 } : (at || freeSpot());
+  const idx = sel ? defs.findIndex(d => d.name === sel) + 1 : closedIdx(defs);
+  fresh.forEach((n, i) => { defs.splice(idx + i, 0, { name: n.name, color: n.color || autoColor(n.name) }); layout.pos[n.name] = { x: Math.round(base.x + i * (COL_W + GAP)), y: Math.round(base.y) }; });
+  const names = p.nodes.map(n => canon(n.name));
+  const wires = p.wires === 'none' ? [] : Array.isArray(p.wires) ? p.wires.map(([a, b]) => [canon(a), canon(b)]) : names.slice(1).map((b, i) => [names[i], b]);
+  let spliced = false;
+  if (sel && names.length && !names.includes(sel)) {
+    const first = names[0], last = names[names.length - 1];
+    const oi = layout.links.findIndex(([a, b]) => a === sel && b !== 'Lost' && !names.includes(b));
+    if (oi > -1) { const nx = layout.links[oi][1]; layout.links.splice(oi, 1); wires.push([last, nx]); }
+    wires.unshift([sel, first]); spliced = true;
+  }
+  let added = 0;
+  wires.forEach(([a, b]) => { if (a && b && a !== b && !layout.links.some(([x, y]) => x === a && y === b)) { layout.links.push([a, b]); added++; } });
+  fresh.forEach(n => bornNodes.add(n.name));
+  if (fresh.length) selNode = fresh[fresh.length - 1].name;
+  saveLayout(); renderAll();
+  if (spliced) setTimeout(autoArrange, 80); else if (fresh.length) focusNode(fresh[0].name);
+  toast(fresh.length ? `${fresh.length === 1 ? 'Node' : fresh.length + ' nodes'} add: ${fresh.map(n => n.name).join(', ')}` + (spliced ? ` (${sel} ke baad)` : '') : added ? `${added} wires jod diye (nodes pehle se the)` : 'Kuch naya nahi — sab pehle se hai');
+}
+
+/* ---- Add Node menu (Tab / right-click / + Node) ---- */
+let palItems = [], palAt = null;
+const palClosed = new Set(['Automation']);
+function paletteFolders() {
+  const F = new Map(), add = (f, it) => { if (!F.has(f)) F.set(f, []); F.get(f).push(it); };
+  add('Basic', { kind: 'blank', name: 'Blank Stage', description: 'Apna naam aur colour do', nodes: [] });
+  BUILTIN.forEach(p => add(p.folder, Object.assign({ kind: 'preset' }, p)));
+  userPresets().forEach(p => add(p.folder, Object.assign({ kind: 'preset', mine: true }, p)));
+  AUTOMATION_SOON.forEach(([name, description]) => add('Automation', { kind: 'soon', name, description, nodes: [] }));
+  return F;
+}
+function paletteRow(it, i) {
+  const ex = new Set(stages().map(s => s.toLowerCase())), nodes = it.nodes || [];
+  const dot = nodes.length ? nodes[0].color : 'var(--line-2)';
+  const sub = nodes.length > 1 ? nodes.map(n => n.name).join(' → ') : nodes.length && ex.has(nodes[0].name.toLowerCase()) ? 'Pipeline mein pehle se hai' : (it.description || 'Ek stage node');
+  const chain = nodes.length > 1 ? `<div class="chain">${nodes.map(n => `<i style="background:${esc(n.color)}"></i>`).join('')}</div>` : '';
+  const badge = it.kind === 'soon' ? '<span class="badge">Step 8</span>' : it.mine ? '<span class="badge mine">Mine</span>' : nodes.length > 1 ? `<span class="badge">${nodes.length} nodes</span>` : '';
+  return `<button class="ni" data-pi="${i}" ${it.kind === 'soon' ? 'disabled' : ''}><span class="sdot" style="background:${esc(dot)}"></span><span class="tx">${esc(it.name)}<small>${esc(sub)}</small>${chain}</span>${badge}</button>`;
+}
+function drawPalette(q) {
+  q = cleanName(q).toLowerCase(); palItems = [];
+  const html = [...paletteFolders()].map(([f, items]) => {
+    const vis = items.filter(it => !q || [it.name, f, it.description, ...(it.nodes || []).map(n => n.name)].join(' ').toLowerCase().includes(q));
+    if (!vis.length) return '';
+    const open = q || !palClosed.has(f);
+    return `<details ${open ? 'open' : ''} data-fold="${esc(f)}"><summary>${I.folder}${esc(f)}<span class="c">${vis.length}</span>${I.chev}</summary>${vis.map(it => paletteRow(it, palItems.push(it) - 1)).join('')}</details>`;
+  }).join('');
+  $('#palBody').innerHTML = html || '<div class="empty" style="padding:24px">Kuch nahi mila</div>';
+  if (q) { const f = $('#palBody [data-pi]:not(:disabled)'); if (f) f.classList.add('kb'); }
+  $$('#palBody details').forEach(d => d.addEventListener('toggle', () => { if (!q) d.open ? palClosed.delete(d.dataset.fold) : palClosed.add(d.dataset.fold); }));
+}
+function openPalette(x, y, at) {
+  closePops(); palAt = at || null;
+  const m = $('#nodePal'), sel = selNode && !LOCKED.includes(selNode) ? selNode : null;
+  m.innerHTML = `<div class="ph"><input class="input" id="palQ" placeholder="Node ya preset dhundo…" autocomplete="off">
+      <div class="note">${sel ? `Selected: <b>${esc(sel)}</b> — naya node iske <b>baad</b> beech mein judega` : `Koi node select nahi — naya node ${at ? 'yahin' : 'right side khaali jagah mein'} akela banega, wire baad mein jodo`}</div></div>
+    <div class="pb" id="palBody"></div>
+    <div class="pf"><button class="btn sm" data-palgo>${I.code}Apna preset banao (Scripts)</button></div>`;
+  drawPalette('');
+  placePop(m, x, y);
+  const q = $('#palQ'); setTimeout(() => q.focus(), 30);
+  q.oninput = () => drawPalette(q.value);
+  q.onkeydown = e => {
+    const all = $$('#palBody details[open] [data-pi]:not(:disabled)'); let i = all.findIndex(b => b.classList.contains('kb'));
+    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); all.forEach(b => b.classList.remove('kb')); i = e.key === 'ArrowDown' ? Math.min(all.length - 1, i + 1) : Math.max(0, i - 1); if (all[i]) { all[i].classList.add('kb'); all[i].scrollIntoView({ block: 'nearest' }); } }
+    else if (e.key === 'Enter') { e.preventDefault(); const b = all[i] || all[0]; if (b) b.click(); }
+    else if (e.key === 'Tab') e.preventDefault();
+  };
+  m.onclick = e => {
+    if (e.target.closest('[data-palgo]')) { closePops(); go('scripts'); newScript(); return; }
+    const b = e.target.closest('[data-pi]'); if (!b || b.disabled) return;
+    const it = palItems[+b.dataset.pi]; closePops();
+    if (it.kind === 'blank') openStageForm('add', null, palAt); else if (it.kind === 'preset') applyPreset(it, palAt);
+  };
+}
+
+/* ---- stage form: add / rename / colour ---- */
+let sfColor = '';
+function openStageForm(mode, s, at) {
+  closePops();
+  const d = s ? stageDefs().find(x => x.name === s) : null; if (mode === 'edit' && !d) return;
+  const locked = !!d && LOCKED.includes(d.name), n = d ? S.leads.filter(l => l.stage === d.name).length : 0;
+  sfColor = d ? d.color : STAGE_COLORS[(stages().length * 5) % STAGE_COLORS.length];
+  const after = mode === 'add' && selNode && !LOCKED.includes(selNode) ? selNode : '';
+  $('#stageBox').innerHTML = `<div class="m-head"><h2>${mode === 'add' ? 'Naya stage node' : 'Stage edit'}</h2><button class="ibtn" data-close>${I.x}</button></div>
+    <div class="form" style="grid-template-columns:1fr">
+      <div class="field"><label>Stage ka naam</label><input class="input" id="sfName" maxlength="30" value="${esc(d ? d.name : '')}" placeholder="jaise: Site Visit" ${locked ? 'disabled' : ''}></div>
+      ${locked ? '<p class="help">Won aur Lost system stages hain (reports inhi se bante hain), isliye inka naam nahi badalta. Colour badal sakte ho.</p>' : ''}
+      ${mode === 'edit' && n && !locked ? `<p class="help">Is stage mein ${n} lead${n > 1 ? 's' : ''} hain — naam badalne pe sab apne aap naye naam pe chale jayenge.</p>` : ''}
+      <div class="field"><label>Colour</label><div class="cswatch" id="sfSw">${STAGE_COLORS.map(c => `<button type="button" class="sw ${c.toLowerCase() === String(sfColor).toLowerCase() ? 'on' : ''}" data-sfc="${c}" style="background:${c}"></button>`).join('')}</div></div>
+      ${after ? `<p class="help">Ye <b>${esc(after)}</b> ke baad judega (wire apne aap).</p>` : ''}
+    </div>
+    <div class="m-foot">${mode === 'edit' && !locked ? `<button class="btn danger" id="sfDel">${I.trash}Delete</button>` : ''}<div class="grow"></div><button class="btn" data-close>Cancel</button><button class="btn primary" id="sfSave">${mode === 'add' ? 'Node banao' : 'Save'}</button></div>`;
+  $$('#sfSw [data-sfc]').forEach(b => b.onclick = () => { sfColor = b.dataset.sfc; $$('#sfSw .sw').forEach(x => x.classList.toggle('on', x === b)); });
+  const name = $('#sfName');
+  $('#sfSave').onclick = () => {
+    const nm = cleanName(name.value);
+    if (mode === 'add') { const e = nameErr(nm); if (e) { toast(e, true); name.focus(); return; } hideModal('#stageModal'); applyPreset({ nodes: [{ name: nm, color: sfColor }], wires: 'chain' }, at); return; }
+    if (!locked) { const e = nameErr(nm, d.name); if (e) { toast(e, true); name.focus(); return; } }
+    hideModal('#stageModal'); renameStage(d.name, locked ? d.name : nm, sfColor);
+  };
+  name.onkeydown = e => { if (e.key === 'Enter') $('#sfSave').click(); };
+  const del = $('#sfDel'); if (del) del.onclick = () => { hideModal('#stageModal'); requestDeleteStage(d.name); };
+  showModal('#stageModal'); if (!locked) setTimeout(() => name.select(), 60);
+}
+async function renameStage(old, nu, color, quiet) {
+  const d = layout.stages.find(x => x.name === old); if (!d) return;
+  if (color) d.color = color;
+  if (!nu || nu === old) { saveLayout(); renderAll(); if (!quiet) toast('Stage update ho gaya'); return; }
+  d.name = nu; layout.pos[nu] = layout.pos[old]; delete layout.pos[old];
+  layout.links = layout.links.map(([a, b]) => [a === old ? nu : a, b === old ? nu : b]);
+  if (selNode === old) selNode = nu; if (ui.stage === old) ui.stage = nu; if (ui.lf.stage === old) ui.lf.stage = nu;
+  if (ui.expanded.delete(old)) ui.expanded.add(nu);
+  const ls = S.leads.filter(l => l.stage === old); ls.forEach(l => { l.stage = nu; });
+  saveLayout(); renderAll();
+  if (demo || !ls.length) { toast(`Rename ho gaya: ${old} → ${nu}`); return; }
+  toast(`${ls.length} leads update ho rahe hain…`);
+  try { await runBatch(ls, l => api('updateLead', { id: l.leadId, stage: nu })); toast(`Rename ho gaya: ${old} → ${nu} ✓`); }
+  catch (e) { toast('Kuch leads update nahi hue: ' + e.message, true); load(true); }
+}
+function requestDeleteStage(s) {
+  closePops();
+  if (LOCKED.includes(s)) return toast('Won aur Lost delete nahi hote (reports inse bante hain)', true);
+  const n = S.leads.filter(l => l.stage === s).length;
+  if (!n) { if (confirm(`"${s}" node delete karna hai?\nIsme koi lead nahi hai. Aage-peeche ke wires apne aap jud jayenge.`)) deleteStage(s); return; }
+  const others = stages().filter(x => x !== s), next = (layout.links.find(([a, b]) => a === s && b !== 'Lost') || [])[1] || others[0];
+  $('#stageBox').innerHTML = `<div class="m-head"><h2>"${esc(s)}" delete karo</h2><button class="ibtn" data-close>${I.x}</button></div>
+    <p class="help" style="margin-bottom:14px">Is node mein <b>${n} lead${n > 1 ? 's' : ''}</b> hain. Delete se pehle inhe kisi aur stage mein bhejna hoga (har lead ki journey mein entry ban jayegi).</p>
+    <div class="field"><label>Leads kahan bhejein?</label><select class="input" id="sdTo">${others.map(o => `<option ${o === next ? 'selected' : ''}>${esc(o)}</option>`).join('')}</select></div>
+    <div class="m-foot"><div class="grow"></div><button class="btn" data-close>Cancel</button><button class="btn danger" id="sdGo">${I.trash}Leads bhejo aur delete karo</button></div>`;
+  $('#sdGo').onclick = () => { const to = $('#sdTo').value; hideModal('#stageModal'); deleteStage(s, to); };
+  showModal('#stageModal');
+}
+async function deleteStage(s, to) {
+  const ls = S.leads.filter(l => l.stage === s);
+  if (ls.length && !to) return requestDeleteStage(s);
+  if (ls.length && demo) ls.forEach(l => demoApi('moveStage', { id: l.leadId, stage: to, by: me() }));
+  else ls.forEach(l => { l.stage = to; l.lastContact = todayStr(); });
+  const ins = layout.links.filter(([, b]) => b === s).map(([a]) => a), outs = layout.links.filter(([a]) => a === s).map(([, b]) => b);
+  layout.links = layout.links.filter(([a, b]) => a !== s && b !== s);
+  ins.forEach(a => outs.forEach(b => { if (a !== b && !layout.links.some(([x, y]) => x === a && y === b)) layout.links.push([a, b]); }));
+  layout.stages = layout.stages.filter(d => d.name !== s); delete layout.pos[s];
+  if (selNode === s) selNode = null; ui.expanded.delete(s);
+  if (ui.stage === s) ui.stage = ''; if (ui.lf.stage === s) ui.lf.stage = '';
+  saveLayout(); renderAll();
+  toast(`"${s}" node delete ho gaya` + (ls.length ? ` · ${ls.length} leads → ${to}` : ''));
+  if (!demo && ls.length) {
+    try { await runBatch(ls, l => api('moveStage', { id: l.leadId, stage: to, by: me() })); load(true); }
+    catch (e) { toast('Kuch leads move nahi hue: ' + e.message, true); load(true); }
+  }
+}
+
+/* ---- Scripts & Presets page ---- */
+const scr = { id: null };
+const PRESET_EXAMPLE = { name: 'Cafe Order Flow', folder: 'Furniture', description: 'Cafe / restaurant ke bulk seating order ke liye',
+  nodes: [{ name: 'Site Visit', color: '#4FB3D9' }, { name: 'Sample Sent', color: '#B08CEB' }, { name: 'Order Confirmed', color: '#9BC53D' }], wires: 'chain' };
+const presetJSON = p => JSON.stringify(Object.assign({ name: p.name, folder: p.folder }, p.description ? { description: p.description } : {}, { nodes: p.nodes, wires: p.wires }), null, 2);
+const AI_PROMPT = () => `Mere CRM ke liye ek "pipeline preset" JSON banao.
+Mera business: [YAHAN APNA BUSINESS LIKHO — jaise "cafe ke liye furniture banana aur install karna"]
+
+Rules:
+- Sirf JSON do, koi extra text ya explanation nahi.
+- Format bilkul aisa:
+{
+  "name": "Preset ka naam",
+  "folder": "Folder ka naam",
+  "description": "1 line: kis kaam ka hai",
+  "nodes": [
+    { "name": "Stage 1", "color": "#4FB3D9" },
+    { "name": "Stage 2", "color": "#B08CEB" }
+  ],
+  "wires": "chain"
+}
+- nodes: 3 se 8 sales stages, sahi kram (order) mein. Har naam 30 akshar se chhota.
+- "New Lead", "Won", "Lost" mat daalna — ye CRM mein pehle se hain.
+- color sirf in mein se: ${STAGE_COLORS.join(', ')}
+- wires: "chain" (sab ek line mein) ya [["A","B"], ...] agar branch chahiye.`;
+function updateScrHead(p) {
+  $('#scrTitle').textContent = scr.id ? (p ? p.name : 'Preset') : 'Naya Preset';
+  $('#scrBadge').textContent = scr.id ? 'Saved' : 'Draft'; $('#scrBadge').className = 'badge' + (scr.id ? ' mine' : '');
+  $('#scrDel').disabled = !scr.id;
+}
+function previewScript() {
+  const r = parsePreset($('#scrCode').value), msg = $('#scrMsg');
+  if (!r.ok) { msg.className = 'scr-msg err'; msg.textContent = '✗ ' + r.error; $('#scrPrev').innerHTML = '<span class="muted" style="font-size:13px">Script theek karo, preview yahan dikhega</span>'; return null; }
+  const p = r.preset, ex = new Set(stages().map(s => s.toLowerCase())), chain = p.wires === 'chain';
+  $('#scrPrev').innerHTML = p.nodes.map((n, i) => (i ? (chain ? '<span class="mwire"></span>' : '<span style="width:12px;flex:none"></span>') : '') +
+    `<span class="mnode ${ex.has(n.name.toLowerCase()) ? 'ex' : ''}" title="${ex.has(n.name.toLowerCase()) ? 'Pipeline mein pehle se hai (dobara nahi banega)' : 'Naya node'}"><span class="sdot" style="background:${esc(n.color)}"></span>${esc(n.name)}</span>`).join('');
+  const nNew = p.nodes.filter(n => !ex.has(n.name.toLowerCase())).length;
+  msg.className = 'scr-msg ok';
+  msg.textContent = `✓ Sahi hai — folder "${p.folder}" · ${p.nodes.length} node${p.nodes.length > 1 ? 's' : ''} (${nNew} naye)` + (Array.isArray(p.wires) ? ` · ${p.wires.length} wires` : p.wires === 'none' ? ' · wires nahi' : '');
+  return p;
+}
+function renderScripts(keep) {
+  const mine = userPresets(), groups = new Map();
+  mine.forEach(p => { if (!groups.has(p.folder)) groups.set(p.folder, []); groups.get(p.folder).push(p); });
+  let h = mine.length ? '' : '<div class="empty" style="padding:18px 10px;font-size:13px">Abhi tumhara koi preset nahi.<br>Naya banao, ya neeche built-in se copy karo.</div>';
+  groups.forEach((arr, f) => { h += `<div class="fold">${I.folder}${esc(f)}</div>` + arr.map(p => `<button class="scr-item ${scr.id === p.id ? 'active' : ''}" data-scr="${esc(p.id)}"><span class="sdot" style="background:${esc(p.nodes[0].color)}"></span><span class="nm">${esc(p.name)}</span><span class="badge">${p.nodes.length}</span></button>`).join(''); });
+  h += `<div class="fold">${I.folder}Built-in · copy karke edit karo</div>` + BUILTIN.map((p, i) => p.nodes.length > 1 ? `<button class="scr-item" data-scrb="${i}"><span class="sdot" style="background:${esc(p.nodes[0].color)}"></span><span class="nm">${esc(p.name)}</span><span class="badge">${p.nodes.length}</span></button>` : '').join('');
+  $('#scrList').innerHTML = h;
+  if (!keep && !$('#scrCode').value.trim()) newScript(); else { updateScrHead(mine.find(p => p.id === scr.id)); previewScript(); }
+}
+function newScript() { scr.id = null; $('#scrCode').value = presetJSON(PRESET_EXAMPLE); updateScrHead(); previewScript(); $$('.scr-item.active').forEach(b => b.classList.remove('active')); }
+function loadScript(id) { const p = userPresets().find(x => x.id === id); if (!p) return; scr.id = id; $('#scrCode').value = presetJSON(p); updateScrHead(p); previewScript(); $$('.scr-item').forEach(b => b.classList.toggle('active', b.dataset.scr === id)); }
+function loadBuiltin(i) { const p = BUILTIN[i]; if (!p) return; scr.id = null; $('#scrCode').value = presetJSON(Object.assign({}, p, { name: p.name + ' (copy)', folder: 'My Presets' })); updateScrHead(); previewScript(); $$('.scr-item').forEach(b => b.classList.toggle('active', b.dataset.scrb === String(i))); toast('Copy ban gayi — edit karke Save dabao'); }
+(function scriptsEvents() {
+  let t = null; const code = $('#scrCode');
+  code.addEventListener('input', () => { clearTimeout(t); t = setTimeout(previewScript, 250); });
+  code.addEventListener('keydown', e => { if (e.key === 'Tab') { e.preventDefault(); code.setRangeText('  ', code.selectionStart, code.selectionEnd, 'end'); } });
+  $('#scrList').addEventListener('click', e => { const a = e.target.closest('[data-scr]'); if (a) return loadScript(a.dataset.scr); const b = e.target.closest('[data-scrb]'); if (b) loadBuiltin(+b.dataset.scrb); });
+  $('#scrNew').onclick = newScript;
+  $('#scrFromPipe').onclick = () => {
+    if (!layout) layout = loadLayout();
+    scr.id = null;
+    $('#scrCode').value = presetJSON({ name: 'Mera Pipeline ' + fmtDate(todayStr()), folder: 'My Presets', description: 'Poora pipeline: saare stages aur wires', nodes: layout.stages.map(d => ({ name: d.name, color: d.color })), wires: layout.links.map(w => w.slice()) });
+    updateScrHead(); previewScript(); toast('Current pipeline script mein aa gaya — Save dabao');
+  };
+  $('#scrSave').onclick = async () => {
+    const p = previewScript(); if (!p) return toast('Pehle script theek karo', true);
+    const id = scr.id || 'PRESET-' + Date.now().toString(36).toUpperCase();
+    const body = { flowId: id, flowName: p.name, trigger: 'preset', status: 'Active', flowJson: JSON.stringify(p) };
+    const b = $('#scrSave'); b.disabled = true;
+    try {
+      await api('saveFlow', body);
+      if (!demo) { const i = S.flows.findIndex(f => String(f.flowId) === id); if (i > -1) S.flows[i] = Object.assign(S.flows[i], body); else S.flows.push(body); }
+      scr.id = id; renderScripts(true); toast(`Saved ✓ — Pipeline → + Node → "${p.folder}" folder mein dikhega`);
+    } catch (e) { toast('Save nahi hua: ' + e.message, true); }
+    finally { b.disabled = false; }
+  };
+  $('#scrDel').onclick = async () => {
+    if (!scr.id || !confirm('Ye preset delete karna hai? (Pipeline ke nodes pe asar nahi padega)')) return;
+    try { await api('deleteFlow', { id: scr.id }); if (!demo) S.flows = S.flows.filter(f => String(f.flowId) !== scr.id); toast('Preset delete ho gaya'); scr.id = null; newScript(); renderScripts(true); }
+    catch (e) { toast('Delete nahi hua: ' + e.message, true); }
+  };
+  $('#scrTry').onclick = () => { const p = previewScript(); if (!p) return toast('Pehle script theek karo', true); go('pipeline'); setTimeout(() => applyPreset(p), 350); };
+  $('#scrAi').onclick = () => {
+    const txt = AI_PROMPT();
+    const fallback = () => {
+      $('#stageBox').innerHTML = `<div class="m-head"><h2>AI prompt</h2><button class="ibtn" data-close>${I.x}</button></div><p class="help" style="margin-bottom:10px">Ye copy karke ChatGPT / Gemini mein do. Jo JSON mile wo Script box mein paste karo.</p><textarea class="input code" style="min-height:260px" readonly>${esc(txt)}</textarea>`;
+      showModal('#stageModal'); setTimeout(() => $('#stageBox textarea').select(), 60);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(() => toast('AI prompt copy ho gaya — ChatGPT / Gemini mein paste karo'), fallback); else fallback();
+  };
+})();
 
 /* ================= actions ================= */
 const me = () => brand().userName || settings.name || 'Shivam';
@@ -1531,6 +2047,7 @@ function renderTemplates() {
 /* ================= tooltip ================= */
 (function () {
   const tip = $('#tip');
+  document.addEventListener('pointerdown', () => tip.classList.remove('show'), true);
   document.addEventListener('mousemove', e => {
     const t = e.target.closest && e.target.closest('[data-tip]');
     if (!t) { tip.classList.remove('show'); return; }
@@ -1554,6 +2071,8 @@ function go(name) {
   if (name === 'reports') renderReports(true);
   if (name === 'leads') renderLeads(true);
   if (name === 'team') renderTeam(true);
+  if (name === 'scripts') renderScripts();
+  closePops();
   window.scrollTo(0, 0);
 }
 window.addEventListener('hashchange', () => go(location.hash.slice(1)));
@@ -1561,6 +2080,7 @@ window.addEventListener('hashchange', () => go(location.hash.slice(1)));
 /* ================= global events ================= */
 document.addEventListener('click', e => {
   const t = e.target;
+  if (!t.closest('.pop,[data-nmenu]')) closePops();
   if (t.closest('[data-stop]')) return;
   const goEl = t.closest('[data-go]'); if (goEl) { e.preventDefault(); go(goEl.dataset.go); return; }
   const tab = t.closest('[data-tab]'); if (tab) { ui.tab = tab.dataset.tab; renderDashboard(true); return; }
@@ -1578,11 +2098,22 @@ document.addEventListener('click', e => {
   const th = t.closest('th[data-sort]'); if (th) { const k = th.dataset.sort; ui.sort = { k, d: ui.sort.k === k ? -ui.sort.d : 1 }; renderLeads(); return; }
   const mem = t.closest('[data-mem]'); if (mem) { openMemberModal(S.team.find(m => String(m.memberId) === mem.dataset.mem)); return; }
   const mtog = t.closest('[data-memtoggle]'); if (mtog) { toggleMember(mtog.dataset.memtoggle); return; }
+  const ex = t.closest('[data-expand]'); if (ex) { const s = ex.dataset.expand; ui.expanded.has(s) ? ui.expanded.delete(s) : ui.expanded.add(s); renderPipeline(); return; }
+  const sl = t.closest('[data-stagelist]'); if (sl) { ui.lf.stage = sl.dataset.stagelist; go('leads'); return; }
   const op = t.closest('[data-open]'); if (op) { openPanel(op.dataset.open); return; }
   if (t.id === 'scrim') { if ($('.modal.show')) $$('.modal.show').forEach(m => hideModal('#' + m.id)); else closePanel(); }
   if (t.classList.contains('modal')) hideModal('#' + t.id);
 });
-document.addEventListener('keydown', e => { if ((e.key === 'Delete' || e.key === 'Backspace') && selWire !== null && !e.target.closest('input,textarea,select')) { e.preventDefault(); deleteWire(selWire); return; } if (e.key === 'Escape') { if ($('.modal.show')) $$('.modal.show').forEach(m => hideModal('#' + m.id)); else closePanel(); } });
+document.addEventListener('keydown', e => {
+  const typing = e.target.closest && e.target.closest('input,textarea,select,[contenteditable]');
+  const onPipe = $('#v-pipeline').classList.contains('active') && !$('.modal.show') && !$('#panel.show');
+  if ((e.key === 'Delete' || e.key === 'Backspace') && !typing) {
+    if (selWire !== null) { e.preventDefault(); deleteWire(selWire); return; }
+    if (selNode && onPipe) { e.preventDefault(); requestDeleteStage(selNode); return; }
+  }
+  if (e.key === 'Tab' && onPipe && !typing && !$('#nodePal.show')) { e.preventDefault(); const cv = $('#canvas').getBoundingClientRect(); const at = lastMouse.in ? lastMouse : { x: cv.left + cv.width / 2 - 170, y: cv.top + 80 }; openPalette(at.x, at.y, lastMouse.in && !selNode ? screenToWorld(lastMouse.x, lastMouse.y) : null); return; }
+  if (e.key === 'Escape') { if ($('.pop.show')) { closePops(); return; } if ($('.modal.show')) $$('.modal.show').forEach(m => hideModal('#' + m.id)); else closePanel(); }
+});
 $('#dsearch').oninput = e => { ui.q = e.target.value; $('#gsearch').value = ui.q; renderDashboard(); renderPipeline(); };
 $('#gsearch').oninput = e => { ui.q = e.target.value; $('#dsearch').value = ui.q; renderDashboard(); renderPipeline(); };
 $('#dstage').onchange = e => { ui.stage = e.target.value; renderDashboard(); };
