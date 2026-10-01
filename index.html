@@ -160,6 +160,12 @@ textarea.input{min-height:84px;resize:vertical}
 .canvas{position:relative;height:calc(100vh - 190px);min-height:520px;overflow:hidden;border-radius:var(--r-panel);cursor:grab;touch-action:none;
   background-color:var(--glass);background-image:radial-gradient(var(--grid-dot) 1.2px,transparent 1.3px);background-size:22px 22px;border:1px solid var(--stroke);box-shadow:var(--shadow)}
 .canvas.panning{cursor:grabbing}
+.marquee{position:absolute;display:none;z-index:6;border:1.5px dashed var(--blue-2);background:rgba(111,143,232,.10);border-radius:4px;pointer-events:none}
+.canvas-like{cursor:default}
+.canvas-like.panning,.canvas-like.hand{cursor:grab}
+.canvas-like.hand:active,.canvas-like.panning:active{cursor:grabbing}
+.canvas-like.hand *{cursor:grab!important}
+
 .world{position:absolute;left:0;top:0;transform-origin:0 0}
 .wires{position:absolute;left:-5000px;top:-5000px;width:20000px;height:20000px;overflow:visible;pointer-events:none}
 .wire .hit{fill:none;stroke:transparent;stroke-width:16;pointer-events:stroke;cursor:pointer}
@@ -386,6 +392,77 @@ textarea.input.code{min-height:320px}
   .stagger .dbar{animation:colIn .7s cubic-bezier(.3,.8,.3,1) both;animation-delay:calc(var(--i,0)*14ms)}
   .stagger .fnode{animation:nodeIn .5s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(var(--i,0)*45ms)}
 }
+
+/* ---------- node canvas engine ---------- */
+.fx{position:relative;height:calc(100vh - 250px);min-height:540px;overflow:hidden;border-radius:var(--r-panel);touch-action:none;outline:none;
+  background-color:var(--glass);background-image:radial-gradient(var(--grid-dot) 1.2px,transparent 1.3px);background-size:22px 22px;border:1px solid var(--stroke);box-shadow:var(--shadow)}
+.fx-world{position:absolute;left:0;top:0;transform-origin:0 0}
+.fx-wires{position:absolute;left:-5000px;top:-5000px;width:20000px;height:20000px;overflow:visible;pointer-events:none}
+.fx-node{position:absolute;width:230px;background:var(--glass-3);border:1px solid var(--line-2);border-radius:var(--r-panel);box-shadow:0 4px 14px rgba(30,40,70,.06);padding:10px 14px 12px 16px;user-select:none;transition:box-shadow .15s,border-color .15s}
+.fx-node::before{content:"";position:absolute;left:0;top:12px;bottom:12px;width:3px;border-radius:0 3px 3px 0;background:var(--c)}
+.fx-node:hover{border-color:color-mix(in srgb,var(--c) 55%,var(--line-2))}
+.fx-node.sel{border-color:var(--blue-2);box-shadow:0 0 0 3px var(--blue-soft),0 6px 18px rgba(30,40,70,.1)}
+.fx-node.missing{opacity:.6;border-style:dashed}
+.fx-h{display:flex;align-items:center;gap:8px;height:22px}
+.fx-h b{font-size:13.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1}
+.fx-ic{flex:none;width:22px;height:22px;border-radius:6px;display:grid;place-items:center;font-size:11px;font-weight:800;color:#fff;background:var(--c)}
+.fx-s{font-size:12px;color:var(--muted);margin-top:6px;line-height:1.35;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.fx-port{position:absolute;width:14px;height:14px;border-radius:50%;background:var(--glass-3);border:2px solid var(--c);box-sizing:border-box;z-index:2;cursor:crosshair;transition:transform .15s,box-shadow .15s}
+.fx-port.in{left:-8px;top:26px}
+.fx-port.out{right:-8px;background:var(--c)}
+.fx-port:hover,.fx-port.hot{transform:scale(1.4)}
+.fx-port.hot{box-shadow:0 0 0 6px var(--blue-soft)}
+.fx-ol{position:absolute;right:14px;font-size:11px;line-height:14px;font-weight:700;color:var(--muted)}
+.fx-bar{position:absolute;left:12px;top:12px;z-index:5;display:flex;gap:6px;align-items:center;flex-wrap:wrap;right:12px;pointer-events:none}
+.fx-bar>*{pointer-events:auto}
+.fx-status{font-size:12px;color:var(--muted);background:var(--glass-3);border:1px solid var(--line-2);padding:6px 10px;border-radius:var(--r-ctl)}
+.fx-insp{position:absolute;right:12px;top:58px;bottom:12px;width:290px;z-index:6;overflow:auto;background:var(--glass-3);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--stroke);border-radius:var(--r-panel);box-shadow:var(--shadow-2);padding:14px;display:flex;flex-direction:column;gap:10px}
+.fx-ih{display:flex;align-items:center;gap:10px}.fx-ih div{flex:1;min-width:0}.fx-ih small{display:block;font-size:11px;color:var(--muted);font-weight:600}.fx-ih b{font-size:15px}
+.fx-ih .fx-ic{width:30px;height:30px;font-size:13px}
+.fx-ih .ibtn{width:30px;height:30px}
+.fx-if{display:flex;gap:8px;margin-top:4px}
+.fx-host{display:block}
+.fx-insp:not([hidden])~.ctrls{right:314px}
+@media (max-width:820px){.fx-insp:not([hidden])~.ctrls{display:none}}
+.mnode-fx{position:relative;width:250px;flex:none}
+@media (max-width:820px){.fx-insp{left:12px;width:auto;top:auto;max-height:55%}.fx .hint{display:none}}
+@media (prefers-reduced-motion:no-preference){.fx-node.born{animation:nodeIn .45s cubic-bezier(.2,.7,.2,1) both}}
+
+/* ---------- login ---------- */
+.auth{position:fixed;inset:0;z-index:90;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);background:radial-gradient(1200px 700px at 15% -10%,rgba(255,255,255,.55),transparent 60%),linear-gradient(135deg,var(--bg1),var(--bg2));overflow:auto}
+:root[data-theme="dark"] .auth{background:radial-gradient(900px 500px at 12% -10%,rgba(255,255,255,.035),transparent 60%),#09090B}
+.auth-side{padding:48px 56px;display:flex;flex-direction:column;justify-content:center;gap:26px;border-right:1px solid var(--line)}
+.auth-brand,.auth-mbrand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:18px}
+.auth-brand .logo,.auth-mbrand .logo{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;background:var(--primary);color:var(--on-primary);background-size:cover;background-position:center}
+.auth-side h1{font-size:34px;line-height:1.15;letter-spacing:-.03em;margin:0;max-width:520px}
+.auth-side ul{margin:0;padding-left:18px;color:var(--muted);line-height:2}
+.auth-graph{position:relative;height:170px;max-width:440px}
+.auth-graph svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.aw{fill:none;stroke:var(--blue);stroke-width:2;stroke-dasharray:6 6;animation:march 1.2s linear infinite}
+.an{position:absolute;display:flex;align-items:center;gap:8px;padding:10px 14px;background:var(--glass-3);border:1px solid var(--line-2);border-radius:var(--r-panel);font-weight:700;font-size:13px;box-shadow:var(--shadow);white-space:nowrap}
+.an i{width:22px;height:22px;border-radius:6px;display:grid;place-items:center;color:#fff;font-style:normal;font-size:11px;font-weight:800}
+.auth-main{display:grid;place-items:center;padding:32px 20px}
+.auth-card{width:100%;max-width:410px;padding:28px;position:relative;background:var(--glass-2)}
+.auth-card h2{margin:6px 0 4px;font-size:24px;letter-spacing:-.02em}
+.auth-card>.muted{margin:0 0 18px}
+.auth-mbrand{display:none;margin-bottom:10px}
+.auth-x{position:absolute;top:12px;right:12px;font-size:20px}
+#authForm{display:flex;flex-direction:column;gap:12px}
+#authForm label{display:flex;justify-content:space-between;align-items:center}
+.auth-forgot{font-size:12px;color:var(--blue-2);text-decoration:none;font-weight:600}
+.pw{position:relative}.pw .input{padding-right:64px}
+.pw-eye{position:absolute;right:6px;top:50%;transform:translateY(-50%);border:0;background:var(--line);border-radius:6px;padding:5px 8px;font-size:11.5px;font-weight:700;color:var(--muted)}
+.auth-go{justify-content:center;padding:12px;margin-top:4px}
+.auth-google{width:100%;justify-content:center;padding:11px}
+.auth-or{display:flex;align-items:center;gap:10px;color:var(--faint);font-size:12px;margin:16px 0}
+.auth-or::before,.auth-or::after{content:"";flex:1;border-top:1px solid var(--line)}
+.auth-msg{font-size:12.5px;font-weight:600;min-height:0}.auth-msg.err{color:var(--coral)}.auth-msg.ok{color:var(--green)}
+.auth-foot{font-size:11.5px;text-align:center;margin:16px 0 0}
+.acct-me{display:flex;align-items:center;gap:12px;padding:12px;border-radius:var(--r-panel);background:var(--green-soft);margin-bottom:14px}
+.acct-me .grow{flex:1;min-width:0}.acct-me small{display:block;color:var(--muted)}
+@media (max-width:900px){.auth{grid-template-columns:1fr}.auth-side{display:none}.auth-mbrand{display:flex}}
+@media (prefers-reduced-motion:no-preference){.auth:not([hidden]) .auth-card{animation:popIn .5s cubic-bezier(.2,.7,.2,1) both}.auth:not([hidden]) .an{animation:nodeIn .6s cubic-bezier(.2,.7,.2,1) both}.an:nth-of-type(2){animation-delay:.1s}.an:nth-of-type(3){animation-delay:.25s}}
+@media (prefers-reduced-motion:reduce){.aw{animation:none}}
 
 /* ---------- side panel ---------- */
 .scrim{position:fixed;inset:0;background:rgba(15,18,28,.25);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);opacity:0;pointer-events:none;transition:.2s;z-index:40}
@@ -715,7 +792,7 @@ textarea.input.code{min-height:320px}
           <div id="cols"></div>
         </div>
         <div class="farhint">Zoomed out: showing counts only. Zoom in to see lead cards.</div>
-        <div class="hint"><span><span class="kbd">Tab</span> / Right-click = node add · Port drag = wire · <span class="kbd">Del</span> = remove · Scroll = zoom</span>
+        <div class="hint"><span><span class="kbd">Tab</span> add · Drag empty = select box · <span class="kbd">Del</span> delete · <span class="kbd">Space</span>+drag = hand · <span class="kbd">Ctrl</span>+scroll = zoom</span>
           <span class="lg"><i></i>Flow</span><span class="lg"><i class="w"></i>Lost</span></div>
         <div class="ctrls">
           <div class="minimap" id="minimap"><div class="vp" id="mmvp"></div></div>
@@ -781,12 +858,13 @@ textarea.input.code{min-height:320px}
       <div class="banner" style="background:var(--blue-soft);border-color:var(--stroke)"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg><div class="grow">Showing <b>sample ad data</b>. CRM numbers (leads, won deals, ROAS) are real. Live Meta numbers start once your ad account is connected.</div><button class="btn sm" data-adtab="connect">Connect</button></div>
       <div class="subnav" id="adsTabs"></div>
       <div id="adsBody"></div>
+      <div class="fx-host" id="adsCanvas" hidden></div>
     </section>
 
     <!-- SCRIPTS & PRESETS -->
     <section class="view" id="v-scripts">
       <div class="head"><div><div class="eyebrow">Pipeline</div><h1>Scripts & Presets</h1><p class="sub">Node presets for the <b>+ Node</b> menu, and code scripts that run in a locked sandbox.</p></div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" id="scrFromPipe">From current pipeline</button><button class="btn" id="scrNewCode"><svg class="i" viewBox="0 0 24 24"><path d="m8 7-5 5 5 5M16 7l5 5-5 5M13.5 4l-3 16"/></svg>New code script</button><button class="btn primary" id="scrNew"><svg class="i" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>New preset</button></div></div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" id="scrFromPipe">From current pipeline</button><button class="btn" id="scrNewNode"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="7" width="8" height="10" rx="1.5"/><path d="M11 12h4M18 9v6M15 12h6"/></svg>New custom node</button><button class="btn" id="scrNewCode"><svg class="i" viewBox="0 0 24 24"><path d="m8 7-5 5 5 5M16 7l5 5-5 5M13.5 4l-3 16"/></svg>New code script</button><button class="btn primary" id="scrNew"><svg class="i" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>New preset</button></div></div>
       <div class="scr">
         <div class="scr-list glass" id="scrList"></div>
         <div class="scr-ed glass">
@@ -794,6 +872,10 @@ textarea.input.code{min-height:320px}
           <div class="form scr-meta" id="scrMeta" hidden>
             <div class="field"><label>Script name</label><input class="input" id="scrName" maxlength="40" placeholder="e.g. Hot leads → follow-up tomorrow"></div>
             <div class="field"><label>Folder</label><input class="input" id="scrFolder" maxlength="30" placeholder="My Scripts"></div>
+          </div>
+          <div class="form scr-meta" id="scrNodeMeta" hidden>
+            <div class="field"><label>Node name</label><input class="input" id="scrNodeName" maxlength="30" placeholder="e.g. Google review request"></div>
+            <div class="field"><label>Section — where this node appears</label><select class="input" id="scrSection"></select></div>
           </div>
           <div class="field"><label id="scrCodeLbl">Script (JSON) — name, folder, nodes, wires</label><textarea class="input code" id="scrCode" spellcheck="false" autocomplete="off" autocapitalize="off"></textarea></div>
           <div class="field" id="scrPrevWrap"><label>Preview</label><div class="scr-prev" id="scrPrev"></div><div class="scr-msg" id="scrMsg"></div></div>
@@ -823,10 +905,10 @@ textarea.input.code{min-height:320px}
       <div class="big"><svg class="i" viewBox="0 0 24 24"><path d="m3 11 18-8-8 18-2-8Z"/></svg></div>
       <h2>Bulk Broadcast</h2><p class="muted">Coming in Step 7.</p>
       <ul><li>Pick an audience (stage, city, tag)</li><li>Approved template + phone preview</li><li>Cost estimate and Sent / Read report</li></ul></div></section>
-    <section class="view" id="v-automation"><div class="soon glass">
-      <div class="big"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="4" width="6" height="5" rx="1.2"/><rect x="15" y="4" width="6" height="5" rx="1.2"/><rect x="9" y="15" width="6" height="5" rx="1.2"/><path d="M9 6.5h6M6 9v3a3 3 0 0 0 3 3M18 9v3a3 3 0 0 1-3 3"/></svg></div>
-      <h2>WhatsApp Automation (Node Builder)</h2><p class="muted">Coming in Step 8.</p>
-      <ul><li>n8n-style canvas: drag, connect, zoom, minimap</li><li>Nodes: Trigger, Condition, Send Message, AI Reply, Save Lead, Assign</li><li>Phone preview and Publish Flow</li></ul></div></section>
+    <section class="view" id="v-automation">
+      <div class="head"><div><div class="eyebrow">WhatsApp</div><h1>Automation</h1><p class="sub">n8n-style flows: triggers, WhatsApp, CRM, AI, Meta and n8n webhook nodes on one canvas.</p></div></div>
+      <div class="fx-host" id="autoCanvas"></div>
+    </section>
   </main>
 </div>
 
@@ -840,7 +922,7 @@ textarea.input.code{min-height:320px}
 <!-- SETTINGS MODAL -->
 <div class="modal" id="setModal"><div class="box narrow">
   <div class="m-head"><h2>Settings</h2><button class="ibtn" data-close><svg class="i" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
-  <div class="seg"><button class="segb" data-stab="brand">Branding & Profile</button><button class="segb" data-stab="conn">Connection</button></div>
+  <div class="seg"><button class="segb" data-stab="brand">Branding & Profile</button><button class="segb" data-stab="conn">Connection</button><button class="segb" data-stab="acct">Accounts</button></div>
   <div class="stab" id="stab-brand">
     <div class="brand-row"><div id="upLogo"></div><div class="field"><label>Website name</label><input class="input" id="bName" maxlength="40" placeholder="LeadNode"></div></div>
     <div class="brand-row"><div id="upPhoto"></div><div class="field"><label>Your name (profile)</label><input class="input" id="pName" maxlength="40" placeholder="Shivam"></div></div>
@@ -862,7 +944,56 @@ textarea.input.code{min-height:320px}
       <button class="btn primary" id="sSave">Save & Connect</button>
     </div>
   </div>
+  <div class="stab" id="stab-acct" hidden>
+    <div id="acctSigned" class="acct-me" hidden></div>
+    <div class="form" style="grid-template-columns:1fr">
+      <p class="help">Logins (email, Google, team roles) run on <b>Supabase Auth</b>. Paste your Supabase project's URL and <b>anon / publishable</b> key. Never paste the service_role key or your database password.</p>
+      <div class="field"><label>Supabase project URL</label><input class="input" id="sbUrl" placeholder="https://abcdefgh.supabase.co"></div>
+      <div class="field"><label>Anon / publishable key</label><input class="input" id="sbKey" placeholder="eyJhbGciOi… or sb_publishable_…"></div>
+      <div class="status" id="sbStatus"></div>
+    </div>
+    <div class="m-foot" style="flex-wrap:wrap">
+      <button class="btn danger" id="sbClear">Turn off logins</button>
+      <div class="grow"></div>
+      <button class="btn" id="sbPreview">Preview login page</button>
+      <button class="btn primary" id="sbSave">Save</button>
+    </div>
+  </div>
 </div></div>
+
+<!-- LOGIN -->
+<div class="auth" id="auth" hidden>
+  <div class="auth-side">
+    <div class="auth-brand"><div class="logo brand-logo"></div><span class="brandTxt">LeadNode</span></div>
+    <h1>Leads, WhatsApp and Meta ads — one node-based workspace.</h1>
+    <div class="auth-graph" aria-hidden="true">
+      <svg viewBox="0 0 420 170"><path class="aw" d="M120 40 C 170 40, 160 85, 210 85"/><path class="aw" d="M120 130 C 170 130, 160 85, 210 85"/><path class="aw" d="M330 85 C 360 85, 360 85, 400 85"/></svg>
+      <div class="an" style="left:0;top:18px"><i style="background:#4F7DF3">M</i>Meta lead form</div>
+      <div class="an" style="left:0;top:108px"><i style="background:#25A55F">W</i>WhatsApp message</div>
+      <div class="an" style="left:210px;top:63px"><i style="background:#3CB4A0">L</i>New Lead · Hot</div>
+    </div>
+    <ul><li>Pipeline as nodes — drag, wire, automate</li><li>WhatsApp inbox, broadcasts and AI replies</li><li>Meta Ads results tied to real won deals</li></ul>
+  </div>
+  <div class="auth-main">
+    <div class="auth-card glass">
+      <button class="ibtn auth-x" id="authExit" title="Exit preview" hidden>×</button>
+      <div class="auth-mbrand"><div class="logo brand-logo"></div><span class="brandTxt">LeadNode</span></div>
+      <h2 id="authTitle">Welcome back</h2><p class="muted" id="authSub">Sign in to your workspace</p>
+      <div class="seg" id="authTabs"><button class="segb active" data-auth="in">Sign in</button><button class="segb" data-auth="up">Create account</button></div>
+      <form id="authForm" autocomplete="on" novalidate>
+        <div class="field auth-up" hidden><label>Business name</label><input class="input" id="auBiz" autocomplete="organization" placeholder="Diya Seating Solutions"></div>
+        <div class="field auth-up" hidden><label>Your name</label><input class="input" id="auName" autocomplete="name" placeholder="Shivam Waghmare"></div>
+        <div class="field auth-mail"><label>Email</label><input class="input" id="auEmail" type="email" autocomplete="email" placeholder="you@business.com"></div>
+        <div class="field auth-pass"><label>Password <a href="#" class="auth-forgot" id="authForgot">Forgot?</a></label><div class="pw"><input class="input" id="auPass" type="password" autocomplete="current-password" placeholder="At least 8 characters"><button type="button" class="pw-eye" id="auEye" title="Show password">Show</button></div></div>
+        <div class="auth-msg" id="authMsg"></div>
+        <button class="btn primary auth-go" id="authGo" type="submit">Sign in</button>
+      </form>
+      <div class="auth-or"><span>or</span></div>
+      <button class="btn auth-google" id="authGoogle" type="button"><svg viewBox="0 0 24 24" width="18" height="18"><path fill="#4285F4" d="M22.6 12.2c0-.8-.1-1.5-.2-2.2H12v4.2h5.9a5 5 0 0 1-2.2 3.3v2.7h3.6c2.1-1.9 3.3-4.8 3.3-8Z"/><path fill="#34A853" d="M12 23c3 0 5.5-1 7.3-2.7l-3.6-2.8c-1 .7-2.2 1.1-3.7 1.1-2.9 0-5.3-1.9-6.2-4.5H2.1v2.8A11 11 0 0 0 12 23Z"/><path fill="#FBBC05" d="M5.8 14.1a6.6 6.6 0 0 1 0-4.2V7.1H2.1a11 11 0 0 0 0 9.8l3.7-2.8Z"/><path fill="#EA4335" d="M12 5.4c1.6 0 3.1.6 4.2 1.7l3.2-3.2A11 11 0 0 0 2.1 7.1l3.7 2.8C6.7 7.3 9.1 5.4 12 5.4Z"/></svg>Continue with Google</button>
+      <p class="auth-foot muted">By continuing you agree to the Terms and Privacy Policy.</p>
+    </div>
+  </div>
+</div>
 
 <!-- STAGE NODE MODAL -->
 <div class="modal" id="stageModal"><div class="box narrow" id="stageBox"></div></div>
@@ -968,8 +1099,8 @@ function demoApi(action, d) {
     case 'addActivity': { const a = log(d.leadId, d.type, d.details, d.doneBy); try { find(d.leadId).lastContact = todayStr(); } catch (e) { } return a; }
     case 'deleteLead': { S.leads = S.leads.filter(l => l.leadId !== d.id); return { deleted: d.id }; }
     case 'addTeamMember': { const m = Object.assign({ active: true }, d, { memberId: nextId(S.team, 'memberId', 'T') }); S.team.push(m); return m; }
-    case 'saveFlow': { const f = Object.assign({}, d, { updatedOn: nowStr() }); if (!f.flowId) f.flowId = nextId(S.flows, 'flowId', 'F'); const i = S.flows.findIndex(x => String(x.flowId) === String(f.flowId)); if (i > -1) S.flows[i] = f; else S.flows.push(f); store.set('leadnode.demoFlows', S.flows.filter(x => x.trigger === 'preset')); return f; }
-    case 'deleteFlow': { S.flows = S.flows.filter(x => String(x.flowId) !== String(d.id)); store.set('leadnode.demoFlows', S.flows.filter(x => x.trigger === 'preset')); return { deleted: d.id }; }
+    case 'saveFlow': { const f = Object.assign({}, d, { updatedOn: nowStr() }); if (!f.flowId) f.flowId = nextId(S.flows, 'flowId', 'F'); const i = S.flows.findIndex(x => String(x.flowId) === String(f.flowId)); if (i > -1) S.flows[i] = f; else S.flows.push(f); store.set('leadnode.demoFlows', S.flows.filter(x => ['preset', 'script', 'node', 'toolset'].includes(x.trigger))); return f; }
+    case 'deleteFlow': { S.flows = S.flows.filter(x => String(x.flowId) !== String(d.id)); store.set('leadnode.demoFlows', S.flows.filter(x => ['preset', 'script', 'node', 'toolset'].includes(x.trigger))); return { deleted: d.id }; }
     case 'updateTeamMember': { const m = S.team.find(x => x.memberId === d.id); if (!m) throw new Error('Member not found'); Object.assign(m, d); delete m.id; return m; }
   }
   throw new Error('Unknown action: ' + action);
@@ -1049,7 +1180,7 @@ function finishLoad(anim) {
   renderAll(anim);
 }
 /** Render only the screen you're looking at; the others re-render when you open them */
-const VIEW_RENDER = { dashboard: a => renderDashboard(a), pipeline: a => renderPipeline(a), leads: a => renderLeads(a), team: a => renderTeam(a), reports: a => renderReports(a), templates: () => renderTemplates(), scripts: () => renderScripts(true), ads: a => renderAds(a) };
+const VIEW_RENDER = { automation: () => autoCanvas().sync(), dashboard: a => renderDashboard(a), pipeline: a => renderPipeline(a), leads: a => renderLeads(a), team: a => renderTeam(a), reports: a => renderReports(a), templates: () => renderTemplates(), scripts: () => renderScripts(true), ads: a => renderAds(a) };
 const staleViews = new Set();
 const activeView = () => { const v = $('.view.active'); return v ? v.id.slice(2) : 'dashboard'; };
 function renderAll(anim) {
@@ -1182,7 +1313,7 @@ function renderPipeline(anim) {
     const open = ui.expanded.has(s), shown = open ? items : items.slice(0, CARD_LIMIT), extra = items.length - shown.length;
     const more = extra > 0 ? `<button class="more" data-expand="${esc(s)}">Show ${extra} more lead${extra > 1 ? 's' : ''}</button>`
       : open && items.length > CARD_LIMIT ? `<div class="more-row"><button class="more" data-expand="${esc(s)}">Show less</button><button class="more" data-stagelist="${esc(s)}">Open in table</button></div>` : '';
-    return `<div class="col ${shown.length ? '' : 'emptycol'} ${selNode === s ? 'sel' : ''} ${bornNodes.has(s) ? 'born' : ''}" data-stage="${esc(s)}" style="left:${p.x}px;top:${p.y}px;--i:${i}">
+    return `<div class="col ${shown.length ? '' : 'emptycol'} ${selNodes.has(s) ? 'sel' : ''} ${bornNodes.has(s) ? 'born' : ''}" data-stage="${esc(s)}" style="left:${p.x}px;top:${p.y}px;--i:${i}">
       <div class="col-head" data-node="${esc(s)}" title="Drag to move the node">
         <span class="port l in ${lost ? 'coral' : ''} ${incoming.has(s) ? 'on' : ''}" data-in="${esc(s)}" title="Input: drop a wire here / drag out to remove"></span>
         <span class="port r out" data-out="${esc(s)}" title="Output: drag to connect a wire"></span>
@@ -1298,43 +1429,103 @@ function drawMinimap() {
 }
 
 /* ---- mouse / touch: pan, zoom, node drag, wire connect ---- */
+/* ---- Nuke-style controls (shared): Space = hand, middle mouse = pan, Ctrl/⌘ + wheel = zoom, wheel = pan, drag empty = box select ---- */
+const KEYS = { space: false };
+addEventListener('keydown', e => {
+  if (e.code !== 'Space' || (e.target.closest && e.target.closest('input,textarea,select,[contenteditable]'))) return;
+  if (!$('.canvas-like:hover') && !$('.view.active .canvas-like')) return;
+  if (!KEYS.space) { KEYS.space = true; $$('.canvas-like').forEach(c => c.classList.add('hand')); }
+  e.preventDefault();
+});
+addEventListener('keyup', e => { if (e.code === 'Space') { KEYS.space = false; $$('.canvas-like').forEach(c => c.classList.remove('hand')); } });
+addEventListener('blur', () => { KEYS.space = false; $$('.canvas-like').forEach(c => c.classList.remove('hand')); });
+/** Wheel: Ctrl/⌘ (and trackpad pinch) zooms at the cursor, plain wheel pans, Shift+wheel pans sideways */
+function wheelNav(e, rect, zoomFn, panFn) {
+  e.preventDefault();
+  if (e.ctrlKey || e.metaKey) { zoomFn(e.clientX - rect.left, e.clientY - rect.top, Math.exp(-e.deltaY * (e.deltaMode ? 0.05 : 0.0025))); return; }
+  const m = e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? 400 : 1;
+  const dx = (e.shiftKey && !e.deltaX ? e.deltaY : e.deltaX) * m, dy = (e.shiftKey && !e.deltaX ? 0 : e.deltaY) * m;
+  panFn(-dx, -dy);
+}
+/** Marquee rectangle helper (screen coords inside a container) */
+function marqueeRect(box, x0, y0, x1, y1) { const l = Math.min(x0, x1), t = Math.min(y0, y1); Object.assign(box.style, { left: l + 'px', top: t + 'px', width: Math.abs(x1 - x0) + 'px', height: Math.abs(y1 - y0) + 'px', display: 'block' }); return { l, t, r: l + Math.abs(x1 - x0), b: t + Math.abs(y1 - y0) }; }
+
+/* ---- pipeline: multi-selection ---- */
+const selNodes = new Set();
+function syncSel() { $$('#cols .col').forEach(c => c.classList.toggle('sel', selNodes.has(c.dataset.stage))); }
+function selectNode(s, add) {
+  if (!add) selNodes.clear();
+  if (s && layout && layout.pos[s]) { selNodes.add(s); selNode = s; } else if (!add) selNode = null;
+  syncSel();
+}
+function toggleNode(s) { if (selNodes.has(s)) { selNodes.delete(s); if (selNode === s) selNode = [...selNodes].pop() || null; } else { selNodes.add(s); selNode = s; } syncSel(); }
+
 (function canvasEvents() {
-  const cv = $('#canvas'); const ptrs = new Map(); let act = null, pinch = null;
+  const cv = $('#canvas'); cv.classList.add('canvas-like');
+  const ptrs = new Map(); let act = null, pinch = null;
+  const box = document.createElement('div'); box.className = 'marquee'; cv.appendChild(box);
   const toWorld = (cx, cy) => { const r = cv.getBoundingClientRect(); return { x: (cx - r.left - view.x) / view.k, y: (cy - r.top - view.y) / view.k }; };
   const inPortAt = (cx, cy) => { const el = document.elementFromPoint(cx, cy); if (!el) return null; const p = el.closest('.port.in'); if (p) return p.dataset.in; const h = el.closest('.col-head'); return h ? h.dataset.node : null; };
   const hotPort = s => $$('.port.in').forEach(p => p.classList.toggle('hot', p.dataset.in === s));
-  cv.addEventListener('wheel', e => { e.preventDefault(); const r = cv.getBoundingClientRect(); zoomAt(e.clientX - r.left, e.clientY - r.top, view.k * Math.exp(-e.deltaY * 0.0015)); }, { passive: false });
+  cv.addEventListener('wheel', e => wheelNav(e, cv.getBoundingClientRect(), (x, y, f) => zoomAt(x, y, view.k * f), (dx, dy) => { view.x += dx; view.y += dy; applyView(); }), { passive: false });
   cv.addEventListener('pointerdown', e => {
     const t = e.target;
-    if (t.closest('.ctrls,.hint') || e.button === 2) return;
-    const del = t.closest('[data-del]'); if (del) { deleteWire(+del.dataset.del); return; }
-    const nm = t.closest('[data-nmenu]'); if (nm) { const r = nm.getBoundingClientRect(); openNodeMenu(nm.dataset.nmenu, r.left, r.bottom + 6); return; }
-    const out = t.closest('.port.out'), inn = t.closest('.port.in'), head = t.closest('.col-head'), wire = t.closest('.wire');
-    if (out) { act = { type: 'wire', from: out.dataset.out }; }
-    else if (inn) {
-      // Like Nuke: dragging from an input detaches the wire
-      const idx = layout.links.map(([, b], i) => b === inn.dataset.in ? i : -1).filter(i => i > -1).pop();
-      if (idx === undefined) return;
-      const [from] = layout.links.splice(idx, 1)[0]; selWire = null; drawWires(); act = { type: 'wire', from, detached: true };
+    if (t.closest('.ctrls,.hint,.farhint') || e.button === 2) return;
+    const panReq = e.button === 1 || KEYS.space;
+    if (!panReq) {
+      const del = t.closest('[data-del]'); if (del) { deleteWire(+del.dataset.del); return; }
+      const nm = t.closest('[data-nmenu]'); if (nm) { const r = nm.getBoundingClientRect(); openNodeMenu(nm.dataset.nmenu, r.left, r.bottom + 6); return; }
+      const out = t.closest('.port.out'), inn = t.closest('.port.in'), head = t.closest('.col-head'), wire = t.closest('.wire');
+      if (out) { act = { type: 'wire', from: out.dataset.out }; }
+      else if (inn) {
+        // Like Nuke: dragging from an input detaches the wire
+        const idx = layout.links.map(([, b], i) => b === inn.dataset.in ? i : -1).filter(i => i > -1).pop();
+        if (idx === undefined) return;
+        const [from] = layout.links.splice(idx, 1)[0]; selWire = null; drawWires(); act = { type: 'wire', from, detached: true };
+      }
+      else if (head) {
+        const s = head.dataset.node, additive = e.shiftKey || e.ctrlKey || e.metaKey;
+        if (additive) toggleNode(s); else if (!selNodes.has(s)) selectNode(s);
+        if (!selNodes.has(s)) return;                       // toggled off
+        const group = [...selNodes].filter(n => layout.pos[n]).map(n => ({ n, ox: layout.pos[n].x, oy: layout.pos[n].y, col: colEl(n) }));
+        act = { type: 'node', stage: s, sx: e.clientX, sy: e.clientY, group, moved: false, additive };
+        group.forEach(g => g.col && g.col.classList.add('lifting'));
+      }
+      else if (wire) { selWire = +wire.dataset.wire; drawWires(); return; }
+      else if (t.closest('.pcard,button,a')) return;
+      else {
+        if (selWire !== null) { selWire = null; drawWires(); }
+        if (e.pointerType !== 'touch') { const r = cv.getBoundingClientRect(); act = { type: 'box', x0: e.clientX - r.left, y0: e.clientY - r.top, base: (e.shiftKey || e.ctrlKey || e.metaKey) ? new Set(selNodes) : new Set(), moved: false }; }
+      }
     }
-    else if (head) { const s = head.dataset.node, p = layout.pos[s]; act = { type: 'node', stage: s, sx: e.clientX, sy: e.clientY, ox: p.x, oy: p.y, col: head.parentElement, moved: false }; act.col.classList.add('lifting'); }
-    else if (wire) { selWire = +wire.dataset.wire; drawWires(); return; }
-    else if (t.closest('.pcard,button,a')) return;
-    else { if (selWire !== null) { selWire = null; drawWires(); } if (selNode) selectNode(null); }
     e.preventDefault();
     ptrs.set(e.pointerId, { x: e.clientX, y: e.clientY }); cv.setPointerCapture(e.pointerId);
     if (!act && ptrs.size === 1) { act = { type: 'pan', x: e.clientX, y: e.clientY, vx: view.x, vy: view.y }; cv.classList.add('panning'); }
-    if (ptrs.size === 2) { const [a, b] = [...ptrs.values()]; pinch = { d: Math.hypot(a.x - b.x, a.y - b.y), k: view.k }; if (act && act.type === 'pan') act = null; }
+    if (ptrs.size === 2) { const [a, b] = [...ptrs.values()]; pinch = { d: Math.hypot(a.x - b.x, a.y - b.y), k: view.k }; if (act && (act.type === 'pan' || act.type === 'box')) { act = null; box.style.display = 'none'; } }
     if (act && act.type === 'wire') { cv.classList.add('wiring'); const w = toWorld(e.clientX, e.clientY), A = portPos(act.from, 'out'); $('#tmpWire').setAttribute('d', wirePath(A, w)); }
   });
   cv.addEventListener('pointermove', e => {
+    lastMouse = { x: e.clientX, y: e.clientY, in: true };
     if (!ptrs.has(e.pointerId)) return; ptrs.set(e.pointerId, { x: e.clientX, y: e.clientY });
     if (pinch && ptrs.size === 2) { const [a, b] = [...ptrs.values()], r = cv.getBoundingClientRect(); zoomAt((a.x + b.x) / 2 - r.left, (a.y + b.y) / 2 - r.top, pinch.k * Math.hypot(a.x - b.x, a.y - b.y) / pinch.d); return; }
     if (!act) return;
     if (act.type === 'pan') { view.x = act.vx + e.clientX - act.x; view.y = act.vy + e.clientY - act.y; applyView(); }
     else if (act.type === 'node') {
-      const p = layout.pos[act.stage]; p.x = act.ox + (e.clientX - act.sx) / view.k; p.y = act.oy + (e.clientY - act.sy) / view.k; act.moved = true;
-      act.col.style.left = p.x + 'px'; act.col.style.top = p.y + 'px'; drawWires();
+      const dx = (e.clientX - act.sx) / view.k, dy = (e.clientY - act.sy) / view.k;
+      if (!act.moved && Math.hypot(dx, dy) * view.k < 3) return;
+      act.moved = true;
+      act.group.forEach(g => { const p = layout.pos[g.n]; p.x = g.ox + dx; p.y = g.oy + dy; if (g.col) { g.col.style.left = p.x + 'px'; g.col.style.top = p.y + 'px'; } });
+      drawWires();
+    }
+    else if (act.type === 'box') {
+      const r = cv.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
+      if (!act.moved && Math.hypot(x - act.x0, y - act.y0) < 4) return;
+      act.moved = true;
+      const R = marqueeRect(box, act.x0, act.y0, x, y);
+      const w1 = { x: (R.l - view.x) / view.k, y: (R.t - view.y) / view.k }, w2 = { x: (R.r - view.x) / view.k, y: (R.b - view.y) / view.k };
+      selNodes.clear(); act.base.forEach(n => selNodes.add(n));
+      $$('#cols .col').forEach(c => { const x1 = c.offsetLeft, y1 = c.offsetTop, x2 = x1 + c.offsetWidth, y2 = y1 + (c.querySelector('.col-head') || c).offsetHeight; if (x1 < w2.x && x2 > w1.x && y1 < w2.y && y2 > w1.y) selNodes.add(c.dataset.stage); });
+      selNode = [...selNodes].pop() || null; syncSel();
     }
     else if (act.type === 'wire') {
       const target = inPortAt(e.clientX, e.clientY); hotPort(target && target !== act.from ? target : null);
@@ -1347,10 +1538,11 @@ function drawMinimap() {
     if (!had || ptrs.size) return;
     cv.classList.remove('panning', 'wiring');
     if (act && act.type === 'node') {
-      act.col.classList.remove('lifting');
-      if (act.moved) { const p = layout.pos[act.stage]; p.x = Math.round(p.x / 11) * 11; p.y = Math.round(p.y / 11) * 11; act.col.style.left = p.x + 'px'; act.col.style.top = p.y + 'px'; drawWires(); drawMinimap(); saveLayout(); }
-      else selectNode(act.stage);
+      act.group.forEach(g => g.col && g.col.classList.remove('lifting'));
+      if (act.moved) { act.group.forEach(g => { const p = layout.pos[g.n]; p.x = Math.round(p.x / 11) * 11; p.y = Math.round(p.y / 11) * 11; if (g.col) { g.col.style.left = p.x + 'px'; g.col.style.top = p.y + 'px'; } }); drawWires(); drawMinimap(); saveLayout(); }
+      else if (!act.additive) selectNode(act.stage);
     }
+    if (act && act.type === 'box') { box.style.display = 'none'; if (!act.moved && !act.base.size) selectNode(null); else if (act.moved && selNodes.size) toast(`${selNodes.size} node${selNodes.size > 1 ? 's' : ''} selected · Del to delete · drag to move`); }
     if (act && act.type === 'wire') {
       hotPort(null); const target = inPortAt(e.clientX, e.clientY);
       if (!linkWire(act.from, target)) { if (act.detached) { renderPipeline(); saveLayout(); toast('Wire removed'); } else drawWires(); }
@@ -1358,13 +1550,13 @@ function drawMinimap() {
     act = null;
   };
   cv.addEventListener('pointerup', up); cv.addEventListener('pointercancel', up);
+  cv.addEventListener('auxclick', e => { if (e.button === 1) e.preventDefault(); });
   cv.addEventListener('dblclick', e => { const w = e.target.closest('.wire'); if (w) { deleteWire(+w.dataset.wire); return; } const h = e.target.closest('.col-head'); if (h && !e.target.closest('.port,[data-nmenu]')) openStageForm('edit', h.dataset.node); });
-  cv.addEventListener('pointermove', e => { lastMouse = { x: e.clientX, y: e.clientY, in: true }; });
   cv.addEventListener('pointerleave', () => { lastMouse.in = false; });
   cv.addEventListener('contextmenu', e => {
     if (e.target.closest('.ctrls,.hint')) return;
     e.preventDefault();
-    const h = e.target.closest('.col-head'); if (h) { selectNode(h.dataset.node); openNodeMenu(h.dataset.node, e.clientX, e.clientY); return; }
+    const h = e.target.closest('.col-head'); if (h) { if (!selNodes.has(h.dataset.node)) selectNode(h.dataset.node); openNodeMenu(h.dataset.node, e.clientX, e.clientY); return; }
     if (e.target.closest('.pcard')) return;
     selectNode(null); openPalette(e.clientX, e.clientY, screenToWorld(e.clientX, e.clientY));
   });
@@ -1406,7 +1598,6 @@ function viewCenterWorld() { const cv = $('#canvas'), r = cv.getBoundingClientRe
 /** New node without a selection: free space on the right (columns grow downward) */
 function freeSpot() { if (!$('.col')) return viewCenterWorld(); const b = worldBounds(); return { x: b.x1 + b.w - 40 + GAP, y: b.y1 + 60 }; }
 function focusNode(s) { const cv = $('#canvas'), p = layout.pos[s]; if (!p || !cv.clientWidth) return; animateView(view.k, cv.clientWidth / 2 - (p.x + COL_W / 2) * view.k, Math.min(90, cv.clientHeight / 4) - p.y * view.k); }
-function selectNode(s) { selNode = s && layout && layout.pos[s] ? s : null; $$('.col').forEach(c => c.classList.toggle('sel', c.dataset.stage === selNode)); }
 function sortDefsByPos() {
   const d = layout.stages, P = n => layout.pos[n] || { x: 0, y: 0 };
   const open = d.filter(x => !LOCKED.includes(x.name)).sort((a, b) => (P(a.name).x - P(b.name).x) || (P(a.name).y - P(b.name).y));
@@ -1450,7 +1641,7 @@ function openNodeMenu(s, x, y) {
     else if (a === 'after') { const col = colEl(s), r = col && col.getBoundingClientRect(); openPalette(r ? r.right + 12 : x, r ? r.top : y); }
     else if (a === 'list') { ui.lf.stage = s; go('leads'); }
     else if (a === 'script') { go('scripts'); if (scr.kind !== 'code') loadBuiltinCode(0); $('#scrScope').value = s; }
-    else if (a === 'del') requestDeleteStage(s);
+    else if (a === 'del') requestDeleteStage(selNodes.has(s) && selNodes.size > 1 ? [...selNodes] : [s]);
   };
   placePop(m, x, y);
 }
@@ -1523,7 +1714,7 @@ function applyPreset(p, at) {
   let added = 0;
   wires.forEach(([a, b]) => { if (a && b && a !== b && !layout.links.some(([x, y]) => x === a && y === b)) { layout.links.push([a, b]); added++; } });
   fresh.forEach(n => bornNodes.add(n.name));
-  if (fresh.length) selNode = fresh[fresh.length - 1].name;
+  if (fresh.length) { selNodes.clear(); selNode = fresh[fresh.length - 1].name; selNodes.add(selNode); }
   saveLayout(); renderAll();
   if (spliced) setTimeout(autoArrange, 80); else if (fresh.length) focusNode(fresh[0].name);
   toast(fresh.length ? `${fresh.length === 1 ? 'Node' : fresh.length + ' nodes'} added: ${fresh.map(n => n.name).join(', ')}` + (spliced ? ` (after ${sel})` : '') : added ? `${added} wires connected (nodes already existed)` : 'Nothing new — everything already exists');
@@ -1620,7 +1811,7 @@ async function renameStage(old, nu, color, quiet) {
   if (!nu || nu === old) { saveLayout(); renderAll(); if (!quiet) toast('Stage updated'); return; }
   d.name = nu; layout.pos[nu] = layout.pos[old]; delete layout.pos[old];
   layout.links = layout.links.map(([a, b]) => [a === old ? nu : a, b === old ? nu : b]);
-  if (selNode === old) selNode = nu; if (ui.stage === old) ui.stage = nu; if (ui.lf.stage === old) ui.lf.stage = nu;
+  if (selNodes.delete(old)) selNodes.add(nu); if (selNode === old) selNode = nu; if (ui.stage === old) ui.stage = nu; if (ui.lf.stage === old) ui.lf.stage = nu;
   if (ui.expanded.delete(old)) ui.expanded.add(nu);
   const ls = S.leads.filter(l => l.stage === old); ls.forEach(l => { l.stage = nu; });
   saveLayout(); renderAll();
@@ -1629,32 +1820,41 @@ async function renameStage(old, nu, color, quiet) {
   try { await runBatch(ls, l => api('updateLead', { id: l.leadId, stage: nu })); toast(`Renamed: ${old} → ${nu} ✓`); }
   catch (e) { toast('Some leads were not updated: ' + e.message, true); load(true); }
 }
-function requestDeleteStage(s) {
+function requestDeleteStage(list) {
   closePops();
-  if (LOCKED.includes(s)) return toast('Won and Lost cannot be deleted (reports depend on them)', true);
-  const n = S.leads.filter(l => l.stage === s).length;
-  if (!n) { if (confirm(`Delete the "${s}" node?\nIt has no leads. Wires on either side will be reconnected automatically.`)) deleteStage(s); return; }
-  const others = stages().filter(x => x !== s), next = (layout.links.find(([a, b]) => a === s && b !== 'Lost') || [])[1] || others[0];
-  $('#stageBox').innerHTML = `<div class="m-head"><h2>Delete "${esc(s)}"</h2><button class="ibtn" data-close>${I.x}</button></div>
-    <p class="help" style="margin-bottom:14px">This node has <b>${n} lead${n > 1 ? 's' : ''}</b>. Move them to another stage before deleting (each lead's journey will record the move).</p>
+  list = (Array.isArray(list) ? list : [list]).filter(s => layout.pos[s]);
+  const locked = list.filter(s => LOCKED.includes(s)); list = list.filter(s => !LOCKED.includes(s));
+  if (!list.length) return toast('Won and Lost cannot be deleted (reports depend on them)', true);
+  if (locked.length) toast('Won / Lost skipped — they cannot be deleted');
+  const n = S.leads.filter(l => list.includes(l.stage)).length, label = list.length === 1 ? `"${list[0]}"` : `${list.length} nodes`;
+  if (!n) { if (confirm(`Delete ${label}?\nNo leads inside. Wires on either side will be reconnected automatically.`)) deleteStages(list); return; }
+  const others = stages().filter(x => !list.includes(x));
+  const next = (layout.links.find(([a, b]) => list.includes(a) && !list.includes(b) && b !== 'Lost') || [])[1] || others[0];
+  $('#stageBox').innerHTML = `<div class="m-head"><h2>Delete ${esc(label)}</h2><button class="ibtn" data-close>${I.x}</button></div>
+    ${list.length > 1 ? `<p class="help" style="margin-bottom:8px">${list.map(esc).join(' · ')}</p>` : ''}
+    <p class="help" style="margin-bottom:14px">${list.length > 1 ? 'These nodes have' : 'This node has'} <b>${n} lead${n > 1 ? 's' : ''}</b>. Move them to another stage before deleting (each lead's journey will record the move).</p>
     <div class="field"><label>Move leads to</label><select class="input" id="sdTo">${others.map(o => `<option ${o === next ? 'selected' : ''}>${esc(o)}</option>`).join('')}</select></div>
     <div class="m-foot"><div class="grow"></div><button class="btn" data-close>Cancel</button><button class="btn danger" id="sdGo">${I.trash}Move leads and delete</button></div>`;
-  $('#sdGo').onclick = () => { const to = $('#sdTo').value; hideModal('#stageModal'); deleteStage(s, to); };
+  $('#sdGo').onclick = () => { const to = $('#sdTo').value; hideModal('#stageModal'); deleteStages(list, to); };
   showModal('#stageModal');
 }
-async function deleteStage(s, to) {
-  const ls = S.leads.filter(l => l.stage === s);
-  if (ls.length && !to) return requestDeleteStage(s);
+const deleteStage = (s, to) => deleteStages([s], to);
+async function deleteStages(list, to) {
+  const ls = S.leads.filter(l => list.includes(l.stage));
+  if (ls.length && !to) return requestDeleteStage(list);
   if (ls.length && demo) ls.forEach(l => demoApi('moveStage', { id: l.leadId, stage: to, by: me() }));
   else ls.forEach(l => { l.stage = to; l.lastContact = todayStr(); });
-  const ins = layout.links.filter(([, b]) => b === s).map(([a]) => a), outs = layout.links.filter(([a]) => a === s).map(([, b]) => b);
-  layout.links = layout.links.filter(([a, b]) => a !== s && b !== s);
-  ins.forEach(a => outs.forEach(b => { if (a !== b && !layout.links.some(([x, y]) => x === a && y === b)) layout.links.push([a, b]); }));
-  layout.stages = layout.stages.filter(d => d.name !== s); delete layout.pos[s];
-  if (selNode === s) selNode = null; ui.expanded.delete(s);
-  if (ui.stage === s) ui.stage = ''; if (ui.lf.stage === s) ui.lf.stage = '';
+  list.forEach(s => {
+    const ins = layout.links.filter(([, b]) => b === s).map(([a]) => a), outs = layout.links.filter(([a]) => a === s).map(([, b]) => b);
+    layout.links = layout.links.filter(([a, b]) => a !== s && b !== s);
+    ins.forEach(a => outs.forEach(b => { if (a !== b && !layout.links.some(([x, y]) => x === a && y === b)) layout.links.push([a, b]); }));
+    layout.stages = layout.stages.filter(d => d.name !== s); delete layout.pos[s];
+    selNodes.delete(s); ui.expanded.delete(s);
+    if (ui.stage === s) ui.stage = ''; if (ui.lf.stage === s) ui.lf.stage = '';
+  });
+  if (!selNodes.has(selNode)) selNode = null;
   saveLayout(); renderAll();
-  toast(`"${s}" node deleted` + (ls.length ? ` · ${ls.length} leads → ${to}` : ''));
+  toast(`${list.length === 1 ? `"${list[0]}" node` : list.length + ' nodes'} deleted` + (ls.length ? ` · ${ls.length} leads → ${to}` : ''));
   if (!demo && ls.length) {
     try { await runBatch(ls, l => api('moveStage', { id: l.leadId, stage: to, by: me() })); load(true); }
     catch (e) { toast('Some leads were not moved: ' + e.message, true); load(true); }
@@ -1838,10 +2038,12 @@ function userScripts() {
   return (S.flows || []).filter(f => String(f.trigger) === 'script').map(f => { try { const o = JSON.parse(f.flowJson); if (typeof o.code !== 'string') return null; return { id: String(f.flowId), name: cleanName(o.name) || 'Untitled', folder: cleanName(o.folder) || 'My Scripts', description: cleanName(o.description), code: o.code }; } catch (e) { return null; } }).filter(Boolean);
 }
 function setKind(kind) {
-  scr.kind = kind; const code = kind === 'code';
-  $('#scrMeta').hidden = !code; $('#scrRunWrap').hidden = !code; $('#scrPrevWrap').hidden = code; $('#scrTry').hidden = code;
-  $('#scrKind').textContent = code ? 'Code · JavaScript' : 'Preset · JSON';
-  $('#scrCodeLbl').textContent = code ? 'Code (JavaScript)' : 'Script (JSON) — name, folder, nodes, wires';
+  scr.kind = kind; const code = kind === 'code', node = kind === 'node';
+  $('#scrMeta').hidden = !code; $('#scrNodeMeta').hidden = !node; $('#scrRunWrap').hidden = !code; $('#scrPrevWrap').hidden = code; $('#scrTry').hidden = code || node;
+  if (node && !$('#scrSection').options.length) $('#scrSection').innerHTML = Object.entries(SECTIONS).map(([k, v]) => `<option value="${k}">${esc(v.name)}</option>`).join('');
+  $('#scrKind').textContent = code ? 'Code · JavaScript' : node ? 'Custom node · JSON' : 'Preset · JSON';
+  $('#scrCodeLbl').textContent = code ? 'Code (JavaScript)' : node ? 'Node definition (JSON) — description, color, inputs, outputs, fields' : 'Script (JSON) — name, folder, nodes, wires';
+  if (node) { $('#scrHelp').innerHTML = 'The node shows up in the <b>+ Node</b> menu of every canvas that uses its section (Meta Ads canvas, Automation). Field types: <code>text</code>, <code>number</code>, <code>textarea</code>, <code>select</code>. What the node <i>does</i> when a flow runs is added in Step 8.'; $('#scrOut').hidden = true; scr.last = null; return; }
   $('#scrHelp').innerHTML = code
     ? 'Available: <code>crm.leads</code>, <code>crm.stages</code>, <code>crm.team</code>, <code>crm.today</code> · actions: <code>moveStage</code>, <code>setTag</code>, <code>setFollowUp</code>, <code>assign</code>, <code>addNote</code> · helpers: <code>log</code>, <code>addDays</code>, <code>daysSince</code>, <code>isClosed</code>.'
     : '<b>wires</b>: <code>"chain"</code> = connect top to bottom · <code>"none"</code> = no wires · or <code>[["A","B"]]</code> pairs. If a node is selected in the Pipeline, the preset is inserted <b>after</b> it (like Nuke).';
@@ -1855,6 +2057,7 @@ function updateScrHead(title) {
 }
 function previewScript() {
   if (scr.kind === 'code') return null;
+  if (scr.kind === 'node') return previewNode();
   const r = parsePreset($('#scrCode').value), msg = $('#scrMsg');
   if (!r.ok) { msg.className = 'scr-msg err'; msg.textContent = '✗ ' + r.error; $('#scrPrev').innerHTML = '<span class="muted" style="font-size:13px">Fix the script to see a preview here</span>'; return null; }
   const p = r.preset, ex = new Set(stages().map(s => s.toLowerCase())), chain = p.wires === 'chain';
@@ -1866,12 +2069,13 @@ function previewScript() {
   return p;
 }
 function renderScripts(keep) {
-  const items = userPresets().map(p => Object.assign({ kind: 'preset' }, p)).concat(userScripts().map(p => Object.assign({ kind: 'code' }, p)));
+  const items = userPresets().map(p => Object.assign({ kind: 'preset' }, p)).concat(userScripts().map(p => Object.assign({ kind: 'code' }, p)), userNodeScripts().map(p => Object.assign({ kind: 'node', folder: 'Custom nodes · ' + SECTIONS[p.section].name }, p)));
   const groups = new Map(); items.forEach(p => { if (!groups.has(p.folder)) groups.set(p.folder, []); groups.get(p.folder).push(p); });
   const row = (attr, kind, name, dot, badge, active) => `<button class="scr-item ${active ? 'active' : ''}" ${attr}><span class="sdot" style="background:${esc(dot)}"></span><span class="nm">${esc(name)}</span><span class="badge ${kind === 'code' ? 'js' : ''}">${badge}</span></button>`;
   let h = items.length ? '' : '<div class="empty" style="padding:18px 10px;font-size:13px">No saved items yet.<br>Create one, or copy a built-in below.</div>';
-  groups.forEach((arr, f) => { h += `<div class="fold">${I.folder}${esc(f)}</div>` + arr.map(p => row(`data-scr="${esc(p.id)}"`, p.kind, p.name, p.kind === 'code' ? 'var(--blue-2)' : p.nodes[0].color, p.kind === 'code' ? 'JS' : p.nodes.length, scr.id === p.id)).join(''); });
+  groups.forEach((arr, f) => { h += `<div class="fold">${I.folder}${esc(f)}</div>` + arr.map(p => row(`data-scr="${esc(p.id)}"`, p.kind, p.name, p.kind === 'code' ? 'var(--blue-2)' : p.kind === 'node' ? (p.def && p.def.color) || SECTIONS[p.section].color : p.nodes[0].color, p.kind === 'code' ? 'JS' : p.kind === 'node' ? 'NODE' : p.nodes.length, scr.id === p.id)).join(''); });
   h += `<div class="fold">${I.folder}Built-in presets · copy to edit</div>` + BUILTIN.map((p, i) => p.nodes.length > 1 ? row(`data-scrb="${i}"`, 'preset', p.name, p.nodes[0].color, p.nodes.length) : '').join('');
+  h += `<div class="fold">${I.folder}Built-in custom nodes · copy to edit</div>` + BUILTIN_NODES.map((p, i) => row(`data-scrn="${i}"`, 'node', p.name, p.def.color || SECTIONS[p.section].color, 'NODE')).join('');
   h += `<div class="fold">${I.code}Built-in scripts · copy to edit</div>` + BUILTIN_CODE.map((p, i) => row(`data-scrc="${i}"`, 'code', p.name, 'var(--blue-2)', 'JS')).join('');
   $('#scrList').innerHTML = h;
   if (!keep && !$('#scrCode').value.trim()) newScript(); else previewScript();
@@ -1882,11 +2086,57 @@ function newCodeScript(src) { scr.id = null; setKind('code'); $('#scrName').valu
 function loadScript(id) {
   const p = userPresets().find(x => x.id === id);
   if (p) { scr.id = id; setKind('preset'); $('#scrCode').value = presetJSON(p); updateScrHead(p.name); previewScript(); markActive(`[data-scr="${CSS.escape(id)}"]`); return; }
+  const nd = userNodeScripts().find(x => x.id === id);
+  if (nd) { newNodeScript(nd.section, nd); scr.id = id; updateScrHead(nd.name); markActive(`[data-scr="${CSS.escape(id)}"]`); return; }
   const c = userScripts().find(x => x.id === id); if (!c) return;
   scr.id = id; setKind('code'); $('#scrName').value = c.name; $('#scrFolder').value = c.folder; $('#scrCode').value = c.code; updateScrHead(c.name); markActive(`[data-scr="${CSS.escape(id)}"]`);
 }
 function loadBuiltin(i) { const p = BUILTIN[i]; if (!p) return; scr.id = null; setKind('preset'); $('#scrCode').value = presetJSON(Object.assign({}, p, { name: p.name + ' (copy)', folder: 'My Presets' })); updateScrHead(); previewScript(); markActive(`[data-scrb="${i}"]`); toast('Copied — edit it and press Save'); }
 function loadBuiltinCode(i) { const p = BUILTIN_CODE[i]; if (!p) return; newCodeScript(p); markActive(`[data-scrc="${i}"]`); }
+
+
+/* ---- custom nodes (Scripts → node canvases) ---- */
+const NODE_EXAMPLE = { description: 'Ask a happy client for a Google review', inputs: 1, outputs: ['sent', 'failed'], fields: [{ key: 'link', label: 'Review link', type: 'text', default: 'https://g.page/r/…' }, { key: 'delay', label: 'Delay (hours)', type: 'number', default: 2 }] };
+const BUILTIN_NODES = [
+  { name: 'Google review request', section: 'whatsapp', def: NODE_EXAMPLE },
+  { name: 'Book site visit', section: 'lead', def: { description: 'Schedule a site visit and notify the team', color: '#4FB3D9', inputs: 1, outputs: ['booked'], fields: [{ key: 'date', label: 'Visit date', type: 'text' }, { key: 'address', label: 'Address', type: 'textarea' }, { key: 'who', label: 'Visit by', type: 'select', options: ['Sales', 'Designer', 'Owner'] }] } },
+  { name: 'Retarget engaged leads', section: 'meta', def: { description: 'Add the lead to a Meta custom audience', inputs: 1, outputs: ['added'], fields: [{ key: 'audience', label: 'Audience name', type: 'text', default: 'Engaged leads · 30 days' }] } },
+];
+const AI_PROMPT_NODE = () => `Create a custom node definition (JSON) for my CRM's node canvas.
+What the node should do: [DESCRIBE IT — e.g. "send a payment reminder with UPI link after 3 days"]
+
+Reply with JSON only, exactly this shape:
+{
+  "description": "One line: what the node does",
+  "color": "#25A55F",
+  "inputs": 1,
+  "outputs": ["sent", "failed"],
+  "fields": [
+    { "key": "link", "label": "Payment link", "type": "text" },
+    { "key": "days", "label": "After (days)", "type": "number", "default": 3 },
+    { "key": "tone", "label": "Tone", "type": "select", "options": ["Friendly", "Formal"] }
+  ]
+}
+Rules: inputs is 0 (start node) or 1. outputs: 1–4 short names. fields: max 12; type is text, number, textarea or select (select needs options). key: letters/numbers only. color optional, #RRGGBB.`;
+function userNodeScripts() {
+  return (S.flows || []).filter(f => String(f.trigger) === 'node').map(f => { try { const o = JSON.parse(f.flowJson); return { id: String(f.flowId), name: cleanName(o.name) || 'Custom node', section: SECTIONS[o.section] ? o.section : 'lead', def: o.def }; } catch (e) { return null; } }).filter(Boolean);
+}
+function newNodeScript(section, src) {
+  scr.id = null; setKind('node');
+  $('#scrNodeName').value = src ? src.name : ''; $('#scrSection').value = (src && src.section) || section || 'lead';
+  $('#scrCode').value = JSON.stringify(src ? src.def : NODE_EXAMPLE, null, 2); updateScrHead(src ? src.name : 'New custom node'); previewScript();
+  setTimeout(() => $('#scrNodeName').focus(), 50);
+}
+function previewNode() {
+  const r = parseNodeDef($('#scrCode').value), msg = $('#scrMsg');
+  if (!r.ok) { msg.className = 'scr-msg err'; msg.textContent = '✗ ' + r.error; $('#scrPrev').innerHTML = '<span class="muted" style="font-size:13px">Fix the definition to see the node</span>'; return null; }
+  const sec = $('#scrSection').value || 'lead', t = Object.assign({ type: 'preview', section: sec, name: cleanName($('#scrNodeName').value) || 'Custom node', custom: true }, r.def);
+  const n = { id: 'preview', type: 'preview', x: 0, y: 0, p: {} }; t.fields.forEach(f => { if (f.def !== undefined) n.p[f.k] = f.def; });
+  const outs = outsOf(t), c = colorOf(t);
+  $('#scrPrev').innerHTML = `<div class="fx-node mnode-fx" style="position:relative;left:auto;top:auto;min-height:${outs.length > 1 ? 74 + outs.length * 24 : 66}px;--c:${esc(c)}"><div class="fx-h"><span class="fx-ic">${esc(SECTIONS[sec].ic)}</span><b>${esc(t.name)}</b><span class="badge mine">Custom</span></div><div class="fx-s">${esc(t.sum(n.p))}</div>${insOf(t) ? '<span class="fx-port in"></span>' : ''}${outs.map((o, k) => `<span class="fx-port out" style="top:${outs.length > 1 ? 70 + k * 24 : 26}px"></span>${outs.length > 1 ? `<span class="fx-ol" style="top:${70 + k * 24}px">${esc(o)}</span>` : ''}`).join('')}</div>`;
+  msg.className = 'scr-msg ok'; msg.textContent = `✓ Valid — appears under "${SECTIONS[sec].name}" · ${insOf(t) ? '1 input' : 'start node'} · outputs: ${outs.join(', ')} · ${t.fields.length} field${t.fields.length === 1 ? '' : 's'}`;
+  return { name: t.name, section: sec, def: JSON.parse($('#scrCode').value) };
+}
 
 /* ---- dry run → review → apply ---- */
 const ACTION_LABEL = { moveStage: 'Stage', setTag: 'Tag', setFollowUp: 'Follow-up', assign: 'Assign', addNote: 'Note' };
@@ -1959,8 +2209,11 @@ async function applyRun() {
   let t = null; const code = $('#scrCode');
   code.addEventListener('input', () => { clearTimeout(t); t = setTimeout(previewScript, 250); if (scr.kind === 'code') { $('#scrOut').hidden = true; scr.last = null; } });
   code.addEventListener('keydown', e => { if (e.key === 'Tab') { e.preventDefault(); code.setRangeText('  ', code.selectionStart, code.selectionEnd, 'end'); } if ((e.ctrlKey || e.metaKey) && e.key === 'Enter' && scr.kind === 'code') { e.preventDefault(); dryRun(); } });
-  $('#scrList').addEventListener('click', e => { const a = e.target.closest('[data-scr]'); if (a) return loadScript(a.dataset.scr); const b = e.target.closest('[data-scrb]'); if (b) return loadBuiltin(+b.dataset.scrb); const c = e.target.closest('[data-scrc]'); if (c) loadBuiltinCode(+c.dataset.scrc); });
+  $('#scrList').addEventListener('click', e => { const a = e.target.closest('[data-scr]'); if (a) return loadScript(a.dataset.scr); const b = e.target.closest('[data-scrb]'); if (b) return loadBuiltin(+b.dataset.scrb); const c = e.target.closest('[data-scrc]'); if (c) return loadBuiltinCode(+c.dataset.scrc); const n = e.target.closest('[data-scrn]'); if (n) { const src = BUILTIN_NODES[+n.dataset.scrn]; newNodeScript(src.section, Object.assign({}, src, { name: src.name })); markActive(`[data-scrn="${n.dataset.scrn}"]`); } });
   $('#scrNew').onclick = newScript;
+  $('#scrNewNode').onclick = () => { newNodeScript('lead'); markActive('.none'); };
+  $('#scrSection').onchange = () => previewScript();
+  $('#scrNodeName').oninput = () => previewScript();
   $('#scrNewCode').onclick = () => { newCodeScript(); markActive('.none'); setTimeout(() => $('#scrName').focus(), 50); };
   $('#scrRun').onclick = dryRun;
   $('#scrFromPipe').onclick = () => {
@@ -1971,8 +2224,12 @@ async function applyRun() {
   };
   $('#scrSave').onclick = async () => {
     let body;
-    const id = scr.id || (scr.kind === 'code' ? 'SCRIPT-' : 'PRESET-') + Date.now().toString(36).toUpperCase();
-    if (scr.kind === 'code') {
+    const id = scr.id || (scr.kind === 'code' ? 'SCRIPT-' : scr.kind === 'node' ? 'NODE-' : 'PRESET-') + Date.now().toString(36).toUpperCase();
+    if (scr.kind === 'node') {
+      const r = previewNode(); if (!r) return toast('Fix the node definition first', true);
+      const name = cleanName($('#scrNodeName').value); if (!name) { $('#scrNodeName').focus(); return toast('Give the node a name', true); }
+      body = { flowId: id, flowName: name, trigger: 'node', status: 'Active', flowJson: JSON.stringify({ name, section: r.section, def: r.def }) };
+    } else if (scr.kind === 'code') {
       const name = cleanName($('#scrName').value), folder = cleanName($('#scrFolder').value) || 'My Scripts', src = $('#scrCode').value;
       if (!name) { $('#scrName').focus(); return toast('Give the script a name', true); }
       if (!src.trim()) return toast('The script is empty', true);
@@ -1987,18 +2244,18 @@ async function applyRun() {
       await api('saveFlow', body);
       if (!demo) { const i = S.flows.findIndex(f => String(f.flowId) === id); if (i > -1) S.flows[i] = Object.assign(S.flows[i], body); else S.flows.push(body); }
       scr.id = id; renderScripts(true); updateScrHead(body.flowName); markActive(`[data-scr="${CSS.escape(id)}"]`);
-      toast(scr.kind === 'code' ? 'Script saved ✓' : `Saved ✓ — find it in Pipeline → + Node → "${JSON.parse(body.flowJson).folder}"`);
+      toast(scr.kind === 'node' ? `Custom node saved ✓ — find it under + Node → ${SECTIONS[JSON.parse(body.flowJson).section].name}` : scr.kind === 'code' ? 'Script saved ✓' : `Saved ✓ — find it in Pipeline → + Node → "${JSON.parse(body.flowJson).folder}"`);
     } catch (e) { toast('Could not save: ' + e.message, true); }
     finally { b.disabled = false; }
   };
   $('#scrDel').onclick = async () => {
-    if (!scr.id || !confirm(scr.kind === 'code' ? 'Delete this script?' : 'Delete this preset? (Nodes already in the pipeline are not affected)')) return;
+    if (!scr.id || !confirm(scr.kind === 'node' ? 'Delete this custom node? Canvases that use it will show it as missing.' : scr.kind === 'code' ? 'Delete this script?' : 'Delete this preset? (Nodes already in the pipeline are not affected)')) return;
     try { await api('deleteFlow', { id: scr.id }); if (!demo) S.flows = S.flows.filter(f => String(f.flowId) !== scr.id); toast('Deleted'); scr.id = null; newScript(); renderScripts(true); }
     catch (e) { toast('Could not delete: ' + e.message, true); }
   };
   $('#scrTry').onclick = () => { const p = previewScript(); if (!p) return toast('Fix the script first', true); go('pipeline'); setTimeout(() => applyPreset(p), 350); };
   $('#scrAi').onclick = () => {
-    const txt = scr.kind === 'code' ? AI_PROMPT_CODE() : AI_PROMPT_PRESET();
+    const txt = scr.kind === 'code' ? AI_PROMPT_CODE() : scr.kind === 'node' ? AI_PROMPT_NODE() : AI_PROMPT_PRESET();
     const fallback = () => {
       $('#stageBox').innerHTML = `<div class="m-head"><h2>AI prompt</h2><button class="ibtn" data-close>${I.x}</button></div><p class="help" style="margin-bottom:10px">Copy this into ChatGPT / Gemini, then paste what it returns into the editor.</p><textarea class="input code" style="min-height:260px" readonly>${esc(txt)}</textarea>`;
       showModal('#stageModal'); setTimeout(() => $('#stageBox textarea').select(), 60);
@@ -2009,7 +2266,7 @@ async function applyRun() {
 
 /* ================= Performance Marketing · Meta Ads ================= */
 const ADS = { tab: 'overview', range: 30, camp: '', data: null };
-const ADS_TABS = [['overview', 'Overview'], ['campaigns', 'Campaigns'], ['adsets', 'Ad sets'], ['ads', 'Ads'], ['audiences', 'Audiences'], ['creatives', 'Creatives'], ['forms', 'Lead forms'], ['funnel', 'Funnel'], ['connect', 'Connect']];
+const ADS_TABS = [['overview', 'Overview'], ['canvas', 'Canvas'], ['campaigns', 'Campaigns'], ['adsets', 'Ad sets'], ['ads', 'Ads'], ['audiences', 'Audiences'], ['creatives', 'Creatives'], ['forms', 'Lead forms'], ['funnel', 'Funnel'], ['connect', 'Connect']];
 const AD_SOURCES = ['Meta Ad', 'Instagram', 'Facebook'];
 const cmp = n => { n = Number(n) || 0; if (n >= 1e7) return (n / 1e7).toFixed(1) + ' Cr'; if (n >= 1e5) return (n / 1e5).toFixed(1) + 'L'; if (n >= 1e3) return (n / 1e3).toFixed(1) + 'K'; return String(Math.round(n)); };
 const pct = (a, b) => b ? (a / b * 100) : 0;
@@ -2106,6 +2363,8 @@ function renderAds(anim) {
   if (!$('#v-ads').classList.contains('active')) return;
   $('#adsTabs').innerHTML = ADS_TABS.map(([k, n]) => `<button class="tab ${ADS.tab === k ? 'active' : ''}" data-adtab="${k}">${n}</button>`).join('');
   $('#adsRange').value = String(ADS.range);
+  const isCv = ADS.tab === 'canvas'; $('#adsCanvas').hidden = !isCv; $('#adsBody').hidden = isCv;
+  if (isCv) { adsCanvas().sync(); return; }
   const body = $('#adsBody'), f = { overview: adsOverview, campaigns: adsCampaigns, adsets: adsAdsets, ads: adsAds, audiences: adsAudiences, creatives: adsCreatives, forms: adsForms, funnel: adsFunnel, connect: adsConnect }[ADS.tab] || adsOverview;
   body.innerHTML = f();
   stagger(body, anim);
@@ -2249,6 +2508,552 @@ function adsConnect() {
     if (e.target.id === 'adsRange') { ADS.range = +e.target.value; renderAds(true); return; }
     const fs = e.target.closest('[data-formset]'); if (fs) { const m = store.get('leadnode.ads.forms') || {}; const id = fs.dataset.formset; m[id] = Object.assign({ auto: true }, m[id], { [fs.dataset.k]: fs.value }); store.set('leadnode.ads.forms', m); toast('Mapping saved'); }
   });
+})();
+
+/* ================= Node canvas engine (Meta Ads canvas, Automation) ================= */
+const SECTIONS = {
+  trigger: { name: 'Triggers', color: '#6F8FE8', ic: '⚡' },
+  meta: { name: 'Meta Ads', color: '#4F7DF3', ic: 'M' },
+  lead: { name: 'Lead / CRM', color: '#3CB4A0', ic: 'L' },
+  whatsapp: { name: 'WhatsApp', color: '#25A55F', ic: 'W' },
+  logic: { name: 'Logic', color: '#F29A5C', ic: '◇' },
+  ai: { name: 'AI', color: '#B08CEB', ic: '✦' },
+  n8n: { name: 'n8n / Webhooks', color: '#EA4B71', ic: 'n' },
+};
+const F = (k, label, kind = 'text', extra = {}) => Object.assign({ k, label, kind }, extra);
+const stageOpts = () => stages();
+const tagOpts = () => S.lists.tags || ['Hot', 'Warm', 'Cold'];
+const teamOpts = () => ['Round-robin'].concat(S.team.filter(t => t.active !== false && t.name).map(t => t.name));
+const NODE_TYPES = [
+  // triggers
+  { type: 'trg.newlead', section: 'trigger', name: 'New lead', ins: 0, fields: [F('source', 'Source', 'select', { options: () => ['Any'].concat(S.lists.sources || []) })], sum: p => `Source: ${p.source || 'Any'}` },
+  { type: 'trg.stage', section: 'trigger', name: 'Stage changed', ins: 0, fields: [F('stage', 'To stage', 'select', { options: stageOpts })], sum: p => `→ ${p.stage || stages()[0]}` },
+  { type: 'trg.wamsg', section: 'trigger', name: 'WhatsApp message', ins: 0, fields: [F('kw', 'Contains keyword (optional)')], sum: p => p.kw ? `Contains “${p.kw}”` : 'Any incoming message' },
+  { type: 'trg.form', section: 'trigger', name: 'Meta lead form', ins: 0, fields: [F('form', 'Form name')], sum: p => p.form || 'Any form' },
+  { type: 'trg.schedule', section: 'trigger', name: 'Schedule', ins: 0, fields: [F('every', 'Every', 'select', { options: ['Day', 'Week', 'Month'] }), F('time', 'Time', 'text', { def: '09:00' })], sum: p => `Every ${(p.every || 'Day').toLowerCase()} at ${p.time || '09:00'}` },
+  // meta
+  { type: 'meta.campaign', section: 'meta', name: 'Campaign', ins: 0, fields: [F('name', 'Campaign name'), F('objective', 'Objective', 'select', { options: ['Leads', 'Messages', 'Sales', 'Traffic', 'Awareness'] }), F('budget', 'Daily budget (₹)', 'number', { def: 500 }), F('status', 'Status', 'select', { options: ['Active', 'Paused'] })], sum: p => `${p.objective || 'Leads'} · ${inr(p.budget || 500)}/day` },
+  { type: 'meta.adset', section: 'meta', name: 'Ad set', fields: [F('location', 'Location', 'text', { def: 'Mumbai' }), F('age', 'Age', 'text', { def: '25-45' }), F('interests', 'Interests'), F('placement', 'Placement', 'select', { options: ['Advantage+', 'Instagram only', 'Facebook only', 'Reels'] })], sum: p => `${p.location || 'Mumbai'} · ${p.age || '25-45'}` },
+  { type: 'meta.audience', section: 'meta', name: 'Audience', ins: 0, fields: [F('src', 'Source', 'select', { options: ['CRM stage', 'Website visitors', 'Instagram engagers', 'Lookalike of CRM stage'] }), F('stage', 'CRM stage', 'select', { options: stageOpts }), F('pct', 'Lookalike %', 'number', { def: 1 })], sum: p => (p.src || 'CRM stage') + (String(p.src || 'CRM stage').includes('CRM') ? ` · ${p.stage || 'Won'}` : '') },
+  { type: 'meta.ad', section: 'meta', name: 'Ad / Creative', fields: [F('format', 'Format', 'select', { options: ['Image', 'Video', 'Carousel'] }), F('headline', 'Headline'), F('text', 'Primary text', 'textarea'), F('cta', 'Button', 'select', { options: ['Get quote', 'Send WhatsApp message', 'Learn more', 'Call now'] })], sum: p => `${p.format || 'Image'} · ${p.headline || 'No headline yet'}` },
+  { type: 'meta.form', section: 'meta', name: 'Lead form', fields: [F('form', 'Form name'), F('questions', 'Questions', 'textarea', { def: 'Name, Phone, City' })], sum: p => p.form || 'Instant form' },
+  { type: 'meta.rule', section: 'meta', name: 'Budget rule', outs: ['matched', 'ok'], fields: [F('metric', 'If', 'select', { options: ['Cost per lead', 'CTR', 'Frequency', 'Daily spend'] }), F('op', 'is', 'select', { options: ['above', 'below'] }), F('value', 'Value', 'number', { def: 250 }), F('action', 'Then', 'select', { options: ['Pause ad', 'Raise budget 20%', 'Lower budget 20%', 'Notify me'] })], sum: p => `If ${p.metric || 'Cost per lead'} ${p.op || 'above'} ${p.value || 250} → ${p.action || 'Pause ad'}` },
+  { type: 'meta.capi', section: 'meta', name: 'Send to Meta (CAPI)', fields: [F('event', 'Event', 'select', { options: ['Purchase', 'QualifiedLead', 'Lead', 'Schedule'] })], sum: p => `Event: ${p.event || 'Purchase'}` },
+  { type: 'meta.report', section: 'meta', name: 'Ads report', fields: [F('to', 'Send to', 'select', { options: ['My WhatsApp', 'Email', 'Team WhatsApp group'] })], sum: p => `Daily → ${p.to || 'My WhatsApp'}` },
+  // lead / CRM
+  { type: 'lead.create', section: 'lead', name: 'Create lead', fields: [F('stage', 'Stage', 'select', { options: stageOpts }), F('tag', 'Tag', 'select', { options: tagOpts })], sum: p => `${p.stage || stages()[0]} · ${p.tag || 'Hot'}` },
+  { type: 'lead.move', section: 'lead', name: 'Move to stage', fields: [F('stage', 'Stage', 'select', { options: stageOpts })], sum: p => `→ ${p.stage || stages()[0]}` },
+  { type: 'lead.assign', section: 'lead', name: 'Assign', fields: [F('member', 'Member', 'select', { options: teamOpts })], sum: p => p.member || 'Round-robin' },
+  { type: 'lead.tag', section: 'lead', name: 'Set tag', fields: [F('tag', 'Tag', 'select', { options: tagOpts })], sum: p => p.tag || 'Hot' },
+  { type: 'lead.followup', section: 'lead', name: 'Set follow-up', fields: [F('days', 'In (days)', 'number', { def: 1 })], sum: p => `In ${p.days || 1} day${(+p.days || 1) > 1 ? 's' : ''}` },
+  { type: 'lead.note', section: 'lead', name: 'Add note', fields: [F('text', 'Note', 'textarea')], sum: p => p.text || 'Note text' },
+  // whatsapp
+  { type: 'wa.template', section: 'whatsapp', name: 'Send template', fields: [F('template', 'Template name'), F('lang', 'Language', 'select', { options: ['en', 'hi', 'mr'] })], sum: p => p.template || 'Choose a template' },
+  { type: 'wa.text', section: 'whatsapp', name: 'Send message', fields: [F('text', 'Message', 'textarea')], sum: p => p.text || 'Message text (24-hour window)' },
+  { type: 'wa.wait', section: 'whatsapp', name: 'Wait for reply', outs: ['replied', 'no reply'], fields: [F('hours', 'Wait up to (hours)', 'number', { def: 24 })], sum: p => `Up to ${p.hours || 24} h` },
+  // logic
+  { type: 'logic.if', section: 'logic', name: 'If / Router', outs: ['yes', 'no'], fields: [F('field', 'Field', 'select', { options: ['Budget', 'Source', 'City', 'Tag', 'Stage', 'Business type'] }), F('op', 'Operator', 'select', { options: ['is', 'is not', 'above', 'below', 'contains'] }), F('value', 'Value')], sum: p => `${p.field || 'Budget'} ${p.op || 'above'} ${p.value || '…'}` },
+  { type: 'logic.wait', section: 'logic', name: 'Wait', fields: [F('amount', 'Amount', 'number', { def: 1 }), F('unit', 'Unit', 'select', { options: ['days', 'hours', 'minutes'] })], sum: p => `${p.amount || 1} ${p.unit || 'days'}` },
+  { type: 'logic.split', section: 'logic', name: 'A/B split', outs: ['A', 'B'], fields: [F('pct', 'A gets (%)', 'number', { def: 50 })], sum: p => `A ${p.pct || 50}% · B ${100 - (+p.pct || 50)}%` },
+  // ai
+  { type: 'ai.reply', section: 'ai', name: 'AI reply', fields: [F('prompt', 'Instructions', 'textarea', { def: 'Reply politely in Hinglish, share price range, ask for city.' })], sum: p => (p.prompt || 'Gemini reply').slice(0, 48) },
+  { type: 'ai.score', section: 'ai', name: 'AI lead score', outs: ['hot', 'warm', 'cold'], fields: [F('criteria', 'What makes a lead hot?', 'textarea')], sum: () => 'Gemini scores the lead' },
+  { type: 'ai.intent', section: 'ai', name: 'Detect intent', outs: ['buying', 'question', 'other'], fields: [F('hint', 'Hints', 'textarea')], sum: () => 'Buying · question · other' },
+  // n8n / webhooks
+  { type: 'n8n.send', section: 'n8n', name: 'Send to n8n', fields: [F('url', 'n8n webhook URL', 'text', { def: 'https://' }), F('data', 'Send', 'select', { options: ['Lead', 'Lead + last message', 'Event only'] })], sum: p => p.url && p.url !== 'https://' ? p.url.replace(/^https?:\/\//, '').slice(0, 32) : 'Add your n8n webhook URL' },
+  { type: 'n8n.in', section: 'n8n', name: 'From n8n', ins: 0, fields: [F('event', 'Event name', 'text', { def: 'n8n.update' })], sum: p => `Webhook in · ${p.event || 'n8n.update'}` },
+  { type: 'n8n.http', section: 'n8n', name: 'HTTP request', fields: [F('method', 'Method', 'select', { options: ['POST', 'GET'] }), F('url', 'URL', 'text', { def: 'https://' })], sum: p => `${p.method || 'POST'} ${(p.url || '').replace(/^https?:\/\//, '').slice(0, 26)}` },
+];
+/** Custom nodes saved from Scripts → section-aware node types */
+function customNodeTypes() {
+  return (S.flows || []).filter(f => String(f.trigger) === 'node').map(f => { try { const o = JSON.parse(f.flowJson), r = parseNodeDef(o.def, true); if (!r.ok || !SECTIONS[o.section]) return null; return Object.assign({ type: 'custom.' + f.flowId, section: o.section, name: cleanName(o.name) || 'Custom node', custom: true, id: String(f.flowId) }, r.def); } catch (e) { return null; } }).filter(Boolean);
+}
+function nodeType(t) { return NODE_TYPES.find(x => x.type === t) || customNodeTypes().find(x => x.type === t) || { type: t, section: 'logic', name: 'Missing node', fields: [], sum: () => 'This custom node was deleted', missing: true }; }
+function parseNodeDef(o, quiet) {
+  const err = e => ({ ok: false, error: e });
+  if (typeof o === 'string') { try { o = JSON.parse(o); } catch (e) { return err('Invalid JSON — ' + e.message); } }
+  if (!o || typeof o !== 'object' || Array.isArray(o)) return err('The definition must be a { } object');
+  const color = o.color || '';
+  if (color && !/^#[0-9a-f]{6}$/i.test(color)) return err('"color" must look like #RRGGBB');
+  const ins = o.inputs === 0 ? 0 : 1;
+  const outs = o.outputs === undefined ? ['out'] : o.outputs;
+  if (!Array.isArray(outs) || outs.length > 4 || outs.some(x => typeof x !== 'string' || !cleanName(x) || x.length > 16)) return err('"outputs" must be a list of up to 4 short names, e.g. ["yes","no"]');
+  const fields = o.fields || [];
+  if (!Array.isArray(fields) || fields.length > 12) return err('"fields" must be a list (max 12)');
+  const out = [];
+  for (const f of fields) {
+    if (!f || !/^[a-zA-Z][a-zA-Z0-9_]{0,24}$/.test(f.key || '')) return err('Each field needs a "key" (letters/numbers, starts with a letter)');
+    const kind = f.type || 'text';
+    if (!['text', 'number', 'textarea', 'select'].includes(kind)) return err(`Field "${f.key}": type must be text, number, textarea or select`);
+    if (kind === 'select' && (!Array.isArray(f.options) || !f.options.length)) return err(`Field "${f.key}": select needs "options"`);
+    out.push({ k: f.key, label: cleanName(f.label || f.key).slice(0, 40), kind, options: kind === 'select' ? f.options.map(x => cleanName(x).slice(0, 40)) : undefined, def: f.default });
+  }
+  return { ok: true, def: { desc: cleanName(o.description).slice(0, 140), color: color || undefined, ins, outs: outs.map(cleanName), fields: out, sum: p => { const f = out[0]; return f ? `${f.label}: ${p[f.k] ?? f.def ?? '–'}` : (cleanName(o.description) || 'Custom node'); } } };
+}
+const outsOf = t => (t.outs && t.outs.length ? t.outs : ['out']);
+const insOf = t => (t.ins === 0 ? 0 : 1);
+const colorOf = t => t.color || SECTIONS[t.section].color;
+
+class FlowCanvas {
+  constructor(o) {
+    this.o = o; this.root = o.root; this.view = { x: 40, y: 30, k: 0.9 };
+    this.sel = new Set(); this.selWire = null; this.flow = null; this.saveT = null; this.fitted = false;
+    this.root.classList.add('fx', 'canvas-like');
+    this.root.innerHTML = `<div class="fx-world"><svg class="fx-wires"></svg><div class="fx-nodes"></div></div>
+      <div class="fx-bar"><button class="btn sm primary" data-fx="add">${I.plus}Node</button><button class="btn sm" data-fx="preset" disabled>${I.folder}Save as preset</button><button class="btn sm" data-fx="del" disabled>${I.trash}Delete</button><span class="fx-status">${esc(o.status || '')}</span></div>
+      <aside class="fx-insp" hidden></aside>
+      <div class="marquee"></div>
+      <div class="hint"><span><span class="kbd">Tab</span> add · Drag empty = select box · <span class="kbd">Del</span> delete · <span class="kbd">Ctrl</span>+<span class="kbd">C</span>/<span class="kbd">V</span>/<span class="kbd">D</span> · <span class="kbd">Space</span>+drag = hand · <span class="kbd">Ctrl</span>+scroll = zoom</span></div>
+      <div class="ctrls"><div class="minimap"><div class="vp"></div></div><div class="zoombar"><button data-fx="zout" title="Zoom out"><svg class="i" viewBox="0 0 24 24"><path d="M5 12h14"/></svg></button><span class="pct">100%</span><button data-fx="zin" title="Zoom in"><svg class="i" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button><button data-fx="fit" title="Fit"><svg class="i" viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button></div></div>`;
+    this.world = this.root.querySelector('.fx-world'); this.nodesEl = this.root.querySelector('.fx-nodes'); this.svg = this.root.querySelector('.fx-wires');
+    this.insp = this.root.querySelector('.fx-insp'); this.box = this.root.querySelector('.marquee');
+    this.bind();
+  }
+  /* ---- data ---- */
+  load() {
+    let f = null; const row = (S.flows || []).find(x => String(x.flowId) === this.o.key);
+    if (row) { try { f = JSON.parse(row.flowJson); } catch (e) { } }
+    if (!f) f = store.get('leadnode.flow.' + this.o.key);
+    if (!f || !Array.isArray(f.nodes)) f = this.o.seed();
+    f.links = (f.links || []).filter(l => f.nodes.some(n => n.id === l[0]) && f.nodes.some(n => n.id === l[2]));
+    this.fromSeed = !row && !store.get('leadnode.flow.' + this.o.key); this.flow = f; this.render(); if (!this.fitted) { requestAnimationFrame(() => this.fit(true)); this.fitted = true; }
+  }
+  sync() { if (!this.flow || (this.fromSeed && (S.flows || []).some(x => String(x.flowId) === this.o.key))) { this.fitted = false; this.load(); } else { this.render(); if (!this.fitted) { requestAnimationFrame(() => this.fit(true)); this.fitted = true; } } }
+  save() {
+    store.set('leadnode.flow.' + this.o.key, this.flow); this.fromSeed = false;
+    const row = { flowId: this.o.key, flowName: this.o.title, trigger: 'canvas', status: 'Draft', flowJson: JSON.stringify(this.flow) };
+    const i = (S.flows || []).findIndex(x => String(x.flowId) === this.o.key); if (i > -1) S.flows[i] = row; else (S.flows = S.flows || []).push(row);
+    if (demo) return;
+    clearTimeout(this.saveT);
+    this.saveT = setTimeout(() => api('saveFlow', { flowId: this.o.key, flowName: this.o.title, trigger: 'canvas', status: 'Draft', flowJson: JSON.stringify(this.flow) }).catch(e => toast('Could not save canvas: ' + e.message, true)), 900);
+  }
+  uid() { let i = this.flow.nodes.length + 1, id; do { id = 'n' + (i++); } while (this.flow.nodes.some(n => n.id === id)); return id; }
+  node(id) { return this.flow.nodes.find(n => n.id === id); }
+  /* ---- render ---- */
+  render() {
+    if (!this.flow) return;
+    this.nodesEl.innerHTML = this.flow.nodes.map((n, i) => this.nodeHTML(n, i)).join('');
+    this.drawWires(); this.apply(); this.syncSel(); this.renderInsp();
+  }
+  nodeHTML(n, i) {
+    const t = nodeType(n.type), outs = outsOf(t), c = colorOf(t), sec = SECTIONS[t.section] || SECTIONS.logic, p = n.p || {};
+    let sum = ''; try { sum = t.sum(p); } catch (e) { sum = ''; }
+    const h = outs.length > 1 ? 74 + outs.length * 24 : 66;
+    return `<div class="fx-node ${t.missing ? 'missing' : ''} ${this.born && this.born.has(n.id) ? 'born' : ''}" data-id="${esc(n.id)}" style="left:${n.x}px;top:${n.y}px;min-height:${h}px;--c:${esc(c)};--i:${Math.min(i, 20)}">
+      <div class="fx-h"><span class="fx-ic">${esc(sec.ic)}</span><b>${esc(n.title || t.name)}</b>${t.custom ? '<span class="badge mine">Custom</span>' : ''}</div>
+      <div class="fx-s">${esc(String(sum).slice(0, 80))}</div>
+      ${insOf(t) ? '<span class="fx-port in" data-pin></span>' : ''}
+      ${outs.map((o, k) => `<span class="fx-port out" data-pout="${k}" style="top:${outs.length > 1 ? 70 + k * 24 : 26}px"></span>${outs.length > 1 ? `<span class="fx-ol" style="top:${70 + k * 24}px">${esc(o)}</span>` : ''}`).join('')}
+    </div>`;
+  }
+  portXY(id, kind, k = 0) {
+    const n = this.node(id); if (!n) return { x: 0, y: 0 };
+    const el = this.nodesEl.querySelector(`.fx-node[data-id="${CSS.escape(id)}"]`), w = el ? el.offsetWidth : 230;
+    const outs = outsOf(nodeType(n.type));
+    if (kind === 'in') return { x: n.x, y: n.y + 33 };
+    return { x: n.x + w, y: n.y + (outs.length > 1 ? 77 + k * 24 : 33) };
+  }
+  drawWires(tmp) {
+    const W = this.flow.links.map((l, i) => {
+      const A = this.portXY(l[0], 'out', l[1]), B = this.portXY(l[2], 'in'), d = wirePath(A, B), sel = this.selWire === i;
+      const m = midPoint(A, B);
+      return `<g class="wire ${sel ? 'sel' : ''}" data-w="${i}"><path class="hit" d="${d}"/><path class="ln" d="${d}"/><circle class="flow" r="3"><animateMotion dur="${(2.4 + (i % 4) * 0.4).toFixed(1)}s" repeatCount="indefinite" path="${d}"/></circle>${sel ? `<g class="wdel" data-wdel="${i}" transform="translate(${m.x},${m.y})"><circle r="11"/><path d="M-4 -4 4 4M4 -4-4 4"/></g>` : ''}</g>`;
+    }).join('');
+    this.svg.innerHTML = `<g transform="translate(5000,5000)">${W}${tmp ? `<path class="tmp" d="${tmp}"/>` : ''}</g>`;
+  }
+  apply() {
+    const v = this.view; this.world.style.transform = `translate(${v.x}px,${v.y}px) scale(${v.k})`;
+    this.root.style.backgroundSize = `${22 * v.k}px ${22 * v.k}px`; this.root.style.backgroundPosition = `${v.x}px ${v.y}px`;
+    this.root.querySelector('.pct').textContent = Math.round(v.k * 100) + '%';
+    this.minimap();
+  }
+  bounds() { let x1 = Infinity, y1 = Infinity, x2 = -Infinity, y2 = -Infinity; this.nodesEl.querySelectorAll('.fx-node').forEach(e => { x1 = Math.min(x1, e.offsetLeft); y1 = Math.min(y1, e.offsetTop); x2 = Math.max(x2, e.offsetLeft + e.offsetWidth); y2 = Math.max(y2, e.offsetTop + e.offsetHeight); }); if (!isFinite(x1)) return { x1: 0, y1: 0, w: 800, h: 500 }; return { x1: x1 - 40, y1: y1 - 40, w: x2 - x1 + 80, h: y2 - y1 + 80 }; }
+  minimap() {
+    const mm = this.root.querySelector('.minimap'); if (!mm.clientWidth) return; const b = this.bounds(), s = Math.min(mm.clientWidth / b.w, mm.clientHeight / b.h);
+    mm.querySelectorAll('i').forEach(e => e.remove());
+    this.nodesEl.querySelectorAll('.fx-node').forEach(e => { const i = document.createElement('i'); i.style.cssText = `left:${(e.offsetLeft - b.x1) * s}px;top:${(e.offsetTop - b.y1) * s}px;width:${e.offsetWidth * s}px;height:${Math.max(3, e.offsetHeight * s)}px`; mm.insertBefore(i, mm.firstChild); });
+    const vp = mm.querySelector('.vp'), v = this.view; vp.style.left = ((-v.x / v.k - b.x1) * s) + 'px'; vp.style.top = ((-v.y / v.k - b.y1) * s) + 'px'; vp.style.width = (this.root.clientWidth / v.k * s) + 'px'; vp.style.height = (this.root.clientHeight / v.k * s) + 'px';
+    mm._s = s; mm._b = b;
+  }
+  zoomAt(cx, cy, k) { k = Math.max(0.25, Math.min(2, k)); const v = this.view; v.x = cx - (cx - v.x) * (k / v.k); v.y = cy - (cy - v.y) * (k / v.k); v.k = k; this.apply(); }
+  fit(first) {
+    const b = this.bounds(), W = this.root.clientWidth, H = this.root.clientHeight; if (!W) return;
+    const k = Math.max(0.3, Math.min(first ? 0.95 : 1.2, W / b.w, (H - 60) / b.h));
+    this.view = { k, x: (W - b.w * k) / 2 - b.x1 * k, y: 50 - b.y1 * k + Math.max(0, (H - 60 - b.h * k) / 2) }; this.apply();
+  }
+  toWorld(cx, cy) { const r = this.root.getBoundingClientRect(); return { x: (cx - r.left - this.view.x) / this.view.k, y: (cy - r.top - this.view.y) / this.view.k }; }
+  syncSel() {
+    this.nodesEl.querySelectorAll('.fx-node').forEach(e => e.classList.toggle('sel', this.sel.has(e.dataset.id)));
+    const b = this.root.querySelector('[data-fx="preset"]'), d = this.root.querySelector('[data-fx="del"]');
+    b.disabled = !this.sel.size; d.disabled = !this.sel.size && this.selWire === null;
+    this.renderInsp();
+  }
+  select(id, add) { if (!add) this.sel.clear(); if (id) this.sel.add(id); this.syncSel(); }
+  /* ---- inspector (node properties) ---- */
+  renderInsp() {
+    const one = this.sel.size === 1 ? this.node([...this.sel][0]) : null;
+    if (!one) { this.insp.hidden = true; return; }
+    const t = nodeType(one.type), p = one.p || (one.p = {}), sec = SECTIONS[t.section] || SECTIONS.logic;
+    const val = f => p[f.k] ?? f.def ?? '';
+    const input = f => {
+      const v = val(f), opts = typeof f.options === 'function' ? f.options() : (f.options || []);
+      if (f.kind === 'select') return `<select class="input" data-fp="${f.k}">${opts.map(o => `<option ${String(o) === String(v) ? 'selected' : ''}>${esc(o)}</option>`).join('')}</select>`;
+      if (f.kind === 'textarea') return `<textarea class="input" data-fp="${f.k}" rows="3">${esc(v)}</textarea>`;
+      return `<input class="input" data-fp="${f.k}" ${f.kind === 'number' ? 'type="number"' : ''} value="${esc(v)}">`;
+    };
+    this.insp.hidden = false;
+    this.insp.innerHTML = `<div class="fx-ih"><span class="fx-ic" style="background:${esc(colorOf(t))}">${esc(sec.ic)}</span><div><small>${esc(sec.name)}${t.custom ? ' · custom' : ''}</small><b>${esc(t.name)}</b></div><button class="ibtn" data-fx="close" title="Close">${I.x}</button></div>
+      ${t.desc ? `<p class="help">${esc(t.desc)}</p>` : ''}
+      <div class="field"><label>Label</label><input class="input" data-fp="__title" value="${esc(one.title || '')}" placeholder="${esc(t.name)}"></div>
+      ${t.fields.map(f => `<div class="field"><label>${esc(f.label)}</label>${input(f)}</div>`).join('')}
+      <div class="fx-if"><button class="btn sm" data-fx="dup">Duplicate</button><button class="btn sm danger" data-fx="del">${I.trash}Delete</button></div>`;
+  }
+  /* ---- edits ---- */
+  addNode(type, at, connect = true) {
+    const t = nodeType(type), id = this.uid(), src = connect && this.sel.size === 1 ? this.node([...this.sel][0]) : null;
+    let x, y;
+    if (src) { x = src.x + 300; y = src.y; while (this.flow.nodes.some(n => Math.abs(n.x - x) < 60 && Math.abs(n.y - y) < 60)) y += 110; }
+    else if (at) { x = at.x; y = at.y; }
+    else { const r = this.root.getBoundingClientRect(), w = this.toWorld(r.left + r.width / 2, r.top + r.height / 2); x = w.x - 115; y = w.y - 35; }
+    const p = {}; t.fields.forEach(f => { if (f.def !== undefined) p[f.k] = f.def; });
+    this.flow.nodes.push({ id, type, x: Math.round(x), y: Math.round(y), p });
+    if (src && insOf(t)) this.flow.links.push([src.id, 0, id]);
+    this.born = new Set([id]); this.select(id); this.render(); this.born = null; this.save();
+  }
+  deleteSel() {
+    if (this.selWire !== null && !this.sel.size) { this.flow.links.splice(this.selWire, 1); this.selWire = null; this.render(); this.save(); return; }
+    if (!this.sel.size) return;
+    const n = this.sel.size;
+    this.flow.nodes = this.flow.nodes.filter(x => !this.sel.has(x.id));
+    this.flow.links = this.flow.links.filter(l => !this.sel.has(l[0]) && !this.sel.has(l[2]));
+    this.sel.clear(); this.selWire = null; this.render(); this.save(); toast(`${n} node${n > 1 ? 's' : ''} deleted`);
+  }
+  copySel() {
+    if (!this.sel.size) return null;
+    const nodes = this.flow.nodes.filter(n => this.sel.has(n.id)), x0 = Math.min(...nodes.map(n => n.x)), y0 = Math.min(...nodes.map(n => n.y));
+    return { nodes: nodes.map(n => ({ id: n.id, type: n.type, title: n.title, p: JSON.parse(JSON.stringify(n.p || {})), x: n.x - x0, y: n.y - y0 })), links: this.flow.links.filter(l => this.sel.has(l[0]) && this.sel.has(l[2])) };
+  }
+  paste(clip, at) {
+    if (!clip || !clip.nodes || !clip.nodes.length) return;
+    const map = {}, base = at || (() => { const r = this.root.getBoundingClientRect(); return this.toWorld(r.left + 120, r.top + 90); })();
+    this.sel.clear(); this.born = new Set();
+    clip.nodes.forEach(n => { const id = this.uid(); map[n.id] = id; this.flow.nodes.push({ id, type: n.type, title: n.title, p: JSON.parse(JSON.stringify(n.p || {})), x: Math.round(base.x + n.x), y: Math.round(base.y + n.y) }); this.sel.add(id); this.born.add(id); });
+    (clip.links || []).forEach(l => { if (map[l[0]] && map[l[2]]) this.flow.links.push([map[l[0]], l[1], map[l[2]]]); });
+    this.render(); this.born = null; this.save();
+  }
+  /* ---- palette (folders = sections, plus presets) ---- */
+  openPalette(x, y, at) {
+    closePops(); const m = $('#nodePal'); this.palAt = at || null;
+    const one = this.sel.size === 1 ? this.node([...this.sel][0]) : null;
+    m.innerHTML = `<div class="ph"><input class="input" id="palQ" placeholder="Search nodes and presets…" autocomplete="off"><div class="note">${one ? `Selected: <b>${esc(one.title || nodeType(one.type).name)}</b> — the new node connects after it` : 'Pick a node. Tip: select a node first to auto-connect.'}</div></div><div class="pb" id="palBody"></div><div class="pf"><button class="btn sm" data-palgo>${I.code}Create a custom node (Scripts)</button></div>`;
+    const draw = q => {
+      q = cleanName(q).toLowerCase(); const items = [];
+      const all = NODE_TYPES.concat(customNodeTypes()).filter(t => this.o.sections.includes(t.section));
+      const folders = this.o.sections.map(sec => [SECTIONS[sec].name, all.filter(t => t.section === sec).map(t => ({ kind: 'node', t }))]);
+      const tools = toolsets().filter(ts => ts.nodes.every(n => this.o.sections.includes(nodeType(n.type).section)));
+      if (tools.length) folders.unshift(['Presets', tools.map(ts => ({ kind: 'preset', ts }))]);
+      const row = (it, i) => it.kind === 'node'
+        ? `<button class="ni" data-pi="${i}"><span class="sdot" style="background:${esc(colorOf(it.t))}"></span><span class="tx">${esc(it.t.name)}<small>${esc(it.t.desc || (insOf(it.t) ? '' : 'Starts a flow · ') + (outsOf(it.t).length > 1 ? 'Branches: ' + outsOf(it.t).join(' / ') : SECTIONS[it.t.section].name))}</small></span>${it.t.custom ? '<span class="badge mine">Mine</span>' : ''}</button>`
+        : `<button class="ni" data-pi="${i}"><span class="sdot" style="background:var(--blue-2)"></span><span class="tx">${esc(it.ts.name)}<small>${it.ts.nodes.length} nodes · ${esc(it.ts.folder)}</small><div class="chain">${it.ts.nodes.slice(0, 8).map(n => `<i style="background:${esc(colorOf(nodeType(n.type)))}"></i>`).join('')}</div></span><span class="badge mine">Preset</span></button>`;
+      const html = folders.map(([f, list]) => {
+        const vis = list.filter(it => !q || (it.kind === 'node' ? [it.t.name, f, it.t.desc] : [it.ts.name, it.ts.folder, f]).join(' ').toLowerCase().includes(q));
+        if (!vis.length) return '';
+        return `<details open><summary>${I.folder}${esc(f)}<span class="c">${vis.length}</span>${I.chev}</summary>${vis.map(it => row(it, items.push(it) - 1)).join('')}</details>`;
+      }).join('');
+      $('#palBody').innerHTML = html || '<div class="empty" style="padding:24px">Nothing found</div>';
+      if (q) { const f = $('#palBody [data-pi]'); if (f) f.classList.add('kb'); }
+      this.palItems = items;
+    };
+    draw(''); placePop(m, x, y);
+    const q = $('#palQ'); setTimeout(() => q.focus(), 30);
+    q.oninput = () => draw(q.value);
+    q.onkeydown = e => {
+      const all = $$('#palBody [data-pi]'); let i = all.findIndex(b => b.classList.contains('kb'));
+      if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); all.forEach(b => b.classList.remove('kb')); i = e.key === 'ArrowDown' ? Math.min(all.length - 1, i + 1) : Math.max(0, i - 1); if (all[i]) { all[i].classList.add('kb'); all[i].scrollIntoView({ block: 'nearest' }); } }
+      else if (e.key === 'Enter') { e.preventDefault(); (all[i] || all[0])?.click(); }
+      else if (e.key === 'Tab') e.preventDefault();
+    };
+    m.onclick = e => {
+      if (e.target.closest('[data-palgo]')) { closePops(); go('scripts'); newNodeScript(this.o.sections.includes('meta') ? 'meta' : 'lead'); return; }
+      const b = e.target.closest('[data-pi]'); if (!b) return; const it = this.palItems[+b.dataset.pi]; closePops();
+      if (it.kind === 'node') this.addNode(it.t.type, this.palAt);
+      else { this.paste({ nodes: it.ts.nodes, links: it.ts.links }, this.palAt); toast(`Preset added: ${it.ts.name}`); }
+    };
+  }
+  async savePreset() {
+    const clip = this.copySel(); if (!clip) return;
+    const name = cleanName(prompt('Preset name', 'My preset') || ''); if (!name) return;
+    const folder = cleanName(prompt('Folder', this.o.title) || '') || this.o.title;
+    const id = 'TOOLSET-' + Date.now().toString(36).toUpperCase();
+    const body = { flowId: id, flowName: name, trigger: 'toolset', status: 'Active', flowJson: JSON.stringify({ name, folder, nodes: clip.nodes, links: clip.links }) };
+    try { await api('saveFlow', body); if (!demo) S.flows.push(body); toast(`Preset saved ✓ — find it under + Node → Presets`); }
+    catch (e) { toast('Could not save preset: ' + e.message, true); }
+  }
+  /* ---- events ---- */
+  bind() {
+    const R = this.root, ptrs = new Map(); let act = null, pinch = null;
+    R.addEventListener('wheel', e => { if (e.target.closest('.fx-insp')) return; wheelNav(e, R.getBoundingClientRect(), (x, y, f) => this.zoomAt(x, y, this.view.k * f), (dx, dy) => { this.view.x += dx; this.view.y += dy; this.apply(); }); }, { passive: false });
+    R.addEventListener('pointerdown', e => {
+      const t = e.target;
+      if (t.closest('.fx-bar,.fx-insp,.ctrls,.hint') || e.button === 2) return;
+      R.focus({ preventScroll: true }); FlowCanvas.active = this;
+      const panReq = e.button === 1 || KEYS.space;
+      if (!panReq) {
+        const wd = t.closest('[data-wdel]'); if (wd) { this.flow.links.splice(+wd.dataset.wdel, 1); this.selWire = null; this.render(); this.save(); return; }
+        const pout = t.closest('[data-pout]'), pin = t.closest('[data-pin]'), nd = t.closest('.fx-node'), w = t.closest('.wire');
+        if (pout) { act = { type: 'wire', from: nd.dataset.id, k: +pout.dataset.pout }; }
+        else if (pin) {
+          const idx = this.flow.links.map((l, i) => l[2] === nd.dataset.id ? i : -1).filter(i => i > -1).pop(); if (idx === undefined) return;
+          const l = this.flow.links.splice(idx, 1)[0]; act = { type: 'wire', from: l[0], k: l[1], detached: true }; this.drawWires();
+        }
+        else if (nd) {
+          const id = nd.dataset.id, add = e.shiftKey || e.ctrlKey || e.metaKey;
+          if (add) { this.sel.has(id) ? this.sel.delete(id) : this.sel.add(id); this.syncSel(); } else if (!this.sel.has(id)) this.select(id);
+          if (!this.sel.has(id)) return;
+          this.selWire = null;
+          act = { type: 'move', sx: e.clientX, sy: e.clientY, group: [...this.sel].map(i => { const n = this.node(i); return { n, ox: n.x, oy: n.y, el: this.nodesEl.querySelector(`.fx-node[data-id="${CSS.escape(i)}"]`) }; }), moved: false };
+        }
+        else if (w) { this.selWire = +w.dataset.w; this.sel.clear(); this.syncSel(); this.drawWires(); return; }
+        else {
+          if (this.selWire !== null) { this.selWire = null; this.drawWires(); }
+          if (e.pointerType !== 'touch') { const r = R.getBoundingClientRect(); act = { type: 'box', x0: e.clientX - r.left, y0: e.clientY - r.top, base: (e.shiftKey || e.ctrlKey || e.metaKey) ? new Set(this.sel) : new Set(), moved: false }; }
+        }
+      }
+      e.preventDefault(); ptrs.set(e.pointerId, { x: e.clientX, y: e.clientY }); R.setPointerCapture(e.pointerId);
+      if (!act && ptrs.size === 1) { act = { type: 'pan', x: e.clientX, y: e.clientY, vx: this.view.x, vy: this.view.y }; R.classList.add('panning'); }
+      if (ptrs.size === 2) { const [a, b] = [...ptrs.values()]; pinch = { d: Math.hypot(a.x - b.x, a.y - b.y), k: this.view.k }; if (act && (act.type === 'pan' || act.type === 'box')) { act = null; this.box.style.display = 'none'; } }
+    });
+    R.addEventListener('pointermove', e => {
+      this.mouse = { x: e.clientX, y: e.clientY };
+      if (!ptrs.has(e.pointerId)) return; ptrs.set(e.pointerId, { x: e.clientX, y: e.clientY });
+      if (pinch && ptrs.size === 2) { const [a, b] = [...ptrs.values()], r = R.getBoundingClientRect(); this.zoomAt((a.x + b.x) / 2 - r.left, (a.y + b.y) / 2 - r.top, pinch.k * Math.hypot(a.x - b.x, a.y - b.y) / pinch.d); return; }
+      if (!act) return;
+      if (act.type === 'pan') { this.view.x = act.vx + e.clientX - act.x; this.view.y = act.vy + e.clientY - act.y; this.apply(); }
+      else if (act.type === 'move') {
+        const dx = (e.clientX - act.sx) / this.view.k, dy = (e.clientY - act.sy) / this.view.k;
+        if (!act.moved && Math.hypot(dx, dy) * this.view.k < 3) return; act.moved = true;
+        act.group.forEach(g => { g.n.x = g.ox + dx; g.n.y = g.oy + dy; if (g.el) { g.el.style.left = g.n.x + 'px'; g.el.style.top = g.n.y + 'px'; } }); this.drawWires();
+      }
+      else if (act.type === 'box') {
+        const r = R.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
+        if (!act.moved && Math.hypot(x - act.x0, y - act.y0) < 4) return; act.moved = true;
+        const Q = marqueeRect(this.box, act.x0, act.y0, x, y), v = this.view;
+        const a = { x: (Q.l - v.x) / v.k, y: (Q.t - v.y) / v.k }, b = { x: (Q.r - v.x) / v.k, y: (Q.b - v.y) / v.k };
+        this.sel = new Set(act.base);
+        this.nodesEl.querySelectorAll('.fx-node').forEach(el => { const x1 = el.offsetLeft, y1 = el.offsetTop, x2 = x1 + el.offsetWidth, y2 = y1 + el.offsetHeight; if (x1 < b.x && x2 > a.x && y1 < b.y && y2 > a.y) this.sel.add(el.dataset.id); });
+        this.nodesEl.querySelectorAll('.fx-node').forEach(el => el.classList.toggle('sel', this.sel.has(el.dataset.id)));
+      }
+      else if (act.type === 'wire') {
+        const el = document.elementFromPoint(e.clientX, e.clientY), tn = el && el.closest('.fx-node'), ok = tn && tn.dataset.id !== act.from && insOf(nodeType(this.node(tn.dataset.id).type));
+        this.nodesEl.querySelectorAll('.fx-port.in').forEach(p => p.classList.toggle('hot', !!ok && p.parentElement === tn));
+        this.drawWires(wirePath(this.portXY(act.from, 'out', act.k), ok ? this.portXY(tn.dataset.id, 'in') : this.toWorld(e.clientX, e.clientY)));
+      }
+    });
+    const up = e => {
+      const had = ptrs.has(e.pointerId); ptrs.delete(e.pointerId); if (ptrs.size < 2) pinch = null;
+      if (!had || ptrs.size) return; R.classList.remove('panning');
+      if (act && act.type === 'move') { if (act.moved) { act.group.forEach(g => { g.n.x = Math.round(g.n.x / 11) * 11; g.n.y = Math.round(g.n.y / 11) * 11; }); this.render(); this.save(); } }
+      if (act && act.type === 'box') { this.box.style.display = 'none'; if (!act.moved && !act.base.size) this.sel.clear(); this.syncSel(); }
+      if (act && act.type === 'wire') {
+        const el = document.elementFromPoint(e.clientX, e.clientY), tn = el && el.closest('.fx-node');
+        const to = tn && tn.dataset.id !== act.from && insOf(nodeType(this.node(tn.dataset.id).type)) ? tn.dataset.id : null;
+        if (to && !this.flow.links.some(l => l[0] === act.from && l[1] === act.k && l[2] === to)) this.flow.links.push([act.from, act.k, to]);
+        if (to || act.detached) this.save();
+        this.nodesEl.querySelectorAll('.fx-port.in.hot').forEach(p => p.classList.remove('hot')); this.drawWires();
+      }
+      act = null;
+    };
+    R.addEventListener('pointerup', up); R.addEventListener('pointercancel', up);
+    R.addEventListener('auxclick', e => { if (e.button === 1) e.preventDefault(); });
+    R.addEventListener('dblclick', e => { const w = e.target.closest('.wire'); if (w) { this.flow.links.splice(+w.dataset.w, 1); this.selWire = null; this.render(); this.save(); } });
+    R.addEventListener('contextmenu', e => { if (e.target.closest('.fx-bar,.fx-insp,.ctrls,.hint')) return; e.preventDefault(); const nd = e.target.closest('.fx-node'); if (nd && !this.sel.has(nd.dataset.id)) this.select(nd.dataset.id); if (!nd) this.select(null); this.openPalette(e.clientX, e.clientY, nd ? null : this.toWorld(e.clientX, e.clientY)); });
+    R.addEventListener('click', e => {
+      const b = e.target.closest('[data-fx]'); if (!b || b.disabled) return; const a = b.dataset.fx;
+      if (a === 'add') { e.stopPropagation(); const r = b.getBoundingClientRect(); this.openPalette(r.left, r.bottom + 6); }
+      if (a === 'del') this.deleteSel();
+      if (a === 'preset') this.savePreset();
+      if (a === 'dup') this.paste(this.copySel(), (() => { const n = this.node([...this.sel][0]); return { x: n.x + 40, y: n.y + 140 }; })());
+      if (a === 'close') this.select(null);
+      if (a === 'zin') this.zoomAt(R.clientWidth / 2, R.clientHeight / 2, this.view.k * 1.2);
+      if (a === 'zout') this.zoomAt(R.clientWidth / 2, R.clientHeight / 2, this.view.k / 1.2);
+      if (a === 'fit') this.fit();
+    });
+    this.insp.addEventListener('input', e => {
+      const f = e.target.closest('[data-fp]'); if (!f) return; const n = this.node([...this.sel][0]); if (!n) return;
+      if (f.dataset.fp === '__title') n.title = cleanName(f.value).slice(0, 40); else n.p[f.dataset.fp] = f.type === 'number' ? (f.value === '' ? '' : +f.value) : f.value;
+      const el = this.nodesEl.querySelector(`.fx-node[data-id="${CSS.escape(n.id)}"]`); if (el) { el.outerHTML = this.nodeHTML(n, 0); this.syncSelOnly(); this.drawWires(); }
+      this.save();
+    });
+    R.querySelector('.minimap').addEventListener('click', e => { const mm = e.currentTarget, r = mm.getBoundingClientRect(), s = mm._s || 1, b = mm._b || { x1: 0, y1: 0 }; const wx = (e.clientX - r.left) / s + b.x1, wy = (e.clientY - r.top) / s + b.y1; this.view.x = R.clientWidth / 2 - wx * this.view.k; this.view.y = R.clientHeight / 2 - wy * this.view.k; this.apply(); });
+    R.addEventListener('pointerenter', () => { FlowCanvas.active = this; });
+  }
+  syncSelOnly() { this.nodesEl.querySelectorAll('.fx-node').forEach(e => e.classList.toggle('sel', this.sel.has(e.dataset.id))); }
+  key(e) {
+    const k = e.key.toLowerCase(), mod = e.ctrlKey || e.metaKey;
+    if (k === 'delete' || k === 'backspace') { e.preventDefault(); this.deleteSel(); return true; }
+    if (k === 'tab') { e.preventDefault(); const m = this.mouse, r = this.root.getBoundingClientRect(), inside = m && m.x > r.left && m.x < r.right && m.y > r.top && m.y < r.bottom; this.openPalette(inside ? m.x : r.left + 80, inside ? m.y : r.top + 60, inside && this.sel.size !== 1 ? this.toWorld(m.x, m.y) : null); return true; }
+    if (mod && k === 'a') { e.preventDefault(); this.sel = new Set(this.flow.nodes.map(n => n.id)); this.syncSel(); return true; }
+    if (mod && k === 'c') { const c = this.copySel(); if (c) { FlowCanvas.clip = c; store.set('leadnode.clip', c); toast(`${c.nodes.length} node${c.nodes.length > 1 ? 's' : ''} copied`); } return true; }
+    if (mod && k === 'v') { const c = FlowCanvas.clip || store.get('leadnode.clip'); const m = this.mouse; this.paste(c, m ? this.toWorld(m.x, m.y) : null); return true; }
+    if (mod && k === 'd') { e.preventDefault(); const c = this.copySel(); if (c) { const n = this.node([...this.sel][0]); this.paste(c, { x: Math.min(...[...this.sel].map(i => this.node(i).x)) + 40, y: Math.min(...[...this.sel].map(i => this.node(i).y)) + 140 }); } return true; }
+    if (k === 'f' && !mod) { this.fit(); return true; }
+    if (k === 'escape') { if (this.sel.size || this.selWire !== null) { this.sel.clear(); this.selWire = null; this.syncSel(); this.drawWires(); return true; } }
+    return false;
+  }
+}
+function toolsets() {
+  return (S.flows || []).filter(f => String(f.trigger) === 'toolset').map(f => { try { const o = JSON.parse(f.flowJson); if (!Array.isArray(o.nodes) || !o.nodes.length) return null; return { id: String(f.flowId), name: cleanName(o.name) || 'Preset', folder: cleanName(o.folder) || 'Presets', nodes: o.nodes, links: o.links || [] }; } catch (e) { return null; } }).filter(Boolean);
+}
+addEventListener('keydown', e => {
+  const fc = FlowCanvas.active; if (!fc || !fc.root.offsetParent) return;
+  if (e.target.closest && e.target.closest('input,textarea,select,[contenteditable]')) return;
+  if ($('.modal.show') || $('#panel.show') || ($('.pop.show') && e.key !== 'Escape')) return;
+  if (fc.key(e)) e.stopImmediatePropagation();
+}, true);
+
+/* ---- canvases ---- */
+const seedFlow = (nodes, links) => ({ nodes: nodes.map(([id, type, x, y, p, title]) => ({ id, type, x, y, p: p || {}, title })), links });
+const CANVASES = {};
+function adsCanvas() {
+  if (CANVASES.ads) return CANVASES.ads;
+  return CANVASES.ads = new FlowCanvas({
+    root: $('#adsCanvas'), key: 'ADS-CANVAS', title: 'Meta Ads', sections: ['meta', 'trigger', 'lead', 'whatsapp', 'logic', 'ai', 'n8n'],
+    status: 'Design mode — runs when your ad account is connected',
+    seed: () => seedFlow([
+      ['n1', 'meta.audience', 0, 0, { src: 'Lookalike of CRM stage', stage: 'Won', pct: 1 }],
+      ['n2', 'meta.campaign', 0, 160, { name: 'Cafe Chairs', objective: 'Leads', budget: 800, status: 'Active' }],
+      ['n3', 'meta.adset', 330, 60, { location: 'Mumbai', age: '25-45', placement: 'Advantage+' }],
+      ['n4', 'meta.ad', 660, 60, { format: 'Video', headline: 'Premium cafe chairs from ₹2,499', cta: 'Get quote' }],
+      ['n5', 'meta.form', 990, 60, { form: 'Cafe seating enquiry', questions: 'Name, Phone, City, Seats needed' }],
+      ['n6', 'lead.create', 1320, 60, { stage: stages()[0], tag: 'Hot' }],
+      ['n7', 'wa.template', 1650, 60, { template: 'welcome_offer', lang: 'en' }],
+      ['n8', 'meta.rule', 330, 300, { metric: 'Cost per lead', op: 'above', value: 250, action: 'Pause ad' }],
+      ['n9', 'trg.stage', 990, 330, { stage: 'Won' }],
+      ['n10', 'meta.capi', 1320, 330, { event: 'Purchase' }],
+    ], [['n1', 0, 'n3'], ['n2', 0, 'n3'], ['n3', 0, 'n4'], ['n4', 0, 'n5'], ['n5', 0, 'n6'], ['n6', 0, 'n7'], ['n2', 0, 'n8'], ['n9', 0, 'n10']]),
+  });
+}
+function autoCanvas() {
+  if (CANVASES.auto) return CANVASES.auto;
+  return CANVASES.auto = new FlowCanvas({
+    root: $('#autoCanvas'), key: 'AUTOMATION', title: 'Automation', sections: ['trigger', 'lead', 'whatsapp', 'logic', 'ai', 'n8n', 'meta'],
+    status: 'Design mode — flows start running in Step 8',
+    seed: () => seedFlow([
+      ['n1', 'trg.newlead', 0, 120, { source: 'Any' }],
+      ['n2', 'logic.if', 330, 120, { field: 'Budget', op: 'above', value: '100000' }],
+      ['n3', 'lead.tag', 660, 20, { tag: 'Hot' }],
+      ['n4', 'wa.template', 990, 20, { template: 'welcome_offer', lang: 'en' }],
+      ['n5', 'wa.wait', 1320, 20, { hours: 24 }],
+      ['n6', 'lead.assign', 1650, -40, { member: 'Round-robin' }],
+      ['n7', 'lead.followup', 1650, 120, { days: 1 }],
+      ['n8', 'logic.wait', 660, 260, { amount: 1, unit: 'days' }],
+      ['n9', 'wa.text', 990, 260, { text: 'Hi! Sharing our catalogue — what seating are you looking for?' }],
+      ['n10', 'n8n.send', 330, 360, { url: 'https://', data: 'Lead' }],
+    ], [['n1', 0, 'n2'], ['n2', 0, 'n3'], ['n3', 0, 'n4'], ['n4', 0, 'n5'], ['n5', 0, 'n6'], ['n5', 1, 'n7'], ['n2', 1, 'n8'], ['n8', 0, 'n9'], ['n1', 0, 'n10']]),
+  });
+}
+
+
+/* ================= login (Supabase Auth) ================= */
+const AUTH = { client: null, session: null, mode: 'in', preview: false };
+const sbConf = () => store.get('leadnode.supabase') || {};
+function loadScriptOnce(src) { return new Promise((res, rej) => { if ($(`script[src="${src}"]`)) return res(); const sc = document.createElement('script'); sc.src = src; sc.onload = res; sc.onerror = () => rej(new Error('Could not load the login library')); document.head.appendChild(sc); }); }
+async function authClient() {
+  const c = sbConf(); if (!c.url || !c.key) return null;
+  if (AUTH.client) return AUTH.client;
+  await loadScriptOnce('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js');
+  AUTH.client = window.supabase.createClient(c.url, c.key, { auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true } });
+  AUTH.client.auth.onAuthStateChange((ev, sess) => {
+    AUTH.session = sess;
+    if (ev === 'PASSWORD_RECOVERY') showAuth('reset');
+    if (ev === 'SIGNED_OUT') showAuth('in');
+  });
+  return AUTH.client;
+}
+/** Returns true when the app may load (logins off, or a valid session) */
+async function authInit() {
+  const c = sbConf(); if (!c.url || !c.key) return true;
+  try { const cl = await authClient(); const { data } = await cl.auth.getSession(); AUTH.session = data.session; }
+  catch (e) { toast('Login service unavailable: ' + e.message, true); return true; }
+  if (AUTH.session) return true;
+  showAuth('in'); return false;
+}
+function authUser() { const u = AUTH.session && AUTH.session.user; return u ? { email: u.email, name: (u.user_metadata && (u.user_metadata.full_name || u.user_metadata.name)) || u.email } : null; }
+function showAuth(mode, preview) {
+  AUTH.mode = mode || 'in'; AUTH.preview = !!preview;
+  const b = brand(); $$('#auth .brandTxt').forEach(e => e.textContent = b.brandName);
+  $$('#auth .brand-logo').forEach(e => { const u = safeUrl(b.logoUrl); e.style.backgroundImage = u ? `url('${u}')` : ''; e.innerHTML = u ? '' : LOGO_DEFAULT; });
+  $('#authExit').hidden = !preview; $('#auth').hidden = false; closePanel(); $$('.modal.show').forEach(m => hideModal('#' + m.id));
+  drawAuth();
+}
+function hideAuth() { $('#auth').hidden = true; }
+function drawAuth() {
+  const m = AUTH.mode, up = m === 'up', forgot = m === 'forgot', reset = m === 'reset';
+  $('#authTitle').textContent = up ? 'Create your workspace' : forgot ? 'Reset your password' : reset ? 'Set a new password' : 'Welcome back';
+  $('#authSub').textContent = up ? 'Free to start. Your team can join later.' : forgot ? 'We will email you a reset link.' : reset ? 'Choose a new password for your account.' : 'Sign in to your workspace';
+  $('#authTabs').hidden = forgot || reset;
+  $$('#authTabs .segb').forEach(x => x.classList.toggle('active', x.dataset.auth === (up ? 'up' : 'in')));
+  $$('.auth-up').forEach(x => x.hidden = !up);
+  $('.auth-mail').hidden = reset; $('.auth-pass').hidden = forgot; $('#authForgot').hidden = up || reset;
+  $('#auPass').autocomplete = up || reset ? 'new-password' : 'current-password';
+  $('#authGo').textContent = up ? 'Create account' : forgot ? 'Send reset link' : reset ? 'Save password' : 'Sign in';
+  $('#authGoogle').hidden = forgot || reset; $('.auth-or').hidden = forgot || reset;
+  authMsg('');
+}
+function authMsg(t, ok) { const e = $('#authMsg'); e.textContent = t || ''; e.className = 'auth-msg' + (t ? (ok ? ' ok' : ' err') : ''); }
+const AUTH_ERR = { 'Invalid login credentials': 'Wrong email or password.', 'Email not confirmed': 'Please confirm your email first — check your inbox.', 'User already registered': 'This email already has an account. Sign in instead.' };
+async function authSubmit(e) {
+  e.preventDefault();
+  const email = $('#auEmail').value.trim(), pass = $('#auPass').value, m = AUTH.mode;
+  if (m !== 'reset' && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return authMsg('Enter a valid email.');
+  if ((m === 'in' || m === 'up' || m === 'reset') && pass.length < 8) return authMsg('Password must be at least 8 characters.');
+  if (m === 'up' && !$('#auBiz').value.trim()) return authMsg('Enter your business name.');
+  if (AUTH.preview || !sbConf().url) return authMsg('Preview only — add your Supabase details in Settings → Accounts to make this work.', true);
+  const btn = $('#authGo'), label = btn.textContent; btn.disabled = true; btn.textContent = 'Please wait…';
+  try {
+    const cl = await authClient(), redirectTo = location.origin + location.pathname;
+    let r;
+    if (m === 'in') r = await cl.auth.signInWithPassword({ email, password: pass });
+    if (m === 'up') r = await cl.auth.signUp({ email, password: pass, options: { emailRedirectTo: redirectTo, data: { full_name: $('#auName').value.trim(), business_name: $('#auBiz').value.trim() } } });
+    if (m === 'forgot') r = await cl.auth.resetPasswordForEmail(email, { redirectTo });
+    if (m === 'reset') r = await cl.auth.updateUser({ password: pass });
+    if (r.error) throw r.error;
+    if (m === 'forgot') return authMsg('Check your email for the reset link.', true);
+    if (m === 'up' && !r.data.session) return authMsg('Account created — confirm your email, then sign in.', true);
+    AUTH.session = (r.data && r.data.session) || AUTH.session; hideAuth(); toast(m === 'reset' ? 'Password updated ✓' : 'Signed in ✓'); load();
+  } catch (err) { authMsg(AUTH_ERR[err.message] || err.message || 'Something went wrong'); }
+  finally { btn.disabled = false; btn.textContent = label; }
+}
+async function authGoogle() {
+  if (AUTH.preview || !sbConf().url) return authMsg('Preview only — add your Supabase details in Settings → Accounts to make this work.', true);
+  try { const cl = await authClient(); const r = await cl.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: location.origin + location.pathname } }); if (r.error) throw r.error; }
+  catch (err) { authMsg(err.message.includes('provider is not enabled') ? 'Google login is not switched on in Supabase yet (Authentication → Providers → Google).' : err.message); }
+}
+function fillAcct() {
+  const c = sbConf(), u = authUser();
+  $('#sbUrl').value = c.url || ''; $('#sbKey').value = c.key || '';
+  $('#sbStatus').className = 'status'; $('#sbStatus').textContent = c.url ? 'Logins are on.' : 'Logins are off — the site uses your API key only.';
+  $('#acctSigned').hidden = !u;
+  if (u) $('#acctSigned').innerHTML = `${avatar(u.name, '', brand().userPhoto)}<div class="grow"><b>${esc(u.name)}</b><small>${esc(u.email)}</small></div><button class="btn sm" id="sbOut">Sign out</button>`;
+}
+(function authEvents() {
+  $('#authForm').addEventListener('submit', authSubmit);
+  $('#authTabs').addEventListener('click', e => { const b = e.target.closest('[data-auth]'); if (b) { AUTH.mode = b.dataset.auth; drawAuth(); } });
+  $('#authForgot').onclick = e => { e.preventDefault(); AUTH.mode = 'forgot'; drawAuth(); };
+  $('#auEye').onclick = () => { const p = $('#auPass'), show = p.type === 'password'; p.type = show ? 'text' : 'password'; $('#auEye').textContent = show ? 'Hide' : 'Show'; };
+  $('#authGoogle').onclick = authGoogle;
+  $('#authExit').onclick = hideAuth;
+  $('#sbPreview').onclick = () => showAuth('in', true);
+  $('#sbSave').onclick = async () => {
+    const url = $('#sbUrl').value.trim().replace(/\/+$/, ''), key = $('#sbKey').value.trim(), st = $('#sbStatus');
+    if (!/^https:\/\/[a-z0-9-]+\.supabase\.(co|in)$/i.test(url)) { st.className = 'status err'; st.textContent = 'The URL should look like https://abcdefgh.supabase.co'; return; }
+    if (!/^(eyJ[\w-]+\.[\w-]+\.[\w-]+|sb_publishable_[\w-]+)$/.test(key)) { st.className = 'status err'; st.textContent = 'Use the anon / publishable key (starts with eyJ… or sb_publishable_…). Never the service_role key.'; return; }
+    if (/^eyJ/.test(key)) { try { const p = JSON.parse(atob(key.split('.')[1].replace(/-/g, '+').replace(/_/g, '/'))); if (p.role === 'service_role') { st.className = 'status err'; st.textContent = 'That is the service_role key — it must never go in a website. Use the anon key.'; return; } } catch (e) { } }
+    store.set('leadnode.supabase', { url, key }); AUTH.client = null;
+    st.className = 'status ok'; st.textContent = '✓ Saved. Logins are on — next time the site opens it will ask to sign in.';
+  };
+  $('#sbClear').onclick = () => { if (!confirm('Turn off logins on this browser?')) return; store.del('leadnode.supabase'); AUTH.client = null; AUTH.session = null; fillAcct(); toast('Logins turned off'); };
+  $('#stab-acct').addEventListener('click', async e => { if (e.target.id === 'sbOut') { try { const cl = await authClient(); await cl.auth.signOut(); } catch (err) { } AUTH.session = null; hideModal('#setModal'); showAuth('in'); } });
 })();
 
 /* ================= actions ================= */
@@ -2467,7 +3272,7 @@ function applyBranding() {
 }
 
 /* ================= settings modal ================= */
-function setSTab(t) { $$('.segb').forEach(b => b.classList.toggle('active', b.dataset.stab === t)); $('#stab-brand').hidden = t !== 'brand'; $('#stab-conn').hidden = t !== 'conn'; }
+function setSTab(t) { $$('#setModal .segb').forEach(b => b.classList.toggle('active', b.dataset.stab === t)); $('#stab-brand').hidden = t !== 'brand'; $('#stab-conn').hidden = t !== 'conn'; $('#stab-acct').hidden = t !== 'acct'; if (t === 'acct') fillAcct(); }
 function openSettings(tab) {
   const b = brand();
   upStore.brand = { logoUrl: b.logoUrl, userPhoto: b.userPhoto };
@@ -2707,6 +3512,7 @@ function go(name) {
   if (name === 'team') renderTeam(true);
   if (name === 'scripts') renderScripts();
   if (name === 'ads') renderAds(true);
+  if (name === 'automation') requestAnimationFrame(() => autoCanvas().sync());
   if (name === 'templates' && stale) renderTemplates();
   closePops();
   window.scrollTo(0, 0);
@@ -2745,8 +3551,10 @@ document.addEventListener('keydown', e => {
   const onPipe = $('#v-pipeline').classList.contains('active') && !$('.modal.show') && !$('#panel.show');
   if ((e.key === 'Delete' || e.key === 'Backspace') && !typing) {
     if (selWire !== null) { e.preventDefault(); deleteWire(selWire); return; }
-    if (selNode && onPipe) { e.preventDefault(); requestDeleteStage(selNode); return; }
+    if (selNodes.size && onPipe) { e.preventDefault(); requestDeleteStage([...selNodes]); return; }
   }
+  if (onPipe && !typing && (e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'a') { e.preventDefault(); stages().forEach(n => selNodes.add(n)); selNode = stages()[0]; syncSel(); return; }
+  if (e.key === 'Escape' && onPipe && selNodes.size && !$('.pop.show')) { selectNode(null); return; }
   if (e.key === 'Tab' && onPipe && !typing && !$('#nodePal.show')) { e.preventDefault(); const cv = $('#canvas').getBoundingClientRect(); const at = lastMouse.in ? lastMouse : { x: cv.left + cv.width / 2 - 170, y: cv.top + 80 }; openPalette(at.x, at.y, lastMouse.in && !selNode ? screenToWorld(lastMouse.x, lastMouse.y) : null); return; }
   if (e.key === 'Escape') { if ($('.pop.show')) { closePops(); return; } if ($('.modal.show')) $$('.modal.show').forEach(m => hideModal('#' + m.id)); else closePanel(); }
 });
@@ -2763,7 +3571,7 @@ setTheme(store.get('leadnode.theme') || 'light');
 
 /* ================= start ================= */
 go(location.hash.slice(1) || 'dashboard');
-load();
+authInit().then(ok => { if (ok) load(); });
 </script>
 </body>
 </html>
