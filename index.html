@@ -64,13 +64,16 @@ svg.i{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8;stro
 .top{display:flex;align-items:center;gap:16px;padding:10px 14px;margin-bottom:18px}
 .brand{font-weight:800;font-size:20px;letter-spacing:-.02em;display:flex;align-items:center;gap:8px}
 .brand small{font-weight:600;color:var(--muted);font-size:12px}
-.nav{display:flex;gap:4px;margin-left:10px;overflow-x:auto;scrollbar-width:none}
+.nav{display:flex;gap:4px;margin-left:10px;overflow-x:auto;scrollbar-width:none;min-width:0;flex:0 1 auto}
+.mobonly{display:none!important}
 .nav::-webkit-scrollbar{display:none}
 .nav a{display:flex;align-items:center;gap:7px;padding:8px 12px;border-radius:var(--r-ctl);color:var(--muted);text-decoration:none;font-weight:600;white-space:nowrap}
 .nav a:hover{color:var(--text);background:var(--glass-2)}
 .nav a.active{color:var(--text);background:var(--glass-3);box-shadow:0 1px 0 var(--line)}
 .top .grow{flex:1}
 .search{display:flex;align-items:center;gap:8px;background:var(--glass-2);border:1px solid var(--stroke);border-radius:var(--r-ctl);padding:8px 12px;min-width:220px;color:var(--muted)}
+.top .search{min-width:150px;flex:0 1 240px}
+@media (max-width:1180px){.top .search{display:none}}
 .search input{border:0;outline:0;background:transparent;width:100%;color:var(--text)}
 .ibtn{width:38px;height:38px;border-radius:var(--r-ctl);border:1px solid var(--stroke);background:var(--glass-2);display:grid;place-items:center;color:var(--text);position:relative}
 .ibtn:hover{background:var(--glass-3)}
@@ -225,7 +228,7 @@ textarea.input{min-height:84px;resize:vertical}
 .minimap{width:170px;height:96px;background:var(--glass-3);border:1px solid var(--line-2);border-radius:var(--r-ctl);position:relative;overflow:hidden;box-shadow:var(--shadow);cursor:pointer}
 .minimap i{position:absolute;background:var(--blue-soft);border:1px solid var(--blue);border-radius:2px}
 .minimap .vp{position:absolute;border:1.5px solid var(--blue-2);background:rgba(111,143,232,.08);border-radius:3px}
-.hint{position:absolute;left:14px;bottom:14px;display:flex;gap:14px;align-items:center;font-size:12px;color:var(--muted);background:var(--glass-3);border:1px solid var(--line-2);padding:7px 12px;border-radius:var(--r-ctl);z-index:5}
+.hint{pointer-events:none;position:absolute;left:14px;bottom:14px;display:flex;gap:14px;align-items:center;font-size:12px;color:var(--muted);background:var(--glass-3);border:1px solid var(--line-2);padding:7px 12px;border-radius:var(--r-ctl);z-index:5}
 .lg{display:flex;align-items:center;gap:6px}
 .lg i{display:inline-block;width:22px;border-top:2px solid var(--blue)}
 .lg i.p{border-color:var(--coral)}.lg i.w{border-top-style:dashed;border-color:var(--coral)}
@@ -290,8 +293,8 @@ textarea.input{min-height:84px;resize:vertical}
 .scr-item.active{background:var(--blue-soft);color:var(--blue-2);border-color:var(--stroke)}
 .scr-item .nm{min-width:0;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .scr-ed{padding:16px;display:flex;flex-direction:column;gap:12px;min-width:0}
-.scr-ed .top{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.scr-ed .top h3{margin:0;font-size:17px;flex:1;min-width:0}
+.scr-top{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.scr-top h3{margin:0;font-size:17px;flex:1;min-width:0}
 .badge.js{color:#B7861A;background:var(--yellow-soft)}
 :root[data-theme="dark"] .badge.js{color:var(--yellow)}
 .scr-meta{grid-template-columns:2fr 1fr}
@@ -514,6 +517,33 @@ textarea.input.code{min-height:320px}
 .run-filter{display:flex;justify-content:flex-end}
 @media (max-width:980px){.n8det-b{grid-template-columns:1fr}.n8side{border-left:0;border-top:1px solid var(--line);max-height:none}.n8canvas{height:340px}}
 @media (prefers-reduced-motion:no-preference){.n8n{animation:nodeIn .45s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(var(--i,0)*45ms)}.n8n.running{animation:pulseRun 1s ease-in-out infinite}}
+
+.n8n{cursor:pointer;user-select:none}
+.n8n.pick{box-shadow:0 0 0 3px var(--blue-soft);border-color:var(--blue-2)}
+.n8n.need{border-color:var(--coral);background:color-mix(in srgb,var(--coral) 8%,var(--glass-3))}
+.n8n.need .n8ic{background:var(--coral)}
+.n8n.need .n8st{background:var(--coral)}
+.n8n.ready .n8ic{background:var(--faint)}
+.n8n.success .n8ic{background:var(--c)}
+.n8legend{display:flex;gap:12px;font-size:11.5px;color:var(--muted);flex-wrap:wrap}
+.n8legend span{display:flex;align-items:center;gap:5px}.n8legend i{width:10px;height:10px;border-radius:3px;display:inline-block}
+.lg-need{background:var(--coral)}.lg-ready{background:var(--faint)}.lg-ok{background:var(--green)}
+.n8prog{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;font-size:12px;color:var(--muted)}.n8prog b{color:var(--text)}
+.n8todo{display:flex;flex-direction:column;gap:6px}
+.n8todo-i{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:9px 10px;border:1px solid color-mix(in srgb,var(--coral) 40%,var(--line-2));border-radius:var(--r-ctl);background:var(--glass);cursor:pointer;color:var(--text)}
+.n8todo-i:hover{border-color:var(--blue-2)}
+.n8todo-i.ok{border-color:var(--line-2)}
+.n8todo-i .cdot{flex:none;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:11px;font-weight:800;background:var(--coral-soft);color:var(--coral)}
+.n8todo-i.ok .cdot{background:var(--green-soft);color:var(--green)}
+.n8todo-i .tx{flex:1;min-width:0}.n8todo-i b{display:block;font-size:13px}.n8todo-i small{font-size:11.5px;color:var(--muted)}.n8todo-i .go{color:var(--faint);font-size:18px}
+.n8back{align-self:flex-start;padding-left:0}
+.n8nh{display:flex;align-items:center;gap:10px}.n8nh b{display:block;font-size:15px}.n8nh small{font-size:12px}.n8nh .n8ic{width:34px;height:34px}
+.n8keyst{font-size:12.5px;font-weight:700;padding:8px 10px;border-radius:var(--r-ctl);background:var(--coral-soft);color:var(--coral)}
+.n8keyst.ok{background:var(--green-soft);color:var(--green)}
+.n8where{padding:10px 12px;border-radius:var(--r-ctl);background:var(--glass);border:1px solid var(--line);display:flex;flex-direction:column;gap:6px;align-items:flex-start}
+.n8where b{font-size:12.5px}.n8where p{margin:0;font-size:12.5px;color:var(--muted);line-height:1.45}
+.input.need{border-color:color-mix(in srgb,var(--coral) 60%,transparent)}
+:root:not([data-theme="dark"]) .n8keyst{color:#B3263A}:root:not([data-theme="dark"]) .n8keyst.ok{color:#1B7246}
 @keyframes pulseRun{50%{box-shadow:0 0 0 8px rgba(111,143,232,.08)}}
 
 /* ---------- side panel ---------- */
@@ -555,13 +585,14 @@ textarea.input.code{min-height:320px}
 .notebox{display:flex;flex-direction:column;gap:8px;background:var(--glass);border:1px solid var(--line);border-radius:var(--r-ctl);padding:10px}
 .notebox .row{display:flex;gap:8px}
 .p-foot{padding:12px 18px;border-top:1px solid var(--line);display:flex;gap:10px}
-.p-foot .btn{flex:1;justify-content:center}
+.p-foot .btn{flex:1;justify-content:center;min-width:0}
+.ell{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
 
 /* ---------- modal ---------- */
-.modal{position:fixed;inset:0;display:grid;place-items:center;z-index:60;padding:16px;opacity:0;pointer-events:none;transition:.2s}
+.modal{position:fixed;inset:0;display:grid;grid-template-columns:minmax(0,1fr);place-items:center;z-index:60;padding:16px;opacity:0;pointer-events:none;transition:.2s}
 .modal.show{opacity:1;pointer-events:auto}
-.modal .box{width:680px;max-width:100%;max-height:calc(100vh - 32px);overflow:auto;background:var(--glass-3);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid var(--stroke);border-radius:14px;box-shadow:var(--shadow-2);padding:20px}
-.modal .box.narrow{width:480px}
+.modal .box{width:min(680px,100%);max-width:100%;max-height:calc(100vh - 32px);overflow:auto;background:var(--glass-3);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid var(--stroke);border-radius:14px;box-shadow:var(--shadow-2);padding:20px}
+.modal .box.narrow{width:min(480px,100%)}
 .m-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
 .m-head h2{margin:0;font-size:20px}
 .form{display:grid;grid-template-columns:1fr 1fr;gap:14px}
@@ -572,7 +603,7 @@ textarea.input.code{min-height:320px}
 .chip.on.warm{background:var(--yellow-soft);color:#B7861A;border-color:var(--yellow)}
 .chip.on.cold{background:var(--blue-soft);color:var(--blue-2);border-color:var(--blue-2)}
 .stagepick{display:flex;align-items:center;gap:0;overflow-x:auto;padding:4px 0}
-.m-foot{display:flex;justify-content:flex-end;gap:10px;margin-top:18px;align-items:center}
+.m-foot{display:flex;justify-content:flex-end;gap:10px;margin-top:18px;align-items:center;flex-wrap:wrap}
 .m-foot .grow{flex:1}
 .check{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted)}
 .help{font-size:12.5px;color:var(--muted);line-height:1.5;margin:0}
@@ -587,7 +618,7 @@ textarea.input.code{min-height:320px}
 .soon ul{text-align:left;display:inline-block;color:var(--muted);line-height:1.9;margin:14px 0 0}
 
 /* ---------- toast / loader ---------- */
-.toasts{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);display:flex;flex-direction:column;gap:8px;z-index:80}
+.toasts{pointer-events:none;position:fixed;left:50%;bottom:22px;transform:translateX(-50%);display:flex;flex-direction:column;gap:8px;z-index:80}
 .toast{background:var(--primary);color:var(--on-primary);padding:10px 16px;border-radius:var(--r-ctl);box-shadow:var(--shadow-2);font-weight:600;font-size:13px;animation:tin .2s ease}
 .toast.err{background:var(--coral);color:#fff}
 @keyframes tin{from{opacity:0;transform:translateY(8px)}}
@@ -728,6 +759,15 @@ textarea.input.code{min-height:320px}
 @keyframes colIn{from{transform:scaleY(0)}}
 @media (prefers-reduced-motion:reduce){.flow{display:none}}
 
+/* ---------- readable colours in light theme ---------- */
+:root:not([data-theme="dark"]) .tab.active,:root:not([data-theme="dark"]) .sbtn.active,:root:not([data-theme="dark"]) .pill.cold,:root:not([data-theme="dark"]) .badge.mine,:root:not([data-theme="dark"]) .more{color:#3554B8}
+:root:not([data-theme="dark"]) .pill.hot{color:#B3263A}
+:root:not([data-theme="dark"]) .pill.won{color:#1B7246}
+:root:not([data-theme="dark"]) .pill.warm{color:#8A6100}
+.tbl th .ar{opacity:.85}
+:root:not([data-theme="dark"]) .scr-list .fold,:root:not([data-theme="dark"]) .fhead{color:var(--muted)}
+:root:not([data-theme="dark"]) .pcard .due,:root:not([data-theme="dark"]) .lc-foot [style*="--coral"]{color:#B3263A!important}
+:root:not([data-theme="dark"]) .fconv{color:#3554B8}
 /* ---------- responsive ---------- */
 @media (max-width:1100px){.stats{grid-template-columns:repeat(2,1fr)}.head{flex-direction:column;align-items:stretch}}
 @media (max-width:820px){
@@ -751,6 +791,15 @@ textarea.input.code{min-height:320px}
   .minimap{display:none}
   .hint .lg{display:none}
   .panel{top:0;right:0;bottom:0;border-radius:0;max-width:100vw;width:100vw}
+  .toasts{bottom:auto;top:12px;width:calc(100vw - 24px);align-items:center}
+  .canvas{min-height:340px}
+  .mobonly{display:grid!important}
+  #refreshBtn{display:none}
+  .brand small{display:none}
+  .top .ibtn{width:36px;height:36px}
+  .fx{height:calc(100dvh - 230px);min-height:360px}
+  .nav{mask-image:linear-gradient(90deg,#000 calc(100% - 32px),transparent);-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 32px),transparent);padding-right:24px}
+  .p-foot .btn{min-width:0;overflow:hidden;text-overflow:ellipsis}
 }
 </style>
 </head>
@@ -801,6 +850,8 @@ textarea.input.code{min-height:320px}
       <label class="search"><svg class="i" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="gsearch" placeholder="Search leads, business, city…"></label>
       <button class="ibtn" id="refreshBtn" title="Refresh data"><svg class="i" viewBox="0 0 24 24"><path d="M20 11a8 8 0 0 0-14.6-4.5L4 8M4 4v4h4M4 13a8 8 0 0 0 14.6 4.5L20 16M20 20v-4h-4"/></svg></button>
       <button class="ibtn" id="bellBtn" title="Follow-ups due"><svg class="i" viewBox="0 0 24 24"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10.3 21a1.9 1.9 0 0 0 3.4 0"/></svg><span class="dot-badge" id="bellDot" hidden></span></button>
+      <button class="ibtn mobonly" id="mThemeBtn" title="Dark / Light"><svg class="i" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 1 1 9.5 4 6.5 6.5 0 0 0 20 14.5Z"/></svg></button>
+      <button class="ibtn mobonly" id="mSetBtn" title="Settings"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg></button>
       <button class="me" id="meBtn" title="Profile & Branding"><div class="avatar">S</div></button>
     </header>
 
@@ -902,7 +953,7 @@ textarea.input.code{min-height:320px}
     <!-- TEMPLATES -->
     <section class="view" id="v-templates">
       <div class="head"><div><div class="eyebrow">WhatsApp</div><h1>Templates</h1><p class="sub">Bulk messages can only use Meta-approved templates.</p></div></div>
-      <div class="banner" style="background:var(--blue-soft);border-color:var(--stroke)"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg><div class="grow">Creating templates and getting them approved by Meta will happen here in <b>Step 7</b>. For now these come from the Templates tab in your Sheet.</div></div>
+      <div class="banner" style="background:var(--blue-soft);border-color:var(--stroke)"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg><div class="grow">Creating templates and getting them approved by Meta will be added here soon. For now these come from the Templates tab in your Sheet.</div></div>
       <div class="tplgrid" id="tplgrid"></div>
     </section>
 
@@ -910,6 +961,7 @@ textarea.input.code{min-height:320px}
     <section class="view" id="v-n8n">
       <div class="head"><div><div class="eyebrow">Integrations</div><h1>n8n Services</h1><p class="sub">Each client runs their own n8n. They see simple services, live runs and only the settings that matter.</p></div>
         <div class="adhead-r"><span class="badge">Demo data</span><span id="n8ClientWrap"><select class="input" id="n8Client" style="width:auto"></select></span><select class="input" id="n8Role" style="width:auto" title="Preview what a client sees"><option value="admin">View as: Admin (you)</option><option value="client">View as: Client</option></select></div></div>
+      <p class="help" id="n8RoleHelp" style="margin:-8px 4px 12px"></p>
       <div class="banner" style="background:var(--blue-soft);border-color:var(--stroke)"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg><div class="grow">This is a <b>working demo</b>. Live connection to each client's n8n starts after the Supabase step (the n8n API keys must live on the server).</div></div>
       <div class="subnav" id="n8Tabs"></div>
       <div id="n8Body"></div>
@@ -932,7 +984,7 @@ textarea.input.code{min-height:320px}
       <div class="scr">
         <div class="scr-list glass" id="scrList"></div>
         <div class="scr-ed glass">
-          <div class="top"><h3 id="scrTitle">New Preset</h3><span class="badge" id="scrKind">Preset · JSON</span><span class="badge" id="scrBadge">Draft</span></div>
+          <div class="scr-top"><h3 id="scrTitle">New Preset</h3><span class="badge" id="scrKind">Preset · JSON</span><span class="badge" id="scrBadge">Draft</span></div>
           <div class="form scr-meta" id="scrMeta" hidden>
             <div class="field"><label>Script name</label><input class="input" id="scrName" maxlength="40" placeholder="e.g. Hot leads → follow-up tomorrow"></div>
             <div class="field"><label>Folder</label><input class="input" id="scrFolder" maxlength="30" placeholder="My Scripts"></div>
@@ -963,11 +1015,11 @@ textarea.input.code{min-height:320px}
     <!-- COMING SOON -->
     <section class="view" id="v-whatsapp"><div class="soon glass">
       <div class="big"><svg class="i" viewBox="0 0 24 24"><path d="M3.5 20.5 5 16a8.5 8.5 0 1 1 3.2 3.2Z"/></svg></div>
-      <h2>WhatsApp Inbox</h2><p class="muted">Coming in Steps 5–6, once the WhatsApp Cloud API webhook is live.</p>
+      <h2>WhatsApp Inbox</h2><p class="muted">Coming soon — once incoming WhatsApp messages are connected.</p>
       <ul><li>Team inbox: every WhatsApp chat in one place</li><li>Lead info and stage next to each chat</li><li>New messages create leads automatically</li></ul></div></section>
     <section class="view" id="v-broadcast"><div class="soon glass">
       <div class="big"><svg class="i" viewBox="0 0 24 24"><path d="m3 11 18-8-8 18-2-8Z"/></svg></div>
-      <h2>Bulk Broadcast</h2><p class="muted">Coming in Step 7.</p>
+      <h2>Bulk Broadcast</h2><p class="muted">Coming soon.</p>
       <ul><li>Pick an audience (stage, city, tag)</li><li>Approved template + phone preview</li><li>Cost estimate and Sent / Read report</li></ul></div></section>
     <section class="view" id="v-automation">
       <div class="head"><div><div class="eyebrow">WhatsApp</div><h1>Automation</h1><p class="sub">n8n-style flows: triggers, WhatsApp, CRM, AI, Meta and n8n webhook nodes on one canvas.</p></div></div>
@@ -1091,8 +1143,8 @@ const relDay = v => { if (!v) return '-'; const n = daysBetween(v, todayStr()); 
 const hue = s => { let h = 0; for (const c of String(s)) h = (h * 31 + c.charCodeAt(0)) % 360; return h; };
 const initials = s => String(s || '?').trim().split(/\s+/).slice(0, 2).map(w => w[0]).join('').toUpperCase() || '?';
 const safeUrl = u => { u = String(u || '').trim(); if (!/^(https:\/\/|data:image\/)/i.test(u)) return ''; return u.replace(/["'()\\\s<>]/g, ''); };
-const avatar = (name, cls = '', photo) => { const u = safeUrl(photo); return u ? `<div class="avatar ${cls} img" style="background-image:url('${esc(u)}')" title="${esc(name)}"></div>` : `<div class="avatar ${cls}" style="background:hsl(${hue(name)} 45% 55%)" title="${esc(name)}">${esc(initials(name))}</div>`; };
-const bizTile = (name, photo) => { const u = safeUrl(photo); if (u) return `<div class="biz img" style="background-image:url('${esc(u)}')"></div>`; const h = hue(name); return `<div class="biz" style="background:linear-gradient(135deg,hsl(${h} 55% 62%),hsl(${(h + 40) % 360} 50% 48%))">${esc(initials(name))}</div>`; };
+const avatar = (name, cls = '', photo) => { const u = safeUrl(photo); return u ? `<div class="avatar ${cls} img" style="background-image:url('${esc(u)}')" title="${esc(name)}"></div>` : `<div class="avatar ${cls}" style="background:hsl(${hue(name)} 45% 43%)" title="${esc(name)}">${esc(initials(name))}</div>`; };
+const bizTile = (name, photo) => { const u = safeUrl(photo); if (u) return `<div class="biz img" style="background-image:url('${esc(u)}')"></div>`; const h = hue(name); return `<div class="biz" style="background:linear-gradient(135deg,hsl(${h} 50% 48%),hsl(${(h + 40) % 360} 50% 36%))">${esc(initials(name))}</div>`; };
 const waLink = (phone, text = '') => 'https://wa.me/' + String(phone || '').replace(/\D/g, '') + (text ? '?text=' + encodeURIComponent(text) : '');
 const reduceMotion = () => window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
 /** Count numbers up from 0 to the target */
@@ -1388,6 +1440,7 @@ function renderPipeline(anim) {
   }).join('');
   drawWires(anim);
   bindDrop();
+  requestAnimationFrame(resolveOverlaps);
   if (bornNodes.size) setTimeout(() => bornNodes.clear(), 1500);
   if (anim) setTimeout(() => $('#world').classList.remove('stagger-nodes'), 1200);
   if (!view.fitted && $('#v-pipeline').classList.contains('active')) { initialView(); view.fitted = true; } else applyView();
@@ -1400,6 +1453,17 @@ function pCard(l) {
       ${l.phone ? `<a class="wa-mini" href="${waLink(l.phone)}" target="_blank" rel="noopener" data-stop title="WhatsApp">${I.wa}</a>` : ''}</div></div>`;
 }
 
+/** If a column grew into the node below it, push that node down */
+function resolveOverlaps() {
+  const cv = $('#canvas'); if (!cv.offsetParent || cv.classList.contains('far')) return;
+  const items = $$('#cols .col').map(c => ({ s: c.dataset.stage, el: c, h: c.offsetHeight })).filter(i => layout.pos[i.s]).sort((a, b) => layout.pos[a.s].y - layout.pos[b.s].y);
+  let moved = false;
+  for (let i = 0; i < items.length; i++) for (let j = i + 1; j < items.length; j++) {
+    const A = layout.pos[items[i].s], B = layout.pos[items[j].s];
+    if (Math.abs(A.x - B.x) < COL_W && B.y >= A.y && B.y < A.y + items[i].h + 30) { B.y = Math.round((A.y + items[i].h + 50) / 11) * 11; items[j].el.style.top = B.y + 'px'; moved = true; }
+  }
+  if (moved) { drawWires(); drawMinimap(); saveLayout(); }
+}
 /* ---- wires ---- */
 const portPos = (s, side) => { const p = layout.pos[s]; return { x: p.x + (side === 'out' ? COL_W : 0), y: p.y + PORT_Y }; };
 function wirePath(a, b) { const dx = Math.max(60, Math.abs(b.x - a.x) * 0.5); return `M${a.x} ${a.y} C ${a.x + dx} ${a.y}, ${b.x - dx} ${b.y}, ${b.x} ${b.y}`; }
@@ -1448,7 +1512,15 @@ function autoArrange() {
   };
   requestAnimationFrame(step);
 }
-function resetLayout() { layout = defaultLayout(); selWire = null; renderPipeline(true); saveLayout(); fit(); toast('Layout reset'); }
+/** Back to the default stages + layout. Custom stages that still hold leads are kept so no lead disappears. */
+function resetLayout() {
+  const defs = DEFAULT_LISTS.stages.filter(n => !LOCKED.includes(n)), keep = stages().filter(n => !LOCKED.includes(n) && !defs.includes(n) && S.leads.some(l => l.stage === n));
+  const names = defs.concat(keep, LOCKED), old = layout ? layout.stages : [];
+  layout = defaultLayout(names);
+  layout.stages = names.map(n => ({ name: n, color: (old.find(d => d.name === n) || {}).color || autoColor(n) }));
+  selWire = null; selNodes.clear(); selNode = null; renderAll(true); saveLayout(); setTimeout(fit, 120);
+  toast('Pipeline reset to the default stages' + (keep.length ? ` · kept ${keep.join(', ')} (has leads)` : ''));
+}
 
 /* ---- view: zoom / pan / fit / minimap ---- */
 function worldBounds() {
@@ -1461,11 +1533,11 @@ function applyView() {
   $('#world').style.transform = `translate(${view.x}px,${view.y}px) scale(${view.k})`;
   const cv = $('#canvas'); cv.style.backgroundSize = `${22 * view.k}px ${22 * view.k}px`; cv.style.backgroundPosition = `${view.x}px ${view.y}px`;
   $('#zPct').textContent = Math.round(view.k * 100) + '%';
-  cv.classList.toggle('far', view.k < 0.5);
+  cv.classList.toggle('far', view.k < 0.42);
   drawMinimap();
 }
 function zoomAt(cx, cy, nk) { nk = Math.max(0.25, Math.min(2, nk)); view.x = cx - (cx - view.x) * (nk / view.k); view.y = cy - (cy - view.y) * (nk / view.k); view.k = nk; applyView(); }
-function sizeCanvas() { const cv = $('#canvas'); if (!cv.offsetParent) return; const top = cv.getBoundingClientRect().top; cv.style.height = Math.max(420, window.innerHeight - top - 20) + 'px'; }
+function sizeCanvas() { const cv = $('#canvas'); if (!cv.offsetParent) return; const top = cv.getBoundingClientRect().top + window.scrollY; cv.style.height = Math.max(innerWidth < 820 ? 340 : 420, window.innerHeight - top - 20) + 'px'; }
 function fit() {
   const cv = $('#canvas'), b = worldBounds(); if (!cv.clientWidth) return;
   const k = Math.max(0.25, Math.min(1, cv.clientWidth / b.w, (cv.clientHeight - 50) / b.h));
@@ -1516,6 +1588,9 @@ function marqueeRect(box, x0, y0, x1, y1) { const l = Math.min(x0, x1), t = Math
 
 /* ---- pipeline: multi-selection ---- */
 const selNodes = new Set();
+let lastTap = { k: '', t: 0 };
+/** Manual double-click (pointer capture stops the browser's dblclick reaching nodes) */
+function isDblTap(k) { const now = performance.now(), d = lastTap.k === k && now - lastTap.t < 380; lastTap = d ? { k: '', t: 0 } : { k, t: now }; return d; }
 function syncSel() { $$('#cols .col').forEach(c => c.classList.toggle('sel', selNodes.has(c.dataset.stage))); }
 function selectNode(s, add) {
   if (!add) selNodes.clear();
@@ -1549,13 +1624,14 @@ function toggleNode(s) { if (selNodes.has(s)) { selNodes.delete(s); if (selNode 
       }
       else if (head) {
         const s = head.dataset.node, additive = e.shiftKey || e.ctrlKey || e.metaKey;
+        if (!additive && isDblTap('h:' + s)) { selectNode(s); openStageForm('edit', s); return; }
         if (additive) toggleNode(s); else if (!selNodes.has(s)) selectNode(s);
         if (!selNodes.has(s)) return;                       // toggled off
         const group = [...selNodes].filter(n => layout.pos[n]).map(n => ({ n, ox: layout.pos[n].x, oy: layout.pos[n].y, col: colEl(n) }));
         act = { type: 'node', stage: s, sx: e.clientX, sy: e.clientY, group, moved: false, additive };
         group.forEach(g => g.col && g.col.classList.add('lifting'));
       }
-      else if (wire) { selWire = +wire.dataset.wire; drawWires(); return; }
+      else if (wire) { if (isDblTap('w:' + wire.dataset.wire)) { deleteWire(+wire.dataset.wire); return; } selWire = +wire.dataset.wire; drawWires(); return; }
       else if (t.closest('.pcard,button,a')) return;
       else {
         if (selWire !== null) { selWire = null; drawWires(); }
@@ -1629,7 +1705,7 @@ function toggleNode(s) { if (selNodes.has(s)) { selNodes.delete(s); if (selNode 
   $('#zFit').onclick = fit;
   $('#zAuto').onclick = autoArrange; $('#autoBtn').onclick = autoArrange;
   $('#addNodeBtn').onclick = e => { e.stopPropagation(); const r = e.currentTarget.getBoundingClientRect(); openPalette(r.left, r.bottom + 6); };
-  $('#zReset').onclick = () => { if (confirm('Reset nodes and wires to the default layout?')) resetLayout(); };
+  $('#zReset').onclick = () => { if (confirm('Reset the pipeline to the default stages and layout?\nRenamed or custom stages that still have leads are kept, so no lead is lost.')) resetLayout(); };
   $('#minimap').addEventListener('click', e => { const mm = $('#minimap'), r = mm.getBoundingClientRect(), s = mm._s || 1, b = mm._b || { x1: 0, y1: 0 }; const wx = (e.clientX - r.left) / s + b.x1, wy = (e.clientY - r.top) / s + b.y1; animateView(view.k, cv.clientWidth / 2 - wx * view.k, cv.clientHeight / 2 - wy * view.k); });
   window.addEventListener('resize', () => { sizeCanvas(); drawMinimap(); });
 })();
@@ -1693,6 +1769,7 @@ function openNodeMenu(s, x, y) {
     <button class="mi" data-nm="edit">${I.edit}${locked ? 'Change colour' : 'Rename / colour'}</button>
     <div class="swatches">${STAGE_COLORS.map(c => `<button class="sw ${c.toLowerCase() === String(d.color).toLowerCase() ? 'on' : ''}" style="background:${c}" data-nmc="${c}" title="${c}"></button>`).join('')}</div>
     <button class="mi" data-nm="after" ${locked ? 'disabled' : ''}>${I.plus}Add node after this</button>
+    <button class="mi" data-nm="addlead">${I.users}Add a lead here</button>
     <button class="mi" data-nm="list">${I.list}View leads in table</button>
     <button class="mi" data-nm="script">${I.code}Run a script on this stage</button>
     <div class="sep"></div>
@@ -1704,6 +1781,7 @@ function openNodeMenu(s, x, y) {
     if (a === 'edit') openStageForm('edit', s);
     else if (a === 'after') { const col = colEl(s), r = col && col.getBoundingClientRect(); openPalette(r ? r.right + 12 : x, r ? r.top : y); }
     else if (a === 'list') { ui.lf.stage = s; go('leads'); }
+    else if (a === 'addlead') openLeadModal(null, s);
     else if (a === 'script') { go('scripts'); if (scr.kind !== 'code') loadBuiltinCode(0); $('#scrScope').value = s; }
     else if (a === 'del') requestDeleteStage(selNodes.has(s) && selNodes.size > 1 ? [...selNodes] : [s]);
   };
@@ -1790,6 +1868,8 @@ const palClosed = new Set(['Automation']);
 function paletteFolders() {
   const F = new Map(), add = (f, it) => { if (!F.has(f)) F.set(f, []); F.get(f).push(it); };
   add('Basic', { kind: 'blank', name: 'Blank Stage', description: 'Your own name and colour', nodes: [] });
+  const have = new Set(stages().map(x => x.toLowerCase()));
+  DEFAULT_LISTS.stages.filter(n => !have.has(n.toLowerCase())).forEach(n => add('Restore default stages', { kind: 'preset', name: n, description: 'Deleted earlier — add it back', nodes: [{ name: n, color: DEFAULT_COLORS[n] || autoColor(n) }], wires: 'chain' }));
   BUILTIN.forEach(p => add(p.folder, Object.assign({ kind: 'preset' }, p)));
   userPresets().forEach(p => add(p.folder, Object.assign({ kind: 'preset', mine: true }, p)));
   AUTOMATION_SOON.forEach(([name, description]) => add('Automation', { kind: 'soon', name, description, nodes: [] }));
@@ -1800,7 +1880,7 @@ function paletteRow(it, i) {
   const dot = nodes.length ? nodes[0].color : 'var(--line-2)';
   const sub = nodes.length > 1 ? nodes.map(n => n.name).join(' → ') : nodes.length && ex.has(nodes[0].name.toLowerCase()) ? 'Already in the pipeline' : (it.description || 'Single stage node');
   const chain = nodes.length > 1 ? `<div class="chain">${nodes.map(n => `<i style="background:${esc(n.color)}"></i>`).join('')}</div>` : '';
-  const badge = it.kind === 'soon' ? '<span class="badge">Step 8</span>' : it.mine ? '<span class="badge mine">Mine</span>' : nodes.length > 1 ? `<span class="badge">${nodes.length} nodes</span>` : '';
+  const badge = it.kind === 'soon' ? '<span class="badge">Soon</span>' : it.mine ? '<span class="badge mine">Mine</span>' : nodes.length > 1 ? `<span class="badge">${nodes.length} nodes</span>` : '';
   return `<button class="ni" data-pi="${i}" ${it.kind === 'soon' ? 'disabled' : ''}><span class="sdot" style="background:${esc(dot)}"></span><span class="tx">${esc(it.name)}<small>${esc(sub)}</small>${chain}</span>${badge}</button>`;
 }
 function drawPalette(q) {
@@ -1891,9 +1971,11 @@ function requestDeleteStage(list) {
   if (!list.length) return toast('Won and Lost cannot be deleted (reports depend on them)', true);
   if (locked.length) toast('Won / Lost skipped — they cannot be deleted');
   const n = S.leads.filter(l => list.includes(l.stage)).length, label = list.length === 1 ? `"${list[0]}"` : `${list.length} nodes`;
+  if (!stages().some(x => !LOCKED.includes(x) && !list.includes(x))) return toast('Keep at least one open stage (like New Lead). Add another stage first, then delete.', true);
   if (!n) { if (confirm(`Delete ${label}?\nNo leads inside. Wires on either side will be reconnected automatically.`)) deleteStages(list); return; }
-  const others = stages().filter(x => !list.includes(x));
-  const next = (layout.links.find(([a, b]) => list.includes(a) && !list.includes(b) && b !== 'Lost') || [])[1] || others[0];
+  const others = stages().filter(x => !list.includes(x)), openLeft = others.filter(x => !LOCKED.includes(x));
+  const nx = (layout.links.find(([a, b]) => list.includes(a) && !list.includes(b) && !LOCKED.includes(b)) || [])[1];
+  const next = openLeft.includes(nx) ? nx : openLeft[0];
   $('#stageBox').innerHTML = `<div class="m-head"><h2>Delete ${esc(label)}</h2><button class="ibtn" data-close>${I.x}</button></div>
     ${list.length > 1 ? `<p class="help" style="margin-bottom:8px">${list.map(esc).join(' · ')}</p>` : ''}
     <p class="help" style="margin-bottom:14px">${list.length > 1 ? 'These nodes have' : 'This node has'} <b>${n} lead${n > 1 ? 's' : ''}</b>. Move them to another stage before deleting (each lead's journey will record the move).</p>
@@ -2107,7 +2189,7 @@ function setKind(kind) {
   if (node && !$('#scrSection').options.length) $('#scrSection').innerHTML = Object.entries(SECTIONS).map(([k, v]) => `<option value="${k}">${esc(v.name)}</option>`).join('');
   $('#scrKind').textContent = code ? 'Code · JavaScript' : node ? 'Custom node · JSON' : 'Preset · JSON';
   $('#scrCodeLbl').textContent = code ? 'Code (JavaScript)' : node ? 'Node definition (JSON) — description, color, inputs, outputs, fields' : 'Script (JSON) — name, folder, nodes, wires';
-  if (node) { $('#scrHelp').innerHTML = 'The node shows up in the <b>+ Node</b> menu of every canvas that uses its section (Meta Ads canvas, Automation). Field types: <code>text</code>, <code>number</code>, <code>textarea</code>, <code>select</code>. What the node <i>does</i> when a flow runs is added in Step 8.'; $('#scrOut').hidden = true; scr.last = null; return; }
+  if (node) { $('#scrHelp').innerHTML = 'The node shows up in the <b>+ Node</b> menu of every canvas that uses its section (Meta Ads canvas, Automation). Field types: <code>text</code>, <code>number</code>, <code>textarea</code>, <code>select</code>. What the node <i>does</i> when a flow runs is added when automations go live.'; $('#scrOut').hidden = true; scr.last = null; return; }
   $('#scrHelp').innerHTML = code
     ? 'Available: <code>crm.leads</code>, <code>crm.stages</code>, <code>crm.team</code>, <code>crm.today</code> · actions: <code>moveStage</code>, <code>setTag</code>, <code>setFollowUp</code>, <code>assign</code>, <code>addNote</code> · helpers: <code>log</code>, <code>addDays</code>, <code>daysSince</code>, <code>isClosed</code>.'
     : '<b>wires</b>: <code>"chain"</code> = connect top to bottom · <code>"none"</code> = no wires · or <code>[["A","B"]]</code> pairs. If a node is selected in the Pipeline, the preset is inserted <b>after</b> it (like Nuke).';
@@ -2204,13 +2286,14 @@ function previewNode() {
 
 /* ---- dry run → review → apply ---- */
 const ACTION_LABEL = { moveStage: 'Stage', setTag: 'Tag', setFollowUp: 'Follow-up', assign: 'Assign', addNote: 'Note' };
-function validateActions(acts) {
+function validateActions(acts, scope) {
   const st = new Set(stages()), tags = new Set(S.lists.tags || ['Hot', 'Warm', 'Cold']), team = new Set(S.team.map(t => t.name).filter(Boolean));
   const ok = [], bad = [], seen = new Set();
   for (const a of acts.slice(0, 500)) {
     if (!a || !ACTION_LABEL[a.type]) { bad.push('Unknown action'); continue; }
     const l = S.leads.find(x => x.leadId === String(a.id));
     if (!l) { bad.push(`${ACTION_LABEL[a.type]}: lead "${String(a.id).slice(0, 20)}" not found`); continue; }
+    if (scope && !scope.has(l.leadId)) { bad.push(`${l.name}: outside the chosen "Run on" scope`); continue; }
     let from = '', to = '';
     if (a.type === 'moveStage') { if (!st.has(a.stage)) { bad.push(`${l.name}: stage "${String(a.stage).slice(0, 30)}" does not exist`); continue; } from = l.stage; to = a.stage; }
     if (a.type === 'setTag') { if (!tags.has(a.tag)) { bad.push(`${l.name}: tag "${String(a.tag).slice(0, 20)}" is not allowed`); continue; } from = l.tag || '–'; to = a.tag; }
@@ -2224,10 +2307,10 @@ function validateActions(acts) {
   }
   return { ok, bad };
 }
-function renderRunResult(r, ms) {
+function renderRunResult(r, ms, scope) {
   const out = $('#scrOut'); out.hidden = false;
   if (!r.ok) { scr.last = null; out.innerHTML = `<div class="run-err">✗ ${esc(r.error)}${r.line ? ` <span class="muted">(line ${r.line})</span>` : ''}</div>${r.logs.length ? `<pre class="run-log">${esc(r.logs.join('\n'))}</pre>` : ''}`; return; }
-  const v = validateActions(r.actions); scr.last = v.ok;
+  const v = validateActions(r.actions, scope); scr.last = v.ok;
   out.innerHTML = `<div class="run-sum"><b>${v.ok.length}</b> change${v.ok.length === 1 ? '' : 's'} proposed${v.bad.length ? ` · <span style="color:var(--coral)">${v.bad.length} rejected</span>` : ''} <span class="muted">· ${ms} ms</span></div>
     ${r.logs.length ? `<pre class="run-log">${esc(r.logs.join('\n'))}</pre>` : ''}
     ${v.ok.length ? `<div class="run-tbl"><table class="tbl"><thead><tr><th>Lead</th><th>Change</th><th>From</th><th>To</th></tr></thead><tbody>${v.ok.slice(0, 200).map(a => `<tr style="cursor:default"><td>${esc(a.lead.name)}</td><td>${ACTION_LABEL[a.type]}</td><td class="muted">${esc(a.from || '')}</td><td>${esc(String(a.to).slice(0, 80))}</td></tr>`).join('')}</tbody></table>${v.ok.length > 200 ? `<p class="muted" style="font-size:12px;margin:6px 0 0">…and ${v.ok.length - 200} more</p>` : ''}</div>` : ''}
@@ -2244,7 +2327,7 @@ async function dryRun() {
   const b = $('#scrRun'); b.disabled = true; b.lastChild.textContent = 'Running…';
   const t0 = performance.now(); const r = await runSandbox(code, input); const ms = Math.round(performance.now() - t0);
   b.disabled = false; b.lastChild.textContent = 'Dry run';
-  renderRunResult(r, ms);
+  renderRunResult(r, ms, scope ? new Set(leads.map(l => l.leadId)) : null);
 }
 async function applyRun() {
   const list = scr.last; if (!list || !list.length) return;
@@ -2444,11 +2527,11 @@ function adsOverview() {
   const camps = D.campaigns.map(c => Object.assign({ c }, adsAgg(x => D.ads.find(a => a.id === x.adId).campaignId === c.id))).sort((a, b) => b.spend - a.spend);
   const ins = adsInsights(), icon = { good: '▲', warn: '!', bad: '●' };
   return `<div class="stats adstats">
-      ${tile(I.rupee, 'var(--yellow-soft)', '#B7861A', inrShort(t.spend), 'Amount spent')}
-      ${tile(I.users, 'var(--blue-soft)', 'var(--blue-2)', cmp(t.leads), 'Leads (Meta)')}
-      ${tile(I.rupee, 'var(--blue-soft)', 'var(--blue-2)', inr(t.cpl), 'Cost per lead')}
-      ${tile(I.fire, 'var(--coral-soft)', 'var(--coral)', t.ctr.toFixed(2) + '%', 'CTR (link)')}
-      ${tile(I.trophy, 'var(--green-soft)', 'var(--green)', inrShort(crm.wonVal), `Won from ads · ${crm.won.length} deals`)}
+      ${tile(I.rupee, 'var(--yellow-soft)', '#B7861A', inrShort(t.spend), 'Amount spent · sample')}
+      ${tile(I.users, 'var(--blue-soft)', 'var(--blue-2)', cmp(t.leads), 'Leads (Meta) · sample')}
+      ${tile(I.rupee, 'var(--blue-soft)', 'var(--blue-2)', inr(t.cpl), 'Cost per lead · sample')}
+      ${tile(I.fire, 'var(--coral-soft)', 'var(--coral)', t.ctr.toFixed(2) + '%', 'CTR (link) · sample')}
+      ${tile(I.trophy, 'var(--green-soft)', 'var(--green)', inrShort(crm.wonVal), `Won from ads · ${crm.won.length} deals · your CRM`)}
       ${tile(I.trophy, 'var(--green-soft)', 'var(--green)', roas ? roas.toFixed(1) + '×' : '–', 'ROAS (CRM won ÷ spend)')}
     </div>
     <div class="glass adfunnel"><div class="sec-t">Ads → CRM funnel <span class="muted" style="font-weight:500;font-size:12px">Meta numbers + your real pipeline</span></div>
@@ -2682,7 +2765,8 @@ class FlowCanvas {
     f.links = (f.links || []).filter(l => f.nodes.some(n => n.id === l[0]) && f.nodes.some(n => n.id === l[2]));
     this.fromSeed = !row && !store.get('leadnode.flow.' + this.o.key); this.flow = f; this.render(); if (!this.fitted) { requestAnimationFrame(() => this.fit(true)); this.fitted = true; }
   }
-  sync() { if (!this.flow || (this.fromSeed && (S.flows || []).some(x => String(x.flowId) === this.o.key))) { this.fitted = false; this.load(); } else { this.render(); if (!this.fitted) { requestAnimationFrame(() => this.fit(true)); this.fitted = true; } } }
+  size() { if (!this.root.offsetParent) return; const top = this.root.getBoundingClientRect().top + scrollY; this.root.style.height = Math.max(innerWidth < 820 ? 360 : 520, innerHeight - top - 20) + 'px'; }
+  sync() { this.size(); if (!this.flow || (this.fromSeed && (S.flows || []).some(x => String(x.flowId) === this.o.key))) { this.fitted = false; this.load(); } else { this.render(); if (!this.fitted) { requestAnimationFrame(() => this.fit(true)); this.fitted = true; } } }
   save() {
     store.set('leadnode.flow.' + this.o.key, this.flow); this.fromSeed = false;
     const row = { flowId: this.o.key, flowName: this.o.title, trigger: 'canvas', status: 'Draft', flowJson: JSON.stringify(this.flow) };
@@ -2742,7 +2826,7 @@ class FlowCanvas {
   zoomAt(cx, cy, k) { k = Math.max(0.25, Math.min(2, k)); const v = this.view; v.x = cx - (cx - v.x) * (k / v.k); v.y = cy - (cy - v.y) * (k / v.k); v.k = k; this.apply(); }
   fit(first) {
     const b = this.bounds(), W = this.root.clientWidth, H = this.root.clientHeight; if (!W) return;
-    const k = Math.max(0.3, Math.min(first ? 0.95 : 1.2, W / b.w, (H - 60) / b.h));
+    const k = Math.max(W < 600 ? 0.55 : 0.3, Math.min(first ? 0.95 : 1.2, W / b.w, (H - 60) / b.h));
     this.view = { k, x: (W - b.w * k) / 2 - b.x1 * k, y: 50 - b.y1 * k + Math.max(0, (H - 60 - b.h * k) / 2) }; this.apply();
   }
   toWorld(cx, cy) { const r = this.root.getBoundingClientRect(); return { x: (cx - r.left - this.view.x) / this.view.k, y: (cy - r.top - this.view.y) / this.view.k }; }
@@ -2877,7 +2961,7 @@ class FlowCanvas {
           this.selWire = null;
           act = { type: 'move', sx: e.clientX, sy: e.clientY, group: [...this.sel].map(i => { const n = this.node(i); return { n, ox: n.x, oy: n.y, el: this.nodesEl.querySelector(`.fx-node[data-id="${CSS.escape(i)}"]`) }; }), moved: false };
         }
-        else if (w) { this.selWire = +w.dataset.w; this.sel.clear(); this.syncSel(); this.drawWires(); return; }
+        else if (w) { if (isDblTap('fw:' + w.dataset.w)) { this.flow.links.splice(+w.dataset.w, 1); this.selWire = null; this.render(); this.save(); return; } this.selWire = +w.dataset.w; this.sel.clear(); this.syncSel(); this.drawWires(); return; }
         else {
           if (this.selWire !== null) { this.selWire = null; this.drawWires(); }
           if (e.pointerType !== 'touch') { const r = R.getBoundingClientRect(); act = { type: 'box', x0: e.clientX - r.left, y0: e.clientY - r.top, base: (e.shiftKey || e.ctrlKey || e.metaKey) ? new Set(this.sel) : new Set(), moved: false }; }
@@ -3001,7 +3085,7 @@ function autoCanvas() {
   if (CANVASES.auto) return CANVASES.auto;
   return CANVASES.auto = new FlowCanvas({
     root: $('#autoCanvas'), key: 'AUTOMATION', title: 'Automation', sections: ['trigger', 'lead', 'whatsapp', 'logic', 'ai', 'n8n', 'meta'],
-    status: 'Design mode — flows start running in Step 8',
+    status: 'Design mode — flows run once automations go live',
     seed: () => seedFlow([
       ['n1', 'trg.newlead', 0, 120, { source: 'Any' }],
       ['n2', 'logic.if', 330, 120, { field: 'Budget', op: 'above', value: '100000' }],
@@ -3042,7 +3126,7 @@ function n8Seed() {
   const N = (name, type, x, y, extra) => Object.assign({ name, type, position: [x, y], parameters: {} }, extra || {});
   const templates = [
     { id: 'T1', name: 'Instagram Auto-Post', version: 3, cat: 'Social media', desc: 'Posts from a Google Sheet every day with an AI caption, then pings you on WhatsApp.',
-      settings: [{ key: 'sheet_url', label: 'Content sheet link', type: 'text', value: '', help: 'Google Sheet with columns: Date, Image URL, Topic' }, { key: 'post_time', label: 'Post time', type: 'text', value: '10:00', help: '24-hour time, India time' }, { key: 'tone', label: 'Caption tone', type: 'select', options: ['Friendly', 'Premium', 'Funny', 'Hinglish'], value: 'Premium', help: '' }, { key: 'notify', label: 'WhatsApp number for alerts', type: 'text', value: '', help: 'With country code, e.g. 9198…' }],
+      settings: [{ key: 'sheet_url', label: 'Content sheet link', type: 'text', value: '', help: 'Google Sheet with columns: Date, Image URL, Topic' }, { key: 'post_time', label: 'Post time', type: 'text', value: '10:00', help: '24-hour time, India time' }, { key: 'tone', label: 'Caption tone', type: 'select', options: ['Friendly', 'Premium', 'Funny', 'Hinglish'], value: 'Premium', help: '' }, { key: 'notify', label: 'WhatsApp number for alerts', type: 'text', value: '', req: false, help: 'With country code, e.g. 9198…' }],
       creds: ['googleSheetsOAuth2Api', 'googlePalmApi', 'facebookGraphApi', 'whatsAppApi'],
       wf: W([N('Every day', 'n8n-nodes-base.scheduleTrigger', 0, 0), N('⚙ Client Settings', 'n8n-nodes-base.set', 240, 0), N("Today's post", 'n8n-nodes-base.googleSheets', 480, 0), N('Write caption', '@n8n/n8n-nodes-langchain.lmChatGoogleGemini', 720, 0), N('Publish to Instagram', 'n8n-nodes-base.facebookGraphApi', 960, 0), N('Posted?', 'n8n-nodes-base.if', 1200, 0), N('Alert on WhatsApp', 'n8n-nodes-base.whatsApp', 1440, -90), N('Error alert', 'n8n-nodes-base.whatsApp', 1440, 90)],
         [['Every day', '⚙ Client Settings'], ['⚙ Client Settings', "Today's post"], ["Today's post", 'Write caption'], ['Write caption', 'Publish to Instagram'], ['Publish to Instagram', 'Posted?'], ['Posted?', 'Alert on WhatsApp', 0], ['Posted?', 'Error alert', 1]]) },
@@ -3104,49 +3188,12 @@ function n8Health(c) {
   if (c.limit && c.used / c.limit >= 0.85) out.push(['warn', `${Math.round(c.used / c.limit * 100)}% of n8n plan runs used`]);
   const old = n8Data().installs.filter(i => i.client === c.id && i.version < n8Tpl(i.tpl).version).length;
   if (old) out.push(['info', `${old} update${old > 1 ? 's' : ''} available`]);
-  const missing = n8Data().installs.filter(i => i.client === c.id && n8Tpl(i.tpl).creds.some(k => !i.creds[k])).length;
-  if (missing) out.push(['warn', `${missing} service${missing > 1 ? 's' : ''} missing keys`]);
+  const missing = n8Data().installs.filter(i => i.client === c.id && Object.values(n8BaseStates(n8Tpl(i.tpl), i)).includes('need')).length;
+  if (missing) out.push(['warn', `${missing} service${missing > 1 ? 's need' : ' needs'} setup`]);
   return out;
 }
 const n8Pill = ([k, t]) => `<span class="pill ${k === 'bad' ? 'hot' : k === 'warn' ? 'warm' : k === 'ok' ? 'won' : 'cold'}">${k === 'bad' ? '✕' : k === 'warn' ? '!' : k === 'ok' ? '✓' : '↑'} ${esc(t)}</span>`;
 const runPill = s => s === 'success' ? '<span class="pill won">✓ Success</span>' : s === 'error' ? '<span class="pill hot">✕ Failed</span>' : '<span class="pill cold">● Running</span>';
-
-/* ---- read-only workflow viewer (n8n JSON → our node style), with live run states ---- */
-function n8Graph(t, states) {
-  const NW = 200, NH = 62, S = 1.1, nodes = t.wf.nodes;
-  const xs = nodes.map(n => n.position[0] * S), ys = nodes.map(n => n.position[1] * S), x0 = Math.min(...xs), y0 = Math.min(...ys);
-  const P = {}; nodes.forEach(n => P[n.name] = { x: n.position[0] * S - x0 + 30, y: n.position[1] * S - y0 + 30 });
-  const W = Math.max(...Object.values(P).map(p => p.x)) + NW + 60, H = Math.max(...Object.values(P).map(p => p.y)) + NH + 60;
-  let wires = '';
-  Object.entries(t.wf.connections).forEach(([from, c]) => (c.main || []).forEach((list, o) => (list || []).forEach(l => {
-    const a = P[from], b = P[l.node]; if (!a || !b) return; const outs = (c.main || []).length;
-    const A = { x: a.x + NW, y: a.y + NH / 2 + (outs > 1 ? (o ? 12 : -12) : 0) }, B = { x: b.x, y: b.y + NH / 2 }, d = wirePath(A, B);
-    const st = states && states[l.node], lit = st === 'success' || st === 'running';
-    wires += `<g class="wire ${lit ? 'lit' : ''} ${st === 'error' ? 'bad' : ''}"><path class="ln" d="${d}"/>${lit ? `<circle class="flow" r="3"><animateMotion dur="1.2s" repeatCount="indefinite" path="${d}"/></circle>` : ''}${outs > 1 ? `<text class="wl" x="${A.x + 10}" y="${A.y - 5}">${o ? 'false' : 'true'}</text>` : ''}</g>`;
-  })));
-  const nodeHTML = nodes.map((n, i) => {
-    const k = n8Kind(n.type), st = states && states[n.name], cfg = /Client Settings/.test(n.name);
-    return `<div class="n8n ${st || ''} ${cfg ? 'cfg' : ''}" data-n8node="${esc(n.name)}" style="left:${P[n.name].x}px;top:${P[n.name].y}px;width:${NW}px;height:${NH}px;--c:${k.c};--i:${i}" title="${esc(n.name)}">
-      <span class="n8ic">${esc(k.ic)}</span><div class="n8t"><b>${esc(n.name)}</b><small>${esc(cfg ? 'Your settings' : k.label)}</small></div>
-      ${st ? `<span class="n8st">${st === 'success' ? '✓' : st === 'error' ? '✕' : ''}</span>` : ''}</div>`;
-  }).join('');
-  return `<div class="n8w" style="width:${W}px;height:${H}px"><svg class="n8svg" width="${W}" height="${H}">${wires}</svg>${nodeHTML}</div>`;
-}
-function n8Viewer(host, html) {
-  host.innerHTML = `<div class="n8vp">${html}</div><div class="n8zoom"><button data-n8z="out" title="Zoom out">−</button><button data-n8z="fit" title="Fit">Fit</button><button data-n8z="in" title="Zoom in">+</button></div>`;
-  const vp = host.querySelector('.n8vp'), w = host.querySelector('.n8w'), v = { x: 0, y: 0, k: 1 };
-  const apply = () => { w.style.transform = `translate(${v.x}px,${v.y}px) scale(${v.k})`; };
-  const fit = () => { const W = host.clientWidth, H = host.clientHeight; if (!W) return; v.k = Math.max(0.6, Math.min(1.1, (W - 30) / w.offsetWidth, (H - 30) / w.offsetHeight)); v.x = Math.max(15, (W - w.offsetWidth * v.k) / 2); v.y = (H - w.offsetHeight * v.k) / 2; apply(); };
-  const zoom = (cx, cy, k) => { k = Math.max(0.3, Math.min(2, k)); v.x = cx - (cx - v.x) * (k / v.k); v.y = cy - (cy - v.y) * (k / v.k); v.k = k; apply(); };
-  host.addEventListener('wheel', e => wheelNav(e, host.getBoundingClientRect(), (x, y, f) => zoom(x, y, v.k * f), (dx, dy) => { v.x += dx; v.y += dy; apply(); }), { passive: false });
-  let drag = null;
-  host.addEventListener('pointerdown', e => { if (e.target.closest('.n8zoom,.n8n')) return; drag = { x: e.clientX, y: e.clientY, vx: v.x, vy: v.y }; host.setPointerCapture(e.pointerId); host.classList.add('panning'); });
-  host.addEventListener('pointermove', e => { if (!drag) return; v.x = drag.vx + e.clientX - drag.x; v.y = drag.vy + e.clientY - drag.y; apply(); });
-  host.addEventListener('pointerup', () => { drag = null; host.classList.remove('panning'); });
-  host.querySelector('.n8zoom').onclick = e => { const b = e.target.closest('[data-n8z]'); if (!b) return; const z = b.dataset.n8z; if (z === 'fit') fit(); else zoom(host.clientWidth / 2, host.clientHeight / 2, v.k * (z === 'in' ? 1.2 : 1 / 1.2)); };
-  requestAnimationFrame(fit);
-  return { setStates(states, t) { const keep = { ...v }; host.querySelector('.n8vp').innerHTML = n8Graph(t, states); const nw = host.querySelector('.n8w'); nw.style.transform = `translate(${keep.x}px,${keep.y}px) scale(${keep.k})`; } };
-}
 
 /* ---- page ---- */
 function renderN8n(anim) {
@@ -3154,7 +3201,8 @@ function renderN8n(anim) {
   const D = n8Data(), tabs = N8_TABS[N8.role];
   if (!tabs.some(([k]) => k === N8.tab)) N8.tab = 'services';
   $('#n8Role').value = N8.role;
-  $('#n8ClientWrap').hidden = N8.role === 'admin' && !['services', 'runs', 'connect'].includes(N8.tab);
+  $('#n8ClientWrap').hidden = N8.role === 'client' || !['services', 'runs', 'connect'].includes(N8.tab);
+  $('#n8RoleHelp').textContent = N8.role === 'client' ? `Previewing exactly what ${n8Client(N8.client).name} sees after login — only their own services and runs.` : 'Admin: you see every client. Switch to "Client" to preview one client\'s view.';
   $('#n8Client').innerHTML = D.clients.map(c => `<option value="${c.id}" ${c.id === N8.client ? 'selected' : ''}>${esc(c.name)}</option>`).join('');
   $('#n8Tabs').innerHTML = tabs.map(([k, n]) => `<button class="tab ${N8.tab === k ? 'active' : ''}" data-n8tab="${k}">${n}</button>`).join('');
   const body = $('#n8Body');
@@ -3170,51 +3218,149 @@ function n8Services() {
     <div class="n8cl-r">${h.length ? h.map(n8Pill).join('') : n8Pill(['ok', 'All healthy'])}</div></div>`;
   if (!list.length) return head + `<div class="empty glass">No services yet for ${esc(c.name)}.<br>${N8.role === 'admin' ? 'Open <b>Templates</b> and install one.' : 'Your service provider will add them here.'}</div>`;
   const cards = list.map((ins, i) => {
-    const t = n8Tpl(ins.tpl), last = D.runs.filter(r => r.client === c.id && r.tpl === t.id)[0], missing = t.creds.filter(k => !ins.creds[k]).length, upd = ins.version < t.version;
+    const t = n8Tpl(ins.tpl), last = D.runs.filter(r => r.client === c.id && r.tpl === t.id)[0], missing = Object.values(n8BaseStates(t, ins)).filter(x => x === 'need').length, upd = ins.version < t.version;
     const month = D.runs.filter(r => r.client === c.id && r.tpl === t.id).length;
     return `<div class="n8card glass ${N8.open === t.id ? 'on' : ''}" data-n8open="${t.id}" style="--i:${i}">
       <div class="r1"><b>${esc(t.name)}</b><button class="switch ${ins.active ? 'on' : ''}" data-n8toggle="${t.id}" data-tip="${ins.active ? 'Turn off in n8n' : 'Turn on in n8n'}"></button></div>
       <p class="muted">${esc(t.desc)}</p>
       <div class="n8meta">${last ? runPill(last.status) + `<span class="muted">${n8Ago(last.at)}</span>` : '<span class="muted">No runs yet</span>'}<span class="grow"></span><span class="muted">${month} runs</span></div>
-      <div class="n8flags">${missing ? n8Pill(['warn', `${missing} key${missing > 1 ? 's' : ''} missing`]) : ''}${upd ? n8Pill(['info', `Update v${ins.version} → v${t.version}`]) : ''}<span class="badge">v${ins.version}</span></div></div>`;
+      <div class="n8flags">${missing ? n8Pill(['warn', `${missing} step${missing > 1 ? 's need' : ' needs'} setup`]) : n8Pill(['ok', 'Ready'])}${upd ? n8Pill(['info', `Update v${ins.version} → v${t.version}`]) : ''}<span class="badge">v${ins.version}</span></div></div>`;
   }).join('');
   return head + `<div class="n8grid">${cards}</div><div id="n8Detail"></div>`;
 }
+/* which key / settings each n8n node needs → red (needs setup) · grey (ready) · green (ran) */
+const N8_NODECRED = [[/googleSheets/i, 'googleSheetsOAuth2Api'], [/gemini|langchain|googlePalm/i, 'googlePalmApi'], [/facebookGraph/i, 'facebookGraphApi'], [/whatsApp/i, 'whatsAppApi'], [/facebookLeadAds/i, 'facebookLeadAdsOAuth2Api']];
+function n8Need(t, ins, node) {
+  if (/Client Settings/.test(node.name)) { const miss = t.settings.filter(s => s.req !== false && !String(ins.values[s.key] ?? s.value ?? '').trim()); return { kind: 'settings', ok: !miss.length, miss: miss.length }; }
+  const m = N8_NODECRED.find(([re]) => re.test(node.type)), k = m && t.creds.includes(m[1]) ? m[1] : null;
+  if (k) return { kind: 'cred', key: k, ok: !!ins.creds[k] };
+  return { kind: 'none', ok: true };
+}
+/** Run order: start at trigger nodes, follow wires; an If node takes its "true" branch */
+function n8Path(t) {
+  const C = t.wf.connections, inc = new Set(); Object.values(C).forEach(c => (c.main || []).forEach(l => (l || []).forEach(x => inc.add(x.node))));
+  const q = t.wf.nodes.filter(n => !inc.has(n.name)).map(n => n.name), order = [], seen = new Set();
+  while (q.length) { const n = q.shift(); if (seen.has(n)) continue; seen.add(n); order.push(n); const node = t.wf.nodes.find(x => x.name === n), outs = (C[n] && C[n].main) || []; (/\.if$/i.test(node.type) ? outs.slice(0, 1) : outs).forEach(l => (l || []).forEach(x => q.push(x.node))); }
+  return order;
+}
+function n8BaseStates(t, ins) { const st = {}; t.wf.nodes.forEach(n => st[n.name] = n8Need(t, ins, n).ok ? 'ready' : 'need'); return st; }
+const n8Ins = () => n8Data().installs.find(i => i.client === N8.client && i.tpl === N8.open);
+
+/* ---- read-only workflow viewer (n8n JSON → our node style), with setup + live run states ---- */
+function n8Graph(t, states, pick) {
+  const NW = 200, NH = 62, S = 1.1, nodes = t.wf.nodes;
+  const xs = nodes.map(n => n.position[0] * S), ys = nodes.map(n => n.position[1] * S), x0 = Math.min(...xs), y0 = Math.min(...ys);
+  const P = {}; nodes.forEach(n => P[n.name] = { x: n.position[0] * S - x0 + 30, y: n.position[1] * S - y0 + 30 });
+  const W = Math.max(...Object.values(P).map(p => p.x)) + NW + 60, H = Math.max(...Object.values(P).map(p => p.y)) + NH + 60;
+  let wires = '';
+  Object.entries(t.wf.connections).forEach(([from, c]) => (c.main || []).forEach((list, o) => (list || []).forEach(l => {
+    const a = P[from], b = P[l.node]; if (!a || !b) return; const outs = (c.main || []).length;
+    const A = { x: a.x + NW, y: a.y + NH / 2 + (outs > 1 ? (o ? 12 : -12) : 0) }, B = { x: b.x, y: b.y + NH / 2 }, d = wirePath(A, B);
+    const st = states && states[l.node], lit = st === 'success' || st === 'running';
+    wires += `<g class="wire ${lit ? 'lit' : ''} ${st === 'error' ? 'bad' : ''}"><path class="ln" d="${d}"/>${lit ? `<circle class="flow" r="3"><animateMotion dur="1.2s" repeatCount="indefinite" path="${d}"/></circle>` : ''}${outs > 1 ? `<text class="wl" x="${A.x + 10}" y="${A.y - 5}">${o ? 'false' : 'true'}</text>` : ''}</g>`;
+  })));
+  const badge = { need: '!', success: '✓', error: '✕', running: '' };
+  const nodeHTML = nodes.map((n, i) => {
+    const k = n8Kind(n.type), st = (states && states[n.name]) || '', cfg = /Client Settings/.test(n.name);
+    return `<div class="n8n ${st} ${cfg ? 'cfg' : ''} ${pick === n.name ? 'pick' : ''}" data-n8node="${esc(n.name)}" style="left:${P[n.name].x}px;top:${P[n.name].y}px;width:${NW}px;height:${NH}px;--c:${k.c};--i:${i}" title="${esc(n.name)} — double-click to set up">
+      <span class="n8ic">${esc(k.ic)}</span><div class="n8t"><b>${esc(n.name)}</b><small>${esc(cfg ? 'Your settings' : k.label)}</small></div>
+      ${st in badge && st !== 'ready' ? `<span class="n8st">${badge[st]}</span>` : ''}</div>`;
+  }).join('');
+  return `<div class="n8w" style="width:${W}px;height:${H}px"><svg class="n8svg" width="${W}" height="${H}">${wires}</svg>${nodeHTML}</div>`;
+}
+function n8Viewer(host, html, on = {}) {
+  host.innerHTML = `<div class="n8vp">${html}</div><div class="n8zoom"><button data-n8z="out" title="Zoom out">−</button><button data-n8z="fit" title="Fit">Fit</button><button data-n8z="in" title="Zoom in">+</button></div>`;
+  const v = { x: 0, y: 0, k: 1 }; let w = host.querySelector('.n8w');
+  const apply = () => { w.style.transform = `translate(${v.x}px,${v.y}px) scale(${v.k})`; };
+  const fit = () => { const W = host.clientWidth, H = host.clientHeight; if (!W) return; v.k = Math.max(W < 600 ? 0.5 : 0.45, Math.min(1.1, (W - 30) / w.offsetWidth, (H - 30) / w.offsetHeight)); v.x = Math.max(15, (W - w.offsetWidth * v.k) / 2); v.y = (H - w.offsetHeight * v.k) / 2; apply(); };
+  const zoom = (cx, cy, k) => { k = Math.max(0.3, Math.min(2, k)); v.x = cx - (cx - v.x) * (k / v.k); v.y = cy - (cy - v.y) * (k / v.k); v.k = k; apply(); };
+  host.addEventListener('wheel', e => wheelNav(e, host.getBoundingClientRect(), (x, y, f) => zoom(x, y, v.k * f), (dx, dy) => { v.x += dx; v.y += dy; apply(); }), { passive: false });
+  let drag = null;
+  host.addEventListener('pointerdown', e => {
+    const n = e.target.closest('.n8n');
+    if (n) { if (e.pointerType === 'touch' && on.open) on.open(n.dataset.n8node); return; }
+    if (e.target.closest('.n8zoom')) return;
+    drag = { x: e.clientX, y: e.clientY, vx: v.x, vy: v.y, moved: false }; host.setPointerCapture(e.pointerId); host.classList.add('panning');
+  });
+  host.addEventListener('pointermove', e => { if (!drag) return; v.x = drag.vx + e.clientX - drag.x; v.y = drag.vy + e.clientY - drag.y; drag.moved = true; apply(); });
+  host.addEventListener('pointerup', () => { if (drag && !drag.moved && on.empty) on.empty(); drag = null; host.classList.remove('panning'); });
+  host.addEventListener('click', e => { const n = e.target.closest('.n8n'); if (n && on.pick) on.pick(n.dataset.n8node); });
+  host.addEventListener('dblclick', e => { const n = e.target.closest('.n8n'); if (n && on.open) on.open(n.dataset.n8node); });
+  host.querySelector('.n8zoom').onclick = e => { const b = e.target.closest('[data-n8z]'); if (!b) return; const z = b.dataset.n8z; if (z === 'fit') fit(); else zoom(host.clientWidth / 2, host.clientHeight / 2, v.k * (z === 'in' ? 1.2 : 1 / 1.2)); };
+  requestAnimationFrame(fit);
+  return {
+    /** Update colours in place (no re-insert → no flashing, double-click keeps working) */
+    setStates(states, t, pick) {
+      const tmp = document.createElement('div'); tmp.innerHTML = n8Graph(t, states, pick);
+      w.querySelector('.n8svg').innerHTML = tmp.querySelector('.n8svg').innerHTML;
+      tmp.querySelectorAll('.n8n').forEach(nn => { const old = [...w.querySelectorAll('.n8n')].find(o => o.dataset.n8node === nn.dataset.n8node); if (!old) return; old.className = nn.className; const ob = old.querySelector('.n8st'), nb = nn.querySelector('.n8st'); if (ob) ob.remove(); if (nb) old.appendChild(nb); });
+    },
+  };
+}
+function n8States() { const t = n8Tpl(N8.open), ins = n8Ins(); return Object.assign(n8BaseStates(t, ins), N8.runStates || {}); }
+function n8Refresh() { const t = n8Tpl(N8.open); if (!t || !n8Ins()) return; N8.view && N8.view.setStates(n8States(), t, N8.node); n8Side(); n8CardFlags(); }
+function n8CardFlags() {
+  const t = n8Tpl(N8.open), ins = n8Ins(), el = $(`[data-n8open="${N8.open}"] .n8flags`); if (!el || !t || !ins) return;
+  const need = Object.values(n8BaseStates(t, ins)).filter(x => x === 'need').length;
+  el.innerHTML = (need ? n8Pill(['warn', `${need} step${need > 1 ? 's need' : ' needs'} setup`]) : n8Pill(['ok', 'Ready'])) + (ins.version < t.version ? n8Pill(['info', `Update v${ins.version} → v${t.version}`]) : '') + `<span class="badge">v${ins.version}</span>`;
+}
 function n8MountDetail() {
-  const t = n8Tpl(N8.open), c = n8Client(N8.client), ins = n8Data().installs.find(i => i.client === c.id && i.tpl === t.id); if (!ins) { N8.open = null; return; }
-  const settings = t.settings.map(s => { const v = ins.values[s.key] ?? s.value ?? ''; return `<div class="field"><label>${esc(s.label)}</label>${s.type === 'select' ? `<select class="input" data-n8set="${s.key}">${s.options.map(o => `<option ${o === v ? 'selected' : ''}>${esc(o)}</option>`).join('')}</select>` : `<input class="input" data-n8set="${s.key}" value="${esc(v)}">`}${s.help ? `<small class="muted">${esc(s.help)}</small>` : ''}</div>`; }).join('');
-  const creds = t.creds.map(k => { const g = N8_CREDS[k], ok = !!ins.creds[k];
-    return `<details class="n8cred ${ok ? 'ok' : ''}" ${ok ? '' : 'open'}><summary><span class="cdot">${ok ? '✓' : '!'}</span><b>${esc(g.name)}</b><span class="muted">${ok ? 'Saved in n8n' : 'Needed'}</span></summary>
-      <p class="help">${esc(g.help)}${g.link ? ` <a href="${esc(g.link)}" target="_blank" rel="noopener">Open ↗</a>` : ''}</p>
-      ${g.oauth ? `<button class="btn sm" data-n8oauth="${k}">Connect in n8n ↗</button>` : g.fields.map(([f, l]) => `<div class="field"><label>${esc(l)}</label><input class="input" type="password" autocomplete="off" data-n8cred="${k}" data-f="${f}" placeholder="${ok ? '•••••• saved — paste to replace' : 'Paste here'}"></div>`).join('') + `<button class="btn sm primary" data-n8credsave="${k}">Save to n8n</button>`}
-    </details>`; }).join('');
+  const t = n8Tpl(N8.open), c = n8Client(N8.client), ins = n8Ins(); if (!ins) { N8.open = null; return; }
   const upd = ins.version < t.version;
   $('#n8Detail').innerHTML = `<div class="n8det glass">
     <div class="n8det-h"><div><small class="muted">${esc(t.cat)} · v${ins.version}${upd ? ` (v${t.version} available)` : ''}</small><h3>${esc(t.name)}</h3></div><div class="grow"></div>
+      <div class="n8legend"><span><i class="lg-need"></i>Needs setup</span><span><i class="lg-ready"></i>Ready</span><span><i class="lg-ok"></i>Ran OK</span></div>
       ${upd && N8.role === 'admin' ? `<button class="btn sm" data-n8update="${t.id}">Update to v${t.version}</button>` : ''}<button class="btn sm primary" data-n8test="${t.id}"><svg class="i" viewBox="0 0 24 24"><path d="M7 5v14l11-7Z"/></svg>Test run</button><button class="ibtn" data-n8close title="Close">${I.x}</button></div>
-    <div class="n8det-b"><div class="n8canvas" id="n8Canvas"></div>
-      <div class="n8side"><div class="sec-t">Settings</div><p class="help">Only what this service needs. Saved straight into the "⚙ Client Settings" node in n8n.</p>${settings}<button class="btn sm primary" data-n8setsave="${t.id}">Save settings</button>
-        <div class="sec-t" style="margin-top:8px">Connections & keys</div><p class="help">Keys go directly into ${esc(c.name)}'s own n8n. This website never stores them.</p>${creds}</div></div></div>`;
-  N8.view = n8Viewer($('#n8Canvas'), n8Graph(t));
+    <div class="n8det-b"><div class="n8canvas" id="n8Canvas"></div><div class="n8side" id="n8Side"></div></div></div>`;
+  N8.view = n8Viewer($('#n8Canvas'), n8Graph(t, n8States(), N8.node), {
+    pick: name => { N8.node = name; N8.view.setStates(n8States(), t, name); },
+    open: name => { N8.node = name; N8.panel = name; n8Refresh(); },
+    empty: () => { if (N8.node) { N8.node = null; N8.view.setStates(n8States(), t, null); } },
+  });
+  n8Side();
+}
+function n8Side() {
+  const t = n8Tpl(N8.open), ins = n8Ins(), side = $('#n8Side'), c = n8Client(N8.client); if (!side || !t || !ins) return;
+  const node = N8.panel && t.wf.nodes.find(n => n.name === N8.panel);
+  if (!node) {
+    const steps = t.wf.nodes.map(n => ({ n, need: n8Need(t, ins, n) })), setup = steps.filter(x => x.need.kind !== 'none'), done = setup.filter(x => x.need.ok).length;
+    side.innerHTML = `<div class="sec-t">Set up this service</div>
+      <div class="n8prog"><div class="bar-track"><div class="bar" style="width:${setup.length ? done / setup.length * 100 : 100}%;background:${done === setup.length ? 'var(--green)' : 'var(--blue-2)'}"></div></div><small><b>${done}</b> of ${setup.length} ready</small></div>
+      <p class="help"><b>Double-click a node</b> on the left (or pick one below) to fill in what it needs. Red = needs your input · Grey = ready · Green = ran successfully.</p>
+      <div class="n8todo">${setup.map(x => `<button class="n8todo-i ${x.need.ok ? 'ok' : ''}" data-n8pick="${esc(x.n.name)}"><span class="cdot">${x.need.ok ? '✓' : '!'}</span><span class="tx"><b>${esc(x.n.name)}</b><small>${x.need.kind === 'settings' ? (x.need.ok ? 'Settings saved' : `${x.need.miss} setting${x.need.miss > 1 ? 's' : ''} to fill`) : (x.need.ok ? N8_CREDS[x.need.key].name + ' connected' : 'Needs: ' + N8_CREDS[x.need.key].name)}</small></span><span class="go">›</span></button>`).join('')}</div>
+      <p class="help">Other steps (${steps.filter(x => x.need.kind === 'none').map(x => esc(x.n.name)).join(', ')}) are handled by your provider — nothing to do there.</p>`;
+    return;
+  }
+  const k = n8Kind(node.type), need = n8Need(t, ins, node);
+  let body = '';
+  if (need.kind === 'settings') body = `<p class="help">Saved straight into the "⚙ Client Settings" node in your n8n.</p>` + t.settings.map(s => { const v = ins.values[s.key] ?? s.value ?? ''; return `<div class="field"><label>${esc(s.label)}${s.req === false ? ' <span class="muted">(optional)</span>' : ''}</label>${s.type === 'select' ? `<select class="input" data-n8set="${s.key}">${s.options.map(o => `<option ${o === v ? 'selected' : ''}>${esc(o)}</option>`).join('')}</select>` : `<input class="input ${s.req !== false && !String(v).trim() ? 'need' : ''}" data-n8set="${s.key}" value="${esc(v)}">`}${s.help ? `<small class="muted">${esc(s.help)}</small>` : ''}</div>`; }).join('') + `<button class="btn primary" data-n8setsave="${t.id}">Save settings</button>`;
+  else if (need.kind === 'cred') { const g = N8_CREDS[need.key];
+    body = `<div class="n8keyst ${need.ok ? 'ok' : ''}">${need.ok ? '✓ Connected in your n8n' : '! Not connected yet'}</div>
+      <div class="n8where"><b>Where to find it</b><p>${esc(g.help)}</p>${g.link ? `<a class="btn sm" href="${esc(g.link)}" target="_blank" rel="noopener">Open ↗</a>` : ''}</div>
+      ${g.oauth ? `<button class="btn primary" data-n8oauth="${need.key}">Connect in n8n ↗</button>` : g.fields.map(([f, l]) => `<div class="field"><label>${esc(l)}</label><input class="input" type="password" autocomplete="off" data-n8cred="${need.key}" data-f="${f}" placeholder="${need.ok ? '•••••• saved — paste to replace' : 'Paste here'}"></div>`).join('') + `<button class="btn primary" data-n8credsave="${need.key}">Save to n8n</button>`}
+      <p class="help">The key goes directly into ${esc(c.name)}'s own n8n. This website never stores it.</p>`; }
+  else body = `<div class="n8keyst ok">Nothing to set up here</div><p class="help">This step is managed by your service provider. It runs automatically.</p>`;
+  side.innerHTML = `<button class="btn sm ghost n8back" data-n8back>← All steps</button>
+    <div class="n8nh"><span class="n8ic" style="background:${k.c}">${esc(k.ic)}</span><div><b>${esc(node.name)}</b><small class="muted">${esc(/Client Settings/.test(node.name) ? 'Your settings' : k.label)}</small></div></div>${body}`;
 }
 async function n8TestRun(tid) {
-  const t = n8Tpl(tid), c = n8Client(N8.client), names = t.wf.nodes.map(n => n.name), states = {};
-  const ins = n8Data().installs.find(i => i.client === c.id && i.tpl === t.id), missing = t.creds.some(k => !ins.creds[k]);
-  const failAt = missing ? names.findIndex((n, i) => i > 1 && /WhatsApp|Instagram|reply|Send|Publish|insights/i.test(n)) : -1;
+  const t = n8Tpl(tid), c = n8Client(N8.client), ins = n8Ins(), base = n8BaseStates(t, ins), names = t.wf.nodes.map(n => n.name), st = Object.assign({}, base);
   const btn = $(`[data-n8test="${tid}"]`); if (btn) btn.disabled = true;
+  N8.runStates = {}; const paint = () => { Object.assign(st, N8.runStates); N8.view && N8.view.setStates(st, t, N8.node); };
   const t0 = Date.now(), run = { id: 'R' + Date.now().toString(36).toUpperCase(), client: c.id, tpl: t.id, status: 'running', at: new Date().toISOString(), ms: 0, nodes: [], error: '' };
-  for (let i = 0; i < names.length; i++) {
-    states[names[i]] = 'running'; N8.view && N8.view.setStates(states, t);
-    await new Promise(r => setTimeout(r, reduceMotion() ? 60 : 420));
-    const bad = i === failAt; states[names[i]] = bad ? 'error' : 'success'; run.nodes.push({ name: names[i], status: states[names[i]], ms: 100 + Math.round(Math.random() * 600) });
-    N8.view && N8.view.setStates(states, t);
-    if (bad) { run.status = 'error'; run.error = `${names[i]}: a key is missing — add it under "Connections & keys"`; break; }
+  for (const name of n8Path(t)) {
+    if (base[name] === 'need') { N8.runStates[name] = 'error'; paint(); run.status = 'error'; run.error = `"${name}" is not set up yet — double-click it to add what it needs`; run.nodes.push({ name, status: 'error', ms: 0 }); break; }
+    N8.runStates[name] = 'running'; paint();
+    await new Promise(r => setTimeout(r, reduceMotion() ? 60 : 450));
+    N8.runStates[name] = 'success'; run.nodes.push({ name, status: 'success', ms: 100 + Math.round(Math.random() * 600) }); paint();
   }
   if (run.status === 'running') run.status = 'success';
   run.ms = Date.now() - t0; n8Data().runs.unshift(run); if (btn) btn.disabled = false;
-  toast(run.status === 'success' ? `✓ Test run passed (${(run.ms / 1000).toFixed(1)} s) — demo` : '✕ Test run failed — see Runs', run.status !== 'success');
+  toast(run.status === 'success' ? `✓ Test run passed (${(run.ms / 1000).toFixed(1)} s) — demo` : `✕ ${run.error}`, run.status !== 'success');
+  if (run.status !== 'success') { N8.panel = run.nodes[run.nodes.length - 1].name; N8.node = N8.panel; n8Side(); N8.view && N8.view.setStates(st, t, N8.node); }
   const card = $(`[data-n8open="${tid}"] .n8meta`); if (card) card.innerHTML = runPill(run.status) + '<span class="muted">just now</span><span class="grow"></span>';
 }
+
 function n8Runs() {
   const D = n8Data();
   return `<div class="adfilter run-filter"><label class="check"><input type="checkbox" id="n8RunsAll" ${N8.runsAll ? 'checked' : ''} ${N8.role === 'admin' ? '' : 'hidden'}>${N8.role === 'admin' ? ' Show all clients' : ''}</label></div>
@@ -3273,13 +3419,15 @@ function n8Connect() {
     const t = e.target;
     const tab = t.closest('[data-n8tab]'); if (tab) { N8.tab = tab.dataset.n8tab; N8.open = null; N8.run = null; renderN8n(true); return; }
     const tg = t.closest('[data-n8toggle]'); if (tg) { e.stopPropagation(); const ins = n8Data().installs.find(i => i.client === N8.client && i.tpl === tg.dataset.n8toggle); ins.active = !ins.active; tg.classList.toggle('on', ins.active); n8Save(); toast(`${n8Tpl(ins.tpl).name}: ${ins.active ? 'turned on' : 'turned off'} in n8n (demo)`); return; }
-    if (t.closest('[data-n8close]')) { N8.open = null; renderN8n(); return; }
+    if (t.closest('[data-n8close]')) { N8.open = null; N8.node = N8.panel = null; renderN8n(); return; }
     if (t.closest('[data-n8closerun]')) { N8.run = null; renderN8n(); return; }
-    const op = t.closest('[data-n8open]'); if (op) { N8.open = N8.open === op.dataset.n8open ? null : op.dataset.n8open; renderN8n(); if (N8.open) setTimeout(() => $('#n8Detail').scrollIntoView({ behavior: reduceMotion() ? 'auto' : 'smooth', block: 'start' }), 60); return; }
+    const pk = t.closest('[data-n8pick]'); if (pk) { N8.node = N8.panel = pk.dataset.n8pick; n8Refresh(); return; }
+    if (t.closest('[data-n8back]')) { N8.panel = null; n8Refresh(); return; }
+    const op = t.closest('[data-n8open]'); if (op) { N8.node = N8.panel = null; N8.runStates = null; N8.open = N8.open === op.dataset.n8open ? null : op.dataset.n8open; renderN8n(); if (N8.open) setTimeout(() => $('#n8Detail').scrollIntoView({ behavior: reduceMotion() ? 'auto' : 'smooth', block: 'start' }), 60); return; }
     const ts = t.closest('[data-n8test]'); if (ts) { n8TestRun(ts.dataset.n8test); return; }
-    const ss = t.closest('[data-n8setsave]'); if (ss) { const ins = n8Data().installs.find(i => i.client === N8.client && i.tpl === ss.dataset.n8setsave); $$('[data-n8set]').forEach(f => ins.values[f.dataset.n8set] = f.value.trim()); n8Save(); toast('Settings saved to "⚙ Client Settings" in n8n (demo)'); return; }
-    const cs = t.closest('[data-n8credsave]'); if (cs) { const k = cs.dataset.n8credsave, inputs = $$(`[data-n8cred="${k}"]`); if (inputs.some(i => !i.value.trim())) return toast('Fill every field for this connection', true); const ins = n8Data().installs.find(i => i.client === N8.client && i.tpl === N8.open); ins.creds[k] = true; inputs.forEach(i => i.value = ''); n8Save(); toast(`${N8_CREDS[k].name} saved in n8n (demo) ✓`); n8MountDetail(); return; }
-    const oa = t.closest('[data-n8oauth]'); if (oa) { const c = n8Client(N8.client); if (!c.url) return toast('Connect n8n first (Connect n8n tab)', true); toast('Opens your n8n credentials page once live — demo'); const ins = n8Data().installs.find(i => i.client === N8.client && i.tpl === N8.open); ins.creds[oa.dataset.n8oauth] = true; n8Save(); n8MountDetail(); return; }
+    const ss = t.closest('[data-n8setsave]'); if (ss) { const ins = n8Ins(); $$('[data-n8set]').forEach(f => ins.values[f.dataset.n8set] = f.value.trim()); n8Save(); N8.runStates = null; const ok = n8Need(n8Tpl(N8.open), ins, { name: '⚙ Client Settings', type: '' }).ok; toast(ok ? 'Settings saved ✓ — this step is ready (grey)' : 'Saved — some required settings are still empty', !ok); n8Refresh(); return; }
+    const cs = t.closest('[data-n8credsave]'); if (cs) { const k = cs.dataset.n8credsave, inputs = $$(`[data-n8cred="${k}"]`); if (inputs.some(i => !i.value.trim())) return toast('Fill every field for this connection', true); const ins = n8Ins(); ins.creds[k] = true; inputs.forEach(i => i.value = ''); n8Save(); N8.runStates = null; toast(`${N8_CREDS[k].name} connected ✓ — node is ready (grey). Press Test run.`); n8Refresh(); return; }
+    const oa = t.closest('[data-n8oauth]'); if (oa) { const c = n8Client(N8.client); if (!c.url) return toast('Connect n8n first (Connect n8n tab)', true); toast('Opens your n8n credentials page once live — demo'); const ins = n8Ins(); ins.creds[oa.dataset.n8oauth] = true; n8Save(); N8.runStates = null; n8Refresh(); return; }
     const up = t.closest('[data-n8update]'); if (up) { const ins = n8Data().installs.find(i => i.client === N8.client && i.tpl === up.dataset.n8update); ins.version = n8Tpl(ins.tpl).version; n8Save(); toast(`Updated to v${ins.version} — settings and keys kept (demo)`); renderN8n(); return; }
     const rr = t.closest('[data-n8retry]'); if (rr) { e.stopPropagation(); const r = n8Data().runs.find(x => x.id === rr.dataset.n8retry); toast('Retry sent to n8n (demo)'); r.status = n8Client(r.client).keyOk ? 'success' : 'error'; renderN8n(); return; }
     const run = t.closest('[data-n8run]'); if (run) { N8.run = N8.run === run.dataset.n8run ? null : run.dataset.n8run; renderN8n(); if (N8.run) setTimeout(() => $('#n8RunDet').scrollIntoView({ behavior: reduceMotion() ? 'auto' : 'smooth', block: 'start' }), 60); return; }
@@ -3411,7 +3559,7 @@ async function moveStage(id, stage) {
   catch (e) { l.stage = old; toast('Could not save stage: ' + e.message, true); load(true); }
 }
 async function addNote(id, type, details) {
-  if (!details.trim() && type === 'Note') return toast('The note is empty', true);
+  if (!details.trim()) return toast('Write what happened first', true);
   try { await api('addActivity', { leadId: id, type, details, doneBy: me() }); toast('Added to journey'); if (demo) renderAll(); else await load(true); }
   catch (e) { toast('Could not save: ' + e.message, true); }
 }
@@ -3441,12 +3589,12 @@ function renderPanel(id) {
   const nextStage = nextStageOf(l.stage);
   const journey = acts.map((a, i) => `<div class="jn" style="--i:${i}"><b>${esc(a.type)}</b>${a.details ? `<p>${esc(a.details)}</p>` : ''}<time>${esc(fmtDT(a.dateTime))}${a.doneBy ? ' · ' + esc(a.doneBy) : ''}</time></div>`).join('')
     + (l.followUpDate && !isClosed(l) ? `<div class="jn next"><b>Next follow-up</b><p>${esc(fmtDate(l.followUpDate))}${isDue(l) ? ' · <span style="color:var(--coral);font-weight:700">due</span>' : ''}</p></div>` : '');
-  const types = (S.lists.activityTypes || DEFAULT_LISTS.activityTypes).filter(t => t !== 'Lead Added' && t !== 'Stage Changed');
+  const types = (S.lists.activityTypes || DEFAULT_LISTS.activityTypes).filter(t => t !== 'Lead Added' && t !== 'Stage Changed').sort((a, b) => (b === 'Note') - (a === 'Note'));
   const pcov = safeUrl(l.businessPhoto);
   $('#panel').innerHTML = `${pcov ? `<div class="p-cover" style="background-image:url('${esc(pcov)}')"></div>` : ''}
     <div class="p-head">${avatar(l.name, 'lg', l.clientPhoto)}<div class="t"><b>${esc(l.name)}</b><span>${esc(l.businessName || '')}${l.city ? ' · ' + esc(l.city) : ''}</span>
       <div style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap">${l.tag ? `<span class="pill ${tagCls(l.tag)}">${esc(l.tag)}</span>` : ''}<span class="pill stage"><span class="sdot" style="background:${stageColor(l.stage)}"></span>${esc(l.stage)}</span></div></div>
-      <button class="ibtn" data-close-panel>${I.x}</button></div>
+      <button class="ibtn" data-delete="${esc(l.leadId)}" title="Delete lead">${I.trash}</button><button class="ibtn" data-close-panel>${I.x}</button></div>
     <div class="p-body">
       <div class="p-actions">
         <a class="btn wa" href="${waLink(l.phone, 'Hi ' + (l.name || '').split(' ')[0] + ', ')}" target="_blank" rel="noopener" ${l.phone ? '' : 'style="pointer-events:none;opacity:.5"'}>${I.wa}WhatsApp</a>
@@ -3476,7 +3624,7 @@ function renderPanel(id) {
     </div>
     <div class="p-foot">
       ${l.stage !== 'Lost' && l.stage !== 'Won' ? '<button class="btn danger" data-move="Lost">Mark as Lost</button>' : `<button class="btn danger" data-delete="${esc(l.leadId)}">Delete Lead</button>`}
-      ${nextStage ? `<button class="btn primary" data-move="${esc(nextStage)}">Move to ${esc(nextStage)} →</button>` : `<button class="btn" data-move="${esc(op[0] || 'New Lead')}">Re-open lead</button>`}
+      ${nextStage ? `<button class="btn primary" data-move="${esc(nextStage)}" title="Move to ${esc(nextStage)}"><span class="ell">Move to ${esc(nextStage)} →</span></button>` : `<button class="btn" data-move="${esc(op[0] || 'New Lead')}">Re-open lead</button>`}
     </div>`;
   $('#nsave').onclick = () => addNote(id, $('#ntype').value, $('#ntext').value);
   $('#wasend').onclick = () => sendWa(id);
@@ -3488,8 +3636,9 @@ let formTag = '', formStage = '';
 function openLeadModal(lead, presetStage) {
   const l = lead || {}; const st = stages(); formTag = l.tag || 'Warm'; formStage = l.stage || presetStage || st[0];
   upStore.lead = { businessPhoto: l.businessPhoto || '', clientPhoto: l.clientPhoto || '' };
-  const opt = (arr, v) => ['<option value="">Select…</option>'].concat(arr.map(x => `<option ${x === v ? 'selected' : ''}>${esc(x)}</option>`)).join('');
+  const opt = (arr, v) => { const list = v && !arr.includes(v) ? arr.concat([v]) : arr; return ['<option value="">Select…</option>'].concat(list.map(x => `<option ${x === v ? 'selected' : ''}>${esc(x)}</option>`)).join(''); };
   const team = [...new Set(S.team.filter(t => t.active !== false && t.name).map(t => t.name))];
+  if (l.assignedTo && !team.includes(l.assignedTo)) team.push(l.assignedTo);
   $('#leadBox').innerHTML = `
     <div class="m-head"><h2>${lead ? 'Edit Lead' : 'Add New Lead'}</h2><button class="ibtn" data-close>${I.x}</button></div>
     <form class="form" id="lform" autocomplete="off">
@@ -3511,7 +3660,7 @@ function openLeadModal(lead, presetStage) {
       <div class="field full"><label>Notes</label><textarea class="input" name="notes" placeholder="Requirement, quantity, special request…">${esc(l.notes || '')}</textarea></div>
     </form>
     <div class="m-foot">
-      <label class="check"><input type="checkbox" disabled> Send a WhatsApp welcome message <small>(after Step 7)</small></label>
+      <label class="check"><input type="checkbox" disabled> Send a WhatsApp welcome message <small>(coming soon)</small></label>
       <div class="grow"></div>
       <button class="btn" data-close>Cancel</button>
       <button class="btn primary" id="lsave">${lead ? 'Save Changes' : 'Save Lead'}</button>
@@ -3531,7 +3680,8 @@ async function saveLead(lead) {
   if (upBusy) return toast('Photo is still uploading, wait 2 seconds…', true);
   const f = $('#lform'); const fd = Object.fromEntries(new FormData(f).entries());
   if (!fd.name.trim()) return toast('Name is required', true);
-  const digits = fd.phone.replace(/\D/g, ''); if (digits.length < 10) return toast('Enter a valid WhatsApp number (10 digits)', true);
+  const digits = fd.phone.replace(/\D/g, '').replace(/^0+/, ''); if (digits.length < 10) return toast('Enter a valid WhatsApp number (10 digits)', true);
+  if (fd.budget && Number(fd.budget) < 0) return toast('Budget cannot be negative', true);
   const data = { name: fd.name.trim(), phone: digits.length === 10 ? '91' + digits : digits, businessName: fd.businessName.trim(), businessType: fd.businessType, city: fd.city.trim(), source: fd.source, budget: fd.budget ? Number(fd.budget) : '', followUpDate: fd.followUpDate, assignedTo: fd.assignedTo, notes: fd.notes.trim(), tag: formTag, stage: formStage, businessPhoto: upStore.lead.businessPhoto || '', clientPhoto: upStore.lead.clientPhoto || '' };
   const btn = $('#lsave'); btn.disabled = true; btn.textContent = 'Saving…';
   try {
@@ -3664,6 +3814,7 @@ function renderLeads(anim) {
   fillFilter('#lfSource', 'All sources', S.lists.sources || [], ui.lf.source);
   const f = ui.lf;
   let list = S.leads.filter(l => matchQ(l, f.q) && (!f.stage || l.stage === f.stage) && (!f.tag || l.tag === f.tag) && (!f.source || l.source === f.source));
+  ui.leadList = list;
   const { k, d } = ui.sort;
   list.sort((a, b) => k === 'budget' ? ((+a.budget || 0) - (+b.budget || 0)) * d : String(a[k] || '').localeCompare(String(b[k] || '')) * d);
   $('#leadsCount').textContent = `Showing ${list.length} of ${S.leads.length} leads`;
@@ -3687,10 +3838,11 @@ $('#lfSource').onchange = e => { ui.lf.source = e.target.value; renderLeads(); }
 const CSV_COLS = [['leadId', 'Lead ID'], ['createdOn', 'Created On'], ['name', 'Name'], ['phone', 'Phone'], ['businessName', 'Business Name'], ['businessType', 'Business Type'], ['city', 'City'], ['source', 'Source'], ['budget', 'Budget'], ['stage', 'Stage'], ['tag', 'Tag'], ['assignedTo', 'Assigned To'], ['followUpDate', 'Follow-up Date'], ['lastContact', 'Last Contact'], ['notes', 'Notes']];
 function exportCSV() {
   const q = v => { v = String(v ?? ''); if (/^[=+\-@]/.test(v) && !/^\+?\d+$/.test(v)) v = "'" + v; return /[",\n\r]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; };
-  const rows = [CSV_COLS.map(c => c[1])].concat(S.leads.map(l => CSV_COLS.map(([k]) => k === 'phone' && l.phone ? '+' + l.phone : l[k])));
+  const src = ui.leadList && $('#v-leads').classList.contains('active') ? ui.leadList : S.leads;
+  const rows = [CSV_COLS.map(c => c[1])].concat(src.map(l => CSV_COLS.map(([k]) => k === 'phone' && l.phone ? '+' + l.phone : l[k])));
   const blob = new Blob(['﻿' + rows.map(r => r.map(q).join(',')).join('\r\n')], { type: 'text/csv;charset=utf-8' });
   const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `leads-${todayStr()}.csv`; document.body.appendChild(a); a.click(); a.remove();
-  setTimeout(() => URL.revokeObjectURL(a.href), 2000); toast(S.leads.length + ' leads exported');
+  setTimeout(() => URL.revokeObjectURL(a.href), 2000); toast(src.length + ' leads exported' + (src.length < S.leads.length ? ' (filtered view)' : ''));
 }
 function parseCSV(text) {
   const rows = []; let row = [], f = '', q = false;
@@ -3712,19 +3864,21 @@ async function importCSV(file) {
   if (!keys.includes('name') || !keys.includes('phone')) return toast('The CSV needs at least "Name" and "Phone" columns', true);
   const items = rows.slice(1, 301);
   if (!confirm(`Import ${items.length} leads?${rows.length > 301 ? ' (max 300 at a time)' : ''}`)) return;
-  let ok = 0, skip = 0;
+  let ok = 0, skip = 0, dup = 0;
+  const seen = new Set(S.leads.map(l => String(l.phone || '').replace(/\D/g, '').slice(-10)).filter(Boolean));
   for (const r of items) {
     const d = {}; keys.forEach((k, i) => { if (k) d[k] = String(r[i] || '').trim(); });
     const digits = String(d.phone || '').replace(/\D/g, '');
     if (!d.name || digits.length < 10) { skip++; continue; }
     d.phone = digits.length === 10 ? '91' + digits : digits;
+    if (seen.has(digits.slice(-10))) { dup++; continue; } seen.add(digits.slice(-10));
     if (d.budget) d.budget = Number(String(d.budget).replace(/[^\d.]/g, '')) || '';
     if (d.stage && !stages().includes(d.stage)) delete d.stage;
     if (d.followUpDate && !/^\d{4}-\d{2}-\d{2}$/.test(d.followUpDate)) delete d.followUpDate;
     d.by = me();
     try { await api('addLead', d); ok++; if (ok % 10 === 0) toast(`${ok} leads imported…`); } catch (e) { skip++; }
   }
-  toast(`✓ ${ok} leads imported${skip ? ` · ${skip} skipped (bad name/phone)` : ''}`);
+  toast(`✓ ${ok} leads imported${dup ? ` · ${dup} already existed (same phone)` : ''}${skip ? ` · ${skip} skipped (bad name/phone)` : ''}`);
   if (demo) renderAll(); else load(true);
 }
 $('#csvExport').onclick = exportCSV;
@@ -3761,9 +3915,12 @@ function openMemberModal(m) {
     <div class="m-foot"><div class="grow"></div><button class="btn" data-close>Cancel</button><button class="btn primary" id="mSave">${m ? 'Save Changes' : 'Add Member'}</button></div>`;
   $('#mSave').onclick = async () => {
     const name = $('#mName').value.trim(); if (!name) return toast('Name is required', true);
+    if (S.team.some(t => t !== m && String(t.name).trim().toLowerCase() === name.toLowerCase())) return toast('A team member with this name already exists', true);
     const data = { name, role: $('#mRole').value, phone: $('#mPhone').value.replace(/[^\d+]/g, ''), email: $('#mEmail').value.trim() };
+    const oldName = m ? m.name : '';
     try {
       if (m) await api('updateTeamMember', Object.assign({ id: m.memberId }, data)); else await api('addTeamMember', data);
+      if (oldName && oldName !== name) { const ls = S.leads.filter(l => l.assignedTo === oldName); ls.forEach(l => { l.assignedTo = name; }); if (!demo && ls.length) await runBatch(ls, l => api('updateLead', { id: l.leadId, assignedTo: name })); if (ls.length) toast(`${ls.length} lead${ls.length > 1 ? 's' : ''} moved to the new name`); }
       hideModal('#memModal'); toast(m ? 'Member updated' : 'Member added'); if (demo) renderAll(); else load(true);
     } catch (e) { toast('Could not save: ' + e.message, true); }
   };
@@ -3821,7 +3978,7 @@ function renderTemplates() {
       <div class="chatbg"><div class="bubble">${t.header ? `<div class="hdr">${esc(t.header)}</div>` : ''}${esc(t.body || '')}</div>
       ${btns.length ? `<div class="qbtns">${btns.map(b => `<span>${esc(b)}</span>`).join('')}</div>` : ''}</div>
       <span class="muted" style="font-size:12px">Language: ${esc(t.language || '-')}</span></div>`;
-  }).join('') || '<div class="empty glass" style="grid-column:1/-1">No templates yet. We will build them in Step 7.</div>';
+  }).join('') || '<div class="empty glass" style="grid-column:1/-1">No templates yet.</div>';
 }
 
 /* ================= tooltip ================= */
@@ -3838,11 +3995,12 @@ function renderTemplates() {
 
 /* ================= modal helpers ================= */
 function showModal(sel) { $(sel).classList.add('show'); $('#scrim').classList.add('show'); }
-function hideModal(sel) { $(sel).classList.remove('show'); if (!ui.openId) $('#scrim').classList.remove('show'); }
+function hideModal(sel) { const ae = document.activeElement; if (ae && $(sel).contains(ae)) ae.blur(); $(sel).classList.remove('show'); if (!ui.openId) $('#scrim').classList.remove('show'); }
 
 /* ================= routing ================= */
 function go(name) {
   if (!document.getElementById('v-' + name)) name = 'dashboard';
+  if (name !== 'pipeline' && typeof selWire !== 'undefined') { selWire = null; }
   $$('.view').forEach(v => v.classList.toggle('active', v.id === 'v-' + name));
   $$('[data-go]').forEach(a => a.classList.toggle('active', a.dataset.go === name));
   if (location.hash !== '#' + name) history.replaceState(null, '', '#' + name);
@@ -3893,7 +4051,7 @@ document.addEventListener('keydown', e => {
   const typing = e.target.closest && e.target.closest('input,textarea,select,[contenteditable]');
   const onPipe = $('#v-pipeline').classList.contains('active') && !$('.modal.show') && !$('#panel.show');
   if ((e.key === 'Delete' || e.key === 'Backspace') && !typing) {
-    if (selWire !== null) { e.preventDefault(); deleteWire(selWire); return; }
+    if (selWire !== null && onPipe) { e.preventDefault(); deleteWire(selWire); return; }
     if (selNodes.size && onPipe) { e.preventDefault(); requestDeleteStage([...selNodes]); return; }
   }
   if (onPipe && !typing && (e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'a') { e.preventDefault(); stages().forEach(n => selNodes.add(n)); selNode = stages()[0]; syncSel(); return; }
@@ -3909,7 +4067,8 @@ $('#refreshBtn').onclick = () => { load(true).then(() => toast('Data refreshed')
 $('#bellBtn').onclick = () => { ui.tab = 'due'; go('dashboard'); renderDashboard(); };
 $('#sideSettings').onclick = () => openSettings(); $('#bannerSettings').onclick = () => openSettings('conn'); $('#meBtn').onclick = () => openSettings('brand');
 function setTheme(t) { document.documentElement.dataset.theme = t; store.set('leadnode.theme', t); }
-$('#themeBtn').onclick = () => setTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark');
+$('#themeBtn').onclick = $('#mThemeBtn').onclick = () => setTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark');
+$('#mSetBtn').onclick = () => openSettings();
 setTheme(store.get('leadnode.theme') || 'light');
 
 /* ================= start ================= */
