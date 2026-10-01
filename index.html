@@ -630,8 +630,9 @@ textarea.input.code{min-height:320px}
 .acct-imp{display:flex;gap:12px;align-items:center;flex-wrap:wrap;padding:12px;border:1px dashed var(--line-2);border-radius:12px;margin-bottom:12px}.acct-imp>div{flex:1 1 240px;display:flex;flex-direction:column;gap:3px}.acct-imp small{color:var(--muted);font-size:12px}
 .auth-demo{display:block;margin:12px auto 0;border:0;background:none;color:var(--muted);font-weight:600}.auth-demo:hover{color:var(--text)}
 input:-webkit-autofill,input:-webkit-autofill:hover,input:-webkit-autofill:focus{-webkit-text-fill-color:var(--text);caret-color:var(--text);transition:background-color 99999s ease-out 0s}
+.nav-badge{display:inline-block;min-width:16px;padding:0 5px;margin-left:5px;border-radius:9px;background:var(--wa,#25A55F);color:#fff;font-size:10.5px;font-weight:800;line-height:16px;text-align:center;vertical-align:1px}.nav-badge[hidden]{display:none}
 .ro-banner{display:none}body.ro .ro-banner{display:flex}
-body.ro [data-add],body.ro .addcard,body.ro #addMember,body.ro [data-lginvite],body.ro #pImport,body.ro #scrNew,body.ro [data-go="industry"],body.ro [data-go="scripts"],body.ro [data-go="automation"],body.ro [data-go="broadcast"],body.ro [data-stab="conn"],body.ro [data-stab="wl"],body.ro #acctImport,body.ro #acctWs{display:none!important}
+body.ro [data-add],body.ro .addcard,body.ro #addMember,body.ro [data-lginvite],body.ro #pImport,body.ro #scrNew,body.ro [data-go="industry"],body.ro [data-go="scripts"],body.ro [data-go="automation"],body.ro [data-go="broadcast"],body.ro [data-stab="conn"],body.ro [data-stab="wl"],body.ro #acctImport,body.ro #acctWs,body.ro #panel .notebox,body.ro #panel [data-delete],body.ro #panel [data-edit],body.ro #panel [data-focus-note],body.ro #panel .p-foot,body.ro #panel .aisum-act button{display:none!important}body.ro #panel .stagebar{pointer-events:none}
 .lg-card{padding:18px;border-radius:16px;margin-top:18px}.lg-h{display:flex;gap:12px;align-items:flex-start;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap}.lg-h h3{margin:0 0 4px}.lg-h p{margin:0;font-size:13px}
 .lg-p{display:flex;gap:10px;align-items:center}.lg-p>div:last-child{display:flex;flex-direction:column}.lg-p small{font-size:12px}.input.sm{padding:6px 8px;font-size:12.5px;height:auto;width:auto}
 .lg-sub{margin:16px 0 8px;font-size:13px}.lg-inv{display:flex;flex-direction:column;gap:8px}.lg-i{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:8px 10px;border:1px solid var(--line);border-radius:10px;font-size:13px}
@@ -973,7 +974,7 @@ body.ro [data-add],body.ro .addcard,body.ro #addMember,body.ro [data-lginvite],b
         <a href="#pipeline" data-go="pipeline">Pipeline</a>
         <a href="#leads" data-go="leads">Leads</a>
         <a href="#industry" data-go="industry" class="mob">Kits</a>
-        <a href="#whatsapp" data-go="whatsapp">WhatsApp</a>
+        <a href="#whatsapp" data-go="whatsapp">WhatsApp<span class="nav-badge" id="waBadge" hidden></span></a>
         <a href="#broadcast" data-go="broadcast" class="mob">Broadcast</a>
         <a href="#automation" data-go="automation" class="mob">Automation</a>
         <a href="#ads" data-go="ads">Ads</a>
@@ -1494,6 +1495,7 @@ function renderAll(anim) {
   Object.keys(VIEW_RENDER).forEach(k => { if (k === cur) VIEW_RENDER[k](anim); else staleViews.add(k); });
   if (ui.openId) renderPanel(ui.openId);
   $('#bellDot').hidden = !S.leads.some(isDue);
+  try { const n = convos().reduce((s, c) => s + c.unread, 0), bd = $('#waBadge'); bd.hidden = !n; bd.textContent = n > 99 ? '99+' : n; } catch (e) { }
 }
 function fillSelects() {
   const opts = ['<option value="">All stages</option>'].concat(stages().map(s => `<option ${ui.stage === s ? 'selected' : ''}>${esc(s)}</option>`)).join('');
@@ -4757,11 +4759,12 @@ function liveStart() {
   } catch (e) { /* live updates are a bonus — the app works without them */ }
 }
 function liveStop() { if (AUTH.live) { try { AUTH.client.removeChannel(AUTH.live); } catch (e) { } AUTH.live = null; } }
-function liveKick() { clearTimeout(liveT); liveT = setTimeout(() => { if (document.hidden) { liveDirty = true; return; } if (cloud) load(true); }, 900); }
+const typingNow = () => { const a = document.activeElement; return !!(a && /^(INPUT|TEXTAREA)$/.test(a.tagName) && a.value && a.id !== 'ibText' && a.closest('#panel, .modal.show')); };
+function liveKick() { clearTimeout(liveT); liveT = setTimeout(() => { if (document.hidden) { liveDirty = true; return; } if (typingNow()) return liveKick(); if (cloud) load(true); }, 900); }
 document.addEventListener('visibilitychange', () => { if (!document.hidden && liveDirty) { liveDirty = false; if (cloud) load(true); } });
 
 /* ================= WhatsApp inbox ================= */
-const WA = { open: null, q: '', status: null, mobileThread: false };
+const WA = { open: null, q: '', status: null, mobileThread: false, drafts: {} };
 const WEBHOOK_URL = () => (sbConf().url || SB_DEFAULT.url) + '/functions/v1/wa-webhook';
 function demoMessages() {
   const t = new Date(), at = (dAgo, h, m) => { const d = new Date(t); d.setDate(d.getDate() - dAgo); d.setHours(h, m, 0, 0); return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(h)}:${pad(m)}`; };
@@ -4807,7 +4810,12 @@ function waConnHTML() {
 }
 async function fnCall(name, body) {
   const { data, error } = await AUTH.client.functions.invoke(name, { body: Object.assign({ workspace_id: AUTH.ws }, body) });
-  if (error) { let m = error.message; try { const j = await error.context.json(); m = j.error || m; } catch (e) { } if (/Failed to send a request|FunctionsFetchError|not found/i.test(m)) m = 'The WhatsApp server function is not set up yet (Supabase → Edge Functions).'; throw new Error(m); }
+  if (error) {
+    let m = '', status = error.context && error.context.status;
+    try { const j = await error.context.json(); m = j.error || j.message || ''; } catch (e) { }
+    if (!m || /Requested function was not found|Failed to send a request/i.test(m + ' ' + error.message) || status === 404 && !/Lead not found/.test(m)) m = m && status !== 404 ? m : 'The WhatsApp server function is not set up yet (Supabase → Edge Functions).';
+    throw new Error(m);
+  }
   if (data && data.error) throw new Error(data.error); return data;
 }
 async function renderInbox() {
@@ -4836,15 +4844,15 @@ function renderThread() {
     ${ro ? '<div class="ib-note">View-only access.</div>' : open24 ? `<div class="ib-comp"><textarea class="input" id="ibText" rows="1" placeholder="Type a message…"></textarea><button class="btn wa" id="ibSend">${I.wa}Send</button></div>`
       : `<div class="ib-comp tpl"><div class="ib-note">24-hour window closed — WhatsApp only allows an approved template until the customer replies.</div><select class="input" id="ibTpl">${tpls.length ? tpls.map(t => `<option value="${esc(t.templateName)}" data-lang="${esc(t.language || 'en')}">${esc(t.templateName)}${t.metaStatus ? ' · ' + esc(t.metaStatus) : ''}</option>`).join('') : '<option value="">No templates yet — add one in Templates</option>'}</select><button class="btn wa" id="ibSendTpl" ${tpls.length ? '' : 'disabled'}>${I.wa}Send template</button></div>`}`;
   const mb = $('#ibMsgs'); mb.scrollTop = mb.scrollHeight;
-  const ta = $('#ibText'); if (ta) { ta.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); ibSend(c); } }); ta.addEventListener('input', () => { ta.style.height = 'auto'; ta.style.height = Math.min(140, ta.scrollHeight) + 'px'; }); }
+  const ta = $('#ibText'); if (ta) { ta.value = WA.drafts[c.leadId || c.key] || ''; ta.addEventListener('input', () => { WA.drafts[c.leadId || c.key] = ta.value; }); ta.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); ibSend(c); } }); ta.addEventListener('input', () => { ta.style.height = 'auto'; ta.style.height = Math.min(140, ta.scrollHeight) + 'px'; }); }
   const sb = $('#ibSend'); if (sb) sb.onclick = () => ibSend(c);
   const st = $('#ibSendTpl'); if (st) st.onclick = () => ibSendTpl(c);
 }
 async function ibSend(c) {
   const ta = $('#ibText'), text = ta.value.trim(); if (!text) return;
-  if (demo) { S.messages.push({ messageId: 'd' + Date.now(), leadId: c.leadId, phone: c.phone, direction: 'out', type: 'text', text, time: nowStr(), status: 'sent' }); WA.open = c.leadId || c.key; ta.value = ''; renderInbox(); return toast('Demo: shown here only — connect WhatsApp to send for real'); }
+  if (demo) { S.messages.push({ messageId: 'd' + Date.now(), leadId: c.leadId, phone: c.phone, direction: 'out', type: 'text', text, time: nowStr(), status: 'sent' }); WA.open = c.leadId || c.key; ta.value = ''; delete WA.drafts[c.leadId || c.key]; renderInbox(); return toast('Demo: shown here only — connect WhatsApp to send for real'); }
   const btn = $('#ibSend'); btn.disabled = true;
-  try { await fnCall('wa-send', { lead_id: c.leadId, phone: c.phone, text, by: me() }); S.messages.push({ messageId: 'tmp' + Date.now(), leadId: c.leadId, phone: c.phone, direction: 'out', type: 'text', text, time: nowStr(), status: 'sent' }); WA.open = c.leadId || c.key; ta.value = ''; renderInbox(); load(true); }
+  try { await fnCall('wa-send', { lead_id: c.leadId, phone: c.phone, text, by: me() }); S.messages.push({ messageId: 'tmp' + Date.now(), leadId: c.leadId, phone: c.phone, direction: 'out', type: 'text', text, time: nowStr(), status: 'sent' }); WA.open = c.leadId || c.key; ta.value = ''; delete WA.drafts[c.leadId || c.key]; renderInbox(); load(true); }
   catch (e) { toast(e.message, true); } finally { const b = $('#ibSend'); if (b) b.disabled = false; }
 }
 async function ibSendTpl(c) {
