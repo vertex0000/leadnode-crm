@@ -733,6 +733,10 @@ body.ro [data-add],body.ro .addcard,body.ro #addMember,body.ro [data-lginvite],b
 .wa-qb{color:var(--blue-2);background:color-mix(in srgb,var(--glass-2,var(--card)) 72%,transparent);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-color:color-mix(in srgb,var(--blue-2) 22%,var(--line));border-radius:12px}
 .ib-day{box-shadow:0 1px 2px rgba(0,0,0,.06);font-weight:600}
 .ib-comp{background:var(--glass-2,var(--card));gap:10px}.ib-comp textarea{border-radius:22px;padding:10px 16px}.ib-comp #ibSend{border-radius:22px;padding:0 18px;height:42px}
+.ib-ai{position:relative;align-self:flex-end}.ib-aibtn{width:42px;height:42px;border-radius:50%;border:1px solid color-mix(in srgb,var(--blue-2) 35%,var(--line));background:color-mix(in srgb,var(--blue-2) 12%,var(--glass-2,var(--card)));font-size:18px;cursor:pointer;display:grid;place-items:center;transition:transform .15s,box-shadow .15s}.ib-aibtn:hover{transform:translateY(-1px);box-shadow:0 6px 16px color-mix(in srgb,var(--blue-2) 30%,transparent)}
+.ib-aibtn.busy{animation:aiPulse 1s ease-in-out infinite}@keyframes aiPulse{50%{box-shadow:0 0 0 6px color-mix(in srgb,#A78BFA 25%,transparent)}}
+.ib-aim{position:absolute;bottom:52px;left:0;z-index:30;width:250px;padding:6px;border-radius:14px;background:var(--glass-2,var(--card));border:1px solid var(--line);box-shadow:0 18px 40px rgba(0,0,0,.25);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);display:flex;flex-direction:column}
+.ib-aim button{display:flex;flex-direction:column;align-items:flex-start;gap:1px;border:0;background:none;padding:7px 10px;border-radius:9px;cursor:pointer;color:var(--text);text-align:left}.ib-aim button:hover{background:var(--blue-soft)}.ib-aim b{font-size:13px}.ib-aim small{font-size:11.5px;color:var(--muted)}
 .imp-batch{display:flex;flex-direction:column;gap:6px;margin:12px 0 4px;font-size:13px;font-weight:600}.imp-batch small{font-weight:500;color:var(--muted)}.imp-batch .input{max-width:320px}
 .imp-done{display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px;padding:18px 8px}.imp-ok{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;font-size:22px;font-weight:800;color:#fff;background:linear-gradient(135deg,var(--blue-2),#A78BFA)}
 .srcTag{font-style:normal;font-size:10px;font-weight:700;padding:1px 5px;border-radius:4px;margin-left:4px;vertical-align:1px}
@@ -4945,12 +4949,30 @@ function renderThread() {
   let lastDay = '';
   box.innerHTML = `<div class="ib-h"><button class="ibtn ib-back" data-ibback title="Back">‹</button>${avatar(c.name, '', l && l.clientPhoto)}<div class="grow"><b>${esc(c.name)}</b><small class="muted">+${esc(c.phone || '')}${l ? ` · ${esc(l.businessName || '')}` : ''}</small></div>${l ? `<span class="pill stage" style="--c:${stageColor(l.stage)}">${esc(l.stage)}</span><button class="btn sm" data-ibl="${esc(l.leadId)}">Open lead</button>` : ''}</div>
     <div class="ib-msgs" id="ibMsgs">${c.list.map(m => { const d = String(m.time).slice(0, 10), sep = d !== lastDay ? `<div class="ib-day">${esc(d === todayStr() ? 'Today' : relDay(d))}</div>` : ''; lastDay = d; return sep + `<div class="bub ${m.direction === 'out' ? 'out' : 'in'}"><span>${esc(m.text)}</span><small>${esc(String(m.time).slice(11, 16))} ${m.direction === 'out' ? tick(m.status) : ''}</small></div>`; }).join('') || '<div class="ib-empty">No messages yet — say hello.</div>'}</div>
-    ${ro ? '<div class="ib-note">View-only access.</div>' : open24 ? `<div class="ib-comp"><textarea class="input" id="ibText" rows="1" placeholder="Type a message…"></textarea><button class="btn wa" id="ibSend">${I.wa}Send</button></div>`
+    ${ro ? '<div class="ib-note">View-only access.</div>' : open24 ? `<div class="ib-comp"><div class="ib-ai"><button class="ib-aibtn" id="ibAi" data-tip="Write with AI (Gemini)" aria-label="Write with AI">✨</button><div class="ib-aim" id="ibAiMenu" hidden>${AI_MODES.map(([k, n, d]) => `<button data-aimode="${k}"><b>${n}</b><small>${d}</small></button>`).join('')}</div></div><textarea class="input" id="ibText" rows="1" placeholder="Type a message…"></textarea><button class="btn wa" id="ibSend">${I.wa}Send</button></div>`
       : `<div class="ib-comp tpl"><div class="ib-note">24-hour window closed — WhatsApp only allows an approved template until the customer replies.</div><select class="input" id="ibTpl">${tpls.length ? tpls.map(t => `<option value="${esc(t.templateName)}" data-lang="${esc(t.language || 'en')}">${esc(t.templateName)}${t.metaStatus ? ' · ' + esc(t.metaStatus) : ''}</option>`).join('') : '<option value="">No templates yet — add one in Templates</option>'}</select><button class="btn wa" id="ibSendTpl" ${tpls.length ? '' : 'disabled'}>${I.wa}Send template</button></div>`}`;
   const mb = $('#ibMsgs'); mb.scrollTop = mb.scrollHeight;
   const ta = $('#ibText'); if (ta) { ta.value = WA.drafts[c.leadId || c.key] || ''; ta.addEventListener('input', () => { WA.drafts[c.leadId || c.key] = ta.value; }); ta.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); ibSend(c); } }); ta.addEventListener('input', () => { ta.style.height = 'auto'; ta.style.height = Math.min(140, ta.scrollHeight) + 'px'; }); }
   const sb = $('#ibSend'); if (sb) sb.onclick = () => ibSend(c);
+  const ab = $('#ibAi'), am = $('#ibAiMenu'); if (ab) { ab.onclick = e => { e.stopPropagation(); am.hidden = !am.hidden; }; am.onclick = e => { const m = e.target.closest('[data-aimode]'); if (!m) return; am.hidden = true; ibAi(c, m.dataset.aimode); }; }
   const st = $('#ibSendTpl'); if (st) st.onclick = () => ibSendTpl(c);
+}
+/* ---- AI writing help (Gemini via the ai-write function) ---- */
+const AI_MODES = [['reply', 'Suggest a reply', 'Reads the chat and drafts an answer'], ['improve', 'Improve my text', 'Fix grammar, sound professional'], ['shorter', 'Make it shorter', 'One or two lines'], ['polite', 'More polite', 'Warmer and friendlier'], ['hinglish', 'Hinglish', 'Roman Hindi + English'], ['hindi', 'Hindi', 'हिंदी में'], ['english', 'English', 'Translate to English']];
+async function ibAi(c, mode) {
+  const ta = $('#ibText'), btn = $('#ibAi'); if (!ta || !btn) return;
+  const draft = ta.value.trim(); if (mode !== 'reply' && !draft) { ta.focus(); return toast('Type something first, then ask AI to improve it', true); }
+  if (!demo && !cloud) return toast('AI writing works when you are signed in to Nodevers cloud', true);
+  const l = c.lead || {}, ph = ta.placeholder; btn.classList.add('busy'); btn.disabled = true; ta.disabled = true; ta.placeholder = 'AI is writing…';
+  try {
+    let text;
+    if (demo) { await new Promise(r => setTimeout(r, 700)); text = mode === 'reply' ? `Hi ${String(c.name || '').split(' ')[0] || 'there'}! Thanks for your message 🙂 Sure — let me check and share the details with you shortly.` : mode === 'hinglish' ? 'Haan ji, main details check karke abhi share karta hoon 🙂' : draft.replace(/\s+/g, ' ').replace(/^./, x => x.toUpperCase()).replace(/([^.!?])$/, '$1.'); }
+    else text = (await fnCall('ai-write', { mode, draft, messages: c.list.slice(-14).map(m => ({ direction: m.direction, text: m.text })), lead: { name: c.name, business: l.businessName || '', city: l.city || '', stage: l.stage || '' } })).text;
+    const t = $('#ibText'); if (!t) return;
+    t.value = text; WA.drafts[c.leadId || c.key] = text; t.dispatchEvent(new Event('input'));
+    toast('✨ AI draft ready — check it, then press Send');
+  } catch (e) { toast(e.message, true); }
+  finally { const t = $('#ibText'), b = $('#ibAi'); if (t) { t.disabled = false; t.placeholder = ph; t.focus(); } if (b) { b.classList.remove('busy'); b.disabled = false; } }
 }
 async function ibSend(c) {
   const ta = $('#ibText'), text = ta.value.trim(); if (!text) return;
@@ -5096,6 +5118,7 @@ async function downloadSample() {
     const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'nodevers-leads-sample.csv'; a.click();
   }
 }
+document.addEventListener('click', e => { const am = $('#ibAiMenu'); if (am && !am.hidden && !e.target.closest('.ib-ai')) am.hidden = true; });
 document.addEventListener('click', e => { if (e.target.closest('[data-impsample]')) downloadSample();
   const b = e.target.closest('[data-impbc]'); if (!b || !IMP.batch) return;
   hideModal('#leadModal'); BC.tab = b.dataset.impbc; BC.node = 'msg'; BC.excluded = new Set(); BC.showList = false;
