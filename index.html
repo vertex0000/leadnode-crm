@@ -325,7 +325,8 @@ textarea.input.code{min-height:320px}
 .subnav{display:flex;gap:4px;overflow-x:auto;padding:4px;margin:0 0 16px;border-radius:var(--r-panel);background:var(--glass);border:1px solid var(--stroke);scrollbar-width:none}
 .subnav::-webkit-scrollbar{display:none}
 .subnav .tab{flex:none}
-.adhead-r{display:flex;gap:8px;align-items:center}
+.adhead-r{display:flex;gap:8px;align-items:center;flex-wrap:wrap;min-width:0}
+.adhead-r select{max-width:100%}
 .adstats{grid-template-columns:repeat(6,minmax(0,1fr));margin-bottom:14px}
 .adstats .stat b{font-size:19px}
 .adfunnel{padding:16px 18px;margin-bottom:14px}
@@ -463,6 +464,57 @@ textarea.input.code{min-height:320px}
 @media (max-width:900px){.auth{grid-template-columns:1fr}.auth-side{display:none}.auth-mbrand{display:flex}}
 @media (prefers-reduced-motion:no-preference){.auth:not([hidden]) .auth-card{animation:popIn .5s cubic-bezier(.2,.7,.2,1) both}.auth:not([hidden]) .an{animation:nodeIn .6s cubic-bezier(.2,.7,.2,1) both}.an:nth-of-type(2){animation-delay:.1s}.an:nth-of-type(3){animation-delay:.25s}}
 @media (prefers-reduced-motion:reduce){.aw{animation:none}}
+
+/* ---------- n8n services ---------- */
+.n8cl{display:flex;align-items:center;gap:18px;padding:14px 18px;margin-bottom:14px;flex-wrap:wrap}
+.n8cl-l{display:flex;align-items:center;gap:12px;min-width:220px}.n8cl-l b{display:block;font-size:15px}.n8cl-l small{font-size:12px}
+.n8cl-m{flex:1;min-width:200px}.n8cl-r{display:flex;gap:6px;flex-wrap:wrap}
+.n8use{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;font-size:12px;color:var(--muted)}.n8use b{color:var(--text)}
+.n8grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;margin-bottom:14px}
+.n8card{padding:16px;display:flex;flex-direction:column;gap:10px;cursor:pointer;transition:border-color .15s,box-shadow .15s}
+.n8card:hover{border-color:var(--blue)}.n8card.on{border-color:var(--blue-2);box-shadow:0 0 0 3px var(--blue-soft),var(--shadow)}
+.n8card .r1{display:flex;align-items:center;justify-content:space-between;gap:10px}.n8card .r1 b{font-size:15px}
+.n8card p{margin:0;font-size:12.5px;line-height:1.45}
+.n8meta{display:flex;align-items:center;gap:8px;font-size:12px;flex-wrap:wrap}.n8meta .grow{flex:1}
+.n8flags{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.n8chain{display:flex;gap:4px;flex-wrap:wrap}.n8chain i{width:24px;height:24px;border-radius:6px;display:grid;place-items:center;color:#fff;font-style:normal;font-size:10px;font-weight:800}
+.n8det{margin-bottom:14px;overflow:hidden}
+.n8det-h{display:flex;align-items:center;gap:10px;padding:14px 18px;flex-wrap:wrap}.n8det-h h3{margin:2px 0 0;font-size:17px;display:flex;align-items:center;gap:8px}.n8det-h .grow{flex:1}
+.n8det-b{display:grid;grid-template-columns:minmax(0,1fr) 340px;border-top:1px solid var(--line)}
+.n8canvas{position:relative;height:440px;overflow:hidden;touch-action:none;cursor:grab;background-image:radial-gradient(var(--grid-dot) 1.2px,transparent 1.3px);background-size:22px 22px}
+.n8canvas.panning{cursor:grabbing}
+.n8vp{position:absolute;inset:0}
+.n8w{position:absolute;left:0;top:0;transform-origin:0 0}
+.n8svg{position:absolute;left:0;top:0;overflow:visible;pointer-events:none}
+.n8svg .wire .ln{stroke:var(--line-2)}.n8svg .wire.lit .ln{stroke:var(--green)}.n8svg .wire.bad .ln{stroke:var(--coral)}
+.n8svg .wire.lit .flow{fill:var(--green)}
+.wl{font-size:10px;font-weight:700;fill:var(--muted)}
+.n8n{position:absolute;display:flex;align-items:center;gap:10px;padding:0 12px;background:var(--glass-3);border:1px solid var(--line-2);border-radius:var(--r-panel);box-shadow:0 4px 14px rgba(30,40,70,.06);transition:border-color .2s,box-shadow .2s}
+.n8n.cfg{border-style:dashed;border-color:color-mix(in srgb,var(--yellow) 70%,transparent)}
+.n8ic{flex:none;width:30px;height:30px;border-radius:8px;display:grid;place-items:center;color:#fff;font-size:11px;font-weight:800;background:var(--c)}
+.n8t{min-width:0;flex:1}.n8t b{display:block;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.n8t small{font-size:11.5px;color:var(--muted)}
+.n8st{position:absolute;top:-8px;right:-8px;width:20px;height:20px;border-radius:50%;display:grid;place-items:center;font-size:11px;font-weight:800;color:#fff;background:var(--green)}
+.n8n.success{border-color:var(--green)}.n8n.error{border-color:var(--coral)}.n8n.error .n8st{background:var(--coral)}
+.n8n.running{border-color:var(--blue-2);box-shadow:0 0 0 4px var(--blue-soft)}.n8n.running .n8st{background:var(--blue-2)}
+.n8zoom{position:absolute;right:10px;bottom:10px;display:flex;gap:2px;padding:3px;background:var(--glass-3);border:1px solid var(--line-2);border-radius:var(--r-ctl);z-index:2}
+.n8zoom button{min-width:30px;height:28px;border:0;background:transparent;border-radius:6px;font-weight:700;color:var(--text)}.n8zoom button:hover{background:var(--line)}
+.n8side{padding:16px;border-left:1px solid var(--line);display:flex;flex-direction:column;gap:10px;max-height:520px;overflow:auto}
+.n8side .field small{font-size:11.5px}
+.n8cred{border:1px solid var(--line-2);border-radius:var(--r-ctl);padding:8px 10px;background:var(--glass)}
+.n8cred summary{display:flex;align-items:center;gap:8px;cursor:pointer;list-style:none;font-size:13px}.n8cred summary::-webkit-details-marker{display:none}
+.n8cred summary .muted{margin-left:auto;font-size:11.5px}
+.n8cred .cdot{width:20px;height:20px;border-radius:50%;display:grid;place-items:center;font-size:11px;font-weight:800;background:var(--yellow-soft);color:#B7861A}
+.n8cred.ok .cdot{background:var(--green-soft);color:var(--green)}
+.n8cred[open]{display:flex;flex-direction:column;gap:8px}.n8cred .help a{color:var(--blue-2);font-weight:600}
+.n8steps{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:6px}
+.n8steps li{display:grid;grid-template-columns:22px 1fr auto;gap:8px;align-items:center;font-size:13px;padding:6px 8px;border-radius:8px;background:var(--glass)}
+.n8steps li span{width:20px;height:20px;border-radius:50%;display:grid;place-items:center;font-size:11px;font-weight:800;background:var(--green-soft);color:var(--green)}
+.n8steps li.error span{background:var(--coral-soft);color:var(--coral)}.n8steps li.skip{opacity:.5}.n8steps li.skip span{background:var(--line);color:var(--muted)}
+.tbl tr.on{background:var(--blue-soft)}
+.run-filter{display:flex;justify-content:flex-end}
+@media (max-width:980px){.n8det-b{grid-template-columns:1fr}.n8side{border-left:0;border-top:1px solid var(--line);max-height:none}.n8canvas{height:340px}}
+@media (prefers-reduced-motion:no-preference){.n8n{animation:nodeIn .45s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(var(--i,0)*45ms)}.n8n.running{animation:pulseRun 1s ease-in-out infinite}}
+@keyframes pulseRun{50%{box-shadow:0 0 0 8px rgba(111,143,232,.08)}}
 
 /* ---------- side panel ---------- */
 .scrim{position:fixed;inset:0;background:rgba(15,18,28,.25);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);opacity:0;pointer-events:none;transition:.2s;z-index:40}
@@ -716,6 +768,8 @@ textarea.input.code{min-height:320px}
     <button class="sbtn" data-go="templates"><svg class="i" viewBox="0 0 24 24"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9Z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></svg><span class="lbl">Templates</span></button>
     <button class="sbtn" data-go="automation"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="4" width="6" height="5" rx="1.2"/><rect x="15" y="4" width="6" height="5" rx="1.2"/><rect x="9" y="15" width="6" height="5" rx="1.2"/><path d="M9 6.5h6M6 9v3a3 3 0 0 0 3 3M18 9v3a3 3 0 0 1-3 3"/></svg><span class="lbl">Automation</span></button>
     <button class="sbtn" data-go="scripts"><svg class="i" viewBox="0 0 24 24"><path d="m8 7-5 5 5 5M16 7l5 5-5 5M13.5 4l-3 16"/></svg><span class="lbl">Scripts & Presets</span></button>
+    <div class="sgrp">Integrations</div>
+    <button class="sbtn" data-go="n8n"><svg class="i" viewBox="0 0 24 24"><circle cx="5" cy="12" r="2.2"/><circle cx="19" cy="6" r="2.2"/><circle cx="19" cy="18" r="2.2"/><path d="M7.2 12h4.3M11.5 12c2.5 0 2.5-6 5.3-6M11.5 12c2.5 0 2.5 6 5.3 6"/></svg><span class="lbl">n8n Services</span></button>
     <div class="sgrp">Marketing</div>
     <button class="sbtn" data-go="ads"><svg class="i" viewBox="0 0 24 24"><path d="M3 11v2a1 1 0 0 0 1 1h2l5 4V6L6 10H4a1 1 0 0 0-1 1Z"/><path d="M15 8.5a4.5 4.5 0 0 1 0 7M18 5.5a8.5 8.5 0 0 1 0 13"/></svg><span class="lbl">Meta Ads</span></button>
     <div class="sgrp">Insights</div>
@@ -737,6 +791,7 @@ textarea.input.code{min-height:320px}
         <a href="#broadcast" data-go="broadcast" class="mob">Broadcast</a>
         <a href="#automation" data-go="automation" class="mob">Automation</a>
         <a href="#ads" data-go="ads">Ads</a>
+        <a href="#n8n" data-go="n8n" class="mob">n8n</a>
         <a href="#reports" data-go="reports">Reports</a>
         <a href="#team" data-go="team" class="mob">Team</a>
         <a href="#templates" data-go="templates" class="mob">Templates</a>
@@ -849,6 +904,15 @@ textarea.input.code{min-height:320px}
       <div class="head"><div><div class="eyebrow">WhatsApp</div><h1>Templates</h1><p class="sub">Bulk messages can only use Meta-approved templates.</p></div></div>
       <div class="banner" style="background:var(--blue-soft);border-color:var(--stroke)"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg><div class="grow">Creating templates and getting them approved by Meta will happen here in <b>Step 7</b>. For now these come from the Templates tab in your Sheet.</div></div>
       <div class="tplgrid" id="tplgrid"></div>
+    </section>
+
+    <!-- n8n SERVICES -->
+    <section class="view" id="v-n8n">
+      <div class="head"><div><div class="eyebrow">Integrations</div><h1>n8n Services</h1><p class="sub">Each client runs their own n8n. They see simple services, live runs and only the settings that matter.</p></div>
+        <div class="adhead-r"><span class="badge">Demo data</span><span id="n8ClientWrap"><select class="input" id="n8Client" style="width:auto"></select></span><select class="input" id="n8Role" style="width:auto" title="Preview what a client sees"><option value="admin">View as: Admin (you)</option><option value="client">View as: Client</option></select></div></div>
+      <div class="banner" style="background:var(--blue-soft);border-color:var(--stroke)"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg><div class="grow">This is a <b>working demo</b>. Live connection to each client's n8n starts after the Supabase step (the n8n API keys must live on the server).</div></div>
+      <div class="subnav" id="n8Tabs"></div>
+      <div id="n8Body"></div>
     </section>
 
     <!-- PERFORMANCE MARKETING · META ADS -->
@@ -1180,7 +1244,7 @@ function finishLoad(anim) {
   renderAll(anim);
 }
 /** Render only the screen you're looking at; the others re-render when you open them */
-const VIEW_RENDER = { automation: () => autoCanvas().sync(), dashboard: a => renderDashboard(a), pipeline: a => renderPipeline(a), leads: a => renderLeads(a), team: a => renderTeam(a), reports: a => renderReports(a), templates: () => renderTemplates(), scripts: () => renderScripts(true), ads: a => renderAds(a) };
+const VIEW_RENDER = { n8n: a => renderN8n(a), automation: () => autoCanvas().sync(), dashboard: a => renderDashboard(a), pipeline: a => renderPipeline(a), leads: a => renderLeads(a), team: a => renderTeam(a), reports: a => renderReports(a), templates: () => renderTemplates(), scripts: () => renderScripts(true), ads: a => renderAds(a) };
 const staleViews = new Set();
 const activeView = () => { const v = $('.view.active'); return v ? v.id.slice(2) : 'dashboard'; };
 function renderAll(anim) {
@@ -2954,6 +3018,284 @@ function autoCanvas() {
 }
 
 
+/* ================= n8n Services (each client has their own n8n; the website is the simple remote control) ================= */
+const N8 = { tab: 'services', role: 'admin', client: 'C1', open: null, run: null, data: null, view: null };
+const N8_TABS = { admin: [['services', 'Services'], ['runs', 'Runs'], ['templates', 'Templates'], ['clients', 'Clients'], ['connect', 'Connect n8n']], client: [['services', 'My services'], ['runs', 'Runs'], ['connect', 'Connect n8n']] };
+/* node look by n8n type */
+const N8_KIND = [
+  [/scheduleTrigger|cron/i, '⏱', '#6F8FE8', 'Schedule'], [/webhook/i, '⚡', '#6F8FE8', 'Webhook'], [/facebookLeadAds|leadAds/i, 'M', '#4F7DF3', 'Meta Lead Ads'],
+  [/googleSheets/i, 'S', '#1FA463', 'Google Sheets'], [/gemini|openAi|langchain/i, 'AI', '#B08CEB', 'AI model'], [/instagram/i, 'IG', '#E1306C', 'Instagram'],
+  [/whatsApp/i, 'W', '#25A55F', 'WhatsApp'], [/facebookGraph|metaAds/i, 'M', '#4F7DF3', 'Meta Graph'], [/httpRequest/i, 'H', '#EA4B71', 'HTTP request'],
+  [/\.if$|switch/i, '◇', '#F29A5C', 'If'], [/gmail|emailSend/i, '@', '#6F8FE8', 'Email'], [/\.set$/i, '⚙', '#F2C94C', 'Edit fields'], [/code/i, '{}', '#9AA0A6', 'Code'],
+];
+const n8Kind = t => { const k = N8_KIND.find(([re]) => re.test(t)); return k ? { ic: k[1], c: k[2], label: k[3] } : { ic: '•', c: '#9AA0A6', label: 'Node' }; };
+/* credential guides: what the client needs and where to find it */
+const N8_CREDS = {
+  whatsAppApi: { name: 'WhatsApp Cloud API', fields: [['accessToken', 'Permanent access token'], ['businessAccountId', 'WhatsApp Business Account ID']], help: 'Meta Business settings → Users → System users → Generate token (whatsapp_business_messaging). The account ID is in WhatsApp Manager.', link: 'https://business.facebook.com/settings/system-users' },
+  facebookGraphApi: { name: 'Meta (Facebook / Instagram) Graph API', fields: [['accessToken', 'Page / system user access token']], help: 'Meta Business settings → System users → Generate token with instagram_content_publish, pages_read_engagement.', link: 'https://business.facebook.com/settings/system-users' },
+  googlePalmApi: { name: 'Google Gemini API', fields: [['apiKey', 'API key']], help: 'Google AI Studio → Get API key → Create API key.', link: 'https://aistudio.google.com/app/apikey' },
+  googleSheetsOAuth2Api: { name: 'Google Sheets', oauth: true, fields: [], help: 'Uses "Sign in with Google". This one-time step happens inside the client\'s n8n — the button opens the right page.', link: '' },
+  facebookLeadAdsOAuth2Api: { name: 'Meta Lead Ads', oauth: true, fields: [], help: 'Uses "Continue with Facebook" inside the client\'s n8n, then pick the Page and form.', link: '' },
+};
+function n8Seed() {
+  const W = (nodes, links) => { const connections = {}; links.forEach(([a, b, o = 0]) => { const c = connections[a] = connections[a] || { main: [] }; (c.main[o] = c.main[o] || []).push({ node: b, type: 'main', index: 0 }); }); return { nodes, connections }; };
+  const N = (name, type, x, y, extra) => Object.assign({ name, type, position: [x, y], parameters: {} }, extra || {});
+  const templates = [
+    { id: 'T1', name: 'Instagram Auto-Post', version: 3, cat: 'Social media', desc: 'Posts from a Google Sheet every day with an AI caption, then pings you on WhatsApp.',
+      settings: [{ key: 'sheet_url', label: 'Content sheet link', type: 'text', value: '', help: 'Google Sheet with columns: Date, Image URL, Topic' }, { key: 'post_time', label: 'Post time', type: 'text', value: '10:00', help: '24-hour time, India time' }, { key: 'tone', label: 'Caption tone', type: 'select', options: ['Friendly', 'Premium', 'Funny', 'Hinglish'], value: 'Premium', help: '' }, { key: 'notify', label: 'WhatsApp number for alerts', type: 'text', value: '', help: 'With country code, e.g. 9198…' }],
+      creds: ['googleSheetsOAuth2Api', 'googlePalmApi', 'facebookGraphApi', 'whatsAppApi'],
+      wf: W([N('Every day', 'n8n-nodes-base.scheduleTrigger', 0, 0), N('⚙ Client Settings', 'n8n-nodes-base.set', 240, 0), N("Today's post", 'n8n-nodes-base.googleSheets', 480, 0), N('Write caption', '@n8n/n8n-nodes-langchain.lmChatGoogleGemini', 720, 0), N('Publish to Instagram', 'n8n-nodes-base.facebookGraphApi', 960, 0), N('Posted?', 'n8n-nodes-base.if', 1200, 0), N('Alert on WhatsApp', 'n8n-nodes-base.whatsApp', 1440, -90), N('Error alert', 'n8n-nodes-base.whatsApp', 1440, 90)],
+        [['Every day', '⚙ Client Settings'], ['⚙ Client Settings', "Today's post"], ["Today's post", 'Write caption'], ['Write caption', 'Publish to Instagram'], ['Publish to Instagram', 'Posted?'], ['Posted?', 'Alert on WhatsApp', 0], ['Posted?', 'Error alert', 1]]) },
+    { id: 'T2', name: 'Lead Auto-Reply (WhatsApp)', version: 2, cat: 'Sales', desc: 'Replies to every new WhatsApp lead in seconds with AI, then saves it to the CRM.',
+      settings: [{ key: 'business', label: 'Business name', type: 'text', value: '', help: 'Used in the reply' }, { key: 'price_range', label: 'Price range to share', type: 'text', value: '', help: 'e.g. ₹2,500 – ₹6,000 per chair' }, { key: 'language', label: 'Reply language', type: 'select', options: ['Hinglish', 'English', 'Hindi', 'Marathi'], value: 'Hinglish', help: '' }],
+      creds: ['whatsAppApi', 'googlePalmApi'],
+      wf: W([N('New WhatsApp message', 'n8n-nodes-base.webhook', 0, 0), N('⚙ Client Settings', 'n8n-nodes-base.set', 240, 0), N('Is it a new lead?', 'n8n-nodes-base.if', 480, 0), N('AI reply', '@n8n/n8n-nodes-langchain.lmChatGoogleGemini', 720, -90), N('Send reply', 'n8n-nodes-base.whatsApp', 960, -90), N('Save to CRM', 'n8n-nodes-base.httpRequest', 1200, -90), N('Log only', 'n8n-nodes-base.code', 720, 90)],
+        [['New WhatsApp message', '⚙ Client Settings'], ['⚙ Client Settings', 'Is it a new lead?'], ['Is it a new lead?', 'AI reply', 0], ['Is it a new lead?', 'Log only', 1], ['AI reply', 'Send reply'], ['Send reply', 'Save to CRM']]) },
+    { id: 'T3', name: 'Meta Lead Form → CRM', version: 1, cat: 'Ads', desc: 'Every Facebook / Instagram form lead lands in the CRM and gets a WhatsApp welcome.',
+      settings: [{ key: 'stage', label: 'CRM stage for new leads', type: 'select', options: ['New Lead', 'Contacted'], value: 'New Lead', help: '' }, { key: 'template', label: 'WhatsApp welcome template', type: 'text', value: 'welcome_offer', help: 'Must be approved in WhatsApp Manager' }],
+      creds: ['facebookLeadAdsOAuth2Api', 'whatsAppApi'],
+      wf: W([N('New form lead', 'n8n-nodes-base.facebookLeadAdsTrigger', 0, 0), N('⚙ Client Settings', 'n8n-nodes-base.set', 240, 0), N('Clean phone number', 'n8n-nodes-base.code', 480, 0), N('Create CRM lead', 'n8n-nodes-base.httpRequest', 720, 0), N('WhatsApp welcome', 'n8n-nodes-base.whatsApp', 960, 0)],
+        [['New form lead', '⚙ Client Settings'], ['⚙ Client Settings', 'Clean phone number'], ['Clean phone number', 'Create CRM lead'], ['Create CRM lead', 'WhatsApp welcome']]) },
+    { id: 'T4', name: 'Weekly Ads Report', version: 1, cat: 'Ads', desc: 'Every Monday: spend, leads and cost per lead summarised by AI, sent to WhatsApp.',
+      settings: [{ key: 'account', label: 'Ad account ID', type: 'text', value: '', help: 'Starts with act_' }, { key: 'to', label: 'Send report to (WhatsApp)', type: 'text', value: '', help: '' }],
+      creds: ['facebookGraphApi', 'googlePalmApi', 'whatsAppApi'],
+      wf: W([N('Every Monday 9am', 'n8n-nodes-base.scheduleTrigger', 0, 0), N('⚙ Client Settings', 'n8n-nodes-base.set', 240, 0), N('Get ad insights', 'n8n-nodes-base.facebookGraphApi', 480, 0), N('Summarise', '@n8n/n8n-nodes-langchain.lmChatGoogleGemini', 720, 0), N('Send report', 'n8n-nodes-base.whatsApp', 960, 0)],
+        [['Every Monday 9am', '⚙ Client Settings'], ['⚙ Client Settings', 'Get ad insights'], ['Get ad insights', 'Summarise'], ['Summarise', 'Send report']]) },
+  ];
+  const clients = [
+    { id: 'C1', name: 'Diya Seating Solutions', owner: 'Shivam', url: 'https://diyaseating.app.n8n.cloud', plan: 'Starter', status: 'connected', used: 1840, limit: 2500, keyOk: true },
+    { id: 'C2', name: 'Moutix', owner: 'Moutix team', url: 'https://moutix.app.n8n.cloud', plan: 'Starter', status: 'connected', used: 2310, limit: 2500, keyOk: true },
+    { id: 'C3', name: 'Brew & Bites Cafe', owner: 'Aarav Mehta', url: 'https://n8n.brewbites.in', plan: 'Self-hosted', status: 'key-error', used: 420, limit: 0, keyOk: false },
+    { id: 'C4', name: 'Urban Beans', owner: 'Priya Sharma', url: '', plan: '—', status: 'not-connected', used: 0, limit: 0, keyOk: false },
+  ];
+  const installs = [
+    { client: 'C1', tpl: 'T1', version: 3, active: true, values: { post_time: '10:00', tone: 'Premium' }, creds: { googleSheetsOAuth2Api: true, googlePalmApi: true, facebookGraphApi: true, whatsAppApi: true } },
+    { client: 'C1', tpl: 'T2', version: 1, active: true, values: { language: 'Hinglish', price_range: '₹2,500 – ₹6,000 per chair' }, creds: { whatsAppApi: true, googlePalmApi: true } },
+    { client: 'C1', tpl: 'T3', version: 1, active: false, values: { stage: 'New Lead', template: 'welcome_offer' }, creds: { whatsAppApi: true } },
+    { client: 'C2', tpl: 'T1', version: 2, active: true, values: { tone: 'Funny', post_time: '19:30' }, creds: { googleSheetsOAuth2Api: true, googlePalmApi: true, facebookGraphApi: true, whatsAppApi: true } },
+    { client: 'C2', tpl: 'T4', version: 1, active: true, values: {}, creds: { facebookGraphApi: true, googlePalmApi: true, whatsAppApi: true } },
+    { client: 'C3', tpl: 'T2', version: 2, active: true, values: { language: 'English' }, creds: { whatsAppApi: false, googlePalmApi: true } },
+  ];
+  const runs = []; const r = mulberry32(42); let id = 900;
+  for (let d = 0; d < 40; d++) {
+    const ins = installs[Math.floor(r() * installs.length)], t = templates.find(x => x.id === ins.tpl), cl = clients.find(c => c.id === ins.client);
+    const fail = !cl.keyOk ? true : r() < 0.12, at = new Date(Date.now() - d * 3.1 * 3600e3 - r() * 3600e3);
+    const names = t.wf.nodes.map(n => n.name), failAt = fail ? 2 + Math.floor(r() * (names.length - 3)) : -1;
+    runs.push({ id: 'R' + (id--), client: cl.id, tpl: t.id, status: fail ? 'error' : 'success', at: at.toISOString(), ms: Math.round(1200 + r() * 5200),
+      nodes: names.slice(0, fail ? failAt + 1 : names.length).map((n, i) => ({ name: n, status: i === failAt ? 'error' : 'success', ms: Math.round(80 + r() * 900) })),
+      error: fail ? (!cl.keyOk ? 'WhatsApp: The access token is invalid or expired (code 190)' : 'Instagram: Media URL could not be fetched (image link broken)') : '' });
+  }
+  return { templates, clients, installs, runs };
+}
+function n8Data() {
+  if (N8.data) return N8.data;
+  const saved = store.get('leadnode.n8n'); N8.data = n8Seed();
+  if (saved && saved.installs) { N8.data.installs = saved.installs; N8.data.clients = saved.clients || N8.data.clients; }
+  return N8.data;
+}
+const n8Save = () => store.set('leadnode.n8n', { installs: N8.data.installs, clients: N8.data.clients });
+const n8Tpl = id => n8Data().templates.find(t => t.id === id);
+const n8Client = id => n8Data().clients.find(c => c.id === id);
+const n8Ago = iso => { const m = Math.round((Date.now() - new Date(iso)) / 60000); return m < 60 ? m + ' min ago' : m < 1440 ? Math.round(m / 60) + ' h ago' : Math.round(m / 1440) + ' d ago'; };
+function n8Health(c) {
+  const out = [];
+  if (c.status === 'not-connected') out.push(['bad', 'n8n not connected']);
+  if (c.status === 'key-error') out.push(['bad', 'API key not working']);
+  if (c.limit && c.used / c.limit >= 0.85) out.push(['warn', `${Math.round(c.used / c.limit * 100)}% of n8n plan runs used`]);
+  const old = n8Data().installs.filter(i => i.client === c.id && i.version < n8Tpl(i.tpl).version).length;
+  if (old) out.push(['info', `${old} update${old > 1 ? 's' : ''} available`]);
+  const missing = n8Data().installs.filter(i => i.client === c.id && n8Tpl(i.tpl).creds.some(k => !i.creds[k])).length;
+  if (missing) out.push(['warn', `${missing} service${missing > 1 ? 's' : ''} missing keys`]);
+  return out;
+}
+const n8Pill = ([k, t]) => `<span class="pill ${k === 'bad' ? 'hot' : k === 'warn' ? 'warm' : k === 'ok' ? 'won' : 'cold'}">${k === 'bad' ? '✕' : k === 'warn' ? '!' : k === 'ok' ? '✓' : '↑'} ${esc(t)}</span>`;
+const runPill = s => s === 'success' ? '<span class="pill won">✓ Success</span>' : s === 'error' ? '<span class="pill hot">✕ Failed</span>' : '<span class="pill cold">● Running</span>';
+
+/* ---- read-only workflow viewer (n8n JSON → our node style), with live run states ---- */
+function n8Graph(t, states) {
+  const NW = 200, NH = 62, S = 1.1, nodes = t.wf.nodes;
+  const xs = nodes.map(n => n.position[0] * S), ys = nodes.map(n => n.position[1] * S), x0 = Math.min(...xs), y0 = Math.min(...ys);
+  const P = {}; nodes.forEach(n => P[n.name] = { x: n.position[0] * S - x0 + 30, y: n.position[1] * S - y0 + 30 });
+  const W = Math.max(...Object.values(P).map(p => p.x)) + NW + 60, H = Math.max(...Object.values(P).map(p => p.y)) + NH + 60;
+  let wires = '';
+  Object.entries(t.wf.connections).forEach(([from, c]) => (c.main || []).forEach((list, o) => (list || []).forEach(l => {
+    const a = P[from], b = P[l.node]; if (!a || !b) return; const outs = (c.main || []).length;
+    const A = { x: a.x + NW, y: a.y + NH / 2 + (outs > 1 ? (o ? 12 : -12) : 0) }, B = { x: b.x, y: b.y + NH / 2 }, d = wirePath(A, B);
+    const st = states && states[l.node], lit = st === 'success' || st === 'running';
+    wires += `<g class="wire ${lit ? 'lit' : ''} ${st === 'error' ? 'bad' : ''}"><path class="ln" d="${d}"/>${lit ? `<circle class="flow" r="3"><animateMotion dur="1.2s" repeatCount="indefinite" path="${d}"/></circle>` : ''}${outs > 1 ? `<text class="wl" x="${A.x + 10}" y="${A.y - 5}">${o ? 'false' : 'true'}</text>` : ''}</g>`;
+  })));
+  const nodeHTML = nodes.map((n, i) => {
+    const k = n8Kind(n.type), st = states && states[n.name], cfg = /Client Settings/.test(n.name);
+    return `<div class="n8n ${st || ''} ${cfg ? 'cfg' : ''}" data-n8node="${esc(n.name)}" style="left:${P[n.name].x}px;top:${P[n.name].y}px;width:${NW}px;height:${NH}px;--c:${k.c};--i:${i}" title="${esc(n.name)}">
+      <span class="n8ic">${esc(k.ic)}</span><div class="n8t"><b>${esc(n.name)}</b><small>${esc(cfg ? 'Your settings' : k.label)}</small></div>
+      ${st ? `<span class="n8st">${st === 'success' ? '✓' : st === 'error' ? '✕' : ''}</span>` : ''}</div>`;
+  }).join('');
+  return `<div class="n8w" style="width:${W}px;height:${H}px"><svg class="n8svg" width="${W}" height="${H}">${wires}</svg>${nodeHTML}</div>`;
+}
+function n8Viewer(host, html) {
+  host.innerHTML = `<div class="n8vp">${html}</div><div class="n8zoom"><button data-n8z="out" title="Zoom out">−</button><button data-n8z="fit" title="Fit">Fit</button><button data-n8z="in" title="Zoom in">+</button></div>`;
+  const vp = host.querySelector('.n8vp'), w = host.querySelector('.n8w'), v = { x: 0, y: 0, k: 1 };
+  const apply = () => { w.style.transform = `translate(${v.x}px,${v.y}px) scale(${v.k})`; };
+  const fit = () => { const W = host.clientWidth, H = host.clientHeight; if (!W) return; v.k = Math.max(0.6, Math.min(1.1, (W - 30) / w.offsetWidth, (H - 30) / w.offsetHeight)); v.x = Math.max(15, (W - w.offsetWidth * v.k) / 2); v.y = (H - w.offsetHeight * v.k) / 2; apply(); };
+  const zoom = (cx, cy, k) => { k = Math.max(0.3, Math.min(2, k)); v.x = cx - (cx - v.x) * (k / v.k); v.y = cy - (cy - v.y) * (k / v.k); v.k = k; apply(); };
+  host.addEventListener('wheel', e => wheelNav(e, host.getBoundingClientRect(), (x, y, f) => zoom(x, y, v.k * f), (dx, dy) => { v.x += dx; v.y += dy; apply(); }), { passive: false });
+  let drag = null;
+  host.addEventListener('pointerdown', e => { if (e.target.closest('.n8zoom,.n8n')) return; drag = { x: e.clientX, y: e.clientY, vx: v.x, vy: v.y }; host.setPointerCapture(e.pointerId); host.classList.add('panning'); });
+  host.addEventListener('pointermove', e => { if (!drag) return; v.x = drag.vx + e.clientX - drag.x; v.y = drag.vy + e.clientY - drag.y; apply(); });
+  host.addEventListener('pointerup', () => { drag = null; host.classList.remove('panning'); });
+  host.querySelector('.n8zoom').onclick = e => { const b = e.target.closest('[data-n8z]'); if (!b) return; const z = b.dataset.n8z; if (z === 'fit') fit(); else zoom(host.clientWidth / 2, host.clientHeight / 2, v.k * (z === 'in' ? 1.2 : 1 / 1.2)); };
+  requestAnimationFrame(fit);
+  return { setStates(states, t) { const keep = { ...v }; host.querySelector('.n8vp').innerHTML = n8Graph(t, states); const nw = host.querySelector('.n8w'); nw.style.transform = `translate(${keep.x}px,${keep.y}px) scale(${keep.k})`; } };
+}
+
+/* ---- page ---- */
+function renderN8n(anim) {
+  if (!$('#v-n8n').classList.contains('active')) return;
+  const D = n8Data(), tabs = N8_TABS[N8.role];
+  if (!tabs.some(([k]) => k === N8.tab)) N8.tab = 'services';
+  $('#n8Role').value = N8.role;
+  $('#n8ClientWrap').hidden = N8.role === 'admin' && !['services', 'runs', 'connect'].includes(N8.tab);
+  $('#n8Client').innerHTML = D.clients.map(c => `<option value="${c.id}" ${c.id === N8.client ? 'selected' : ''}>${esc(c.name)}</option>`).join('');
+  $('#n8Tabs').innerHTML = tabs.map(([k, n]) => `<button class="tab ${N8.tab === k ? 'active' : ''}" data-n8tab="${k}">${n}</button>`).join('');
+  const body = $('#n8Body');
+  body.innerHTML = ({ services: n8Services, runs: n8Runs, templates: n8Templates, clients: n8Clients, connect: n8Connect })[N8.tab]();
+  stagger(body, anim);
+  if (N8.tab === 'services' && N8.open) n8MountDetail();
+  if (N8.tab === 'runs' && N8.run) n8MountRun();
+}
+function n8Services() {
+  const D = n8Data(), c = n8Client(N8.client), list = D.installs.filter(i => i.client === c.id), h = n8Health(c);
+  const head = `<div class="n8cl glass"><div class="n8cl-l">${bizTile(c.name)}<div><b>${esc(c.name)}</b><small class="muted">${c.url ? esc(c.url.replace(/^https?:\/\//, '')) : 'n8n not connected yet'} · ${esc(c.plan)}</small></div></div>
+    <div class="n8cl-m">${c.limit ? `<div class="n8use"><small>n8n runs this month</small><div class="bar-track"><div class="bar" style="width:${Math.min(100, c.used / c.limit * 100).toFixed(0)}%;background:${c.used / c.limit > 0.85 ? 'var(--coral)' : 'var(--blue-2)'}"></div></div><small><b>${c.used.toLocaleString('en-IN')}</b> / ${c.limit.toLocaleString('en-IN')}</small></div>` : ''}</div>
+    <div class="n8cl-r">${h.length ? h.map(n8Pill).join('') : n8Pill(['ok', 'All healthy'])}</div></div>`;
+  if (!list.length) return head + `<div class="empty glass">No services yet for ${esc(c.name)}.<br>${N8.role === 'admin' ? 'Open <b>Templates</b> and install one.' : 'Your service provider will add them here.'}</div>`;
+  const cards = list.map((ins, i) => {
+    const t = n8Tpl(ins.tpl), last = D.runs.filter(r => r.client === c.id && r.tpl === t.id)[0], missing = t.creds.filter(k => !ins.creds[k]).length, upd = ins.version < t.version;
+    const month = D.runs.filter(r => r.client === c.id && r.tpl === t.id).length;
+    return `<div class="n8card glass ${N8.open === t.id ? 'on' : ''}" data-n8open="${t.id}" style="--i:${i}">
+      <div class="r1"><b>${esc(t.name)}</b><button class="switch ${ins.active ? 'on' : ''}" data-n8toggle="${t.id}" data-tip="${ins.active ? 'Turn off in n8n' : 'Turn on in n8n'}"></button></div>
+      <p class="muted">${esc(t.desc)}</p>
+      <div class="n8meta">${last ? runPill(last.status) + `<span class="muted">${n8Ago(last.at)}</span>` : '<span class="muted">No runs yet</span>'}<span class="grow"></span><span class="muted">${month} runs</span></div>
+      <div class="n8flags">${missing ? n8Pill(['warn', `${missing} key${missing > 1 ? 's' : ''} missing`]) : ''}${upd ? n8Pill(['info', `Update v${ins.version} → v${t.version}`]) : ''}<span class="badge">v${ins.version}</span></div></div>`;
+  }).join('');
+  return head + `<div class="n8grid">${cards}</div><div id="n8Detail"></div>`;
+}
+function n8MountDetail() {
+  const t = n8Tpl(N8.open), c = n8Client(N8.client), ins = n8Data().installs.find(i => i.client === c.id && i.tpl === t.id); if (!ins) { N8.open = null; return; }
+  const settings = t.settings.map(s => { const v = ins.values[s.key] ?? s.value ?? ''; return `<div class="field"><label>${esc(s.label)}</label>${s.type === 'select' ? `<select class="input" data-n8set="${s.key}">${s.options.map(o => `<option ${o === v ? 'selected' : ''}>${esc(o)}</option>`).join('')}</select>` : `<input class="input" data-n8set="${s.key}" value="${esc(v)}">`}${s.help ? `<small class="muted">${esc(s.help)}</small>` : ''}</div>`; }).join('');
+  const creds = t.creds.map(k => { const g = N8_CREDS[k], ok = !!ins.creds[k];
+    return `<details class="n8cred ${ok ? 'ok' : ''}" ${ok ? '' : 'open'}><summary><span class="cdot">${ok ? '✓' : '!'}</span><b>${esc(g.name)}</b><span class="muted">${ok ? 'Saved in n8n' : 'Needed'}</span></summary>
+      <p class="help">${esc(g.help)}${g.link ? ` <a href="${esc(g.link)}" target="_blank" rel="noopener">Open ↗</a>` : ''}</p>
+      ${g.oauth ? `<button class="btn sm" data-n8oauth="${k}">Connect in n8n ↗</button>` : g.fields.map(([f, l]) => `<div class="field"><label>${esc(l)}</label><input class="input" type="password" autocomplete="off" data-n8cred="${k}" data-f="${f}" placeholder="${ok ? '•••••• saved — paste to replace' : 'Paste here'}"></div>`).join('') + `<button class="btn sm primary" data-n8credsave="${k}">Save to n8n</button>`}
+    </details>`; }).join('');
+  const upd = ins.version < t.version;
+  $('#n8Detail').innerHTML = `<div class="n8det glass">
+    <div class="n8det-h"><div><small class="muted">${esc(t.cat)} · v${ins.version}${upd ? ` (v${t.version} available)` : ''}</small><h3>${esc(t.name)}</h3></div><div class="grow"></div>
+      ${upd && N8.role === 'admin' ? `<button class="btn sm" data-n8update="${t.id}">Update to v${t.version}</button>` : ''}<button class="btn sm primary" data-n8test="${t.id}"><svg class="i" viewBox="0 0 24 24"><path d="M7 5v14l11-7Z"/></svg>Test run</button><button class="ibtn" data-n8close title="Close">${I.x}</button></div>
+    <div class="n8det-b"><div class="n8canvas" id="n8Canvas"></div>
+      <div class="n8side"><div class="sec-t">Settings</div><p class="help">Only what this service needs. Saved straight into the "⚙ Client Settings" node in n8n.</p>${settings}<button class="btn sm primary" data-n8setsave="${t.id}">Save settings</button>
+        <div class="sec-t" style="margin-top:8px">Connections & keys</div><p class="help">Keys go directly into ${esc(c.name)}'s own n8n. This website never stores them.</p>${creds}</div></div></div>`;
+  N8.view = n8Viewer($('#n8Canvas'), n8Graph(t));
+}
+async function n8TestRun(tid) {
+  const t = n8Tpl(tid), c = n8Client(N8.client), names = t.wf.nodes.map(n => n.name), states = {};
+  const ins = n8Data().installs.find(i => i.client === c.id && i.tpl === t.id), missing = t.creds.some(k => !ins.creds[k]);
+  const failAt = missing ? names.findIndex((n, i) => i > 1 && /WhatsApp|Instagram|reply|Send|Publish|insights/i.test(n)) : -1;
+  const btn = $(`[data-n8test="${tid}"]`); if (btn) btn.disabled = true;
+  const t0 = Date.now(), run = { id: 'R' + Date.now().toString(36).toUpperCase(), client: c.id, tpl: t.id, status: 'running', at: new Date().toISOString(), ms: 0, nodes: [], error: '' };
+  for (let i = 0; i < names.length; i++) {
+    states[names[i]] = 'running'; N8.view && N8.view.setStates(states, t);
+    await new Promise(r => setTimeout(r, reduceMotion() ? 60 : 420));
+    const bad = i === failAt; states[names[i]] = bad ? 'error' : 'success'; run.nodes.push({ name: names[i], status: states[names[i]], ms: 100 + Math.round(Math.random() * 600) });
+    N8.view && N8.view.setStates(states, t);
+    if (bad) { run.status = 'error'; run.error = `${names[i]}: a key is missing — add it under "Connections & keys"`; break; }
+  }
+  if (run.status === 'running') run.status = 'success';
+  run.ms = Date.now() - t0; n8Data().runs.unshift(run); if (btn) btn.disabled = false;
+  toast(run.status === 'success' ? `✓ Test run passed (${(run.ms / 1000).toFixed(1)} s) — demo` : '✕ Test run failed — see Runs', run.status !== 'success');
+  const card = $(`[data-n8open="${tid}"] .n8meta`); if (card) card.innerHTML = runPill(run.status) + '<span class="muted">just now</span><span class="grow"></span>';
+}
+function n8Runs() {
+  const D = n8Data();
+  return `<div class="adfilter run-filter"><label class="check"><input type="checkbox" id="n8RunsAll" ${N8.runsAll ? 'checked' : ''} ${N8.role === 'admin' ? '' : 'hidden'}>${N8.role === 'admin' ? ' Show all clients' : ''}</label></div>
+    <div class="glass tblcard"><div class="tblwrap"><table class="tbl"><thead><tr><th>When</th>${N8.runsAll && N8.role === 'admin' ? '<th>Client</th>' : ''}<th>Service</th><th>Status</th><th class="num">Time</th><th></th></tr></thead><tbody>
+    ${(N8.runsAll && N8.role === 'admin' ? D.runs.slice(0, 60) : D.runs.filter(r => r.client === N8.client).slice(0, 60)).map((r, i) => `<tr data-n8run="${r.id}" style="--i:${Math.min(i, 20)}" class="${N8.run === r.id ? 'on' : ''}"><td>${esc(n8Ago(r.at))}</td>${N8.runsAll && N8.role === 'admin' ? `<td>${esc(n8Client(r.client).name)}</td>` : ''}<td><b>${esc(n8Tpl(r.tpl).name)}</b></td><td>${runPill(r.status)}</td><td class="num">${(r.ms / 1000).toFixed(1)} s</td><td>${r.status === 'error' ? `<button class="btn sm" data-n8retry="${r.id}">Retry</button>` : ''}</td></tr>`).join('') || '<tr><td colspan="6" class="empty">No runs yet.</td></tr>'}
+    </tbody></table></div></div><div id="n8RunDet"></div>`;
+}
+function n8MountRun() {
+  const r = n8Data().runs.find(x => x.id === N8.run); if (!r) return; const t = n8Tpl(r.tpl), states = {}; r.nodes.forEach(n => states[n.name] = n.status);
+  $('#n8RunDet').innerHTML = `<div class="n8det glass"><div class="n8det-h"><div><small class="muted">${esc(n8Client(r.client).name)} · ${esc(new Date(r.at).toLocaleString('en-IN'))}</small><h3>${esc(t.name)} ${runPill(r.status)}</h3></div><div class="grow"></div>${r.status === 'error' ? `<button class="btn sm primary" data-n8retry="${r.id}">Retry</button>` : ''}<button class="ibtn" data-n8closerun title="Close">${I.x}</button></div>
+    ${r.error ? `<div class="run-err" style="padding:0 18px 10px">✕ ${esc(r.error)}</div>` : ''}
+    <div class="n8det-b"><div class="n8canvas" id="n8RunCanvas"></div><div class="n8side"><div class="sec-t">Node by node</div>
+      <ol class="n8steps">${t.wf.nodes.map(n => { const x = r.nodes.find(z => z.name === n.name); return `<li class="${x ? x.status : 'skip'}"><span>${x ? (x.status === 'success' ? '✓' : '✕') : '–'}</span><b>${esc(n.name)}</b><small class="muted">${x ? x.ms + ' ms' : 'not run'}</small></li>`; }).join('')}</ol>
+      <p class="help">Full input / output of each node will show here once the client's n8n is connected.</p></div></div></div>`;
+  n8Viewer($('#n8RunCanvas'), n8Graph(t, states));
+}
+function n8Templates() {
+  const D = n8Data();
+  return `<div class="glass adcta"><div><h3>Your workflow templates</h3><p class="muted">Build in your own n8n, then import here. Add a node named <b>⚙ Client Settings</b> — its fields become the client's form, and node notes become help text.</p></div><div class="adcta-row"><button class="btn" data-n8import>Import from my n8n</button></div></div>
+    <div class="n8grid">${D.templates.map((t, i) => { const ins = D.installs.filter(x => x.tpl === t.id), old = ins.filter(x => x.version < t.version);
+      return `<div class="n8card glass" style="--i:${i}"><div class="r1"><b>${esc(t.name)}</b><span class="badge mine">v${t.version}</span></div><p class="muted">${esc(t.desc)}</p>
+        <div class="n8chain">${t.wf.nodes.map(n => { const k = n8Kind(n.type); return `<i style="background:${k.c}" title="${esc(n.name)}">${esc(k.ic)}</i>`; }).join('')}</div>
+        <div class="n8meta"><span class="muted">${esc(t.cat)} · ${t.wf.nodes.length} nodes · ${t.settings.length} settings · ${t.creds.length} keys</span></div>
+        <div class="n8meta"><span class="muted">Installed for ${ins.length} client${ins.length === 1 ? '' : 's'}</span><span class="grow"></span>${old.length ? `<button class="btn sm" data-n8push="${t.id}">Push v${t.version} to ${old.length}</button>` : ''}</div>
+        <div class="run-row" style="margin-top:4px"><select class="input" data-n8instto="${t.id}" style="flex:1">${D.clients.filter(c => !ins.some(x => x.client === c.id)).map(c => `<option value="${c.id}">${esc(c.name)}</option>`).join('') || '<option value="">Installed for everyone</option>'}</select><button class="btn sm primary" data-n8install="${t.id}">Install</button></div></div>`; }).join('')}</div>`;
+}
+function n8Clients() {
+  const D = n8Data();
+  return `<div class="glass tblcard"><div class="tblwrap"><table class="tbl"><thead><tr><th>Client</th><th>n8n</th><th>Plan usage</th><th class="num">Services</th><th class="num">Failed (recent)</th><th>Health</th></tr></thead><tbody>
+    ${D.clients.map((c, i) => { const fails = D.runs.filter(r => r.client === c.id && r.status === 'error').length, h = n8Health(c);
+      return `<tr data-n8cli="${c.id}" style="--i:${i}"><td><div class="who">${bizTile(c.name)}<div><b>${esc(c.name)}</b><div class="muted" style="font-size:11.5px">${esc(c.owner)}</div></div></div></td><td>${c.url ? esc(c.url.replace(/^https?:\/\//, '')) : '<span class="muted">—</span>'}<div class="muted" style="font-size:11.5px">${esc(c.plan)}</div></td>
+        <td style="min-width:150px">${c.limit ? `<div class="bar-track"><div class="bar" style="width:${Math.min(100, c.used / c.limit * 100).toFixed(0)}%;background:${c.used / c.limit > 0.85 ? 'var(--coral)' : 'var(--blue-2)'}"></div></div><small class="muted">${c.used.toLocaleString('en-IN')} / ${c.limit.toLocaleString('en-IN')}</small>` : '<span class="muted">—</span>'}</td>
+        <td class="num">${D.installs.filter(x => x.client === c.id).length}</td><td class="num">${fails}</td><td><div class="n8flags">${h.length ? h.map(n8Pill).join('') : n8Pill(['ok', 'Healthy'])}</div></td></tr>`; }).join('')}
+    </tbody></table></div></div><p class="help" style="margin-top:10px">Click a client to open their services. New clients appear here when they sign up and connect their n8n.</p>`;
+}
+function n8Connect() {
+  const c = n8Client(N8.client);
+  const step = (n, t, d) => `<div class="cstep"><span class="cn">${n}</span><div><b>${t}</b><p class="muted">${d}</p></div></div>`;
+  return `<div class="rgrid"><div class="rcard glass"><h3>Connect ${esc(c.name)}'s n8n</h3><p class="sub muted">One time. After this, everything is managed from this website.</p>
+      <div class="form" style="grid-template-columns:1fr">
+        <div class="field"><label>n8n address</label><input class="input" id="n8Url" placeholder="https://yourname.app.n8n.cloud" value="${esc(c.url || '')}"></div>
+        <div class="field"><label>n8n API key</label><input class="input" id="n8Key" type="password" autocomplete="off" placeholder="${c.keyOk ? '•••••• connected — paste to replace' : 'Paste the API key'}"></div>
+        <p class="help">The key is stored encrypted on the server (Supabase) and is never shown again — not even to you.</p>
+        <div class="status" id="n8Status"></div>
+        <div class="m-foot" style="margin-top:4px"><div class="grow"></div><button class="btn primary" id="n8ConnSave">Test & connect</button></div></div></div>
+    <div class="rcard glass"><h3>Where to find these</h3><p class="sub muted">Takes about 2 minutes</p>
+      ${step(1, 'Take a paid n8n plan', 'The n8n API is not available on the free trial — Starter or above on n8n Cloud, or any self-hosted n8n.')}
+      ${step(2, 'Copy the n8n address', 'The link you open n8n with, e.g. https://yourname.app.n8n.cloud')}
+      ${step(3, 'Create an API key', 'In n8n: Settings → n8n API → Create an API key. Give it a label like "NodeOS".')}
+      ${step(4, 'Paste both here', 'Press "Test & connect". Your services appear under My services.')}
+    </div></div>`;
+}
+(function n8Events() {
+  const V = $('#v-n8n');
+  V.addEventListener('click', async e => {
+    const t = e.target;
+    const tab = t.closest('[data-n8tab]'); if (tab) { N8.tab = tab.dataset.n8tab; N8.open = null; N8.run = null; renderN8n(true); return; }
+    const tg = t.closest('[data-n8toggle]'); if (tg) { e.stopPropagation(); const ins = n8Data().installs.find(i => i.client === N8.client && i.tpl === tg.dataset.n8toggle); ins.active = !ins.active; tg.classList.toggle('on', ins.active); n8Save(); toast(`${n8Tpl(ins.tpl).name}: ${ins.active ? 'turned on' : 'turned off'} in n8n (demo)`); return; }
+    if (t.closest('[data-n8close]')) { N8.open = null; renderN8n(); return; }
+    if (t.closest('[data-n8closerun]')) { N8.run = null; renderN8n(); return; }
+    const op = t.closest('[data-n8open]'); if (op) { N8.open = N8.open === op.dataset.n8open ? null : op.dataset.n8open; renderN8n(); if (N8.open) setTimeout(() => $('#n8Detail').scrollIntoView({ behavior: reduceMotion() ? 'auto' : 'smooth', block: 'start' }), 60); return; }
+    const ts = t.closest('[data-n8test]'); if (ts) { n8TestRun(ts.dataset.n8test); return; }
+    const ss = t.closest('[data-n8setsave]'); if (ss) { const ins = n8Data().installs.find(i => i.client === N8.client && i.tpl === ss.dataset.n8setsave); $$('[data-n8set]').forEach(f => ins.values[f.dataset.n8set] = f.value.trim()); n8Save(); toast('Settings saved to "⚙ Client Settings" in n8n (demo)'); return; }
+    const cs = t.closest('[data-n8credsave]'); if (cs) { const k = cs.dataset.n8credsave, inputs = $$(`[data-n8cred="${k}"]`); if (inputs.some(i => !i.value.trim())) return toast('Fill every field for this connection', true); const ins = n8Data().installs.find(i => i.client === N8.client && i.tpl === N8.open); ins.creds[k] = true; inputs.forEach(i => i.value = ''); n8Save(); toast(`${N8_CREDS[k].name} saved in n8n (demo) ✓`); n8MountDetail(); return; }
+    const oa = t.closest('[data-n8oauth]'); if (oa) { const c = n8Client(N8.client); if (!c.url) return toast('Connect n8n first (Connect n8n tab)', true); toast('Opens your n8n credentials page once live — demo'); const ins = n8Data().installs.find(i => i.client === N8.client && i.tpl === N8.open); ins.creds[oa.dataset.n8oauth] = true; n8Save(); n8MountDetail(); return; }
+    const up = t.closest('[data-n8update]'); if (up) { const ins = n8Data().installs.find(i => i.client === N8.client && i.tpl === up.dataset.n8update); ins.version = n8Tpl(ins.tpl).version; n8Save(); toast(`Updated to v${ins.version} — settings and keys kept (demo)`); renderN8n(); return; }
+    const rr = t.closest('[data-n8retry]'); if (rr) { e.stopPropagation(); const r = n8Data().runs.find(x => x.id === rr.dataset.n8retry); toast('Retry sent to n8n (demo)'); r.status = n8Client(r.client).keyOk ? 'success' : 'error'; renderN8n(); return; }
+    const run = t.closest('[data-n8run]'); if (run) { N8.run = N8.run === run.dataset.n8run ? null : run.dataset.n8run; renderN8n(); if (N8.run) setTimeout(() => $('#n8RunDet').scrollIntoView({ behavior: reduceMotion() ? 'auto' : 'smooth', block: 'start' }), 60); return; }
+    const pu = t.closest('[data-n8push]'); if (pu) { const tpl = n8Tpl(pu.dataset.n8push), old = n8Data().installs.filter(x => x.tpl === tpl.id && x.version < tpl.version); if (!confirm(`Push v${tpl.version} of "${tpl.name}" to ${old.length} client${old.length > 1 ? 's' : ''}? Their settings and keys are kept.`)) return; old.forEach(x => x.version = tpl.version); n8Save(); toast(`v${tpl.version} pushed to ${old.length} client${old.length > 1 ? 's' : ''} (demo)`); renderN8n(); return; }
+    const inst = t.closest('[data-n8install]'); if (inst) { const id = inst.dataset.n8install, sel = $(`[data-n8instto="${id}"]`), cid = sel && sel.value; if (!cid) return toast('Already installed for every client'); const tpl = n8Tpl(id); n8Data().installs.push({ client: cid, tpl: id, version: tpl.version, active: false, values: {}, creds: {} }); n8Save(); toast(`"${tpl.name}" installed in ${n8Client(cid).name}'s n8n (demo) — add their keys next`); renderN8n(); return; }
+    if (t.closest('[data-n8import]')) { toast('Import from your n8n works once Supabase is connected (it lists your workflows to pick from)'); return; }
+    const cl = t.closest('[data-n8cli]'); if (cl) { N8.client = cl.dataset.n8cli; N8.tab = 'services'; N8.open = null; renderN8n(true); return; }
+    if (t.id === 'n8ConnSave') { const u = $('#n8Url').value.trim(), k = $('#n8Key').value.trim(), st = $('#n8Status'); if (!/^https:\/\/[^\s/]+\.[^\s/]+/.test(u)) { st.className = 'status err'; st.textContent = 'Enter the n8n address, e.g. https://yourname.app.n8n.cloud'; return; } if (!k && !n8Client(N8.client).keyOk) { st.className = 'status err'; st.textContent = 'Paste the API key'; return; } st.className = 'status'; st.textContent = 'Live connection needs the Supabase step first — the key must be stored on the server, never in the browser.'; const c = n8Client(N8.client); c.url = u.replace(/\/+$/, ''); n8Save(); $('#n8Key').value = ''; }
+  });
+  V.addEventListener('change', e => {
+    if (e.target.id === 'n8Role') { N8.role = e.target.value; N8.open = null; N8.run = null; renderN8n(true); }
+    if (e.target.id === 'n8Client') { N8.client = e.target.value; N8.open = null; N8.run = null; renderN8n(true); }
+    if (e.target.id === 'n8RunsAll') { N8.runsAll = e.target.checked; N8.run = null; renderN8n(); }
+  });
+})();
+
 /* ================= login (Supabase Auth) ================= */
 const AUTH = { client: null, session: null, mode: 'in', preview: false };
 const sbConf = () => store.get('leadnode.supabase') || {};
@@ -3512,6 +3854,7 @@ function go(name) {
   if (name === 'team') renderTeam(true);
   if (name === 'scripts') renderScripts();
   if (name === 'ads') renderAds(true);
+  if (name === 'n8n') renderN8n(true);
   if (name === 'automation') requestAnimationFrame(() => autoCanvas().sync());
   if (name === 'templates' && stale) renderTemplates();
   closePops();
