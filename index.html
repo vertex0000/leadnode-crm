@@ -628,6 +628,7 @@ textarea.input.code{min-height:320px}
 @media (max-width:600px){#stab-wl .form{grid-template-columns:1fr!important}}
 .acct-imp{display:flex;gap:12px;align-items:center;flex-wrap:wrap;padding:12px;border:1px dashed var(--line-2);border-radius:12px;margin-bottom:12px}.acct-imp>div{flex:1 1 240px;display:flex;flex-direction:column;gap:3px}.acct-imp small{color:var(--muted);font-size:12px}
 .auth-demo{display:block;margin:12px auto 0;border:0;background:none;color:var(--muted);font-weight:600}.auth-demo:hover{color:var(--text)}
+input:-webkit-autofill,input:-webkit-autofill:hover,input:-webkit-autofill:focus{-webkit-text-fill-color:var(--text);caret-color:var(--text);transition:background-color 99999s ease-out 0s}
 .srcTag{font-style:normal;font-size:10px;font-weight:700;padding:1px 5px;border-radius:4px;margin-left:4px;vertical-align:1px}
 .srcTag.real{background:var(--green-soft);color:var(--green)}.srcTag.sample{background:var(--line);color:var(--muted)}
 .rcard.span2{grid-column:1/-1}
@@ -1181,7 +1182,7 @@ textarea.input.code{min-height:320px}
     <div class="form" style="grid-template-columns:1fr">
       <div class="field"><label>Web App URL</label><input class="input" id="sUrl" placeholder="https://script.google.com/macros/s/…/exec"></div>
       <div class="field"><label>API Key</label>
-        <div style="display:flex;gap:8px"><input class="input" id="sKey" type="password" placeholder="Apps Script → Project Settings → Script Properties → API_KEY"><button class="btn" id="sShow" type="button">Show</button></div></div>
+        <div style="display:flex;gap:8px"><input class="input" id="sKey" type="password" name="sheet-api-key" autocomplete="new-password" data-lpignore="true" data-1p-ignore placeholder="Apps Script → Project Settings → Script Properties → API_KEY"><button class="btn" id="sShow" type="button">Show</button></div></div>
       <p class="help">The URL and key are saved only in this browser. Never share this key.</p>
       <div class="status" id="sStatus"></div>
     </div>
