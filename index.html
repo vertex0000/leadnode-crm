@@ -740,6 +740,10 @@ body.ro [data-add],body.ro .addcard,body.ro #addMember,body.ro [data-lginvite],b
 .bc-imp{display:flex;gap:12px;align-items:center;padding:12px 14px;margin-bottom:14px;border-radius:14px;border:1px dashed color-mix(in srgb,var(--blue-2) 45%,var(--line));background:color-mix(in srgb,var(--blue-2) 7%,transparent)}.bc-imp b{display:block;font-size:13.5px}.bc-imp small{font-size:12px;color:var(--muted)}.bc-imp-ic{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;font-weight:800;color:#fff;background:linear-gradient(135deg,var(--blue-2),#A78BFA);flex:none}
 @media (max-width:600px){.bc-imp{flex-wrap:wrap}.bc-imp .btn{width:100%}}
 .bub-err{align-self:flex-end;max-width:min(75%,560px);font-size:12px;line-height:1.4;color:var(--coral);background:color-mix(in srgb,var(--coral) 10%,transparent);border:1px solid color-mix(in srgb,var(--coral) 30%,transparent);border-radius:10px;padding:5px 9px;margin-top:-3px}
+.n8l-dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--green);box-shadow:0 0 0 4px var(--green-soft);margin-right:8px;vertical-align:1px}
+.n8l-h{display:flex;gap:8px;align-items:center;margin-bottom:10px}.n8l-h h3{margin:0;flex:1}.n8l-h .input{max-width:200px}
+.n8l-list{display:flex;flex-direction:column;gap:6px;max-height:420px;overflow:auto}.n8l-w,.n8l-r{display:flex;gap:10px;align-items:center;padding:9px 10px;border:1px solid var(--line);border-radius:12px}.n8l-w b,.n8l-r b{display:block;font-size:13.5px}.n8l-w small,.n8l-r small{font-size:11.5px}
+.n8l-w .grow,.n8l-r .grow{flex:1;min-width:0}.n8l-i{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:800;background:var(--line);flex:none}.n8l-r.st-success .n8l-i{background:var(--green-soft);color:var(--green)}.n8l-r.st-error .n8l-i,.n8l-r.st-crashed .n8l-i{background:color-mix(in srgb,var(--coral) 16%,transparent);color:var(--coral)}
 .imp-batch{display:flex;flex-direction:column;gap:6px;margin:12px 0 4px;font-size:13px;font-weight:600}.imp-batch small{font-weight:500;color:var(--muted)}.imp-batch .input{max-width:320px}
 .imp-done{display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px;padding:18px 8px}.imp-ok{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;font-size:22px;font-weight:800;color:#fff;background:linear-gradient(135deg,var(--blue-2),#A78BFA)}
 .srcTag{font-style:normal;font-size:10px;font-weight:700;padding:1px 5px;border-radius:4px;margin-left:4px;vertical-align:1px}
@@ -1205,7 +1209,7 @@ body.ro [data-add],body.ro .addcard,body.ro #addMember,body.ro [data-lginvite],b
       <div class="head"><div><div class="eyebrow">Integrations</div><h1>n8n Services</h1><p class="sub">Each client runs their own n8n. They see simple services, live runs and only the settings that matter.</p></div>
         <div class="adhead-r"><span class="badge">Demo data</span><span id="n8ClientWrap"><select class="input" id="n8Client" style="width:auto"></select></span><select class="input" id="n8Role" style="width:auto" title="Preview what a client sees"><option value="admin">View as: Admin (you)</option><option value="client">View as: Client</option></select></div></div>
       <p class="help" id="n8RoleHelp" style="margin:-8px 4px 12px"></p>
-      <div class="banner" style="background:var(--blue-soft);border-color:var(--stroke)"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg><div class="grow">This is a <b>working demo</b>. Live connection to each client's n8n starts after the Supabase step (the n8n API keys must live on the server).</div></div>
+      <div class="banner n8-demo-note" style="background:var(--blue-soft);border-color:var(--stroke)"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg><div class="grow">This is a <b>working demo</b>. Live connection to each client's n8n starts after the Supabase step (the n8n API keys must live on the server).</div></div>
       <div class="subnav" id="n8Tabs"></div>
       <div id="n8Body"></div>
     </section>
@@ -3578,6 +3582,7 @@ function renderN8n(anim) {
   $('#n8Client').innerHTML = D.clients.map(c => `<option value="${c.id}" ${c.id === N8.client ? 'selected' : ''}>${esc(c.name)}</option>`).join('');
   $('#n8Tabs').innerHTML = tabs.map(([k, n]) => `<button class="tab ${N8.tab === k ? 'active' : ''}" data-n8tab="${k}">${n}</button>`).join('');
   const body = $('#n8Body');
+  { const bn = $('#v-n8n .n8-demo-note'); if (bn) bn.hidden = cloud && !demo && N8.tab === 'connect'; }
   body.innerHTML = ({ services: n8Services, runs: n8Runs, schedule: n8Schedule, status: n8Status, report: n8Report, templates: n8Templates, clients: n8Clients, connect: n8Connect })[N8.tab]();
   stagger(body, anim);
   if (N8.tab === 'services' && N8.open) n8MountDetail();
@@ -3769,7 +3774,64 @@ function n8Clients() {
         <td class="num">${D.installs.filter(x => x.client === c.id).length}</td><td class="num">${fails}</td><td><div class="n8flags">${h.length ? h.map(n8Pill).join('') : n8Pill(['ok', 'Healthy'])}</div></td></tr>`; }).join('')}
     </tbody></table></div></div><p class="help" style="margin-top:10px">Click a client to open their services. New clients appear here when they sign up and connect their n8n.</p>`;
 }
+/* ---- live n8n (cloud): own n8n Cloud or self-hosted / Docker, via the "n8n" Edge Function ---- */
+const N8L = { loaded: false, busy: false, st: null, wfs: null, runs: null, err: '', q: '' };
+async function n8LiveLoad(force) {
+  if (N8L.busy || (N8L.loaded && !force)) return; N8L.busy = true; N8L.err = '';
+  try {
+    N8L.st = await fnCall('n8n', { action: 'status' });
+    if (N8L.st.connected) { const [w, r] = await Promise.all([fnCall('n8n', { action: 'workflows' }), fnCall('n8n', { action: 'executions', limit: 15 })]); N8L.wfs = w.workflows; N8L.runs = r.runs; }
+  } catch (e) { N8L.err = e.message; }
+  N8L.loaded = true; N8L.busy = false; if (N8.tab === 'connect') renderN8n();
+}
+const n8lAgo = t => { if (!t) return ''; const m = Math.round((Date.now() - new Date(t).getTime()) / 6e4); return m < 1 ? 'just now' : m < 60 ? m + ' min ago' : m < 1440 ? Math.round(m / 60) + ' h ago' : Math.round(m / 1440) + ' d ago'; };
+function n8Live() {
+  if (!N8L.loaded) { n8LiveLoad(); return `<div class="rcard glass"><p class="muted">Checking your n8n connection…</p></div>`; }
+  const st = N8L.st || {}, on = st.connected, adm = canAdmin(), wn = {}; (N8L.wfs || []).forEach(w => { wn[w.id] = w.name; });
+  const step = (n, t, d) => `<div class="cstep"><span class="cn">${n}</span><div><b>${t}</b><p class="muted">${d}</p></div></div>`;
+  const form = adm ? `<div class="form" style="grid-template-columns:1fr">
+        <div class="field"><label>n8n address (https)</label><input class="input" id="n8lUrl" placeholder="https://yourname.ngrok-free.app" value="${esc(st.url || '')}"></div>
+        <div class="field"><label>n8n API key</label><input class="input" id="n8lKey" data-noautofill type="text" style="-webkit-text-security:disc" readonly autocomplete="off" placeholder="${on ? '•••••• connected — paste only to replace' : 'Paste the API key'}"></div>
+        <p class="help">The key is stored on the server (Supabase) only and is never shown again.</p>
+        <div class="status ${N8L.err ? 'err' : ''}" id="n8lStatus">${esc(N8L.err)}</div>
+        <div class="m-foot" style="margin-top:4px">${on ? '<button class="btn" data-n8ldisc>Disconnect</button>' : ''}<div class="grow"></div><button class="btn primary" data-n8lsave>${on ? 'Save & re-test' : 'Test & connect'}</button></div></div>` : `<p class="muted">Ask the owner or an admin to connect n8n.</p>${N8L.err ? `<div class="status err">${esc(N8L.err)}</div>` : ''}`;
+  const head = `<div class="rgrid"><div class="rcard glass"><h3>${on ? '<span class="n8l-dot"></span>n8n connected' : 'Connect your n8n'}</h3><p class="sub muted">${on ? `${esc(st.url)} · ${st.workflows || 0} workflows` : 'n8n Cloud (Starter or above) or your own self-hosted / Docker n8n.'}</p>${form}</div>
+    <div class="rcard glass"><h3>n8n on your PC (Docker)?</h3><p class="sub muted">Nodevers runs on the internet, so it can't open <code>localhost:5678</code>. Give n8n a free https link with ngrok.</p>
+      ${step(1, 'Free ngrok account', 'ngrok.com → sign up → Domains → claim your free static domain (e.g. yourname.ngrok-free.app).')}
+      ${step(2, 'Start the tunnel', 'On your PC (n8n running in Docker): <code>ngrok http --url=yourname.ngrok-free.app 5678</code>')}
+      ${step(3, 'Create an n8n API key', 'Open n8n → Settings → n8n API → Create an API key (label "Nodevers").')}
+      ${step(4, 'Paste both here', 'Address = your ngrok link. Keep the PC, Docker and ngrok on — when the PC sleeps, n8n stops.')}</div></div>`;
+  if (!on) return head;
+  const q = N8L.q.toLowerCase(), wfs = (N8L.wfs || []).filter(w => !q || w.name.toLowerCase().includes(q)).sort((a, b) => (b.active - a.active) || String(b.updatedAt).localeCompare(String(a.updatedAt)));
+  const ro = AUTH.role === 'client', icon = { success: '✓', error: '!', crashed: '!', running: '…', waiting: '…', canceled: '×' };
+  return head + `<div class="rgrid" style="margin-top:14px"><div class="rcard glass"><div class="n8l-h"><h3>Workflows <small class="muted">${(N8L.wfs || []).length}</small></h3><input class="input sm" id="n8lQ" placeholder="Search workflows" value="${esc(N8L.q)}"><button class="ibtn" data-n8lref title="Refresh">⟳</button></div>
+      <div class="n8l-list">${wfs.map(w => `<div class="n8l-w"><div class="grow"><b>${esc(w.name)}</b><small class="muted">${w.nodes} nodes${w.updatedAt ? ' · edited ' + n8lAgo(w.updatedAt) : ''}${w.tags.length ? ' · ' + w.tags.map(esc).join(', ') : ''}</small></div>
+        <a class="btn sm" href="${esc(st.url)}/workflow/${encodeURIComponent(w.id)}" target="_blank" rel="noopener">Open</a>
+        <button class="switch ${w.active ? 'on' : ''}" data-n8ltog="${esc(w.id)}" data-tip="${w.active ? 'Active — click to turn off' : 'Off — click to activate'}" ${ro ? 'disabled' : ''}></button></div>`).join('') || '<p class="muted">No workflows yet — create one in n8n, then press ⟳.</p>'}</div></div>
+    <div class="rcard glass"><h3>Recent runs</h3><p class="sub muted">Last ${(N8L.runs || []).length} executions from your n8n</p>
+      <div class="n8l-list">${(N8L.runs || []).map(r => `<div class="n8l-r st-${esc(r.status)}"><span class="n8l-i">${icon[r.status] || '•'}</span><div class="grow"><b>${esc(wn[r.workflowId] || 'Workflow ' + r.workflowId)}</b><small class="muted">${esc(r.status)} · ${esc(r.mode)} · ${n8lAgo(r.startedAt)}${r.stoppedAt && r.startedAt ? ' · ' + Math.max(0, Math.round((new Date(r.stoppedAt) - new Date(r.startedAt)) / 100) / 10) + 's' : ''}</small></div><a class="ibtn" href="${esc(st.url)}/workflow/${encodeURIComponent(r.workflowId)}/executions/${encodeURIComponent(r.id)}" target="_blank" rel="noopener" title="Open in n8n">↗</a></div>`).join('') || '<p class="muted">No runs yet.</p>'}</div></div></div>`;
+}
+document.addEventListener('input', e => { if (e.target.id === 'n8lQ') { N8L.q = e.target.value; const pos = e.target.selectionStart; renderN8n(); const q = $('#n8lQ'); if (q) { q.focus(); q.setSelectionRange(pos, pos); } } });
+document.addEventListener('click', async e => {
+  const tg = e.target.closest('[data-n8ltog]'); if (!tg || tg.disabled) return;
+  const want = !tg.classList.contains('on'); tg.disabled = true;
+  try { const r = await fnCall('n8n', { action: 'toggle', id: tg.dataset.n8ltog, active: want }); const w = (N8L.wfs || []).find(x => x.id === tg.dataset.n8ltog); if (w) w.active = r.active; tg.classList.toggle('on', r.active); toast(r.active ? '✓ Workflow is active' : 'Workflow turned off'); }
+  catch (er) { toast(er.message, true); }
+  tg.disabled = false;
+});
+document.addEventListener('click', async e => {
+  if (e.target.closest('[data-n8lref]')) { N8L.loaded = false; renderN8n(); return; }
+  if (e.target.closest('[data-n8ldisc]')) { if (!confirm('Disconnect n8n from this workspace? Your workflows stay in n8n.')) return; try { await fnCall('n8n', { action: 'disconnect' }); N8L.loaded = false; N8L.st = null; toast('n8n disconnected'); renderN8n(); } catch (er) { toast(er.message, true); } return; }
+  const sv = e.target.closest('[data-n8lsave]'); if (!sv) return;
+  const url = $('#n8lUrl').value.trim(), key = $('#n8lKey').value.trim(), st = $('#n8lStatus');
+  if (!/^https?:\/\//i.test(url)) { st.className = 'status err'; st.textContent = 'Enter the full address starting with https://'; return; }
+  if (!key && !(N8L.st && N8L.st.connected)) { st.className = 'status err'; st.textContent = 'Paste the n8n API key'; return; }
+  sv.disabled = true; st.className = 'status'; st.textContent = 'Testing the connection…';
+  try { const r = await fnCall('n8n', { action: 'connect', url, api_key: key }); N8L.loaded = false; N8L.err = ''; toast(`✓ n8n connected — ${r.workflows.length} workflows found`); renderN8n(); }
+  catch (er) { st.className = 'status err'; st.textContent = er.message; sv.disabled = false; }
+});
 function n8Connect() {
+  if (cloud && !demo) return n8Live();
   const c = n8Client(N8.client);
   const step = (n, t, d) => `<div class="cstep"><span class="cn">${n}</span><div><b>${t}</b><p class="muted">${d}</p></div></div>`;
   return `<div class="rgrid"><div class="rcard glass"><h3>Connect ${esc(c.name)}'s n8n</h3><p class="sub muted">One time. After this, everything is managed from this website.</p>
