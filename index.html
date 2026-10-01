@@ -743,7 +743,9 @@ body.ro [data-add],body.ro .addcard,body.ro #addMember,body.ro [data-lginvite],b
 .n8l-dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--green);box-shadow:0 0 0 4px var(--green-soft);margin-right:8px;vertical-align:1px}
 .n8l-h{display:flex;gap:8px;align-items:center;margin-bottom:10px}.n8l-h h3{margin:0;flex:1}.n8l-h .input{max-width:200px}
 .n8l-list{display:flex;flex-direction:column;gap:6px;max-height:420px;overflow:auto}.n8l-w,.n8l-r{display:flex;gap:10px;align-items:center;padding:9px 10px;border:1px solid var(--line);border-radius:12px}.n8l-w b,.n8l-r b{display:block;font-size:13.5px}.n8l-w small,.n8l-r small{font-size:11.5px}
-.n8l-w .grow,.n8l-r .grow{flex:1;min-width:0}.n8l-man{font-size:11px;font-weight:700;padding:3px 8px;border-radius:7px;border:1px solid var(--line);color:var(--muted);cursor:help;white-space:nowrap}.n8l-i{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:800;background:var(--line);flex:none}.n8l-r.st-success .n8l-i{background:var(--green-soft);color:var(--green)}.n8l-r.st-error .n8l-i,.n8l-r.st-crashed .n8l-i{background:color-mix(in srgb,var(--coral) 16%,transparent);color:var(--coral)}
+.n8l-w .grow,.n8l-r .grow{flex:1;min-width:0}.n8l-man{font-size:11px;font-weight:700;padding:3px 8px;border-radius:7px;border:1px solid var(--line);color:var(--muted);cursor:help;white-space:nowrap}.n8l-ks{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.n8l-k{border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;gap:2px}.n8l-k b{font-size:24px}.n8l-k small{font-size:12px}@media (max-width:760px){.n8l-ks{grid-template-columns:repeat(2,1fr)}}
+.n8l-i.on{background:var(--green-soft);color:var(--green)}
+.n8l-i{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:800;background:var(--line);flex:none}.n8l-r.st-success .n8l-i{background:var(--green-soft);color:var(--green)}.n8l-r.st-error .n8l-i,.n8l-r.st-crashed .n8l-i{background:color-mix(in srgb,var(--coral) 16%,transparent);color:var(--coral)}
 .imp-batch{display:flex;flex-direction:column;gap:6px;margin:12px 0 4px;font-size:13px;font-weight:600}.imp-batch small{font-weight:500;color:var(--muted)}.imp-batch .input{max-width:320px}
 .imp-done{display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px;padding:18px 8px}.imp-ok{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;font-size:22px;font-weight:800;color:#fff;background:linear-gradient(135deg,var(--blue-2),#A78BFA)}
 .srcTag{font-style:normal;font-size:10px;font-weight:700;padding:1px 5px;border-radius:4px;margin-left:4px;vertical-align:1px}
@@ -3571,6 +3573,7 @@ function n8SampleOut(node, client) {
 /* ---- page ---- */
 function renderN8n(anim) {
   if (!$('#v-n8n').classList.contains('active')) return;
+  if (cloud && !demo) return renderN8Live(anim);
   const lockedClient = cloud && AUTH.role === 'client';           // a real client login: always their own view, no switch
   if (lockedClient) N8.role = 'client';
   const D = n8Data(), tabs = N8_TABS[N8.role];
@@ -3582,7 +3585,6 @@ function renderN8n(anim) {
   $('#n8Client').innerHTML = D.clients.map(c => `<option value="${c.id}" ${c.id === N8.client ? 'selected' : ''}>${esc(c.name)}</option>`).join('');
   $('#n8Tabs').innerHTML = tabs.map(([k, n]) => `<button class="tab ${N8.tab === k ? 'active' : ''}" data-n8tab="${k}">${n}</button>`).join('');
   const body = $('#n8Body');
-  { const bn = $('#v-n8n .n8-demo-note'); if (bn) bn.hidden = cloud && !demo && N8.tab === 'connect'; }
   body.innerHTML = ({ services: n8Services, runs: n8Runs, schedule: n8Schedule, status: n8Status, report: n8Report, templates: n8Templates, clients: n8Clients, connect: n8Connect })[N8.tab]();
   stagger(body, anim);
   if (N8.tab === 'services' && N8.open) n8MountDetail();
@@ -3774,48 +3776,79 @@ function n8Clients() {
         <td class="num">${D.installs.filter(x => x.client === c.id).length}</td><td class="num">${fails}</td><td><div class="n8flags">${h.length ? h.map(n8Pill).join('') : n8Pill(['ok', 'Healthy'])}</div></td></tr>`; }).join('')}
     </tbody></table></div></div><p class="help" style="margin-top:10px">Click a client to open their services. New clients appear here when they sign up and connect their n8n.</p>`;
 }
-/* ---- live n8n (cloud): own n8n Cloud or self-hosted / Docker, via the "n8n" Edge Function ---- */
-const N8L = { loaded: false, busy: false, st: null, wfs: null, runs: null, err: '', q: '' };
+/* ---- live n8n (cloud): each workspace connects its OWN n8n (Cloud or self-hosted / Docker) via the "n8n" Edge Function ---- */
+const N8L = { loaded: false, busy: false, st: null, wfs: null, runs: null, err: '', q: '', ws: '', tab: 'workflows', rwf: '', rst: '' };
 async function n8LiveLoad(force) {
+  if (N8L.ws !== AUTH.ws) { Object.assign(N8L, { loaded: false, st: null, wfs: null, runs: null, err: '', ws: AUTH.ws }); }
   if (N8L.busy || (N8L.loaded && !force)) return; N8L.busy = true; N8L.err = '';
   try {
     N8L.st = await fnCall('n8n', { action: 'status' });
-    if (N8L.st.connected) { const [w, r] = await Promise.all([fnCall('n8n', { action: 'workflows' }), fnCall('n8n', { action: 'executions', limit: 15 })]); N8L.wfs = w.workflows; N8L.runs = r.runs; }
+    if (N8L.st.connected) { const [w, r] = await Promise.all([fnCall('n8n', { action: 'workflows' }), fnCall('n8n', { action: 'executions', limit: 50 })]); N8L.wfs = w.workflows; N8L.runs = r.runs; }
   } catch (e) { N8L.err = e.message; }
-  N8L.loaded = true; N8L.busy = false; if (N8.tab === 'connect') renderN8n();
+  N8L.loaded = true; N8L.busy = false; renderN8n();
 }
 const n8lAgo = t => { if (!t) return ''; const m = Math.round((Date.now() - new Date(t).getTime()) / 6e4); return m < 1 ? 'just now' : m < 60 ? m + ' min ago' : m < 1440 ? Math.round(m / 60) + ' h ago' : Math.round(m / 1440) + ' d ago'; };
-function n8Live() {
-  if (!N8L.loaded) { n8LiveLoad(); return `<div class="rcard glass"><p class="muted">Checking your n8n connection…</p></div>`; }
-  const st = N8L.st || {}, on = st.connected, adm = canAdmin(), wn = {}; (N8L.wfs || []).forEach(w => { wn[w.id] = w.name; });
+const N8L_ICON = { success: '✓', error: '!', crashed: '!', running: '…', waiting: '…', canceled: '×' };
+function renderN8Live(anim) {
+  const adm = canAdmin(), ro = AUTH.role === 'client';
+  const hd = $('#v-n8n .adhead-r'); if (hd) hd.hidden = true; $('#n8RoleHelp').hidden = true; { const bn = $('#v-n8n .n8-demo-note'); if (bn) bn.hidden = true; }
+  const sub = $('#v-n8n .head .sub'); if (sub) sub.textContent = 'Your own n8n, live — workflows, runs and on/off. Every client workspace connects its own n8n and sees only its own.';
+  const tabs = [['workflows', 'Workflows'], ['runs', 'Runs']].concat(ro ? [] : [['connect', adm ? 'Connect n8n' : 'Connection']]);
+  if (!tabs.some(([k]) => k === N8L.tab)) N8L.tab = 'workflows';
+  $('#n8Tabs').innerHTML = tabs.map(([k, n]) => `<button class="tab ${N8L.tab === k ? 'active' : ''}" data-n8ltab="${k}">${n}</button>`).join('');
+  const body = $('#n8Body');
+  if (!N8L.loaded || N8L.ws !== AUTH.ws) { n8LiveLoad(); body.innerHTML = `<div class="rcard glass"><p class="muted">Loading your n8n…</p></div>`; return; }
+  const on = N8L.st && N8L.st.connected;
+  if (!on && N8L.tab !== 'connect') body.innerHTML = `<div class="tp-empty glass"><b>${N8L.err ? 'Could not load n8n' : 'n8n is not connected yet'}</b><p class="muted">${N8L.err ? esc(N8L.err) : adm ? 'Connect your own n8n (n8n Cloud or self-hosted / Docker) — your workflows and runs show up here.' : 'Ask the owner or an admin of this workspace to connect n8n.'}</p>${adm ? '<button class="btn primary" data-n8ltab="connect">Connect n8n</button>' : ''}</div>`;
+  else body.innerHTML = ({ workflows: n8lWorkflows, runs: n8lRuns, connect: n8lConnect })[N8L.tab]();
+  stagger(body, anim);
+}
+function n8lStats() {
+  const w = N8L.wfs || [], r = N8L.runs || [], ok = r.filter(x => x.status === 'success').length, bad = r.filter(x => /error|crashed/.test(x.status)).length;
+  const tile = (n, l, c) => `<div class="n8l-k glass"><b style="${c ? 'color:' + c : ''}">${n}</b><small class="muted">${l}</small></div>`;
+  return `<div class="n8l-ks">${tile(w.length, 'Workflows')}${tile(w.filter(x => x.active).length, 'Active (run by themselves)', 'var(--green)')}${tile(ok, 'Successful runs (recent)')}${tile(bad, 'Failed runs (recent)', bad ? 'var(--coral)' : '')}</div>`;
+}
+function n8lWorkflows() {
+  const st = N8L.st, ro = AUTH.role === 'client', q = N8L.q.toLowerCase(), last = {};
+  (N8L.runs || []).forEach(r => { if (!last[r.workflowId]) last[r.workflowId] = r; });
+  const wfs = (N8L.wfs || []).filter(w => !q || w.name.toLowerCase().includes(q)).sort((a, b) => (b.active - a.active) || String(b.updatedAt).localeCompare(String(a.updatedAt)));
+  return n8lStats() + `<div class="rcard glass" style="margin-top:14px"><div class="n8l-h"><h3>Workflows <small class="muted">${esc(st.url.replace(/^https?:\/\//, ''))}</small></h3><input class="input sm" id="n8lQ" placeholder="Search workflows" value="${esc(N8L.q)}"><button class="ibtn" data-n8lref title="Refresh">⟳</button></div>
+    <div class="n8l-list">${wfs.map(w => { const lr = last[w.id]; return `<div class="n8l-w"><span class="n8l-i ${w.active ? 'on' : ''}">${w.active ? '●' : '○'}</span><div class="grow"><b>${esc(w.name)}</b><small class="muted">${w.nodes} nodes${w.trigger === false ? ' · manual start' : w.triggers && w.triggers.length ? ' · starts on ' + w.triggers.map(esc).join(', ') : ''}${lr ? ` · last run ${n8lAgo(lr.startedAt)} (${esc(lr.status)})` : ''}${w.tags.length ? ' · ' + w.tags.map(esc).join(', ') : ''}</small></div>
+      ${lr ? `<button class="btn sm" data-n8lruns="${esc(w.id)}">Runs</button>` : ''}${ro ? '' : `<a class="btn sm" href="${esc(st.url)}/workflow/${encodeURIComponent(w.id)}" target="_blank" rel="noopener">Open</a>`}
+      ${w.trigger === false ? `<span class="n8l-man" data-tip="Starts with a manual trigger — run it from n8n (Open). To switch it on, add a Schedule, Webhook or app trigger in n8n.">Manual</span>` : `<button class="switch ${w.active ? 'on' : ''}" data-n8ltog="${esc(w.id)}" data-tip="${w.active ? 'Active — click to turn off' : 'Off — click to activate'}" ${ro ? 'disabled' : ''}></button>`}</div>`; }).join('') || '<p class="muted">No workflows yet — create one in n8n, then press ⟳.</p>'}</div></div>`;
+}
+function n8lRuns() {
+  const st = N8L.st, ro = AUTH.role === 'client', wn = {}; (N8L.wfs || []).forEach(w => { wn[w.id] = w.name; });
+  const runs = (N8L.runs || []).filter(r => (!N8L.rwf || r.workflowId === N8L.rwf) && (!N8L.rst || (N8L.rst === 'error' ? /error|crashed/.test(r.status) : r.status === N8L.rst)));
+  return n8lStats() + `<div class="rcard glass" style="margin-top:14px"><div class="n8l-h"><h3>Runs <small class="muted">latest ${(N8L.runs || []).length}</small></h3>
+      <select class="input sm" id="n8lRwf"><option value="">All workflows</option>${(N8L.wfs || []).map(w => `<option value="${esc(w.id)}" ${w.id === N8L.rwf ? 'selected' : ''}>${esc(w.name)}</option>`).join('')}</select>
+      <select class="input sm" id="n8lRst" style="max-width:130px">${[['', 'Any status'], ['success', 'Success'], ['error', 'Failed'], ['running', 'Running']].map(([v, n]) => `<option value="${v}" ${v === N8L.rst ? 'selected' : ''}>${n}</option>`).join('')}</select><button class="ibtn" data-n8lref title="Refresh">⟳</button></div>
+    <div class="n8l-list">${runs.map(r => `<div class="n8l-r st-${esc(r.status)}"><span class="n8l-i">${N8L_ICON[r.status] || '•'}</span><div class="grow"><b>${esc(wn[r.workflowId] || 'Workflow ' + r.workflowId)}</b><small class="muted">${esc(r.status)} · ${esc(r.mode)} · ${n8lAgo(r.startedAt)}${r.stoppedAt && r.startedAt ? ' · ' + Math.max(0, Math.round((new Date(r.stoppedAt) - new Date(r.startedAt)) / 100) / 10) + 's' : ''}</small></div>${ro ? '' : `<a class="ibtn" href="${esc(st.url)}/workflow/${encodeURIComponent(r.workflowId)}/executions/${encodeURIComponent(r.id)}" target="_blank" rel="noopener" title="Open this run in n8n">↗</a>`}</div>`).join('') || '<p class="muted">No runs match.</p>'}</div></div>`;
+}
+function n8lConnect() {
+  const st = N8L.st || {}, on = st.connected, adm = canAdmin();
   const step = (n, t, d) => `<div class="cstep"><span class="cn">${n}</span><div><b>${t}</b><p class="muted">${d}</p></div></div>`;
   const form = adm ? `<div class="form" style="grid-template-columns:1fr">
         <div class="field"><label>n8n address (https)</label><input class="input" id="n8lUrl" placeholder="https://yourname.ngrok-free.app" value="${esc(st.url || '')}"></div>
         <div class="field"><label>n8n API key</label><input class="input" id="n8lKey" data-noautofill type="text" style="-webkit-text-security:disc" readonly autocomplete="off" placeholder="${on ? '•••••• connected — paste only to replace' : 'Paste the API key'}"></div>
         <p class="help">The key is stored on the server (Supabase) only and is never shown again.</p>
         <div class="status ${N8L.err ? 'err' : ''}" id="n8lStatus">${esc(N8L.err)}</div>
-        <div class="m-foot" style="margin-top:4px">${on ? '<button class="btn" data-n8ldisc>Disconnect</button>' : ''}<div class="grow"></div><button class="btn primary" data-n8lsave>${on ? 'Save & re-test' : 'Test & connect'}</button></div></div>` : `<p class="muted">Ask the owner or an admin to connect n8n.</p>${N8L.err ? `<div class="status err">${esc(N8L.err)}</div>` : ''}`;
-  const head = `<div class="rgrid"><div class="rcard glass"><h3>${on ? '<span class="n8l-dot"></span>n8n connected' : 'Connect your n8n'}</h3><p class="sub muted">${on ? `${esc(st.url)} · ${st.workflows || 0} workflows` : 'n8n Cloud (Starter or above) or your own self-hosted / Docker n8n.'}</p>${form}</div>
+        <div class="m-foot" style="margin-top:4px">${on ? '<button class="btn" data-n8ldisc>Disconnect</button>' : ''}<div class="grow"></div><button class="btn primary" data-n8lsave>${on ? 'Save & re-test' : 'Test & connect'}</button></div></div>` : `<p class="muted">Only the owner or an admin can change the n8n connection.</p>`;
+  return `<div class="rgrid"><div class="rcard glass"><h3>${on ? '<span class="n8l-dot"></span>n8n connected' : 'Connect your n8n'}</h3><p class="sub muted">${on ? `${esc(st.url)} · ${st.workflows || 0} workflows` : 'n8n Cloud (Starter or above) or your own self-hosted / Docker n8n.'}</p>${form}</div>
     <div class="rcard glass"><h3>n8n on your PC (Docker)?</h3><p class="sub muted">Nodevers runs on the internet, so it can't open <code>localhost:5678</code>. Give n8n a free https link with ngrok.</p>
-      ${step(1, 'Free ngrok account', 'ngrok.com → sign up → Domains → claim your free static domain (e.g. yourname.ngrok-free.app).')}
-      ${step(2, 'Start the tunnel', 'On your PC (n8n running in Docker): <code>ngrok http --url=yourname.ngrok-free.app 5678</code>')}
+      ${step(1, 'Free ngrok account', 'ngrok.com → sign up → you get a free static link (e.g. yourname.ngrok-free.dev).')}
+      ${step(2, 'Start the tunnel', 'On your PC (n8n running in Docker): <code>ngrok http --url=yourname.ngrok-free.dev 5678</code>')}
       ${step(3, 'Create an n8n API key', 'Open n8n → Settings → n8n API → Create an API key (label "Nodevers").')}
-      ${step(4, 'Paste both here', 'Address = your ngrok link. Keep the PC, Docker and ngrok on — when the PC sleeps, n8n stops.')}</div></div>`;
-  if (!on) return head;
-  const q = N8L.q.toLowerCase(), wfs = (N8L.wfs || []).filter(w => !q || w.name.toLowerCase().includes(q)).sort((a, b) => (b.active - a.active) || String(b.updatedAt).localeCompare(String(a.updatedAt)));
-  const ro = AUTH.role === 'client', icon = { success: '✓', error: '!', crashed: '!', running: '…', waiting: '…', canceled: '×' };
-  return head + `<div class="rgrid" style="margin-top:14px"><div class="rcard glass"><div class="n8l-h"><h3>Workflows <small class="muted">${(N8L.wfs || []).length}</small></h3><input class="input sm" id="n8lQ" placeholder="Search workflows" value="${esc(N8L.q)}"><button class="ibtn" data-n8lref title="Refresh">⟳</button></div>
-      <div class="n8l-list">${wfs.map(w => `<div class="n8l-w"><div class="grow"><b>${esc(w.name)}</b><small class="muted">${w.nodes} nodes${w.trigger === false ? ' · manual start' : w.triggers && w.triggers.length ? ' · starts on ' + w.triggers.map(esc).join(', ') : ''}${w.updatedAt ? ' · edited ' + n8lAgo(w.updatedAt) : ''}${w.tags.length ? ' · ' + w.tags.map(esc).join(', ') : ''}</small></div>
-        <a class="btn sm" href="${esc(st.url)}/workflow/${encodeURIComponent(w.id)}" target="_blank" rel="noopener">Open</a>
-        ${w.trigger === false ? `<span class="n8l-man" data-tip="Starts with a manual trigger — run it from n8n (Open). To switch it on, add a Schedule, Webhook or app trigger in n8n.">Manual</span>` : `<button class="switch ${w.active ? 'on' : ''}" data-n8ltog="${esc(w.id)}" data-tip="${w.active ? 'Active — click to turn off' : 'Off — click to activate'}" ${ro ? 'disabled' : ''}></button>`}</div>`).join('') || '<p class="muted">No workflows yet — create one in n8n, then press ⟳.</p>'}</div></div>
-    <div class="rcard glass"><h3>Recent runs</h3><p class="sub muted">Last ${(N8L.runs || []).length} executions from your n8n</p>
-      <div class="n8l-list">${(N8L.runs || []).map(r => `<div class="n8l-r st-${esc(r.status)}"><span class="n8l-i">${icon[r.status] || '•'}</span><div class="grow"><b>${esc(wn[r.workflowId] || 'Workflow ' + r.workflowId)}</b><small class="muted">${esc(r.status)} · ${esc(r.mode)} · ${n8lAgo(r.startedAt)}${r.stoppedAt && r.startedAt ? ' · ' + Math.max(0, Math.round((new Date(r.stoppedAt) - new Date(r.startedAt)) / 100) / 10) + 's' : ''}</small></div><a class="ibtn" href="${esc(st.url)}/workflow/${encodeURIComponent(r.workflowId)}/executions/${encodeURIComponent(r.id)}" target="_blank" rel="noopener" title="Open in n8n">↗</a></div>`).join('') || '<p class="muted">No runs yet.</p>'}</div></div></div>`;
+      ${step(4, 'Paste both here', 'Keep the PC, Docker and ngrok on — when the PC sleeps, n8n stops.')}
+      ${step('★', 'Each client = own workspace', 'A client signs up (or you invite them), creates their workspace and connects their own n8n here. They only ever see their own workflows and runs.')}</div></div>`;
 }
+document.addEventListener('click', e => { const t = e.target.closest('[data-n8ltab]'); if (t) { N8L.tab = t.dataset.n8ltab; renderN8n(); return; } const r = e.target.closest('[data-n8lruns]'); if (r) { N8L.rwf = r.dataset.n8lruns; N8L.rst = ''; N8L.tab = 'runs'; renderN8n(); } });
+document.addEventListener('change', e => { if (e.target.id === 'n8lRwf') { N8L.rwf = e.target.value; renderN8n(); } else if (e.target.id === 'n8lRst') { N8L.rst = e.target.value; renderN8n(); } });
 document.addEventListener('input', e => { if (e.target.id === 'n8lQ') { N8L.q = e.target.value; const pos = e.target.selectionStart; renderN8n(); const q = $('#n8lQ'); if (q) { q.focus(); q.setSelectionRange(pos, pos); } } });
 document.addEventListener('click', async e => {
   const tg = e.target.closest('[data-n8ltog]'); if (!tg || tg.disabled) return;
   const want = !tg.classList.contains('on'); tg.disabled = true;
-  try { const r = await fnCall('n8n', { action: 'toggle', id: tg.dataset.n8ltog, active: want }); const w = (N8L.wfs || []).find(x => x.id === tg.dataset.n8ltog); if (w) w.active = r.active; tg.classList.toggle('on', r.active); toast(r.active ? '✓ Workflow is active' : 'Workflow turned off'); }
+  try { const r = await fnCall('n8n', { action: 'toggle', id: tg.dataset.n8ltog, active: want }); const w = (N8L.wfs || []).find(x => x.id === tg.dataset.n8ltog); if (w) w.active = r.active; toast(r.active ? '✓ Workflow is active' : 'Workflow turned off'); renderN8n(); return; }
   catch (er) { const m = /no trigger node/i.test(er.message) ? 'This workflow only has a manual start, so n8n cannot switch it on. Run it from n8n (Open), or add a Schedule / Webhook trigger in n8n first.' : er.message; if (![...document.querySelectorAll('.toast')].some(t => t.textContent === m)) toast(m, true); }
   tg.disabled = false;
 });
@@ -3831,7 +3864,6 @@ document.addEventListener('click', async e => {
   catch (er) { st.className = 'status err'; st.textContent = er.message; sv.disabled = false; }
 });
 function n8Connect() {
-  if (cloud && !demo) return n8Live();
   const c = n8Client(N8.client);
   const step = (n, t, d) => `<div class="cstep"><span class="cn">${n}</span><div><b>${t}</b><p class="muted">${d}</p></div></div>`;
   return `<div class="rgrid"><div class="rcard glass"><h3>Connect ${esc(c.name)}'s n8n</h3><p class="sub muted">One time. After this, everything is managed from this website.</p>
