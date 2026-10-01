@@ -43,7 +43,13 @@ async function allWorkflows(url: string, key: string) {
     const j = await n8n(url, key, `/workflows?limit=250${cursor ? '&cursor=' + encodeURIComponent(cursor) : ''}`);
     out.push(...(j.data ?? [])); cursor = j.nextCursor ?? ''; if (!cursor) break;
   }
-  return out.map((w) => ({ id: String(w.id), name: String(w.name ?? ''), active: !!w.active, updatedAt: w.updatedAt ?? '', nodes: Array.isArray(w.nodes) ? w.nodes.length : 0, tags: (w.tags ?? []).map((t: any) => t.name).filter(Boolean) }));
+  // n8n can only switch on workflows that start with a real trigger (schedule, webhook, app trigger…), not "Manual"/"Execute workflow"/"Error" triggers
+  const isTrigger = (t: string) => /(trigger|webhook|cron|interval)$/i.test(t) && !/(manualTrigger|executeWorkflowTrigger|errorTrigger)$/i.test(t);
+  return out.map((w) => {
+    const nodes = Array.isArray(w.nodes) ? w.nodes : [];
+    const trig = nodes.filter((n: any) => isTrigger(String(n.type ?? '')));
+    return { id: String(w.id), name: String(w.name ?? ''), active: !!w.active, updatedAt: w.updatedAt ?? '', nodes: nodes.length, trigger: trig.length > 0, triggers: trig.map((n: any) => String(n.name ?? '')).slice(0, 3), tags: (w.tags ?? []).map((t: any) => t.name).filter(Boolean) };
+  });
 }
 
 Deno.serve(async (req) => {
