@@ -639,6 +639,7 @@ body.ro [data-add],body.ro .addcard,body.ro #addMember,body.ro [data-lginvite],b
 .lg-roles{display:flex;flex-direction:column;gap:8px}.lg-r{display:flex;gap:10px;align-items:flex-start;padding:10px;border:1px solid var(--line);border-radius:10px;cursor:pointer}.lg-r:has(input:checked){border-color:var(--blue-2);background:var(--blue-soft)}.lg-r span{display:flex;flex-direction:column;gap:2px}.lg-r small{color:var(--muted);font-size:12px}
 .wa-on{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:13px;margin-bottom:12px}.wa-on .dot{width:8px;height:8px;border-radius:50%;background:var(--wa,#25A55F);box-shadow:0 0 0 3px color-mix(in srgb,var(--wa,#25A55F) 25%,transparent)}
 .wa-conn{padding:16px;border-radius:14px;margin-bottom:14px;display:flex;flex-direction:column;gap:4px;font-size:13.5px}.wa-fh{display:flex;justify-content:space-between;gap:10px}.wa-fh h3{margin:0 0 4px}.wa-fh p{margin:0 0 10px;font-size:13px}
+.input.secret{-webkit-text-security:disc}
 .wa-grid{grid-template-columns:1fr 1fr}.wa-grid .span2{grid-column:1/-1}.wa-help{margin:6px 0 4px;font-size:13px}.wa-help summary{cursor:pointer;font-weight:700}.wa-help p{color:var(--muted)}
 .inbox{display:grid;grid-template-columns:320px 1fr;height:calc(100vh - 250px);min-height:460px;border-radius:16px;overflow:hidden}
 .ib-list{border-right:1px solid var(--line);display:flex;flex-direction:column;min-height:0}.ib-search{padding:10px}.ib-scroll{overflow:auto;flex:1}
@@ -4802,7 +4803,7 @@ function waConnHTML() {
   return `<div class="glass wa-conn wa-form"><div class="wa-fh"><div><h3>${s.connected ? 'WhatsApp connection' : 'Connect your WhatsApp number'}</h3><p class="muted">From Meta → WhatsApp Manager → <b>API Setup</b>. The token is saved on the server only — it never comes back to the browser.</p></div>${s.connected ? '<button class="btn sm" data-waclose>Close</button>' : ''}</div>
     <div class="form wa-grid"><div class="field"><label>Phone number ID</label><input class="input" id="waPid" inputmode="numeric" autocomplete="off" value="${esc(s.phone_number_id || '')}" placeholder="e.g. 1234567890123"></div>
     <div class="field"><label>WhatsApp Business Account ID</label><input class="input" id="waWaba" inputmode="numeric" autocomplete="off" value="${esc(s.waba_id || '')}" placeholder="e.g. 9876543210987"></div>
-    <div class="field span2"><label>Permanent access token (System user)</label><input class="input" id="waTok" type="password" autocomplete="off" placeholder="${s.connected ? 'Leave empty to keep the saved token' : 'EAA…'}"></div></div>
+    <div class="field span2"><label>Permanent access token (System user)</label><input class="input secret" id="waTok" type="text" name="wa-token-${Date.now()}" autocomplete="off" autocapitalize="off" spellcheck="false" readonly data-noautofill placeholder="${s.connected ? 'Paste the token again to change it' : 'EAA… (long token, ~200 characters)'}"></div></div>
     <details class="wa-help"><summary>Webhook — so incoming messages arrive here</summary><p>Meta app → WhatsApp → Configuration → Webhook → Edit:</p>
       <div class="field"><label>Callback URL</label><div style="display:flex;gap:8px"><input class="input" readonly value="${esc(WEBHOOK_URL())}"><button class="btn" type="button" data-wacopy>Copy</button></div></div>
       <p>Verify token: the same text you saved as <code>WA_VERIFY_TOKEN</code> in Supabase → Edge Functions → Secrets. Then subscribe to the <b>messages</b> field.</p></details>
@@ -4876,7 +4877,8 @@ async function ibSendTpl(c) {
     if (t.closest('[data-wacopy]')) return copyText(WEBHOOK_URL());
     if (t.closest('[data-wadisc]')) { if (!confirm('Disconnect this WhatsApp number from Nodevers? Chats stay saved.')) return; try { await fnCall('wa-connect', { disconnect: true }); WA.status = null; WA.manage = false; toast('Disconnected'); renderInbox(); } catch (err) { toast(err.message, true); } return; }
     const cb = t.closest('[data-waconnect]'); if (cb) {
-      const pid = $('#waPid').value.trim(), waba = $('#waWaba').value.trim(), tok = $('#waTok').value.trim();
+      const pid = $('#waPid').value.trim(), waba = $('#waWaba').value.trim(), tok = $('#waTok').value.replace(/\s+/g, '');
+      if (tok && !/^EAA[A-Za-z0-9]{40,}$/.test(tok)) return toast('That is not a WhatsApp token — it should start with EAA and be very long. Clear the box and paste WA_TOKEN again.', true);
       if (!/^\d{6,20}$/.test(pid)) return toast('Phone number ID should be only digits', true);
       if (!tok && !(WA.status && WA.status.connected)) return toast('Paste the access token', true);
       if (!tok) return toast('Paste the token again to save changes (it is never shown back)', true);
@@ -5207,7 +5209,7 @@ document.addEventListener('keydown', e => {
   if (e.key === 'Tab' && onPipe && !typing && !$('#nodePal.show')) { e.preventDefault(); const cv = $('#canvas').getBoundingClientRect(); const at = lastMouse.in ? lastMouse : { x: cv.left + cv.width / 2 - 170, y: cv.top + 80 }; openPalette(at.x, at.y, lastMouse.in && !selNode ? screenToWorld(lastMouse.x, lastMouse.y) : null); return; }
   if (e.key === 'Escape') { if ($('.pop.show')) { closePops(); return; } if ($('.modal.show')) $$('.modal.show').forEach(m => hideModal('#' + m.id)); else closePanel(); }
 });
-$$('[data-noautofill]').forEach(i => { const off = () => i.removeAttribute('readonly'); i.addEventListener('focus', off); i.addEventListener('pointerdown', off); });
+['focusin', 'pointerdown'].forEach(ev => document.addEventListener(ev, e => { const i = e.target.closest && e.target.closest('[data-noautofill]'); if (i) i.removeAttribute('readonly'); }, true));   // stops browsers auto-filling saved passwords into these boxes
 $('#dsearch').oninput = e => { ui.q = e.target.value; $('#gsearch').value = ui.q; renderDashboard(); renderPipeline(); };
 $('#gsearch').oninput = e => { ui.q = e.target.value; $('#dsearch').value = ui.q; renderDashboard(); renderPipeline(); };
 $('#dstage').onchange = e => { ui.stage = e.target.value; renderDashboard(); };
