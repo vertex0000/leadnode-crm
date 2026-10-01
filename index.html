@@ -745,6 +745,7 @@ body.ro [data-add],body.ro .addcard,body.ro #addMember,body.ro [data-lginvite],b
 .n8l-list{display:flex;flex-direction:column;gap:6px;max-height:420px;overflow:auto}.n8l-w,.n8l-r{display:flex;gap:10px;align-items:center;padding:9px 10px;border:1px solid var(--line);border-radius:12px}.n8l-w b,.n8l-r b{display:block;font-size:13.5px}.n8l-w small,.n8l-r small{font-size:11.5px}
 .n8l-w .grow,.n8l-r .grow{flex:1;min-width:0}.n8l-man{font-size:11px;font-weight:700;padding:3px 8px;border-radius:7px;border:1px solid var(--line);color:var(--muted);cursor:help;white-space:nowrap}.n8l-ks{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.n8l-k{border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;gap:2px}.n8l-k b{font-size:24px}.n8l-k small{font-size:12px}@media (max-width:760px){.n8l-ks{grid-template-columns:repeat(2,1fr)}}
 .n8l-i.on{background:var(--green-soft);color:var(--green)}
+.n8l-name{cursor:pointer}.n8l-name:hover{color:var(--blue-2)}.n8l-need,.n8l-ok{font-size:11.5px;font-weight:700;padding:4px 9px;border-radius:8px;border:0;cursor:pointer;white-space:nowrap}.n8l-need{background:var(--yellow-soft);color:#C9971C}.n8l-ok{background:var(--green-soft);color:var(--green)}
 .n8l-i{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:800;background:var(--line);flex:none}.n8l-r.st-success .n8l-i{background:var(--green-soft);color:var(--green)}.n8l-r.st-error .n8l-i,.n8l-r.st-crashed .n8l-i{background:color-mix(in srgb,var(--coral) 16%,transparent);color:var(--coral)}
 .imp-batch{display:flex;flex-direction:column;gap:6px;margin:12px 0 4px;font-size:13px;font-weight:600}.imp-batch small{font-weight:500;color:var(--muted)}.imp-batch .input{max-width:320px}
 .imp-done{display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px;padding:18px 8px}.imp-ok{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;font-size:22px;font-weight:800;color:#fff;background:linear-gradient(135deg,var(--blue-2),#A78BFA)}
@@ -3400,7 +3401,7 @@ const N8_KIND = [
   [/scheduleTrigger|cron/i, '⏱', '#6F8FE8', 'Schedule'], [/webhook/i, '⚡', '#6F8FE8', 'Webhook'], [/facebookLeadAds|leadAds/i, 'M', '#4F7DF3', 'Meta Lead Ads'],
   [/googleSheets/i, 'S', '#1FA463', 'Google Sheets'], [/gemini|openAi|langchain/i, 'AI', '#B08CEB', 'AI model'], [/instagram/i, 'IG', '#E1306C', 'Instagram'],
   [/whatsApp/i, 'W', '#25A55F', 'WhatsApp'], [/facebookGraph|metaAds/i, 'M', '#4F7DF3', 'Meta Graph'], [/httpRequest/i, 'H', '#EA4B71', 'HTTP request'],
-  [/\.if$|switch/i, '◇', '#F29A5C', 'If'], [/gmail|emailSend/i, '@', '#6F8FE8', 'Email'], [/\.set$/i, '⚙', '#F2C94C', 'Edit fields'], [/code/i, '{}', '#9AA0A6', 'Code'],
+  [/telegram/i, 'TG', '#2AABEE', 'Telegram'], [/googleDrive/i, 'D', '#1FA463', 'Google Drive'], [/notion/i, 'N', '#9AA0A6', 'Notion'], [/airtable/i, 'A', '#F2C94C', 'Airtable'], [/slack/i, '#', '#B08CEB', 'Slack'], [/\.if$|switch/i, '◇', '#F29A5C', 'If'], [/gmail|emailSend/i, '@', '#6F8FE8', 'Email'], [/\.set$/i, '⚙', '#F2C94C', 'Edit fields'], [/code/i, '{}', '#9AA0A6', 'Code'],
 ];
 const n8Kind = t => { const k = N8_KIND.find(([re]) => re.test(t)); return k ? { ic: k[1], c: k[2], label: k[3] } : { ic: '•', c: '#9AA0A6', label: 'Node' }; };
 /* credential guides: what the client needs and where to find it */
@@ -3409,6 +3410,14 @@ const N8_CREDS = {
   facebookGraphApi: { name: 'Meta (Facebook / Instagram) Graph API', fields: [['accessToken', 'Page / system user access token']], help: 'Meta Business settings → System users → Generate token with instagram_content_publish, pages_read_engagement.', link: 'https://business.facebook.com/settings/system-users' },
   googlePalmApi: { name: 'Google Gemini API', fields: [['apiKey', 'API key']], help: 'Google AI Studio → Get API key → Create API key.', link: 'https://aistudio.google.com/app/apikey' },
   googleSheetsOAuth2Api: { name: 'Google Sheets', oauth: true, fields: [], help: 'Uses "Sign in with Google". This one-time step happens inside the client\'s n8n — the button opens the right page.', link: '' },
+  telegramApi: { name: 'Telegram bot', fields: [['accessToken', 'Bot token']], help: 'In Telegram open @BotFather → /newbot (or /token for an existing bot) → copy the token.', link: 'https://t.me/BotFather' },
+  openAiApi: { name: 'OpenAI API', fields: [['apiKey', 'API key']], help: 'platform.openai.com → API keys → Create new secret key.', link: 'https://platform.openai.com/api-keys' },
+  anthropicApi: { name: 'Anthropic (Claude) API', fields: [['apiKey', 'API key']], help: 'console.anthropic.com → API keys → Create key.', link: 'https://console.anthropic.com/settings/keys' },
+  airtableTokenApi: { name: 'Airtable', fields: [['accessToken', 'Personal access token']], help: 'airtable.com/create/tokens → Create token with the bases this workflow uses.', link: 'https://airtable.com/create/tokens' },
+  notionApi: { name: 'Notion', fields: [['apiKey', 'Internal integration secret']], help: 'notion.so/my-integrations → New integration → copy the secret, then share the page with the integration.', link: 'https://www.notion.so/my-integrations' },
+  smtp: { name: 'Email (SMTP)', fields: [], help: 'Your email provider\'s SMTP details: host, port, user and password (Gmail needs an App password).', link: '' },
+  gmailOAuth2: { name: 'Gmail', oauth: true, fields: [], help: 'Uses "Sign in with Google" inside n8n.', link: '' },
+  googleDriveOAuth2Api: { name: 'Google Drive', oauth: true, fields: [], help: 'Uses "Sign in with Google" inside n8n.', link: '' },
   facebookLeadAdsOAuth2Api: { name: 'Meta Lead Ads', oauth: true, fields: [], help: 'Uses "Continue with Facebook" inside the client\'s n8n, then pick the Page and form.', link: '' },
 };
 function n8Seed() {
@@ -3777,7 +3786,7 @@ function n8Clients() {
     </tbody></table></div></div><p class="help" style="margin-top:10px">Click a client to open their services. New clients appear here when they sign up and connect their n8n.</p>`;
 }
 /* ---- live n8n (cloud): each workspace connects its OWN n8n (Cloud or self-hosted / Docker) via the "n8n" Edge Function ---- */
-const N8L = { loaded: false, busy: false, st: null, wfs: null, runs: null, err: '', q: '', ws: '', tab: 'workflows', rwf: '', rst: '' };
+const N8L = { loaded: false, busy: false, st: null, wfs: null, runs: null, err: '', q: '', ws: '', tab: 'workflows', rwf: '', rst: '', open: '', wf: null, node: '', schema: {}, view: null };
 async function n8LiveLoad(force) {
   if (N8L.ws !== AUTH.ws) { Object.assign(N8L, { loaded: false, st: null, wfs: null, runs: null, err: '', ws: AUTH.ws }); }
   if (N8L.busy || (N8L.loaded && !force)) return; N8L.busy = true; N8L.err = '';
@@ -3802,7 +3811,98 @@ function renderN8Live(anim) {
   if (!on && N8L.tab !== 'connect') body.innerHTML = `<div class="tp-empty glass"><b>${N8L.err ? 'Could not load n8n' : 'n8n is not connected yet'}</b><p class="muted">${N8L.err ? esc(N8L.err) : adm ? 'Connect your own n8n (n8n Cloud or self-hosted / Docker) — your workflows and runs show up here.' : 'Ask the owner or an admin of this workspace to connect n8n.'}</p>${adm ? '<button class="btn primary" data-n8ltab="connect">Connect n8n</button>' : ''}</div>`;
   else body.innerHTML = ({ workflows: n8lWorkflows, runs: n8lRuns, connect: n8lConnect })[N8L.tab]();
   stagger(body, anim);
+  if (on && N8L.tab === 'workflows' && N8L.open && N8L.wf) n8lMount();
 }
+/* ---- one workflow as nodes: red = needs the client's key / link / setting → saved straight into their n8n ---- */
+const n8lSetupNodes = () => (N8L.wf ? N8L.wf.nodes.filter(n => n.cred || n.fields) : []);
+function n8lStates() {
+  const last = (N8L.runs || []).find(r => r.workflowId === N8L.open), st = {};
+  (N8L.wf ? N8L.wf.nodes : []).forEach(n => { st[n.name] = n.todo ? 'need' : last && last.status === 'success' ? 'success' : 'ready'; });
+  return st;
+}
+const n8lGraphT = () => ({ wf: { nodes: N8L.wf.nodes, connections: N8L.wf.connections } });
+function n8lDetail() {
+  if (!N8L.open) return '';
+  if (!N8L.wf) return `<div class="n8det glass" style="margin-top:14px;padding:18px"><p class="muted">Opening the workflow…</p></div>`;
+  const w = N8L.wf, st = N8L.st;
+  return `<div class="n8det glass" style="margin-top:14px">
+    <div class="n8det-h"><div><small class="muted">n8n workflow · ${w.active ? 'Active' : 'Off'} · ${w.nodes.length} nodes</small><h3>${esc(w.name)}</h3></div><div class="grow"></div>
+      <div class="n8legend"><span><i class="lg-need"></i>Needs setup</span><span><i class="lg-ready"></i>Ready</span><span><i class="lg-ok"></i>Ran OK</span></div>
+      ${AUTH.role === 'client' ? '' : `<a class="btn sm" href="${esc(st.url)}/workflow/${encodeURIComponent(w.id)}" target="_blank" rel="noopener">Open in n8n ↗</a>`}<button class="ibtn" data-n8lclose title="Close">${I.x}</button></div>
+    <div class="n8det-b"><div class="n8canvas" id="n8lCanvas"></div><div class="n8side" id="n8lSide"></div></div></div>`;
+}
+function n8lMount() {
+  const cv = $('#n8lCanvas'); if (!cv) return;
+  N8L.view = n8Viewer(cv, n8Graph(n8lGraphT(), n8lStates(), N8L.node), {
+    pick: name => { N8L.node = name; N8L.view.setStates(n8lStates(), n8lGraphT(), name); n8lSide(); },
+    open: name => { N8L.node = name; N8L.view.setStates(n8lStates(), n8lGraphT(), name); n8lSide(); },
+    empty: () => { if (N8L.node) { N8L.node = ''; N8L.view.setStates(n8lStates(), n8lGraphT(), null); n8lSide(); } },
+  });
+  n8lSide();
+}
+async function n8lOpen(id) {
+  if (N8L.open === id && N8L.wf) { N8L.open = ''; N8L.wf = null; N8L.node = ''; return renderN8n(); }
+  N8L.open = id; N8L.wf = null; N8L.node = ''; renderN8n();
+  try { N8L.wf = (await fnCall('n8n', { action: 'workflow', id })).wf; const first = n8lSetupNodes().find(n => n.todo); N8L.node = first ? first.name : ''; }
+  catch (e) { toast(e.message, true); N8L.open = ''; }
+  renderN8n(); const d = $('#n8Body .n8det'); if (d) d.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+const n8lInput = (attr, name, label, opt) => `<div class="field"><label>${esc(label)}${opt.req ? '' : ' <span class="muted">(optional)</span>'}</label>${opt.options ? `<select class="input" ${attr}="${esc(name)}">${opt.options.map(o => `<option ${String(o) === String(opt.value) ? 'selected' : ''}>${esc(o)}</option>`).join('')}</select>` : `<input class="input" ${attr}="${esc(name)}" ${opt.secret ? 'data-noautofill readonly type="text" style="-webkit-text-security:disc"' : 'type="text"'} autocomplete="off" value="${esc(opt.value || '')}" placeholder="${esc(opt.ph || '')}">`}</div>`;
+async function n8lSide() {
+  const side = $('#n8lSide'); if (!side || !N8L.wf) return;
+  const ro = AUTH.role === 'client', node = N8L.node && N8L.wf.nodes.find(n => n.name === N8L.node), setup = n8lSetupNodes(), done = setup.filter(n => !n.todo).length;
+  if (!node) {
+    side.innerHTML = `<div class="sec-t">Set up this workflow</div>
+      <div class="n8prog"><div class="bar-track"><div class="bar" style="width:${setup.length ? done / setup.length * 100 : 100}%;background:${done === setup.length ? 'var(--green)' : 'var(--blue-2)'}"></div></div><small><b>${done}</b> of ${setup.length} ready</small></div>
+      <p class="help"><b>Click a red node</b> (or pick one below) and give what it needs — API key, link or setting. It is saved straight into your n8n.</p>
+      <div class="n8todo">${setup.map(n => `<button class="n8todo-i ${n.todo ? '' : 'ok'}" data-n8lpick="${esc(n.name)}"><span class="cdot">${n.todo ? '!' : '✓'}</span><span class="tx"><b>${esc(n.name)}</b><small>${n.fields ? (n.miss ? `${n.miss} setting${n.miss > 1 ? 's' : ''} to fill` : 'Settings filled') : n.cred.ok ? `Connected${n.cred.name ? ' · ' + esc(n.cred.name) : ''}` : `Needs ${esc((N8_CREDS[n.cred.type] || {}).name || n.cred.type)}`}</small></span><span class="chev">›</span></button>`).join('') || '<p class="muted">Nothing to set up — this workflow needs no keys or settings.</p>'}</div>`;
+    return;
+  }
+  const k = n8Kind(node.type), head = `<button class="btn sm ghost n8back" data-n8lback>← All steps</button><div class="n8nh"><span class="n8ic" style="background:${k.c}">${esc(k.ic)}</span><div><b>${esc(node.name)}</b><small class="muted">${esc(node.fields ? 'Your settings' : k.label)}</small></div></div>`;
+  if (node.fields) {
+    side.innerHTML = head + `<div class="n8keyst ${node.miss ? '' : 'ok'}">${node.miss ? `! ${node.miss} setting${node.miss > 1 ? 's' : ''} to fill` : '✓ All settings filled'}</div>
+      ${node.fields.map(f => n8lInput('data-n8lf', f.name, f.name, { req: true, secret: f.secret, value: f.secret ? '' : f.value, ph: f.secret && f.filled ? '•••••• saved — leave empty to keep' : f.kind === 'number' ? 'Number' : '' })).join('')}
+      ${ro ? '' : `<button class="btn primary" data-n8lsavef>Save to n8n</button>`}<p class="help">Saved straight into the "${esc(node.name)}" node of your n8n workflow.</p>`;
+    return;
+  }
+  if (!node.cred) { side.innerHTML = head + `<div class="n8keyst ok">Nothing to set up here</div><p class="help">This step just runs — it needs no key or link.</p>`; return; }
+  const type = node.cred.type, g = N8_CREDS[type] || {};
+  side.innerHTML = head + `<div class="n8keyst ${node.cred.ok ? 'ok' : ''}">${node.cred.ok ? `✓ Connected${node.cred.name ? ' — ' + esc(node.cred.name) : ''}` : `! Needs ${esc(g.name || type)}`}</div><div id="n8lCredBox"><p class="muted">Loading…</p></div>`;
+  if (ro) { $('#n8lCredBox').innerHTML = ''; return; }
+  let sc = N8L.schema[type];
+  if (!sc) { try { sc = N8L.schema[type] = await fnCall('n8n', { action: 'cred_schema', type }); } catch (e) { const b = $('#n8lCredBox'); if (b) b.innerHTML = `<div class="status err">${esc(e.message)}</div>`; return; } }
+  const box = $('#n8lCredBox'); if (!box || N8L.node !== node.name) return;
+  const where = g.help ? `<div class="n8where"><b>Where to find it</b><p>${esc(g.help)}</p>${g.link ? `<a class="btn sm" href="${esc(g.link)}" target="_blank" rel="noopener">Open ↗</a>` : ''}</div>` : '';
+  box.innerHTML = sc.oauth ? `${where}<p class="help">This one uses <b>"Sign in with Google / Facebook"</b>, which can only happen inside n8n: open the workflow, double-click <b>${esc(node.name)}</b> → Credential → <b>Create new</b> → Sign in. Then press Refresh here.</p>
+      <div class="m-foot"><a class="btn primary" href="${esc(N8L.st.url)}/workflow/${encodeURIComponent(N8L.open)}" target="_blank" rel="noopener">Sign in inside n8n ↗</a><button class="btn" data-n8lreload>Refresh</button></div>`
+    : `${where}${node.cred.ok ? '<p class="help">Already connected. Fill the form only to replace it with a new key.</p>' : ''}${sc.fields.map(f => n8lInput('data-n8lc', f.name, f.name.replace(/([a-z])([A-Z])/g, '$1 $2').replace(/^./, c => c.toUpperCase()), { req: f.required, secret: f.secret, options: f.options })).join('')}
+      <button class="btn primary" data-n8lsavec>${node.cred.ok ? 'Replace in n8n' : 'Connect in n8n'}</button><p class="help">Goes straight into your own n8n as a credential and is attached to this step. Nodevers does not keep a copy.</p>`;
+}
+async function n8lAfterSave(msg) {
+  toast(msg);
+  try { const [wf, ws] = await Promise.all([fnCall('n8n', { action: 'workflow', id: N8L.open }), fnCall('n8n', { action: 'workflows' })]); N8L.wf = wf.wf; N8L.wfs = ws.workflows; } catch (e) { toast(e.message, true); }
+  const next = n8lSetupNodes().find(n => n.todo); N8L.node = next ? next.name : ''; renderN8n();
+}
+document.addEventListener('click', async e => {
+  const t = e.target;
+  const op = t.closest('[data-n8lopen]'); if (op) { n8lOpen(op.dataset.n8lopen); return; }
+  if (t.closest('[data-n8lclose]')) { N8L.open = ''; N8L.wf = null; N8L.node = ''; renderN8n(); return; }
+  const pk = t.closest('[data-n8lpick]'); if (pk) { N8L.node = pk.dataset.n8lpick; if (N8L.view) N8L.view.setStates(n8lStates(), n8lGraphT(), N8L.node); n8lSide(); return; }
+  if (t.closest('[data-n8lback]')) { N8L.node = ''; if (N8L.view) N8L.view.setStates(n8lStates(), n8lGraphT(), null); n8lSide(); return; }
+  if (t.closest('[data-n8lreload]')) { n8lAfterSave('Refreshed'); return; }
+  const sf = t.closest('[data-n8lsavef]'); if (sf) {
+    const values = {}; $$('#n8lSide [data-n8lf]').forEach(i => { values[i.dataset.n8lf] = i.value.trim(); });
+    sf.disabled = true; try { await fnCall('n8n', { action: 'set_fields', id: N8L.open, node: N8L.node, values }); await n8lAfterSave('✓ Settings saved in your n8n'); } catch (er) { toast(er.message, true); sf.disabled = false; }
+    return;
+  }
+  const sc = t.closest('[data-n8lsavec]'); if (sc) {
+    const node = N8L.wf.nodes.find(n => n.name === N8L.node), sch = N8L.schema[node.cred.type] || { fields: [] }, data = {}; let miss = '';
+    $$('#n8lSide [data-n8lc]').forEach(i => { const v = i.value.trim(); if (v) data[i.dataset.n8lc] = v; });
+    sch.fields.forEach(f => { if (f.required && !data[f.name] && !miss) miss = f.name; });
+    if (miss) return toast(`Fill “${miss}” first`, true);
+    sc.disabled = true; try { await fnCall('n8n', { action: 'add_cred', id: N8L.open, node: N8L.node, type: node.cred.type, data, label: node.name }); await n8lAfterSave('✓ Connected in your n8n'); } catch (er) { toast(er.message, true); sc.disabled = false; }
+  }
+});
 function n8lStats() {
   const w = N8L.wfs || [], r = N8L.runs || [], ok = r.filter(x => x.status === 'success').length, bad = r.filter(x => /error|crashed/.test(x.status)).length;
   const tile = (n, l, c) => `<div class="n8l-k glass"><b style="${c ? 'color:' + c : ''}">${n}</b><small class="muted">${l}</small></div>`;
@@ -3812,9 +3912,10 @@ function n8lWorkflows() {
   const st = N8L.st, ro = AUTH.role === 'client', q = N8L.q.toLowerCase(), last = {};
   (N8L.runs || []).forEach(r => { if (!last[r.workflowId]) last[r.workflowId] = r; });
   const wfs = (N8L.wfs || []).filter(w => !q || w.name.toLowerCase().includes(q)).sort((a, b) => (b.active - a.active) || String(b.updatedAt).localeCompare(String(a.updatedAt)));
-  return n8lStats() + `<div class="rcard glass" style="margin-top:14px"><div class="n8l-h"><h3>Workflows <small class="muted">${esc(st.url.replace(/^https?:\/\//, ''))}</small></h3><input class="input sm" id="n8lQ" placeholder="Search workflows" value="${esc(N8L.q)}"><button class="ibtn" data-n8lref title="Refresh">⟳</button></div>
-    <div class="n8l-list">${wfs.map(w => { const lr = last[w.id]; return `<div class="n8l-w"><span class="n8l-i ${w.active ? 'on' : ''}">${w.active ? '●' : '○'}</span><div class="grow"><b>${esc(w.name)}</b><small class="muted">${w.nodes} nodes${w.trigger === false ? ' · manual start' : w.triggers && w.triggers.length ? ' · starts on ' + w.triggers.map(esc).join(', ') : ''}${lr ? ` · last run ${n8lAgo(lr.startedAt)} (${esc(lr.status)})` : ''}${w.tags.length ? ' · ' + w.tags.map(esc).join(', ') : ''}</small></div>
-      ${lr ? `<button class="btn sm" data-n8lruns="${esc(w.id)}">Runs</button>` : ''}${ro ? '' : `<a class="btn sm" href="${esc(st.url)}/workflow/${encodeURIComponent(w.id)}" target="_blank" rel="noopener">Open</a>`}
+  return n8lStats() + n8lDetail() + `<div class="rcard glass" style="margin-top:14px"><div class="n8l-h"><h3>Workflows <small class="muted">${esc(st.url.replace(/^https?:\/\//, ''))}</small></h3><input class="input sm" id="n8lQ" placeholder="Search workflows" value="${esc(N8L.q)}"><button class="ibtn" data-n8lref title="Refresh">⟳</button></div>
+    <div class="n8l-list">${wfs.map(w => { const lr = last[w.id]; return `<div class="n8l-w"><span class="n8l-i ${w.active ? 'on' : ''}">${w.active ? '●' : '○'}</span><div class="grow"><b class="n8l-name" data-n8lopen="${esc(w.id)}">${esc(w.name)}</b><small class="muted">${w.nodes} nodes${w.trigger === false ? ' · manual start' : w.triggers && w.triggers.length ? ' · starts on ' + w.triggers.map(esc).join(', ') : ''}${lr ? ` · last run ${n8lAgo(lr.startedAt)} (${esc(lr.status)})` : ''}${w.tags.length ? ' · ' + w.tags.map(esc).join(', ') : ''}</small></div>
+      ${w.todo ? `<button class="n8l-need" data-n8lopen="${esc(w.id)}">! ${w.todo} step${w.todo > 1 ? 's' : ''} need setup</button>` : w.todo === 0 ? `<button class="n8l-ok" data-n8lopen="${esc(w.id)}">✓ Ready</button>` : ''}
+      ${lr ? `<button class="btn sm" data-n8lruns="${esc(w.id)}">Runs</button>` : ''}<button class="btn sm ${N8L.open === w.id ? 'primary' : ''}" data-n8lopen="${esc(w.id)}">${ro ? 'View' : 'Set up'}</button>
       ${w.trigger === false ? `<span class="n8l-man" data-tip="Starts with a manual trigger — run it from n8n (Open). To switch it on, add a Schedule, Webhook or app trigger in n8n.">Manual</span>` : `<button class="switch ${w.active ? 'on' : ''}" data-n8ltog="${esc(w.id)}" data-tip="${w.active ? 'Active — click to turn off' : 'Off — click to activate'}" ${ro ? 'disabled' : ''}></button>`}</div>`; }).join('') || '<p class="muted">No workflows yet — create one in n8n, then press ⟳.</p>'}</div></div>`;
 }
 function n8lRuns() {

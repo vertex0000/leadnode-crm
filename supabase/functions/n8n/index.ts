@@ -20,10 +20,50 @@ function cleanUrl(raw: string): string {
   return u.origin;
 }
 
-async function n8n(url: string, key: string, path: string, method = 'GET') {
+// ---------- what does each node need from the client? ----------
+const NODE_CRED: [RegExp, string][] = [
+  [/telegram/i, 'telegramApi'], [/googleSheets/i, 'googleSheetsOAuth2Api'], [/gmail/i, 'gmailOAuth2'], [/googleDrive/i, 'googleDriveOAuth2Api'],
+  [/googleCalendar/i, 'googleCalendarOAuth2Api'], [/lmChatGoogleGemini|googleGemini|embeddingsGoogleGemini/i, 'googlePalmApi'], [/lmChatOpenAi|openAi|embeddingsOpenAi/i, 'openAiApi'],
+  [/lmChatAnthropic|anthropic/i, 'anthropicApi'], [/whatsAppTrigger/i, 'whatsAppTriggerApi'], [/whatsApp/i, 'whatsAppApi'], [/facebookLeadAds/i, 'facebookLeadAdsOAuth2Api'],
+  [/facebookGraphApi/i, 'facebookGraphApi'], [/slack/i, 'slackApi'], [/airtable/i, 'airtableTokenApi'], [/notion/i, 'notionApi'], [/emailSend/i, 'smtp'],
+  [/supabase/i, 'supabaseApi'], [/hubspot/i, 'hubspotAppToken'], [/lmChatGroq|groq/i, 'groqApi'], [/discord/i, 'discordBotApi'],
+];
+const SECRETISH = /key|token|secret|password|pass\b|auth/i;
+const PLACEHOLDER = /^\s*$|^(your|enter|paste|change|add|put|insert)[\s_-]|^x{3,}|^<.*>$|^todo\b|^\[.*\]$|_here$/i;
+const isSettingsNode = (n: any) => /\.set$/i.test(String(n.type ?? '')) && /setting|config|client|variable|env|input/i.test(String(n.name ?? ''));
+function setFields(n: any): { name: string; value: string; kind: string; path: string }[] {
+  const p = n.parameters ?? {}, out: any[] = [];
+  (p.assignments?.assignments ?? []).forEach((a: any, i: number) => out.push({ name: String(a.name ?? ''), value: String(a.value ?? ''), kind: String(a.type ?? 'string'), path: `a:${i}` }));
+  for (const t of ['string', 'number', 'boolean']) (p.values?.[t] ?? []).forEach((v: any, i: number) => out.push({ name: String(v.name ?? ''), value: String(v.value ?? ''), kind: t, path: `v:${t}:${i}` }));
+  return out.filter((f) => f.name);
+}
+function analyze(n: any) {
+  const type = String(n.type ?? ''), creds = n.credentials ?? {}, have = Object.keys(creds), p = n.parameters ?? {};
+  let need = '';
+  if (!have.length && !n.disabled) {
+    if (/httpRequest/i.test(type)) { if (p.authentication === 'predefinedCredentialType' && p.nodeCredentialType) need = String(p.nodeCredentialType); else if (p.authentication === 'genericCredentialType' && p.genericAuthType) need = String(p.genericAuthType); }
+    else { const m = NODE_CRED.find(([re]) => re.test(type)); if (m) need = m[1]; }
+  }
+  const cred = need ? { type: need, ok: false } : have.length ? { type: have[0], ok: true, name: String(creds[have[0]]?.name ?? '') } : null;
+  let fields: any[] | null = null, miss = 0;
+  if (isSettingsNode(n)) { fields = setFields(n).map((f) => { const empty = PLACEHOLDER.test(f.value); if (empty) miss++; const secret = SECRETISH.test(f.name); return { name: f.name, kind: f.kind, path: f.path, secret, filled: !empty, value: secret ? '' : (empty ? '' : f.value) }; }); }
+  const todo = (cred && !cred.ok ? 1 : 0) + (miss ? 1 : 0);
+  return { cred, fields, miss, todo };
+}
+const SETTINGS_OK = ['saveExecutionProgress', 'saveManualExecutions', 'saveDataErrorExecution', 'saveDataSuccessExecution', 'executionTimeout', 'errorWorkflow', 'timezone', 'executionOrder', 'callerPolicy', 'callerIds'];
+async function putWorkflow(url: string, key: string, w: any) {
+  const settings: any = {}; for (const k of SETTINGS_OK) if (w.settings?.[k] !== undefined) settings[k] = w.settings[k];
+  const body = (st: any) => JSON.stringify({ name: w.name, nodes: w.nodes, connections: w.connections ?? {}, settings: st, ...(w.staticData ? { staticData: w.staticData } : {}) });
+  const go = (st: any) => fetch(url + '/api/v1/workflows/' + encodeURIComponent(w.id), { method: 'PUT', headers: { 'X-N8N-API-KEY': key, 'Content-Type': 'application/json', Accept: 'application/json', 'ngrok-skip-browser-warning': '1' }, body: body(st), signal: AbortSignal.timeout(15000) });
+  let r = await go(settings);
+  if (r.status === 400) { const t = await r.text(); if (/settings/i.test(t)) r = await go({ executionOrder: settings.executionOrder ?? 'v1' }); else throw new Error('n8n did not accept the change: ' + t.slice(0, 200)); }
+  if (!r.ok) { const j = await r.json().catch(() => ({})); throw new Error('n8n did not accept the change: ' + (j?.message ?? r.status)); }
+}
+
+async function n8n(url: string, key: string, path: string, method = 'GET', payload?: unknown) {
   let r: Response;
   try {
-    r = await fetch(url + '/api/v1' + path, { method, headers: { 'X-N8N-API-KEY': key, Accept: 'application/json', 'ngrok-skip-browser-warning': '1' }, signal: AbortSignal.timeout(12000) });
+    r = await fetch(url + '/api/v1' + path, { method, headers: { 'X-N8N-API-KEY': key, Accept: 'application/json', 'ngrok-skip-browser-warning': '1', ...(payload ? { 'Content-Type': 'application/json' } : {}) }, ...(payload ? { body: JSON.stringify(payload) } : {}), signal: AbortSignal.timeout(15000) });
   } catch (e) {
     throw new Error(/timed? ?out|abort/i.test(String(e)) ? 'n8n did not answer in time — is your PC on, Docker running and ngrok open?' : 'Could not reach n8n at this address — is it running and is the link correct?');
   }
@@ -32,7 +72,7 @@ async function n8n(url: string, key: string, path: string, method = 'GET') {
   if (r.status === 401 || r.status === 403) throw new Error('n8n rejected the API key — create a new one in n8n → Settings → n8n API.');
   if (r.status === 404 && !j) throw new Error('This address is not an n8n API — check the link (use the main n8n address, not a workflow link).');
   if (/ERR_NGROK|ngrok/i.test(text) && !j) throw new Error('ngrok says the tunnel is offline — start ngrok again on your PC.');
-  if (!r.ok) throw new Error('n8n: ' + (j?.message ?? `error ${r.status}`));
+  if (!r.ok) throw new Error('n8n: ' + (j?.message ?? `error ${r.status}`) + (j?.description ? ' — ' + j.description : ''));
   if (!j) throw new Error('This address did not answer like n8n — check the link.');
   return j;
 }
@@ -48,7 +88,8 @@ async function allWorkflows(url: string, key: string) {
   return out.map((w) => {
     const nodes = Array.isArray(w.nodes) ? w.nodes : [];
     const trig = nodes.filter((n: any) => isTrigger(String(n.type ?? '')));
-    return { id: String(w.id), name: String(w.name ?? ''), active: !!w.active, updatedAt: w.updatedAt ?? '', nodes: nodes.length, trigger: trig.length > 0, triggers: trig.map((n: any) => String(n.name ?? '')).slice(0, 3), tags: (w.tags ?? []).map((t: any) => t.name).filter(Boolean) };
+    const todo = nodes.reduce((t: number, n: any) => t + analyze(n).todo, 0);
+    return { id: String(w.id), name: String(w.name ?? ''), active: !!w.active, updatedAt: w.updatedAt ?? '', nodes: nodes.length, todo, trigger: trig.length > 0, triggers: trig.map((n: any) => String(n.name ?? '')).slice(0, 3), tags: (w.tags ?? []).map((t: any) => t.name).filter(Boolean) };
   });
 }
 
@@ -98,6 +139,48 @@ Deno.serve(async (req) => {
       const j = await n8n(acc.url, acc.api_key, `/executions?limit=${Math.min(50, Number(b.limit) || 20)}${wf}`);
       const runs = (j.data ?? []).map((e: any) => ({ id: String(e.id), workflowId: String(e.workflowId ?? ''), status: e.status ?? (e.finished ? 'success' : 'error'), mode: e.mode ?? '', startedAt: e.startedAt ?? '', stoppedAt: e.stoppedAt ?? '' }));
       return json({ ok: true, runs });
+    }
+    if (act === 'workflow') {
+      const w = await n8n(acc.url, acc.api_key, `/workflows/${encodeURIComponent(String(b.id ?? ''))}`);
+      const nodes = (w.nodes ?? []).map((n: any) => ({ name: String(n.name), type: String(n.type ?? ''), position: Array.isArray(n.position) ? n.position : [0, 0], disabled: !!n.disabled, ...analyze(n) }));
+      return json({ ok: true, wf: { id: String(w.id), name: w.name, active: !!w.active, nodes, connections: w.connections ?? {} } });
+    }
+    if (act === 'cred_schema') {
+      const type = String(b.type ?? '').replace(/[^\w]/g, '');
+      if (/oauth/i.test(type)) return json({ ok: true, oauth: true, fields: [] });
+      const j = await n8n(acc.url, acc.api_key, `/credentials/schema/${type}`);
+      const req = new Set(j.required ?? []);
+      const fields = Object.entries(j.properties ?? {}).filter(([k]) => !/oauthTokenData|notice/i.test(k)).map(([k, v]: any) => ({ name: k, type: v.type ?? 'string', required: req.has(k), options: Array.isArray(v.enum) ? v.enum : null, secret: SECRETISH.test(k) }));
+      return json({ ok: true, oauth: false, fields });
+    }
+    if (act === 'add_cred' || act === 'set_fields') {
+      if (m.role === 'client') return json({ error: 'View-only access.' }, 403);
+      const id = String(b.id ?? ''), nodeName = String(b.node ?? '');
+      const w = await n8n(acc.url, acc.api_key, `/workflows/${encodeURIComponent(id)}`);
+      const node = (w.nodes ?? []).find((n: any) => n.name === nodeName);
+      if (!node) return json({ error: 'That step was not found — refresh and try again.' }, 400);
+      if (act === 'add_cred') {
+        const type = String(b.type ?? '').replace(/[^\w]/g, ''), data = b.data && typeof b.data === 'object' ? b.data : {};
+        if (!type) return json({ error: 'Which connection?' }, 400);
+        const c = await n8n(acc.url, acc.api_key, '/credentials', 'POST', { name: `${String(b.label || nodeName).slice(0, 60)} (Nodevers)`, type, data });
+        node.credentials = { ...(node.credentials ?? {}), [type]: { id: String(c.id), name: String(c.name) } };
+        await putWorkflow(acc.url, acc.api_key, w);
+        return json({ ok: true, credential: c.name });
+      }
+      const vals = b.values && typeof b.values === 'object' ? b.values : {};
+      const p = node.parameters ?? {}; let changed = 0;
+      for (const f of setFields(node)) {
+        if (!(f.name in vals)) continue;
+        const v = String(vals[f.name] ?? ''); if (SECRETISH.test(f.name) && !v) continue;       // empty secret = keep the old one
+        const val = f.kind === 'number' ? (v === '' ? '' : Number(v)) : f.kind === 'boolean' ? /^(true|1|yes)$/i.test(v) : v;
+        if (f.path.startsWith('a:')) p.assignments.assignments[Number(f.path.slice(2))].value = val;
+        else { const [, t, i] = f.path.split(':'); p.values[t][Number(i)].value = val; }
+        changed++;
+      }
+      if (!changed) return json({ error: 'Nothing to save.' }, 400);
+      node.parameters = p;
+      await putWorkflow(acc.url, acc.api_key, w);
+      return json({ ok: true, changed });
     }
     if (act === 'toggle') {
       if (m.role === 'client') return json({ error: 'View-only access.' }, 403);
