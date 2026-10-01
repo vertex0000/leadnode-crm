@@ -4147,6 +4147,8 @@ async function authClient() {
 async function authInit() {
   const c = sbConf(); if (!c.url || !c.key) return true;
   const fallback = (settings.url && settings.key) || demoChosen();      // your Google Sheet on this browser, or the demo
+  const urlErr = new URLSearchParams(location.hash.slice(1)).get('error_description');
+  if (urlErr) { history.replaceState(null, '', location.pathname + '#dashboard'); showAuth('in'); authMsg(/expired|invalid/i.test(urlErr) ? 'This email link has expired or was already used. Ask for a new one.' : urlErr); return false; }
   if (!hasSbSession() && !/access_token=|[?&]code=|type=recovery/.test(location.href)) { if (fallback) return true; showAuth('in'); return false; }
   try { const cl = await authClient(); const { data } = await cl.auth.getSession(); AUTH.session = data.session; }
   catch (e) { toast('Login service unavailable: ' + e.message, true); return true; }
@@ -4868,12 +4870,13 @@ function showModal(sel) { $(sel).classList.add('show'); $('#scrim').classList.ad
 function hideModal(sel) { const ae = document.activeElement; if (ae && $(sel).contains(ae)) ae.blur(); $(sel).classList.remove('show'); if (!ui.openId) $('#scrim').classList.remove('show'); }
 
 /* ================= routing ================= */
+const authInUrl = () => /access_token=|refresh_token=|error_description=|type=recovery|[?&]code=/.test(location.hash + location.search);
 function go(name) {
   if (!document.getElementById('v-' + name)) name = 'dashboard';
   if (name !== 'pipeline' && typeof selWire !== 'undefined') { selWire = null; }
   $$('.view').forEach(v => v.classList.toggle('active', v.id === 'v-' + name));
   $$('[data-go]').forEach(a => a.classList.toggle('active', a.dataset.go === name));
-  if (location.hash !== '#' + name) history.replaceState(null, '', '#' + name);
+  if (location.hash !== '#' + name && !authInUrl()) history.replaceState(null, '', '#' + name);   // keep login/reset tokens until Supabase reads them
   const stale = staleViews.delete(name);
   if (name === 'pipeline') requestAnimationFrame(() => { sizeCanvas(); if (!view.fitted || stale) { renderPipeline(!view.fitted); } else applyView(); });
   if (name === 'dashboard' && S.leads.length) renderDashboard(true);
