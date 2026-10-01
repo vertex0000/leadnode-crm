@@ -745,6 +745,14 @@ body.ro [data-add],body.ro .addcard,body.ro #addMember,body.ro [data-lginvite],b
 .n8l-list{display:flex;flex-direction:column;gap:6px;max-height:420px;overflow:auto}.n8l-w,.n8l-r{display:flex;gap:10px;align-items:center;padding:9px 10px;border:1px solid var(--line);border-radius:12px}.n8l-w b,.n8l-r b{display:block;font-size:13.5px}.n8l-w small,.n8l-r small{font-size:11.5px}
 .n8l-w .grow,.n8l-r .grow{flex:1;min-width:0}.n8l-man{font-size:11px;font-weight:700;padding:3px 8px;border-radius:7px;border:1px solid var(--line);color:var(--muted);cursor:help;white-space:nowrap}.n8l-ks{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.n8l-k{border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;gap:2px}.n8l-k b{font-size:24px}.n8l-k small{font-size:12px}@media (max-width:760px){.n8l-ks{grid-template-columns:repeat(2,1fr)}}
 .n8l-i.on{background:var(--green-soft);color:var(--green)}
+.n8det.live .n8canvas{height:min(640px,calc(100vh - 230px));min-height:460px}.n8det.live .n8det-b{grid-template-columns:minmax(0,1fr) 380px}.n8det.live .n8side{max-height:min(640px,calc(100vh - 230px));min-height:460px;overflow:auto}
+.n8det.live .n8n{border-radius:14px;padding:0 14px}.n8det.live .n8ic{width:36px;height:36px;border-radius:10px;font-size:12px}.n8det.live .n8t b{font-size:14px}.n8det.live .n8n.pick{box-shadow:0 0 0 3px var(--blue-soft),0 10px 26px rgba(0,0,0,.18);border-color:var(--blue-2)}.n8det.live .n8n:hover{border-color:var(--blue-2);cursor:pointer}
+.n8det.full{position:fixed;inset:10px;z-index:70;margin:0!important;display:flex;flex-direction:column;background:var(--card,var(--glass-2))}.n8det.full .n8det-b{flex:1;min-height:0}.n8det.full .n8canvas,.n8det.full .n8side{height:auto!important;max-height:none!important;min-height:0}
+body.n8l-noscroll{overflow:hidden}
+.n8l-hint{position:absolute;left:12px;bottom:12px;font-size:11.5px;color:var(--muted);background:var(--glass-2,var(--card));border:1px solid var(--line);border-radius:8px;padding:4px 8px;pointer-events:none;z-index:2}
+.n8l-pill{font-weight:700;color:var(--muted)}.n8l-pill.on{color:var(--green)}
+.n8l-sec{border:1px solid var(--line);border-radius:12px;padding:12px;margin-top:12px;display:flex;flex-direction:column;gap:8px}.n8l-sec-t{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}.n8l-sec .field small{display:block;margin-top:3px;font-size:11.5px}
+@media (max-width:900px){.n8det.live .n8det-b{grid-template-columns:1fr}.n8det.live .n8side{max-height:none;min-height:0}}
 .n8l-name{cursor:pointer}.n8l-name:hover{color:var(--blue-2)}.n8l-need,.n8l-ok{font-size:11.5px;font-weight:700;padding:4px 9px;border-radius:8px;border:0;cursor:pointer;white-space:nowrap}.n8l-need{background:var(--yellow-soft);color:#C9971C}.n8l-ok{background:var(--green-soft);color:var(--green)}
 .n8l-i{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:800;background:var(--line);flex:none}.n8l-r.st-success .n8l-i{background:var(--green-soft);color:var(--green)}.n8l-r.st-error .n8l-i,.n8l-r.st-crashed .n8l-i{background:color-mix(in srgb,var(--coral) 16%,transparent);color:var(--coral)}
 .imp-batch{display:flex;flex-direction:column;gap:6px;margin:12px 0 4px;font-size:13px;font-weight:600}.imp-batch small{font-weight:500;color:var(--muted)}.imp-batch .input{max-width:320px}
@@ -3661,7 +3669,7 @@ function n8Viewer(host, html, on = {}) {
   host.innerHTML = `<div class="n8vp">${html}</div><div class="n8zoom"><button data-n8z="out" title="Zoom out">−</button><button data-n8z="fit" title="Fit">Fit</button><button data-n8z="in" title="Zoom in">+</button></div>`;
   const v = { x: 0, y: 0, k: 1 }; let w = host.querySelector('.n8w');
   const apply = () => { w.style.transform = `translate(${v.x}px,${v.y}px) scale(${v.k})`; };
-  const fit = () => { const W = host.clientWidth, H = host.clientHeight; if (!W) return; v.k = Math.max(W < 600 ? 0.5 : 0.45, Math.min(1.1, (W - 30) / w.offsetWidth, (H - 30) / w.offsetHeight)); v.x = Math.max(15, (W - w.offsetWidth * v.k) / 2); v.y = (H - w.offsetHeight * v.k) / 2; apply(); };
+  const fit = () => { const W = host.clientWidth, H = host.clientHeight; if (!W) return; v.k = Math.max(on.minK || (W < 600 ? 0.5 : 0.45), Math.min(1.1, (W - 30) / w.offsetWidth, (H - 30) / w.offsetHeight)); v.x = Math.max(15, (W - w.offsetWidth * v.k) / 2); v.y = (H - w.offsetHeight * v.k) / 2; apply(); };
   const zoom = (cx, cy, k) => { k = Math.max(0.3, Math.min(2, k)); v.x = cx - (cx - v.x) * (k / v.k); v.y = cy - (cy - v.y) * (k / v.k); v.k = k; apply(); };
   host.addEventListener('wheel', e => wheelNav(e, host.getBoundingClientRect(), (x, y, f) => zoom(x, y, v.k * f), (dx, dy) => { v.x += dx; v.y += dy; apply(); }), { passive: false });
   let drag = null;
@@ -3678,6 +3686,7 @@ function n8Viewer(host, html, on = {}) {
   host.querySelector('.n8zoom').onclick = e => { const b = e.target.closest('[data-n8z]'); if (!b) return; const z = b.dataset.n8z; if (z === 'fit') fit(); else zoom(host.clientWidth / 2, host.clientHeight / 2, v.k * (z === 'in' ? 1.2 : 1 / 1.2)); };
   requestAnimationFrame(fit);
   return {
+    fit,
     /** Update colours in place (no re-insert → no flashing, double-click keeps working) */
     setStates(states, t, pick) {
       const tmp = document.createElement('div'); tmp.innerHTML = n8Graph(t, states, pick);
@@ -3823,73 +3832,95 @@ function n8lStates() {
 const n8lGraphT = () => ({ wf: { nodes: N8L.wf.nodes, connections: N8L.wf.connections } });
 function n8lDetail() {
   if (!N8L.open) return '';
-  if (!N8L.wf) return `<div class="n8det glass" style="margin-top:14px;padding:18px"><p class="muted">Opening the workflow…</p></div>`;
-  const w = N8L.wf, st = N8L.st;
-  return `<div class="n8det glass" style="margin-top:14px">
-    <div class="n8det-h"><div><small class="muted">n8n workflow · ${w.active ? 'Active' : 'Off'} · ${w.nodes.length} nodes</small><h3>${esc(w.name)}</h3></div><div class="grow"></div>
+  if (!N8L.wf) return `<div class="n8det glass live" style="margin-top:14px;padding:18px"><p class="muted">Opening the workflow…</p></div>`;
+  const w = N8L.wf, st = N8L.st, ro = AUTH.role === 'client', lw = (N8L.wfs || []).find(x => x.id === w.id) || {};
+  const run = w.runner ? `<button class="btn sm primary" data-n8lrun ${ro ? 'disabled' : ''} data-tip="${w.active ? 'Start this workflow now' : 'Switch the workflow ON first'}"><svg class="i" viewBox="0 0 24 24"><path d="M7 5v14l11-7Z"/></svg>Run now</button>` : ro ? '' : `<button class="btn sm" data-n8laddrun data-tip="Adds a small “Run from Nodevers” trigger so you can start it from this website">+ Add Run button</button>`;
+  return `<div class="n8det glass live ${N8L.full ? 'full' : ''}" style="margin-top:14px">
+    <div class="n8det-h"><div><small class="muted"><span class="n8l-pill ${w.active ? 'on' : ''}">${w.active ? '● Active' : '○ Off'}</span> ${w.nodes.length} steps${lw.trigger === false ? ' · manual start' : ''}</small><h3>${esc(w.name)}</h3></div><div class="grow"></div>
       <div class="n8legend"><span><i class="lg-need"></i>Needs setup</span><span><i class="lg-ready"></i>Ready</span><span><i class="lg-ok"></i>Ran OK</span></div>
-      ${AUTH.role === 'client' ? '' : `<a class="btn sm" href="${esc(st.url)}/workflow/${encodeURIComponent(w.id)}" target="_blank" rel="noopener">Open in n8n ↗</a>`}<button class="ibtn" data-n8lclose title="Close">${I.x}</button></div>
-    <div class="n8det-b"><div class="n8canvas" id="n8lCanvas"></div><div class="n8side" id="n8lSide"></div></div></div>`;
+      ${run}${ro ? '' : `<a class="btn sm" href="${esc(st.url)}/workflow/${encodeURIComponent(w.id)}" target="_blank" rel="noopener">Open in n8n ↗</a>`}
+      <button class="ibtn" data-n8lfull title="${N8L.full ? 'Exit full screen' : 'Full screen'}">${N8L.full ? '⤡' : '⤢'}</button><button class="ibtn" data-n8lclose title="Close">${I.x}</button></div>
+    <div class="n8det-b"><div class="n8canvas" id="n8lCanvas"><div class="n8l-hint">Drag to move · scroll / pinch to zoom · click a step to see and change it</div></div><div class="n8side" id="n8lSide"></div></div></div>`;
 }
 function n8lMount() {
   const cv = $('#n8lCanvas'); if (!cv) return;
+  const hint = cv.querySelector('.n8l-hint');
   N8L.view = n8Viewer(cv, n8Graph(n8lGraphT(), n8lStates(), N8L.node), {
-    pick: name => { N8L.node = name; N8L.view.setStates(n8lStates(), n8lGraphT(), name); n8lSide(); },
-    open: name => { N8L.node = name; N8L.view.setStates(n8lStates(), n8lGraphT(), name); n8lSide(); },
+    minK: 0.22,
+    pick: name => { N8L.node = name; N8L.cedit = false; N8L.view.setStates(n8lStates(), n8lGraphT(), name); n8lSide(); },
+    open: name => { N8L.node = name; N8L.cedit = false; N8L.view.setStates(n8lStates(), n8lGraphT(), name); n8lSide(); },
     empty: () => { if (N8L.node) { N8L.node = ''; N8L.view.setStates(n8lStates(), n8lGraphT(), null); n8lSide(); } },
   });
+  if (hint) cv.appendChild(hint);
   n8lSide();
 }
 async function n8lOpen(id) {
-  if (N8L.open === id && N8L.wf) { N8L.open = ''; N8L.wf = null; N8L.node = ''; return renderN8n(); }
+  if (N8L.open === id && N8L.wf) { N8L.open = ''; N8L.wf = null; N8L.node = ''; N8L.full = false; return renderN8n(); }
   N8L.open = id; N8L.wf = null; N8L.node = ''; renderN8n();
   try { N8L.wf = (await fnCall('n8n', { action: 'workflow', id })).wf; const first = n8lSetupNodes().find(n => n.todo); N8L.node = first ? first.name : ''; }
   catch (e) { toast(e.message, true); N8L.open = ''; }
   renderN8n(); const d = $('#n8Body .n8det'); if (d) d.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
-const n8lInput = (attr, name, label, opt) => `<div class="field"><label>${esc(label)}${opt.req ? '' : ' <span class="muted">(optional)</span>'}</label>${opt.options ? `<select class="input" ${attr}="${esc(name)}">${opt.options.map(o => `<option ${String(o) === String(opt.value) ? 'selected' : ''}>${esc(o)}</option>`).join('')}</select>` : `<input class="input" ${attr}="${esc(name)}" ${opt.secret ? 'data-noautofill readonly type="text" style="-webkit-text-security:disc"' : 'type="text"'} autocomplete="off" value="${esc(opt.value || '')}" placeholder="${esc(opt.ph || '')}">`}</div>`;
+const n8lInput = (attr, name, label, opt) => `<div class="field"><label>${esc(label)}${opt.req === false ? ' <span class="muted">(optional)</span>' : ''}</label>${opt.options ? `<select class="input" ${attr}="${esc(name)}">${opt.options.map(o => `<option ${String(o) === String(opt.value) ? 'selected' : ''}>${esc(o)}</option>`).join('')}</select>` : `<input class="input" ${attr}="${esc(name)}" ${opt.secret ? 'data-noautofill readonly type="text" style="-webkit-text-security:disc"' : 'type="text"'} autocomplete="off" value="${esc(opt.value || '')}" placeholder="${esc(opt.ph || '')}">`}${opt.help ? `<small class="muted">${opt.help}</small>` : ''}</div>`;
+const n8lSec = (title, body, cls = '') => `<div class="n8l-sec ${cls}"><div class="n8l-sec-t">${title}</div>${body}</div>`;
 async function n8lSide() {
   const side = $('#n8lSide'); if (!side || !N8L.wf) return;
   const ro = AUTH.role === 'client', node = N8L.node && N8L.wf.nodes.find(n => n.name === N8L.node), setup = n8lSetupNodes(), done = setup.filter(n => !n.todo).length;
   if (!node) {
+    const editable = N8L.wf.nodes.filter(n => n.params && n.params.length && !n.cred && !n.fields);
     side.innerHTML = `<div class="sec-t">Set up this workflow</div>
       <div class="n8prog"><div class="bar-track"><div class="bar" style="width:${setup.length ? done / setup.length * 100 : 100}%;background:${done === setup.length ? 'var(--green)' : 'var(--blue-2)'}"></div></div><small><b>${done}</b> of ${setup.length} ready</small></div>
-      <p class="help"><b>Click a red node</b> (or pick one below) and give what it needs — API key, link or setting. It is saved straight into your n8n.</p>
-      <div class="n8todo">${setup.map(n => `<button class="n8todo-i ${n.todo ? '' : 'ok'}" data-n8lpick="${esc(n.name)}"><span class="cdot">${n.todo ? '!' : '✓'}</span><span class="tx"><b>${esc(n.name)}</b><small>${n.fields ? (n.miss ? `${n.miss} setting${n.miss > 1 ? 's' : ''} to fill` : 'Settings filled') : n.cred.ok ? `Connected${n.cred.name ? ' · ' + esc(n.cred.name) : ''}` : `Needs ${esc((N8_CREDS[n.cred.type] || {}).name || n.cred.type)}`}</small></span><span class="chev">›</span></button>`).join('') || '<p class="muted">Nothing to set up — this workflow needs no keys or settings.</p>'}</div>`;
+      <p class="help"><b>Click any step</b> on the canvas or below. Red = needs your key, link or setting. Everything you change is saved straight into your n8n.</p>
+      <div class="n8todo">${setup.map(n => `<button class="n8todo-i ${n.todo ? '' : 'ok'}" data-n8lpick="${esc(n.name)}"><span class="cdot">${n.todo ? '!' : '✓'}</span><span class="tx"><b>${esc(n.name)}</b><small>${n.fields ? (n.miss ? `${n.miss} setting${n.miss > 1 ? 's' : ''} to fill` : 'Settings filled') : n.cred.ok ? `Connected${n.cred.name ? ' · ' + esc(n.cred.name) : ''}` : `Needs ${esc((N8_CREDS[n.cred.type] || {}).name || n.cred.type)}`}${n.params && n.params.length ? ' · links' : ''}</small></span><span class="chev">›</span></button>`).join('') || '<p class="muted">No keys or settings needed.</p>'}</div>
+      ${editable.length ? `<div class="sec-t" style="margin-top:14px">Links & IDs you can change</div><div class="n8todo">${editable.map(n => `<button class="n8todo-i ok" data-n8lpick="${esc(n.name)}"><span class="cdot">🔗</span><span class="tx"><b>${esc(n.name)}</b><small>${n.params.map(p => esc(p.label)).join(', ')}</small></span><span class="chev">›</span></button>`).join('')}</div>` : ''}`;
     return;
   }
-  const k = n8Kind(node.type), head = `<button class="btn sm ghost n8back" data-n8lback>← All steps</button><div class="n8nh"><span class="n8ic" style="background:${k.c}">${esc(k.ic)}</span><div><b>${esc(node.name)}</b><small class="muted">${esc(node.fields ? 'Your settings' : k.label)}</small></div></div>`;
-  if (node.fields) {
-    side.innerHTML = head + `<div class="n8keyst ${node.miss ? '' : 'ok'}">${node.miss ? `! ${node.miss} setting${node.miss > 1 ? 's' : ''} to fill` : '✓ All settings filled'}</div>
-      ${node.fields.map(f => n8lInput('data-n8lf', f.name, f.name, { req: true, secret: f.secret, value: f.secret ? '' : f.value, ph: f.secret && f.filled ? '•••••• saved — leave empty to keep' : f.kind === 'number' ? 'Number' : '' })).join('')}
-      ${ro ? '' : `<button class="btn primary" data-n8lsavef>Save to n8n</button>`}<p class="help">Saved straight into the "${esc(node.name)}" node of your n8n workflow.</p>`;
-    return;
-  }
-  if (!node.cred) { side.innerHTML = head + `<div class="n8keyst ok">Nothing to set up here</div><p class="help">This step just runs — it needs no key or link.</p>`; return; }
+  const k = n8Kind(node.type), stTxt = node.todo ? '<div class="n8keyst">! Needs your input</div>' : '<div class="n8keyst ok">✓ Ready</div>';
+  let html = `<button class="btn sm ghost n8back" data-n8lback>← All steps</button><div class="n8nh"><span class="n8ic" style="background:${k.c}">${esc(k.ic)}</span><div><b>${esc(node.name)}</b><small class="muted">${esc(node.fields ? 'Your settings' : k.label)}${node.disabled ? ' · disabled' : ''}</small></div></div>${stTxt}${node.notes ? `<p class="help">${esc(node.notes)}</p>` : ''}`;
+  if (node.cred) html += n8lSec('🔑 Connection', `<div id="n8lCredBox">${node.cred.ok && !N8L.cedit ? `<p class="help">Connected${node.cred.name ? ': <b>' + esc(node.cred.name) + '</b>' : ''}.</p>${ro ? '' : '<button class="btn sm" data-n8lcedit>Change key / account</button>'}` : '<p class="muted">Loading…</p>'}</div>`);
+  if (node.params && node.params.length) html += n8lSec('🔗 Links & IDs', node.params.map(p => n8lInput('data-n8lp', p.key, p.label, { value: p.value, help: p.kind === 'rl' && p.name ? 'Now: ' + esc(p.name) : p.kind === 'rl' ? 'Paste the full link (or the ID)' : '' })).join('') + (ro ? '' : '<button class="btn primary" data-n8lsavep>Save links to n8n</button>'));
+  if (node.fields) html += n8lSec('⚙ Settings', node.fields.map(f => n8lInput('data-n8lf', f.name, f.name, { secret: f.secret, value: f.secret ? '' : f.value, ph: f.secret && f.filled ? '•••••• saved — leave empty to keep' : f.kind === 'number' ? 'Number' : '' })).join('') + (ro ? '' : '<button class="btn primary" data-n8lsavef>Save settings to n8n</button>'));
+  if (!node.cred && !(node.params && node.params.length) && !node.fields) html += `<p class="help">Nothing to change in this step — it runs by itself. Open it in n8n to edit its logic.</p>`;
+  side.innerHTML = html;
+  if (node.cred && (!node.cred.ok || N8L.cedit) && !ro) n8lCredForm(node);
+}
+async function n8lCredForm(node) {
   const type = node.cred.type, g = N8_CREDS[type] || {};
-  side.innerHTML = head + `<div class="n8keyst ${node.cred.ok ? 'ok' : ''}">${node.cred.ok ? `✓ Connected${node.cred.name ? ' — ' + esc(node.cred.name) : ''}` : `! Needs ${esc(g.name || type)}`}</div><div id="n8lCredBox"><p class="muted">Loading…</p></div>`;
-  if (ro) { $('#n8lCredBox').innerHTML = ''; return; }
   let sc = N8L.schema[type];
   if (!sc) { try { sc = N8L.schema[type] = await fnCall('n8n', { action: 'cred_schema', type }); } catch (e) { const b = $('#n8lCredBox'); if (b) b.innerHTML = `<div class="status err">${esc(e.message)}</div>`; return; } }
   const box = $('#n8lCredBox'); if (!box || N8L.node !== node.name) return;
   const where = g.help ? `<div class="n8where"><b>Where to find it</b><p>${esc(g.help)}</p>${g.link ? `<a class="btn sm" href="${esc(g.link)}" target="_blank" rel="noopener">Open ↗</a>` : ''}</div>` : '';
-  box.innerHTML = sc.oauth ? `${where}<p class="help">This one uses <b>"Sign in with Google / Facebook"</b>, which can only happen inside n8n: open the workflow, double-click <b>${esc(node.name)}</b> → Credential → <b>Create new</b> → Sign in. Then press Refresh here.</p>
+  box.innerHTML = sc.oauth ? `${where}<p class="help">This one uses <b>"Sign in with Google / Facebook"</b>, which happens inside n8n: open the workflow, double-click <b>${esc(node.name)}</b> → Credential → <b>Create new</b> → Sign in. Then press Refresh here.</p>
       <div class="m-foot"><a class="btn primary" href="${esc(N8L.st.url)}/workflow/${encodeURIComponent(N8L.open)}" target="_blank" rel="noopener">Sign in inside n8n ↗</a><button class="btn" data-n8lreload>Refresh</button></div>`
-    : `${where}${node.cred.ok ? '<p class="help">Already connected. Fill the form only to replace it with a new key.</p>' : ''}${sc.fields.map(f => n8lInput('data-n8lc', f.name, f.name.replace(/([a-z])([A-Z])/g, '$1 $2').replace(/^./, c => c.toUpperCase()), { req: f.required, secret: f.secret, options: f.options })).join('')}
+    : `${where}${sc.fields.map(f => n8lInput('data-n8lc', f.name, f.name.replace(/([a-z])([A-Z])/g, '$1 $2').replace(/^./, c => c.toUpperCase()), { req: f.required, secret: f.secret, options: f.options })).join('')}
       <button class="btn primary" data-n8lsavec>${node.cred.ok ? 'Replace in n8n' : 'Connect in n8n'}</button><p class="help">Goes straight into your own n8n as a credential and is attached to this step. Nodevers does not keep a copy.</p>`;
 }
-async function n8lAfterSave(msg) {
+async function n8lAfterSave(msg, stay) {
   toast(msg);
   try { const [wf, ws] = await Promise.all([fnCall('n8n', { action: 'workflow', id: N8L.open }), fnCall('n8n', { action: 'workflows' })]); N8L.wf = wf.wf; N8L.wfs = ws.workflows; } catch (e) { toast(e.message, true); }
-  const next = n8lSetupNodes().find(n => n.todo); N8L.node = next ? next.name : ''; renderN8n();
+  N8L.cedit = false; if (!stay) { const next = n8lSetupNodes().find(n => n.todo); N8L.node = next ? next.name : ''; } renderN8n();
 }
 document.addEventListener('click', async e => {
   const t = e.target;
   const op = t.closest('[data-n8lopen]'); if (op) { n8lOpen(op.dataset.n8lopen); return; }
-  if (t.closest('[data-n8lclose]')) { N8L.open = ''; N8L.wf = null; N8L.node = ''; renderN8n(); return; }
+  if (t.closest('[data-n8lclose]')) { N8L.open = ''; N8L.wf = null; N8L.node = ''; N8L.full = false; document.body.classList.remove('n8l-noscroll'); renderN8n(); return; }
   const pk = t.closest('[data-n8lpick]'); if (pk) { N8L.node = pk.dataset.n8lpick; if (N8L.view) N8L.view.setStates(n8lStates(), n8lGraphT(), N8L.node); n8lSide(); return; }
   if (t.closest('[data-n8lback]')) { N8L.node = ''; if (N8L.view) N8L.view.setStates(n8lStates(), n8lGraphT(), null); n8lSide(); return; }
   if (t.closest('[data-n8lreload]')) { n8lAfterSave('Refreshed'); return; }
+  if (t.closest('[data-n8lcedit]')) { N8L.cedit = true; n8lSide(); return; }
+  if (t.closest('[data-n8lfull]')) { N8L.full = !N8L.full; const d = $('#n8Body .n8det'); if (d) { d.classList.toggle('full', N8L.full); document.body.classList.toggle('n8l-noscroll', N8L.full); const b = t.closest('[data-n8lfull]'); b.textContent = N8L.full ? '⤡' : '⤢'; } setTimeout(() => N8L.view && N8L.view.fit(), 60); return; }
+  const rn = t.closest('[data-n8lrun]'); if (rn) {
+    rn.disabled = true; try { const r = await fnCall('n8n', { action: 'run', id: N8L.open }); toast('▶ ' + (r.note || 'Workflow started in your n8n')); setTimeout(async () => { try { N8L.runs = (await fnCall('n8n', { action: 'executions', limit: 50 })).runs; renderN8n(); } catch (e) { } }, 4000); } catch (er) { toast(er.message, true); } rn.disabled = false; return;
+  }
+  const ar = t.closest('[data-n8laddrun]'); if (ar) {
+    if (!confirm('Add a small "Run from Nodevers" trigger to this workflow in n8n? Your other triggers stay as they are.')) return;
+    ar.disabled = true; try { await fnCall('n8n', { action: 'add_runner', id: N8L.open }); await n8lAfterSave('✓ Run button added — switch the workflow ON, then press Run now'); } catch (er) { toast(er.message, true); ar.disabled = false; } return;
+  }
+  const sp = t.closest('[data-n8lsavep]'); if (sp) {
+    const values = {}; $$('#n8lSide [data-n8lp]').forEach(i => { values[i.dataset.n8lp] = i.value.trim(); });
+    sp.disabled = true; try { await fnCall('n8n', { action: 'set_params', id: N8L.open, node: N8L.node, values }); await n8lAfterSave('✓ Links saved in your n8n', true); } catch (er) { toast(er.message, true); sp.disabled = false; }
+    return;
+  }
   const sf = t.closest('[data-n8lsavef]'); if (sf) {
     const values = {}; $$('#n8lSide [data-n8lf]').forEach(i => { values[i.dataset.n8lf] = i.value.trim(); });
     sf.disabled = true; try { await fnCall('n8n', { action: 'set_fields', id: N8L.open, node: N8L.node, values }); await n8lAfterSave('✓ Settings saved in your n8n'); } catch (er) { toast(er.message, true); sf.disabled = false; }

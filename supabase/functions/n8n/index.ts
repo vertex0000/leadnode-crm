@@ -50,6 +50,25 @@ function analyze(n: any) {
   const todo = (cred && !cred.ok ? 1 : 0) + (miss ? 1 : 0);
   return { cred, fields, miss, todo };
 }
+// links, IDs and plain text the client may change (sheet / document links, URLs, emails, chat IDs…) — never code or expressions
+const SKIP_PARAM = /^(jsCode|pythonCode|code|functionCode|query|sql|html|text|message|prompt|systemMessage|jsonBody|body|jsonParameters|options|rule|rules|conditions|assignments|values|path|httpMethod|responseMode|authentication|nodeCredentialType|genericAuthType|operation|resource|mode)$/i;
+const LABEL: Record<string, string> = { documentId: 'Google Sheet (link)', sheetName: 'Sheet tab', url: 'URL', sendTo: 'Send to (email)', toEmail: 'To (email)', fromEmail: 'From (email)', chatId: 'Chat ID', folderId: 'Folder (link)', fileId: 'File (link)', calendar: 'Calendar', baseId: 'Airtable base', tableId: 'Table', databaseId: 'Notion database', pageId: 'Notion page', channelId: 'Channel', phoneNumberId: 'Phone number ID', recipientPhoneNumber: 'Recipient phone', subject: 'Email subject' };
+const human = (k: string) => LABEL[k] ?? k.replace(/([a-z])([A-Z])/g, '$1 $2').replace(/^./, (c) => c.toUpperCase());
+function editParams(n: any) {
+  if (/\.(code|set|function|functionItem|if|switch|merge|noOp|wait|stickyNote)$/i.test(String(n.type ?? ''))) return [];
+  const out: any[] = [];
+  for (const [k, v] of Object.entries(n.parameters ?? {})) {
+    if (SKIP_PARAM.test(k)) continue;
+    if (v && typeof v === 'object' && (v as any).__rl) { const rv = String((v as any).value ?? ''); if (rv.startsWith('=')) continue; out.push({ key: k, label: human(k), kind: 'rl', mode: (v as any).mode ?? 'id', value: (v as any).cachedResultUrl && (v as any).mode !== 'url' ? String((v as any).cachedResultUrl) : rv, name: String((v as any).cachedResultName ?? '') }); continue; }
+    if (typeof v !== 'string' || v.startsWith('=') || v.includes('\n') || v.length > 400 || !v.trim()) continue;
+    if (/^https?:\/\//i.test(v) || /@/.test(v) || /(id|url|link|email|to|from|phone|chat|channel|folder|sheet|subject|name)$/i.test(k)) out.push({ key: k, label: human(k), kind: /^https?:/i.test(v) ? 'url' : 'text', value: v });
+  }
+  return out.slice(0, 12);
+}
+function runner(w: any) {
+  const n = (w.nodes ?? []).find((x: any) => /\.webhook$/i.test(String(x.type ?? '')) && !x.disabled && (!x.parameters?.authentication || x.parameters.authentication === 'none') && x.parameters?.path && !String(x.parameters.path).startsWith('='));
+  return n ? { node: String(n.name), path: String(n.parameters.path).replace(/^\/+/, ''), method: String(n.parameters.httpMethod ?? 'GET').toUpperCase() } : null;
+}
 const SETTINGS_OK = ['saveExecutionProgress', 'saveManualExecutions', 'saveDataErrorExecution', 'saveDataSuccessExecution', 'executionTimeout', 'errorWorkflow', 'timezone', 'executionOrder', 'callerPolicy', 'callerIds'];
 async function putWorkflow(url: string, key: string, w: any) {
   const settings: any = {}; for (const k of SETTINGS_OK) if (w.settings?.[k] !== undefined) settings[k] = w.settings[k];
@@ -142,8 +161,8 @@ Deno.serve(async (req) => {
     }
     if (act === 'workflow') {
       const w = await n8n(acc.url, acc.api_key, `/workflows/${encodeURIComponent(String(b.id ?? ''))}`);
-      const nodes = (w.nodes ?? []).map((n: any) => ({ name: String(n.name), type: String(n.type ?? ''), position: Array.isArray(n.position) ? n.position : [0, 0], disabled: !!n.disabled, ...analyze(n) }));
-      return json({ ok: true, wf: { id: String(w.id), name: w.name, active: !!w.active, nodes, connections: w.connections ?? {} } });
+      const nodes = (w.nodes ?? []).filter((n: any) => !/stickyNote$/i.test(String(n.type ?? ''))).map((n: any) => ({ name: String(n.name), type: String(n.type ?? ''), position: Array.isArray(n.position) ? n.position : [0, 0], disabled: !!n.disabled, notes: String(n.notes ?? '').slice(0, 300), params: editParams(n), ...analyze(n) }));
+      return json({ ok: true, wf: { id: String(w.id), name: w.name, active: !!w.active, nodes, connections: w.connections ?? {}, runner: runner(w) } });
     }
     if (act === 'cred_schema') {
       const type = String(b.type ?? '').replace(/[^\w]/g, '');
@@ -153,7 +172,33 @@ Deno.serve(async (req) => {
       const fields = Object.entries(j.properties ?? {}).filter(([k]) => !/oauthTokenData|notice/i.test(k)).map(([k, v]: any) => ({ name: k, type: v.type ?? 'string', required: req.has(k), options: Array.isArray(v.enum) ? v.enum : null, secret: SECRETISH.test(k) }));
       return json({ ok: true, oauth: false, fields });
     }
-    if (act === 'add_cred' || act === 'set_fields') {
+    if (act === 'run') {
+      if (m.role === 'client') return json({ error: 'View-only access.' }, 403);
+      const w = await n8n(acc.url, acc.api_key, `/workflows/${encodeURIComponent(String(b.id ?? ''))}`), rn = runner(w);
+      if (!rn) return json({ error: 'This workflow has no "Run from Nodevers" trigger yet — press "Add Run button" first.' }, 400);
+      if (!w.active) return json({ error: 'Switch the workflow ON first — n8n only listens for runs while it is active.' }, 400);
+      let r: Response;
+      try { r = await fetch(`${acc.url}/webhook/${rn.path}`, { method: rn.method === 'GET' || rn.method === 'HEAD' ? rn.method : 'POST', headers: { 'Content-Type': 'application/json', 'ngrok-skip-browser-warning': '1' }, ...(rn.method === 'GET' || rn.method === 'HEAD' ? {} : { body: JSON.stringify({ source: 'nodevers', by: u.user.email ?? '', at: new Date().toISOString() }) }), signal: AbortSignal.timeout(20000) }); }
+      catch (e) { return /timed? ?out|abort/i.test(String(e)) ? json({ ok: true, started: true, note: 'Started — it is still running in n8n.' }) : json({ error: 'Could not reach n8n — is your PC / n8n / ngrok on?' }, 400); }
+      if (r.status === 404) return json({ error: 'n8n is not listening on this workflow — switch it OFF and ON again, then retry.' }, 400);
+      if (!r.ok) return json({ error: `n8n answered ${r.status} — open the run in n8n to see why.` }, 400);
+      return json({ ok: true, started: true });
+    }
+    if (act === 'add_runner') {
+      if (m.role === 'client') return json({ error: 'View-only access.' }, 403);
+      const w = await n8n(acc.url, acc.api_key, `/workflows/${encodeURIComponent(String(b.id ?? ''))}`);
+      if (runner(w)) return json({ ok: true, already: true });
+      const isTrig = (t: string) => /(trigger|webhook|cron|interval)$/i.test(t);
+      const trig = (w.nodes ?? []).find((n: any) => isTrig(String(n.type ?? '')) && (w.connections ?? {})[n.name]?.main?.[0]?.length);
+      if (!trig) return json({ error: 'Could not find where this workflow starts — add a Webhook trigger in n8n instead.' }, 400);
+      const id = crypto.randomUUID(), name = 'Run from Nodevers';
+      w.nodes.push({ id, name, type: 'n8n-nodes-base.webhook', typeVersion: 2, webhookId: id, position: [trig.position?.[0] ?? 0, (trig.position?.[1] ?? 0) + 180], parameters: { httpMethod: 'POST', path: 'nodevers-' + id.slice(0, 8), responseMode: 'onReceived', options: {} } });
+      w.connections = w.connections ?? {}; w.connections[name] = { main: [JSON.parse(JSON.stringify(w.connections[trig.name].main[0]))] };
+      await putWorkflow(acc.url, acc.api_key, w);
+      if (w.active) { try { await n8n(acc.url, acc.api_key, `/workflows/${encodeURIComponent(w.id)}/deactivate`, 'POST'); await n8n(acc.url, acc.api_key, `/workflows/${encodeURIComponent(w.id)}/activate`, 'POST'); } catch { /* still saved */ } }
+      return json({ ok: true });
+    }
+    if (act === 'add_cred' || act === 'set_fields' || act === 'set_params') {
       if (m.role === 'client') return json({ error: 'View-only access.' }, 403);
       const id = String(b.id ?? ''), nodeName = String(b.node ?? '');
       const w = await n8n(acc.url, acc.api_key, `/workflows/${encodeURIComponent(id)}`);
@@ -169,6 +214,17 @@ Deno.serve(async (req) => {
       }
       const vals = b.values && typeof b.values === 'object' ? b.values : {};
       const p = node.parameters ?? {}; let changed = 0;
+      if (act === 'set_params') {
+        for (const f of editParams(node)) {
+          if (!(f.key in vals)) continue; const v = String(vals[f.key] ?? '').trim(); if (!v) continue;
+          if (f.kind === 'rl') { const old = p[f.key]; const url = /^https?:\/\//i.test(v); p[f.key] = { __rl: true, value: v, mode: url ? 'url' : /sheetName/i.test(f.key) && !/^\d+$/.test(v) ? 'name' : (old.mode === 'list' || old.mode === 'url' ? 'id' : old.mode) }; }
+          else p[f.key] = v;
+          changed++;
+        }
+        if (!changed) return json({ error: 'Nothing changed.' }, 400);
+        node.parameters = p; await putWorkflow(acc.url, acc.api_key, w);
+        return json({ ok: true, changed });
+      }
       for (const f of setFields(node)) {
         if (!(f.name in vals)) continue;
         const v = String(vals[f.name] ?? ''); if (SECRETISH.test(f.name) && !v) continue;       // empty secret = keep the old one
