@@ -78,7 +78,11 @@ Deno.serve(async (req) => {
         }
       }
       for (const s of v.statuses ?? []) {
-        await db.from('messages').update({ status: s.status }).eq('workspace_id', ws).eq('whatsapp_msg_id', s.id);
+        const er = (s.errors ?? [])[0];
+        const reason = er ? `${er.code ?? ''} · ${er.error_data?.details || er.message || er.title || 'Unknown error'}`.slice(0, 300) : '';
+        if (er) console.log('message failed', s.id, reason);
+        const up = await db.from('messages').update(reason ? { status: s.status, error: reason } : { status: s.status }).eq('workspace_id', ws).eq('whatsapp_msg_id', s.id);
+        if (up.error && reason) await db.from('messages').update({ status: s.status }).eq('workspace_id', ws).eq('whatsapp_msg_id', s.id);   // before 05_message_errors.sql
       }
     }
   } catch (e) {
