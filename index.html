@@ -626,6 +626,8 @@ textarea.input.code{min-height:320px}
 #stab-wl .field{margin-bottom:10px}#stab-wl>.help:first-child{margin-top:0}
 @media (max-width:600px){#setModal .seg{flex-wrap:wrap}#setModal .segb{flex:1 1 40%}}.auth-pow{text-align:center;margin:10px 0 0}#authSideSub{margin:-14px 0 0;font-size:15px}
 @media (max-width:600px){#stab-wl .form{grid-template-columns:1fr!important}}
+.acct-imp{display:flex;gap:12px;align-items:center;flex-wrap:wrap;padding:12px;border:1px dashed var(--line-2);border-radius:12px;margin-bottom:12px}.acct-imp>div{flex:1 1 240px;display:flex;flex-direction:column;gap:3px}.acct-imp small{color:var(--muted);font-size:12px}
+.auth-demo{display:block;margin:12px auto 0;border:0;background:none;color:var(--muted);font-weight:600}.auth-demo:hover{color:var(--text)}
 .srcTag{font-style:normal;font-size:10px;font-weight:700;padding:1px 5px;border-radius:4px;margin-left:4px;vertical-align:1px}
 .srcTag.real{background:var(--green-soft);color:var(--green)}.srcTag.sample{background:var(--line);color:var(--muted)}
 .rcard.span2{grid-column:1/-1}
@@ -1192,6 +1194,7 @@ textarea.input.code{min-height:320px}
   </div>
   <div class="stab" id="stab-acct" hidden>
     <div id="acctSigned" class="acct-me" hidden></div>
+    <div id="acctImport" class="acct-imp" hidden><div><b>Move your Google Sheet data here</b><small>Copies leads, journey, team, templates, pipeline and settings to your cloud workspace. Your Sheet is not changed. Safe to run again.</small></div><button class="btn primary" id="sbImport">Move my Google Sheet data here</button></div>
     <div class="form" style="grid-template-columns:1fr">
       <p class="help">Logins (email, Google, team roles) run on <b>Supabase Auth</b>. Paste your Supabase project's URL and <b>anon / publishable</b> key. Never paste the service_role key or your database password.</p>
       <div class="field"><label>Supabase project URL</label><input class="input" id="sbUrl" placeholder="https://abcdefgh.supabase.co"></div>
@@ -1202,6 +1205,7 @@ textarea.input.code{min-height:320px}
       <button class="btn danger" id="sbClear">Turn off logins</button>
       <div class="grow"></div>
       <button class="btn" id="sbPreview">Preview login page</button>
+      <button class="btn" id="sbLogin" hidden>Sign in / Create account</button>
       <button class="btn primary" id="sbSave">Save</button>
     </div>
   </div>
@@ -1253,6 +1257,7 @@ textarea.input.code{min-height:320px}
       <div class="auth-or"><span>or</span></div>
       <button class="btn auth-google" id="authGoogle" type="button"><svg viewBox="0 0 24 24" width="18" height="18"><path fill="#4285F4" d="M22.6 12.2c0-.8-.1-1.5-.2-2.2H12v4.2h5.9a5 5 0 0 1-2.2 3.3v2.7h3.6c2.1-1.9 3.3-4.8 3.3-8Z"/><path fill="#34A853" d="M12 23c3 0 5.5-1 7.3-2.7l-3.6-2.8c-1 .7-2.2 1.1-3.7 1.1-2.9 0-5.3-1.9-6.2-4.5H2.1v2.8A11 11 0 0 0 12 23Z"/><path fill="#FBBC05" d="M5.8 14.1a6.6 6.6 0 0 1 0-4.2V7.1H2.1a11 11 0 0 0 0 9.8l3.7-2.8Z"/><path fill="#EA4335" d="M12 5.4c1.6 0 3.1.6 4.2 1.7l3.2-3.2A11 11 0 0 0 2.1 7.1l3.7 2.8C6.7 7.3 9.1 5.4 12 5.4Z"/></svg>Continue with Google</button>
       <p class="auth-foot muted">By continuing you agree to the Terms and Privacy Policy.</p>
+      <button class="btn ghost auth-demo" id="authDemo" type="button">Explore the demo first →</button>
       <p class="powered auth-pow">Powered by <b>Nodevers</b></p>
     </div>
   </div>
@@ -1320,6 +1325,7 @@ const DEFAULT_LISTS = { stages: ['New Lead', 'Contacted', 'Interested', 'Quotati
 let settings = store.get('leadnode.settings') || {};
 let S = { leads: [], activities: [], team: [], lists: DEFAULT_LISTS, templates: [], flows: [] };
 let demo = !(settings.url && settings.key);
+let cloud = false;                     // true after Supabase sign-in
 const ui = { tab: 'all', q: '', stage: '', pfilter: '', openId: null, expanded: new Set() };
 
 /* ================= demo data ================= */
@@ -1384,7 +1390,8 @@ async function callApi(conf, action, data = {}) {
   if (!j.ok) throw new Error(j.error || 'Unknown error');
   return j.data;
 }
-async function api(action, data) { if (demo) return JSON.parse(JSON.stringify(demoApi(action, data))); return callApi(settings, action, data); }
+async function api(action, data) { if (demo) return JSON.parse(JSON.stringify(demoApi(action, data))); if (cloud) return sbApi(action, data); return callApi(settings, action, data); }
+const cacheKey = () => cloud ? 'sb:' + AUTH.ws : settings.url;
 
 /* ================= data helpers ================= */
 const LOCKED = ['Won', 'Lost'];
@@ -1421,7 +1428,7 @@ function applyData(d) {
 /** Instant start: show the last saved copy right away, then refresh from the Sheet in the background */
 async function load(silent) {
   let cached = false;
-  if (!silent && !demo) { const c = store.get('leadnode.cache'); if (c && c.url === settings.url && c.data) { applyData(c.data); cached = true; layout = loadLayout(false); finishLoad(true); } }
+  if (!silent && !demo) { const c = store.get('leadnode.cache'); if (c && c.url === cacheKey() && c.data) { applyData(c.data); cached = true; layout = loadLayout(false); finishLoad(true); } }
   if (!silent && !cached) $('#lgrid').innerHTML = '<div class="loader"><div class="spin"></div>Loading…</div>';
   let d;
   try { d = demo ? demoData() : await api('getAll'); }
@@ -1432,12 +1439,13 @@ async function load(silent) {
     return;
   }
   applyData(d);
-  if (!demo) store.set('leadnode.cache', { url: settings.url, at: Date.now(), data: d });
+  if (!demo) store.set('leadnode.cache', { url: cacheKey(), at: Date.now(), data: d });
   layout = loadLayout(!!silent || (cached && !!saveTimer));
   finishLoad(!silent && !cached);
 }
 function finishLoad(anim) {
   $('#demoBanner').hidden = !demo; sizeCanvas();
+  if (demo) { const sb = !!sbConf().url; $('#demoBanner .grow').innerHTML = sb ? '<b>Demo:</b> you\'re exploring sample data. Create your free account to add your own leads.' : '<b>Demo mode:</b> you\'re looking at sample data. To connect your Google Sheet, add the Web App URL and API key in Settings.'; $('#bannerSettings').textContent = sb ? 'Create free account' : 'Open Settings'; }
   if (demo) S.settings = store.get('leadnode.branding') || {};
   mergeSavedLists();
   applyBranding();
@@ -4114,26 +4122,36 @@ async function saveWL() {
 
 /* ================= login (Supabase Auth) ================= */
 const AUTH = { client: null, session: null, mode: 'in', preview: false };
-const sbConf = () => store.get('leadnode.supabase') || {};
+/* Nodevers cloud — the URL and publishable key are public by design (RLS protects the data). */
+const SB_DEFAULT = { url: 'https://ljllsrinjjbraumacobz.supabase.co', key: 'sb_publishable_L8mKKUhWlkJbL9ArKELJIA_FHnjJfS3' };
+const sbConf = () => { const c = store.get('leadnode.supabase'); return c ? (c.off ? {} : c) : SB_DEFAULT; };
+const demoChosen = () => { if (/[?&]demo\b/.test(location.search)) return true; try { return sessionStorage.getItem('leadnode.demo') === '1'; } catch (e) { return false; } };
+const hasSbSession = () => { try { return Object.keys(localStorage).some(k => /^sb-.+-auth-token$/.test(k)); } catch (e) { return false; } };
 function loadScriptOnce(src) { return new Promise((res, rej) => { if ($(`script[src="${src}"]`)) return res(); const sc = document.createElement('script'); sc.src = src; sc.onload = res; sc.onerror = () => rej(new Error('Could not load the login library')); document.head.appendChild(sc); }); }
 async function authClient() {
   const c = sbConf(); if (!c.url || !c.key) return null;
   if (AUTH.client) return AUTH.client;
-  await loadScriptOnce('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js');
+  await loadScriptOnce('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js');
   AUTH.client = window.supabase.createClient(c.url, c.key, { auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true } });
   AUTH.client.auth.onAuthStateChange((ev, sess) => {
     AUTH.session = sess;
     if (ev === 'PASSWORD_RECOVERY') showAuth('reset');
-    if (ev === 'SIGNED_OUT') showAuth('in');
+    if (ev === 'SIGNED_OUT' && cloud) { cloudStop(); store.del('leadnode.cache'); showAuth('in'); }
   });
   return AUTH.client;
 }
 /** Returns true when the app may load (logins off, or a valid session) */
 async function authInit() {
   const c = sbConf(); if (!c.url || !c.key) return true;
+  const fallback = (settings.url && settings.key) || demoChosen();      // your Google Sheet on this browser, or the demo
+  if (!hasSbSession() && !/access_token=|[?&]code=|type=recovery/.test(location.href)) { if (fallback) return true; showAuth('in'); return false; }
   try { const cl = await authClient(); const { data } = await cl.auth.getSession(); AUTH.session = data.session; }
   catch (e) { toast('Login service unavailable: ' + e.message, true); return true; }
-  if (AUTH.session) return true;
+  if (AUTH.session) {
+    try { await cloudStart(); return true; }
+    catch (e) { toast(e.message, true); cloudStop(); if (settings.url && settings.key) return true; showAuth('in'); authMsg(e.message); return false; }
+  }
+  if (fallback) return true;
   showAuth('in'); return false;
 }
 function authUser() { const u = AUTH.session && AUTH.session.user; return u ? { email: u.email, name: (u.user_metadata && (u.user_metadata.full_name || u.user_metadata.name)) || u.email } : null; }
@@ -4178,7 +4196,9 @@ async function authSubmit(e) {
     if (r.error) throw r.error;
     if (m === 'forgot') return authMsg('Check your email for the reset link.', true);
     if (m === 'up' && !r.data.session) return authMsg('Account created — confirm your email, then sign in.', true);
-    AUTH.session = (r.data && r.data.session) || AUTH.session; hideAuth(); toast(m === 'reset' ? 'Password updated ✓' : 'Signed in ✓'); load();
+    AUTH.session = (r.data && r.data.session) || AUTH.session;
+    await cloudStart(); try { sessionStorage.removeItem('leadnode.demo'); } catch (e2) { }
+    hideAuth(); toast(m === 'reset' ? 'Password updated ✓' : 'Signed in ✓'); view.fitted = false; layout = null; load();
   } catch (err) { authMsg(AUTH_ERR[err.message] || err.message || 'Something went wrong'); }
   finally { btn.disabled = false; btn.textContent = label; }
 }
@@ -4191,8 +4211,9 @@ function fillAcct() {
   const c = sbConf(), u = authUser();
   $('#sbUrl').value = c.url || ''; $('#sbKey').value = c.key || '';
   $('#sbStatus').className = 'status'; $('#sbStatus').textContent = c.url ? 'Logins are on.' : 'Logins are off — the site uses your API key only.';
-  $('#acctSigned').hidden = !u;
-  if (u) $('#acctSigned').innerHTML = `${avatar(u.name, '', brand().userPhoto)}<div class="grow"><b>${esc(u.name)}</b><small>${esc(u.email)}</small></div><button class="btn sm" id="sbOut">Sign out</button>`;
+  $('#acctSigned').hidden = !u; $('#sbLogin').hidden = !c.url || !!u; $('#acctImport').hidden = !(cloud && settings.url && settings.key);
+  if (u) $('#acctSigned').innerHTML = `${avatar(u.name, '', brand().userPhoto)}<div class="grow"><b>${esc(u.name)}</b><small>${esc(u.email)}${cloud ? ` · ${esc(AUTH.wsName || 'Workspace')} (${esc(AUTH.role)})` : ''}</small></div><button class="btn sm" id="sbOut">Sign out</button>`;
+  if (u && cloud) { $('#sbStatus').className = 'status ok'; $('#sbStatus').textContent = '✓ Your data is saved in the Nodevers cloud. Only people in your workspace can see it.'; }
 }
 (function authEvents() {
   $('#authForm').addEventListener('submit', authSubmit);
@@ -4210,8 +4231,11 @@ function fillAcct() {
     store.set('leadnode.supabase', { url, key }); AUTH.client = null;
     st.className = 'status ok'; st.textContent = '✓ Saved. Logins are on — next time the site opens it will ask to sign in.';
   };
-  $('#sbClear').onclick = () => { if (!confirm('Turn off logins on this browser?')) return; store.del('leadnode.supabase'); AUTH.client = null; AUTH.session = null; fillAcct(); toast('Logins turned off'); };
-  $('#stab-acct').addEventListener('click', async e => { if (e.target.id === 'sbOut') { try { const cl = await authClient(); await cl.auth.signOut(); } catch (err) { } AUTH.session = null; hideModal('#setModal'); showAuth('in'); } });
+  $('#sbClear').onclick = async () => { if (!confirm('Turn off logins on this browser?')) return; try { const cl = await authClient(); if (cl) await cl.auth.signOut(); } catch (e) { } store.set('leadnode.supabase', { off: true }); AUTH.client = null; AUTH.session = null; cloudStop(); fillAcct(); toast('Logins turned off'); load(); };
+  $('#sbLogin').onclick = () => showAuth('in');
+  $('#sbImport').onclick = () => { if (confirm('Copy everything from your Google Sheet into your cloud workspace? Your Sheet stays as it is.')) importSheet(); };
+  $('#authDemo').onclick = () => { try { sessionStorage.setItem('leadnode.demo', '1'); } catch (e) { } hideAuth(); if (!cloud && !(settings.url && settings.key)) { demo = true; view.fitted = false; layout = null; load(); } };
+  $('#stab-acct').addEventListener('click', async e => { if (e.target.id === 'sbOut') { try { const cl = await authClient(); await cl.auth.signOut(); } catch (err) { } AUTH.session = null; cloudStop(); store.del('leadnode.cache'); hideModal('#setModal'); showAuth('in'); } });
 })();
 
 /* ================= actions ================= */
@@ -4416,6 +4440,173 @@ $('#fileIn').addEventListener('change', async e => {
   } catch (err) { toast('Photo upload failed: ' + err.message, true); }
   finally { upBusy--; const now = findUploader(tgt.scope, tgt.key); if (now) refreshUploader(now); }
 });
+
+/* ================= cloud database (Supabase) =================
+   After sign-in every read/write goes to Supabase. Row Level Security on the
+   server keeps each workspace's rows private — the browser only ever gets its own. */
+const SB_COLS = {
+  leads: ['lead_id', 'created_on', 'name', 'phone', 'business_name', 'business_type', 'city', 'source', 'budget', 'stage', 'tag', 'assigned_to', 'follow_up_date', 'last_contact', 'notes', 'business_photo', 'client_photo'],
+  activities: ['activity_id', 'lead_id', 'date_time', 'type', 'details', 'done_by'],
+  templates: ['template_name', 'category', 'language', 'header', 'body', 'buttons', 'meta_status'],
+  broadcasts: ['broadcast_id', 'name', 'template', 'audience_filter', 'contacts', 'sent', 'delivered', 'read', 'replies', 'scheduled_for', 'status'],
+  flows: ['flow_id', 'flow_name', 'trigger', 'status', 'flow_json', 'updated_on'],
+  team: ['member_id', 'name', 'role', 'phone', 'email', 'active'],
+};
+const SB_DATE = ['created_on', 'follow_up_date', 'last_contact'], SB_TS = ['date_time', 'updated_on', 'scheduled_for', 'time'];
+const SB_INT = ['contacts', 'sent', 'delivered', 'read', 'replies'], SB_HIDE = ['workspace_id', 'created_at', 'updated_at', 'user_id'];
+const toCamel = k => k.replace(/_([a-z])/g, (m, c) => c.toUpperCase());
+const toSnake = k => k.replace(/[A-Z]/g, c => '_' + c.toLowerCase());
+/** 'YYYY-MM-DD HH:MM' (this browser's time) → ISO; ISO passes through */
+function sbTs(v) {
+  if (!v) return null; const s = String(v);
+  if (/[zZ]|[+-]\d\d:?\d\d$/.test(s)) { const d = new Date(s); return isNaN(d) ? null : d.toISOString(); }
+  const m = s.match(/^(\d{4})-(\d{2})-(\d{2})(?:[ T](\d{2}):(\d{2}))?/); if (!m) return null;
+  return new Date(+m[1], m[2] - 1, +m[3], +(m[4] || 0), +(m[5] || 0)).toISOString();
+}
+function sbLocal(iso) { if (!iso) return ''; const d = new Date(iso); return isNaN(d) ? '' : `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`; }
+function fromRow(r) {
+  const o = {};
+  Object.keys(r).forEach(k => { if (SB_HIDE.includes(k)) return; let v = r[k]; if (SB_TS.includes(k)) v = sbLocal(v); if (v === null || v === undefined) v = ''; o[toCamel(k)] = v; });
+  return o;
+}
+function toRow(table, obj) {
+  const row = {};
+  SB_COLS[table].forEach(col => {
+    const key = toCamel(col); if (!Object.prototype.hasOwnProperty.call(obj, key)) return;
+    let v = obj[key];
+    if (SB_DATE.includes(col)) { v = /^\d{4}-\d{2}-\d{2}/.test(String(v || '')) ? String(v).slice(0, 10) : null; }
+    else if (SB_TS.includes(col)) v = sbTs(v);
+    else if (col === 'budget') { const n = Number(String(v == null ? '' : v).replace(/[^\d.]/g, '')); v = v === '' || v == null || isNaN(n) ? null : n; }
+    else if (SB_INT.includes(col)) v = Math.max(0, parseInt(v, 10) || 0);
+    else if (col === 'active') v = v === true || v === 1 || /^(true|1|yes)$/i.test(String(v));
+    else if (col === 'flow_json') v = typeof v === 'string' ? v : JSON.stringify(v || {});
+    else v = v == null ? '' : String(v);
+    row[col] = v;
+  });
+  return row;
+}
+const cleanPhone = p => { let d = String(p || '').replace(/\D/g, ''); if (d.length === 10) d = '91' + d; return d; };
+async function sbq(p) { const { data, error } = await p; if (error) throw new Error(error.message); return data; }
+async function sbAll(table, order) {
+  const cl = AUTH.client, out = [];
+  for (let from = 0; ; from += 1000) {
+    const rows = await sbq(cl.from(table).select('*').eq('workspace_id', AUTH.ws).order(order).range(from, from + 999));
+    out.push(...rows); if (rows.length < 1000) return out;
+  }
+}
+async function sbSettings() { const rows = await sbq(AUTH.client.from('settings').select('key,value').eq('workspace_id', AUTH.ws)); const o = {}; rows.forEach(r => o[r.key] = r.value); return o; }
+async function sbLog(leadId, type, details, by) {
+  const r = await sbq(AUTH.client.from('activities').insert({ workspace_id: AUTH.ws, lead_id: leadId, type, details: String(details || ''), done_by: String(by || '') }).select().single());
+  return fromRow(r);
+}
+async function sbUpsert(table, rows, conflict) {
+  for (let i = 0; i < rows.length; i += 400) await sbq(AUTH.client.from(table).upsert(rows.slice(i, i + 400).map(r => Object.assign({ workspace_id: AUTH.ws }, r)), { onConflict: 'workspace_id,' + conflict }));
+}
+async function sbApi(action, d = {}) {
+  const cl = AUTH.client, ws = AUTH.ws, T = n => cl.from(n);
+  switch (action) {
+    case 'ping': return 'pong';
+    case 'getAll': {
+      const [leads, activities, team, templates, broadcasts, flows, settings] = await Promise.all([
+        sbAll('leads', 'created_at'), sbAll('activities', 'date_time'), sbAll('team', 'member_id'), sbAll('templates', 'template_name'),
+        sbAll('broadcasts', 'broadcast_id'), sbAll('flows', 'flow_id'), sbSettings()]);
+      let stages = null; try { stages = JSON.parse(settings.stagesJson || 'null'); } catch (e) { }
+      return { leads: leads.map(fromRow), activities: activities.map(fromRow), team: team.map(fromRow), templates: templates.map(fromRow), broadcasts: broadcasts.map(fromRow), flows: flows.map(fromRow), lists: Array.isArray(stages) && stages.length ? { stages } : {}, settings };
+    }
+    case 'addLead': {
+      if (!String(d.name || '').trim()) throw new Error('Name is required');
+      const row = toRow('leads', Object.assign({ stage: 'New Lead' }, d)); delete row.lead_id; row.phone = cleanPhone(row.phone); row.workspace_id = ws;
+      if (!row.created_on) delete row.created_on;
+      const l = fromRow(await sbq(T('leads').insert(row).select().single()));
+      await sbLog(l.leadId, 'Lead Added', 'Source: ' + (l.source || '-'), d.by || l.assignedTo); return l;
+    }
+    case 'updateLead': {
+      const row = toRow('leads', d); delete row.lead_id; if ('phone' in row) row.phone = cleanPhone(row.phone);
+      const r = await sbq(T('leads').update(row).eq('workspace_id', ws).eq('lead_id', d.id).select());
+      if (!r.length) throw new Error('Lead not found'); return fromRow(r[0]);
+    }
+    case 'moveStage': {
+      const old = await sbq(T('leads').select('stage').eq('workspace_id', ws).eq('lead_id', d.id).maybeSingle()); if (!old) throw new Error('Lead not found');
+      const r = await sbq(T('leads').update({ stage: d.stage, last_contact: todayStr() }).eq('workspace_id', ws).eq('lead_id', d.id).select().single());
+      await sbLog(d.id, 'Stage Changed', old.stage + ' → ' + d.stage, d.by); return fromRow(r);
+    }
+    case 'deleteLead': await sbq(T('leads').delete().eq('workspace_id', ws).eq('lead_id', d.id)); return { deleted: d.id };
+    case 'addActivity': {
+      const a = await sbLog(d.leadId, d.type, d.details, d.doneBy);
+      await sbq(T('leads').update({ last_contact: todayStr() }).eq('workspace_id', ws).eq('lead_id', d.leadId)); return a;
+    }
+    case 'saveFlow': {
+      const row = toRow('flows', Object.assign({}, d, { updatedOn: nowStr() })); row.workspace_id = ws;
+      if (!row.flow_id) { delete row.flow_id; return fromRow(await sbq(T('flows').insert(row).select().single())); }
+      return fromRow(await sbq(T('flows').upsert(row, { onConflict: 'workspace_id,flow_id' }).select().single()));
+    }
+    case 'deleteFlow': await sbq(T('flows').delete().eq('workspace_id', ws).eq('flow_id', d.id)); return { deleted: d.id };
+    case 'saveTemplate': {
+      const row = toRow('templates', d); row.workspace_id = ws; row.template_name = String(row.template_name || '').toLowerCase().replace(/[^a-z0-9_]+/g, '_').slice(0, 512);
+      if (!row.template_name) throw new Error('Template name is required');
+      return fromRow(await sbq(T('templates').upsert(row, { onConflict: 'workspace_id,template_name' }).select().single()));
+    }
+    case 'addTeamMember': { const row = toRow('team', Object.assign({ active: true }, d)); delete row.member_id; row.workspace_id = ws; return fromRow(await sbq(T('team').insert(row).select().single())); }
+    case 'updateTeamMember': {
+      const row = toRow('team', d); delete row.member_id;
+      const r = await sbq(T('team').update(row).eq('workspace_id', ws).eq('member_id', d.id).select()); if (!r.length) throw new Error('Member not found'); return fromRow(r[0]);
+    }
+    case 'saveSettings': {
+      const rows = Object.keys(d).filter(k => /^[A-Za-z0-9_]{1,40}$/.test(k)).map(k => ({ key: k, value: String(d[k] == null ? '' : d[k]).slice(0, 20000) }));
+      if (rows.length) await sbUpsert('settings', rows, 'key'); return sbSettings();
+    }
+    case 'saveStages': {
+      const list = (d.stages || []).map(x => String(x).trim()).filter(Boolean).slice(0, 29); if (!list.length) throw new Error('No stages given');
+      await sbUpsert('settings', [{ key: 'stagesJson', value: JSON.stringify(list) }], 'key'); return list;
+    }
+    case 'uploadImage': {
+      const type = d.mimeType === 'image/png' ? 'image/png' : 'image/jpeg', blob = await (await fetch(d.base64)).blob();
+      const path = `${ws}/${String(d.kind || 'photo').replace(/\W/g, '')}-${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${type === 'image/png' ? 'png' : 'jpg'}`;
+      const up = await cl.storage.from('media').upload(path, blob, { contentType: type, cacheControl: '31536000' }); if (up.error) throw new Error(up.error.message);
+      return { fileId: path, url: cl.storage.from('media').getPublicUrl(path).data.publicUrl };
+    }
+    case 'sendText': case 'sendTemplate': throw new Error('Sending WhatsApp from the cloud is being set up — use the WhatsApp button for now.');
+  }
+  throw new Error('Unknown action: ' + action);
+}
+/** After sign-in: find (or create on first login) this user's workspace */
+async function cloudStart() {
+  const cl = await authClient(), u = AUTH.session.user, meta = u.user_metadata || {};
+  const { data, error } = await cl.rpc('ensure_workspace', { p_business: meta.business_name || '', p_name: meta.full_name || meta.name || '' });
+  if (error) throw new Error(/ensure_workspace|schema cache|does not exist/i.test(error.message) ? 'The database is not set up yet — run the Nodevers SQL in Supabase first.' : error.message);
+  AUTH.ws = data.workspace_id; AUTH.role = data.role; AUTH.wsName = data.name;
+  cloud = true; demo = false;
+}
+function cloudStop() { cloud = false; AUTH.ws = null; AUTH.role = null; demo = !(settings.url && settings.key); }
+/** One-time move: Google Sheet → cloud (keeps your IDs like L001) */
+async function importSheet() {
+  if (!cloud) return toast('Sign in first', true);
+  if (!(settings.url && settings.key)) return toast('No Google Sheet is connected on this browser', true);
+  const b = $('#sbImport'); b.disabled = true; b.textContent = 'Reading your Sheet…';
+  try {
+    const d = await callApi(settings, 'getAll');
+    // every row gets every column (missing → empty), so one batch never mixes shapes
+    const full = (t, o) => toRow(t, Object.assign(Object.fromEntries(SB_COLS[t].map(c => [toCamel(c), ''])), o));
+    const leads = (d.leads || []).filter(l => l.leadId).map(l => Object.assign(full('leads', Object.assign({}, l, { name: String(l.name || '').trim() || 'Unnamed' })), { phone: cleanPhone(l.phone) }));
+    leads.forEach(r => { if (!r.created_on) r.created_on = todayStr(); });
+    const ids = new Set(leads.map(l => l.lead_id));
+    const acts = (d.activities || []).filter(a => a.activityId && ids.has(String(a.leadId))).map(a => full('activities', a));
+    acts.forEach(r => { if (!r.date_time) r.date_time = new Date().toISOString(); });
+    const team = (d.team || []).filter(m => m.memberId && String(m.name || '').trim()).map(m => full('team', m));
+    const tpls = (d.templates || []).filter(t => t.templateName).map(t => { const r = full('templates', t); r.template_name = r.template_name.toLowerCase().replace(/[^a-z0-9_]+/g, '_'); return r; });
+    const flows = (d.flows || []).filter(f => f.flowId).map(f => full('flows', f));
+    flows.forEach(r => { if (!r.updated_on) r.updated_on = new Date().toISOString(); });
+    const st = Object.assign({}, d.settings || {}); if (d.lists && Array.isArray(d.lists.stages) && d.lists.stages.length) st.stagesJson = JSON.stringify(d.lists.stages);
+    b.textContent = `Copying ${leads.length} leads…`;
+    await sbUpsert('leads', leads, 'lead_id'); await sbUpsert('activities', acts, 'activity_id');
+    await sbUpsert('team', team, 'member_id'); await sbUpsert('templates', tpls, 'template_name'); await sbUpsert('flows', flows, 'flow_id');
+    await sbApi('saveSettings', st);
+    store.set('leadnode.imported', { at: Date.now(), leads: leads.length });
+    toast(`✓ Moved ${leads.length} leads, ${acts.length} journey entries, ${team.length} team members, ${flows.length} flows`);
+    hideModal('#setModal'); load();
+  } catch (e) { toast('Import stopped: ' + e.message + ' — nothing is lost, you can run it again.', true); }
+  finally { b.disabled = false; b.textContent = 'Move my Google Sheet data here'; }
+}
 
 /* ================= branding (logo, name, profile) ================= */
 const DEFAULT_BRAND = { brandName: 'Nodevers', logoUrl: '', userName: 'Shivam', userPhoto: '' };
@@ -4742,7 +4933,7 @@ $('#dstage').onchange = e => { ui.stage = e.target.value; renderDashboard(); };
 $('#pfilter').onchange = e => { ui.pfilter = e.target.value; renderPipeline(); };
 $('#refreshBtn').onclick = () => { load(true).then(() => toast('Data refreshed')); };
 $('#bellBtn').onclick = () => { ui.tab = 'due'; go('dashboard'); renderDashboard(); };
-$('#sideSettings').onclick = () => openSettings(); $('#bannerSettings').onclick = () => openSettings('conn'); $('#meBtn').onclick = () => openSettings('brand');
+$('#sideSettings').onclick = () => openSettings(); $('#bannerSettings').onclick = () => sbConf().url ? showAuth('up') : openSettings('conn'); $('#meBtn').onclick = () => openSettings('brand');
 function setTheme(t) { document.documentElement.dataset.theme = t; store.set('leadnode.theme', t); }
 $('#themeBtn').onclick = $('#mThemeBtn').onclick = () => setTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark');
 $('#mSetBtn').onclick = () => openSettings();
