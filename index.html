@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>LeadNode CRM</title>
+<title>NodeVers CRM</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -163,6 +163,9 @@ textarea.input{min-height:84px;resize:vertical}
 .canvas{position:relative;height:calc(100vh - 190px);min-height:520px;overflow:hidden;border-radius:var(--r-panel);cursor:grab;touch-action:none;
   background-color:var(--glass);background-image:radial-gradient(var(--grid-dot) 1.2px,transparent 1.3px);background-size:22px 22px;border:1px solid var(--stroke);box-shadow:var(--shadow)}
 .canvas.panning{cursor:grabbing}
+.fchip{display:inline-flex;align-items:center;gap:6px;padding:6px 6px 6px 12px;border-radius:var(--r-ctl);background:var(--yellow-soft);border:1px solid color-mix(in srgb,var(--yellow) 50%,transparent);font-size:12.5px;font-weight:600;white-space:nowrap}
+.fchip button{border:0;background:transparent;width:24px;height:24px;border-radius:6px;display:grid;place-items:center;color:var(--text);cursor:pointer}.fchip button:hover{background:var(--line)}
+.fchip .i{width:14px;height:14px}
 .marquee{position:absolute;display:none;z-index:6;border:1.5px dashed var(--blue-2);background:rgba(111,143,232,.10);border-radius:4px;pointer-events:none}
 .canvas-like{cursor:default}
 .canvas-like.panning,.canvas-like.hand{cursor:grab}
@@ -544,7 +547,108 @@ textarea.input.code{min-height:320px}
 .n8where b{font-size:12.5px}.n8where p{margin:0;font-size:12.5px;color:var(--muted);line-height:1.45}
 .input.need{border-color:color-mix(in srgb,var(--coral) 60%,transparent)}
 :root:not([data-theme="dark"]) .n8keyst{color:#B3263A}:root:not([data-theme="dark"]) .n8keyst.ok{color:#1B7246}
+
+.n8check{display:grid;grid-template-columns:minmax(200px,1fr) 2fr;gap:18px;align-items:center;padding:14px 18px;margin-bottom:14px;border-color:color-mix(in srgb,var(--blue-2) 40%,var(--stroke))}
+.n8check ol{list-style:none;margin:0;padding:0;display:flex;gap:8px;flex-wrap:wrap}
+.n8check li{display:flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;padding:6px 10px;border-radius:var(--r-ctl);background:var(--glass);border:1px solid var(--line-2)}
+.n8check li span{width:18px;height:18px;border-radius:50%;border:2px solid var(--line-2);display:grid;place-items:center;font-size:10px;font-weight:800}
+.n8check li.ok{color:var(--muted)}.n8check li.ok span{background:var(--green);border-color:var(--green);color:#fff}
+.sched th.today,.sched td.today{background:var(--blue-soft)}
+.sch{display:inline-block;padding:3px 8px;border-radius:6px;background:var(--blue-2);color:#fff;font-size:12px;font-weight:700}
+.n8evt{padding:14px 18px;margin-top:14px;display:flex;flex-direction:column;gap:8px}
+.n8evt-i{display:flex;align-items:center;gap:10px;font-size:13px;flex-wrap:wrap}
+.n8sum{display:flex;align-items:center;gap:12px;padding:14px 18px;margin-bottom:14px}
+.n8sum b{display:block;font-size:15px}.n8sum small{font-size:12px}
+.dotlg{width:14px;height:14px;border-radius:50%;background:var(--green);box-shadow:0 0 0 5px var(--green-soft)}
+.n8sum.warn .dotlg{background:var(--yellow);box-shadow:0 0 0 5px var(--yellow-soft)}.n8sum.bad .dotlg{background:var(--coral);box-shadow:0 0 0 5px var(--coral-soft)}
+.n8stat{padding:6px 0}
+.n8srow{display:grid;grid-template-columns:minmax(180px,1.2fr) 2fr 70px;gap:14px;align-items:center;padding:12px 16px;border-bottom:1px solid var(--line)}
+.n8sname{display:flex;flex-direction:column;gap:4px;align-items:flex-start}.n8sname b{font-size:13.5px}
+.n8days{display:grid;grid-template-columns:repeat(14,minmax(0,1fr));gap:3px}
+.n8days i{height:26px;border-radius:4px;background:var(--line-2)}
+.n8days i.ok{background:var(--green)}.n8days i.warn{background:var(--yellow)}.n8days i.bad{background:var(--coral)}
+.n8rate{font-size:12px;text-align:right}
+.n8rep-bar{display:flex;align-items:center;gap:10px;margin-bottom:12px}.n8rep-bar .grow{flex:1}
+.n8rep{padding:24px;display:flex;flex-direction:column;gap:18px;max-width:900px}
+.n8rep .rh{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}.n8rep h2{margin:4px 0 2px;font-size:24px}
+.n8rep .rk{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+.n8rep .rk div{padding:12px;border-radius:var(--r-ctl);background:var(--glass);border:1px solid var(--line)}.n8rep .rk small{display:block;font-size:11.5px;color:var(--muted)}.n8rep .rk b{font-size:20px}
+.n8rep .rf{font-size:12px;margin:0}
+.n8steps li.clk{cursor:pointer}.n8steps li.clk:hover,.n8steps li.on{outline:2px solid var(--blue-soft);background:var(--blue-soft)}
+@media (max-width:820px){.n8check{grid-template-columns:1fr}.n8srow{grid-template-columns:1fr}.n8rate{text-align:left}.n8rep .rk{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media print{body.print-report *{visibility:hidden!important}body.print-report #n8Report,body.print-report #n8Report *{visibility:visible!important}body.print-report #n8Report{position:absolute;left:0;top:0;width:100%;max-width:none;box-shadow:none;border:0;background:#fff;color:#111}body.print-report{background:#fff!important}}
 @keyframes pulseRun{50%{box-shadow:0 0 0 8px rgba(111,143,232,.08)}}
+
+/* ---------- AI workflow generator ---------- */
+.gen{padding:16px 18px;margin-bottom:14px;display:flex;flex-direction:column;gap:12px;border-color:color-mix(in srgb,#B08CEB 45%,var(--stroke))}
+.gen-top{display:flex;align-items:center;gap:12px}.gen-top b{display:block;font-size:15px}.gen-top small{font-size:12.5px}.gen-top .badge{margin-left:auto}
+.gen-ai{flex:none;width:34px;height:34px;border-radius:10px;display:grid;place-items:center;color:#fff;font-size:16px;background:linear-gradient(135deg,#B08CEB,#6F8FE8)}
+.gen-row{display:flex;gap:10px;align-items:stretch}.gen-row textarea{flex:1;min-height:52px;resize:vertical}.gen-row .btn{align-self:stretch;justify-content:center}
+.gen-ex{display:flex;gap:6px;flex-wrap:wrap;align-items:center;font-size:12px}
+.gen-chip{border:1px solid var(--line-2);background:var(--glass-2);border-radius:999px;padding:5px 11px;font-size:12px;color:var(--text);cursor:pointer;text-align:left}
+.gen-chip:hover{border-color:#B08CEB;background:var(--glass-3)}
+.gen-res{display:flex;flex-direction:column;gap:12px;padding:14px;border-radius:var(--r-panel);background:var(--glass);border:1px solid var(--line)}
+.gen-h{display:flex;gap:10px;align-items:center}.gen-h b{display:block}.gen-h small{font-size:12px}
+.gen-steps{list-style:none;margin:0;padding:0;display:flex;gap:8px;flex-wrap:wrap}
+.gen-steps li{display:flex;align-items:center;gap:8px;padding:8px 12px 8px 8px;border-radius:var(--r-ctl);background:var(--glass-3);border:1px solid var(--line-2);position:relative}
+.gen-steps li+li::before{content:"";position:absolute;left:-9px;top:50%;width:10px;border-top:1.5px solid var(--blue)}
+.gen-steps b{display:block;font-size:12.5px}.gen-steps small{font-size:11.5px}
+.gs-ic{flex:none;width:24px;height:24px;border-radius:6px;display:grid;place-items:center;color:#fff;font-size:11px;font-weight:800;background:var(--c)}
+.gen-ask{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px}.gen-ask .sec-t{grid-column:1/-1}
+.gen-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.gen-actions .grow{flex:1}
+@media (max-width:820px){.gen-row{flex-direction:column}}
+
+/* ---------- industry kits ---------- */
+.indgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.indcard{display:flex;flex-direction:column;align-items:flex-start;gap:6px;padding:18px;text-align:left;cursor:pointer;color:var(--text);position:relative;transition:border-color .15s,transform .15s}
+.indcard:hover{border-color:var(--c)}.indcard.on{border-color:var(--c);box-shadow:0 0 0 3px color-mix(in srgb,var(--c) 20%,transparent),var(--shadow)}
+.indcard b{font-size:16px}.indcard small{font-size:12.5px;line-height:1.4}.indcard .badge{position:absolute;top:14px;right:14px}
+.indic{width:40px;height:40px;border-radius:11px;display:grid;place-items:center;font-weight:800;font-size:17px;color:#fff;background:var(--c);margin-bottom:4px}
+.indic.sm{display:inline-grid;width:28px;height:28px;font-size:13px;vertical-align:middle;margin:0 6px 0 0}
+.indmeta{font-size:11.5px;color:var(--muted);font-weight:600;margin-top:4px}
+.indprev{display:flex;flex-direction:column;gap:8px}
+.indsec{display:grid;grid-template-columns:22px 1fr;gap:10px;padding:10px 12px;border:1px solid var(--line-2);border-radius:var(--r-ctl);background:var(--glass);cursor:pointer}
+.indsec input{margin-top:3px}.indsec b{display:block;font-size:13.5px;margin-bottom:4px}.indsec small{display:block;font-size:12px;line-height:1.45}
+.indchain{display:flex;flex-wrap:wrap;gap:4px;margin:4px 0}.indchain span{font-size:11.5px;font-weight:700;padding:3px 8px;border-radius:6px;background:var(--glass-3);border:1px solid var(--line-2)}
+.indflow{color:var(--text)!important;padding:3px 0}.indflow::before{content:"⚡ ";color:var(--blue-2)}
+.indwa{display:flex;flex-direction:column;gap:2px;margin:6px 0;padding:8px 10px;border-radius:8px;background:color-mix(in srgb,var(--wa) 8%,var(--glass-3));font-size:12px}
+.indwa code{font-size:11px;color:var(--muted)}
+.indtasks{padding:14px 18px;margin-bottom:14px;display:flex;flex-direction:column;gap:8px}
+
+/* ---------- analytics ---------- */
+.anstats{grid-template-columns:repeat(4,minmax(0,1fr));margin-bottom:14px}
+.wlrow{margin-bottom:6px}.wlcolor{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.wlcolor input[type=color]{width:42px;height:34px;border:1px solid var(--line);border-radius:8px;background:none;padding:2px;cursor:pointer}
+.wlsub{display:flex;align-items:center;gap:6px}.wlsub .input{min-width:0;flex:1}
+#stab-wl .chk{display:flex;align-items:center;gap:8px;font-size:13px;margin-top:8px;cursor:pointer}
+.tbl.dns code{font-size:12px;word-break:break-all}.tbl.dns td{vertical-align:top}
+.powered{font-size:11px;color:var(--muted);padding:6px 12px;opacity:.8}.side .powered.lbl{opacity:0}.side:hover .powered.lbl{opacity:.8}
+#stab-wl .field{margin-bottom:10px}#stab-wl>.help:first-child{margin-top:0}
+@media (max-width:600px){#setModal .seg{flex-wrap:wrap}#setModal .segb{flex:1 1 40%}}.auth-pow{text-align:center;margin:10px 0 0}#authSideSub{margin:-14px 0 0;font-size:15px}
+@media (max-width:600px){#stab-wl .form{grid-template-columns:1fr!important}}
+.srcTag{font-style:normal;font-size:10px;font-weight:700;padding:1px 5px;border-radius:4px;margin-left:4px;vertical-align:1px}
+.srcTag.real{background:var(--green-soft);color:var(--green)}.srcTag.sample{background:var(--line);color:var(--muted)}
+.rcard.span2{grid-column:1/-1}
+.wchart{display:flex;align-items:flex-end;gap:10px;height:190px;padding-top:6px}
+.wcol{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:5px;height:100%;min-width:0}
+.wcol .v{font-size:11.5px;font-weight:700}.wcol .m{font-size:11px;color:var(--muted);white-space:nowrap}
+.wbar{width:100%;max-width:46px;background:var(--blue-2);border-radius:4px 4px 0 0;transform-origin:bottom}
+.wcol:hover .wbar{background:var(--blue)}
+.anfun{display:flex;flex-direction:column;gap:10px}
+.anf{position:relative;display:flex;justify-content:space-between;align-items:center;padding:10px 12px;border-radius:var(--r-ctl);background:var(--glass);border:1px solid var(--line);overflow:hidden;font-size:13px}
+.anf-bar{position:absolute;left:0;top:0;bottom:0;background:var(--blue-soft)}
+.anf span,.anf b{position:relative}
+@media (max-width:1100px){.anstats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (prefers-reduced-motion:no-preference){.stagger .wbar{animation:colIn .8s cubic-bezier(.3,.8,.3,1) both;animation-delay:calc(var(--i,0)*50ms)}}
+:root:not([data-theme="dark"]) .srcTag.real{color:#1B7246}
+/* ---------- AI lead summary ---------- */
+.aisum{padding:14px;border-radius:var(--r-panel);background:linear-gradient(135deg,color-mix(in srgb,#B08CEB 12%,var(--glass-3)),color-mix(in srgb,#6F8FE8 8%,var(--glass-3)));border:1px solid color-mix(in srgb,#B08CEB 35%,var(--line-2));display:flex;flex-direction:column;gap:10px}
+.aisum-h{display:flex;align-items:center;gap:10px}.aisum-h b{flex:1;font-size:14px}.aisum-h .gen-ai{width:28px;height:28px;font-size:13px}
+.aisum p{margin:0;font-size:13px;line-height:1.5}
+.aisum-rec{display:flex;flex-direction:column;gap:2px;padding:10px 12px;border-radius:var(--r-ctl);background:var(--glass-3);border:1px solid var(--line)}
+.aisum-rec b{font-size:11.5px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}.aisum-rec span{font-size:13px;font-weight:600}
+.aisum-act{display:flex;gap:6px;flex-wrap:wrap}
+.aisum small{font-size:11px}
 
 /* ---------- side panel ---------- */
 .scrim{position:fixed;inset:0;background:rgba(15,18,28,.25);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);opacity:0;pointer-events:none;transition:.2s;z-index:40}
@@ -806,11 +910,12 @@ textarea.input.code{min-height:320px}
 <body>
 <div class="app">
   <aside class="side" id="side">
-    <div class="side-brand"><div class="logo brand-logo"><svg class="i" viewBox="0 0 24 24" style="width:22px;height:22px"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="12" r="2.5"/><circle cx="6" cy="18" r="2.5"/><path d="M8.3 7.2 15.7 11M8.3 16.8 15.7 13"/></svg></div><span class="lbl brandTxt">LeadNode</span></div>
+    <div class="side-brand"><div class="logo brand-logo"><svg class="i" viewBox="0 0 24 24" style="width:22px;height:22px"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="12" r="2.5"/><circle cx="6" cy="18" r="2.5"/><path d="M8.3 7.2 15.7 11M8.3 16.8 15.7 13"/></svg></div><span class="lbl brandTxt">NodeVers</span></div>
     <div class="sgrp">CRM</div>
     <button class="sbtn" data-go="dashboard"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg><span class="lbl">Dashboard</span></button>
     <button class="sbtn" data-go="pipeline"><svg class="i" viewBox="0 0 24 24"><circle cx="5" cy="6" r="2"/><circle cx="19" cy="6" r="2"/><circle cx="12" cy="18" r="2"/><path d="M7 6h10M6 8l5 8.3M18 8l-5 8.3"/></svg><span class="lbl">Pipeline</span></button>
     <button class="sbtn" data-go="leads"><svg class="i" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13"/><circle cx="3.5" cy="6" r="1"/><circle cx="3.5" cy="12" r="1"/><circle cx="3.5" cy="18" r="1"/></svg><span class="lbl">Leads</span></button>
+    <button class="sbtn" data-go="industry"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M17.5 14v7M14 17.5h7"/></svg><span class="lbl">Industry Kits</span></button>
     <div class="sgrp">WhatsApp</div>
     <button class="sbtn" data-go="whatsapp"><svg class="i" viewBox="0 0 24 24"><path d="M3.5 20.5 5 16a8.5 8.5 0 1 1 3.2 3.2Z"/><path d="M9 9.5c0 3 2.5 5.5 5.5 5.5l1.2-1.4-1.9-1-1 .8a4 4 0 0 1-2.2-2.2l.8-1-1-1.9Z"/></svg><span class="lbl">Inbox</span></button>
     <button class="sbtn" data-go="broadcast"><svg class="i" viewBox="0 0 24 24"><path d="m3 11 18-8-8 18-2-8Z"/></svg><span class="lbl">Broadcast</span></button>
@@ -822,32 +927,36 @@ textarea.input.code{min-height:320px}
     <div class="sgrp">Marketing</div>
     <button class="sbtn" data-go="ads"><svg class="i" viewBox="0 0 24 24"><path d="M3 11v2a1 1 0 0 0 1 1h2l5 4V6L6 10H4a1 1 0 0 0-1 1Z"/><path d="M15 8.5a4.5 4.5 0 0 1 0 7M18 5.5a8.5 8.5 0 0 1 0 13"/></svg><span class="lbl">Meta Ads</span></button>
     <div class="sgrp">Insights</div>
+    <button class="sbtn" data-go="analytics"><svg class="i" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="m7 15 4-5 3 3 5-6"/></svg><span class="lbl">Analytics</span></button>
     <button class="sbtn" data-go="reports"><svg class="i" viewBox="0 0 24 24"><path d="M3 3v18h18"/><rect x="7" y="12" width="3" height="6" rx=".8"/><rect x="12" y="8" width="3" height="10" rx=".8"/><rect x="17" y="5" width="3" height="13" rx=".8"/></svg><span class="lbl">Reports</span></button>
     <button class="sbtn" data-go="team"><svg class="i" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4.5a3.5 3.5 0 0 1 0 7M18 14a6 6 0 0 1 3.5 6"/></svg><span class="lbl">Team</span></button>
     <div class="spacer" style="flex:1;min-height:12px"></div>
+    <div class="powered lbl">Powered by <b>NodeVers</b></div>
     <button class="sbtn" id="themeBtn"><svg class="i" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 1 1 9.5 4 6.5 6.5 0 0 0 20 14.5Z"/></svg><span class="lbl">Dark / Light</span></button>
     <button class="sbtn" id="sideSettings"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z"/></svg><span class="lbl">Settings</span></button>
   </aside>
 
   <main class="main">
     <header class="top glass">
-      <div class="brand" id="brandBox" data-go="dashboard"><span id="brandName">LeadNode</span> <small>CRM</small></div>
+      <div class="brand" id="brandBox" data-go="dashboard"><span id="brandName">NodeVers</span> <small>CRM</small></div>
       <nav class="nav" id="nav">
         <a href="#dashboard" data-go="dashboard">Dashboard</a>
         <a href="#pipeline" data-go="pipeline">Pipeline</a>
         <a href="#leads" data-go="leads">Leads</a>
+        <a href="#industry" data-go="industry" class="mob">Kits</a>
         <a href="#whatsapp" data-go="whatsapp">WhatsApp</a>
         <a href="#broadcast" data-go="broadcast" class="mob">Broadcast</a>
         <a href="#automation" data-go="automation" class="mob">Automation</a>
         <a href="#ads" data-go="ads">Ads</a>
         <a href="#n8n" data-go="n8n" class="mob">n8n</a>
-        <a href="#reports" data-go="reports">Reports</a>
+        <a href="#analytics" data-go="analytics">Analytics</a>
+        <a href="#reports" data-go="reports" class="mob">Reports</a>
         <a href="#team" data-go="team" class="mob">Team</a>
         <a href="#templates" data-go="templates" class="mob">Templates</a>
         <a href="#scripts" data-go="scripts" class="mob">Scripts</a>
       </nav>
       <div class="grow"></div>
-      <label class="search"><svg class="i" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="gsearch" placeholder="Search leads, business, city…"></label>
+      <label class="search"><svg class="i" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="gsearch" type="search" name="q-gsearch" autocomplete="off" readonly data-noautofill placeholder="Search leads, business, city…"></label>
       <button class="ibtn" id="refreshBtn" title="Refresh data"><svg class="i" viewBox="0 0 24 24"><path d="M20 11a8 8 0 0 0-14.6-4.5L4 8M4 4v4h4M4 13a8 8 0 0 0 14.6 4.5L20 16M20 20v-4h-4"/></svg></button>
       <button class="ibtn" id="bellBtn" title="Follow-ups due"><svg class="i" viewBox="0 0 24 24"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10.3 21a1.9 1.9 0 0 0 3.4 0"/></svg><span class="dot-badge" id="bellDot" hidden></span></button>
       <button class="ibtn mobonly" id="mThemeBtn" title="Dark / Light"><svg class="i" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 1 1 9.5 4 6.5 6.5 0 0 0 20 14.5Z"/></svg></button>
@@ -874,7 +983,7 @@ textarea.input.code{min-height:320px}
       <div class="toolbar glass">
         <div class="tabs" id="dtabs"></div>
         <div class="grow"></div>
-        <label class="search"><svg class="i" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="dsearch" placeholder="Search leads…"></label>
+        <label class="search"><svg class="i" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="dsearch" type="search" name="q-dsearch" autocomplete="off" readonly data-noautofill placeholder="Search leads…"></label>
         <select class="input" id="dstage" style="width:auto"></select>
         <button class="btn primary" data-add><svg class="i" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Add Lead</button>
       </div>
@@ -889,7 +998,9 @@ textarea.input.code{min-height:320px}
         <div class="grow"></div>
         <button class="btn" id="addNodeBtn" data-tip="New stage / preset node (shortcut: Tab)"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="7" width="8" height="10" rx="1.5"/><path d="M11 12h4M18 9v6M15 12h6"/></svg>Node</button>
         <button class="btn" id="autoBtn" data-tip="Arrange nodes along their wires"><svg class="i" viewBox="0 0 24 24"><path d="m15 4 1.5 3L20 8.5 16.5 10 15 13l-1.5-3L10 8.5 13.5 7ZM6 13l1 2 2 1-2 1-1 2-1-2-2-1 2-1Z"/></svg>Auto Arrange</button>
+        <span class="fchip" id="pchip" hidden></span>
         <select class="input" id="pfilter" style="width:auto"></select>
+        <button class="btn" id="pImport" data-tip="Bring in your existing clients from a CSV / Excel sheet"><svg class="i" viewBox="0 0 24 24"><path d="M12 15V3M7 8l5-5 5 5M4 15v4a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4"/></svg>Import</button>
         <button class="btn primary" data-add><svg class="i" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Add Lead</button>
       </div>
       <div class="canvas" id="canvas">
@@ -926,7 +1037,7 @@ textarea.input.code{min-height:320px}
         </div>
       </div>
       <div class="toolbar glass">
-        <label class="search" style="flex:1"><svg class="i" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="lsearch" placeholder="Name, phone, business, city…"></label>
+        <label class="search" style="flex:1"><svg class="i" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="lsearch" type="search" name="q-lsearch" autocomplete="off" readonly data-noautofill placeholder="Name, phone, business, city…"></label>
         <select class="input" id="lfStage" style="width:auto"></select>
         <select class="input" id="lfTag" style="width:auto"></select>
         <select class="input" id="lfSource" style="width:auto"></select>
@@ -955,6 +1066,19 @@ textarea.input.code{min-height:320px}
       <div class="head"><div><div class="eyebrow">WhatsApp</div><h1>Templates</h1><p class="sub">Bulk messages can only use Meta-approved templates.</p></div></div>
       <div class="banner" style="background:var(--blue-soft);border-color:var(--stroke)"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg><div class="grow">Creating templates and getting them approved by Meta will be added here soon. For now these come from the Templates tab in your Sheet.</div></div>
       <div class="tplgrid" id="tplgrid"></div>
+    </section>
+
+    <!-- UNIFIED ANALYTICS -->
+    <section class="view" id="v-analytics">
+      <div class="head"><div><div class="eyebrow">Insights</div><h1>Analytics</h1><p class="sub">Ads, leads, WhatsApp, appointments and revenue in one view.</p></div>
+        <div class="adhead-r"><select class="input" id="anRange" style="width:auto"><option value="7">Last 7 days</option><option value="30">Last 30 days</option><option value="60">Last 60 days</option></select></div></div>
+      <div id="anBody"></div>
+    </section>
+
+    <!-- INDUSTRY KITS -->
+    <section class="view" id="v-industry">
+      <div class="head"><div><div class="eyebrow">Get started</div><h1>Industry Kits</h1><p class="sub">Pick your industry — pipeline, lead sources, automations, WhatsApp templates and a setup checklist are ready in one click.</p></div></div>
+      <div id="indBody"></div>
     </section>
 
     <!-- n8n SERVICES -->
@@ -1023,6 +1147,12 @@ textarea.input.code{min-height:320px}
       <ul><li>Pick an audience (stage, city, tag)</li><li>Approved template + phone preview</li><li>Cost estimate and Sent / Read report</li></ul></div></section>
     <section class="view" id="v-automation">
       <div class="head"><div><div class="eyebrow">WhatsApp</div><h1>Automation</h1><p class="sub">n8n-style flows: triggers, WhatsApp, CRM, AI, Meta and n8n webhook nodes on one canvas.</p></div></div>
+      <div class="gen glass">
+        <div class="gen-top"><span class="gen-ai">✦</span><div><b>Build with AI</b><small class="muted">Describe what should happen — in English or Hinglish. No n8n, webhooks or APIs needed.</small></div><span class="badge">Preview</span></div>
+        <div class="gen-row"><textarea class="input" id="genIn" rows="2" placeholder="e.g. When a Facebook lead arrives, send a WhatsApp message and create a task"></textarea><button class="btn primary" id="genGo">✦ Generate</button></div>
+        <div class="gen-ex"><span class="muted">Try:</span><button class="gen-chip" data-genex="0">When a Facebook lead arrives, send a WhatsApp message and create a task</button><button class="gen-chip" data-genex="1">New lead with budget above 1 lakh: tag Hot, assign to the team and send WhatsApp template</button><button class="gen-chip" data-genex="2">When a WhatsApp message arrives, reply with AI and save the lead to the CRM</button><button class="gen-chip" data-genex="3">Every day at 10am send me a report on WhatsApp</button><button class="gen-chip" data-genex="4">When a lead moves to Won, send a thank-you WhatsApp and wait 7 days then ask for a review</button></div>
+        <div id="genOut" hidden></div>
+      </div>
       <div class="fx-host" id="autoCanvas"></div>
     </section>
   </main>
@@ -1038,9 +1168,9 @@ textarea.input.code{min-height:320px}
 <!-- SETTINGS MODAL -->
 <div class="modal" id="setModal"><div class="box narrow">
   <div class="m-head"><h2>Settings</h2><button class="ibtn" data-close><svg class="i" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
-  <div class="seg"><button class="segb" data-stab="brand">Branding & Profile</button><button class="segb" data-stab="conn">Connection</button><button class="segb" data-stab="acct">Accounts</button></div>
+  <div class="seg"><button class="segb" data-stab="brand">Branding</button><button class="segb" data-stab="conn">Connection</button><button class="segb" data-stab="acct">Accounts</button><button class="segb" data-stab="wl">White label</button></div>
   <div class="stab" id="stab-brand">
-    <div class="brand-row"><div id="upLogo"></div><div class="field"><label>Website name</label><input class="input" id="bName" maxlength="40" placeholder="LeadNode"></div></div>
+    <div class="brand-row"><div id="upLogo"></div><div class="field"><label>Website name</label><input class="input" id="bName" maxlength="40" placeholder="NodeVers"></div></div>
     <div class="brand-row"><div id="upPhoto"></div><div class="field"><label>Your name (profile)</label><input class="input" id="pName" maxlength="40" placeholder="Shivam"></div></div>
     <p class="help" id="brandHelp">Pick a logo and photo from your gallery. They are saved to your Google Sheet (Settings tab) and Drive, so every device shows the same.</p>
     <div class="m-foot"><div class="grow"></div><button class="btn primary" id="bSave">Save</button></div>
@@ -1075,13 +1205,29 @@ textarea.input.code{min-height:320px}
       <button class="btn primary" id="sbSave">Save</button>
     </div>
   </div>
+  <div class="stab" id="stab-wl" hidden>
+    <p class="help">Resell this platform under your own brand. Logo and name are in the <b>Branding</b> tab; colours, login screen and domain are here.</p>
+    <div class="wlrow"><div class="field"><label>Brand colour (links, highlights)</label><div class="wlcolor"><input type="color" id="wlAccent" value="#6F8FE8"><div class="swatches" id="wlSw"></div></div></div></div>
+    <div class="wlrow"><div class="field"><label>Button colour</label><div class="wlcolor"><input type="color" id="wlButton" value="#111318"><button type="button" class="btn sm" id="wlReset">Reset colours</button></div></div></div>
+    <div class="field"><label>Login headline</label><input class="input" id="wlHead" maxlength="120" placeholder="Leads, WhatsApp and Meta ads — one node-based workspace."></div>
+    <div class="field"><label>Login sub-text (optional)</label><input class="input" id="wlSub" maxlength="200" placeholder="The growth platform by Your Agency"></div>
+    <label class="chk"><input type="checkbox" id="wlHide"> Remove “Powered by NodeVers” everywhere</label>
+    <div class="form" style="grid-template-columns:1fr 1fr;margin-top:10px">
+      <div class="field"><label>Free sub-domain</label><div class="wlsub"><input class="input" id="wlSubdomain" maxlength="32" placeholder="youragency"><span class="muted">.nodevers.app</span></div></div>
+      <div class="field"><label>Custom domain</label><input class="input" id="wlDomain" maxlength="80" placeholder="crm.youragency.com"></div>
+    </div>
+    <div id="wlDns"></div>
+    <p class="help">Preview: domains, SSL and hosting go live with the Supabase launch. DNS check below is real.</p>
+    <div class="m-foot" style="flex-wrap:wrap"><button class="btn" id="wlCheck" type="button">Check DNS</button><button class="btn" id="wlPreview" type="button">Preview login page</button><div class="grow"></div><button class="btn primary" id="wlSave" type="button">Save</button></div>
+  </div>
 </div></div>
 
 <!-- LOGIN -->
 <div class="auth" id="auth" hidden>
   <div class="auth-side">
-    <div class="auth-brand"><div class="logo brand-logo"></div><span class="brandTxt">LeadNode</span></div>
+    <div class="auth-brand"><div class="logo brand-logo"></div><span class="brandTxt">NodeVers</span></div>
     <h1>Leads, WhatsApp and Meta ads — one node-based workspace.</h1>
+    <p class="muted" id="authSideSub" hidden></p>
     <div class="auth-graph" aria-hidden="true">
       <svg viewBox="0 0 420 170"><path class="aw" d="M120 40 C 170 40, 160 85, 210 85"/><path class="aw" d="M120 130 C 170 130, 160 85, 210 85"/><path class="aw" d="M330 85 C 360 85, 360 85, 400 85"/></svg>
       <div class="an" style="left:0;top:18px"><i style="background:#4F7DF3">M</i>Meta lead form</div>
@@ -1093,7 +1239,7 @@ textarea.input.code{min-height:320px}
   <div class="auth-main">
     <div class="auth-card glass">
       <button class="ibtn auth-x" id="authExit" title="Exit preview" hidden>×</button>
-      <div class="auth-mbrand"><div class="logo brand-logo"></div><span class="brandTxt">LeadNode</span></div>
+      <div class="auth-mbrand"><div class="logo brand-logo"></div><span class="brandTxt">NodeVers</span></div>
       <h2 id="authTitle">Welcome back</h2><p class="muted" id="authSub">Sign in to your workspace</p>
       <div class="seg" id="authTabs"><button class="segb active" data-auth="in">Sign in</button><button class="segb" data-auth="up">Create account</button></div>
       <form id="authForm" autocomplete="on" novalidate>
@@ -1107,6 +1253,7 @@ textarea.input.code{min-height:320px}
       <div class="auth-or"><span>or</span></div>
       <button class="btn auth-google" id="authGoogle" type="button"><svg viewBox="0 0 24 24" width="18" height="18"><path fill="#4285F4" d="M22.6 12.2c0-.8-.1-1.5-.2-2.2H12v4.2h5.9a5 5 0 0 1-2.2 3.3v2.7h3.6c2.1-1.9 3.3-4.8 3.3-8Z"/><path fill="#34A853" d="M12 23c3 0 5.5-1 7.3-2.7l-3.6-2.8c-1 .7-2.2 1.1-3.7 1.1-2.9 0-5.3-1.9-6.2-4.5H2.1v2.8A11 11 0 0 0 12 23Z"/><path fill="#FBBC05" d="M5.8 14.1a6.6 6.6 0 0 1 0-4.2V7.1H2.1a11 11 0 0 0 0 9.8l3.7-2.8Z"/><path fill="#EA4335" d="M12 5.4c1.6 0 3.1.6 4.2 1.7l3.2-3.2A11 11 0 0 0 2.1 7.1l3.7 2.8C6.7 7.3 9.1 5.4 12 5.4Z"/></svg>Continue with Google</button>
       <p class="auth-foot muted">By continuing you agree to the Terms and Privacy Policy.</p>
+      <p class="powered auth-pow">Powered by <b>NodeVers</b></p>
     </div>
   </div>
 </div>
@@ -1292,11 +1439,12 @@ async function load(silent) {
 function finishLoad(anim) {
   $('#demoBanner').hidden = !demo; sizeCanvas();
   if (demo) S.settings = store.get('leadnode.branding') || {};
+  mergeSavedLists();
   applyBranding();
   renderAll(anim);
 }
 /** Render only the screen you're looking at; the others re-render when you open them */
-const VIEW_RENDER = { n8n: a => renderN8n(a), automation: () => autoCanvas().sync(), dashboard: a => renderDashboard(a), pipeline: a => renderPipeline(a), leads: a => renderLeads(a), team: a => renderTeam(a), reports: a => renderReports(a), templates: () => renderTemplates(), scripts: () => renderScripts(true), ads: a => renderAds(a) };
+const VIEW_RENDER = { analytics: a => renderAnalytics(a), industry: a => renderIndustry(a), n8n: a => renderN8n(a), automation: () => autoCanvas().sync(), dashboard: a => renderDashboard(a), pipeline: a => renderPipeline(a), leads: a => renderLeads(a), team: a => renderTeam(a), reports: a => renderReports(a), templates: () => renderTemplates(), scripts: () => renderScripts(true), ads: a => renderAds(a) };
 const staleViews = new Set();
 const activeView = () => { const v = $('.view.active'); return v ? v.id.slice(2) : 'dashboard'; };
 function renderAll(anim) {
@@ -1419,6 +1567,9 @@ function renderPipeline(anim) {
   if (!layout) layout = loadLayout();
   const st = stages(), who = ui.pfilter === '__me' ? me() : ui.pfilter;
   const leads = S.leads.filter(l => !who || l.assignedTo === who).filter(l => matchQ(l, ui.q));
+  const chip = $('#pchip'), hidden = S.leads.length - leads.length;
+  chip.hidden = !(ui.q || who);
+  if (!chip.hidden) chip.innerHTML = `${ui.q ? `Search: <b>${esc(ui.q)}</b>` : `Owner: <b>${esc(who)}</b>`}${hidden ? ` · ${hidden} hidden` : ''}<button data-clearfilter title="Clear filter">${I.x}</button>`;
   const incoming = new Set(layout.links.map(([, b]) => b));
   const tm = S.team.filter(t => t.active !== false && t.name);
   $('#pteam').innerHTML = `<span class="muted" style="font-size:12.5px;font-weight:600">Team</span><div class="stack">${tm.slice(0, 5).map(t => avatar(t.name, 'sm', memberPhoto(t.name))).join('')}${tm.length > 5 ? `<div class="avatar sm more-av" title="${esc(tm.slice(5).map(t => t.name).join(', '))}">+${tm.length - 5}</div>` : ''}</div>`;
@@ -2763,10 +2914,10 @@ class FlowCanvas {
     if (!f) f = store.get('leadnode.flow.' + this.o.key);
     if (!f || !Array.isArray(f.nodes)) f = this.o.seed();
     f.links = (f.links || []).filter(l => f.nodes.some(n => n.id === l[0]) && f.nodes.some(n => n.id === l[2]));
-    this.fromSeed = !row && !store.get('leadnode.flow.' + this.o.key); this.flow = f; this.render(); if (!this.fitted) { requestAnimationFrame(() => this.fit(true)); this.fitted = true; }
+    this.fromSeed = !row && !store.get('leadnode.flow.' + this.o.key); this.flow = f; this.render(); if (!this.fitted && this.root.offsetParent) { requestAnimationFrame(() => this.fit(true)); this.fitted = true; }
   }
   size() { if (!this.root.offsetParent) return; const top = this.root.getBoundingClientRect().top + scrollY; this.root.style.height = Math.max(innerWidth < 820 ? 360 : 520, innerHeight - top - 20) + 'px'; }
-  sync() { this.size(); if (!this.flow || (this.fromSeed && (S.flows || []).some(x => String(x.flowId) === this.o.key))) { this.fitted = false; this.load(); } else { this.render(); if (!this.fitted) { requestAnimationFrame(() => this.fit(true)); this.fitted = true; } } }
+  sync() { this.size(); if (!this.flow || (this.fromSeed && (S.flows || []).some(x => String(x.flowId) === this.o.key))) { this.fitted = false; this.load(); } else { this.render(); if (!this.fitted && this.root.offsetParent) { requestAnimationFrame(() => this.fit(true)); this.fitted = true; } } }
   save() {
     store.set('leadnode.flow.' + this.o.key, this.flow); this.fromSeed = false;
     const row = { flowId: this.o.key, flowName: this.o.title, trigger: 'canvas', status: 'Draft', flowJson: JSON.stringify(this.flow) };
@@ -3104,7 +3255,7 @@ function autoCanvas() {
 
 /* ================= n8n Services (each client has their own n8n; the website is the simple remote control) ================= */
 const N8 = { tab: 'services', role: 'admin', client: 'C1', open: null, run: null, data: null, view: null };
-const N8_TABS = { admin: [['services', 'Services'], ['runs', 'Runs'], ['templates', 'Templates'], ['clients', 'Clients'], ['connect', 'Connect n8n']], client: [['services', 'My services'], ['runs', 'Runs'], ['connect', 'Connect n8n']] };
+const N8_TABS = { admin: [['services', 'Services'], ['runs', 'Runs'], ['schedule', 'Schedule'], ['status', 'Status'], ['report', 'Monthly report'], ['templates', 'Templates'], ['clients', 'Clients'], ['connect', 'Connect n8n']], client: [['services', 'My services'], ['runs', 'Runs'], ['schedule', 'Schedule'], ['status', 'Status'], ['report', 'Monthly report'], ['connect', 'Connect n8n']] };
 /* node look by n8n type */
 const N8_KIND = [
   [/scheduleTrigger|cron/i, '⏱', '#6F8FE8', 'Schedule'], [/webhook/i, '⚡', '#6F8FE8', 'Webhook'], [/facebookLeadAds|leadAds/i, 'M', '#4F7DF3', 'Meta Lead Ads'],
@@ -3161,7 +3312,7 @@ function n8Seed() {
     { client: 'C3', tpl: 'T2', version: 2, active: true, values: { language: 'English' }, creds: { whatsAppApi: false, googlePalmApi: true } },
   ];
   const runs = []; const r = mulberry32(42); let id = 900;
-  for (let d = 0; d < 40; d++) {
+  for (let d = 0; d < 110; d++) {
     const ins = installs[Math.floor(r() * installs.length)], t = templates.find(x => x.id === ins.tpl), cl = clients.find(c => c.id === ins.client);
     const fail = !cl.keyOk ? true : r() < 0.12, at = new Date(Date.now() - d * 3.1 * 3600e3 - r() * 3600e3);
     const names = t.wf.nodes.map(n => n.name), failAt = fail ? 2 + Math.floor(r() * (names.length - 3)) : -1;
@@ -3195,18 +3346,103 @@ function n8Health(c) {
 const n8Pill = ([k, t]) => `<span class="pill ${k === 'bad' ? 'hot' : k === 'warn' ? 'warm' : k === 'ok' ? 'won' : 'cold'}">${k === 'bad' ? '✕' : k === 'warn' ? '!' : k === 'ok' ? '✓' : '↑'} ${esc(t)}</span>`;
 const runPill = s => s === 'success' ? '<span class="pill won">✓ Success</span>' : s === 'error' ? '<span class="pill hot">✕ Failed</span>' : '<span class="pill cold">● Running</span>';
 
+/* ---- n8n add-ons: setup checklist, schedule, status, monthly report, node output ---- */
+const N8_SCHED = { T1: { kind: 'daily', key: 'post_time', def: '10:00', label: 'Every day' }, T4: { kind: 'weekly', day: 1, time: '09:00', label: 'Every Monday' }, T2: { kind: 'event', label: 'When a WhatsApp message arrives' }, T3: { kind: 'event', label: 'When a Meta form lead arrives' } };
+const N8_SAVES = { T1: 20, T2: 4, T3: 5, T4: 30 };   // minutes of manual work saved per run (rough)
+function n8Checklist(c) {
+  const ins = n8Data().installs.filter(i => i.client === c.id);
+  const ready = ins.filter(i => !Object.values(n8BaseStates(n8Tpl(i.tpl), i)).includes('need')).length;
+  const tested = ins.some(i => n8Data().runs.some(r => r.client === c.id && r.tpl === i.tpl && r.status === 'success'));
+  return [['Create your account', true], ['Connect your n8n', c.status === 'connected'], [`Set up your services (${ready}/${ins.length})`, ins.length && ready === ins.length], ['First successful run', tested]];
+}
+function n8ChecklistHTML(c) {
+  const st = n8Checklist(c), done = st.filter(x => x[1]).length; if (done === st.length) return '';
+  return `<div class="n8check glass"><div><b>${st.length - done} step${st.length - done > 1 ? 's' : ''} left to go live</b><div class="bar-track" style="margin-top:8px"><div class="bar" style="width:${done / st.length * 100}%"></div></div></div>
+    <ol>${st.map(([t, ok]) => `<li class="${ok ? 'ok' : ''}"><span>${ok ? '✓' : ''}</span>${esc(t)}</li>`).join('')}</ol></div>`;
+}
+function n8Invite(cid) {
+  const c = n8Client(cid), token = (Date.now().toString(36) + Math.random().toString(36).slice(2, 8)).toUpperCase();
+  const link = `${location.origin}${location.pathname}#join=${token}`;
+  const msg = `Hi ${c.owner || ''}! Your automation dashboard is ready. Open this link, create your login and follow the 3 setup steps: ${link}`;
+  $('#stageBox').innerHTML = `<div class="m-head"><h2>Invite ${esc(c.name)}</h2><button class="ibtn" data-close>${I.x}</button></div>
+    <p class="help" style="margin-bottom:12px">Send this setup link. After login the client sees a checklist: connect n8n → fill service settings → first test run. They only ever see their own workspace.</p>
+    <div class="field"><label>Setup link</label><div style="display:flex;gap:8px"><input class="input" id="invLink" readonly value="${esc(link)}"><button class="btn" id="invCopy">Copy</button></div></div>
+    <div class="m-foot"><span class="muted" style="font-size:12px">Demo link — it starts working after the Supabase step.</span><div class="grow"></div><a class="btn wa" target="_blank" rel="noopener" href="https://wa.me/?text=${encodeURIComponent(msg)}">${I.wa}Send on WhatsApp</a></div>`;
+  $('#invCopy').onclick = () => { const i = $('#invLink'); i.select(); (navigator.clipboard ? navigator.clipboard.writeText(i.value) : Promise.reject()).then(() => toast('Link copied'), () => { document.execCommand('copy'); toast('Link copied'); }); };
+  showModal('#stageModal');
+}
+function n8Schedule() {
+  const D = n8Data(), c = n8Client(N8.client), ins = D.installs.filter(i => i.client === c.id && i.active);
+  const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'], today = (new Date().getDay() + 6) % 7;
+  const timed = ins.filter(i => N8_SCHED[i.tpl] && N8_SCHED[i.tpl].kind !== 'event'), events = ins.filter(i => !N8_SCHED[i.tpl] || N8_SCHED[i.tpl].kind === 'event');
+  const cell = (i, d) => { const s = N8_SCHED[i.tpl]; if (s.kind === 'daily') return `<span class="sch">${esc(i.values[s.key] || s.def)}</span>`; if (s.kind === 'weekly' && d === s.day - 1) return `<span class="sch">${esc(s.time)}</span>`; return ''; };
+  return `<div class="glass tblcard"><div class="tblwrap"><table class="tbl sched"><thead><tr><th>Service</th>${days.map((d, i) => `<th class="${i === today ? 'today' : ''}">${d}${i === today ? ' · today' : ''}</th>`).join('')}</tr></thead><tbody>
+    ${timed.map(i => `<tr style="cursor:default"><td><b>${esc(n8Tpl(i.tpl).name)}</b><div class="muted" style="font-size:11.5px">${esc(N8_SCHED[i.tpl].label)}</div></td>${days.map((d, k) => `<td class="${k === today ? 'today' : ''}">${cell(i, k)}</td>`).join('')}</tr>`).join('') || `<tr><td colspan="8" class="empty">No timed services for ${esc(c.name)}.</td></tr>`}
+    </tbody></table></div></div>
+    <div class="glass n8evt"><div class="sec-t">Runs on events</div>${events.length ? events.map(i => `<div class="n8evt-i"><span class="pill cold">⚡ Live</span><b>${esc(n8Tpl(i.tpl).name)}</b><span class="muted">${esc((N8_SCHED[i.tpl] || {}).label || 'When its trigger fires')}</span></div>`).join('') : '<p class="muted">None.</p>'}
+    <p class="help">Times are India time. Change a time from the service's "⚙ Client Settings" node.</p></div>`;
+}
+function n8DayCells(cid, tpl) {
+  const out = [];
+  for (let d = 13; d >= 0; d--) {
+    const day = new Date(Date.now() - d * 864e5).toISOString().slice(0, 10);
+    const rs = n8Data().runs.filter(r => r.client === cid && r.tpl === tpl && r.at.slice(0, 10) === day), bad = rs.filter(r => r.status === 'error').length;
+    out.push({ day, n: rs.length, cls: !rs.length ? 'none' : !bad ? 'ok' : bad === rs.length ? 'bad' : 'warn', bad });
+  }
+  return out;
+}
+function n8Status() {
+  const D = n8Data(), c = n8Client(N8.client), ins = D.installs.filter(i => i.client === c.id);
+  const rows = ins.map(i => { const t = n8Tpl(i.tpl), cells = n8DayCells(c.id, t.id), last3 = D.runs.filter(r => r.client === c.id && r.tpl === t.id).slice(0, 3), need = Object.values(n8BaseStates(t, i)).includes('need');
+    const state = !i.active ? ['off', 'Turned off'] : need || (last3[0] && last3[0].status === 'error' && c.status !== 'connected') ? ['bad', 'Needs attention'] : last3.some(r => r.status === 'error') ? ['warn', 'Some failures'] : ['ok', 'Working'];
+    const okRuns = cells.reduce((s, x) => s + x.n - x.bad, 0), allRuns = cells.reduce((s, x) => s + x.n, 0);
+    return { t, cells, state, rate: allRuns ? Math.round(okRuns / allRuns * 100) : null }; });
+  const worst = rows.some(r => r.state[0] === 'bad') ? ['bad', 'Some services need attention'] : rows.some(r => r.state[0] === 'warn') ? ['warn', 'Working, with a few failures'] : ['ok', 'All services working'];
+  return `<div class="n8sum glass ${worst[0]}"><span class="dotlg"></span><div><b>${worst[1]}</b><small class="muted">${esc(c.name)} · last 14 days</small></div></div>
+    <div class="glass n8stat">${rows.map(r => `<div class="n8srow"><div class="n8sname"><b>${esc(r.t.name)}</b><span class="pill ${r.state[0] === 'ok' ? 'won' : r.state[0] === 'warn' ? 'warm' : r.state[0] === 'bad' ? 'hot' : 'lost'}">${r.state[0] === 'ok' ? '✓' : r.state[0] === 'off' ? '–' : '!'} ${r.state[1]}</span></div>
+      <div class="n8days">${r.cells.map(x => `<i class="${x.cls}" data-tip="${fmtDate(x.day)}: ${x.n ? `${x.n - x.bad} ok${x.bad ? `, ${x.bad} failed` : ''}` : 'no runs'}"></i>`).join('')}</div>
+      <span class="muted n8rate">${r.rate == null ? 'no runs' : r.rate + '% ok'}</span></div>`).join('') || '<p class="muted" style="padding:16px">No services yet.</p>'}
+      <div class="n8legend" style="padding:10px 16px 14px"><span><i class="lg-ok"></i>All runs OK</span><span><i style="background:var(--yellow)"></i>Some failed</span><span><i class="lg-need"></i>All failed</span><span><i class="lg-ready"></i>No runs</span></div></div>`;
+}
+function n8Report() {
+  const D = n8Data(), c = n8Client(N8.client), now = new Date(), m0 = new Date(Date.now() - 29 * 864e5).toISOString().slice(0, 10);
+  const runs = D.runs.filter(r => r.client === c.id && r.at.slice(0, 10) >= m0), ok = runs.filter(r => r.status === 'success');
+  const per = D.installs.filter(i => i.client === c.id).map(i => { const t = n8Tpl(i.tpl), rs = runs.filter(r => r.tpl === t.id), o = rs.filter(r => r.status === 'success').length; return { t, n: rs.length, o, saved: o * (N8_SAVES[t.id] || 5) }; });
+  const saved = per.reduce((s, x) => s + x.saved, 0), leads = per.filter(x => ['T2', 'T3'].includes(x.t.id)).reduce((s, x) => s + x.o, 0), posts = per.filter(x => x.t.id === 'T1').reduce((s, x) => s + x.o, 0);
+  const month = `Last 30 days · ${fmtDate(m0)} – ${fmtDate(todayStr())}`, b = brand();
+  return `<div class="n8rep-bar"><span class="muted">Monthly report for ${esc(c.name)}</span><div class="grow"></div><button class="btn primary" data-n8print>${I.list}Download PDF</button></div>
+    <div class="n8rep glass" id="n8Report">
+      <div class="rh"><div><small class="muted">${esc(b.brandName)} · Automation report</small><h2>${esc(c.name)}</h2><span class="muted">${esc(month)}</span></div>${bizTile(c.name)}</div>
+      <div class="rk"><div><small>Automations ran</small><b>${runs.length}</b></div><div><small>Success rate</small><b>${runs.length ? Math.round(ok.length / runs.length * 100) : 0}%</b></div><div><small>Time saved</small><b>${saved >= 60 ? (saved / 60).toFixed(1) + ' h' : saved + ' min'}</b></div><div><small>Leads handled</small><b>${leads}</b></div><div><small>Posts published</small><b>${posts}</b></div></div>
+      <table class="tbl"><thead><tr><th>Service</th><th class="num">Runs</th><th class="num">Successful</th><th class="num">Time saved</th></tr></thead><tbody>${per.map(x => `<tr style="cursor:default"><td>${esc(x.t.name)}</td><td class="num">${x.n}</td><td class="num">${x.o}</td><td class="num">${x.saved} min</td></tr>`).join('')}</tbody></table>
+      <p class="muted rf">${runs.length - ok.length ? `${runs.length - ok.length} run${runs.length - ok.length > 1 ? 's' : ''} failed in this period — most often because a key expired. Fixed runs are retried automatically once keys are updated.` : 'No failures in this period.'} Time saved is an estimate per successful run.</p>
+    </div>`;
+}
+/** Demo input/output for a node in a run (real data comes from the client's n8n once live) */
+function n8SampleOut(node, client) {
+  const k = n8Kind(node.type).label, c = n8Client(client);
+  const map = {
+    'Schedule': { timestamp: new Date().toISOString(), timezone: 'Asia/Kolkata' }, 'Webhook': { from: '9198XXXXXX21', text: 'Hi, price for 20 cafe chairs?', name: 'Rahul' },
+    'Edit fields': { business: c.name, language: 'Hinglish' }, 'Google Sheets': { Date: todayStr(), 'Image URL': 'https://…/chair-01.jpg', Topic: 'Weekend offer' },
+    'AI model': { text: 'Cafe upgrade time ☕ Premium chairs from ₹2,499 — DM for catalogue!' }, 'Meta Graph': { id: '17895695668004550', status: 'PUBLISHED' },
+    'WhatsApp': { messaging_product: 'whatsapp', messages: [{ id: 'wamid.HBgM…', message_status: 'accepted' }] }, 'If': { result: true },
+    'HTTP request': { ok: true, data: { leadId: 'L0042' } }, 'Code': { phone: '919876543210' }, 'Meta Lead Ads': { full_name: 'Neha S', phone_number: '+91 98…', city: 'Pune' },
+  };
+  return JSON.stringify(map[k] || { ok: true }, null, 2);
+}
+
 /* ---- page ---- */
 function renderN8n(anim) {
   if (!$('#v-n8n').classList.contains('active')) return;
   const D = n8Data(), tabs = N8_TABS[N8.role];
   if (!tabs.some(([k]) => k === N8.tab)) N8.tab = 'services';
   $('#n8Role').value = N8.role;
-  $('#n8ClientWrap').hidden = N8.role === 'client' || !['services', 'runs', 'connect'].includes(N8.tab);
+  $('#n8ClientWrap').hidden = N8.role === 'client' || ['templates', 'clients'].includes(N8.tab);
   $('#n8RoleHelp').textContent = N8.role === 'client' ? `Previewing exactly what ${n8Client(N8.client).name} sees after login — only their own services and runs.` : 'Admin: you see every client. Switch to "Client" to preview one client\'s view.';
   $('#n8Client').innerHTML = D.clients.map(c => `<option value="${c.id}" ${c.id === N8.client ? 'selected' : ''}>${esc(c.name)}</option>`).join('');
   $('#n8Tabs').innerHTML = tabs.map(([k, n]) => `<button class="tab ${N8.tab === k ? 'active' : ''}" data-n8tab="${k}">${n}</button>`).join('');
   const body = $('#n8Body');
-  body.innerHTML = ({ services: n8Services, runs: n8Runs, templates: n8Templates, clients: n8Clients, connect: n8Connect })[N8.tab]();
+  body.innerHTML = ({ services: n8Services, runs: n8Runs, schedule: n8Schedule, status: n8Status, report: n8Report, templates: n8Templates, clients: n8Clients, connect: n8Connect })[N8.tab]();
   stagger(body, anim);
   if (N8.tab === 'services' && N8.open) n8MountDetail();
   if (N8.tab === 'runs' && N8.run) n8MountRun();
@@ -3216,7 +3452,8 @@ function n8Services() {
   const head = `<div class="n8cl glass"><div class="n8cl-l">${bizTile(c.name)}<div><b>${esc(c.name)}</b><small class="muted">${c.url ? esc(c.url.replace(/^https?:\/\//, '')) : 'n8n not connected yet'} · ${esc(c.plan)}</small></div></div>
     <div class="n8cl-m">${c.limit ? `<div class="n8use"><small>n8n runs this month</small><div class="bar-track"><div class="bar" style="width:${Math.min(100, c.used / c.limit * 100).toFixed(0)}%;background:${c.used / c.limit > 0.85 ? 'var(--coral)' : 'var(--blue-2)'}"></div></div><small><b>${c.used.toLocaleString('en-IN')}</b> / ${c.limit.toLocaleString('en-IN')}</small></div>` : ''}</div>
     <div class="n8cl-r">${h.length ? h.map(n8Pill).join('') : n8Pill(['ok', 'All healthy'])}</div></div>`;
-  if (!list.length) return head + `<div class="empty glass">No services yet for ${esc(c.name)}.<br>${N8.role === 'admin' ? 'Open <b>Templates</b> and install one.' : 'Your service provider will add them here.'}</div>`;
+  const check = n8ChecklistHTML(c);
+  if (!list.length) return head + check + `<div class="empty glass">No services yet for ${esc(c.name)}.<br>${N8.role === 'admin' ? 'Open <b>Templates</b> and install one.' : 'Your service provider will add them here.'}</div>`;
   const cards = list.map((ins, i) => {
     const t = n8Tpl(ins.tpl), last = D.runs.filter(r => r.client === c.id && r.tpl === t.id)[0], missing = Object.values(n8BaseStates(t, ins)).filter(x => x === 'need').length, upd = ins.version < t.version;
     const month = D.runs.filter(r => r.client === c.id && r.tpl === t.id).length;
@@ -3226,7 +3463,7 @@ function n8Services() {
       <div class="n8meta">${last ? runPill(last.status) + `<span class="muted">${n8Ago(last.at)}</span>` : '<span class="muted">No runs yet</span>'}<span class="grow"></span><span class="muted">${month} runs</span></div>
       <div class="n8flags">${missing ? n8Pill(['warn', `${missing} step${missing > 1 ? 's need' : ' needs'} setup`]) : n8Pill(['ok', 'Ready'])}${upd ? n8Pill(['info', `Update v${ins.version} → v${t.version}`]) : ''}<span class="badge">v${ins.version}</span></div></div>`;
   }).join('');
-  return head + `<div class="n8grid">${cards}</div><div id="n8Detail"></div>`;
+  return head + check + `<div class="n8grid">${cards}</div><div id="n8Detail"></div>`;
 }
 /* which key / settings each n8n node needs → red (needs setup) · grey (ready) · green (ran) */
 const N8_NODECRED = [[/googleSheets/i, 'googleSheetsOAuth2Api'], [/gemini|langchain|googlePalm/i, 'googlePalmApi'], [/facebookGraph/i, 'facebookGraphApi'], [/whatsApp/i, 'whatsAppApi'], [/facebookLeadAds/i, 'facebookLeadAdsOAuth2Api']];
@@ -3373,8 +3610,8 @@ function n8MountRun() {
   $('#n8RunDet').innerHTML = `<div class="n8det glass"><div class="n8det-h"><div><small class="muted">${esc(n8Client(r.client).name)} · ${esc(new Date(r.at).toLocaleString('en-IN'))}</small><h3>${esc(t.name)} ${runPill(r.status)}</h3></div><div class="grow"></div>${r.status === 'error' ? `<button class="btn sm primary" data-n8retry="${r.id}">Retry</button>` : ''}<button class="ibtn" data-n8closerun title="Close">${I.x}</button></div>
     ${r.error ? `<div class="run-err" style="padding:0 18px 10px">✕ ${esc(r.error)}</div>` : ''}
     <div class="n8det-b"><div class="n8canvas" id="n8RunCanvas"></div><div class="n8side"><div class="sec-t">Node by node</div>
-      <ol class="n8steps">${t.wf.nodes.map(n => { const x = r.nodes.find(z => z.name === n.name); return `<li class="${x ? x.status : 'skip'}"><span>${x ? (x.status === 'success' ? '✓' : '✕') : '–'}</span><b>${esc(n.name)}</b><small class="muted">${x ? x.ms + ' ms' : 'not run'}</small></li>`; }).join('')}</ol>
-      <p class="help">Full input / output of each node will show here once the client's n8n is connected.</p></div></div></div>`;
+      <ol class="n8steps">${t.wf.nodes.map(n => { const x = r.nodes.find(z => z.name === n.name); return `<li class="${x ? x.status : 'skip'} ${x ? 'clk' : ''}" ${x ? `data-n8out="${esc(n.name)}"` : ''}><span>${x ? (x.status === 'success' ? '✓' : '✕') : '–'}</span><b>${esc(n.name)}</b><small class="muted">${x ? x.ms + ' ms' : 'not run'}</small></li>`; }).join('')}</ol>
+      <div id="n8Out"><p class="help">Click a step to see what it produced. (Sample output in demo — real data once the client's n8n is connected.)</p></div></div></div></div>`;
   n8Viewer($('#n8RunCanvas'), n8Graph(t, states));
 }
 function n8Templates() {
@@ -3389,7 +3626,7 @@ function n8Templates() {
 }
 function n8Clients() {
   const D = n8Data();
-  return `<div class="glass tblcard"><div class="tblwrap"><table class="tbl"><thead><tr><th>Client</th><th>n8n</th><th>Plan usage</th><th class="num">Services</th><th class="num">Failed (recent)</th><th>Health</th></tr></thead><tbody>
+  return `<div class="adcta glass"><div><h3>Clients</h3><p class="muted">Each client logs in, sees only their own workspace and follows a short setup checklist.</p></div><div class="adcta-row"><select class="input" id="invWho" style="width:auto">${D.clients.map(c => `<option value="${c.id}">${esc(c.name)}</option>`).join('')}</select><button class="btn primary" data-n8invite>Send setup link</button></div></div><div class="glass tblcard"><div class="tblwrap"><table class="tbl"><thead><tr><th>Client</th><th>n8n</th><th>Plan usage</th><th class="num">Services</th><th class="num">Failed (recent)</th><th>Health</th></tr></thead><tbody>
     ${D.clients.map((c, i) => { const fails = D.runs.filter(r => r.client === c.id && r.status === 'error').length, h = n8Health(c);
       return `<tr data-n8cli="${c.id}" style="--i:${i}"><td><div class="who">${bizTile(c.name)}<div><b>${esc(c.name)}</b><div class="muted" style="font-size:11.5px">${esc(c.owner)}</div></div></div></td><td>${c.url ? esc(c.url.replace(/^https?:\/\//, '')) : '<span class="muted">—</span>'}<div class="muted" style="font-size:11.5px">${esc(c.plan)}</div></td>
         <td style="min-width:150px">${c.limit ? `<div class="bar-track"><div class="bar" style="width:${Math.min(100, c.used / c.limit * 100).toFixed(0)}%;background:${c.used / c.limit > 0.85 ? 'var(--coral)' : 'var(--blue-2)'}"></div></div><small class="muted">${c.used.toLocaleString('en-IN')} / ${c.limit.toLocaleString('en-IN')}</small>` : '<span class="muted">—</span>'}</td>
@@ -3435,6 +3672,9 @@ function n8Connect() {
     const inst = t.closest('[data-n8install]'); if (inst) { const id = inst.dataset.n8install, sel = $(`[data-n8instto="${id}"]`), cid = sel && sel.value; if (!cid) return toast('Already installed for every client'); const tpl = n8Tpl(id); n8Data().installs.push({ client: cid, tpl: id, version: tpl.version, active: false, values: {}, creds: {} }); n8Save(); toast(`"${tpl.name}" installed in ${n8Client(cid).name}'s n8n (demo) — add their keys next`); renderN8n(); return; }
     if (t.closest('[data-n8import]')) { toast('Import from your n8n works once Supabase is connected (it lists your workflows to pick from)'); return; }
     const cl = t.closest('[data-n8cli]'); if (cl) { N8.client = cl.dataset.n8cli; N8.tab = 'services'; N8.open = null; renderN8n(true); return; }
+    if (t.closest('[data-n8invite]')) { n8Invite($('#invWho').value); return; }
+    if (t.closest('[data-n8print]')) { document.body.classList.add('print-report'); window.print(); setTimeout(() => document.body.classList.remove('print-report'), 500); return; }
+    const no = t.closest('[data-n8out]'); if (no) { const r = n8Data().runs.find(x => x.id === N8.run), node = n8Tpl(r.tpl).wf.nodes.find(n => n.name === no.dataset.n8out), st = r.nodes.find(z => z.name === node.name); $$('#n8RunDet .n8steps li').forEach(li => li.classList.toggle('on', li === no)); $('#n8Out').innerHTML = `<div class="sec-t">${esc(node.name)} · output</div>${st.status === 'error' ? `<div class="run-err">✕ ${esc(r.error)}</div>` : `<pre class="run-log">${esc(n8SampleOut(node, r.client))}</pre>`}`; return; }
     if (t.id === 'n8ConnSave') { const u = $('#n8Url').value.trim(), k = $('#n8Key').value.trim(), st = $('#n8Status'); if (!/^https:\/\/[^\s/]+\.[^\s/]+/.test(u)) { st.className = 'status err'; st.textContent = 'Enter the n8n address, e.g. https://yourname.app.n8n.cloud'; return; } if (!k && !n8Client(N8.client).keyOk) { st.className = 'status err'; st.textContent = 'Paste the API key'; return; } st.className = 'status'; st.textContent = 'Live connection needs the Supabase step first — the key must be stored on the server, never in the browser.'; const c = n8Client(N8.client); c.url = u.replace(/\/+$/, ''); n8Save(); $('#n8Key').value = ''; }
   });
   V.addEventListener('change', e => {
@@ -3442,6 +3682,434 @@ function n8Connect() {
     if (e.target.id === 'n8Client') { N8.client = e.target.value; N8.open = null; N8.run = null; renderN8n(true); }
     if (e.target.id === 'n8RunsAll') { N8.runsAll = e.target.checked; N8.run = null; renderN8n(); }
   });
+})();
+
+/* ================= AI Workflow Generator (plain words → workflow) =================
+   Preview engine: understands English + Hinglish phrases with rules, asks for missing details,
+   builds the flow on the Automation canvas and exports n8n JSON. After go-live the same screen
+   calls an LLM (Gemini) on the server for free-form requests and deploys straight into the client's n8n. */
+const GEN = { last: null };
+const GEN_EXAMPLES = [
+  'When a Facebook lead arrives, send a WhatsApp message and create a task',
+  'New lead with budget above 1 lakh: tag Hot, assign to the team and send WhatsApp template',
+  'When a WhatsApp message arrives, reply with AI and save the lead to the CRM',
+  'Every day at 10am send me a report on WhatsApp',
+  'When a lead moves to Won, send a thank-you WhatsApp and wait 7 days then ask for a review',
+];
+const num = t => { const m = String(t).match(/(\d+(?:\.\d+)?)\s*(lakh|lac|l\b|k\b|cr|crore)?/i); if (!m) return null; let v = +m[1]; const u = (m[2] || '').toLowerCase(); if (/^l/.test(u)) v *= 1e5; else if (u === 'k') v *= 1e3; else if (/^c/.test(u)) v *= 1e7; return Math.round(v); };
+/** Rules: [regex, build(match, text) → {type, p, ask:[{k,label,kind,options,def}]}] — order in the sentence decides the flow order */
+const GEN_ACTIONS = [
+  [/\b(?:if|agar|jab)?\s*budget\s*(?:is\s*)?(?:above|over|more than|>|greater than|se zyada|se jyada|ke upar)\s*(?:rs\.?|₹)?\s*([\d.,]+\s*(?:lakh|lac|k|cr|crore)?)/i, m => ({ type: 'logic.if', p: { field: 'Budget', op: 'above', value: String(num(m[1].replace(/,/g, ''))) } })],
+  [/\bbudget\s*(?:is\s*)?(?:rs\.?|₹)?\s*([\d.,]+\s*(?:lakh|lac|k|cr|crore)?)\s*(?:se zyada|se jyada|se upar|se adhik|\+|or more|plus)/i, m => ({ type: 'logic.if', p: { field: 'Budget', op: 'above', value: String(num(m[1].replace(/,/g, ''))) } })],
+  [/\b(?:if|agar)\s+(?:source|city)\s+(?:is|=)\s+([a-z ]+?)(?:[,.]|$| then)/i, m => ({ type: 'logic.if', p: { field: /city/i.test(m[0]) ? 'City' : 'Source', op: 'is', value: m[1].trim() } })],
+  [/\b(?:wait|after|ke baad|baad me|baad)\s*(\d+)\s*(day|days|din|hour|hours|ghante|minute|minutes|min)\b|\b(\d+)\s*(day|days|din|hour|hours|ghante)\s*(?:baad|later|ke baad)/i, m => { const n = +(m[1] || m[3]), u = String(m[2] || m[4]); return { type: 'logic.wait', p: { amount: n, unit: /hour|ghante/i.test(u) ? 'hours' : /min/i.test(u) ? 'minutes' : 'days' } }; }],
+  [/\b(?:ai|gemini|chatgpt|smart)\s*(?:se\s*)?(?:reply|jawab|answer|respond)|auto[\s-]?reply|reply with ai/i, () => ({ type: 'ai.reply', p: {}, ask: [{ k: 'prompt', label: 'How should the AI reply?', kind: 'textarea', def: 'Reply politely in Hinglish, share the price range and ask for their city.' }] })],
+  [/\b(?:score|qualify|hot or cold|lead score)/i, () => ({ type: 'ai.score', p: {} })],
+  [/\bthank[\s-]?you\b|\bshukriya\b|\bdhanyavad\b/i, () => ({ type: 'wa.template', title: 'Send thank-you', p: { template: 'thank_you' }, ask: [{ k: 'template', label: 'WhatsApp template for the thank-you', def: 'thank_you' }] })],
+  [/ask for (?:a )?(?:google )?review|review (?:maango|request|mango)|ask for feedback|feedback (?:maango|lo)/i, () => ({ type: 'wa.template', title: 'Ask for a review', p: { template: 'review_request' }, ask: [{ k: 'template', label: 'WhatsApp template for the review request', def: 'review_request' }] })],
+  [/\b(?:send|bhejo|bhej do|message karo|msg)\b[^.]*\b(?:whatsapp|wa)\b|\b(?:whatsapp|wa)\b\s*(?:message|msg|template)?\s*(?:send|bhejo|bhej)/i, (m, t) => /template/i.test(m[0]) || !/reply|text/i.test(m[0]) ? { type: 'wa.template', p: { template: 'welcome_offer' }, ask: [{ k: 'template', label: 'Which approved WhatsApp template?', def: 'welcome_offer' }] } : { type: 'wa.text', p: {}, ask: [{ k: 'text', label: 'WhatsApp message text', kind: 'textarea', def: 'Hi {{name}}, thanks for reaching out!' }] }],
+  [/\b(?:create|add|make|banao)\s+(?:a\s+)?(?:task|reminder|follow[\s-]?up)|\bfollow[\s-]?up\s+(?:task|reminder)|\bcall\s+(?:back|them)\b|\breminder\b/i, () => ({ type: 'lead.followup', p: { days: 1 }, ask: [{ k: 'days', label: 'Task due in (days)', kind: 'number', def: 1 }] })],
+  [/\b(?:assign|round[\s-]?robin|team ko|give it to)\b/i, () => ({ type: 'lead.assign', p: { member: 'Round-robin' }, ask: [{ k: 'member', label: 'Assign to', kind: 'select', options: teamOpts, def: 'Round-robin' }] })],
+  [/\b(?:tag|mark)\s*(?:it\s*|as\s*|ko\s*)?(hot|warm|cold)|\b(hot|warm|cold)\s*(?:tag|mark)/i, m => ({ type: 'lead.tag', p: { tag: (m[1] || m[2]).replace(/^./, c => c.toUpperCase()) } })],
+  [/\bmove\s+(?:it\s+|lead\s+)?to\s+([a-z ]+?)(?:\s+stage)?(?:[,.]|$| and)/i, m => { const st = stages().find(s => s.toLowerCase() === m[1].trim().toLowerCase()) || stages()[1] || stages()[0]; return { type: 'lead.move', p: { stage: st } }; }],
+  [/\b(?:save|add|create|daalo|save karo)\s+(?:the\s+)?(?:lead\s+)?(?:in|to|into|me|mein)?\s*(?:the\s+)?crm|\bcreate (?:a )?lead\b|\blead (?:crm )?me save/i, () => ({ type: 'lead.create', p: { stage: stages()[0], tag: 'Hot' } })],
+  [/\bnote\b/i, () => ({ type: 'lead.note', p: {}, ask: [{ k: 'text', label: 'Note text', kind: 'textarea', def: 'Created by automation' }] })],
+  [/\b(?:report|summary)\b[^.]*\b(?:whatsapp|me|mujhe)\b|\bsend me a report\b/i, () => ({ type: 'meta.report', p: { to: 'My WhatsApp' } })],
+  [/\bpause\b[^.]*\bad|\bif\s+(?:cost per lead|cpl)\b/i, m => ({ type: 'meta.rule', p: { metric: 'Cost per lead', op: 'above', value: num(m.input.slice(m.index)) || 250, action: 'Pause ad' } })],
+  [/\b(?:email|mail)\b/i, () => ({ type: 'n8n.http', title: 'Send email (via n8n)', p: { method: 'POST' }, ask: [{ k: 'url', label: 'n8n email webhook URL', def: 'https://' }] })],
+  [/\b(?:google\s*)?sheet\b|\bn8n\b|\bwebhook\b/i, () => ({ type: 'n8n.send', p: { data: 'Lead' }, ask: [{ k: 'url', label: 'n8n webhook URL (where to send the data)', def: 'https://' }] })],
+  [/\b(?:notify|alert|tell|batao)\s+(?:me|mujhe)\b/i, () => ({ type: 'wa.text', title: 'Notify me on WhatsApp', p: { text: 'New update: {{lead.name}}' } })],
+];
+function genTrigger(t) {
+  if (/(?:facebook|meta|insta(?:gram)?)\s*(?:ad\s*)?(?:lead|form)|lead\s*form|instant form/i.test(t)) return { type: 'trg.form', p: {}, ask: [{ k: 'form', label: 'Which Meta lead form? (blank = any form)', def: '' }] };
+  if (/(?:moves?|move hota|jaye|goes|changes?)\s*(?:to|me|mein)?\s*(won|lost|[a-z ]+?)\s*(?:stage)?(?:[,.]|$| then)/i.test(t) && /stage|won|lost|moves? to/i.test(t)) { const m = t.match(/(?:moves?|goes|changes?)\s*(?:to)\s*([a-z ]+?)(?:\s+stage)?(?:[,.]|$| then| and)/i); const st = m && stages().find(s => s.toLowerCase() === m[1].trim().toLowerCase()); return { type: 'trg.stage', p: { stage: st || 'Won' } }; }
+  if (/every\s*day|daily|roz|har\s*din|each day/i.test(t)) { const tm = t.match(/(\d{1,2})(?::(\d{2}))?\s*(am|pm|baje)?/i); let time = '09:00'; if (tm) { let h = +tm[1]; if (/pm/i.test(tm[3] || '') && h < 12) h += 12; time = pad(h) + ':' + (tm[2] || '00'); } return { type: 'trg.schedule', p: { every: 'Day', time } }; }
+  if (/every\s*week|weekly|har\s*hafte|every\s*monday/i.test(t)) return { type: 'trg.schedule', p: { every: 'Week', time: '09:00' } };
+  if (/whatsapp\s*(?:message|msg)\s*(?:aaye|aaye to|arrives?|comes?|received)|(?:jab|when)\s+(?:a\s+)?(?:customer\s+)?(?:sends?|messages?)\s+(?:on\s+)?whatsapp|(?:jab|when)\s+whatsapp/i.test(t)) return { type: 'trg.wamsg', p: {} };
+  if (/n8n|webhook/i.test(t) && /(?:from|se)\s*n8n/i.test(t)) return { type: 'n8n.in', p: {} };
+  return { type: 'trg.newlead', p: { source: /website/i.test(t) ? 'Website' : 'Any' } };
+}
+function genParse(text) {
+  const t = String(text || '').replace(/\s+/g, ' ').trim(); if (t.length < 6) return null;
+  const trig = genTrigger(t), found = [];
+  GEN_ACTIONS.forEach(([re, build]) => { const g = new RegExp(re.source, re.flags.includes('g') ? re.flags : re.flags + 'g'); let m; while ((m = g.exec(t))) { const step = build(m, t); if (step && !found.some(f => f.type === step.type && Math.abs(f.at - m.index) < 25)) found.push(Object.assign(step, { at: m.index })); if (!g.global) break; } });
+  // the trigger phrase itself ("whatsapp message aaye") shouldn't also become a "send" step
+  const named = found.filter(f => f.title);   // specific WhatsApp steps (thank-you / review) win over the generic "send WhatsApp"
+  const steps = found.sort((a, b) => a.at - b.at).filter((s, i, arr) => !(trig.type === 'trg.wamsg' && s.type === 'wa.template' && s.at < 25)
+    && !(/^wa\./.test(s.type) && !s.title && arr.some(x => (x.type === 'meta.report' || (x.title && /^wa\./.test(x.type))) && Math.abs(x.at - s.at) < 45)));
+  if (trig.type === 'trg.form' && !steps.some(s => s.type === 'lead.create')) steps.unshift({ type: 'lead.create', p: { stage: stages()[0], tag: 'Hot' }, auto: true });
+  if (!steps.length) return { trig, steps, empty: true };
+  return { trig, steps };
+}
+function genHumanize(s) { const t = nodeType(s.type); let sum = ''; try { sum = t.sum(Object.assign({}, s.p)); } catch (e) { } return { name: s.title || t.name, sum, sec: SECTIONS[t.section] }; }
+function genRender() {
+  const box = $('#genOut'), g = GEN.last; if (!box) return;
+  if (!g) { box.hidden = true; return; }
+  box.hidden = false;
+  if (g.empty) { box.innerHTML = `<div class="gen-res"><b>I couldn't find any steps in that.</b><p class="muted">Try naming the actions, e.g. "send a WhatsApp", "create a task", "wait 2 days", "assign to the team", "tag Hot", "save in CRM".</p></div>`; return; }
+  const all = [g.trig].concat(g.steps), asks = [];
+  all.forEach((s, i) => (s.ask || []).forEach(a => asks.push(Object.assign({ i }, a))));
+  const ifAt = g.steps.findIndex(s => s.type === 'logic.if');
+  box.innerHTML = `<div class="gen-res"><div class="gen-h"><span class="gen-ai">✦</span><div><b>Here's the workflow I understood</b><small class="muted">${all.length} steps · check it, fill the details, then build</small></div></div>
+    <ol class="gen-steps">${all.map((s, i) => { const h = genHumanize(s); return `<li style="--c:${h.sec.color}"><span class="gs-ic">${esc(h.sec.ic)}</span><div><b>${i ? '' : 'When: '}${esc(h.name)}</b><small class="muted">${esc(h.sum)}${s.auto ? ' · added automatically' : ''}${ifAt > -1 && i - 1 > ifAt ? ' · only if yes' : ''}</small></div></li>`; }).join('')}</ol>
+    ${asks.length ? `<div class="gen-ask"><div class="sec-t">A few details</div>${asks.map((a, j) => { const v = (all[a.i].p || {})[a.k] ?? a.def ?? ''; const opts = typeof a.options === 'function' ? a.options() : a.options; return `<div class="field"><label>${esc(a.label)}</label>${a.kind === 'select' ? `<select class="input" data-genk="${a.i}:${a.k}">${opts.map(o => `<option ${o === v ? 'selected' : ''}>${esc(o)}</option>`).join('')}</select>` : a.kind === 'textarea' ? `<textarea class="input" rows="2" data-genk="${a.i}:${a.k}">${esc(v)}</textarea>` : `<input class="input" ${a.kind === 'number' ? 'type="number"' : ''} data-genk="${a.i}:${a.k}" value="${esc(v)}">`}</div>`; }).join('')}</div>` : ''}
+    <div class="gen-actions"><button class="btn primary" data-genbuild>${I.plus}Build on canvas</button><button class="btn" data-genjson>Download n8n JSON</button><button class="btn" data-gendeploy>Deploy to n8n</button><div class="grow"></div><button class="btn ghost" data-genclear>Clear</button></div></div>`;
+}
+function genApplyAnswers() { const g = GEN.last, all = [g.trig].concat(g.steps); $$('[data-genk]').forEach(el => { const [i, k] = el.dataset.genk.split(':'); const s = all[+i]; s.p = s.p || {}; s.p[k] = el.type === 'number' ? +el.value : el.value; }); return all; }
+function genBuild() { genAddToCanvas(genApplyAnswers()); }
+function genAddToCanvas(all, quiet) {
+  const fc = autoCanvas(); if (!fc.flow) fc.sync();
+  const ys = fc.flow.nodes.map(n => n.y), y0 = ys.length ? Math.max(...ys) + 220 : 0, x0 = fc.flow.nodes.length ? Math.min(...fc.flow.nodes.map(n => n.x)) : 0;
+  const ids = []; let prev = null, prevOut = 0;
+  all.forEach((s, i) => {
+    const t = nodeType(s.type), id = fc.uid(), p = {}; t.fields.forEach(f => { if (f.def !== undefined) p[f.k] = f.def; }); Object.assign(p, s.p || {});
+    fc.flow.nodes.push({ id, type: s.type, x: x0 + i * 300, y: y0, p, title: s.title }); ids.push(id);
+    if (prev) fc.flow.links.push([prev, prevOut, id]);
+    prev = id; prevOut = 0;   // after an If node, continue on its "yes" output (0)
+  });
+  fc.sel = new Set(ids); fc.born = new Set(ids); fc.render(); fc.born = null; fc.save();
+  if (quiet) { fc.fitted = false; return; }
+  requestAnimationFrame(() => fc.fit());
+  toast(`✓ ${all.length}-step workflow added to the canvas`);
+  $('#autoCanvas').scrollIntoView({ behavior: reduceMotion() ? 'auto' : 'smooth', block: 'start' });
+}
+/** n8n import JSON (starter): real n8n node types; open n8n → Import from file */
+const N8N_TYPE = { 'trg.newlead': 'n8n-nodes-base.webhook', 'trg.stage': 'n8n-nodes-base.webhook', 'trg.wamsg': 'n8n-nodes-base.whatsAppTrigger', 'trg.form': 'n8n-nodes-base.facebookLeadAdsTrigger', 'trg.schedule': 'n8n-nodes-base.scheduleTrigger', 'n8n.in': 'n8n-nodes-base.webhook',
+  'wa.template': 'n8n-nodes-base.whatsApp', 'wa.text': 'n8n-nodes-base.whatsApp', 'logic.if': 'n8n-nodes-base.if', 'logic.wait': 'n8n-nodes-base.wait', 'ai.reply': '@n8n/n8n-nodes-langchain.lmChatGoogleGemini', 'ai.score': '@n8n/n8n-nodes-langchain.lmChatGoogleGemini',
+  'n8n.send': 'n8n-nodes-base.httpRequest', 'n8n.http': 'n8n-nodes-base.httpRequest', 'meta.report': 'n8n-nodes-base.whatsApp', 'meta.rule': 'n8n-nodes-base.facebookGraphApi' };
+function genN8nJSON() {
+  const all = genApplyAnswers(), nodes = [], connections = {};
+  const names = all.map((s, i) => { const h = genHumanize(s); let n = h.name, k = 2; while (nodes.some(x => x.name === n)) n = h.name + ' ' + k++; nodes.push({ name: n }); return n; });
+  nodes.length = 0;
+  nodes.push({ name: '⚙ Client Settings', type: 'n8n-nodes-base.set', typeVersion: 3.4, position: [220, 0], parameters: { assignments: { assignments: [{ name: 'business', value: brand().brandName, type: 'string' }] } }, notes: 'Fields here become the client\'s settings form in NodeVers' });
+  all.forEach((s, i) => {
+    const type = N8N_TYPE[s.type] || 'n8n-nodes-base.httpRequest';
+    const parameters = type.endsWith('.httpRequest') ? { method: 'POST', url: (s.p && s.p.url) || 'https://YOUR-CRM/api', sendBody: true } : type.endsWith('.wait') ? { amount: (s.p && s.p.amount) || 1, unit: (s.p && s.p.unit) || 'days' } : type.endsWith('.scheduleTrigger') ? { rule: { interval: [{ field: (s.p && s.p.every) === 'Week' ? 'weeks' : 'days', triggerAtHour: +String((s.p && s.p.time) || '09').slice(0, 2) }] } } : type.endsWith('.webhook') ? { httpMethod: 'POST', path: 'nodevers-' + s.type.replace(/\W/g, '-') } : {};
+    nodes.push({ name: names[i], type, typeVersion: 1, position: [i === 0 ? 0 : 220 + i * 240, 0], parameters, notes: 'NodeVers: ' + (genHumanize(s).sum || '') });
+  });
+  const order = [names[0], '⚙ Client Settings'].concat(names.slice(1));
+  order.slice(0, -1).forEach((n, i) => { connections[n] = { main: [[{ node: order[i + 1], type: 'main', index: 0 }]] }; });
+  nodes.find(n => n.name === '⚙ Client Settings').position = [220, 0];
+  order.forEach((n, i) => { const nd = nodes.find(x => x.name === n); nd.position = [i * 240, 0]; });
+  const wf = { name: 'NodeVers · ' + (genHumanize(all[0]).name) + ' flow', nodes, connections, settings: { executionOrder: 'v1' }, meta: { generatedBy: 'NodeVers AI Workflow Generator' } };
+  const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([JSON.stringify(wf, null, 2)], { type: 'application/json' })); a.download = 'nodevers-workflow.json'; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+  toast('n8n JSON downloaded — in n8n: Workflows → Import from file. Add your keys on each node.');
+}
+(function genEvents() {
+  const V = $('#v-automation');
+  V.addEventListener('click', e => {
+    const t = e.target;
+    const ex = t.closest('[data-genex]'); if (ex) { $('#genIn').value = GEN_EXAMPLES[+ex.dataset.genex]; GEN.last = genParse($('#genIn').value); genRender(); return; }
+    if (t.closest('#genGo')) { const v = $('#genIn').value; if (!v.trim()) return toast('Describe the automation first', true); GEN.last = genParse(v); genRender(); return; }
+    if (t.closest('[data-genbuild]')) { genBuild(); return; }
+    if (t.closest('[data-genjson]')) { genN8nJSON(); return; }
+    if (t.closest('[data-gendeploy]')) { toast('Deploying into a client\'s n8n starts after the Supabase step. For now: Download n8n JSON → import in n8n.'); return; }
+    if (t.closest('[data-genclear]')) { GEN.last = null; $('#genIn').value = ''; genRender(); return; }
+  });
+  $('#genIn').addEventListener('keydown', e => { if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) { e.preventDefault(); $('#genGo').click(); } });
+})();
+
+/* ================= One-click industry templates ================= */
+const WAT = (name, category, body) => ({ name, category, body });
+const INDUSTRIES = [
+  { id: 'furniture', name: 'Furniture', ic: 'F', color: '#C47B3B', tag: 'Cafes, offices & homes — site visits to orders',
+    stages: ['New Lead', 'Site Visit', 'Sample Sent', 'Quotation Sent', 'Negotiation'], sources: ['Instagram', 'Meta Ad', 'Google', 'IndiaMART', 'JustDial', 'Walk-in', 'Referral'], types: ['Cafe', 'Restaurant', 'Hotel', 'Office', 'Home', 'Co-working', 'Other'],
+    auto: ['When a Facebook lead arrives, send a WhatsApp message and create a task', 'When a lead moves to Quotation Sent, wait 2 days then send WhatsApp template', 'When a lead moves to Won, send a thank-you WhatsApp and wait 7 days then ask for a review'],
+    wa: [WAT('welcome_catalogue', 'Marketing', 'Hi {{1}}! Thanks for your interest in our seating. Here is our catalogue: {{2}}. When can we visit your site for free measurements?'), WAT('quotation_followup', 'Utility', 'Hi {{1}}, just checking — did you get a chance to look at the quotation for {{2}}? Happy to adjust it for your budget.'), WAT('site_visit_confirm', 'Utility', 'Your free site visit is confirmed for {{1}} at {{2}}. Our designer {{3}} will call before arriving.')],
+    tasks: ['Upload your product catalogue (PDF / photos)', 'Add your price list to Notes templates', 'Import existing clients (CSV)', 'Connect WhatsApp & Instagram', 'Get the WhatsApp templates approved by Meta'],
+    kpis: ['Site visits booked', 'Quotation → order rate', 'Average order value', 'Cost per lead (ads)'], assistant: 'Furniture sales assistant: suggests products by seat count and space, shares lead times and asks for site address.' },
+  { id: 'realestate', name: 'Real Estate', ic: 'R', color: '#3C8DD9', tag: 'Enquiries to site visits to bookings',
+    stages: ['New Enquiry', 'Contacted', 'Site Visit Scheduled', 'Site Visit Done', 'Negotiation'], sources: ['99acres', 'MagicBricks', 'Housing.com', 'Meta Ad', 'Google Ads', 'Referral', 'Walk-in'], types: ['1 BHK', '2 BHK', '3 BHK', 'Villa', 'Plot', 'Commercial'],
+    auto: ['When a Facebook lead arrives, send a WhatsApp message, assign to the team and create a task', 'When a lead moves to Site Visit Scheduled, send WhatsApp template', 'When a lead moves to Won, send a thank-you WhatsApp and wait 30 days then ask for a review'],
+    wa: [WAT('project_brochure', 'Marketing', 'Hi {{1}}, thanks for enquiring about {{2}}. Here is the brochure and price sheet: {{3}}. Would you like to visit this weekend?'), WAT('site_visit_reminder', 'Utility', 'Reminder: your site visit to {{1}} is tomorrow at {{2}}. Location: {{3}}'), WAT('price_update', 'Marketing', 'Hi {{1}}, prices at {{2}} go up from {{3}}. Book now to lock today\'s rate.')],
+    tasks: ['Add your projects & inventory', 'Upload brochures and price sheets', 'Assign areas / projects to sales team', 'Connect 99acres / MagicBricks lead emails (via n8n)', 'Import existing enquiries (CSV)'],
+    kpis: ['Site visits done', 'Visit → booking rate', 'Cost per site visit', 'Bookings this month'], assistant: 'Property advisor: answers about location, price, possession date and books site visits.' },
+  { id: 'agency', name: 'Marketing Agency', ic: 'A', color: '#7B61FF', tag: 'Discovery calls to signed retainers',
+    stages: ['New Lead', 'Discovery Call', 'Audit Shared', 'Proposal Sent', 'Negotiation'], sources: ['LinkedIn', 'Instagram', 'Referral', 'Website', 'Cold outreach', 'Meta Ad'], types: ['Local business', 'D2C brand', 'Restaurant', 'Real estate', 'Clinic', 'Other'],
+    auto: ['New lead: send WhatsApp template and create a task', 'When a lead moves to Proposal Sent, wait 3 days then send WhatsApp template', 'Every week send me a report on WhatsApp'],
+    wa: [WAT('audit_ready', 'Utility', 'Hi {{1}}, your free marketing audit for {{2}} is ready: {{3}}. Shall we walk through it on a 15-min call?'), WAT('proposal_followup', 'Utility', 'Hi {{1}}, following up on the proposal for {{2}}. Any questions I can answer?'), WAT('monthly_report', 'Utility', 'Hi {{1}}, your {{2}} report is ready: {{3}}')],
+    tasks: ['Create your service packages', 'Add a proposal template', 'Connect client ad accounts (Meta Ads)', 'Set up n8n client services', 'Import current clients (CSV)'],
+    kpis: ['Monthly recurring revenue', 'Proposal → close rate', 'Avg response time', 'Client ROAS'], assistant: 'Agency assistant: qualifies budget and goals, books discovery calls.' },
+  { id: 'restaurant', name: 'Restaurant / Cafe', ic: 'C', color: '#E0703A', tag: 'Table, party & catering bookings',
+    stages: ['New Enquiry', 'Menu Shared', 'Booking Confirmed', 'Advance Paid'], sources: ['Instagram', 'Google Maps', 'Zomato', 'Swiggy Dineout', 'Walk-in', 'Referral'], types: ['Table', 'Birthday party', 'Corporate event', 'Catering', 'Bulk order'],
+    auto: ['When a WhatsApp message arrives, reply with AI and save the lead to the CRM', 'When a lead moves to Won, send a thank-you WhatsApp and wait 1 day then ask for a review'],
+    wa: [WAT('menu_share', 'Marketing', 'Hi {{1}}! Here is our menu: {{2}}. For parties of {{3}}+ we have special packages.'), WAT('booking_confirm', 'Utility', 'Your booking for {{1}} guests on {{2}} at {{3}} is confirmed. See you soon!'), WAT('review_request', 'Marketing', 'Thanks for visiting {{1}}! Could you leave us a quick review? {{2}}')],
+    tasks: ['Upload menu & party packages', 'Add Google review link', 'Connect WhatsApp', 'Import regular guests (CSV)'],
+    kpis: ['Bookings this week', 'Repeat guests', 'Average bill', 'Google reviews gained'], assistant: 'Host assistant: shares menu, checks party size and date, confirms bookings in Hinglish.' },
+  { id: 'salon', name: 'Salon & Spa', ic: 'S', color: '#D77FC4', tag: 'Appointments, reminders & rebooking',
+    stages: ['New Enquiry', 'Services Shared', 'Appointment Booked', 'Reminder Sent'], sources: ['Instagram', 'Google Maps', 'Walk-in', 'Referral', 'JustDial'], types: ['Hair', 'Skin', 'Bridal', 'Nails', 'Spa'],
+    auto: ['When a lead moves to Appointment Booked, send WhatsApp template', 'When a lead moves to Won, send a thank-you WhatsApp and wait 30 days then send WhatsApp template'],
+    wa: [WAT('appointment_confirm', 'Utility', 'Hi {{1}}, your {{2}} appointment is booked for {{3}}. Reply 1 to confirm.'), WAT('appointment_reminder', 'Utility', 'Reminder: see you tomorrow at {{1}} for {{2}}!'), WAT('rebook_offer', 'Marketing', 'Hi {{1}}, it\'s been a month! Book this week and get {{2}} off.')],
+    tasks: ['Add services & prices', 'Add stylists to Team', 'Connect WhatsApp', 'Import client list (CSV)'],
+    kpis: ['Appointments', 'No-show rate', 'Rebooking rate', 'Revenue per client'], assistant: 'Salon assistant: suggests services, shares prices and books slots.' },
+  { id: 'gym', name: 'Gym & Fitness', ic: 'G', color: '#2FA36B', tag: 'Free trials to memberships & renewals',
+    stages: ['New Lead', 'Trial Booked', 'Trial Done', 'Offer Sent'], sources: ['Instagram', 'Meta Ad', 'Walk-in', 'Referral', 'Google'], types: ['Weight loss', 'Muscle gain', 'Yoga', 'Personal training', 'Zumba'],
+    auto: ['When a Facebook lead arrives, send a WhatsApp message and create a task', 'When a lead moves to Offer Sent, wait 2 days then send WhatsApp template'],
+    wa: [WAT('free_trial_confirm', 'Utility', 'Hi {{1}}, your free trial is booked for {{2}}. Bring water and a towel 💪'), WAT('offer_expiring', 'Marketing', 'Hi {{1}}, your joining offer of {{2}} ends {{3}}. Reply YES to lock it.'), WAT('renewal_reminder', 'Utility', 'Hi {{1}}, your membership ends on {{2}}. Renew now to keep your plan.')],
+    tasks: ['Add membership plans', 'Add trainers to Team', 'Run a free-trial Meta ad', 'Import members (CSV) for renewals'],
+    kpis: ['Trials booked', 'Trial → join rate', 'Renewals due', 'Churn'], assistant: 'Fitness assistant: asks goal, suggests a plan and books a free trial.' },
+  { id: 'health', name: 'Clinic / Healthcare', ic: '+', color: '#3CB4A0', tag: 'Appointments, follow-ups & reminders',
+    stages: ['New Enquiry', 'Appointment Booked', 'Consultation Done', 'Treatment Plan Shared'], sources: ['Google Maps', 'Practo', 'Instagram', 'Referral', 'Walk-in'], types: ['Consultation', 'Dental', 'Skin', 'Physio', 'Diagnostics'],
+    auto: ['When a lead moves to Appointment Booked, send WhatsApp template', 'When a lead moves to Consultation Done, wait 7 days then send WhatsApp template'],
+    wa: [WAT('appointment_confirm', 'Utility', 'Hello {{1}}, your appointment with {{2}} is on {{3}}. Reply 1 to confirm or 2 to reschedule.'), WAT('appointment_reminder', 'Utility', 'Reminder: your appointment is tomorrow at {{1}}.'), WAT('follow_up_visit', 'Utility', 'Hello {{1}}, it is time for your follow-up visit. Book here: {{2}}')],
+    tasks: ['Add doctors & timings', 'Add consultation fees', 'Keep medical details out of Notes (privacy)', 'Import patient contact list (CSV)'],
+    kpis: ['Appointments', 'No-show rate', 'Follow-up visits', 'New patients'], assistant: 'Clinic front-desk assistant: books appointments; never gives medical advice.' },
+  { id: 'education', name: 'Education / Coaching', ic: 'E', color: '#F2A93B', tag: 'Enquiries to demo classes to admissions',
+    stages: ['New Enquiry', 'Counselling Call', 'Demo Class', 'Fees Shared'], sources: ['Instagram', 'Google Ads', 'Meta Ad', 'School tie-up', 'Website', 'Referral'], types: ['School', 'College', 'Competitive exam', 'Skill course', 'Language'],
+    auto: ['When a Facebook lead arrives, send a WhatsApp message, assign to the team and create a task', 'When a lead moves to Demo Class, send WhatsApp template', 'When a lead moves to Fees Shared, wait 2 days then send WhatsApp template'],
+    wa: [WAT('demo_class_link', 'Utility', 'Hi {{1}}, your free demo class is on {{2}}. Join here: {{3}}'), WAT('fee_structure', 'Utility', 'Hi {{1}}, here is the fee structure for {{2}}: {{3}}. EMI available.'), WAT('batch_starting', 'Marketing', 'New {{1}} batch starts {{2}} — only {{3}} seats left.')],
+    tasks: ['Add courses & batches', 'Upload fee structure', 'Add counsellors to Team', 'Import past enquiries (CSV)'],
+    kpis: ['Demo classes', 'Demo → admission rate', 'Cost per admission', 'Admissions this month'], assistant: 'Admission counsellor: asks class/goal, shares batches and books a demo.' },
+  { id: 'ecommerce', name: 'E-commerce / D2C', ic: '₹', color: '#E8707E', tag: 'Catalogue, carts, orders & repeat buyers',
+    stages: ['New Enquiry', 'Catalogue Sent', 'Payment Pending'], sources: ['Instagram', 'Meta Ad', 'Website', 'WhatsApp', 'Marketplace'], types: ['New customer', 'Repeat customer', 'Wholesale', 'Gifting'],
+    auto: ['When a WhatsApp message arrives, reply with AI and save the lead to the CRM', 'When a lead moves to Payment Pending, wait 1 day then send WhatsApp template', 'When a lead moves to Won, send a thank-you WhatsApp and wait 7 days then ask for a review'],
+    wa: [WAT('catalogue_share', 'Marketing', 'Hi {{1}}! Here is our latest collection: {{2}}. Reply with the item code to order.'), WAT('payment_reminder', 'Utility', 'Hi {{1}}, your order {{2}} is waiting for payment. Pay here: {{3}}'), WAT('order_shipped', 'Utility', 'Your order {{1}} has shipped! Track it: {{2}}')],
+    tasks: ['Add product catalogue link', 'Add UPI / payment link', 'Connect Instagram & WhatsApp', 'Import customers (CSV)'],
+    kpis: ['Conversion rate', 'Average order value', 'Repeat purchase rate', 'ROAS'], assistant: 'Shop assistant: shares products, sizes and prices, sends payment link.' },
+];
+const IND = { open: null };
+const curIndustry = () => (S.settings && S.settings.industry) || store.get('leadnode.industry') || '';
+function renderIndustry(anim) {
+  if (!$('#v-industry').classList.contains('active')) return;
+  const cur = curIndustry(), tasks = store.get('leadnode.setupTasks');
+  $('#indBody').innerHTML = `${tasks && tasks.items && tasks.items.some(t => !t.done) ? `<div class="glass indtasks"><div class="sec-t">Setup checklist · ${esc((INDUSTRIES.find(i => i.id === tasks.id) || {}).name || '')}</div>${tasks.items.map((t, i) => `<label class="check"><input type="checkbox" data-indtask="${i}" ${t.done ? 'checked' : ''}> ${esc(t.t)}</label>`).join('')}</div>` : ''}
+    <div class="indgrid">${INDUSTRIES.map((x, i) => `<button class="indcard glass ${cur === x.id ? 'on' : ''}" data-ind="${x.id}" style="--c:${x.color};--i:${i}">
+      <span class="indic">${esc(x.ic)}</span><b>${esc(x.name)}</b><small class="muted">${esc(x.tag)}</small>
+      <span class="indmeta">${x.stages.length + 2} stages · ${x.auto.length} automations · ${x.wa.length} WhatsApp templates</span>${cur === x.id ? '<span class="badge mine">Active</span>' : ''}</button>`).join('')}</div>`;
+  stagger($('#indBody'), anim);
+}
+function openIndustry(id) {
+  const x = INDUSTRIES.find(i => i.id === id); if (!x) return;
+  const flows = x.auto.map(a => { const g = genParse(a); return g && !g.empty ? [g.trig].concat(g.steps).map(s => genHumanize(s).name).join(' → ') : a; });
+  $('#stageBox').innerHTML = `<div class="m-head"><h2><span class="indic sm" style="--c:${x.color}">${esc(x.ic)}</span> ${esc(x.name)} kit</h2><button class="ibtn" data-close>${I.x}</button></div>
+    <p class="help" style="margin-bottom:14px">${esc(x.tag)}. Everything below is set up in one click — you can change any of it later.</p>
+    <div class="indprev">
+      <label class="indsec"><input type="checkbox" data-indopt="pipe" checked><div><b>Pipeline stages</b><div class="indchain">${x.stages.concat(['Won', 'Lost']).map(s => `<span>${esc(s)}</span>`).join('')}</div><small class="muted">Your existing leads are kept.</small><label class="check" style="margin-top:6px" onclick="event.stopPropagation()"><input type="checkbox" data-indopt="remap" checked> Move existing leads into the new stages (old stages are removed)</label></div></label>
+      <label class="indsec"><input type="checkbox" data-indopt="lists" checked><div><b>Lead sources & customer types</b><small class="muted">${esc(x.sources.join(', '))} · ${esc(x.types.join(', '))}</small></div></label>
+      <label class="indsec"><input type="checkbox" data-indopt="auto" checked><div><b>${x.auto.length} automations</b>${flows.map(f => `<small class="indflow">${esc(f)}</small>`).join('')}</div></label>
+      <label class="indsec"><input type="checkbox" data-indopt="wa" checked><div><b>${x.wa.length} WhatsApp template drafts</b>${x.wa.map(w => `<div class="indwa"><code>${esc(w.name)}</code><span>${esc(w.body)}</span></div>`).join('')}<small class="muted">Saved as drafts — they still need Meta approval before sending.</small></div></label>
+      <label class="indsec"><input type="checkbox" data-indopt="tasks" checked><div><b>Setup checklist</b><small class="muted">${esc(x.tasks.join(' · '))}</small></div></label>
+      <div class="indsec"><span></span><div><b>Dashboard KPIs & AI assistant</b><small class="muted">KPIs: ${esc(x.kpis.join(', '))}</small><small class="muted">AI assistant: ${esc(x.assistant)}</small></div></div>
+    </div>
+    <div class="m-foot"><div class="grow"></div><button class="btn" data-close>Cancel</button><button class="btn primary" id="indApply">Apply ${esc(x.name)} kit</button></div>`;
+  $('#indApply').onclick = () => { const opt = {}; $$('[data-indopt]').forEach(c => opt[c.dataset.indopt] = c.checked); hideModal('#stageModal'); applyIndustry(x, opt); };
+  showModal('#stageModal');
+}
+async function applyIndustry(x, opt) {
+  const done = [];
+  if (opt.pipe) {
+    const oldOpen = stages().filter(n => !LOCKED.includes(n)), moves = [];
+    if (opt.remap) S.leads.forEach(l => { if (LOCKED.includes(l.stage) || x.stages.includes(l.stage)) return; const i = oldOpen.indexOf(l.stage); const to = x.stages[Math.min(x.stages.length - 1, Math.max(0, Math.round(i / Math.max(1, oldOpen.length - 1) * (x.stages.length - 1))))]; moves.push([l, to]); });
+    moves.forEach(([l, to]) => { if (demo) demoApi('moveStage', { id: l.leadId, stage: to, by: me() + ' (kit)' }); else l.stage = to; });
+    if (!demo && moves.length) runBatch(moves, ([l, to]) => api('moveStage', { id: l.leadId, stage: to, by: me() + ' (kit)' })).catch(e => toast('Some leads were not moved: ' + e.message, true));
+    if (moves.length) done.push(`${moves.length} leads moved`);
+    const keep = stages().filter(n => !LOCKED.includes(n) && !x.stages.includes(n) && S.leads.some(l => l.stage === n)), names = x.stages.concat(keep, LOCKED);
+    layout = defaultLayout(names); layout.stages = names.map((n, i) => ({ name: n, color: DEFAULT_COLORS[n] || STAGE_COLORS[(i * 2 + 1) % STAGE_COLORS.length] }));
+    selNodes.clear(); selNode = null; view.fitted = false; saveLayout(); done.push(`${names.length} stages`);
+  }
+  if (opt.lists) { S.lists = Object.assign({}, S.lists, { sources: x.sources, businessTypes: x.types }); done.push('sources & types'); }
+  if (opt.auto) { const fc = autoCanvas(); if (!fc.flow) fc.sync(); if (fc.fromSeed) fc.flow = { nodes: [], links: [] }; let wi = 0; x.auto.forEach(a => { const g = genParse(a); if (!g || g.empty) return; g.steps.forEach(st => { if (st.type === 'wa.template' && (st.p || {}).template === 'welcome_offer') st.p.template = (x.wa[Math.min(wi++, x.wa.length - 1)] || {}).name || 'welcome_offer'; }); genAddToCanvas([g.trig].concat(g.steps), true); }); done.push(`${x.auto.length} automations`); }
+  if (opt.wa) {
+    const drafts = x.wa.map(w => ({ templateName: w.name, category: w.category, language: 'en', header: '', body: w.body, buttons: '', metaStatus: 'Draft' }));
+    drafts.forEach(d => { if (!S.templates.some(t => t.templateName === d.templateName)) S.templates.push(d); });
+    if (!demo) runBatch(drafts, d => api('saveTemplate', d)).catch(e => toast('Some templates were not saved: ' + e.message, true));
+    done.push(`${drafts.length} WhatsApp drafts`);
+  }
+  if (opt.tasks) { store.set('leadnode.setupTasks', { id: x.id, items: x.tasks.map(t => ({ t, done: false })) }); done.push('setup checklist'); }
+  store.set('leadnode.industry', x.id); S.settings = Object.assign({}, S.settings, { industry: x.id, listsJson: JSON.stringify({ sources: S.lists.sources, businessTypes: S.lists.businessTypes }) });
+  if (demo) store.set('leadnode.branding', Object.assign({}, store.get('leadnode.branding') || {}, { industry: x.id, listsJson: S.settings.listsJson }));
+  else api('saveSettings', { industry: x.id, listsJson: S.settings.listsJson }).catch(() => { });
+  renderAll(true); renderIndustry(true);
+  toast(`✓ ${x.name} kit applied: ${done.join(' · ')}`);
+}
+function mergeSavedLists() { try { const j = S.settings && S.settings.listsJson ? JSON.parse(S.settings.listsJson) : null; if (j) { if (Array.isArray(j.sources) && j.sources.length) S.lists.sources = j.sources; if (Array.isArray(j.businessTypes) && j.businessTypes.length) S.lists.businessTypes = j.businessTypes; } } catch (e) { } }
+(function indEvents() {
+  $('#v-industry').addEventListener('click', e => { const c = e.target.closest('[data-ind]'); if (c) openIndustry(c.dataset.ind); });
+  $('#v-industry').addEventListener('change', e => { const t = e.target.closest('[data-indtask]'); if (!t) return; const s = store.get('leadnode.setupTasks'); s.items[+t.dataset.indtask].done = t.checked; store.set('leadnode.setupTasks', s); if (s.items.every(i => i.done)) { toast('🎉 Setup complete!'); renderIndustry(); } });
+})();
+
+/* ================= Unified analytics (ads + CRM + WhatsApp + revenue in one view) ================= */
+const AN = { range: 30, g: null };
+const CHANNEL_OF = src => /meta|facebook|\bfb\b|insta(?:gram)?\s*ad/i.test(src || '') ? 'Meta Ads' : /google\s*ads?\b|adwords/i.test(src || '') ? 'Google Ads' : /whatsapp/i.test(src || '') ? 'WhatsApp' : 'Organic, social & referrals';
+const CHANNELS = ['Meta Ads', 'Google Ads', 'WhatsApp', 'Organic, social & referrals'];
+/** Sample Google Ads account (until connected) — 60 days of daily rows */
+function gAdsSample() {
+  if (AN.g) return AN.g; const r = mulberry32(777), rows = [];
+  for (let d = 59; d >= 0; d--) { const dt = new Date(); dt.setDate(dt.getDate() - d); const day = dt.toISOString().slice(0, 10), spend = 420 + r() * 260, clicks = spend / (11 + r() * 6); rows.push({ day, spend, clicks, leads: Math.max(0, Math.round(clicks * (0.05 + r() * 0.05))) }); }
+  return AN.g = rows;
+}
+function anData() {
+  const days = AN.range, from = (() => { const d = new Date(); d.setDate(d.getDate() - days + 1); return d.toISOString().slice(0, 10); })();
+  const prevFrom = (() => { const d = new Date(); d.setDate(d.getDate() - days * 2 + 1); return d.toISOString().slice(0, 10); })();
+  const inR = (v, a, b) => { const x = dOnly(v); return x >= a && (!b || x < b); };
+  const leads = S.leads.filter(l => inR(l.createdOn, from)), prev = S.leads.filter(l => inR(l.createdOn, prevFrom, from));
+  const won = leads.filter(l => l.stage === 'Won'), rev = won.reduce((s, l) => s + (+l.budget || 0), 0);
+  const acts = S.activities.filter(a => inR(a.dateTime, from)), appts = acts.filter(a => /meeting|site visit|appointment|demo/i.test(a.type + ' ' + a.details)).length;
+  const waConv = acts.filter(a => /whatsapp/i.test(a.type)).length + leads.filter(l => CHANNEL_OF(l.source) === 'WhatsApp').length;
+  const meta = adsSample(), metaRows = meta.rows.filter(x => x.day >= from), gRows = gAdsSample().filter(x => x.day >= from);
+  const spend = { 'Meta Ads': metaRows.reduce((s, x) => s + x.spend, 0), 'Google Ads': gRows.reduce((s, x) => s + x.spend, 0) };
+  const reported = { 'Meta Ads': metaRows.reduce((s, x) => s + x.leads, 0), 'Google Ads': gRows.reduce((s, x) => s + x.leads, 0) };
+  const ch = CHANNELS.map(c => { const L = leads.filter(l => CHANNEL_OF(l.source) === c), Wn = L.filter(l => l.stage === 'Won'), R = Wn.reduce((s, l) => s + (+l.budget || 0), 0), sp = spend[c] || 0;
+    return { c, spend: sp, leads: L.length, reported: reported[c], won: Wn.length, rev: R, cpl: sp && L.length ? sp / L.length : 0, roas: sp ? R / sp : null }; });
+  const paidSpend = spend['Meta Ads'] + spend['Google Ads'], paidLeads = ch.filter(x => x.spend).reduce((s, x) => s + x.leads, 0), paidRev = ch.filter(x => x.spend).reduce((s, x) => s + x.rev, 0);
+  const worked = leads.filter(l => l.stage !== stages()[0]).length;
+  // weekly buckets (oldest → newest)
+  const weeks = []; for (let w = Math.ceil(days / 7) - 1; w >= 0; w--) { const e = new Date(); e.setDate(e.getDate() - w * 7); const s0 = new Date(e); s0.setDate(e.getDate() - 6); weeks.push({ a: s0.toISOString().slice(0, 10), b: e.toISOString().slice(0, 10) }); }
+  weeks.forEach(w => { w.leads = S.leads.filter(l => dOnly(l.createdOn) >= w.a && dOnly(l.createdOn) <= w.b).length; w.spend = metaRows.concat(gRows).filter(x => x.day >= w.a && x.day <= w.b).reduce((s, x) => s + x.spend, 0); });
+  return { from, leads, prev, won, rev, appts, waConv, ch, paidSpend, paidLeads, paidRev, worked, weeks };
+}
+function weekChart(rows, key, fmt, unit) {
+  const max = Math.max(1, ...rows.map(r => r[key]));
+  return `<div class="wchart">${rows.map((r, i) => `<div class="wcol" data-tip="${esc(fmtDate(r.a).replace(/ \d{4}$/, ''))} – ${esc(fmtDate(r.b).replace(/ \d{4}$/, ''))}: ${esc(fmt(r[key]))}${unit}"><span class="v">${esc(fmt(r[key]))}</span><div class="wbar" style="height:${Math.max(2, r[key] / max * 100).toFixed(1)}%;--i:${i}"></div><span class="m">${esc(fmtDate(r.b).replace(/ \d{4}$/, ''))}</span></div>`).join('')}</div>`;
+}
+function anInsights(d) {
+  const out = [], paid = d.ch.filter(x => x.spend && x.leads);
+  const best = paid.slice().sort((a, b) => a.cpl - b.cpl)[0], top = d.ch.slice().sort((a, b) => b.leads - a.leads)[0];
+  if (best) out.push(['good', 'Cheapest leads', `${best.c} brings leads at ${inr(best.cpl)} each — the best of your paid channels.`]);
+  if (top && top.leads) out.push(['good', 'Top source', `${top.c} gave ${top.leads} of your ${d.leads.length} leads in this period.`]);
+  const growth = d.prev.length ? Math.round((d.leads.length - d.prev.length) / d.prev.length * 100) : null;
+  if (growth !== null) out.push([growth >= 0 ? 'good' : 'warn', growth >= 0 ? 'Leads are up' : 'Leads are down', `${Math.abs(growth)}% ${growth >= 0 ? 'more' : 'fewer'} leads than the previous ${AN.range} days.`]);
+  const stale = S.leads.filter(l => !isClosed(l) && daysBetween(l.lastContact || l.createdOn, todayStr()) >= 3).length;
+  if (stale) out.push(['bad', 'Leads going cold', `${stale} open lead${stale > 1 ? 's have' : ' has'} had no contact for 3+ days. A quick WhatsApp today can save them.`]);
+  if (d.leads.length && !d.won.length) out.push(['warn', 'No wins yet in this period', 'Focus follow-ups on leads in Negotiation and Quotation stages.']);
+  return out;
+}
+function renderAnalytics(anim) {
+  if (!$('#v-analytics').classList.contains('active')) return;
+  const d = anData(), conv = d.leads.length ? Math.round(d.won.length / d.leads.length * 100) : 0, roas = d.paidSpend ? d.paidRev / d.paidSpend : 0;
+  let si = 0; const tile = (ic, bg, fg, v, lbl, tag) => `<div class="stat glass" style="--i:${si++}"><div class="ic" style="background:${bg};color:${fg}">${ic}</div><div><b>${v}</b><span>${lbl}${tag ? ` <em class="srcTag ${tag}">${tag === 'real' ? 'your CRM' : 'sample'}</em>` : ''}</span></div></div>`;
+  const ins = anInsights(d), icon = { good: '▲', warn: '!', bad: '●' };
+  $('#anRange').value = String(AN.range);
+  $('#anBody').innerHTML = `<div class="stats anstats">
+      ${tile(I.rupee, 'var(--green-soft)', 'var(--green)', inrShort(d.rev), 'Revenue (won)', 'real')}
+      ${tile(I.users, 'var(--blue-soft)', 'var(--blue-2)', d.leads.length, 'New leads', 'real')}
+      ${tile(I.trophy, 'var(--green-soft)', 'var(--green)', conv + '%', `Lead → won · ${d.won.length} deals`, 'real')}
+      ${tile(I.cal, 'var(--yellow-soft)', '#B7861A', d.appts, 'Appointments / visits', 'real')}
+      ${tile(I.wa, 'color-mix(in srgb,var(--wa) 15%,transparent)', 'var(--wa)', d.waConv, 'WhatsApp conversations', 'real')}
+      ${tile(I.rupee, 'var(--yellow-soft)', '#B7861A', inrShort(d.paidSpend), 'Ad spend (Meta + Google)', 'sample')}
+      ${tile(I.rupee, 'var(--blue-soft)', 'var(--blue-2)', d.paidLeads ? inr(d.paidSpend / d.paidLeads) : '–', 'Cost per CRM lead', 'sample')}
+      ${tile(I.fire, 'var(--coral-soft)', 'var(--coral)', roas ? roas.toFixed(1) + '×' : '–', 'ROAS (won ÷ ad spend)', 'sample')}
+    </div>
+    <div class="rgrid">
+      <div class="rcard glass"><h3>Leads per week</h3><p class="sub muted">All channels · from your CRM</p>${weekChart(d.weeks, 'leads', v => String(v), ' leads')}</div>
+      <div class="rcard glass"><h3>Ad spend per week</h3><p class="sub muted">Meta + Google · sample until connected</p>${weekChart(d.weeks, 'spend', inrShort, '')}</div>
+      <div class="rcard glass span2"><h3>Channels</h3><p class="sub muted">Spend from the ad platforms, leads and revenue from your CRM — so ROAS is real money, not platform estimates</p>
+        <div class="tblwrap"><table class="tbl"><thead><tr><th>Channel</th><th class="num">Spend</th><th class="num">CRM leads</th><th class="num">Platform-reported</th><th class="num">Won</th><th class="num">Revenue</th><th class="num">Cost / lead</th><th class="num">ROAS</th></tr></thead><tbody>
+        ${d.ch.map(x => `<tr style="cursor:default"><td><b>${esc(x.c)}</b></td><td class="num">${x.spend ? inr(x.spend) : '–'}</td><td class="num">${x.leads}</td><td class="num">${x.reported != null ? x.reported : '–'}</td><td class="num">${x.won}</td><td class="num">${inr(x.rev)}</td><td class="num">${x.cpl ? inr(x.cpl) : '–'}</td><td class="num">${x.roas == null ? '–' : x.roas.toFixed(1) + '×'}</td></tr>`).join('')}
+        </tbody></table></div></div>
+      <div class="rcard glass"><h3>Funnel</h3><p class="sub muted">This period · from your CRM</p>
+        <div class="anfun">${[['New leads', d.leads.length], ['Worked on', d.worked], ['Appointments', d.appts], ['Won', d.won.length]].map(([l, v], i, a) => `<div class="anf"><div class="anf-bar" style="width:${a[0][1] ? Math.max(4, v / a[0][1] * 100) : 4}%"></div><span>${l}</span><b>${v}</b></div>`).join('')}</div></div>
+      <div class="rcard glass"><h3>AI insights</h3><p class="sub muted">What to do next</p><div class="insights">${ins.map(([k, h, tx]) => `<div class="ins ${k}"><span class="ii">${icon[k]}</span><div><b>${esc(h)}</b><p>${esc(tx)}</p></div></div>`).join('') || '<p class="muted">Not enough data yet.</p>'}</div></div>
+    </div>`;
+  stagger($('#anBody'), anim);
+}
+$('#anRange').addEventListener('change', e => { AN.range = +e.target.value; renderAnalytics(true); });
+
+/* ================= AI lead summary & recommendations =================
+   Preview: built from the lead's data, source, journey and timing with rules.
+   After go-live, Gemini also reads the WhatsApp chat + ad/campaign data on the server. */
+function leadInsight(l) {
+  const acts = actsOf(l.leadId), touches = acts.filter(a => a.type !== 'Lead Added' && a.type !== 'Stage Changed'), last = touches[touches.length - 1];
+  const since = daysBetween(l.lastContact || l.createdOn || todayStr(), todayStr()), age = l.createdOn ? daysBetween(l.createdOn, todayStr()) : 0;
+  const ch = CHANNEL_OF(l.source), first = String(l.name || '').split(' ')[0] || 'there', who = me();
+  const whoTxt = `${l.name || 'This lead'}${l.businessName ? ` from ${l.businessName}` : ''}${l.businessType || l.city ? ` (${[l.businessType, l.city].filter(Boolean).join(', ')})` : ''}`;
+  const whereTxt = l.source ? `came from ${l.source}${ch === 'Meta Ads' || ch === 'Google Ads' ? ' (paid ad)' : ''} ${age <= 0 ? 'today' : age === 1 ? 'yesterday' : age + ' days ago'}` : `was added ${age <= 0 ? 'today' : age + ' days ago'}`;
+  const didTxt = touches.length ? `${touches.length} interaction${touches.length > 1 ? 's' : ''} so far, last one ${String(last.type).toLowerCase()} ${relDay(last.dateTime).toLowerCase()}` : 'No conversation yet';
+  const moneyTxt = l.budget ? `Budget ${inr(l.budget)}` : 'Budget not known yet';
+  const stageTxt = `Now in ${l.stage}${l.tag && !isClosed(l) ? `, tagged ${l.tag}` : ''}`;
+  let rec, act;
+  if (l.stage === 'Won') { rec = 'Happy client — ask for a Google review and a referral. Referrals are your cheapest leads.'; act = [['wa', 'Ask for a review', `Hi ${first}, thank you for choosing us! Could you leave a quick review? It really helps us.`], ['wa', 'Ask for a referral', `Hi ${first}, glad you liked working with us! Know anyone who needs the same? We'll give them a special price.`]]; }
+  else if (l.stage === 'Lost') { rec = since >= 30 ? 'It has been a month — re-engage with a fresh offer.' : 'Keep the door open and check back in a few weeks with a new offer.'; act = [['wa', 'Send comeback offer', `Hi ${first}, we have a new offer this month — would you like to have a look?`], ['fu', 'Remind me in 30 days', 30]]; }
+  else if (isDue(l)) { const late = daysBetween(l.followUpDate, todayStr()); rec = `Follow-up ${late > 0 ? `is ${late} day${late > 1 ? 's' : ''} overdue` : 'is due today'} — call now while the interest is still warm.`; act = [['call', 'Call now'], ['wa', 'WhatsApp', `Hi ${first}, following up on our conversation — is now a good time to talk?`], ['fu', 'Follow up tomorrow', 1]]; }
+  else if (!touches.length) { rec = 'New lead with no contact yet — reply on WhatsApp within 5 minutes. Fast replies win far more deals.'; act = [['wa', 'Send intro', `Hi ${first}, thanks for your enquiry! I'm ${who}. What are you looking for, and by when?`], ['call', 'Call'], ['fu', 'Follow up tomorrow', 1]]; }
+  else if (/quot/i.test(l.stage) && since >= 3) { rec = `Quotation sent ${since} days ago with no reply — follow up and offer a small reason to decide this week.`; act = [['wa', 'Follow up on quote', `Hi ${first}, did you get a chance to look at the quotation? If you confirm this week we can add a 5% discount.`], ['call', 'Call'], ['fu', 'Follow up in 2 days', 2]]; }
+  else if (/negoti/i.test(l.stage)) { rec = 'In negotiation — book a short call or visit to close. A time-limited offer helps.'; act = [['meet', 'Schedule meeting'], ['wa', 'Send offer', `Hi ${first}, to close this week we can offer ${l.budget ? 'a special price on ' + inr(l.budget) : 'a special price'}. Shall we finalise?`], ['call', 'Call']]; }
+  else if (since >= 5) { rec = `No contact for ${since} days — this lead is going cold. Re-engage today.`; act = [['wa', 'Check in', `Hi ${first}, just checking in — are you still planning this? Happy to help.`], ['call', 'Call'], ['fu', 'Follow up tomorrow', 1]]; }
+  else if (l.tag === 'Hot' || (+l.budget || 0) >= 500000) { rec = 'High-value, warm lead — call today and move it to the next stage.'; act = [['call', 'Call now'], ['meet', 'Schedule meeting'], ['wa', 'WhatsApp', `Hi ${first}, when would be a good time for a quick call today?`]]; }
+  else { const nx = nextStageOf(l.stage); rec = `On track. Keep the conversation going${nx ? ` and move to ${nx} when ready` : ''}.`; act = [['wa', 'WhatsApp', `Hi ${first}, any questions I can help with?`], ['fu', 'Follow up in 2 days', 2]]; }
+  const op = openStages(), si = op.indexOf(l.stage);
+  let score = l.stage === 'Won' ? 100 : l.stage === 'Lost' ? 5 : 25 + (si > -1 ? Math.round(si / Math.max(1, op.length - 1) * 35) : 0);
+  if (!isClosed(l)) { if (l.tag === 'Hot') score += 15; if (l.tag === 'Cold') score -= 10; if ((+l.budget || 0) >= 500000) score += 8; score -= Math.min(25, Math.max(0, since - 2) * 3); if (touches.length >= 3) score += 6; }
+  score = Math.max(1, Math.min(100, score));
+  return { text: `${whoTxt} ${whereTxt}. ${didTxt}. ${moneyTxt}. ${stageTxt}.`, rec, act, score };
+}
+function aiSummaryHTML(l) {
+  const x = leadInsight(l), cls = x.score >= 70 ? 'hot' : x.score >= 40 ? 'warm' : 'cold';
+  const btn = ([k, label, v]) => k === 'call' ? `<a class="btn sm" href="tel:+${esc(String(l.phone || '').replace(/\D/g, ''))}">${I.phone}${esc(label)}</a>`
+    : k === 'wa' ? `<a class="btn sm wa" target="_blank" rel="noopener" href="${waLink(l.phone, v)}" title="${esc(v)}">${I.wa}${esc(label)}</a>`
+    : k === 'fu' ? `<button class="btn sm" data-aifu="${v}">${I.cal}${esc(label)}</button>` : `<button class="btn sm" data-aimeet>${I.cal}${esc(label)}</button>`;
+  return `<div class="aisum"><div class="aisum-h"><span class="gen-ai">✦</span><b>AI summary</b><span class="pill ${cls}" title="How likely this lead is to buy, based on stage, activity, budget and timing">Score ${x.score}</span></div>
+    <p>${esc(x.text)}</p><div class="aisum-rec"><b>Recommended next step</b><span>${esc(x.rec)}</span></div>
+    <div class="aisum-act">${x.act.map(btn).join('')}</div><small class="muted">Smart rules for now · Gemini will also read the WhatsApp chat after go-live</small></div>`;
+}
+
+/* ================= White label (agencies resell NodeVers as their own platform) ================= */
+const WL_KEYS = ['accentColor', 'buttonColor', 'loginHeadline', 'loginSub', 'hidePowered', 'subdomain', 'customDomain'];
+const WL_SWATCHES = ['#6F8FE8', '#4F7DF3', '#7B61FF', '#B08CEB', '#D77FC4', '#E8707E', '#F29A5C', '#E0A82E', '#2FA36B', '#3CB4A0', '#0EA5E9', '#111318'];
+const wl = () => { const s = S.settings || {}, o = {}; WL_KEYS.forEach(k => o[k] = s[k] != null ? String(s[k]) : ''); return o; };
+const lum = hex => { const n = parseInt(hex.slice(1), 16), c = [n >> 16, n >> 8 & 255, n & 255].map(v => { v /= 255; return v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; }); return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]; };
+const okHex = v => /^#[0-9a-f]{6}$/i.test(v || '');
+function applyWhiteLabel() {
+  const w = wl(), r = document.documentElement.style;
+  if (okHex(w.accentColor)) { r.setProperty('--blue-2', w.accentColor); r.setProperty('--blue', `color-mix(in srgb, ${w.accentColor} 70%, #ffffff)`); r.setProperty('--blue-soft', `color-mix(in srgb, ${w.accentColor} 14%, transparent)`); }
+  else ['--blue-2', '--blue', '--blue-soft'].forEach(p => r.removeProperty(p));
+  if (okHex(w.buttonColor)) { r.setProperty('--primary', w.buttonColor); r.setProperty('--on-primary', lum(w.buttonColor) > 0.45 ? '#111318' : '#ffffff'); }
+  else ['--primary', '--on-primary'].forEach(p => r.removeProperty(p));
+  $$('.powered').forEach(e => e.hidden = w.hidePowered === '1');
+  const h = $('.auth-side h1'), sub = $('#authSideSub');
+  if (h) h.textContent = w.loginHeadline || 'Leads, WhatsApp and Meta ads — one node-based workspace.';
+  if (sub) { sub.textContent = w.loginSub || ''; sub.hidden = !w.loginSub; }
+}
+function fillWL() {
+  const w = wl();
+  $('#wlAccent').value = okHex(w.accentColor) ? w.accentColor : '#6F8FE8'; $('#wlButton').value = okHex(w.buttonColor) ? w.buttonColor : '#111318';
+  $('#wlSw').innerHTML = WL_SWATCHES.map(c => `<button type="button" class="sw ${c.toLowerCase() === $('#wlAccent').value.toLowerCase() ? 'on' : ''}" data-wlsw="${c}" style="background:${c}"></button>`).join('');
+  $('#wlHead').value = w.loginHeadline; $('#wlSub').value = w.loginSub; $('#wlHide').checked = w.hidePowered === '1';
+  $('#wlSubdomain').value = w.subdomain; $('#wlDomain').value = w.customDomain; drawDns();
+}
+const domainToken = d => 'nv-' + (Array.from(String(d)).reduce((h, c) => (h * 33 + c.charCodeAt(0)) >>> 0, 5381)).toString(36);
+function drawDns(results) {
+  const d = $('#wlDomain').value.trim().toLowerCase().replace(/^https?:\/\//, '').replace(/\/.*$/, '');
+  if (!d) { $('#wlDns').innerHTML = '<p class="help">Add a domain like <code>crm.youragency.com</code> to see the DNS records to add.</p>'; return; }
+  const recs = [['CNAME', d, 'cname.nodevers.app'], ['TXT', '_nodevers.' + d, domainToken(d)]];
+  $('#wlDns').innerHTML = `<p class="help">Add these 2 records at your domain provider (GoDaddy, Hostinger, Cloudflare…), then press <b>Check DNS</b>. SSL is issued automatically once it's verified.</p>
+    <div class="tblwrap"><table class="tbl dns"><thead><tr><th>Type</th><th>Name / Host</th><th>Value</th><th>Status</th></tr></thead><tbody>${recs.map((r, i) => { const st = results ? results[i] : null; return `<tr style="cursor:default"><td><b>${r[0]}</b></td><td><code>${esc(r[1])}</code></td><td><code>${esc(r[2])}</code></td><td>${st == null ? '<span class="muted">not checked</span>' : st ? '<span class="pill won">✓ Found</span>' : '<span class="pill hot">✕ Not found yet</span>'}</td></tr>`; }).join('')}</tbody></table></div>`;
+}
+async function checkDns() {
+  const d = $('#wlDomain').value.trim().toLowerCase().replace(/^https?:\/\//, '').replace(/\/.*$/, '');
+  if (!/^[a-z0-9-]+(\.[a-z0-9-]+)+$/.test(d)) return toast('Enter a domain like crm.youragency.com', true);
+  const q = async (name, type) => { const r = await fetch(`https://dns.google/resolve?name=${encodeURIComponent(name)}&type=${type}`); const j = await r.json(); return (j.Answer || []).map(a => String(a.data).replace(/"/g, '').replace(/\.$/, '').toLowerCase()); };
+  const b = $('#wlCheck'); b.disabled = true; b.textContent = 'Checking…';
+  try {
+    const [cn, tx] = await Promise.all([q(d, 'CNAME'), q('_nodevers.' + d, 'TXT')]);
+    const res = [cn.includes('cname.nodevers.app'), tx.includes(domainToken(d))]; drawDns(res);
+    toast(res.every(Boolean) ? '✓ Both records found — the domain goes live with hosting at launch' : 'Not found yet — DNS can take up to a few hours to update', !res.every(Boolean));
+  } catch (e) { toast('Could not reach the DNS checker: ' + e.message, true); }
+  finally { b.disabled = false; b.textContent = 'Check DNS'; }
+}
+async function saveWL() {
+  const sub = $('#wlSubdomain').value.trim().toLowerCase(), dom = $('#wlDomain').value.trim().toLowerCase().replace(/^https?:\/\//, '').replace(/\/.*$/, '');
+  if (sub && !/^[a-z0-9]([a-z0-9-]{1,30}[a-z0-9])?$/.test(sub)) return toast('Sub-domain: letters, numbers and dashes only', true);
+  if (dom && !/^[a-z0-9-]+(\.[a-z0-9-]+)+$/.test(dom)) return toast('Enter a domain like crm.youragency.com', true);
+  const acc = $('#wlAccent').value.toLowerCase(), btnc = $('#wlButton').value.toLowerCase();
+  const data = { accentColor: acc === '#6f8fe8' && !wl().accentColor ? '' : acc, buttonColor: btnc === '#111318' && !wl().buttonColor ? '' : btnc, loginHeadline: $('#wlHead').value.trim().slice(0, 120), loginSub: $('#wlSub').value.trim().slice(0, 200), hidePowered: $('#wlHide').checked ? '1' : '', subdomain: sub, customDomain: dom };
+  S.settings = Object.assign({}, S.settings, data); applyWhiteLabel();
+  try {
+    if (demo) store.set('leadnode.branding', Object.assign({}, store.get('leadnode.branding') || {}, data)); else await api('saveSettings', data);
+    toast('White label saved ✓');
+  } catch (e) { toast('Could not save: ' + e.message, true); }
+}
+(function wlEvents() {
+  $('#stab-wl').addEventListener('click', e => {
+    const sw = e.target.closest('[data-wlsw]'); if (sw) { $('#wlAccent').value = sw.dataset.wlsw; $$('#wlSw .sw').forEach(x => x.classList.toggle('on', x === sw)); S.settings = Object.assign({}, S.settings, { accentColor: sw.dataset.wlsw }); applyWhiteLabel(); return; }
+    if (e.target.id === 'wlCheck') { checkDns(); return; }
+    if (e.target.id === 'wlSave') { saveWL(); return; }
+    if (e.target.id === 'wlReset') { $('#wlAccent').value = '#6F8FE8'; $('#wlButton').value = '#111318'; S.settings = Object.assign({}, S.settings, { accentColor: '', buttonColor: '' }); applyWhiteLabel(); toast('Colours reset — press Save to keep'); return; }
+    if (e.target.id === 'wlPreview') { showAuth('in', true); return; }
+  });
+  $('#wlAccent').addEventListener('input', e => { S.settings = Object.assign({}, S.settings, { accentColor: e.target.value }); applyWhiteLabel(); });
+  $('#wlButton').addEventListener('input', e => { S.settings = Object.assign({}, S.settings, { buttonColor: e.target.value }); applyWhiteLabel(); });
+  $('#wlDomain').addEventListener('input', () => drawDns());
 })();
 
 /* ================= login (Supabase Auth) ================= */
@@ -3596,6 +4264,7 @@ function renderPanel(id) {
       <div style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap">${l.tag ? `<span class="pill ${tagCls(l.tag)}">${esc(l.tag)}</span>` : ''}<span class="pill stage"><span class="sdot" style="background:${stageColor(l.stage)}"></span>${esc(l.stage)}</span></div></div>
       <button class="ibtn" data-delete="${esc(l.leadId)}" title="Delete lead">${I.trash}</button><button class="ibtn" data-close-panel>${I.x}</button></div>
     <div class="p-body">
+      ${aiSummaryHTML(l)}
       <div class="p-actions">
         <a class="btn wa" href="${waLink(l.phone, 'Hi ' + (l.name || '').split(' ')[0] + ', ')}" target="_blank" rel="noopener" ${l.phone ? '' : 'style="pointer-events:none;opacity:.5"'}>${I.wa}WhatsApp</a>
         <a class="btn" href="tel:+${esc(String(l.phone || '').replace(/\D/g, ''))}">${I.phone}Call</a>
@@ -3749,7 +4418,7 @@ $('#fileIn').addEventListener('change', async e => {
 });
 
 /* ================= branding (logo, name, profile) ================= */
-const DEFAULT_BRAND = { brandName: 'LeadNode', logoUrl: '', userName: 'Shivam', userPhoto: '' };
+const DEFAULT_BRAND = { brandName: 'NodeVers', logoUrl: '', userName: 'Shivam', userPhoto: '' };
 function brand() { const b = Object.assign({}, DEFAULT_BRAND), src = S.settings || {}; Object.keys(DEFAULT_BRAND).forEach(k => { if (src[k]) b[k] = String(src[k]); }); return b; }
 const LOGO_DEFAULT = '<svg class="i" viewBox="0 0 24 24" style="width:22px;height:22px"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="12" r="2.5"/><circle cx="6" cy="18" r="2.5"/><path d="M8.3 7.2 15.7 11M8.3 16.8 15.7 13"/></svg>';
 const memberPhoto = name => { const b = brand(); return name && name === b.userName ? b.userPhoto : ''; };
@@ -3761,10 +4430,11 @@ function applyBranding() {
   document.title = hasCRM ? b.brandName : b.brandName + ' CRM';
   $$('.brand-logo').forEach(e => { e.innerHTML = logo ? `<img src="${esc(logo)}" alt="" referrerpolicy="no-referrer">` : LOGO_DEFAULT; e.style.background = logo ? 'transparent' : ''; });
   $('#meBtn').innerHTML = avatar(b.userName, '', b.userPhoto);
+  applyWhiteLabel();
 }
 
 /* ================= settings modal ================= */
-function setSTab(t) { $$('#setModal .segb').forEach(b => b.classList.toggle('active', b.dataset.stab === t)); $('#stab-brand').hidden = t !== 'brand'; $('#stab-conn').hidden = t !== 'conn'; $('#stab-acct').hidden = t !== 'acct'; if (t === 'acct') fillAcct(); }
+function setSTab(t) { $$('#setModal .segb').forEach(b => b.classList.toggle('active', b.dataset.stab === t)); $('#stab-brand').hidden = t !== 'brand'; $('#stab-conn').hidden = t !== 'conn'; $('#stab-acct').hidden = t !== 'acct'; $('#stab-wl').hidden = t !== 'wl'; if (t === 'acct') fillAcct(); if (t === 'wl') fillWL(); }
 function openSettings(tab) {
   const b = brand();
   upStore.brand = { logoUrl: b.logoUrl, userPhoto: b.userPhoto };
@@ -3778,11 +4448,11 @@ function openSettings(tab) {
 }
 $('#bSave').onclick = async () => {
   if (upBusy) return toast('Photo is still uploading, wait 2 seconds…', true);
-  const data = { brandName: $('#bName').value.trim() || 'LeadNode', userName: $('#pName').value.trim() || 'Shivam', logoUrl: upStore.brand.logoUrl || '', userPhoto: upStore.brand.userPhoto || '' };
+  const data = { brandName: $('#bName').value.trim() || 'NodeVers', userName: $('#pName').value.trim() || 'Shivam', logoUrl: upStore.brand.logoUrl || '', userPhoto: upStore.brand.userPhoto || '' };
   const btn = $('#bSave'); btn.disabled = true; btn.textContent = 'Saving…';
   try {
-    if (demo) { store.set('leadnode.branding', data); S.settings = data; }
-    else S.settings = await api('saveSettings', data);
+    if (demo) { store.set('leadnode.branding', Object.assign({}, store.get('leadnode.branding') || {}, data)); S.settings = Object.assign({}, S.settings, data); }
+    else S.settings = Object.assign({}, S.settings, await api('saveSettings', data));
     applyBranding(); renderAll(); hideModal('#setModal'); toast('Branding saved ✓');
   } catch (e) { toast('Could not save: ' + e.message, true); }
   finally { btn.disabled = false; btn.textContent = 'Save'; }
@@ -4013,6 +4683,8 @@ function go(name) {
   if (name === 'scripts') renderScripts();
   if (name === 'ads') renderAds(true);
   if (name === 'n8n') renderN8n(true);
+  if (name === 'industry') renderIndustry(true);
+  if (name === 'analytics') renderAnalytics(true);
   if (name === 'automation') requestAnimationFrame(() => autoCanvas().sync());
   if (name === 'templates' && stale) renderTemplates();
   closePops();
@@ -4041,6 +4713,10 @@ document.addEventListener('click', e => {
   const th = t.closest('th[data-sort]'); if (th) { const k = th.dataset.sort; ui.sort = { k, d: ui.sort.k === k ? -ui.sort.d : 1 }; renderLeads(); return; }
   const mem = t.closest('[data-mem]'); if (mem) { openMemberModal(S.team.find(m => String(m.memberId) === mem.dataset.mem)); return; }
   const mtog = t.closest('[data-memtoggle]'); if (mtog) { toggleMember(mtog.dataset.memtoggle); return; }
+  const afu = t.closest('[data-aifu]'); if (afu && ui.openId) { const d = new Date(); d.setDate(d.getDate() + (+afu.dataset.aifu)); const ds = d.toISOString().slice(0, 10), l = S.leads.find(x => x.leadId === ui.openId); l.followUpDate = ds; (demo ? Promise.resolve(demoApi('updateLead', { id: l.leadId, followUpDate: ds })) : api('updateLead', { id: l.leadId, followUpDate: ds })).then(() => { toast('Follow-up set for ' + fmtDate(ds)); renderAll(); }).catch(er => toast(er.message, true)); return; }
+  if (t.closest('[data-aimeet]') && ui.openId) { const ty = $('#ntype'); if (ty && [...ty.options].some(o => o.value === 'Meeting')) ty.value = 'Meeting'; const nt = $('#ntext'); nt.value = 'Meeting scheduled for '; nt.focus(); nt.scrollIntoView({ block: 'center', behavior: 'smooth' }); return; }
+  if (t.closest('[data-clearfilter]')) { ui.q = ''; ui.pfilter = ''; $('#gsearch').value = $('#dsearch').value = ''; fillSelects(); renderDashboard(); renderPipeline(); toast('Filter cleared — showing all leads'); return; }
+  if (t.closest('#pImport')) { go('leads'); setTimeout(() => $('#csvImportBtn').click(), 200); return; }
   const ex = t.closest('[data-expand]'); if (ex) { const s = ex.dataset.expand; ui.expanded.has(s) ? ui.expanded.delete(s) : ui.expanded.add(s); renderPipeline(); return; }
   const sl = t.closest('[data-stagelist]'); if (sl) { ui.lf.stage = sl.dataset.stagelist; go('leads'); return; }
   const op = t.closest('[data-open]'); if (op) { openPanel(op.dataset.open); return; }
@@ -4059,6 +4735,7 @@ document.addEventListener('keydown', e => {
   if (e.key === 'Tab' && onPipe && !typing && !$('#nodePal.show')) { e.preventDefault(); const cv = $('#canvas').getBoundingClientRect(); const at = lastMouse.in ? lastMouse : { x: cv.left + cv.width / 2 - 170, y: cv.top + 80 }; openPalette(at.x, at.y, lastMouse.in && !selNode ? screenToWorld(lastMouse.x, lastMouse.y) : null); return; }
   if (e.key === 'Escape') { if ($('.pop.show')) { closePops(); return; } if ($('.modal.show')) $$('.modal.show').forEach(m => hideModal('#' + m.id)); else closePanel(); }
 });
+$$('[data-noautofill]').forEach(i => { const off = () => i.removeAttribute('readonly'); i.addEventListener('focus', off); i.addEventListener('pointerdown', off); });
 $('#dsearch').oninput = e => { ui.q = e.target.value; $('#gsearch').value = ui.q; renderDashboard(); renderPipeline(); };
 $('#gsearch').oninput = e => { ui.q = e.target.value; $('#dsearch').value = ui.q; renderDashboard(); renderPipeline(); };
 $('#dstage').onchange = e => { ui.stage = e.target.value; renderDashboard(); };
