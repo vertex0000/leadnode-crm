@@ -737,6 +737,8 @@ body.ro [data-add],body.ro .addcard,body.ro #addMember,body.ro [data-lginvite],b
 .ib-aibtn.busy{animation:aiPulse 1s ease-in-out infinite}@keyframes aiPulse{50%{box-shadow:0 0 0 6px color-mix(in srgb,#A78BFA 25%,transparent)}}
 .ib-aim{position:absolute;bottom:52px;left:0;z-index:30;width:250px;padding:6px;border-radius:14px;background:var(--glass-2,var(--card));border:1px solid var(--line);box-shadow:0 18px 40px rgba(0,0,0,.25);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);display:flex;flex-direction:column}
 .ib-aim button{display:flex;flex-direction:column;align-items:flex-start;gap:1px;border:0;background:none;padding:7px 10px;border-radius:9px;cursor:pointer;color:var(--text);text-align:left}.ib-aim button:hover{background:var(--blue-soft)}.ib-aim b{font-size:13px}.ib-aim small{font-size:11.5px;color:var(--muted)}
+.bc-imp{display:flex;gap:12px;align-items:center;padding:12px 14px;margin-bottom:14px;border-radius:14px;border:1px dashed color-mix(in srgb,var(--blue-2) 45%,var(--line));background:color-mix(in srgb,var(--blue-2) 7%,transparent)}.bc-imp b{display:block;font-size:13.5px}.bc-imp small{font-size:12px;color:var(--muted)}.bc-imp-ic{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;font-weight:800;color:#fff;background:linear-gradient(135deg,var(--blue-2),#A78BFA);flex:none}
+@media (max-width:600px){.bc-imp{flex-wrap:wrap}.bc-imp .btn{width:100%}}
 .imp-batch{display:flex;flex-direction:column;gap:6px;margin:12px 0 4px;font-size:13px;font-weight:600}.imp-batch small{font-weight:500;color:var(--muted)}.imp-batch .input{max-width:320px}
 .imp-done{display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px;padding:18px 8px}.imp-ok{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;font-size:22px;font-weight:800;color:#fff;background:linear-gradient(135deg,var(--blue-2),#A78BFA)}
 .srcTag{font-style:normal;font-size:10px;font-weight:700;padding:1px 5px;border-radius:4px;margin-left:4px;vertical-align:1px}
@@ -5099,6 +5101,7 @@ async function runImport() {
     if (demo) renderAll(); else await load(true);
     if (!ok) { hideModal('#leadModal'); return toast(msg, true); }
     IMP.batch = batch;
+    if (IMP.fromBc && batch) { const ch = IMP.fromBc; IMP.fromBc = ''; hideModal('#leadModal'); bcUseBatch(ch, batch); return toast(`✓ ${msg} — selected for this broadcast`); }
     $('#leadBox').innerHTML = `<div class="m-head"><h2>Import done</h2><button class="ibtn" data-close>${I.x}</button></div>
       <div class="imp-done"><div class="imp-ok">✓</div><b>${esc(msg)}</b>${batch ? `<p class="help">Batch name: <b>${esc(batch)}</b>. Send them a WhatsApp template or an email now — the audience is already set to this batch.</p>` : ''}</div>
       <div class="m-foot"><div class="grow"></div><button class="btn" data-close>Done</button>${batch ? `<button class="btn" data-impbc="email">Send email</button><button class="btn primary" data-impbc="whatsapp">Send WhatsApp broadcast</button>` : ''}</div>`;
@@ -5121,9 +5124,13 @@ async function downloadSample() {
 document.addEventListener('click', e => { const am = $('#ibAiMenu'); if (am && !am.hidden && !e.target.closest('.ib-ai')) am.hidden = true; });
 document.addEventListener('click', e => { if (e.target.closest('[data-impsample]')) downloadSample();
   const b = e.target.closest('[data-impbc]'); if (!b || !IMP.batch) return;
-  hideModal('#leadModal'); BC.tab = b.dataset.impbc; BC.node = 'msg'; BC.excluded = new Set(); BC.showList = false;
-  BC.aud = Object.assign({}, BC.aud, { src: 'filters', stages: [], tag: '', source: IMP.batch, city: '', assigned: '', past: '', cap: 0 });
-  go('broadcast'); });
+  hideModal('#leadModal'); bcUseBatch(b.dataset.impbc, IMP.batch); });
+function bcUseBatch(ch, batch) {
+  BC.tab = ch; BC.node = 'msg'; BC.excluded = new Set(); BC.showList = false;
+  BC.aud = Object.assign({}, BC.aud, { src: 'filters', stages: [], tag: '', source: batch, city: '', assigned: '', past: '', cap: 0 });
+  if (location.hash === '#broadcast') renderBroadcast(); else go('broadcast');
+}
+document.addEventListener('click', e => { if (!e.target.closest('[data-bcimport]')) return; IMP.fromBc = BC.tab === 'email' ? 'email' : 'whatsapp'; $('#csvFile').value = ''; $('#csvFile').click(); });
 
 /* ================= broadcast: node flow (Audience → Message → Test → Send) ================= */
 const BC = { tab: 'whatsapp', node: 'aud', aud: { src: 'filters', stages: [], tag: '', source: '', city: '', assigned: '', past: '', pastMode: 'unread', cap: 0 }, excluded: new Set(), showList: false, tpl: '', vars: [], name: '', subject: '', body: 'Hi {{first_name}},\n\n', email: null, running: false, stop: false, tested: {}, testTo: '' };
@@ -5182,7 +5189,7 @@ function flowHTML(ch) {
 function inspAud(ch) {
   const a = BC.aud, uniq = k => [...new Set(S.leads.map(l => l[k]).filter(Boolean))].sort(), r = reach(ch), segs = segments(), past = bcList().filter(b => (b.channel || 'whatsapp') === ch);
   const sel = (id, label, list, v) => `<label class="bc-f"><span>${label}</span><select class="input sm" data-bcaud="${id}"><option value="">All</option>${list.map(x => `<option ${x === v ? 'selected' : ''}>${esc(x)}</option>`).join('')}</select></label>`;
-  return `<div class="bc-seg"><button class="${a.src !== 'past' ? 'on' : ''}" data-bcsrc="filters">By filters</button><button class="${a.src === 'past' ? 'on' : ''}" data-bcsrc="past">Retarget a past campaign</button></div>
+  return `${AUTH.role === 'client' ? '' : `<div class="bc-imp"><span class="bc-imp-ic">⇪</span><div class="grow"><b>Numbers in an Excel / CSV file?</b><small>Import them — they are saved as leads and selected here automatically.</small></div><button class="btn sm" data-bcimport>Import Excel / CSV</button></div>`}<div class="bc-seg"><button class="${a.src !== 'past' ? 'on' : ''}" data-bcsrc="filters">By filters</button><button class="${a.src === 'past' ? 'on' : ''}" data-bcsrc="past">Retarget a past campaign</button></div>
     ${a.src === 'past' ? `<div class="bc-fs two"><label class="bc-f"><span>Campaign</span><select class="input sm" data-bcaud="past"><option value="">Choose…</option>${past.map(b => `<option value="${esc(b.broadcastId)}" ${b.broadcastId === a.past ? 'selected' : ''}>${esc(b.name || b.broadcastId)}</option>`).join('')}</select></label>
       <label class="bc-f"><span>People who</span><select class="input sm" data-bcaud="pastMode">${(ch === 'email' ? [['all', 'got it']] : [['unread', "didn't read it"], ['noreply', "didn't reply"], ['replied', 'replied'], ['all', 'got it']]).map(([k, n]) => `<option value="${k}" ${a.pastMode === k ? 'selected' : ''}>${n}</option>`).join('')}</select></label></div>${!past.length ? '<p class="help">No past campaigns on this channel yet.</p>' : ''}`
     : `${segs.length ? `<div class="bc-chips"><span class="muted">Saved:</span>${segs.map((g, i) => `<button class="chip" data-bcseg="${i}">${esc(g.name)}</button>`).join('')}</div>` : ''}
@@ -5587,7 +5594,7 @@ function parseCSV(text) {
   return rows;
 }
 $('#csvExport').onclick = exportCSV;
-$('#csvImportBtn').onclick = () => { $('#csvFile').value = ''; $('#csvFile').click(); };
+$('#csvImportBtn').onclick = () => { IMP.fromBc = ''; $('#csvFile').value = ''; $('#csvFile').click(); };
 $('#csvFile').onchange = e => { const f = e.target.files[0]; if (f) openImport(f); };
 
 /* ================= team ================= */
