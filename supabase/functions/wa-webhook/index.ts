@@ -1,5 +1,5 @@
 // Nodevers — wa-webhook: Meta sends incoming WhatsApp messages + delivery ticks here.
-// Deploy: Supabase → Edge Functions → Deploy a new function → name "wa-webhook" → paste → turn OFF "Verify JWT".
+// Deploy: Supabase → Edge Functions → wa-webhook → Code → replace all → Deploy. "Enforce JWT verification" stays OFF.
 // Secrets (Edge Functions → Secrets): WA_VERIFY_TOKEN (any long random text, same as in Meta), META_APP_SECRET (Meta app → Basic → App secret).
 import { createClient } from 'npm:@supabase/supabase-js@2';
 
@@ -72,6 +72,9 @@ Deno.serve(async (req) => {
         if (ins.data?.length) {
           await db.from('activities').insert({ workspace_id: ws, lead_id: lead.id, type: 'WhatsApp Received', details: text.slice(0, 300), done_by: names[m.from] || 'Customer' });
           await db.from('leads').update({ last_contact: today() }).eq('workspace_id', ws).eq('lead_id', lead.id);
+          // "STOP" → no more broadcasts to this number; "START" → back in
+          if (/^\s*(stop|unsubscribe|stop all|band karo)\s*[.!]?\s*$/i.test(text)) await db.from('leads').update({ wa_opt_out: true }).eq('workspace_id', ws).eq('lead_id', lead.id);
+          else if (/^\s*start\s*$/i.test(text)) await db.from('leads').update({ wa_opt_out: false }).eq('workspace_id', ws).eq('lead_id', lead.id);
         }
       }
       for (const s of v.statuses ?? []) {

@@ -657,6 +657,17 @@ body.ro [data-add],body.ro .addcard,body.ro #addMember,body.ro [data-lginvite],b
 .ib-comp{display:flex;gap:8px;padding:10px;border-top:1px solid var(--line);align-items:flex-end;flex-wrap:wrap}.ib-comp textarea{flex:1;resize:none;min-height:40px;max-height:140px}.ib-comp.tpl select{flex:1;min-width:180px}
 .ib-note{font-size:12px;color:var(--muted);padding:8px 12px;width:100%}
 @media (max-width:760px){.inbox{grid-template-columns:1fr;height:calc(100vh - 210px)}.inbox .ib-thread{display:none}.inbox.thread-open .ib-list{display:none}.inbox.thread-open .ib-thread{display:flex}.ib-back{display:inline-flex}.wa-grid{grid-template-columns:1fr}}
+.imp-map{display:flex;gap:10px;overflow-x:auto;padding-bottom:8px;margin-bottom:10px}.imp-col{min-width:170px;flex:0 0 170px;border:1px solid var(--line);border-radius:10px;padding:8px;display:flex;flex-direction:column;gap:6px}
+.imp-h{font-weight:700;font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.imp-s{display:flex;flex-direction:column;gap:3px;font-size:12px;color:var(--muted)}.imp-s span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.imp-sum{font-size:13.5px;margin:4px 0 10px}.imp-bad{color:var(--coral)}.imp-prog{display:flex;align-items:center;gap:10px;font-size:12.5px;margin:8px 0;flex-wrap:wrap}.imp-bar{flex:1;min-width:120px;height:8px;border-radius:6px;background:var(--line);overflow:hidden}.imp-bar i{display:block;height:100%;width:0;background:var(--blue-2);transition:width .3s}
+#v-broadcast .tabs{margin-bottom:14px}.bc-grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:14px;align-items:start}.bc-card{padding:16px;border-radius:14px;margin-bottom:14px}.bc-card h3{margin:0 0 10px;font-size:15px}
+.bc-chips{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:10px}.bc-fs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.bc-f{display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--muted)}.bc-f .input{width:100%}
+.bc-reach{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-top:12px;font-size:13.5px}.bc-reach .btn{margin-left:auto}.bc-list{max-height:260px;overflow:auto;margin-top:10px;display:flex;flex-direction:column;gap:4px;font-size:13px}.bc-list label{display:flex;gap:8px;align-items:center}.bc-list label.off{opacity:.55}
+.bc-vars{display:flex;flex-direction:column;gap:8px}.bc-var{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.bc-var .input{flex:1;min-width:120px}.bc-warn{color:var(--coral);font-size:12.5px;margin:6px 0 0}
+.bc-rules{margin:0 0 12px;padding-left:18px;font-size:12.5px;color:var(--muted);line-height:1.7}.bc-go{width:100%;justify-content:center}
+.wa-phone{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:color-mix(in srgb,var(--wa,#25A55F) 6%,var(--glass-3))}.wa-top{display:flex;gap:8px;align-items:center;padding:8px 10px;background:var(--glass-3);border-bottom:1px solid var(--line);font-size:13px}.wa-chat{min-height:180px;padding:12px;display:flex;flex-direction:column}
+.em-prev{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--glass-3)}.em-h{padding:10px 12px;border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:2px}.em-b{padding:14px;font-size:13.5px;line-height:1.6;max-height:340px;overflow:auto}.em-b p{margin:0 0 10px}.em-f{font-size:11.5px;color:var(--muted)}
+@media (max-width:900px){.bc-grid{grid-template-columns:1fr}.bc-fs{grid-template-columns:1fr 1fr}}
 .srcTag{font-style:normal;font-size:10px;font-weight:700;padding:1px 5px;border-radius:4px;margin-left:4px;vertical-align:1px}
 .srcTag.real{background:var(--green-soft);color:var(--green)}.srcTag.sample{background:var(--line);color:var(--muted)}
 .rcard.span2{grid-column:1/-1}
@@ -1062,10 +1073,10 @@ body.ro [data-add],body.ro .addcard,body.ro #addMember,body.ro [data-lginvite],b
       <div class="head">
         <div><div class="eyebrow">All Leads</div><h1>Leads</h1><p class="sub" id="leadsCount"></p></div>
         <div class="head-actions">
-          <button class="btn" id="csvImportBtn" data-tip="CSV needs Name and Phone columns"><svg class="i" viewBox="0 0 24 24"><path d="M12 15V3M7 8l5-5 5 5M4 15v4a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4"/></svg>Import CSV</button>
+          <button class="btn" id="csvImportBtn" data-tip="Excel (.xlsx) or CSV — needs a Name column and a Phone or Email column"><svg class="i" viewBox="0 0 24 24"><path d="M12 15V3M7 8l5-5 5 5M4 15v4a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4"/></svg>Import Excel / CSV</button>
           <button class="btn" id="csvExport"><svg class="i" viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M4 15v4a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4"/></svg>Export CSV</button>
           <button class="btn primary" data-add><svg class="i" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Add Lead</button>
-          <input type="file" id="csvFile" accept=".csv,text/csv" hidden>
+          <input type="file" id="csvFile" accept=".csv,.xlsx,.xls,.xlsm,.ods,text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel" hidden>
         </div>
       </div>
       <div class="toolbar glass">
@@ -1175,10 +1186,11 @@ body.ro [data-add],body.ro .addcard,body.ro #addMember,body.ro [data-lginvite],b
       <div id="waConn"></div>
       <div class="inbox glass" id="inbox"><div class="ib-list"><div class="ib-search"><input class="input" id="ibQ" type="search" name="q-inbox" autocomplete="off" placeholder="Search chats or start one with a lead"></div><div class="ib-scroll" id="ibList"></div></div><div class="ib-thread" id="ibThread"></div></div>
     </section>
-    <section class="view" id="v-broadcast"><div class="soon glass">
-      <div class="big"><svg class="i" viewBox="0 0 24 24"><path d="m3 11 18-8-8 18-2-8Z"/></svg></div>
-      <h2>Bulk Broadcast</h2><p class="muted">Coming soon.</p>
-      <ul><li>Pick an audience (stage, city, tag)</li><li>Approved template + phone preview</li><li>Cost estimate and Sent / Read report</li></ul></div></section>
+    <section class="view" id="v-broadcast">
+      <div class="head"><div><div class="eyebrow">WhatsApp & Email</div><h1>Broadcast</h1><p class="sub">Send a WhatsApp template or an email to many leads at once — each one personalised.</p></div></div>
+      <div class="tabs" id="bcTabs"><button class="tab active" data-bctab="whatsapp">WhatsApp</button><button class="tab" data-bctab="email">Email</button><button class="tab" data-bctab="history">History</button></div>
+      <div id="bcBodyWrap"></div>
+    </section>
     <section class="view" id="v-automation">
       <div class="head"><div><div class="eyebrow">WhatsApp</div><h1>Automation</h1><p class="sub">n8n-style flows: triggers, WhatsApp, CRM, AI, Meta and n8n webhook nodes on one canvas.</p></div></div>
       <div class="gen glass">
@@ -1388,7 +1400,8 @@ function demoData() {
     A('L007', 0, 'Lead Added', 'Website form'),
     A('L008', 25, 'Lead Added', 'Meta ad'), A('L008', 9, 'Stage Changed', 'Quotation Sent → Lost'),
   ];
-  return { messages: demoMessages(), leads, activities: acts, team: [{ memberId: 'T001', name: 'Shivam', role: 'Admin', active: true }, { memberId: 'T002', name: 'Riya Patil', role: 'Sales', active: true }, { memberId: 'T003', name: 'Amit Rao', role: 'Sales', active: true }], lists: DEFAULT_LISTS, templates: [], flows: store.get('leadnode.demoFlows') || [] };
+  ['aarav@brewbites.in', 'priya@spicegarden.in', '', 'sneha@theloungebar.in', 'karan@urbanbeans.in', 'meera@chaiadda.in', 'vikram@hotelsagar.com', ''].forEach((e, i) => { if (leads[i]) leads[i].email = e; });
+  return { messages: demoMessages(), broadcasts: [], leads, activities: acts, team: [{ memberId: 'T001', name: 'Shivam', role: 'Admin', active: true }, { memberId: 'T002', name: 'Riya Patil', role: 'Sales', active: true }, { memberId: 'T003', name: 'Amit Rao', role: 'Sales', active: true }], lists: DEFAULT_LISTS, templates: [], flows: store.get('leadnode.demoFlows') || [] };
 }
 function nextId(arr, key, prefix) { let m = 0; arr.forEach(o => { const x = String(o[key] || '').match(new RegExp('^' + prefix + '(\\d+)$')); if (x) m = Math.max(m, +x[1]); }); return prefix + String(m + 1).padStart(3, '0'); }
 function demoApi(action, d) {
@@ -1402,6 +1415,7 @@ function demoApi(action, d) {
     case 'moveStage': { const l = find(d.id); const old = l.stage; l.stage = d.stage; l.lastContact = todayStr(); log(d.id, 'Stage Changed', old + ' → ' + d.stage, d.by); return l; }
     case 'addActivity': { const a = log(d.leadId, d.type, d.details, d.doneBy); try { find(d.leadId).lastContact = todayStr(); } catch (e) { } return a; }
     case 'deleteLead': { S.leads = S.leads.filter(l => l.leadId !== d.id); return { deleted: d.id }; }
+    case 'saveBroadcast': { S.broadcasts = S.broadcasts || []; const b = Object.assign({}, d); if (!b.broadcastId) b.broadcastId = nextId(S.broadcasts, 'broadcastId', 'B'); const i = S.broadcasts.findIndex(x => x.broadcastId === b.broadcastId); if (i > -1) S.broadcasts[i] = b; else S.broadcasts.push(b); return b; }
     case 'addTeamMember': { const m = Object.assign({ active: true }, d, { memberId: nextId(S.team, 'memberId', 'T') }); S.team.push(m); return m; }
     case 'saveFlow': { const f = Object.assign({}, d, { updatedOn: nowStr() }); if (!f.flowId) f.flowId = nextId(S.flows, 'flowId', 'F'); const i = S.flows.findIndex(x => String(x.flowId) === String(f.flowId)); if (i > -1) S.flows[i] = f; else S.flows.push(f); store.set('leadnode.demoFlows', S.flows.filter(x => ['preset', 'script', 'node', 'toolset'].includes(x.trigger))); return f; }
     case 'deleteFlow': { S.flows = S.flows.filter(x => String(x.flowId) !== String(d.id)); store.set('leadnode.demoFlows', S.flows.filter(x => ['preset', 'script', 'node', 'toolset'].includes(x.trigger))); return { deleted: d.id }; }
@@ -1487,7 +1501,7 @@ function finishLoad(anim) {
   renderAll(anim);
 }
 /** Render only the screen you're looking at; the others re-render when you open them */
-const VIEW_RENDER = { analytics: a => renderAnalytics(a), industry: a => renderIndustry(a), n8n: a => renderN8n(a), automation: () => autoCanvas().sync(), dashboard: a => renderDashboard(a), pipeline: a => renderPipeline(a), leads: a => renderLeads(a), team: a => { renderTeam(a); renderLogins(); }, whatsapp: () => renderInbox(), reports: a => renderReports(a), templates: () => renderTemplates(), scripts: () => renderScripts(true), ads: a => renderAds(a) };
+const VIEW_RENDER = { analytics: a => renderAnalytics(a), industry: a => renderIndustry(a), n8n: a => renderN8n(a), automation: () => autoCanvas().sync(), dashboard: a => renderDashboard(a), pipeline: a => renderPipeline(a), leads: a => renderLeads(a), team: a => { renderTeam(a); renderLogins(); }, broadcast: () => renderBroadcast(), whatsapp: () => renderInbox(), reports: a => renderReports(a), templates: () => renderTemplates(), scripts: () => renderScripts(true), ads: a => renderAds(a) };
 const staleViews = new Set();
 const activeView = () => { const v = $('.view.active'); return v ? v.id.slice(2) : 'dashboard'; };
 function renderAll(anim) {
@@ -4355,7 +4369,8 @@ function renderPanel(id) {
       </div>
       <div><div class="sec-t" style="margin-bottom:6px">Stage</div><div class="stagebar">${bar}</div></div>
       <div class="info">
-        <div><small>Phone</small><b>${l.phone ? '+' + esc(l.phone) : '-'}</b></div>
+        <div><small>Phone</small><b>${l.phone ? '+' + esc(l.phone) : '-'}${l.waOptOut === true ? ' <span class="pill lost">said STOP</span>' : ''}</b></div>
+        <div><small>Email</small><b style="word-break:break-all">${l.email ? `<a href="mailto:${esc(l.email)}">${esc(l.email)}</a>` : '-'}${l.emailOptOut === true ? ' <span class="pill lost">unsubscribed</span>' : ''}</b></div>
         <div><small>Budget</small><b>${inr(l.budget)}</b></div>
         <div><small>Business type</small><b>${esc(l.businessType || '-')}</b></div>
         <div><small>Source</small><b>${esc(l.source || '-')}</b></div>
@@ -4398,7 +4413,8 @@ function openLeadModal(lead, presetStage) {
         <div class="field"><label>Client photo / logo</label>${uploaderHTML('lead', 'clientPhoto', 'client', 400, 'round', 'Photo')}</div>
       </div>
       <div class="field"><label>Full name *</label><input class="input" name="name" required value="${esc(l.name || '')}" placeholder="Aarav Mehta"></div>
-      <div class="field"><label>WhatsApp number *</label><input class="input" name="phone" required inputmode="tel" value="${esc(l.phone ? '+' + l.phone : '')}" placeholder="+91 98765 43210"></div>
+      <div class="field"><label>WhatsApp number</label><input class="input" name="phone" inputmode="tel" value="${esc(l.phone ? '+' + l.phone : '')}" placeholder="+91 98765 43210"></div>
+      <div class="field"><label>Email</label><input class="input" name="email" type="email" inputmode="email" value="${esc(l.email || '')}" placeholder="name@business.com"></div>
       <div class="field"><label>Business name</label><input class="input" name="businessName" value="${esc(l.businessName || '')}" placeholder="Brew & Bites Cafe"></div>
       <div class="field"><label>Business type</label><select class="input" name="businessType">${opt(S.lists.businessTypes || [], l.businessType)}</select></div>
       <div class="field"><label>City</label><input class="input" name="city" value="${esc(l.city || '')}" placeholder="Mumbai"></div>
@@ -4431,9 +4447,12 @@ async function saveLead(lead) {
   if (upBusy) return toast('Photo is still uploading, wait 2 seconds…', true);
   const f = $('#lform'); const fd = Object.fromEntries(new FormData(f).entries());
   if (!fd.name.trim()) return toast('Name is required', true);
-  const digits = fd.phone.replace(/\D/g, '').replace(/^0+/, ''); if (digits.length < 10) return toast('Enter a valid WhatsApp number (10 digits)', true);
+  const digits = fd.phone.replace(/\D/g, '').replace(/^0+/, ''), email = String(fd.email || '').trim().toLowerCase();
+  if (!digits && !email) return toast('Add a WhatsApp number or an email', true);
+  if (digits && digits.length < 10) return toast('Enter a valid WhatsApp number (10 digits)', true);
+  if (email && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return toast('Enter a valid email', true);
   if (fd.budget && Number(fd.budget) < 0) return toast('Budget cannot be negative', true);
-  const data = { name: fd.name.trim(), phone: digits.length === 10 ? '91' + digits : digits, businessName: fd.businessName.trim(), businessType: fd.businessType, city: fd.city.trim(), source: fd.source, budget: fd.budget ? Number(fd.budget) : '', followUpDate: fd.followUpDate, assignedTo: fd.assignedTo, notes: fd.notes.trim(), tag: formTag, stage: formStage, businessPhoto: upStore.lead.businessPhoto || '', clientPhoto: upStore.lead.clientPhoto || '' };
+  const data = { name: fd.name.trim(), phone: !digits ? '' : digits.length === 10 ? '91' + digits : digits, email, businessName: fd.businessName.trim(), businessType: fd.businessType, city: fd.city.trim(), source: fd.source, budget: fd.budget ? Number(fd.budget) : '', followUpDate: fd.followUpDate, assignedTo: fd.assignedTo, notes: fd.notes.trim(), tag: formTag, stage: formStage, businessPhoto: upStore.lead.businessPhoto || '', clientPhoto: upStore.lead.clientPhoto || '' };
   const btn = $('#lsave'); btn.disabled = true; btn.textContent = 'Saving…';
   try {
     if (lead) {
@@ -4503,15 +4522,15 @@ $('#fileIn').addEventListener('change', async e => {
    After sign-in every read/write goes to Supabase. Row Level Security on the
    server keeps each workspace's rows private — the browser only ever gets its own. */
 const SB_COLS = {
-  leads: ['lead_id', 'created_on', 'name', 'phone', 'business_name', 'business_type', 'city', 'source', 'budget', 'stage', 'tag', 'assigned_to', 'follow_up_date', 'last_contact', 'notes', 'business_photo', 'client_photo'],
+  leads: ['lead_id', 'created_on', 'name', 'phone', 'email', 'email_opt_out', 'wa_opt_out', 'business_name', 'business_type', 'city', 'source', 'budget', 'stage', 'tag', 'assigned_to', 'follow_up_date', 'last_contact', 'notes', 'business_photo', 'client_photo'],
   activities: ['activity_id', 'lead_id', 'date_time', 'type', 'details', 'done_by'],
   templates: ['template_name', 'category', 'language', 'header', 'body', 'buttons', 'meta_status'],
-  broadcasts: ['broadcast_id', 'name', 'template', 'audience_filter', 'contacts', 'sent', 'delivered', 'read', 'replies', 'scheduled_for', 'status'],
+  broadcasts: ['broadcast_id', 'name', 'channel', 'template', 'subject', 'body', 'audience_filter', 'contacts', 'sent', 'failed', 'delivered', 'read', 'replies', 'scheduled_for', 'sent_at', 'status'],
   flows: ['flow_id', 'flow_name', 'trigger', 'status', 'flow_json', 'updated_on'],
   team: ['member_id', 'name', 'role', 'phone', 'email', 'active'],
 };
-const SB_DATE = ['created_on', 'follow_up_date', 'last_contact'], SB_TS = ['date_time', 'updated_on', 'scheduled_for', 'time'];
-const SB_INT = ['contacts', 'sent', 'delivered', 'read', 'replies'], SB_HIDE = ['workspace_id', 'created_at', 'updated_at', 'user_id'];
+const SB_DATE = ['created_on', 'follow_up_date', 'last_contact'], SB_TS = ['date_time', 'updated_on', 'scheduled_for', 'time', 'sent_at'];
+const SB_INT = ['contacts', 'sent', 'failed', 'delivered', 'read', 'replies'], SB_HIDE = ['workspace_id', 'created_at', 'updated_at', 'user_id'];
 const toCamel = k => k.replace(/_([a-z])/g, (m, c) => c.toUpperCase());
 const toSnake = k => k.replace(/[A-Z]/g, c => '_' + c.toLowerCase());
 /** 'YYYY-MM-DD HH:MM' (this browser's time) → ISO; ISO passes through */
@@ -4536,7 +4555,7 @@ function toRow(table, obj) {
     else if (SB_TS.includes(col)) v = sbTs(v);
     else if (col === 'budget') { const n = Number(String(v == null ? '' : v).replace(/[^\d.]/g, '')); v = v === '' || v == null || isNaN(n) ? null : n; }
     else if (SB_INT.includes(col)) v = Math.max(0, parseInt(v, 10) || 0);
-    else if (col === 'active') v = v === true || v === 1 || /^(true|1|yes)$/i.test(String(v));
+    else if (col === 'active' || col === 'email_opt_out' || col === 'wa_opt_out') v = v === true || v === 1 || /^(true|1|yes)$/i.test(String(v));
     else if (col === 'flow_json') v = typeof v === 'string' ? v : JSON.stringify(v || {});
     else v = v == null ? '' : String(v);
     row[col] = v;
@@ -4544,7 +4563,7 @@ function toRow(table, obj) {
   return row;
 }
 const cleanPhone = p => { let d = String(p || '').replace(/\D/g, ''); if (d.length === 10) d = '91' + d; return d; };
-async function sbq(p) { const { data, error } = await p; if (error) throw new Error(error.message); return data; }
+async function sbq(p) { const { data, error } = await p; if (error) throw new Error(/(email|opt_out|channel|sent_at|broadcast_id|subject)[\s\S]*(does not exist|schema cache)|column .* of relation .* does not exist/i.test(error.message) ? 'Your database needs an update — run 03_broadcast_email.sql in Supabase → SQL Editor.' : error.message); return data; }
 async function sbAll(table, order) {
   const cl = AUTH.client, out = [];
   for (let from = 0; ; from += 1000) {
@@ -4575,10 +4594,24 @@ async function sbApi(action, d = {}) {
     }
     case 'addLead': {
       if (!String(d.name || '').trim()) throw new Error('Name is required');
-      const row = toRow('leads', Object.assign({ stage: 'New Lead' }, d)); delete row.lead_id; row.phone = cleanPhone(row.phone); row.workspace_id = ws;
-      if (!row.created_on) delete row.created_on;
+      const row = toRow('leads', Object.assign({ stage: stages()[0] || 'New Lead' }, d)); delete row.lead_id; row.phone = cleanPhone(row.phone); row.workspace_id = ws;
+      if (!row.created_on) delete row.created_on; if (!row.email) delete row.email; delete row.email_opt_out; delete row.wa_opt_out;
       const l = fromRow(await sbq(T('leads').insert(row).select().single()));
       await sbLog(l.leadId, 'Lead Added', 'Source: ' + (l.source || '-'), d.by || l.assignedTo); return l;
+    }
+    case 'addLeadsBulk': {
+      const base = { createdOn: todayStr(), stage: stages()[0] || 'New Lead', tag: '', assignedTo: d.by || '', source: 'Import' };
+      const blank = Object.fromEntries(SB_COLS.leads.map(c => [toCamel(c), '']));
+      const rows = (d.leads || []).map(x => { const r = toRow('leads', Object.assign({}, blank, base, x)); delete r.lead_id; delete r.email_opt_out; delete r.wa_opt_out; r.phone = cleanPhone(r.phone); r.workspace_id = ws; return r; });
+      if (rows.length && rows.every(r => !r.email)) rows.forEach(r => delete r.email);          // works before the email update too
+      const ins = await sbq(T('leads').insert(rows).select());
+      if (ins.length) await sbq(T('activities').insert(ins.map(l => ({ workspace_id: ws, lead_id: l.lead_id, type: 'Lead Added', details: 'Imported from file' + (l.source ? ' · ' + l.source : ''), done_by: String(d.by || '') }))));
+      return ins.map(fromRow);
+    }
+    case 'saveBroadcast': {
+      const row = toRow('broadcasts', d); row.workspace_id = ws;
+      if (!row.broadcast_id) { delete row.broadcast_id; return fromRow(await sbq(T('broadcasts').insert(row).select().single())); }
+      return fromRow(await sbq(T('broadcasts').upsert(row, { onConflict: 'workspace_id,broadcast_id' }).select().single()));
     }
     case 'updateLead': {
       const row = toRow('leads', d); delete row.lead_id; if ('phone' in row) row.phone = cleanPhone(row.phone);
@@ -4890,6 +4923,257 @@ async function ibSendTpl(c) {
   $('#ibQ').addEventListener('input', e => { WA.q = e.target.value; renderInbox(); });
 })();
 
+/* ================= import leads from Excel / CSV ================= */
+const XLSX_SRC = 'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';
+const IMPORT_FIELDS = [['', '— Skip this column —'], ['name', 'Name *'], ['phone', 'Phone / WhatsApp'], ['email', 'Email'], ['businessName', 'Business name'], ['businessType', 'Business type'], ['city', 'City'], ['source', 'Source'], ['budget', 'Budget (₹)'], ['stage', 'Stage'], ['tag', 'Tag'], ['assignedTo', 'Assigned to'], ['followUpDate', 'Follow-up date'], ['notes', 'Notes']];
+const IMPORT_MAP = { name: 'name', fullname: 'name', leadname: 'name', customername: 'name', clientname: 'name', contactname: 'name', phone: 'phone', phoneno: 'phone', phonenumber: 'phone', whatsapp: 'phone', whatsappnumber: 'phone', whatsappno: 'phone', mobile: 'phone', mobileno: 'phone', mobilenumber: 'phone', contact: 'phone', contactno: 'phone', number: 'phone', email: 'email', emailaddress: 'email', emailid: 'email', mail: 'email', businessname: 'businessName', business: 'businessName', company: 'businessName', companyname: 'businessName', firm: 'businessName', shop: 'businessName', businesstype: 'businessType', type: 'businessType', category: 'businessType', industry: 'businessType', city: 'city', location: 'city', area: 'city', source: 'source', leadsource: 'source', budget: 'budget', amount: 'budget', value: 'budget', dealvalue: 'budget', stage: 'stage', status: 'stage', tag: 'tag', priority: 'tag', assignedto: 'assignedTo', owner: 'assignedTo', salesperson: 'assignedTo', followupdate: 'followUpDate', followup: 'followUpDate', nextfollowup: 'followUpDate', notes: 'notes', note: 'notes', remarks: 'notes', requirement: 'notes', comments: 'notes' };
+const IMP = { rows: [], map: [] };
+async function readSheetFile(file) {
+  if (/\.(xlsx|xlsm|xls|ods)$/i.test(file.name)) {
+    await loadScriptOnce(XLSX_SRC);
+    const wb = window.XLSX.read(await file.arrayBuffer(), { type: 'array', cellDates: true });
+    const ws = wb.Sheets[wb.SheetNames[0]];
+    return window.XLSX.utils.sheet_to_json(ws, { header: 1, raw: false, dateNF: 'yyyy-mm-dd', defval: '' }).map(r => r.map(c => String(c ?? '')));
+  }
+  return parseCSV((await file.text()).replace(/^﻿/, ''));
+}
+function normDate(v) {
+  const s = String(v || '').trim(); if (!s) return '';
+  if (/^\d{4}-\d{2}-\d{2}/.test(s)) return s.slice(0, 10);
+  const m = s.match(/^(\d{1,2})[\/.-](\d{1,2})[\/.-](\d{2,4})$/); if (m) { const y = m[3].length === 2 ? '20' + m[3] : m[3]; return `${y}-${pad(+m[2])}-${pad(+m[1])}`; }   // Indian dd/mm/yyyy
+  const d = new Date(s); return isNaN(d) ? '' : d.toISOString().slice(0, 10);
+}
+function importPlan() {
+  const keys = IMP.map, out = [], seenP = new Set(S.leads.map(l => String(l.phone || '').replace(/\D/g, '').slice(-10)).filter(Boolean)), seenE = new Set(S.leads.map(l => String(l.email || '').toLowerCase()).filter(Boolean));
+  let dup = 0, bad = 0;
+  for (const r of IMP.rows) {
+    const d = {}; keys.forEach((k, i) => { if (k && r[i] != null && String(r[i]).trim() !== '') d[k] = String(r[i]).trim(); });
+    const digits = String(d.phone || '').replace(/\D/g, '').replace(/^0+/, ''), email = String(d.email || '').toLowerCase();
+    const okP = digits.length >= 10 && digits.length <= 15, okE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email);
+    if (!d.name || (!okP && !okE)) { bad++; continue; }
+    if ((okP && seenP.has(digits.slice(-10))) || (okE && seenE.has(email))) { dup++; continue; }
+    if (okP) seenP.add(digits.slice(-10)); if (okE) seenE.add(email);
+    d.phone = okP ? (digits.length === 10 ? '91' + digits : digits) : ''; if (okE) d.email = email; else delete d.email;
+    if (d.budget) d.budget = Number(String(d.budget).replace(/[^\d.]/g, '')) || ''; else delete d.budget;
+    if (d.stage) { const st = stages().find(x => x.toLowerCase() === d.stage.toLowerCase()); if (st) d.stage = st; else delete d.stage; }
+    if (d.tag) { const t = (S.lists.tags || ['Hot', 'Warm', 'Cold']).find(x => x.toLowerCase() === d.tag.toLowerCase()); if (t) d.tag = t; else delete d.tag; }
+    if (d.followUpDate) d.followUpDate = normDate(d.followUpDate); if (!d.followUpDate) delete d.followUpDate;
+    if (!d.source) d.source = 'Import';
+    out.push(d);
+  }
+  return { list: out, dup, bad };
+}
+function drawImport() {
+  const p = importPlan(), head = IMP.head, sample = IMP.rows.slice(0, 3), max = demo || !cloud ? 300 : 5000;
+  $('#impMap').innerHTML = head.map((h, i) => `<div class="imp-col"><div class="imp-h" title="${esc(h)}">${esc(h || 'Column ' + (i + 1))}</div><select class="input sm" data-impcol="${i}">${IMPORT_FIELDS.map(([k, n]) => `<option value="${k}" ${IMP.map[i] === k ? 'selected' : ''}>${n}</option>`).join('')}</select><div class="imp-s">${sample.map(r => `<span>${esc(String(r[i] ?? '').slice(0, 40)) || '<i class="muted">—</i>'}</span>`).join('')}</div></div>`).join('');
+  const hasName = IMP.map.includes('name'), hasContact = IMP.map.includes('phone') || IMP.map.includes('email');
+  $('#impSum').innerHTML = !hasName || !hasContact ? `<span class="imp-bad">Choose which column is the <b>Name</b>, and at least <b>Phone</b> or <b>Email</b>.</span>`
+    : `<b>${Math.min(p.list.length, max)}</b> new leads will be added${p.list.length > max ? ` <span class="muted">(first ${max} — import the rest in a second file)</span>` : ''}${p.dup ? ` · <span class="muted">${p.dup} already in your CRM (same phone or email) — skipped</span>` : ''}${p.bad ? ` · <span class="muted">${p.bad} rows without name or a valid phone/email — skipped</span>` : ''}`;
+  $('#impGo').disabled = !hasName || !hasContact || !p.list.length;
+}
+async function openImport(file) {
+  let rows;
+  try { rows = (await readSheetFile(file)).filter(r => r.some(c => String(c).trim())); } catch (e) { return toast('Could not read this file: ' + e.message, true); }
+  if (rows.length < 2) return toast('The file has no rows under the header', true);
+  // header = first row that has 2+ filled cells
+  const hi = Math.max(0, rows.findIndex(r => r.filter(c => String(c).trim()).length >= 2));
+  IMP.head = rows[hi].map(h => String(h).trim()); IMP.rows = rows.slice(hi + 1);
+  const used = new Set(); IMP.map = IMP.head.map(h => { const k = IMPORT_MAP[h.toLowerCase().replace(/[^a-z]/g, '')] || ''; if (!k || used.has(k)) return ''; used.add(k); return k; });
+  $('#leadBox').innerHTML = `<div class="m-head"><h2>Import leads</h2><button class="ibtn" data-close>${I.x}</button></div>
+    <p class="help" style="margin-bottom:10px"><b>${esc(file.name)}</b> · ${IMP.rows.length} rows. Check which column is what — we guessed from the headings.</p>
+    <div class="imp-map" id="impMap"></div><div class="imp-sum" id="impSum"></div><div class="imp-prog" id="impProg" hidden><div class="imp-bar"><i id="impBar"></i></div><span id="impTxt"></span></div>
+    <div class="m-foot"><button class="btn" data-impsample>Download sample file</button><div class="grow"></div><button class="btn" data-close>Cancel</button><button class="btn primary" id="impGo">Import leads</button></div>`;
+  $('#impMap').addEventListener('change', e => { const s = e.target.closest('[data-impcol]'); if (!s) return; const i = +s.dataset.impcol; if (s.value) IMP.map = IMP.map.map((k, j) => j !== i && k === s.value ? '' : k); IMP.map[i] = s.value; drawImport(); });
+  $('#impGo').onclick = runImport;
+  drawImport(); showModal('#leadModal');
+}
+async function runImport() {
+  const p = importPlan(), max = demo || !cloud ? 300 : 5000, list = p.list.slice(0, max), btn = $('#impGo');
+  btn.disabled = true; $('#impProg').hidden = false;
+  const prog = n => { $('#impBar').style.width = Math.round(n / list.length * 100) + '%'; $('#impTxt').textContent = `${n} / ${list.length}`; };
+  let ok = 0, fail = 0;
+  try {
+    if (cloud) {
+      for (let i = 0; i < list.length; i += 200) { const part = list.slice(i, i + 200); try { ok += (await sbApi('addLeadsBulk', { leads: part, by: me() })).length; } catch (e) { fail += part.length; if (fail === part.length && !ok) throw e; } prog(Math.min(list.length, i + 200)); }
+    } else {
+      for (const d of list) { try { await api('addLead', Object.assign({ by: me() }, d)); ok++; } catch (e) { fail++; } if ((ok + fail) % 5 === 0) prog(ok + fail); }
+      prog(list.length);
+    }
+    hideModal('#leadModal');
+    toast(`✓ ${ok} leads imported${p.dup ? ` · ${p.dup} already existed` : ''}${p.bad ? ` · ${p.bad} skipped` : ''}${fail ? ` · ${fail} failed` : ''}`);
+  } catch (e) { toast('Import stopped: ' + e.message, true); btn.disabled = false; }
+  if (demo) renderAll(); else load(true);
+}
+async function downloadSample() {
+  const head = ['Name', 'Phone', 'Email', 'Business Name', 'Business Type', 'City', 'Source', 'Budget', 'Stage', 'Tag', 'Follow-up Date', 'Notes'];
+  const row = ['Aarav Mehta', '9876543210', 'aarav@brewbites.in', 'Brew & Bites Cafe', 'Cafe', 'Mumbai', 'Instagram', '250000', stages()[0], 'Hot', todayStr(), 'Needs 20 chairs'];
+  try {
+    await loadScriptOnce(XLSX_SRC);
+    const wb = window.XLSX.utils.book_new(), ws = window.XLSX.utils.aoa_to_sheet([head, row]); ws['!cols'] = head.map(() => ({ wch: 18 }));
+    window.XLSX.utils.book_append_sheet(wb, ws, 'Leads'); window.XLSX.writeFile(wb, 'nodevers-leads-sample.xlsx');
+  } catch (e) {
+    const blob = new Blob(['﻿' + [head, row].map(r => r.map(v => /[",]/.test(v) ? `"${v.replace(/"/g, '""')}"` : v).join(',')).join('\r\n')], { type: 'text/csv' });
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'nodevers-leads-sample.csv'; a.click();
+  }
+}
+document.addEventListener('click', e => { if (e.target.closest('[data-impsample]')) downloadSample(); });
+
+/* ================= broadcast: WhatsApp templates + email campaigns ================= */
+const BC = { tab: 'whatsapp', aud: { stages: [], tag: '', source: '', city: '', assigned: '' }, excluded: new Set(), showList: false, tpl: '', vars: [], name: '', subject: '', body: 'Hi {{first_name}},\n\n', email: null, running: false, stop: false };
+const VAR_SRC = [['first', 'First name'], ['name', 'Full name'], ['business', 'Business name'], ['city', 'City'], ['custom', 'Custom text']];
+const tplVars = t => (String((t || {}).body || '').match(/\{\{(\d+)\}\}/g) || []).length;
+const varVal = (v, l) => v.src === 'first' ? String(l.name || '').split(' ')[0] : v.src === 'name' ? l.name : v.src === 'business' ? (l.businessName || l.name) : v.src === 'city' ? (l.city || '') : (v.text || '');
+const fillEmail = (s, l) => String(s).replace(/\{\{\s*(first_name|name|business|city|email)\s*\}\}/gi, (m, k) => { k = k.toLowerCase(); return k === 'first_name' ? (String(l.name || '').split(' ')[0] || 'there') : k === 'business' ? (l.businessName || '') : String(l[k] || ''); });
+function audience() {
+  const a = BC.aud;
+  return S.leads.filter(l => (!a.stages.length || a.stages.includes(l.stage)) && (!a.tag || l.tag === a.tag) && (!a.source || l.source === a.source) && (!a.city || String(l.city || '').toLowerCase() === a.city.toLowerCase()) && (!a.assigned || l.assignedTo === a.assigned));
+}
+const optOut = (l, ch) => { const v = ch === 'email' ? l.emailOptOut : l.waOptOut; return v === true || v === 'true'; };
+function reach(ch) {
+  const all = audience(), ok = [], skip = { contact: 0, opt: 0, manual: 0 };
+  all.forEach(l => { if (BC.excluded.has(l.leadId)) return skip.manual++; if (ch === 'email' ? !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(l.email || '') : String(l.phone || '').replace(/\D/g, '').length < 10) return skip.contact++; if (optOut(l, ch)) return skip.opt++; ok.push(l); });
+  return { all, ok, skip };
+}
+function audienceHTML(ch) {
+  const a = BC.aud, uniq = k => [...new Set(S.leads.map(l => l[k]).filter(Boolean))].sort(), r = reach(ch);
+  const sel = (id, label, list, v) => `<label class="bc-f"><span>${label}</span><select class="input sm" data-bcaud="${id}"><option value="">All</option>${list.map(x => `<option ${x === v ? 'selected' : ''}>${esc(x)}</option>`).join('')}</select></label>`;
+  return `<div class="bc-card glass"><h3>1 · Who gets it</h3>
+    <div class="bc-chips"><span class="muted">Stage:</span>${stages().map(s => `<button class="chip ${a.stages.includes(s) ? 'on' : ''}" data-bcstage="${esc(s)}">${esc(s)}</button>`).join('')}</div>
+    <div class="bc-fs">${sel('tag', 'Tag', S.lists.tags || ['Hot', 'Warm', 'Cold'], a.tag)}${sel('source', 'Source', uniq('source'), a.source)}${sel('city', 'City', uniq('city'), a.city)}${sel('assigned', 'Assigned to', uniq('assignedTo'), a.assigned)}</div>
+    <div class="bc-reach"><b>${r.ok.length}</b> ${r.ok.length === 1 ? 'lead' : 'leads'} will get this${r.skip.contact ? ` · <span class="muted">${r.skip.contact} without ${ch === 'email' ? 'email' : 'phone'}</span>` : ''}${r.skip.opt ? ` · <span class="muted">${r.skip.opt} unsubscribed</span>` : ''}${r.skip.manual ? ` · <span class="muted">${r.skip.manual} removed by you</span>` : ''}
+      <button class="btn sm" data-bclist>${BC.showList ? 'Hide list' : 'See list'}</button></div>
+    ${BC.showList ? `<div class="bc-list">${r.all.slice(0, 200).map(l => { const bad = ch === 'email' ? !l.email : !l.phone; return `<label class="${bad || optOut(l, ch) ? 'off' : ''}"><input type="checkbox" data-bcx="${esc(l.leadId)}" ${BC.excluded.has(l.leadId) || bad || optOut(l, ch) ? '' : 'checked'} ${bad || optOut(l, ch) ? 'disabled' : ''}> ${esc(l.name)} <small class="muted">${esc(ch === 'email' ? (l.email || 'no email') : (l.phone ? '+' + l.phone : 'no phone'))}${optOut(l, ch) ? ' · unsubscribed' : ''}</small></label>`; }).join('') || '<p class="muted">No leads match.</p>'}</div>` : ''}
+  </div>`;
+}
+function bcWaHTML() {
+  const tpls = (S.templates || []).filter(t => t.templateName), t = tpls.find(x => x.templateName === BC.tpl) || null, n = tplVars(t);
+  while (BC.vars.length < n) BC.vars.push({ src: BC.vars.length ? 'custom' : 'first', text: '' });
+  const r = reach('whatsapp'), first = r.ok[0] || S.leads[0] || { name: 'Aarav Mehta', businessName: 'Brew & Bites', city: 'Mumbai' };
+  const preview = t ? String(t.body || '').replace(/\{\{(\d+)\}\}/g, (m, k) => esc(varVal(BC.vars[k - 1] || {}, first)) || m) : '';
+  return `<div class="bc-grid"><div>${audienceHTML('whatsapp')}
+    <div class="bc-card glass"><h3>2 · Message</h3>
+      <div class="field"><label>Campaign name (only you see it)</label><input class="input" id="bcName" value="${esc(BC.name)}" placeholder="e.g. Diwali offer 2026"></div>
+      <div class="field"><label>Approved template</label><select class="input" id="bcTpl"><option value="">Choose a template…</option>${tpls.map(x => `<option value="${esc(x.templateName)}" ${x.templateName === BC.tpl ? 'selected' : ''}>${esc(x.templateName)}${x.metaStatus ? ' · ' + esc(x.metaStatus) : ''}</option>`).join('')}</select>
+        ${t && !/approved/i.test(t.metaStatus || '') ? '<p class="bc-warn">This template is not marked Approved. Meta only delivers templates approved in WhatsApp Manager.</p>' : ''}${!tpls.length ? '<p class="help">No templates yet — create one in WhatsApp Manager, then add the same name in <a href="#templates" data-go="templates">Templates</a>.</p>' : ''}</div>
+      ${n ? `<div class="bc-vars">${BC.vars.slice(0, n).map((v, i) => `<div class="bc-var"><span class="pill stage">{{${i + 1}}}</span><select class="input sm" data-bcvar="${i}">${VAR_SRC.map(([k, lb]) => `<option value="${k}" ${v.src === k ? 'selected' : ''}>${lb}</option>`).join('')}</select>${v.src === 'custom' ? `<input class="input sm" data-bcvtext="${i}" value="${esc(v.text)}" placeholder="Text for everyone">` : ''}</div>`).join('')}</div>` : ''}
+    </div></div>
+    <div><div class="bc-card glass bc-prev"><h3>Preview</h3><div class="wa-phone"><div class="wa-top">${avatar(brand().brandName)}<b>${esc(brand().brandName)}</b></div><div class="wa-chat">${t ? `<div class="bub in"><span>${preview.replace(/\n/g, '<br>')}</span><small>${nowStr().slice(11)}</small></div>` : '<p class="muted" style="text-align:center;margin-top:40px">Pick a template to preview</p>'}</div></div>
+      <p class="muted" style="font-size:12px">Shown for ${esc(first.name || 'a lead')}. Each lead gets their own values.</p></div>
+      <div class="bc-card glass"><h3>3 · Send</h3>
+        <ul class="bc-rules"><li>Only Meta-approved templates can be broadcast.</li><li>Add a payment method in WhatsApp Manager — Meta charges per template message.</li><li>New numbers can message about 250 new people a day; it grows as quality stays high.</li><li>People who reply <b>STOP</b> are skipped automatically.</li></ul>
+        ${bcRunHTML()}
+        <button class="btn wa bc-go" data-bcsend="whatsapp" ${!t || !r.ok.length || BC.running ? 'disabled' : ''}>${I.wa}Send to ${r.ok.length} ${r.ok.length === 1 ? 'lead' : 'leads'}</button></div></div></div>`;
+}
+function bcEmailHTML() {
+  const s = BC.email || {}, r = reach('email'), first = r.ok[0] || S.leads.find(l => l.email) || { name: 'Aarav Mehta', businessName: 'Brew & Bites', city: 'Mumbai' };
+  if (s.sheet) return `<div class="bc-card glass"><b>Email campaigns run on the Nodevers cloud.</b><p class="muted">Sign in (Settings → Accounts) to connect your email sender.</p></div>`;
+  const conn = s.connected && !BC.emailManage ? `<div class="wa-on"><span class="dot"></span>Sending as <b>${esc(s.from_name || '')}</b> &lt;${esc(s.from_email || '')}&gt;${s.demo ? ' <em class="srcTag sample">demo</em>' : ''}${canAdmin() ? '<button class="btn sm" data-bcemanage>Manage</button>' : ''}</div>`
+    : !canAdmin() ? `<div class="bc-card glass"><b>Email is not connected yet.</b><p class="muted">Ask the workspace owner to connect the sender.</p></div>`
+    : `<div class="bc-card glass"><h3>Connect your email sender (Brevo — free 300 emails a day)</h3>
+      <ol class="bc-rules"><li>Make a free account at <b>brevo.com</b>.</li><li>Brevo → <b>Senders, Domains & Dedicated IPs → Senders</b> → add your email and click the link Brevo sends you.</li><li>Brevo → <b>SMTP & API → API keys</b> → Generate a new API key → copy it here. It is saved on the server only.</li></ol>
+      <div class="form wa-grid"><div class="field"><label>Sender email (verified in Brevo)</label><input class="input" id="emFrom" type="email" value="${esc(s.from_email || '')}" placeholder="you@business.com"></div><div class="field"><label>Sender name</label><input class="input" id="emName" value="${esc(s.from_name || brand().brandName)}" placeholder="Your business"></div>
+      <div class="field span2"><label>Brevo API key</label><input class="input secret" id="emKey" type="text" name="em-key-${Date.now()}" autocomplete="off" spellcheck="false" readonly data-noautofill placeholder="xkeysib-…"></div></div>
+      <div class="m-foot">${s.connected ? '<button class="btn danger" data-bcedisc>Disconnect</button><button class="btn" data-bceclose>Close</button>' : ''}<div class="grow"></div><button class="btn primary" data-bceconnect>${s.connected ? 'Save' : 'Connect email'}</button></div></div>`;
+  return `${conn}<div class="bc-grid"><div>${audienceHTML('email')}
+    <div class="bc-card glass"><h3>2 · Email</h3>
+      <div class="field"><label>Campaign name (only you see it)</label><input class="input" id="bcName" value="${esc(BC.name)}" placeholder="e.g. New catalogue — October"></div>
+      <div class="field"><label>Subject</label><input class="input" id="bcSubj" value="${esc(BC.subject)}" maxlength="200" placeholder="e.g. {{first_name}}, our new cafe chairs are here"></div>
+      <div class="field"><label>Message <span class="muted">— leave an empty line for a new paragraph; links work as they are</span></label><textarea class="input" id="bcBody" rows="9">${esc(BC.body)}</textarea></div>
+      <div class="bc-chips"><span class="muted">Insert:</span>${['first_name', 'name', 'business', 'city'].map(k => `<button class="chip" data-bcins="{{${k}}}">{{${k}}}</button>`).join('')}</div>
+    </div></div>
+    <div><div class="bc-card glass bc-prev"><h3>Preview</h3><div class="em-prev"><div class="em-h"><b>${esc(fillEmail(BC.subject || 'Subject', first))}</b><small class="muted">From ${esc(s.from_name || brand().brandName)} · to ${esc(first.email || 'lead@email.com')}</small></div>
+      <div class="em-b">${String(fillEmail(BC.body, first)).split(/\n{2,}/).map(p => `<p>${esc(p).replace(/\n/g, '<br>')}</p>`).join('')}<p class="em-f">You received this email from ${esc(s.from_name || brand().brandName)}. <u>Unsubscribe</u></p></div></div></div>
+      <div class="bc-card glass"><h3>3 · Send</h3>
+        <ul class="bc-rules"><li>Every email gets an Unsubscribe link — people who click it are skipped next time.</li><li>Only email people who gave you their email or are your customers.</li><li>Brevo free plan: 300 emails a day.</li></ul>
+        ${bcRunHTML()}
+        <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" data-bctest ${s.connected ? '' : 'disabled'}>Send test to me</button><button class="btn primary bc-go" data-bcsend="email" ${!s.connected || !r.ok.length || BC.running ? 'disabled' : ''}>Send to ${r.ok.length} ${r.ok.length === 1 ? 'lead' : 'leads'}</button></div></div></div></div>`;
+}
+const bcRunHTML = () => BC.run ? `<div class="imp-prog"><div class="imp-bar"><i style="width:${Math.round(BC.run.done / Math.max(1, BC.run.total) * 100)}%"></i></div><span>${BC.run.done} / ${BC.run.total} · ✓ ${BC.run.sent} sent${BC.run.failed ? ` · ✕ ${BC.run.failed} failed` : ''}${BC.run.skipped ? ` · ${BC.run.skipped} skipped` : ''}</span>${BC.running ? '<button class="btn sm" data-bcstop>Stop</button>' : ''}</div>${BC.run.err ? `<p class="bc-warn">${esc(BC.run.err)}</p>` : ''}` : '';
+function bcHistoryHTML() {
+  const list = (S.broadcasts || []).slice().sort((a, b) => String(b.sentAt || b.broadcastId).localeCompare(String(a.sentAt || a.broadcastId)));
+  if (!list.length) return `<div class="bc-card glass"><p class="muted">No broadcasts yet. Your sent campaigns and their results show here.</p></div>`;
+  return `<div class="glass tblcard"><div class="tblwrap"><table class="tbl"><thead><tr><th>Campaign</th><th>Channel</th><th>Date</th><th class="num">Audience</th><th class="num">Sent</th><th class="num">Delivered</th><th class="num">Read</th><th class="num">Replies</th><th class="num">Failed</th><th>Status</th></tr></thead><tbody>
+    ${list.map(b => { const ms = msgs().filter(m => m.broadcastId === b.broadcastId), wa = (b.channel || 'whatsapp') === 'whatsapp';
+      const del = ms.filter(m => /delivered|read/.test(m.status)).length, rd = ms.filter(m => m.status === 'read').length;
+      const rep = wa ? new Set(msgs().filter(m => m.direction === 'in' && b.sentAt && String(m.time) > String(b.sentAt) && ms.some(x => x.leadId && x.leadId === m.leadId)).map(m => m.leadId)).size : '–';
+      return `<tr style="cursor:default"><td><b>${esc(b.name || b.broadcastId)}</b><div class="muted" style="font-size:11.5px">${esc(wa ? b.template : b.subject)}</div></td><td>${wa ? 'WhatsApp' : 'Email'}</td><td class="muted">${esc(b.sentAt ? fmtDate(b.sentAt) + ' ' + String(b.sentAt).slice(11, 16) : '-')}</td><td class="num">${b.contacts || 0}</td><td class="num">${b.sent || 0}</td><td class="num">${wa ? del : '–'}</td><td class="num">${wa ? rd : '–'}</td><td class="num">${rep}</td><td class="num">${b.failed || 0}</td><td><span class="pill ${/sent|done/i.test(b.status) ? 'won' : /stop|fail/i.test(b.status) ? 'hot' : 'stage'}">${esc(b.status || '')}</span></td></tr>`; }).join('')}
+  </tbody></table></div></div>`;
+}
+async function renderBroadcast() {
+  if (!$('#v-broadcast').classList.contains('active')) return;
+  if (BC.tab === 'email' && !BC.email) {
+    BC.email = demo ? { connected: true, demo: true, from_email: 'hello@yourbusiness.com', from_name: brand().brandName } : !cloud ? { connected: false, sheet: true } : { connected: false, loading: true };
+    if (cloud) { try { BC.email = await sbq(AUTH.client.rpc('email_status', { p_ws: AUTH.ws })); } catch (e) { BC.email = { connected: false, error: e.message }; } }
+  }
+  $$('#bcTabs .tab').forEach(t => t.classList.toggle('active', t.dataset.bctab === BC.tab));
+  const ae = document.activeElement, keep = ae && ae.closest && ae.closest('#v-broadcast') && /^(INPUT|TEXTAREA)$/.test(ae.tagName) ? { sel: ae.id ? '#' + ae.id : ae.dataset.bcvtext != null ? `[data-bcvtext="${ae.dataset.bcvtext}"]` : '', s: ae.selectionStart, e: ae.selectionEnd } : null;
+  $('#bcBodyWrap').innerHTML = (!cloud && !demo && BC.tab !== 'history') ? `<div class="bc-card glass"><b>Broadcasts run on the Nodevers cloud.</b><p class="muted">Sign in (Settings → Accounts) to send WhatsApp and email campaigns.</p></div>` : BC.tab === 'whatsapp' ? bcWaHTML() : BC.tab === 'email' ? bcEmailHTML() : bcHistoryHTML();
+  if (keep && keep.sel) { const el = $(keep.sel); if (el) { el.focus(); try { el.setSelectionRange(keep.s, keep.e); } catch (e) { } } }
+}
+async function bcSend(ch) {
+  const r = reach(ch), list = r.ok; if (!list.length || BC.running) return;
+  const tplName = BC.tpl, subject = BC.subject.trim(), body = BC.body;
+  if (ch === 'whatsapp' && !tplName) return toast('Pick a template', true);
+  if (ch === 'email' && (!subject || !body.trim())) return toast('Add a subject and a message', true);
+  if (!confirm(`Send this ${ch === 'email' ? 'email' : 'WhatsApp template'} to ${list.length} ${list.length === 1 ? 'lead' : 'leads'} now?`)) return;
+  const name = BC.name.trim() || (ch === 'email' ? subject : tplName) + ' · ' + fmtDate(todayStr());
+  BC.running = true; BC.stop = false; BC.run = { total: list.length, done: 0, sent: 0, failed: 0, skipped: 0, err: '' }; renderBroadcast();
+  const t = (S.templates || []).find(x => x.templateName === tplName) || {}, n = tplVars(t);
+  let b = { name, channel: ch, template: ch === 'whatsapp' ? tplName : '', subject: ch === 'email' ? subject : '', body: ch === 'email' ? body : String(t.body || ''), audienceFilter: JSON.stringify(BC.aud), contacts: list.length, sent: 0, failed: 0, status: 'Sending', sentAt: nowStr() };
+  try { b = Object.assign(b, await api('saveBroadcast', b)); } catch (e) { BC.running = false; BC.run.err = e.message; return renderBroadcast(); }
+  for (let i = 0; i < list.length && !BC.stop; i += 25) {
+    const part = list.slice(i, i + 25); let res = [];
+    try {
+      if (demo) { await new Promise(r => setTimeout(r, 250)); res = part.map(l => ({ lead_id: l.leadId, ok: true })); }
+      else if (ch === 'whatsapp') res = (await fnCall('wa-send', { bulk: part.map(l => { const params = Array.from({ length: n }, (_, k) => varVal(BC.vars[k] || {}, l)); return { lead_id: l.leadId, params, preview: String(t.body || tplName).replace(/\{\{(\d+)\}\}/g, (m, k) => params[k - 1] || m) }; }), template: tplName, language: t.language || 'en', broadcast_id: b.broadcastId, by: me() })).results;
+      else res = (await fnCall('email', { action: 'send', lead_ids: part.map(l => l.leadId), subject, body, broadcast_name: name, by: me() })).results;
+    } catch (e) { BC.run.err = e.message; BC.stop = true; res = part.map(l => ({ lead_id: l.leadId, ok: false })); }
+    res.forEach(x => { if (x.ok) BC.run.sent++; else if (x.skipped) BC.run.skipped++; else { BC.run.failed++; if (x.error && !BC.run.err) BC.run.err = x.error; } });
+    BC.run.done = Math.min(list.length, i + part.length); renderBroadcast();
+  }
+  BC.running = false;
+  b = Object.assign(b, { sent: BC.run.sent, failed: BC.run.failed, status: BC.stop && BC.run.done < list.length ? 'Stopped' : BC.run.failed && !BC.run.sent ? 'Failed' : 'Sent' });
+  try { await api('saveBroadcast', b); } catch (e) { }
+  toast(`${ch === 'email' ? 'Email' : 'WhatsApp'} broadcast: ${BC.run.sent} sent${BC.run.failed ? `, ${BC.run.failed} failed` : ''}${BC.run.skipped ? `, ${BC.run.skipped} skipped` : ''}`, !BC.run.sent);
+  if (demo) renderAll(); else load(true);
+}
+(function bcEvents() {
+  const v = $('#v-broadcast');
+  v.addEventListener('click', async e => {
+    const t = e.target;
+    const tb = t.closest('[data-bctab]'); if (tb) { BC.tab = tb.dataset.bctab; if (!BC.running) BC.run = null; return renderBroadcast(); }
+    const st = t.closest('[data-bcstage]'); if (st) { const s = st.dataset.bcstage, a = BC.aud.stages; BC.aud.stages = a.includes(s) ? a.filter(x => x !== s) : a.concat(s); return renderBroadcast(); }
+    if (t.closest('[data-bclist]')) { BC.showList = !BC.showList; return renderBroadcast(); }
+    const ins = t.closest('[data-bcins]'); if (ins) { const ta = $('#bcBody'), at = ta.selectionStart ?? ta.value.length; ta.value = ta.value.slice(0, at) + ins.dataset.bcins + ta.value.slice(ta.selectionEnd ?? at); BC.body = ta.value; return renderBroadcast(); }
+    const sd = t.closest('[data-bcsend]'); if (sd) return bcSend(sd.dataset.bcsend);
+    if (t.closest('[data-bcstop]')) { BC.stop = true; return; }
+    if (t.closest('[data-bcemanage]')) { BC.emailManage = true; return renderBroadcast(); }
+    if (t.closest('[data-bceclose]')) { BC.emailManage = false; return renderBroadcast(); }
+    if (t.closest('[data-bctest]')) { if (demo) return toast('Demo: test emails are sent after you connect Brevo'); try { await fnCall('email', { action: 'test', subject: BC.subject, body: BC.body, to: AUTH.session.user.email }); toast('Test email sent to ' + AUTH.session.user.email); } catch (err) { toast(err.message, true); } return; }
+    if (t.closest('[data-bcedisc]')) { if (!confirm('Disconnect the email sender?')) return; try { await fnCall('email', { action: 'disconnect' }); BC.email = null; BC.emailManage = false; renderBroadcast(); } catch (err) { toast(err.message, true); } return; }
+    const cn = t.closest('[data-bceconnect]'); if (cn) {
+      const key = $('#emKey').value.trim(), from = $('#emFrom').value.trim(), name = $('#emName').value.trim();
+      if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(from)) return toast('Enter the sender email', true);
+      if (!/^xkeysib-[A-Za-z0-9-]{20,}$/.test(key)) return toast('Paste the Brevo API key — it starts with xkeysib-', true);
+      cn.disabled = true; cn.textContent = 'Checking with Brevo…';
+      try { const r = await fnCall('email', { action: 'connect', api_key: key, from_email: from, from_name: name }); BC.email = null; BC.emailManage = false; toast(`✓ Email connected — sending as ${r.from_email}`); renderBroadcast(); }
+      catch (err) { toast(err.message, true); cn.disabled = false; cn.textContent = 'Connect email'; }
+    }
+  });
+  v.addEventListener('change', e => {
+    const t = e.target, a = t.closest('[data-bcaud]'); if (a) { BC.aud[a.dataset.bcaud] = t.value; return renderBroadcast(); }
+    const x = t.closest('[data-bcx]'); if (x) { if (t.checked) BC.excluded.delete(x.dataset.bcx); else BC.excluded.add(x.dataset.bcx); return renderBroadcast(); }
+    if (t.id === 'bcTpl') { BC.tpl = t.value; BC.vars = []; return renderBroadcast(); }
+    const vr = t.closest('[data-bcvar]'); if (vr) { BC.vars[+vr.dataset.bcvar].src = t.value; return renderBroadcast(); }
+  });
+  let tm; v.addEventListener('input', e => {
+    const t = e.target;
+    if (t.id === 'bcName') BC.name = t.value; else if (t.id === 'bcSubj') BC.subject = t.value; else if (t.id === 'bcBody') BC.body = t.value;
+    else { const vt = t.closest('[data-bcvtext]'); if (vt) BC.vars[+vt.dataset.bcvtext].text = t.value; else return; }
+    clearTimeout(tm); tm = setTimeout(() => renderBroadcast(), 400);
+  });
+})();
+
 /* ================= branding (logo, name, profile) ================= */
 const DEFAULT_BRAND = { brandName: 'Nodevers', logoUrl: '', userName: 'Shivam', userPhoto: '' };
 function brand() { const b = Object.assign({}, DEFAULT_BRAND), src = S.settings || {}; Object.keys(DEFAULT_BRAND).forEach(k => { if (src[k]) b[k] = String(src[k]); }); return b; }
@@ -4977,7 +5261,7 @@ $('#lfTag').onchange = e => { ui.lf.tag = e.target.value; renderLeads(); };
 $('#lfSource').onchange = e => { ui.lf.source = e.target.value; renderLeads(); };
 
 /* ---- CSV export / import ---- */
-const CSV_COLS = [['leadId', 'Lead ID'], ['createdOn', 'Created On'], ['name', 'Name'], ['phone', 'Phone'], ['businessName', 'Business Name'], ['businessType', 'Business Type'], ['city', 'City'], ['source', 'Source'], ['budget', 'Budget'], ['stage', 'Stage'], ['tag', 'Tag'], ['assignedTo', 'Assigned To'], ['followUpDate', 'Follow-up Date'], ['lastContact', 'Last Contact'], ['notes', 'Notes']];
+const CSV_COLS = [['leadId', 'Lead ID'], ['createdOn', 'Created On'], ['name', 'Name'], ['phone', 'Phone'], ['email', 'Email'], ['businessName', 'Business Name'], ['businessType', 'Business Type'], ['city', 'City'], ['source', 'Source'], ['budget', 'Budget'], ['stage', 'Stage'], ['tag', 'Tag'], ['assignedTo', 'Assigned To'], ['followUpDate', 'Follow-up Date'], ['lastContact', 'Last Contact'], ['notes', 'Notes']];
 function exportCSV() {
   const q = v => { v = String(v ?? ''); if (/^[=+\-@]/.test(v) && !/^\+?\d+$/.test(v)) v = "'" + v; return /[",\n\r]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; };
   const src = ui.leadList && $('#v-leads').classList.contains('active') ? ui.leadList : S.leads;
@@ -4998,34 +5282,9 @@ function parseCSV(text) {
   if (f || row.length) { row.push(f); rows.push(row); }
   return rows;
 }
-async function importCSV(file) {
-  const rows = parseCSV((await file.text()).replace(/^﻿/, '')).filter(r => r.some(c => c.trim()));
-  if (rows.length < 2) return toast('The CSV is empty', true);
-  const MAP = { name: 'name', fullname: 'name', leadname: 'name', phone: 'phone', whatsapp: 'phone', whatsappnumber: 'phone', mobile: 'phone', number: 'phone', businessname: 'businessName', business: 'businessName', company: 'businessName', businesstype: 'businessType', type: 'businessType', city: 'city', source: 'source', budget: 'budget', stage: 'stage', tag: 'tag', assignedto: 'assignedTo', owner: 'assignedTo', followupdate: 'followUpDate', followup: 'followUpDate', notes: 'notes', note: 'notes' };
-  const keys = rows[0].map(h => MAP[h.toLowerCase().replace(/[^a-z]/g, '')] || null);
-  if (!keys.includes('name') || !keys.includes('phone')) return toast('The CSV needs at least "Name" and "Phone" columns', true);
-  const items = rows.slice(1, 301);
-  if (!confirm(`Import ${items.length} leads?${rows.length > 301 ? ' (max 300 at a time)' : ''}`)) return;
-  let ok = 0, skip = 0, dup = 0;
-  const seen = new Set(S.leads.map(l => String(l.phone || '').replace(/\D/g, '').slice(-10)).filter(Boolean));
-  for (const r of items) {
-    const d = {}; keys.forEach((k, i) => { if (k) d[k] = String(r[i] || '').trim(); });
-    const digits = String(d.phone || '').replace(/\D/g, '');
-    if (!d.name || digits.length < 10) { skip++; continue; }
-    d.phone = digits.length === 10 ? '91' + digits : digits;
-    if (seen.has(digits.slice(-10))) { dup++; continue; } seen.add(digits.slice(-10));
-    if (d.budget) d.budget = Number(String(d.budget).replace(/[^\d.]/g, '')) || '';
-    if (d.stage && !stages().includes(d.stage)) delete d.stage;
-    if (d.followUpDate && !/^\d{4}-\d{2}-\d{2}$/.test(d.followUpDate)) delete d.followUpDate;
-    d.by = me();
-    try { await api('addLead', d); ok++; if (ok % 10 === 0) toast(`${ok} leads imported…`); } catch (e) { skip++; }
-  }
-  toast(`✓ ${ok} leads imported${dup ? ` · ${dup} already existed (same phone)` : ''}${skip ? ` · ${skip} skipped (bad name/phone)` : ''}`);
-  if (demo) renderAll(); else load(true);
-}
 $('#csvExport').onclick = exportCSV;
 $('#csvImportBtn').onclick = () => { $('#csvFile').value = ''; $('#csvFile').click(); };
-$('#csvFile').onchange = e => { const f = e.target.files[0]; if (f) importCSV(f); };
+$('#csvFile').onchange = e => { const f = e.target.files[0]; if (f) openImport(f); };
 
 /* ================= team ================= */
 function memberStats(name) {
@@ -5154,6 +5413,7 @@ function go(name) {
   if (name === 'leads') renderLeads(true);
   if (name === 'team') { renderTeam(true); renderLogins(); }
   if (name === 'whatsapp') renderInbox();
+  if (name === 'broadcast') renderBroadcast();
   if (name === 'scripts') renderScripts();
   if (name === 'ads') renderAds(true);
   if (name === 'n8n') renderN8n(true);
