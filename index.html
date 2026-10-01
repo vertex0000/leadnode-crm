@@ -5385,7 +5385,7 @@ function tplCard(t, i) {
     <div class="tp-meta"><span>${esc(t.category || 'Marketing')}</span><span>${esc(t.language || 'en')}</span>${tplVars(t) ? `<span>${tplVars(t)} variable${tplVars(t) > 1 ? 's' : ''}</span>` : ''}${t.quality ? `<span>Quality: ${esc(t.quality)}</span>` : ''}</div>
     <div class="tp-phone"><div class="bub in tpl">${t.header ? `<b class="hd">${esc(t.header)}</b>` : ''}<span>${tplBody(t.body)}</span>${t.footer ? `<em class="ft">${esc(t.footer)}</em>` : ''}</div>${btns.map(b => `<div class="wa-qb">${esc(b)}</div>`).join('')}</div>
     ${t.rejectReason ? `<p class="bc-warn">Rejected: ${esc(t.rejectReason)}</p>` : ''}
-    <div class="tp-act"><button class="btn sm primary" data-tpuse="${esc(t.templateName)}" ${st === 'Approved' ? '' : 'title="Works only after Meta approves it"'}>Use in broadcast</button><button class="btn sm" data-tpdup="${esc(t.templateName)}">Duplicate</button><button class="ibtn" data-tpdel="${esc(t.templateName)}" title="Delete">${I.trash}</button></div></div>`;
+    <div class="tp-act">${TPL_STATUS[st] ? `<button class="btn sm primary" data-tpuse="${esc(t.templateName)}" ${st === 'Approved' ? '' : 'title="Works only after Meta approves it"'}>Use in broadcast</button>` : `<button class="btn sm primary" data-tpedit="${esc(t.templateName)}">Edit &amp; submit to Meta</button>`}<button class="btn sm" data-tpdup="${esc(t.templateName)}">Duplicate</button><button class="ibtn" data-tpdel="${esc(t.templateName)}" title="Delete">${I.trash}</button></div></div>`;
 }
 function renderTemplates() {
   if (!$('#tplgrid')) return;
@@ -5430,6 +5430,7 @@ function readTplEditor() {
     const sc = t.closest('[data-tpst]'); if (sc) { TPL.status = sc.dataset.tpst; return renderTemplates(); }
     if (t.closest('[data-tpnew]') || t.id === 'tpNew') return openTplEditor(null);
     const us = t.closest('[data-tpuse]'); if (us) { BC.tab = 'whatsapp'; BC.tpl = us.dataset.tpuse; BC.vars = []; BC.node = 'msg'; go('broadcast'); return; }
+    const ed = t.closest('[data-tpedit]'); if (ed) { const x = (S.templates || []).find(y => y.templateName === ed.dataset.tpedit); if (x) openTplEditor(Object.assign({}, x)); return; }
     const du = t.closest('[data-tpdup]'); if (du) { const x = (S.templates || []).find(y => y.templateName === du.dataset.tpdup); return openTplEditor(Object.assign({}, x, { templateName: x.templateName + '_copy' })); }
     const dl = t.closest('[data-tpdel]'); if (dl) {
       const name = dl.dataset.tpdel, x = (S.templates || []).find(y => y.templateName === name) || {}, onMeta = x.metaId || /approved|pending|rejected|paused/i.test(x.metaStatus || '');
