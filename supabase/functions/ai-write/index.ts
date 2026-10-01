@@ -7,7 +7,7 @@ const firstKey = (json?: string) => { try { return Object.values(JSON.parse(json
 const SERVICE = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') || firstKey(Deno.env.get('SUPABASE_SECRET_KEYS')) || '';
 const db = createClient(Deno.env.get('SUPABASE_URL')!, SERVICE, { auth: { persistSession: false } });
 const GEMINI = Deno.env.get('GEMINI_URL') ?? 'https://generativelanguage.googleapis.com/v1beta';
-const MODELS = [Deno.env.get('GEMINI_MODEL'), 'gemini-flash-latest', 'gemini-2.5-flash', 'gemini-2.5-flash-lite'].filter(Boolean) as string[];
+const MODELS = [...new Set([Deno.env.get('GEMINI_MODEL'), 'gemini-3.5-flash-lite', 'gemini-3.5-flash', 'gemini-flash-lite-latest', 'gemini-flash-latest', 'gemini-2.5-flash'].filter(Boolean) as string[])];
 const cors = { 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type', 'Access-Control-Allow-Methods': 'POST, OPTIONS' };
 const json = (o: unknown, status = 200) => new Response(JSON.stringify(o), { status, headers: { ...cors, 'Content-Type': 'application/json' } });
 const cut = (s: unknown, n: number) => String(s ?? '').slice(0, n);
@@ -74,7 +74,7 @@ Deno.serve(async (req) => {
       last = j?.error?.message ?? String(r.status);
       if (r.status === 400 && /API key/i.test(last)) return json({ error: 'The Gemini API key is not valid — check the GEMINI_API_KEY secret.' }, 400);
       if (r.status === 403) return json({ error: 'Gemini refused the key (403) — make sure the key is from Google AI Studio and the API is enabled.' }, 400);
-      if (r.status !== 404 && r.status !== 429 && r.status !== 503) break;     // try the next model only for missing/busy models
+      if (r.status !== 404 && r.status !== 429 && r.status !== 503 && !/no longer available|not found|not supported|deprecated/i.test(last)) break;     // try the next model only for missing/retired/busy models
     }
     return json({ error: /quota|exhausted|429/i.test(last) ? 'Free AI limit reached for now — try again in a minute.' : 'AI: ' + last }, 400);
   } catch (e) {
