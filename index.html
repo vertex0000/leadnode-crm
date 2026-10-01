@@ -1196,6 +1196,7 @@ input:-webkit-autofill,input:-webkit-autofill:hover,input:-webkit-autofill:focus
   </div>
   <div class="stab" id="stab-acct" hidden>
     <div id="acctSigned" class="acct-me" hidden></div>
+    <div id="acctPw" class="acct-ws" hidden><label>Change password</label><div class="acct-wsrow"><input class="input" id="pwNew" type="password" autocomplete="new-password" placeholder="New password (8+ characters)"><button class="btn" id="pwSave" type="button">Update</button></div></div>
     <div id="acctWs" class="acct-ws" hidden><label>Workspace name</label><div class="acct-wsrow"><input class="input" id="wsNameIn" maxlength="80" placeholder="Your business name"><button class="btn" id="wsRename" type="button">Rename</button></div></div>
     <div id="acctImport" class="acct-imp" hidden><div><b>Move your Google Sheet data here</b><small>Copies leads, journey, team, templates, pipeline and settings to your cloud workspace. Your Sheet is not changed. Safe to run again.</small></div><button class="btn primary" id="sbImport">Move my Google Sheet data here</button></div>
     <div class="form" style="grid-template-columns:1fr">
@@ -4182,7 +4183,7 @@ function drawAuth() {
   authMsg('');
 }
 function authMsg(t, ok) { const e = $('#authMsg'); e.textContent = t || ''; e.className = 'auth-msg' + (t ? (ok ? ' ok' : ' err') : ''); }
-const AUTH_ERR = { 'Invalid login credentials': 'Wrong email or password.', 'Email not confirmed': 'Please confirm your email first — check your inbox.', 'User already registered': 'This email already has an account. Sign in instead.' };
+const AUTH_ERR = { 'email rate limit exceeded': 'Too many emails sent in the last hour. Wait about an hour — or sign in and change your password in Settings → Accounts.', 'New password should be different from the old password.': 'The new password must be different from the old one.', 'Invalid login credentials': 'Wrong email or password.', 'Email not confirmed': 'Please confirm your email first — check your inbox.', 'User already registered': 'This email already has an account. Sign in instead.' };
 async function authSubmit(e) {
   e.preventDefault();
   const email = $('#auEmail').value.trim(), pass = $('#auPass').value, m = AUTH.mode;
@@ -4218,6 +4219,7 @@ function fillAcct() {
   $('#sbStatus').className = 'status'; $('#sbStatus').textContent = c.url ? 'Logins are on.' : 'Logins are off — the site uses your API key only.';
   $('#acctSigned').hidden = !u; $('#sbLogin').hidden = !c.url || !!u; $('#acctImport').hidden = !(cloud && settings.url && settings.key);
   if (u) $('#acctSigned').innerHTML = `${avatar(u.name, '', brand().userPhoto)}<div class="grow"><b>${esc(u.name)}</b><small>${esc(u.email)}${cloud ? ` · ${esc(AUTH.wsName || 'Workspace')} (${esc(AUTH.role)})` : ''}</small></div><button class="btn sm" id="sbOut">Sign out</button>`;
+  $('#acctPw').hidden = !u; $('#pwNew').value = '';
   $('#acctWs').hidden = !(cloud && /owner|admin/.test(AUTH.role || '')); if (cloud) $('#wsNameIn').value = AUTH.wsName || '';
   if (u && cloud) { $('#sbStatus').className = 'status ok'; $('#sbStatus').textContent = '✓ Your data is saved in the Nodevers cloud. Only people in your workspace can see it.'; }
 }
@@ -4239,6 +4241,13 @@ function fillAcct() {
   };
   $('#sbClear').onclick = async () => { if (!confirm('Turn off logins on this browser?')) return; try { const cl = await authClient(); if (cl) await cl.auth.signOut(); } catch (e) { } store.set('leadnode.supabase', { off: true }); AUTH.client = null; AUTH.session = null; cloudStop(); fillAcct(); toast('Logins turned off'); load(); };
   $('#sbLogin').onclick = () => showAuth('in');
+  $('#pwSave').onclick = async () => {
+    const pw = $('#pwNew').value; if (pw.length < 8) return toast('Password must be at least 8 characters', true);
+    if (/^\d+$/.test(pw)) return toast('Use letters and numbers, not only numbers', true);
+    const b = $('#pwSave'); b.disabled = true;
+    try { const cl = await authClient(); const r = await cl.auth.updateUser({ password: pw }); if (r.error) throw r.error; $('#pwNew').value = ''; toast('Password updated ✓'); }
+    catch (e) { toast(AUTH_ERR[e.message] || e.message, true); } finally { b.disabled = false; }
+  };
   $('#wsRename').onclick = async () => {
     const name = $('#wsNameIn').value.trim().slice(0, 80); if (!name) return toast('Enter a name', true);
     try { const r = await sbq(AUTH.client.from('workspaces').update({ name }).eq('id', AUTH.ws).select('name').single()); AUTH.wsName = r.name; fillAcct(); toast('Workspace renamed ✓'); }
