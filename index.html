@@ -626,6 +626,7 @@ textarea.input.code{min-height:320px}
 #stab-wl .field{margin-bottom:10px}#stab-wl>.help:first-child{margin-top:0}
 @media (max-width:600px){#setModal .seg{flex-wrap:wrap}#setModal .segb{flex:1 1 40%}}.auth-pow{text-align:center;margin:10px 0 0}#authSideSub{margin:-14px 0 0;font-size:15px}
 @media (max-width:600px){#stab-wl .form{grid-template-columns:1fr!important}}
+.acct-ws{margin-bottom:12px}.acct-ws label{display:block;font-size:12px;font-weight:700;color:var(--muted);margin-bottom:6px}.acct-wsrow{display:flex;gap:8px}.acct-wsrow .input{flex:1;min-width:0}
 .acct-imp{display:flex;gap:12px;align-items:center;flex-wrap:wrap;padding:12px;border:1px dashed var(--line-2);border-radius:12px;margin-bottom:12px}.acct-imp>div{flex:1 1 240px;display:flex;flex-direction:column;gap:3px}.acct-imp small{color:var(--muted);font-size:12px}
 .auth-demo{display:block;margin:12px auto 0;border:0;background:none;color:var(--muted);font-weight:600}.auth-demo:hover{color:var(--text)}
 input:-webkit-autofill,input:-webkit-autofill:hover,input:-webkit-autofill:focus{-webkit-text-fill-color:var(--text);caret-color:var(--text);transition:background-color 99999s ease-out 0s}
@@ -1195,6 +1196,7 @@ input:-webkit-autofill,input:-webkit-autofill:hover,input:-webkit-autofill:focus
   </div>
   <div class="stab" id="stab-acct" hidden>
     <div id="acctSigned" class="acct-me" hidden></div>
+    <div id="acctWs" class="acct-ws" hidden><label>Workspace name</label><div class="acct-wsrow"><input class="input" id="wsNameIn" maxlength="80" placeholder="Your business name"><button class="btn" id="wsRename" type="button">Rename</button></div></div>
     <div id="acctImport" class="acct-imp" hidden><div><b>Move your Google Sheet data here</b><small>Copies leads, journey, team, templates, pipeline and settings to your cloud workspace. Your Sheet is not changed. Safe to run again.</small></div><button class="btn primary" id="sbImport">Move my Google Sheet data here</button></div>
     <div class="form" style="grid-template-columns:1fr">
       <p class="help">Logins (email, Google, team roles) run on <b>Supabase Auth</b>. Paste your Supabase project's URL and <b>anon / publishable</b> key. Never paste the service_role key or your database password.</p>
@@ -4214,6 +4216,7 @@ function fillAcct() {
   $('#sbStatus').className = 'status'; $('#sbStatus').textContent = c.url ? 'Logins are on.' : 'Logins are off — the site uses your API key only.';
   $('#acctSigned').hidden = !u; $('#sbLogin').hidden = !c.url || !!u; $('#acctImport').hidden = !(cloud && settings.url && settings.key);
   if (u) $('#acctSigned').innerHTML = `${avatar(u.name, '', brand().userPhoto)}<div class="grow"><b>${esc(u.name)}</b><small>${esc(u.email)}${cloud ? ` · ${esc(AUTH.wsName || 'Workspace')} (${esc(AUTH.role)})` : ''}</small></div><button class="btn sm" id="sbOut">Sign out</button>`;
+  $('#acctWs').hidden = !(cloud && /owner|admin/.test(AUTH.role || '')); if (cloud) $('#wsNameIn').value = AUTH.wsName || '';
   if (u && cloud) { $('#sbStatus').className = 'status ok'; $('#sbStatus').textContent = '✓ Your data is saved in the Nodevers cloud. Only people in your workspace can see it.'; }
 }
 (function authEvents() {
@@ -4234,6 +4237,11 @@ function fillAcct() {
   };
   $('#sbClear').onclick = async () => { if (!confirm('Turn off logins on this browser?')) return; try { const cl = await authClient(); if (cl) await cl.auth.signOut(); } catch (e) { } store.set('leadnode.supabase', { off: true }); AUTH.client = null; AUTH.session = null; cloudStop(); fillAcct(); toast('Logins turned off'); load(); };
   $('#sbLogin').onclick = () => showAuth('in');
+  $('#wsRename').onclick = async () => {
+    const name = $('#wsNameIn').value.trim().slice(0, 80); if (!name) return toast('Enter a name', true);
+    try { const r = await sbq(AUTH.client.from('workspaces').update({ name }).eq('id', AUTH.ws).select('name').single()); AUTH.wsName = r.name; fillAcct(); toast('Workspace renamed ✓'); }
+    catch (e) { toast('Could not rename: ' + e.message, true); }
+  };
   $('#sbImport').onclick = () => { if (confirm('Copy everything from your Google Sheet into your cloud workspace? Your Sheet stays as it is.')) importSheet(); };
   $('#authDemo').onclick = () => { try { sessionStorage.setItem('leadnode.demo', '1'); } catch (e) { } hideAuth(); if (!cloud && !(settings.url && settings.key)) { demo = true; view.fitted = false; layout = null; load(); } };
   $('#stab-acct').addEventListener('click', async e => { if (e.target.id === 'sbOut') { try { const cl = await authClient(); await cl.auth.signOut(); } catch (err) { } AUTH.session = null; cloudStop(); store.del('leadnode.cache'); hideModal('#setModal'); showAuth('in'); } });
