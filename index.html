@@ -668,6 +668,58 @@ body.ro [data-add],body.ro .addcard,body.ro #addMember,body.ro [data-lginvite],b
 .wa-phone{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:color-mix(in srgb,var(--wa,#25A55F) 6%,var(--glass-3))}.wa-top{display:flex;gap:8px;align-items:center;padding:8px 10px;background:var(--glass-3);border-bottom:1px solid var(--line);font-size:13px}.wa-chat{min-height:180px;padding:12px;display:flex;flex-direction:column}
 .em-prev{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--glass-3)}.em-h{padding:10px 12px;border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:2px}.em-b{padding:14px;font-size:13.5px;line-height:1.6;max-height:340px;overflow:auto}.em-b p{margin:0 0 10px}.em-f{font-size:11.5px;color:var(--muted)}
 @media (max-width:900px){.bc-grid{grid-template-columns:1fr}.bc-fs{grid-template-columns:1fr 1fr}}
+/* ---- broadcast node flow ---- */
+.bc-flow{display:flex;align-items:stretch;gap:0;padding:22px 18px;margin-bottom:14px;border-radius:16px;border:1px solid var(--line);overflow-x:auto;background-color:var(--glass-3);background-image:radial-gradient(color-mix(in srgb,var(--text) 14%,transparent) 1px,transparent 1.2px);background-size:18px 18px}
+.bc-node{position:relative;flex:1 1 0;min-width:170px;display:flex;gap:10px;align-items:flex-start;text-align:left;padding:12px 14px 12px 12px;border-radius:14px;border:1.5px solid var(--line-2);background:var(--card,var(--glass-2));color:inherit;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.06);transition:transform .15s,border-color .15s,box-shadow .15s}
+.bc-node:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(0,0,0,.1)}.bc-node.sel{border-color:var(--blue-2);box-shadow:0 0 0 4px var(--blue-soft),0 10px 24px rgba(0,0,0,.1)}
+.bc-node .bc-ic,.bc-insp-h .bc-ic{flex:0 0 34px;height:34px;border-radius:10px;display:grid;place-items:center;background:var(--blue-soft);color:var(--blue-2)}.bc-node .bc-ic .i{width:18px;height:18px}
+.bc-nt{display:flex;flex-direction:column;gap:1px;min-width:0}.bc-nt small{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}.bc-nt b{font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.bc-nt em{font-style:normal;font-size:11.5px;color:var(--muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.bc-dot{position:absolute;top:10px;right:10px;width:9px;height:9px;border-radius:50%;background:var(--muted)}.st-need .bc-dot{background:var(--coral);box-shadow:0 0 0 3px color-mix(in srgb,var(--coral) 22%,transparent)}.st-done .bc-dot{background:var(--green);box-shadow:0 0 0 3px var(--green-soft)}
+.st-need{border-color:color-mix(in srgb,var(--coral) 45%,var(--line-2))}.st-done{border-color:color-mix(in srgb,var(--green) 55%,var(--line-2))}
+.bc-port{position:absolute;top:50%;width:10px;height:10px;border-radius:50%;background:var(--card,var(--glass-2));border:2px solid var(--line-2);transform:translateY(-50%)}.bc-port.in{left:-6px}.bc-port.out{right:-6px}.bc-node:first-child .bc-port.in,.bc-node:last-child .bc-port.out{display:none}
+.bc-wire{flex:0 0 34px;align-self:center;height:2px;background:repeating-linear-gradient(90deg,var(--line-2) 0 6px,transparent 6px 10px);position:relative}.bc-wire.on{background:var(--blue-2)}.bc-wire.on i{position:absolute;top:-3px;width:8px;height:8px;border-radius:50%;background:var(--blue-2);animation:bcflow 1.6s linear infinite}
+@keyframes bcflow{from{left:0}to{left:calc(100% - 8px)}}
+.bc-insp{border-radius:16px;padding:0;overflow:hidden;margin-bottom:14px}.bc-insp-h{display:flex;gap:10px;align-items:center;padding:14px 16px;border-bottom:1px solid var(--line);flex-wrap:wrap}.bc-insp-h b{display:block}.bc-insp-h .grow{flex:1 1 auto}.bc-insp-h small{color:var(--muted);font-size:12.5px}
+.bc-insp-b{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr)}.bc-left{padding:16px;border-right:1px solid var(--line);min-width:0}.bc-right{padding:16px;background:color-mix(in srgb,var(--glass-3) 70%,transparent);min-width:0}.bc-rh{font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.bc-seg{display:inline-flex;background:var(--line);border-radius:10px;padding:3px;margin-bottom:12px;flex-wrap:wrap}.bc-seg button{border:0;background:none;padding:6px 12px;border-radius:8px;font-weight:600;color:var(--muted);cursor:pointer}.bc-seg button.on{background:var(--glass-2,var(--card));color:var(--text);box-shadow:0 1px 3px rgba(0,0,0,.1)}
+.bc-fs.two{grid-template-columns:1fr 1fr}.bc-lbl{display:block;font-size:12px;font-weight:700;color:var(--muted);margin:4px 0 8px}.bc-link{float:right;font-weight:600;font-size:12px}
+.bc-viz{display:flex;flex-direction:column;gap:12px}.bc-big b{font-size:40px;letter-spacing:-.03em;line-height:1}.bc-big span{display:block;color:var(--muted);font-size:13px}
+.bc-stack{display:flex;height:12px;border-radius:8px;overflow:hidden;background:var(--line)}.bc-stack i{display:block;height:100%}
+.bc-legend{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px;font-size:13px}.bc-legend li{display:flex;gap:8px;align-items:center}.bc-legend span{width:10px;height:10px;border-radius:3px}.bc-legend b{margin-left:auto}
+.bc-check{list-style:none;margin:0 0 12px;padding:0;display:flex;flex-direction:column;gap:6px}.bc-check li{display:flex;gap:8px;align-items:center;font-size:13.5px;cursor:pointer;padding:6px 8px;border-radius:8px}.bc-check li:hover{background:var(--glass-3)}.bc-check span{width:20px;height:20px;border-radius:50%;display:grid;place-items:center;font-size:11px;font-weight:800}
+.bc-check li.ok span{background:var(--green-soft);color:var(--green)}.bc-check li.no span{background:color-mix(in srgb,var(--coral) 18%,transparent);color:var(--coral)}
+.bc-sendrow{display:flex;gap:8px;flex-wrap:wrap}.bc-sendrow .bc-go{flex:1;min-width:200px;justify-content:center;width:auto}
+.wa-top small{display:block;font-size:11px;color:var(--muted)}.bub.tpl{max-width:92%}.bub .hd{display:block;margin-bottom:4px}.bub .ft{display:block;font-style:normal;font-size:12px;color:var(--muted);margin-top:4px}.bub mark{background:color-mix(in srgb,var(--blue-2) 20%,transparent);color:inherit;border-radius:4px;padding:0 3px}
+.wa-qb{align-self:flex-start;max-width:92%;width:92%;margin-top:4px;text-align:center;font-size:13px;font-weight:600;color:#34B7F1;background:var(--glass-2,var(--card));border:1px solid var(--line);border-radius:10px;padding:7px}
+.bc-hist{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:12px}.bc-h{padding:14px;border-radius:14px;display:flex;flex-direction:column;gap:12px}.bc-h1{display:flex;gap:10px;align-items:center}.bc-h1 .grow{display:flex;flex-direction:column;min-width:0}.bc-h1 small{font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bc-ch{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;font-weight:800}.bc-ch.wa{background:color-mix(in srgb,var(--wa,#25A55F) 16%,transparent);color:var(--wa,#25A55F)}.bc-ch.em{background:var(--blue-soft);color:var(--blue-2)}
+.bc-fun{display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap}.bc-fun>div:not(.bc-hx){display:flex;flex-direction:column;align-items:center;gap:3px;min-width:56px}.bc-fb{width:30px;height:60px;border-radius:8px;background:var(--line);display:flex;align-items:flex-end;overflow:hidden}.bc-fb i{display:block;width:100%;background:linear-gradient(var(--blue),var(--blue-2));border-radius:8px}
+.bc-fun small{font-size:11px;color:var(--muted)}.bc-hx{margin-left:auto;display:flex;flex-direction:column;gap:6px;align-items:flex-end}
+@media (max-width:900px){.bc-insp-b{grid-template-columns:1fr}.bc-left{border-right:0;border-bottom:1px solid var(--line)}.bc-flow{padding:16px 12px}.bc-node{min-width:150px}.bc-fs.two{grid-template-columns:1fr}}
+/* ---- templates ---- */
+.tp-bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:14px}.tp-chips{display:flex;gap:6px;flex-wrap:wrap}.tp-chips .n{font-size:11px;opacity:.7;margin-left:2px}.tp-q{margin-left:auto;min-width:220px}
+.tpgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.tp{border-radius:16px;padding:14px;display:flex;flex-direction:column;gap:10px}.tp-h{display:flex;gap:8px;align-items:center;justify-content:space-between}.tp-h code{font-size:13px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tp-st{display:inline-flex;gap:6px;align-items:center;font-size:12px;font-weight:700;padding:3px 9px;border-radius:20px;background:var(--line);color:var(--muted);white-space:nowrap}.tp-st i{width:7px;height:7px;border-radius:50%;background:currentColor}
+.tp-st.ok{background:var(--green-soft);color:var(--green)}.tp-st.wait{background:var(--yellow-soft);color:#B7861A}.tp-st.bad{background:color-mix(in srgb,var(--coral) 16%,transparent);color:var(--coral)}
+.tp-meta{display:flex;gap:6px;flex-wrap:wrap}.tp-meta span{font-size:11.5px;font-weight:600;padding:2px 8px;border-radius:6px;border:1px solid var(--line);color:var(--muted)}
+.tp-phone,.wa-chat{background-color:color-mix(in srgb,var(--wa,#25A55F) 7%,var(--glass-3));background-image:radial-gradient(color-mix(in srgb,var(--wa,#25A55F) 22%,transparent) 1px,transparent 1.3px);background-size:14px 14px}
+.tp-phone{border-radius:12px;padding:12px;display:flex;flex-direction:column;min-height:120px;border:1px solid var(--line)}
+.tp-act{display:flex;gap:6px;align-items:center;margin-top:auto}.tp-act .ibtn{margin-left:auto}
+.tp-empty{grid-column:1/-1;padding:28px;border-radius:16px;text-align:center;display:flex;flex-direction:column;gap:8px;align-items:center}
+.tpe{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:16px}.tpe-p{position:sticky;top:0;align-self:start}.te-btns{display:flex;flex-direction:column;gap:6px}.te-b{display:flex;gap:6px;align-items:center;flex-wrap:wrap}.te-b .input{flex:1;min-width:110px}
+@media (max-width:820px){.tpe{grid-template-columns:1fr}.tp-q{margin-left:0;width:100%}}
+/* ---- inbox polish ---- */
+.inbox{box-shadow:0 18px 40px rgba(0,0,0,.08)}.ib-top{display:flex;align-items:center;justify-content:space-between;padding:12px 12px 0}.ib-top b{font-size:16px}
+.ib-f{display:inline-flex;background:var(--line);border-radius:9px;padding:3px}.ib-f button{border:0;background:none;padding:4px 10px;border-radius:7px;font-size:12px;font-weight:700;color:var(--muted);cursor:pointer}.ib-f button.on{background:var(--glass-2,var(--card));color:var(--text);box-shadow:0 1px 3px rgba(0,0,0,.1)}
+.ib-c{position:relative;border-bottom:0;margin:2px 8px;width:calc(100% - 16px);border-radius:12px}.ib-c.on{background:var(--blue-soft)}.ib-c.on::before{content:"";position:absolute;left:-8px;top:12px;bottom:12px;width:3px;border-radius:3px;background:var(--blue-2)}
+.ib-c .avatar{box-shadow:0 0 0 2px var(--glass-2,var(--card))}.ib-u{box-shadow:0 2px 6px color-mix(in srgb,var(--wa,#25A55F) 40%,transparent)}
+.ib-h{background:linear-gradient(90deg,var(--glass-3),transparent)}.ib-h .avatar{box-shadow:0 0 0 2px var(--wa,#25A55F)}
+.ib-msgs{background-color:color-mix(in srgb,var(--wa,#25A55F) 5%,var(--glass-3));background-image:radial-gradient(color-mix(in srgb,var(--wa,#25A55F) 18%,transparent) 1px,transparent 1.3px);background-size:16px 16px;padding:16px 20px}
+.bub{position:relative;box-shadow:0 1px 2px rgba(0,0,0,.08)}.bub.in{background:var(--glass-2,var(--card))}.bub.out{background:linear-gradient(135deg,color-mix(in srgb,var(--wa,#25A55F) 26%,var(--glass-2,var(--card))),color-mix(in srgb,var(--wa,#25A55F) 16%,var(--glass-2,var(--card))));border:1px solid color-mix(in srgb,var(--wa,#25A55F) 25%,transparent)}
+.ib-msgs .bub.in::before,.ib-msgs .bub.out::before{content:"";position:absolute;top:0;width:10px;height:10px}.ib-msgs .bub.in::before{left:-6px;background:linear-gradient(225deg,var(--glass-2,var(--card)) 50%,transparent 50%)}.ib-msgs .bub.out::before{right:-6px;background:linear-gradient(135deg,color-mix(in srgb,var(--wa,#25A55F) 26%,var(--glass-2,var(--card))) 50%,transparent 50%)}
+.ib-day{box-shadow:0 1px 2px rgba(0,0,0,.06);font-weight:600}
+.ib-comp{background:var(--glass-2,var(--card));gap:10px}.ib-comp textarea{border-radius:22px;padding:10px 16px}.ib-comp #ibSend{border-radius:22px;padding:0 18px;height:42px}
 .srcTag{font-style:normal;font-size:10px;font-weight:700;padding:1px 5px;border-radius:4px;margin-left:4px;vertical-align:1px}
 .srcTag.real{background:var(--green-soft);color:var(--green)}.srcTag.sample{background:var(--line);color:var(--muted)}
 .rcard.span2{grid-column:1/-1}
@@ -1107,9 +1159,10 @@ body.ro [data-add],body.ro .addcard,body.ro #addMember,body.ro [data-lginvite],b
 
     <!-- TEMPLATES -->
     <section class="view" id="v-templates">
-      <div class="head"><div><div class="eyebrow">WhatsApp</div><h1>Templates</h1><p class="sub">Bulk messages can only use Meta-approved templates.</p></div></div>
-      <div class="banner" style="background:var(--blue-soft);border-color:var(--stroke)"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg><div class="grow">Creating templates and getting them approved by Meta will be added here soon. For now these come from the Templates tab in your Sheet.</div></div>
-      <div class="tplgrid" id="tplgrid"></div>
+      <div class="head"><div><div class="eyebrow">WhatsApp</div><h1>Templates</h1><p class="sub">Approved messages you can send anytime — campaigns, offers, reminders.</p></div>
+        <div class="head-actions"><button class="btn" id="tpSync">⟳ Sync from WhatsApp</button><button class="btn primary" id="tpNew"><svg class="i" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>New template</button></div></div>
+      <div class="tp-bar" id="tplBar"></div>
+      <div class="tpgrid" id="tplgrid"></div>
     </section>
 
     <!-- UNIFIED ANALYTICS -->
@@ -1184,7 +1237,7 @@ body.ro [data-add],body.ro .addcard,body.ro #addMember,body.ro [data-lginvite],b
     <section class="view" id="v-whatsapp">
       <div class="head"><div><div class="eyebrow">WhatsApp</div><h1>Inbox</h1><p class="sub">Every WhatsApp chat with your leads, in one place.</p></div></div>
       <div id="waConn"></div>
-      <div class="inbox glass" id="inbox"><div class="ib-list"><div class="ib-search"><input class="input" id="ibQ" type="search" name="q-inbox" autocomplete="off" placeholder="Search chats or start one with a lead"></div><div class="ib-scroll" id="ibList"></div></div><div class="ib-thread" id="ibThread"></div></div>
+      <div class="inbox glass" id="inbox"><div class="ib-list"><div class="ib-top"><b>Chats</b><div class="ib-f"><button class="on" data-ibf="all">All</button><button data-ibf="unread">Unread</button></div></div><div class="ib-search"><input class="input" id="ibQ" type="search" name="q-inbox" autocomplete="off" placeholder="Search chats or start one with a lead"></div><div class="ib-scroll" id="ibList"></div></div><div class="ib-thread" id="ibThread"></div></div>
     </section>
     <section class="view" id="v-broadcast">
       <div class="head"><div><div class="eyebrow">WhatsApp & Email</div><h1>Broadcast</h1><p class="sub">Send a WhatsApp template or an email to many leads at once — each one personalised.</p></div></div>
@@ -4524,7 +4577,7 @@ $('#fileIn').addEventListener('change', async e => {
 const SB_COLS = {
   leads: ['lead_id', 'created_on', 'name', 'phone', 'email', 'email_opt_out', 'wa_opt_out', 'business_name', 'business_type', 'city', 'source', 'budget', 'stage', 'tag', 'assigned_to', 'follow_up_date', 'last_contact', 'notes', 'business_photo', 'client_photo'],
   activities: ['activity_id', 'lead_id', 'date_time', 'type', 'details', 'done_by'],
-  templates: ['template_name', 'category', 'language', 'header', 'body', 'buttons', 'meta_status'],
+  templates: ['template_name', 'category', 'language', 'header', 'body', 'footer', 'buttons', 'meta_status', 'meta_id', 'quality', 'reject_reason'],
   broadcasts: ['broadcast_id', 'name', 'channel', 'template', 'subject', 'body', 'audience_filter', 'contacts', 'sent', 'failed', 'delivered', 'read', 'replies', 'scheduled_for', 'sent_at', 'status'],
   flows: ['flow_id', 'flow_name', 'trigger', 'status', 'flow_json', 'updated_on'],
   team: ['member_id', 'name', 'role', 'phone', 'email', 'active'],
@@ -4637,6 +4690,7 @@ async function sbApi(action, d = {}) {
     case 'saveTemplate': {
       const row = toRow('templates', d); row.workspace_id = ws; row.template_name = String(row.template_name || '').toLowerCase().replace(/[^a-z0-9_]+/g, '_').slice(0, 512);
       if (!row.template_name) throw new Error('Template name is required');
+      ['footer', 'meta_id', 'quality', 'reject_reason'].forEach(k => { if (!row[k]) delete row[k]; });          // works before database update 04
       return fromRow(await sbq(T('templates').upsert(row, { onConflict: 'workspace_id,template_name' }).select().single()));
     }
     case 'addTeamMember': { const row = toRow('team', Object.assign({ active: true }, d)); delete row.member_id; row.workspace_id = ws; return fromRow(await sbq(T('team').insert(row).select().single())); }
@@ -4856,7 +4910,8 @@ async function renderInbox() {
   if (!$('#v-whatsapp').classList.contains('active')) return;
   if (!WA.status) { $('#waConn').innerHTML = ''; await waLoadStatus(); }
   $('#waConn').innerHTML = waConnHTML();
-  const all = convos(), q = WA.q.toLowerCase(), list = all.filter(c => !q || [c.name, c.phone, c.lead && c.lead.businessName].some(v => String(v || '').toLowerCase().includes(q)));
+  const all = convos(), q = WA.q.toLowerCase(), list = all.filter(c => (WA.filter !== 'unread' || c.unread || c.key === WA.open) && (!q || [c.name, c.phone, c.lead && c.lead.businessName].some(v => String(v || '').toLowerCase().includes(q))));
+  $$('#inbox [data-ibf]').forEach(b => b.classList.toggle('on', b.dataset.ibf === (WA.filter || 'all')));
   const extra = q ? S.leads.filter(l => !all.some(c => c.leadId === l.leadId) && matchQ(l, q)).slice(0, 6) : [];
   if (!WA.open && list[0] && innerWidth > 760) WA.open = list[0].key;
   $('#ibList').innerHTML = (list.map(c => `<button class="ib-c ${c.key === WA.open ? 'on' : ''}" data-ibopen="${esc(c.key)}">${avatar(c.name, '', c.lead && c.lead.clientPhoto)}<span class="ib-m"><span class="ib-t"><b>${esc(c.name)}</b><small>${esc(msgTime(c.last.time))}</small></span><span class="ib-s">${c.last.direction === 'out' ? tick(c.last.status) + ' ' : ''}${esc(String(c.last.text).slice(0, 70))}</span></span>${c.unread ? `<span class="ib-u">${c.unread}</span>` : ''}</button>`).join('')
@@ -4901,6 +4956,7 @@ async function ibSendTpl(c) {
 (function inboxEvents() {
   $('#v-whatsapp').addEventListener('click', async e => {
     const t = e.target;
+    const ff = t.closest('[data-ibf]'); if (ff) { WA.filter = ff.dataset.ibf; return renderInbox(); }
     const o = t.closest('[data-ibopen]'); if (o) { WA.open = o.dataset.ibopen; WA.mobileThread = true; return renderInbox(); }
     const n = t.closest('[data-ibnew]'); if (n) { WA.open = 'new:' + n.dataset.ibnew; WA.mobileThread = true; WA.q = ''; $('#ibQ').value = ''; return renderInbox(); }
     if (t.closest('[data-ibback]')) { WA.mobileThread = false; return renderInbox(); }
@@ -5018,96 +5074,161 @@ async function downloadSample() {
 }
 document.addEventListener('click', e => { if (e.target.closest('[data-impsample]')) downloadSample(); });
 
-/* ================= broadcast: WhatsApp templates + email campaigns ================= */
-const BC = { tab: 'whatsapp', aud: { stages: [], tag: '', source: '', city: '', assigned: '' }, excluded: new Set(), showList: false, tpl: '', vars: [], name: '', subject: '', body: 'Hi {{first_name}},\n\n', email: null, running: false, stop: false };
+/* ================= broadcast: node flow (Audience → Message → Test → Send) ================= */
+const BC = { tab: 'whatsapp', node: 'aud', aud: { src: 'filters', stages: [], tag: '', source: '', city: '', assigned: '', past: '', pastMode: 'unread', cap: 0 }, excluded: new Set(), showList: false, tpl: '', vars: [], name: '', subject: '', body: 'Hi {{first_name}},\n\n', email: null, running: false, stop: false, tested: {}, testTo: '' };
 const VAR_SRC = [['first', 'First name'], ['name', 'Full name'], ['business', 'Business name'], ['city', 'City'], ['custom', 'Custom text']];
 const tplVars = t => (String((t || {}).body || '').match(/\{\{(\d+)\}\}/g) || []).length;
 const varVal = (v, l) => v.src === 'first' ? String(l.name || '').split(' ')[0] : v.src === 'name' ? l.name : v.src === 'business' ? (l.businessName || l.name) : v.src === 'city' ? (l.city || '') : (v.text || '');
 const fillEmail = (s, l) => String(s).replace(/\{\{\s*(first_name|name|business|city|email)\s*\}\}/gi, (m, k) => { k = k.toLowerCase(); return k === 'first_name' ? (String(l.name || '').split(' ')[0] || 'there') : k === 'business' ? (l.businessName || '') : String(l[k] || ''); });
+const okMail = e => /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(e || '');
+const optOut = (l, ch) => { const v = ch === 'email' ? l.emailOptOut : l.waOptOut; return v === true || v === 'true'; };
+const bcList = () => (S.broadcasts || []).slice().sort((a, b) => String(b.sentAt || b.broadcastId).localeCompare(String(a.sentAt || a.broadcastId)));
+const segments = () => { try { return JSON.parse((S.settings || {}).segmentsJson || '[]'); } catch (e) { return []; } };
+function pastLeads(bid, mode) {
+  const b = (S.broadcasts || []).find(x => x.broadcastId === bid); if (!b) return new Set();
+  if ((b.channel || 'whatsapp') === 'email') { const ids = new Set(S.activities.filter(a => a.type === 'Email Sent' && String(a.details).startsWith((b.name || '') + ':')).map(a => a.leadId)); return ids; }
+  const ms = msgs().filter(m => m.broadcastId === bid && m.leadId), all = new Set(ms.map(m => m.leadId));
+  if (mode === 'all') return all;
+  if (mode === 'unread') return new Set(ms.filter(m => m.status !== 'read').map(m => m.leadId));
+  const replied = new Set(msgs().filter(m => m.direction === 'in' && b.sentAt && String(m.time) > String(b.sentAt) && all.has(m.leadId)).map(m => m.leadId));
+  return mode === 'replied' ? replied : new Set([...all].filter(id => !replied.has(id)));
+}
+function recentlyContacted(ch, days) {
+  if (!days) return new Set(); const d = new Date(); d.setDate(d.getDate() - days); const since = `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+  return ch === 'email' ? new Set(S.activities.filter(a => a.type === 'Email Sent' && dOnly(a.dateTime) >= since).map(a => a.leadId)) : new Set(msgs().filter(m => m.direction === 'out' && dOnly(m.time) >= since).map(m => m.leadId));
+}
 function audience() {
   const a = BC.aud;
+  if (a.src === 'past' && a.past) { const ids = pastLeads(a.past, a.pastMode); return S.leads.filter(l => ids.has(l.leadId)); }
   return S.leads.filter(l => (!a.stages.length || a.stages.includes(l.stage)) && (!a.tag || l.tag === a.tag) && (!a.source || l.source === a.source) && (!a.city || String(l.city || '').toLowerCase() === a.city.toLowerCase()) && (!a.assigned || l.assignedTo === a.assigned));
 }
-const optOut = (l, ch) => { const v = ch === 'email' ? l.emailOptOut : l.waOptOut; return v === true || v === 'true'; };
 function reach(ch) {
-  const all = audience(), ok = [], skip = { contact: 0, opt: 0, manual: 0 };
-  all.forEach(l => { if (BC.excluded.has(l.leadId)) return skip.manual++; if (ch === 'email' ? !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(l.email || '') : String(l.phone || '').replace(/\D/g, '').length < 10) return skip.contact++; if (optOut(l, ch)) return skip.opt++; ok.push(l); });
+  const all = audience(), ok = [], skip = { contact: 0, opt: 0, manual: 0, recent: 0 }, recent = recentlyContacted(ch, +BC.aud.cap || 0);
+  all.forEach(l => { if (BC.excluded.has(l.leadId)) return skip.manual++; if (ch === 'email' ? !okMail(l.email) : String(l.phone || '').replace(/\D/g, '').length < 10) return skip.contact++; if (optOut(l, ch)) return skip.opt++; if (recent.has(l.leadId)) return skip.recent++; ok.push(l); });
   return { all, ok, skip };
 }
-function audienceHTML(ch) {
-  const a = BC.aud, uniq = k => [...new Set(S.leads.map(l => l[k]).filter(Boolean))].sort(), r = reach(ch);
-  const sel = (id, label, list, v) => `<label class="bc-f"><span>${label}</span><select class="input sm" data-bcaud="${id}"><option value="">All</option>${list.map(x => `<option ${x === v ? 'selected' : ''}>${esc(x)}</option>`).join('')}</select></label>`;
-  return `<div class="bc-card glass"><h3>1 · Who gets it</h3>
-    <div class="bc-chips"><span class="muted">Stage:</span>${stages().map(s => `<button class="chip ${a.stages.includes(s) ? 'on' : ''}" data-bcstage="${esc(s)}">${esc(s)}</button>`).join('')}</div>
-    <div class="bc-fs">${sel('tag', 'Tag', S.lists.tags || ['Hot', 'Warm', 'Cold'], a.tag)}${sel('source', 'Source', uniq('source'), a.source)}${sel('city', 'City', uniq('city'), a.city)}${sel('assigned', 'Assigned to', uniq('assignedTo'), a.assigned)}</div>
-    <div class="bc-reach"><b>${r.ok.length}</b> ${r.ok.length === 1 ? 'lead' : 'leads'} will get this${r.skip.contact ? ` · <span class="muted">${r.skip.contact} without ${ch === 'email' ? 'email' : 'phone'}</span>` : ''}${r.skip.opt ? ` · <span class="muted">${r.skip.opt} unsubscribed</span>` : ''}${r.skip.manual ? ` · <span class="muted">${r.skip.manual} removed by you</span>` : ''}
-      <button class="btn sm" data-bclist>${BC.showList ? 'Hide list' : 'See list'}</button></div>
-    ${BC.showList ? `<div class="bc-list">${r.all.slice(0, 200).map(l => { const bad = ch === 'email' ? !l.email : !l.phone; return `<label class="${bad || optOut(l, ch) ? 'off' : ''}"><input type="checkbox" data-bcx="${esc(l.leadId)}" ${BC.excluded.has(l.leadId) || bad || optOut(l, ch) ? '' : 'checked'} ${bad || optOut(l, ch) ? 'disabled' : ''}> ${esc(l.name)} <small class="muted">${esc(ch === 'email' ? (l.email || 'no email') : (l.phone ? '+' + l.phone : 'no phone'))}${optOut(l, ch) ? ' · unsubscribed' : ''}</small></label>`; }).join('') || '<p class="muted">No leads match.</p>'}</div>` : ''}
-  </div>`;
+/* ---------- node states ---------- */
+function bcState(ch) {
+  const r = reach(ch), t = (S.templates || []).find(x => x.templateName === BC.tpl);
+  const msgOk = ch === 'email' ? !!(BC.subject.trim() && BC.body.trim()) : !!t;
+  const conn = ch === 'email' ? !!(BC.email && BC.email.connected) : (demo || !!(WA.status && WA.status.connected));
+  return { r, t, msgOk, conn,
+    aud: r.ok.length ? 'ok' : 'need', msg: msgOk ? 'ok' : 'need', test: BC.tested[ch] ? 'done' : 'ok', send: BC.run && !BC.running && BC.run.sent ? 'done' : (r.ok.length && msgOk && conn ? 'ok' : 'need') };
 }
-function bcWaHTML() {
+const NODE_IC = { aud: I.users, msg: I.chat, test: '<svg class="i" viewBox="0 0 24 24"><path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 1.7 3h10.6a2 2 0 0 0 1.7-3l-5-9V3"/></svg>', send: '<svg class="i" viewBox="0 0 24 24"><path d="m3 11 18-8-8 18-2-8Z"/></svg>' };
+function flowHTML(ch) {
+  const s = bcState(ch), a = BC.aud, t = s.t;
+  const audSum = a.src === 'past' && a.past ? `From “${esc(((S.broadcasts || []).find(b => b.broadcastId === a.past) || {}).name || a.past)}” · ${({ unread: "didn't read", noreply: "didn't reply", replied: 'replied', all: 'everyone' })[a.pastMode]}` : [a.stages.length ? a.stages.join(', ') : 'All stages', a.tag, a.source, a.city, a.assigned].filter(Boolean).join(' · ');
+  const nodes = [
+    ['aud', 'Audience', `<b>${s.r.ok.length}</b> ${s.r.ok.length === 1 ? 'lead' : 'leads'}`, audSum],
+    ['msg', ch === 'email' ? 'Email' : 'Template', ch === 'email' ? (BC.subject ? esc(BC.subject) : 'Write subject & message') : (t ? `<code>${esc(t.templateName)}</code>` : 'Pick a template'), ch === 'email' ? (s.conn ? 'From ' + esc((BC.email || {}).from_email || '') : 'Connect sender') : (t ? esc(t.metaStatus || 'Not submitted') + (tplVars(t) ? ` · ${tplVars(t)} variables` : '') : 'Approved templates only')],
+    ['test', 'Test', BC.tested[ch] ? 'Tested ✓' : 'Optional', ch === 'email' ? 'Send it to yourself first' : 'Send to your own number'],
+    ['send', 'Send', BC.running ? `${BC.run.done}/${BC.run.total}` : BC.run && BC.run.sent ? `✓ ${BC.run.sent} sent` : 'Send now', s.send === 'need' ? 'Finish the red steps' : 'Ready to go'],
+  ];
+  return `<div class="bc-flow">${nodes.map(([k, ti, big, small], i) => `${i ? `<div class="bc-wire ${bcState(ch)[nodes[i - 1][0]] === 'need' ? '' : 'on'}"><i></i></div>` : ''}<button class="bc-node ${BC.node === k ? 'sel' : ''} st-${s[k]}" data-bcnode="${k}"><span class="bc-port in"></span><span class="bc-ic">${NODE_IC[k]}</span><span class="bc-nt"><small>${i + 1} · ${ti}</small><b>${big}</b><em>${small}</em></span><span class="bc-dot" title="${s[k] === 'need' ? 'Needs setup' : s[k] === 'done' ? 'Done' : 'Ready'}"></span><span class="bc-port out"></span></button>`).join('')}</div>`;
+}
+/* ---------- inspectors ---------- */
+function inspAud(ch) {
+  const a = BC.aud, uniq = k => [...new Set(S.leads.map(l => l[k]).filter(Boolean))].sort(), r = reach(ch), segs = segments(), past = bcList().filter(b => (b.channel || 'whatsapp') === ch);
+  const sel = (id, label, list, v) => `<label class="bc-f"><span>${label}</span><select class="input sm" data-bcaud="${id}"><option value="">All</option>${list.map(x => `<option ${x === v ? 'selected' : ''}>${esc(x)}</option>`).join('')}</select></label>`;
+  return `<div class="bc-seg"><button class="${a.src !== 'past' ? 'on' : ''}" data-bcsrc="filters">By filters</button><button class="${a.src === 'past' ? 'on' : ''}" data-bcsrc="past">Retarget a past campaign</button></div>
+    ${a.src === 'past' ? `<div class="bc-fs two"><label class="bc-f"><span>Campaign</span><select class="input sm" data-bcaud="past"><option value="">Choose…</option>${past.map(b => `<option value="${esc(b.broadcastId)}" ${b.broadcastId === a.past ? 'selected' : ''}>${esc(b.name || b.broadcastId)}</option>`).join('')}</select></label>
+      <label class="bc-f"><span>People who</span><select class="input sm" data-bcaud="pastMode">${(ch === 'email' ? [['all', 'got it']] : [['unread', "didn't read it"], ['noreply', "didn't reply"], ['replied', 'replied'], ['all', 'got it']]).map(([k, n]) => `<option value="${k}" ${a.pastMode === k ? 'selected' : ''}>${n}</option>`).join('')}</select></label></div>${!past.length ? '<p class="help">No past campaigns on this channel yet.</p>' : ''}`
+    : `${segs.length ? `<div class="bc-chips"><span class="muted">Saved:</span>${segs.map((g, i) => `<button class="chip" data-bcseg="${i}">${esc(g.name)}</button>`).join('')}</div>` : ''}
+      <div class="bc-chips"><span class="muted">Stage:</span>${stages().map(s => `<button class="chip ${a.stages.includes(s) ? 'on' : ''}" data-bcstage="${esc(s)}">${esc(s)}</button>`).join('')}</div>
+      <div class="bc-fs">${sel('tag', 'Tag', S.lists.tags || ['Hot', 'Warm', 'Cold'], a.tag)}${sel('source', 'Source', uniq('source'), a.source)}${sel('city', 'City', uniq('city'), a.city)}${sel('assigned', 'Assigned to', uniq('assignedTo'), a.assigned)}</div>`}
+    <div class="bc-fs two" style="margin-top:10px"><label class="bc-f"><span>Don't send to people already messaged in the last</span><select class="input sm" data-bcaud="cap">${[[0, 'Off'], [1, '1 day'], [3, '3 days'], [7, '7 days'], [14, '14 days'], [30, '30 days']].map(([v, n]) => `<option value="${v}" ${+a.cap === v ? 'selected' : ''}>${n}</option>`).join('')}</select></label>
+      ${a.src !== 'past' ? `<div class="bc-f"><span>Save these filters</span><button class="btn sm" data-bcsave>Save as segment</button></div>` : ''}</div>
+    <div class="bc-reach"><b>${r.ok.length}</b> ${r.ok.length === 1 ? 'lead' : 'leads'} will get this<button class="btn sm" data-bclist>${BC.showList ? 'Hide list' : 'See list'}</button></div>
+    ${BC.showList ? `<div class="bc-list">${r.all.slice(0, 300).map(l => { const bad = ch === 'email' ? !okMail(l.email) : !l.phone, oo = optOut(l, ch); return `<label class="${bad || oo ? 'off' : ''}"><input type="checkbox" data-bcx="${esc(l.leadId)}" ${BC.excluded.has(l.leadId) || bad || oo ? '' : 'checked'} ${bad || oo ? 'disabled' : ''}> ${esc(l.name)} <small class="muted">${esc(ch === 'email' ? (l.email || 'no email') : (l.phone ? '+' + l.phone : 'no phone'))}${oo ? ' · unsubscribed' : ''}</small></label>`; }).join('') || '<p class="muted">No leads match.</p>'}</div>` : ''}`;
+}
+function reachViz(ch) {
+  const r = reach(ch), tot = Math.max(1, r.all.length), parts = [['Will get it', r.ok.length, 'var(--green)'], [ch === 'email' ? 'No email' : 'No phone', r.skip.contact, 'var(--muted)'], ['Unsubscribed', r.skip.opt, 'var(--coral)'], ['Messaged recently', r.skip.recent, '#E0A82E'], ['Removed by you', r.skip.manual, 'var(--blue-2)']].filter(p => p[1]);
+  return `<div class="bc-viz"><div class="bc-big"><b>${r.ok.length}</b><span>of ${r.all.length} matching ${r.all.length === 1 ? 'lead' : 'leads'}</span></div>
+    <div class="bc-stack">${parts.map(p => `<i style="width:${(p[1] / tot * 100).toFixed(1)}%;background:${p[2]}"></i>`).join('')}</div>
+    <ul class="bc-legend">${parts.map(p => `<li><span style="background:${p[2]}"></span>${p[0]}<b>${p[1]}</b></li>`).join('') || '<li class="muted">Pick who should get this.</li>'}</ul></div>`;
+}
+function waPreview(t, l) {
+  if (!t) return `<div class="wa-phone"><div class="wa-top">${avatar(brand().brandName)}<b>${esc(brand().brandName)}</b></div><div class="wa-chat"><p class="muted" style="text-align:center;margin:60px 0">Pick a template to preview</p></div></div>`;
+  const body = String(t.body || '').replace(/\{\{(\d+)\}\}/g, (m, k) => `<mark>${esc(varVal(BC.vars[k - 1] || {}, l)) || m}</mark>`);
+  const btns = String(t.buttons || '').split('|').map(x => x.trim()).filter(Boolean);
+  return `<div class="wa-phone"><div class="wa-top">${avatar(brand().brandName)}<div><b>${esc(brand().brandName)}</b><small>Business account</small></div></div><div class="wa-chat"><div class="bub in tpl">${t.header ? `<b class="hd">${esc(t.header)}</b>` : ''}<span>${body.replace(/\n/g, '<br>')}</span>${t.footer ? `<em class="ft">${esc(t.footer)}</em>` : ''}<small>${nowStr().slice(11)}</small></div>${btns.map(x => `<div class="wa-qb">${esc(x)}</div>`).join('')}</div></div>`;
+}
+function inspMsgWa() {
   const tpls = (S.templates || []).filter(t => t.templateName), t = tpls.find(x => x.templateName === BC.tpl) || null, n = tplVars(t);
   while (BC.vars.length < n) BC.vars.push({ src: BC.vars.length ? 'custom' : 'first', text: '' });
-  const r = reach('whatsapp'), first = r.ok[0] || S.leads[0] || { name: 'Aarav Mehta', businessName: 'Brew & Bites', city: 'Mumbai' };
-  const preview = t ? String(t.body || '').replace(/\{\{(\d+)\}\}/g, (m, k) => esc(varVal(BC.vars[k - 1] || {}, first)) || m) : '';
-  return `<div class="bc-grid"><div>${audienceHTML('whatsapp')}
-    <div class="bc-card glass"><h3>2 · Message</h3>
-      <div class="field"><label>Campaign name (only you see it)</label><input class="input" id="bcName" value="${esc(BC.name)}" placeholder="e.g. Diwali offer 2026"></div>
-      <div class="field"><label>Approved template</label><select class="input" id="bcTpl"><option value="">Choose a template…</option>${tpls.map(x => `<option value="${esc(x.templateName)}" ${x.templateName === BC.tpl ? 'selected' : ''}>${esc(x.templateName)}${x.metaStatus ? ' · ' + esc(x.metaStatus) : ''}</option>`).join('')}</select>
-        ${t && !/approved/i.test(t.metaStatus || '') ? '<p class="bc-warn">This template is not marked Approved. Meta only delivers templates approved in WhatsApp Manager.</p>' : ''}${!tpls.length ? '<p class="help">No templates yet — create one in WhatsApp Manager, then add the same name in <a href="#templates" data-go="templates">Templates</a>.</p>' : ''}</div>
-      ${n ? `<div class="bc-vars">${BC.vars.slice(0, n).map((v, i) => `<div class="bc-var"><span class="pill stage">{{${i + 1}}}</span><select class="input sm" data-bcvar="${i}">${VAR_SRC.map(([k, lb]) => `<option value="${k}" ${v.src === k ? 'selected' : ''}>${lb}</option>`).join('')}</select>${v.src === 'custom' ? `<input class="input sm" data-bcvtext="${i}" value="${esc(v.text)}" placeholder="Text for everyone">` : ''}</div>`).join('')}</div>` : ''}
-    </div></div>
-    <div><div class="bc-card glass bc-prev"><h3>Preview</h3><div class="wa-phone"><div class="wa-top">${avatar(brand().brandName)}<b>${esc(brand().brandName)}</b></div><div class="wa-chat">${t ? `<div class="bub in"><span>${preview.replace(/\n/g, '<br>')}</span><small>${nowStr().slice(11)}</small></div>` : '<p class="muted" style="text-align:center;margin-top:40px">Pick a template to preview</p>'}</div></div>
-      <p class="muted" style="font-size:12px">Shown for ${esc(first.name || 'a lead')}. Each lead gets their own values.</p></div>
-      <div class="bc-card glass"><h3>3 · Send</h3>
-        <ul class="bc-rules"><li>Only Meta-approved templates can be broadcast.</li><li>Add a payment method in WhatsApp Manager — Meta charges per template message.</li><li>New numbers can message about 250 new people a day; it grows as quality stays high.</li><li>People who reply <b>STOP</b> are skipped automatically.</li></ul>
-        ${bcRunHTML()}
-        <button class="btn wa bc-go" data-bcsend="whatsapp" ${!t || !r.ok.length || BC.running ? 'disabled' : ''}>${I.wa}Send to ${r.ok.length} ${r.ok.length === 1 ? 'lead' : 'leads'}</button></div></div></div>`;
+  return `<div class="field"><label>Approved template <a href="#templates" data-go="templates" class="bc-link">Manage templates →</a></label><select class="input" id="bcTpl"><option value="">Choose a template…</option>${tpls.map(x => `<option value="${esc(x.templateName)}" ${x.templateName === BC.tpl ? 'selected' : ''}>${esc(x.templateName)} · ${esc(x.metaStatus || 'Not submitted')}</option>`).join('')}</select>
+      ${t && !/approved/i.test(t.metaStatus || '') ? '<p class="bc-warn">Not approved yet — Meta only delivers templates approved in WhatsApp Manager. Use “Sync from WhatsApp” on the Templates page to refresh statuses.</p>' : ''}${!tpls.length ? '<p class="help">No templates yet — create one on the <a href="#templates" data-go="templates">Templates</a> page.</p>' : ''}</div>
+    ${n ? `<label class="bc-lbl">Fill the variables for each lead</label><div class="bc-vars">${BC.vars.slice(0, n).map((v, i) => `<div class="bc-var"><span class="pill stage">{{${i + 1}}}</span><select class="input sm" data-bcvar="${i}">${VAR_SRC.map(([k, lb]) => `<option value="${k}" ${v.src === k ? 'selected' : ''}>${lb}</option>`).join('')}</select>${v.src === 'custom' ? `<input class="input sm" data-bcvtext="${i}" value="${esc(v.text)}" placeholder="Text for everyone">` : ''}</div>`).join('')}</div>` : ''}`;
 }
-function bcEmailHTML() {
-  const s = BC.email || {}, r = reach('email'), first = r.ok[0] || S.leads.find(l => l.email) || { name: 'Aarav Mehta', businessName: 'Brew & Bites', city: 'Mumbai' };
-  if (s.sheet) return `<div class="bc-card glass"><b>Email campaigns run on the Nodevers cloud.</b><p class="muted">Sign in (Settings → Accounts) to connect your email sender.</p></div>`;
-  const conn = s.connected && !BC.emailManage ? `<div class="wa-on"><span class="dot"></span>Sending as <b>${esc(s.from_name || '')}</b> &lt;${esc(s.from_email || '')}&gt;${s.demo ? ' <em class="srcTag sample">demo</em>' : ''}${canAdmin() ? '<button class="btn sm" data-bcemanage>Manage</button>' : ''}</div>`
-    : !canAdmin() ? `<div class="bc-card glass"><b>Email is not connected yet.</b><p class="muted">Ask the workspace owner to connect the sender.</p></div>`
-    : `<div class="bc-card glass"><h3>Connect your email sender (Brevo — free 300 emails a day)</h3>
-      <ol class="bc-rules"><li>Make a free account at <b>brevo.com</b>.</li><li>Brevo → <b>Senders, Domains & Dedicated IPs → Senders</b> → add your email and click the link Brevo sends you.</li><li>Brevo → <b>SMTP & API → API keys</b> → Generate a new API key → copy it here. It is saved on the server only.</li></ol>
-      <div class="form wa-grid"><div class="field"><label>Sender email (verified in Brevo)</label><input class="input" id="emFrom" type="email" value="${esc(s.from_email || '')}" placeholder="you@business.com"></div><div class="field"><label>Sender name</label><input class="input" id="emName" value="${esc(s.from_name || brand().brandName)}" placeholder="Your business"></div>
-      <div class="field span2"><label>Brevo API key</label><input class="input secret" id="emKey" type="text" name="em-key-${Date.now()}" autocomplete="off" spellcheck="false" readonly data-noautofill placeholder="xkeysib-…"></div></div>
-      <div class="m-foot">${s.connected ? '<button class="btn danger" data-bcedisc>Disconnect</button><button class="btn" data-bceclose>Close</button>' : ''}<div class="grow"></div><button class="btn primary" data-bceconnect>${s.connected ? 'Save' : 'Connect email'}</button></div></div>`;
-  return `${conn}<div class="bc-grid"><div>${audienceHTML('email')}
-    <div class="bc-card glass"><h3>2 · Email</h3>
-      <div class="field"><label>Campaign name (only you see it)</label><input class="input" id="bcName" value="${esc(BC.name)}" placeholder="e.g. New catalogue — October"></div>
-      <div class="field"><label>Subject</label><input class="input" id="bcSubj" value="${esc(BC.subject)}" maxlength="200" placeholder="e.g. {{first_name}}, our new cafe chairs are here"></div>
-      <div class="field"><label>Message <span class="muted">— leave an empty line for a new paragraph; links work as they are</span></label><textarea class="input" id="bcBody" rows="9">${esc(BC.body)}</textarea></div>
-      <div class="bc-chips"><span class="muted">Insert:</span>${['first_name', 'name', 'business', 'city'].map(k => `<button class="chip" data-bcins="{{${k}}}">{{${k}}}</button>`).join('')}</div>
-    </div></div>
-    <div><div class="bc-card glass bc-prev"><h3>Preview</h3><div class="em-prev"><div class="em-h"><b>${esc(fillEmail(BC.subject || 'Subject', first))}</b><small class="muted">From ${esc(s.from_name || brand().brandName)} · to ${esc(first.email || 'lead@email.com')}</small></div>
-      <div class="em-b">${String(fillEmail(BC.body, first)).split(/\n{2,}/).map(p => `<p>${esc(p).replace(/\n/g, '<br>')}</p>`).join('')}<p class="em-f">You received this email from ${esc(s.from_name || brand().brandName)}. <u>Unsubscribe</u></p></div></div></div>
-      <div class="bc-card glass"><h3>3 · Send</h3>
-        <ul class="bc-rules"><li>Every email gets an Unsubscribe link — people who click it are skipped next time.</li><li>Only email people who gave you their email or are your customers.</li><li>Brevo free plan: 300 emails a day.</li></ul>
-        ${bcRunHTML()}
-        <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" data-bctest ${s.connected ? '' : 'disabled'}>Send test to me</button><button class="btn primary bc-go" data-bcsend="email" ${!s.connected || !r.ok.length || BC.running ? 'disabled' : ''}>Send to ${r.ok.length} ${r.ok.length === 1 ? 'lead' : 'leads'}</button></div></div></div></div>`;
+function inspMsgEmail() {
+  return `<div class="field"><label>Subject</label><input class="input" id="bcSubj" value="${esc(BC.subject)}" maxlength="200" placeholder="e.g. {{first_name}}, our new cafe chairs are here"></div>
+    <div class="field"><label>Message <span class="muted">— empty line = new paragraph; links work as they are</span></label><textarea class="input" id="bcBody" rows="10">${esc(BC.body)}</textarea></div>
+    <div class="bc-chips"><span class="muted">Insert:</span>${['first_name', 'name', 'business', 'city'].map(k => `<button class="chip" data-bcins="{{${k}}}">{{${k}}}</button>`).join('')}</div>`;
+}
+function emailPreview(l) {
+  const s = BC.email || {};
+  return `<div class="em-prev"><div class="em-h"><b>${esc(fillEmail(BC.subject || 'Subject', l))}</b><small class="muted">From ${esc(s.from_name || brand().brandName)} · to ${esc(l.email || 'lead@email.com')}</small></div>
+    <div class="em-b">${String(fillEmail(BC.body, l)).split(/\n{2,}/).map(p => `<p>${esc(p).replace(/\n/g, '<br>')}</p>`).join('')}<p class="em-f">You received this email from ${esc(s.from_name || brand().brandName)}. <u>Unsubscribe</u></p></div></div>`;
+}
+function inspTest(ch) {
+  if (ch === 'email') return `<p class="help">Sends this email to you with sample values, marked [Test].</p><div class="field"><label>Send test to</label><input class="input" id="bcTestTo" type="email" value="${esc(BC.testTo || (AUTH.session ? AUTH.session.user.email : ''))}"></div><button class="btn primary" data-bctest="email" ${(BC.email || {}).connected ? '' : 'disabled'}>Send test email</button>`;
+  return `<p class="help">Sends the template to one number with the first lead's values, so you see exactly what customers get. Counts as one template message.</p><div class="field"><label>Your WhatsApp number</label><input class="input" id="bcTestTo" inputmode="tel" value="${esc(BC.testTo)}" placeholder="+91 98765 43210"></div><button class="btn wa" data-bctest="whatsapp" ${BC.tpl ? '' : 'disabled'}>${I.wa}Send test</button>`;
+}
+function inspSend(ch) {
+  const s = bcState(ch), row = (ok, txt, node) => `<li class="${ok ? 'ok' : 'no'}" data-bcnode="${node}"><span>${ok ? '✓' : '!'}</span>${txt}</li>`;
+  return `<div class="field"><label>Campaign name (only you see it)</label><input class="input" id="bcName" value="${esc(BC.name)}" placeholder="${ch === 'email' ? 'e.g. New catalogue — October' : 'e.g. Diwali offer 2026'}"></div>
+    <ul class="bc-check">${row(s.r.ok.length, `${s.r.ok.length} ${s.r.ok.length === 1 ? 'lead' : 'leads'} selected`, 'aud')}${row(s.msgOk, ch === 'email' ? 'Subject and message written' : 'Template chosen', 'msg')}${row(s.conn, ch === 'email' ? 'Email sender connected' : 'WhatsApp connected', ch === 'email' ? 'msg' : 'send')}${row(BC.tested[ch], 'Test sent (optional)', 'test')}</ul>
+    <ul class="bc-rules">${ch === 'email' ? '<li>Every email has an Unsubscribe link — people who click it are skipped next time.</li><li>Brevo free plan: 300 emails a day.</li>' : '<li>Meta charges per template message — add a payment method in WhatsApp Manager.</li><li>New numbers can reach about 250 new people a day; the limit grows with good quality.</li><li>People who reply STOP are skipped automatically.</li>'}</ul>
+    ${bcRunHTML()}
+    <div class="bc-sendrow"><button class="btn ${ch === 'email' ? 'primary' : 'wa'} bc-go" data-bcsend="${ch}" ${s.send === 'need' || BC.running ? 'disabled' : ''}>${ch === 'email' ? '' : I.wa}Send now to ${s.r.ok.length} ${s.r.ok.length === 1 ? 'lead' : 'leads'}</button><button class="btn" disabled title="Scheduling needs the server timer — coming next">Schedule · soon</button></div>`;
 }
 const bcRunHTML = () => BC.run ? `<div class="imp-prog"><div class="imp-bar"><i style="width:${Math.round(BC.run.done / Math.max(1, BC.run.total) * 100)}%"></i></div><span>${BC.run.done} / ${BC.run.total} · ✓ ${BC.run.sent} sent${BC.run.failed ? ` · ✕ ${BC.run.failed} failed` : ''}${BC.run.skipped ? ` · ${BC.run.skipped} skipped` : ''}</span>${BC.running ? '<button class="btn sm" data-bcstop>Stop</button>' : ''}</div>${BC.run.err ? `<p class="bc-warn">${esc(BC.run.err)}</p>` : ''}` : '';
+function emailConnHTML() {
+  const s = BC.email || {};
+  if (s.connected && !BC.emailManage) return `<div class="wa-on"><span class="dot"></span>Sending as <b>${esc(s.from_name || '')}</b> &lt;${esc(s.from_email || '')}&gt;${s.demo ? ' <em class="srcTag sample">demo</em>' : ''}${canAdmin() ? '<button class="btn sm" data-bcemanage>Manage</button>' : ''}</div>`;
+  if (!canAdmin() && !demo) return `<div class="bc-card glass"><b>Email is not connected yet.</b><p class="muted">Ask the workspace owner to connect the sender.</p></div>`;
+  return `<div class="bc-card glass"><h3>Connect your email sender (Brevo — free 300 emails a day)</h3>
+    <ol class="bc-rules"><li>Free account at <b>brevo.com</b>.</li><li>Brevo → <b>Senders, domains, IPs → Senders</b> → add and verify your email.</li><li>Brevo → <b>SMTP & API → API keys</b> → generate → paste here. Saved on the server only.</li></ol>
+    <div class="form wa-grid"><div class="field"><label>Sender email (verified in Brevo)</label><input class="input" id="emFrom" type="email" value="${esc(s.from_email || '')}" placeholder="you@business.com"></div><div class="field"><label>Sender name</label><input class="input" id="emName" value="${esc(s.from_name || brand().brandName)}"></div>
+    <div class="field span2"><label>Brevo API key</label><input class="input secret" id="emKey" type="text" name="em-key-${Date.now()}" autocomplete="off" spellcheck="false" readonly data-noautofill placeholder="xkeysib-…"></div></div>
+    <div class="m-foot">${s.connected ? '<button class="btn danger" data-bcedisc>Disconnect</button><button class="btn" data-bceclose>Close</button>' : ''}<div class="grow"></div><button class="btn primary" data-bceconnect>${s.connected ? 'Save' : 'Connect email'}</button></div></div>`;
+}
+function composerHTML(ch) {
+  const r = reach(ch), first = r.ok[0] || (ch === 'email' ? S.leads.find(l => l.email) : S.leads.find(l => l.phone)) || { name: 'Aarav Mehta', businessName: 'Brew & Bites', city: 'Mumbai', email: '' };
+  const t = (S.templates || []).find(x => x.templateName === BC.tpl) || null, k = BC.node;
+  const meta = { aud: ['Audience', 'Who gets this campaign'], msg: [ch === 'email' ? 'Email' : 'Template', ch === 'email' ? 'Subject, message and personal fields' : 'Approved WhatsApp template and its variables'], test: ['Test', 'Check it on your own phone or inbox first'], send: ['Send', 'Final check, then send'] }[k];
+  const left = k === 'aud' ? inspAud(ch) : k === 'msg' ? (ch === 'email' ? inspMsgEmail() : inspMsgWa()) : k === 'test' ? inspTest(ch) : inspSend(ch);
+  const right = k === 'aud' ? reachViz(ch) : ch === 'email' ? emailPreview(first) : waPreview(t, first);
+  const order = ['aud', 'msg', 'test', 'send'], i = order.indexOf(k);
+  return `${ch === 'email' ? emailConnHTML() : ''}${flowHTML(ch)}
+    <div class="bc-insp glass"><div class="bc-insp-h"><span class="bc-ic">${NODE_IC[k]}</span><div><b>${i + 1} · ${meta[0]}</b><small>${meta[1]}</small></div><div class="grow"></div>${i > 0 ? `<button class="btn sm" data-bcnode="${order[i - 1]}">← Back</button>` : ''}${i < 3 ? `<button class="btn sm primary" data-bcnode="${order[i + 1]}">Next →</button>` : ''}</div>
+      <div class="bc-insp-b"><div class="bc-left">${left}</div><div class="bc-right"><div class="bc-rh">${k === 'aud' ? 'Reach' : 'Live preview'}</div>${right}${k !== 'aud' ? `<p class="muted" style="font-size:12px;margin-top:8px">Shown for ${esc(first.name || 'a lead')}. Each lead gets their own values.</p>` : ''}</div></div></div>`;
+}
 function bcHistoryHTML() {
-  const list = (S.broadcasts || []).slice().sort((a, b) => String(b.sentAt || b.broadcastId).localeCompare(String(a.sentAt || a.broadcastId)));
-  if (!list.length) return `<div class="bc-card glass"><p class="muted">No broadcasts yet. Your sent campaigns and their results show here.</p></div>`;
-  return `<div class="glass tblcard"><div class="tblwrap"><table class="tbl"><thead><tr><th>Campaign</th><th>Channel</th><th>Date</th><th class="num">Audience</th><th class="num">Sent</th><th class="num">Delivered</th><th class="num">Read</th><th class="num">Replies</th><th class="num">Failed</th><th>Status</th></tr></thead><tbody>
-    ${list.map(b => { const ms = msgs().filter(m => m.broadcastId === b.broadcastId), wa = (b.channel || 'whatsapp') === 'whatsapp';
-      const del = ms.filter(m => /delivered|read/.test(m.status)).length, rd = ms.filter(m => m.status === 'read').length;
-      const rep = wa ? new Set(msgs().filter(m => m.direction === 'in' && b.sentAt && String(m.time) > String(b.sentAt) && ms.some(x => x.leadId && x.leadId === m.leadId)).map(m => m.leadId)).size : '–';
-      return `<tr style="cursor:default"><td><b>${esc(b.name || b.broadcastId)}</b><div class="muted" style="font-size:11.5px">${esc(wa ? b.template : b.subject)}</div></td><td>${wa ? 'WhatsApp' : 'Email'}</td><td class="muted">${esc(b.sentAt ? fmtDate(b.sentAt) + ' ' + String(b.sentAt).slice(11, 16) : '-')}</td><td class="num">${b.contacts || 0}</td><td class="num">${b.sent || 0}</td><td class="num">${wa ? del : '–'}</td><td class="num">${wa ? rd : '–'}</td><td class="num">${rep}</td><td class="num">${b.failed || 0}</td><td><span class="pill ${/sent|done/i.test(b.status) ? 'won' : /stop|fail/i.test(b.status) ? 'hot' : 'stage'}">${esc(b.status || '')}</span></td></tr>`; }).join('')}
-  </tbody></table></div></div>`;
+  const list = bcList();
+  if (!list.length) return `<div class="bc-card glass"><p class="muted">No campaigns yet. Sent campaigns and their results show here.</p></div>`;
+  return `<div class="bc-hist">${list.map(b => {
+    const wa = (b.channel || 'whatsapp') === 'whatsapp', ms = msgs().filter(m => m.broadcastId === b.broadcastId), sent = +b.sent || ms.length;
+    const del = ms.filter(m => /delivered|read/.test(m.status)).length, rd = ms.filter(m => m.status === 'read').length;
+    const rep = wa ? new Set(msgs().filter(m => m.direction === 'in' && b.sentAt && String(m.time) > String(b.sentAt) && ms.some(x => x.leadId && x.leadId === m.leadId)).map(m => m.leadId)).size : 0;
+    const steps = wa ? [['Sent', sent], ['Delivered', del], ['Read', rd], ['Replied', rep]] : [['Sent', sent]];
+    return `<div class="bc-h glass"><div class="bc-h1"><span class="bc-ch ${wa ? 'wa' : 'em'}">${wa ? I.wa : '@'}</span><div class="grow"><b>${esc(b.name || b.broadcastId)}</b><small class="muted">${esc(wa ? b.template : b.subject)} · ${esc(b.sentAt ? fmtDate(b.sentAt) + ' ' + String(b.sentAt).slice(11, 16) : '')}</small></div><span class="pill ${/sent/i.test(b.status) ? 'won' : /stop|fail/i.test(b.status) ? 'hot' : 'stage'}">${esc(b.status || '')}</span></div>
+      <div class="bc-fun">${steps.map(([n, v]) => `<div><div class="bc-fb"><i style="height:${sent ? Math.max(4, v / sent * 100) : 4}%"></i></div><b>${v}</b><small>${n}${sent && n !== 'Sent' ? ` · ${Math.round(v / sent * 100)}%` : ''}</small></div>`).join('')}<div class="bc-hx"><small class="muted">Audience ${b.contacts || 0}${+b.failed ? ` · ${b.failed} failed` : ''}</small>
+        ${wa ? `<button class="btn sm" data-bcretarget="${esc(b.broadcastId)}" data-mode="unread">Retarget non-readers</button>` : ''}<button class="btn sm" data-bcdup="${esc(b.broadcastId)}">Duplicate</button></div></div></div>`;
+  }).join('')}</div>`;
 }
 async function renderBroadcast() {
   if (!$('#v-broadcast').classList.contains('active')) return;
   if (BC.tab === 'email' && !BC.email) {
-    BC.email = demo ? { connected: true, demo: true, from_email: 'hello@yourbusiness.com', from_name: brand().brandName } : !cloud ? { connected: false, sheet: true } : { connected: false, loading: true };
+    BC.email = demo ? { connected: true, demo: true, from_email: 'hello@yourbusiness.com', from_name: brand().brandName } : !cloud ? { connected: false, sheet: true } : { connected: false };
     if (cloud) { try { BC.email = await sbq(AUTH.client.rpc('email_status', { p_ws: AUTH.ws })); } catch (e) { BC.email = { connected: false, error: e.message }; } }
   }
+  if (BC.tab === 'whatsapp' && !WA.status) { await waLoadStatus(); }
   $$('#bcTabs .tab').forEach(t => t.classList.toggle('active', t.dataset.bctab === BC.tab));
   const ae = document.activeElement, keep = ae && ae.closest && ae.closest('#v-broadcast') && /^(INPUT|TEXTAREA)$/.test(ae.tagName) ? { sel: ae.id ? '#' + ae.id : ae.dataset.bcvtext != null ? `[data-bcvtext="${ae.dataset.bcvtext}"]` : '', s: ae.selectionStart, e: ae.selectionEnd } : null;
-  $('#bcBodyWrap').innerHTML = (!cloud && !demo && BC.tab !== 'history') ? `<div class="bc-card glass"><b>Broadcasts run on the Nodevers cloud.</b><p class="muted">Sign in (Settings → Accounts) to send WhatsApp and email campaigns.</p></div>` : BC.tab === 'whatsapp' ? bcWaHTML() : BC.tab === 'email' ? bcEmailHTML() : bcHistoryHTML();
+  $('#bcBodyWrap').innerHTML = (!cloud && !demo && BC.tab !== 'history') ? `<div class="bc-card glass"><b>Broadcasts run on the Nodevers cloud.</b><p class="muted">Sign in (Settings → Accounts) to send WhatsApp and email campaigns.</p></div>`
+    : BC.tab === 'history' ? bcHistoryHTML() : composerHTML(BC.tab);
   if (keep && keep.sel) { const el = $(keep.sel); if (el) { el.focus(); try { el.setSelectionRange(keep.s, keep.e); } catch (e) { } } }
 }
 async function bcSend(ch) {
@@ -5124,7 +5245,7 @@ async function bcSend(ch) {
   for (let i = 0; i < list.length && !BC.stop; i += 25) {
     const part = list.slice(i, i + 25); let res = [];
     try {
-      if (demo) { await new Promise(r => setTimeout(r, 250)); res = part.map(l => ({ lead_id: l.leadId, ok: true })); }
+      if (demo) { await new Promise(r => setTimeout(r, 250)); res = part.map(l => ({ lead_id: l.leadId, ok: true })); part.forEach(l => { if (ch === 'whatsapp') S.messages.push({ messageId: 'b' + Date.now() + l.leadId, leadId: l.leadId, phone: l.phone, direction: 'out', type: 'template', text: String(t.body || tplName).replace(/\{\{(\d+)\}\}/g, (m, k) => varVal(BC.vars[k - 1] || {}, l) || m), time: nowStr(), status: 'delivered', broadcastId: b.broadcastId }); }); }
       else if (ch === 'whatsapp') res = (await fnCall('wa-send', { bulk: part.map(l => { const params = Array.from({ length: n }, (_, k) => varVal(BC.vars[k] || {}, l)); return { lead_id: l.leadId, params, preview: String(t.body || tplName).replace(/\{\{(\d+)\}\}/g, (m, k) => params[k - 1] || m) }; }), template: tplName, language: t.language || 'en', broadcast_id: b.broadcastId, by: me() })).results;
       else res = (await fnCall('email', { action: 'send', lead_ids: part.map(l => l.leadId), subject, body, broadcast_name: name, by: me() })).results;
     } catch (e) { BC.run.err = e.message; BC.stop = true; res = part.map(l => ({ lead_id: l.leadId, ok: false })); }
@@ -5134,26 +5255,55 @@ async function bcSend(ch) {
   BC.running = false;
   b = Object.assign(b, { sent: BC.run.sent, failed: BC.run.failed, status: BC.stop && BC.run.done < list.length ? 'Stopped' : BC.run.failed && !BC.run.sent ? 'Failed' : 'Sent' });
   try { await api('saveBroadcast', b); } catch (e) { }
-  toast(`${ch === 'email' ? 'Email' : 'WhatsApp'} broadcast: ${BC.run.sent} sent${BC.run.failed ? `, ${BC.run.failed} failed` : ''}${BC.run.skipped ? `, ${BC.run.skipped} skipped` : ''}`, !BC.run.sent);
+  toast(`${ch === 'email' ? 'Email' : 'WhatsApp'} campaign: ${BC.run.sent} sent${BC.run.failed ? `, ${BC.run.failed} failed` : ''}${BC.run.skipped ? `, ${BC.run.skipped} skipped` : ''}`, !BC.run.sent);
   if (demo) renderAll(); else load(true);
+}
+async function bcTest(ch) {
+  const to = ($('#bcTestTo') || {}).value || ''; BC.testTo = to;
+  if (demo) { BC.tested[ch] = true; renderBroadcast(); return toast('Demo: the test is sent once you connect ' + (ch === 'email' ? 'Brevo' : 'WhatsApp')); }
+  try {
+    if (ch === 'email') { if (!okMail(to)) return toast('Enter an email for the test', true); await fnCall('email', { action: 'test', subject: BC.subject, body: BC.body, to }); toast('Test email sent to ' + to); }
+    else {
+      const d = to.replace(/\D/g, ''); if (d.length < 10) return toast('Enter your WhatsApp number', true);
+      const t = (S.templates || []).find(x => x.templateName === BC.tpl) || {}, l = reach('whatsapp').ok[0] || { name: 'Aarav Mehta', city: 'Mumbai', businessName: 'Brew & Bites' };
+      const params = Array.from({ length: tplVars(t) }, (_, k) => varVal(BC.vars[k] || {}, l));
+      await fnCall('wa-send', { phone: d, template: BC.tpl, language: t.language || 'en', params, preview: '[Test] ' + String(t.body || BC.tpl).replace(/\{\{(\d+)\}\}/g, (m, k) => params[k - 1] || m), by: me() });
+      toast('Test sent to +' + (d.length === 10 ? '91' + d : d));
+    }
+    BC.tested[ch] = true; renderBroadcast();
+  } catch (e) { toast(e.message, true); }
+}
+function bcDuplicate(id, retargetMode) {
+  const b = (S.broadcasts || []).find(x => x.broadcastId === id); if (!b) return;
+  const ch = b.channel || 'whatsapp'; BC.tab = ch; BC.run = null; BC.tested = {}; BC.excluded = new Set();
+  try { const a = JSON.parse(b.audienceFilter || '{}'); BC.aud = Object.assign({ src: 'filters', stages: [], tag: '', source: '', city: '', assigned: '', past: '', pastMode: 'unread', cap: 0 }, a); } catch (e) { }
+  if (retargetMode) BC.aud = Object.assign(BC.aud, { src: 'past', past: id, pastMode: retargetMode });
+  if (ch === 'email') { BC.subject = b.subject || ''; BC.body = b.body || ''; } else { BC.tpl = b.template || ''; BC.vars = []; }
+  BC.name = (retargetMode ? 'Retarget: ' : 'Copy of ') + (b.name || ''); BC.node = retargetMode ? 'aud' : 'msg'; renderBroadcast();
 }
 (function bcEvents() {
   const v = $('#v-broadcast');
   v.addEventListener('click', async e => {
     const t = e.target;
     const tb = t.closest('[data-bctab]'); if (tb) { BC.tab = tb.dataset.bctab; if (!BC.running) BC.run = null; return renderBroadcast(); }
+    const nd = t.closest('[data-bcnode]'); if (nd) { BC.node = nd.dataset.bcnode; return renderBroadcast(); }
+    const src = t.closest('[data-bcsrc]'); if (src) { BC.aud.src = src.dataset.bcsrc; return renderBroadcast(); }
     const st = t.closest('[data-bcstage]'); if (st) { const s = st.dataset.bcstage, a = BC.aud.stages; BC.aud.stages = a.includes(s) ? a.filter(x => x !== s) : a.concat(s); return renderBroadcast(); }
+    const sg = t.closest('[data-bcseg]'); if (sg) { const g = segments()[+sg.dataset.bcseg]; if (g) BC.aud = Object.assign({}, BC.aud, g.aud, { src: 'filters' }); return renderBroadcast(); }
+    if (t.closest('[data-bcsave]')) { const nm = prompt('Name this segment', 'Hot leads in Mumbai'); if (!nm) return; const list = segments().filter(g => g.name !== nm).concat([{ name: nm.slice(0, 40), aud: { stages: BC.aud.stages, tag: BC.aud.tag, source: BC.aud.source, city: BC.aud.city, assigned: BC.aud.assigned } }]).slice(-12); const val = JSON.stringify(list); S.settings = Object.assign({}, S.settings, { segmentsJson: val }); try { if (demo) store.set('leadnode.branding', Object.assign({}, store.get('leadnode.branding') || {}, { segmentsJson: val })); else await api('saveSettings', { segmentsJson: val }); toast('Segment saved'); } catch (err) { toast(err.message, true); } return renderBroadcast(); }
     if (t.closest('[data-bclist]')) { BC.showList = !BC.showList; return renderBroadcast(); }
     const ins = t.closest('[data-bcins]'); if (ins) { const ta = $('#bcBody'), at = ta.selectionStart ?? ta.value.length; ta.value = ta.value.slice(0, at) + ins.dataset.bcins + ta.value.slice(ta.selectionEnd ?? at); BC.body = ta.value; return renderBroadcast(); }
     const sd = t.closest('[data-bcsend]'); if (sd) return bcSend(sd.dataset.bcsend);
+    const ts = t.closest('[data-bctest]'); if (ts) return bcTest(ts.dataset.bctest);
+    const rt = t.closest('[data-bcretarget]'); if (rt) return bcDuplicate(rt.dataset.bcretarget, rt.dataset.mode);
+    const dp = t.closest('[data-bcdup]'); if (dp) return bcDuplicate(dp.dataset.bcdup);
     if (t.closest('[data-bcstop]')) { BC.stop = true; return; }
     if (t.closest('[data-bcemanage]')) { BC.emailManage = true; return renderBroadcast(); }
     if (t.closest('[data-bceclose]')) { BC.emailManage = false; return renderBroadcast(); }
-    if (t.closest('[data-bctest]')) { if (demo) return toast('Demo: test emails are sent after you connect Brevo'); try { await fnCall('email', { action: 'test', subject: BC.subject, body: BC.body, to: AUTH.session.user.email }); toast('Test email sent to ' + AUTH.session.user.email); } catch (err) { toast(err.message, true); } return; }
     if (t.closest('[data-bcedisc]')) { if (!confirm('Disconnect the email sender?')) return; try { await fnCall('email', { action: 'disconnect' }); BC.email = null; BC.emailManage = false; renderBroadcast(); } catch (err) { toast(err.message, true); } return; }
     const cn = t.closest('[data-bceconnect]'); if (cn) {
       const key = $('#emKey').value.trim(), from = $('#emFrom').value.trim(), name = $('#emName').value.trim();
-      if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(from)) return toast('Enter the sender email', true);
+      if (!okMail(from)) return toast('Enter the sender email', true);
       if (!/^xkeysib-[A-Za-z0-9-]{20,}$/.test(key)) return toast('Paste the Brevo API key — it starts with xkeysib-', true);
       cn.disabled = true; cn.textContent = 'Checking with Brevo…';
       try { const r = await fnCall('email', { action: 'connect', api_key: key, from_email: from, from_name: name }); BC.email = null; BC.emailManage = false; toast(`✓ Email connected — sending as ${r.from_email}`); renderBroadcast(); }
@@ -5163,14 +5313,116 @@ async function bcSend(ch) {
   v.addEventListener('change', e => {
     const t = e.target, a = t.closest('[data-bcaud]'); if (a) { BC.aud[a.dataset.bcaud] = t.value; return renderBroadcast(); }
     const x = t.closest('[data-bcx]'); if (x) { if (t.checked) BC.excluded.delete(x.dataset.bcx); else BC.excluded.add(x.dataset.bcx); return renderBroadcast(); }
-    if (t.id === 'bcTpl') { BC.tpl = t.value; BC.vars = []; return renderBroadcast(); }
+    if (t.id === 'bcTpl') { BC.tpl = t.value; BC.vars = []; BC.tested.whatsapp = false; return renderBroadcast(); }
     const vr = t.closest('[data-bcvar]'); if (vr) { BC.vars[+vr.dataset.bcvar].src = t.value; return renderBroadcast(); }
   });
   let tm; v.addEventListener('input', e => {
     const t = e.target;
-    if (t.id === 'bcName') BC.name = t.value; else if (t.id === 'bcSubj') BC.subject = t.value; else if (t.id === 'bcBody') BC.body = t.value;
+    if (t.id === 'bcName') { BC.name = t.value; return; } else if (t.id === 'bcSubj') BC.subject = t.value; else if (t.id === 'bcBody') BC.body = t.value; else if (t.id === 'bcTestTo') { BC.testTo = t.value; return; }
     else { const vt = t.closest('[data-bcvtext]'); if (vt) BC.vars[+vt.dataset.bcvtext].text = t.value; else return; }
     clearTimeout(tm); tm = setTimeout(() => renderBroadcast(), 400);
+  });
+})();
+
+/* ================= WhatsApp templates (premium list + editor + Meta sync) ================= */
+const TPL = { q: '', status: '', edit: null };
+const TPL_STATUS = { Approved: 'ok', Pending: 'wait', Rejected: 'bad', Paused: 'wait', Disabled: 'bad' };
+const tplBody = s => esc(String(s || '')).replace(/\{\{(\d+)\}\}/g, '<mark>{{$1}}</mark>').replace(/\*([^*\n]+)\*/g, '<b>$1</b>').replace(/_([^_\n]+)_/g, '<i>$1</i>').replace(/\n/g, '<br>');
+function tplCard(t, i) {
+  const st = t.metaStatus || 'Draft', cls = TPL_STATUS[st] || 'draft', btns = String(t.buttons || '').split('|').map(b => b.trim()).filter(Boolean);
+  return `<div class="tp glass" style="--i:${i}"><div class="tp-h"><code>${esc(t.templateName)}</code><span class="tp-st ${cls}"><i></i>${esc(st)}</span></div>
+    <div class="tp-meta"><span>${esc(t.category || 'Marketing')}</span><span>${esc(t.language || 'en')}</span>${tplVars(t) ? `<span>${tplVars(t)} variable${tplVars(t) > 1 ? 's' : ''}</span>` : ''}${t.quality ? `<span>Quality: ${esc(t.quality)}</span>` : ''}</div>
+    <div class="tp-phone"><div class="bub in tpl">${t.header ? `<b class="hd">${esc(t.header)}</b>` : ''}<span>${tplBody(t.body)}</span>${t.footer ? `<em class="ft">${esc(t.footer)}</em>` : ''}</div>${btns.map(b => `<div class="wa-qb">${esc(b)}</div>`).join('')}</div>
+    ${t.rejectReason ? `<p class="bc-warn">Rejected: ${esc(t.rejectReason)}</p>` : ''}
+    <div class="tp-act"><button class="btn sm primary" data-tpuse="${esc(t.templateName)}" ${st === 'Approved' ? '' : 'title="Works only after Meta approves it"'}>Use in broadcast</button><button class="btn sm" data-tpdup="${esc(t.templateName)}">Duplicate</button><button class="ibtn" data-tpdel="${esc(t.templateName)}" title="Delete">${I.trash}</button></div></div>`;
+}
+function renderTemplates() {
+  if (!$('#tplgrid')) return;
+  const all = (S.templates || []).filter(t => t.templateName), q = TPL.q.toLowerCase();
+  const count = s => all.filter(t => (t.metaStatus || 'Draft') === s).length;
+  $('#tplBar').innerHTML = `<div class="tp-chips">${[['', 'All', all.length], ['Approved', 'Approved', count('Approved')], ['Pending', 'Pending', count('Pending')], ['Rejected', 'Rejected', count('Rejected')], ['Draft', 'Drafts', all.filter(t => !t.metaStatus || /draft|not submitted/i.test(t.metaStatus)).length]].map(([k, n, c]) => `<button class="chip ${TPL.status === k ? 'on' : ''}" data-tpst="${k}">${n} <span class="n">${c}</span></button>`).join('')}</div>
+    <label class="search tp-q"><svg class="i" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="tpQ" type="search" name="q-tpl" autocomplete="off" placeholder="Search templates" value="${esc(TPL.q)}"></label>`;
+  const list = all.filter(t => (!q || [t.templateName, t.body, t.category].some(v => String(v || '').toLowerCase().includes(q))) && (!TPL.status || (TPL.status === 'Draft' ? (!t.metaStatus || /draft|not submitted/i.test(t.metaStatus)) : t.metaStatus === TPL.status)));
+  $('#tplgrid').innerHTML = list.map(tplCard).join('') || `<div class="tp-empty glass"><b>${all.length ? 'No templates match.' : 'No templates yet'}</b><p class="muted">${all.length ? 'Try another filter.' : 'Create one here and submit it to Meta, or press “Sync from WhatsApp” to bring in templates you already made in WhatsApp Manager.'}</p><button class="btn primary" data-tpnew>+ New template</button></div>`;
+  stagger($('#tplgrid'), true);
+}
+function openTplEditor(base) {
+  const t = Object.assign({ templateName: '', category: 'Marketing', language: 'en', header: '', body: 'Hi {{1}}, ', footer: '', buttons: '' }, base || {});
+  TPL.edit = { name: t.templateName, category: /utility/i.test(t.category) ? 'UTILITY' : 'MARKETING', language: t.language || 'en', header: t.header && !/^\[/.test(t.header) ? t.header : '', body: t.body, footer: t.footer || '', buttons: String(t.buttons || '').split('|').map(x => x.trim()).filter(Boolean).map(x => /^🔗/.test(x) ? { type: 'URL', text: x.replace(/^🔗\s*/, ''), url: 'https://' } : /^📞/.test(x) ? { type: 'PHONE_NUMBER', text: x.replace(/^📞\s*/, ''), phone: '' } : { type: 'QUICK_REPLY', text: x }), examples: [] };
+  drawTplEditor(); showModal('#leadModal');
+}
+function drawTplEditor() {
+  const e = TPL.edit, n = (e.body.match(/\{\{\d+\}\}/g) || []).length, LANGS = [['en', 'English'], ['en_US', 'English (US)'], ['hi', 'Hindi'], ['mr', 'Marathi'], ['gu', 'Gujarati'], ['ta', 'Tamil'], ['te', 'Telugu'], ['bn', 'Bengali'], ['kn', 'Kannada'], ['ml', 'Malayalam'], ['pa', 'Punjabi']];
+  const canMeta = cloud && !(WA.status && WA.status.connected === false && !WA.status.error);   // the server double-checks
+  $('#leadBox').innerHTML = `<div class="m-head"><h2>${e.name ? 'Template' : 'New template'}</h2><button class="ibtn" data-close>${I.x}</button></div>
+    <div class="tpe"><div class="tpe-f">
+      <div class="form" style="grid-template-columns:1fr 1fr"><div class="field full"><label>Name <span class="muted">— lowercase, numbers and _ only</span></label><input class="input" id="teName" value="${esc(e.name)}" placeholder="diwali_offer_2026"></div>
+      <div class="field"><label>Category</label><select class="input" id="teCat"><option value="MARKETING" ${e.category === 'MARKETING' ? 'selected' : ''}>Marketing — offers, news</option><option value="UTILITY" ${e.category === 'UTILITY' ? 'selected' : ''}>Utility — orders, reminders</option></select></div>
+      <div class="field"><label>Language</label><select class="input" id="teLang">${LANGS.map(([k, n2]) => `<option value="${k}" ${e.language === k ? 'selected' : ''}>${n2}</option>`).join('')}</select></div>
+      <div class="field full"><label>Header <span class="muted">(optional, 60 characters)</span></label><input class="input" id="teHead" maxlength="60" value="${esc(e.header)}" placeholder="🎉 Diwali Sale"></div>
+      <div class="field full"><label>Body <span class="muted">— *bold*, _italic_, {{1}} for each personal value</span><button class="btn sm" type="button" data-teaddvar style="float:right">+ Variable</button></label><textarea class="input" id="teBody" rows="6" maxlength="1024">${esc(e.body)}</textarea></div>
+      ${n ? `<div class="field full"><label>Sample values <span class="muted">(Meta needs examples to approve)</span></label><div class="bc-vars">${Array.from({ length: n }, (_, i) => `<div class="bc-var"><span class="pill stage">{{${i + 1}}}</span><input class="input sm" data-teex="${i}" value="${esc(e.examples[i] || '')}" placeholder="${['Aarav', 'Diwali Sale', '20%', 'Mumbai'][i] || 'sample'}"></div>`).join('')}</div></div>` : ''}
+      <div class="field full"><label>Footer <span class="muted">(optional)</span></label><input class="input" id="teFoot" maxlength="60" value="${esc(e.footer)}" placeholder="Reply STOP to unsubscribe"></div>
+      <div class="field full"><label>Buttons <span class="muted">(optional, up to 3)</span></label><div class="te-btns">${e.buttons.map((b, i) => `<div class="te-b"><select class="input sm" data-tebt="${i}"><option value="QUICK_REPLY" ${b.type === 'QUICK_REPLY' ? 'selected' : ''}>Quick reply</option><option value="URL" ${b.type === 'URL' ? 'selected' : ''}>Website</option><option value="PHONE_NUMBER" ${b.type === 'PHONE_NUMBER' ? 'selected' : ''}>Call</option></select><input class="input sm" data-tebx="${i}" maxlength="25" value="${esc(b.text)}" placeholder="Button text">${b.type === 'URL' ? `<input class="input sm" data-tebu="${i}" value="${esc(b.url || '')}" placeholder="https://…">` : b.type === 'PHONE_NUMBER' ? `<input class="input sm" data-tebp="${i}" value="${esc(b.phone || '')}" placeholder="+91…">` : ''}<button class="ibtn" type="button" data-tebdel="${i}">${I.x}</button></div>`).join('')}${e.buttons.length < 3 ? '<button class="btn sm" type="button" data-teaddbtn>+ Add button</button>' : ''}</div></div></div></div>
+      <div class="tpe-p"><div class="bc-rh">Preview</div><div class="wa-phone"><div class="wa-top">${avatar(brand().brandName)}<div><b>${esc(brand().brandName)}</b><small>Business account</small></div></div><div class="wa-chat"><div class="bub in tpl">${e.header ? `<b class="hd">${esc(e.header)}</b>` : ''}<span>${tplBody(e.body.replace(/\{\{(\d+)\}\}/g, (m, k) => e.examples[k - 1] ? e.examples[k - 1] : m))}</span>${e.footer ? `<em class="ft">${esc(e.footer)}</em>` : ''}<small>${nowStr().slice(11)}</small></div>${e.buttons.filter(b => b.text).map(b => `<div class="wa-qb">${b.type === 'URL' ? '🔗 ' : b.type === 'PHONE_NUMBER' ? '📞 ' : ''}${esc(b.text)}</div>`).join('')}</div></div>
+      <ul class="bc-rules" style="margin-top:12px"><li>Meta usually reviews in minutes, sometimes up to 24 hours.</li><li>Marketing templates need a clear offer; don't start or end the body with a variable.</li></ul></div></div>
+    <div class="m-foot"><button class="btn" data-close>Cancel</button><div class="grow"></div><button class="btn" data-tesave>Save as draft</button><button class="btn primary" data-tesubmit ${canMeta ? '' : `disabled title="${demo ? 'Demo mode' : 'Connect WhatsApp first'}"`}>Submit to Meta for approval</button></div>`;
+}
+function readTplEditor() {
+  const e = TPL.edit; e.name = $('#teName').value.toLowerCase().replace(/[^a-z0-9_]+/g, '_').replace(/^_+/, '').slice(0, 512); e.category = $('#teCat').value; e.language = $('#teLang').value;
+  e.header = $('#teHead').value; e.body = $('#teBody').value; e.footer = $('#teFoot').value; return e;
+}
+(function tplEvents() {
+  const v = $('#v-templates');
+  v.addEventListener('click', async ev => {
+    const t = ev.target;
+    const sc = t.closest('[data-tpst]'); if (sc) { TPL.status = sc.dataset.tpst; return renderTemplates(); }
+    if (t.closest('[data-tpnew]') || t.id === 'tpNew') return openTplEditor(null);
+    const us = t.closest('[data-tpuse]'); if (us) { BC.tab = 'whatsapp'; BC.tpl = us.dataset.tpuse; BC.vars = []; BC.node = 'msg'; go('broadcast'); return; }
+    const du = t.closest('[data-tpdup]'); if (du) { const x = (S.templates || []).find(y => y.templateName === du.dataset.tpdup); return openTplEditor(Object.assign({}, x, { templateName: x.templateName + '_copy' })); }
+    const dl = t.closest('[data-tpdel]'); if (dl) {
+      const name = dl.dataset.tpdel, x = (S.templates || []).find(y => y.templateName === name) || {}, onMeta = x.metaId || /approved|pending|rejected|paused/i.test(x.metaStatus || '');
+      if (!confirm(onMeta ? `Delete “${name}” from Meta too? Campaigns can't use it after this.` : `Delete the draft “${name}”?`)) return;
+      try { if (cloud && onMeta) await fnCall('wa-templates', { action: 'delete', name }); else if (cloud) await sbq(AUTH.client.from('templates').delete().eq('workspace_id', AUTH.ws).eq('template_name', name)); else S.templates = S.templates.filter(y => y.templateName !== name); toast('Template deleted'); if (cloud) load(true); else renderTemplates(); } catch (err) { toast(err.message, true); }
+      return;
+    }
+    if (t.id === 'tpSync' || t.closest('#tpSync')) {
+      if (demo) return toast('Demo: connect WhatsApp to sync your real templates');
+      const b = $('#tpSync'); b.disabled = true; b.textContent = 'Syncing…';
+      try { const r = await fnCall('wa-templates', { action: 'sync' }); toast(`✓ ${r.count} templates synced from WhatsApp · ${r.approved} approved`); await load(true); } catch (err) { toast(err.message, true); }
+      finally { b.disabled = false; b.innerHTML = '⟳ Sync from WhatsApp'; }
+    }
+  });
+  v.addEventListener('input', ev => { if (ev.target.id === 'tpQ') { TPL.q = ev.target.value; const pos = ev.target.selectionStart; renderTemplates(); const q = $('#tpQ'); q.focus(); try { q.setSelectionRange(pos, pos); } catch (e) { } } });
+  // editor lives in the shared lead modal
+  const box = $('#leadBox');
+  box.addEventListener('input', ev => {
+    if (!TPL.edit || !box.querySelector('.tpe')) return; const t = ev.target, e = TPL.edit;
+    const ex = t.closest('[data-teex]'); if (ex) e.examples[+ex.dataset.teex] = t.value;
+    const bx = t.closest('[data-tebx]'); if (bx) e.buttons[+bx.dataset.tebx].text = t.value;
+    const bu = t.closest('[data-tebu]'); if (bu) e.buttons[+bu.dataset.tebu].url = t.value;
+    const bp = t.closest('[data-tebp]'); if (bp) e.buttons[+bp.dataset.tebp].phone = t.value;
+    readTplEditor(); clearTimeout(TPL.tm); TPL.tm = setTimeout(() => { const a = document.activeElement, sel = a && (a.id ? '#' + a.id : ['teex', 'tebx', 'tebu', 'tebp'].map(k => a.dataset[k] != null ? `[data-${k}="${a.dataset[k]}"]` : '').join('')), p = a && a.selectionStart; drawTplEditor(); const n = sel && $('#leadBox ' + sel); if (n) { n.focus(); try { n.setSelectionRange(p, p); } catch (er) { } } }, 300);
+  });
+  box.addEventListener('change', ev => { if (!TPL.edit || !box.querySelector('.tpe')) return; const bt = ev.target.closest('[data-tebt]'); if (bt) { TPL.edit.buttons[+bt.dataset.tebt].type = ev.target.value; readTplEditor(); drawTplEditor(); } else if (/^te(Cat|Lang)$/.test(ev.target.id)) readTplEditor(); });
+  box.addEventListener('click', async ev => {
+    if (!TPL.edit || !box.querySelector('.tpe')) return; const t = ev.target, e = TPL.edit;
+    if (t.closest('[data-teaddvar]')) { readTplEditor(); const n = (e.body.match(/\{\{\d+\}\}/g) || []).length; e.body = e.body.replace(/\s*$/, '') + ` {{${n + 1}}}`; return drawTplEditor(); }
+    if (t.closest('[data-teaddbtn]')) { readTplEditor(); e.buttons.push({ type: 'QUICK_REPLY', text: '' }); return drawTplEditor(); }
+    const bd = t.closest('[data-tebdel]'); if (bd) { readTplEditor(); e.buttons.splice(+bd.dataset.tebdel, 1); return drawTplEditor(); }
+    const submit = t.closest('[data-tesubmit]'), save = t.closest('[data-tesave]'); if (!submit && !save) return;
+    readTplEditor();
+    if (!e.name) return toast('Give the template a name', true);
+    if (!e.body.trim()) return toast('Write the message body', true);
+    if (/^\s*\{\{|\}\}\s*$/.test(e.body.trim())) return toast("Meta rejects a body that starts or ends with a variable — add a few words around it", true);
+    const row = { templateName: e.name, category: e.category === 'UTILITY' ? 'Utility' : 'Marketing', language: e.language, header: e.header, body: e.body, footer: e.footer, buttons: e.buttons.filter(b => b.text).map(b => (b.type === 'URL' ? '🔗 ' : b.type === 'PHONE_NUMBER' ? '📞 ' : '') + b.text).join(' | '), metaStatus: 'Draft' };
+    const b = submit || save; b.disabled = true;
+    try {
+      if (submit) { const r = await fnCall('wa-templates', { action: 'create', name: e.name, category: e.category, language: e.language, header: e.header, body: e.body, footer: e.footer, buttons: e.buttons, examples: e.examples }); toast(`✓ Sent to Meta — status: ${r.status}`); }
+      else if (demo) { S.templates = (S.templates || []).filter(x => x.templateName !== row.templateName).concat(row); toast('Draft saved'); }
+      else { await api('saveTemplate', cloud ? row : Object.assign({}, row, { footer: undefined })); toast('Draft saved'); }
+      hideModal('#leadModal'); TPL.edit = null; if (demo) renderTemplates(); else load(true);
+    } catch (err) { toast(err.message, true); b.disabled = false; }
   });
 })();
 
@@ -5371,17 +5623,6 @@ function renderReports(anim) {
 }
 
 /* ================= templates ================= */
-function renderTemplates() {
-  const cls = s => ({ Approved: 'appr', Pending: 'pend', Rejected: 'rej' }[s] || 'lost');
-  $('#tplgrid').innerHTML = (S.templates || []).map(t => {
-    const btns = String(t.buttons || '').split('|').map(b => b.trim()).filter(Boolean);
-    return `<div class="tpl glass"><div class="r1"><code>${esc(t.templateName)}</code><span class="pill stage">${esc(t.category || '-')}</span><span class="pill ${cls(t.metaStatus)}">${esc(t.metaStatus || 'Not submitted')}</span></div>
-      <div class="chatbg"><div class="bubble">${t.header ? `<div class="hdr">${esc(t.header)}</div>` : ''}${esc(t.body || '')}</div>
-      ${btns.length ? `<div class="qbtns">${btns.map(b => `<span>${esc(b)}</span>`).join('')}</div>` : ''}</div>
-      <span class="muted" style="font-size:12px">Language: ${esc(t.language || '-')}</span></div>`;
-  }).join('') || '<div class="empty glass" style="grid-column:1/-1">No templates yet.</div>';
-}
-
 /* ================= tooltip ================= */
 (function () {
   const tip = $('#tip');
@@ -5414,6 +5655,7 @@ function go(name) {
   if (name === 'team') { renderTeam(true); renderLogins(); }
   if (name === 'whatsapp') renderInbox();
   if (name === 'broadcast') renderBroadcast();
+  if (name === 'templates') renderTemplates();
   if (name === 'scripts') renderScripts();
   if (name === 'ads') renderAds(true);
   if (name === 'n8n') renderN8n(true);
