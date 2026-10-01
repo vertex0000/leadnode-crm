@@ -286,6 +286,20 @@ textarea.input{min-height:84px;resize:vertical}
 .scr-ed{padding:16px;display:flex;flex-direction:column;gap:12px;min-width:0}
 .scr-ed .top{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .scr-ed .top h3{margin:0;font-size:17px;flex:1;min-width:0}
+.badge.js{color:#B7861A;background:var(--yellow-soft)}
+:root[data-theme="dark"] .badge.js{color:var(--yellow)}
+.scr-meta{grid-template-columns:2fr 1fr}
+.sbx-note{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:var(--r-panel);background:var(--green-soft);border:1px solid color-mix(in srgb,var(--green) 30%,transparent);font-size:12.5px;line-height:1.5;color:var(--text)}
+.sbx-note svg{flex:none;color:var(--green);width:18px;height:18px;margin-top:1px}
+.run-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:12px}
+.run-out{margin-top:12px;padding:12px;border-radius:var(--r-panel);border:1px solid var(--line-2);background:var(--glass)}
+.run-sum{font-size:13.5px}
+.run-err{color:var(--coral);font-weight:600;font-size:13px}
+.run-log{margin:10px 0 0;padding:10px;border-radius:8px;background:var(--glass-3);border:1px solid var(--line);font:12px/1.5 ui-monospace,Menlo,Consolas,monospace;max-height:180px;overflow:auto;white-space:pre-wrap}
+.run-tbl{margin-top:10px;max-height:300px;overflow:auto;border:1px solid var(--line);border-radius:8px}
+.run-tbl .tbl{min-width:0}
+.run-bad{margin-top:10px;font-size:12.5px;color:var(--muted)}.run-bad summary{cursor:pointer;font-weight:600;color:var(--coral)}
+@media (max-width:820px){.scr-meta{grid-template-columns:1fr}}
 textarea.input.code{min-height:320px}
 .code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13px;line-height:1.55;min-height:320px;resize:vertical;tab-size:2;white-space:pre;overflow:auto}
 .scr-prev{display:flex;align-items:center;overflow-x:auto;padding:16px 12px;background:var(--glass);border:1px dashed var(--line-2);border-radius:var(--r-panel);min-height:78px}
@@ -299,6 +313,78 @@ textarea.input.code{min-height:320px}
   .col.born{animation:nodeIn .55s cubic-bezier(.2,.7,.2,1) both}
   .col.born .col-head{animation:flashIn 1.2s ease-out .2s}
   .pal .pb details[open]>.ni{animation:cardIn .3s both}
+}
+
+/* ---------- performance marketing ---------- */
+.subnav{display:flex;gap:4px;overflow-x:auto;padding:4px;margin:0 0 16px;border-radius:var(--r-panel);background:var(--glass);border:1px solid var(--stroke);scrollbar-width:none}
+.subnav::-webkit-scrollbar{display:none}
+.subnav .tab{flex:none}
+.adhead-r{display:flex;gap:8px;align-items:center}
+.adstats{grid-template-columns:repeat(6,minmax(0,1fr));margin-bottom:14px}
+.adstats .stat b{font-size:19px}
+.adfunnel{padding:16px 18px;margin-bottom:14px}
+.sec-t{font-weight:700;font-size:14px}
+.fsteps{display:flex;align-items:center;margin-top:12px;overflow-x:auto;padding-bottom:2px}
+.fstep{flex:1;min-width:96px;padding:10px 12px;border-radius:10px;background:var(--glass-3);border:1px solid var(--line-2)}
+.fstep small{display:block;font-size:11.5px;color:var(--muted)}.fstep b{font-size:20px;letter-spacing:-.02em}
+.fstep.crm{border-color:color-mix(in srgb,var(--green) 45%,transparent)}
+.fconv{flex:none;min-width:58px;padding:0 6px;font-size:11.5px;font-weight:700;color:var(--blue-2);text-align:center}
+.fconv::before{content:"";display:block;border-top:1.5px solid var(--blue);margin-bottom:4px}
+.dchart{display:grid;grid-template-columns:repeat(var(--n),minmax(0,1fr));gap:2px;align-items:end;height:170px}
+.dcol{height:100%;display:flex;align-items:flex-end}
+.dbar{width:100%;background:var(--blue-2);border-radius:4px 4px 0 0;transform-origin:bottom}
+.dcol:hover .dbar{background:var(--blue)}
+.daxis{display:flex;justify-content:space-between;font-size:11.5px;color:var(--muted);margin-top:6px}
+.tblwrap{overflow:auto}
+.tblcard{padding:0;overflow:hidden}
+.insights{display:flex;flex-direction:column;gap:10px}
+.ins{display:flex;gap:10px;padding:10px 12px;border-radius:10px;background:var(--glass-3);border:1px solid var(--line)}
+.ins .ii{flex:none;width:24px;height:24px;border-radius:7px;display:grid;place-items:center;font-size:12px;font-weight:800}
+.ins.good .ii{background:var(--green-soft);color:var(--green)}.ins.warn .ii{background:var(--yellow-soft);color:#B7861A}.ins.bad .ii{background:var(--coral-soft);color:var(--coral)}
+.ins b{font-size:13px}.ins p{margin:2px 0 0;font-size:12.5px;color:var(--muted);line-height:1.45}
+.adfilter{margin-bottom:12px}
+.adgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.adcard{overflow:hidden;display:flex;flex-direction:column}
+.creative{height:140px;position:relative;display:flex;align-items:flex-end;padding:12px;color:#fff;background:linear-gradient(135deg,hsl(var(--h) 55% 45%),hsl(calc(var(--h) + 50) 50% 28%))}
+.creative.big{height:180px}
+.creative b{font-size:15px;line-height:1.25;text-shadow:0 1px 6px rgba(0,0,0,.35)}
+.creative .fmt{position:absolute;top:10px;left:10px;font-size:11px;font-weight:700;background:rgba(0,0,0,.35);padding:2px 8px;border-radius:5px}
+.adin{padding:12px 14px;display:flex;flex-direction:column;gap:8px}
+.adin .r1{display:flex;align-items:center;gap:8px;justify-content:space-between}.adin .r1 b{font-size:14px}.adin p{margin:0;font-size:12px}
+.admet{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+.admet div{background:var(--glass);border:1px solid var(--line);border-radius:8px;padding:6px 8px;min-width:0}
+.admet small{display:block;font-size:10.5px;color:var(--muted)}.admet b{font-size:13px;white-space:nowrap}
+.adcta{padding:16px 18px;margin-bottom:14px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;justify-content:space-between}
+.adcta h3{margin:0 0 4px;font-size:15px}.adcta p{margin:0;font-size:12.5px;max-width:640px;line-height:1.5}
+.adcta-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.crgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
+.crcard{overflow:hidden}
+.crin{padding:10px 12px;display:flex;flex-direction:column;gap:3px}.crin b{font-size:13px}.crin span{font-size:12px}
+.formlist{display:flex;flex-direction:column;gap:12px}
+.fmcard{padding:16px 18px}
+.fmhead{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.fmhead p{margin:3px 0 0;font-size:12.5px}
+.fmmap{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:12px}
+.fwrap{overflow:auto;padding:16px;background-image:radial-gradient(var(--grid-dot) 1.2px,transparent 1.3px);background-size:22px 22px}
+.fworld{position:relative}
+.fhead{position:absolute;top:0;font-size:11.5px;font-weight:700;color:var(--faint);text-transform:uppercase;letter-spacing:.05em}
+.fwires{position:absolute;left:0;top:0;pointer-events:none;overflow:visible}
+.wire.off .ln{stroke:var(--line-2);stroke-dasharray:5 5}
+.fnode{position:absolute;background:var(--glass-3);border:1px solid var(--line-2);border-radius:var(--r-panel);padding:10px 16px;display:flex;flex-direction:column;justify-content:center;gap:3px;box-shadow:0 4px 14px rgba(30,40,70,.06)}
+.fnode b{font-size:13.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.fnode small{font-size:12px;color:var(--muted)}
+.fnode.dim{opacity:.55}
+.fnode.crm{border-color:color-mix(in srgb,var(--blue-2) 55%,transparent)}
+.fnode.won{border-color:color-mix(in srgb,var(--green) 60%,transparent)}.fnode.won b{color:var(--green)}
+.fnode .port{cursor:default}
+.cstep{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid var(--line)}.cstep:last-child{border-bottom:0}
+.cstep .cn{flex:none;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:800;background:var(--line);color:var(--muted)}
+.cstep.done .cn{background:var(--green-soft);color:var(--green)}
+.cstep b{font-size:13.5px}.cstep p{margin:2px 0 0;font-size:12.5px;line-height:1.45}
+@media (max-width:1300px){.adstats{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:820px){.fmmap{grid-template-columns:1fr}.adhead-r{justify-content:flex-start}}
+@media (max-width:620px){.adstats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (prefers-reduced-motion:no-preference){
+  .stagger .dbar{animation:colIn .7s cubic-bezier(.3,.8,.3,1) both;animation-delay:calc(var(--i,0)*14ms)}
+  .stagger .fnode{animation:nodeIn .5s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(var(--i,0)*45ms)}
 }
 
 /* ---------- side panel ---------- */
@@ -553,6 +639,8 @@ textarea.input.code{min-height:320px}
     <button class="sbtn" data-go="templates"><svg class="i" viewBox="0 0 24 24"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9Z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></svg><span class="lbl">Templates</span></button>
     <button class="sbtn" data-go="automation"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="4" width="6" height="5" rx="1.2"/><rect x="15" y="4" width="6" height="5" rx="1.2"/><rect x="9" y="15" width="6" height="5" rx="1.2"/><path d="M9 6.5h6M6 9v3a3 3 0 0 0 3 3M18 9v3a3 3 0 0 1-3 3"/></svg><span class="lbl">Automation</span></button>
     <button class="sbtn" data-go="scripts"><svg class="i" viewBox="0 0 24 24"><path d="m8 7-5 5 5 5M16 7l5 5-5 5M13.5 4l-3 16"/></svg><span class="lbl">Scripts & Presets</span></button>
+    <div class="sgrp">Marketing</div>
+    <button class="sbtn" data-go="ads"><svg class="i" viewBox="0 0 24 24"><path d="M3 11v2a1 1 0 0 0 1 1h2l5 4V6L6 10H4a1 1 0 0 0-1 1Z"/><path d="M15 8.5a4.5 4.5 0 0 1 0 7M18 5.5a8.5 8.5 0 0 1 0 13"/></svg><span class="lbl">Meta Ads</span></button>
     <div class="sgrp">Insights</div>
     <button class="sbtn" data-go="reports"><svg class="i" viewBox="0 0 24 24"><path d="M3 3v18h18"/><rect x="7" y="12" width="3" height="6" rx=".8"/><rect x="12" y="8" width="3" height="10" rx=".8"/><rect x="17" y="5" width="3" height="13" rx=".8"/></svg><span class="lbl">Reports</span></button>
     <button class="sbtn" data-go="team"><svg class="i" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4.5a3.5 3.5 0 0 1 0 7M18 14a6 6 0 0 1 3.5 6"/></svg><span class="lbl">Team</span></button>
@@ -569,8 +657,9 @@ textarea.input.code{min-height:320px}
         <a href="#pipeline" data-go="pipeline">Pipeline</a>
         <a href="#leads" data-go="leads">Leads</a>
         <a href="#whatsapp" data-go="whatsapp">WhatsApp</a>
-        <a href="#broadcast" data-go="broadcast">Broadcast</a>
-        <a href="#automation" data-go="automation">Automation</a>
+        <a href="#broadcast" data-go="broadcast" class="mob">Broadcast</a>
+        <a href="#automation" data-go="automation" class="mob">Automation</a>
+        <a href="#ads" data-go="ads">Ads</a>
         <a href="#reports" data-go="reports">Reports</a>
         <a href="#team" data-go="team" class="mob">Team</a>
         <a href="#templates" data-go="templates" class="mob">Templates</a>
@@ -585,7 +674,7 @@ textarea.input.code{min-height:320px}
 
     <div class="banner" id="demoBanner" hidden>
       <svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
-      <div class="grow"><b>Demo mode:</b> ye sample data hai. Apni Google Sheet jodne ke liye Settings mein Web App URL aur API key daalo.</div>
+      <div class="grow"><b>Demo mode:</b> you're looking at sample data. To connect your Google Sheet, add the Web App URL and API key in Settings.</div>
       <button class="btn sm primary" id="bannerSettings">Open Settings</button>
     </div>
 
@@ -595,7 +684,7 @@ textarea.input.code{min-height:320px}
         <div>
           <div class="eyebrow">CRM Dashboard</div>
           <h1>Leads Overview</h1>
-          <p class="sub">Leads, follow-ups aur deals ek jagah.</p>
+          <p class="sub">Leads, follow-ups and deals in one place.</p>
         </div>
         <div class="stats" id="stats"></div>
       </div>
@@ -615,8 +704,8 @@ textarea.input.code{min-height:320px}
         <h1>Pipeline</h1>
         <div class="team glass" id="pteam"></div>
         <div class="grow"></div>
-        <button class="btn" id="addNodeBtn" data-tip="Naya stage / preset node (shortcut: Tab)"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="7" width="8" height="10" rx="1.5"/><path d="M11 12h4M18 9v6M15 12h6"/></svg>Node</button>
-        <button class="btn" id="autoBtn" data-tip="Nodes ko wires ke hisaab se set karo"><svg class="i" viewBox="0 0 24 24"><path d="m15 4 1.5 3L20 8.5 16.5 10 15 13l-1.5-3L10 8.5 13.5 7ZM6 13l1 2 2 1-2 1-1 2-1-2-2-1 2-1Z"/></svg>Auto Arrange</button>
+        <button class="btn" id="addNodeBtn" data-tip="New stage / preset node (shortcut: Tab)"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="7" width="8" height="10" rx="1.5"/><path d="M11 12h4M18 9v6M15 12h6"/></svg>Node</button>
+        <button class="btn" id="autoBtn" data-tip="Arrange nodes along their wires"><svg class="i" viewBox="0 0 24 24"><path d="m15 4 1.5 3L20 8.5 16.5 10 15 13l-1.5-3L10 8.5 13.5 7ZM6 13l1 2 2 1-2 1-1 2-1-2-2-1 2-1Z"/></svg>Auto Arrange</button>
         <select class="input" id="pfilter" style="width:auto"></select>
         <button class="btn primary" data-add><svg class="i" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Add Lead</button>
       </div>
@@ -625,8 +714,8 @@ textarea.input.code{min-height:320px}
           <svg class="wires" id="wires"></svg>
           <div id="cols"></div>
         </div>
-        <div class="farhint">Door se sirf count dikh raha hai — zoom in karo to lead cards dikhenge</div>
-        <div class="hint"><span><span class="kbd">Tab</span> / Right-click = node add · Port drag = wire · <span class="kbd">Del</span> = hatao · Scroll = zoom</span>
+        <div class="farhint">Zoomed out: showing counts only. Zoom in to see lead cards.</div>
+        <div class="hint"><span><span class="kbd">Tab</span> / Right-click = node add · Port drag = wire · <span class="kbd">Del</span> = remove · Scroll = zoom</span>
           <span class="lg"><i></i>Flow</span><span class="lg"><i class="w"></i>Lost</span></div>
         <div class="ctrls">
           <div class="minimap" id="minimap"><div class="vp" id="mmvp"></div></div>
@@ -647,14 +736,14 @@ textarea.input.code{min-height:320px}
       <div class="head">
         <div><div class="eyebrow">All Leads</div><h1>Leads</h1><p class="sub" id="leadsCount"></p></div>
         <div class="head-actions">
-          <button class="btn" id="csvImportBtn" data-tip="CSV mein Name aur Phone column zaroori"><svg class="i" viewBox="0 0 24 24"><path d="M12 15V3M7 8l5-5 5 5M4 15v4a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4"/></svg>Import CSV</button>
+          <button class="btn" id="csvImportBtn" data-tip="CSV needs Name and Phone columns"><svg class="i" viewBox="0 0 24 24"><path d="M12 15V3M7 8l5-5 5 5M4 15v4a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4"/></svg>Import CSV</button>
           <button class="btn" id="csvExport"><svg class="i" viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M4 15v4a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4"/></svg>Export CSV</button>
           <button class="btn primary" data-add><svg class="i" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Add Lead</button>
           <input type="file" id="csvFile" accept=".csv,text/csv" hidden>
         </div>
       </div>
       <div class="toolbar glass">
-        <label class="search" style="flex:1"><svg class="i" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="lsearch" placeholder="Naam, phone, business, city…"></label>
+        <label class="search" style="flex:1"><svg class="i" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="lsearch" placeholder="Name, phone, business, city…"></label>
         <select class="input" id="lfStage" style="width:auto"></select>
         <select class="input" id="lfTag" style="width:auto"></select>
         <select class="input" id="lfSource" style="width:auto"></select>
@@ -665,7 +754,7 @@ textarea.input.code{min-height:320px}
     <!-- TEAM -->
     <section class="view" id="v-team">
       <div class="head">
-        <div><div class="eyebrow">Insights</div><h1>Team</h1><p class="sub">Kaun kitni leads sambhal raha hai, aur kitni close hui.</p></div>
+        <div><div class="eyebrow">Insights</div><h1>Team</h1><p class="sub">Who is handling how many leads, and how many closed.</p></div>
         <div class="head-actions"><button class="btn primary" id="addMember"><svg class="i" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Add Member</button></div>
       </div>
       <div class="tgrid" id="tgrid"></div>
@@ -673,34 +762,52 @@ textarea.input.code{min-height:320px}
 
     <!-- REPORTS -->
     <section class="view" id="v-reports">
-      <div class="head"><div><div class="eyebrow">Insights</div><h1>Reports</h1><p class="sub">Tumhare leads aur deals ki poori tasveer.</p></div></div>
+      <div class="head"><div><div class="eyebrow">Insights</div><h1>Reports</h1><p class="sub">The full picture of your leads and deals.</p></div></div>
       <div class="rstats" id="rstats"></div>
       <div class="rgrid" id="rgrid"></div>
     </section>
 
     <!-- TEMPLATES -->
     <section class="view" id="v-templates">
-      <div class="head"><div><div class="eyebrow">WhatsApp</div><h1>Templates</h1><p class="sub">Bulk message sirf Meta se approved templates se jaate hain.</p></div></div>
-      <div class="banner" style="background:var(--blue-soft);border-color:var(--stroke)"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg><div class="grow">Naye templates banana aur Meta se approve karwana <b>Step 7</b> mein yahin se hoga. Abhi Sheet ke Templates tab wale dikh rahe hain.</div></div>
+      <div class="head"><div><div class="eyebrow">WhatsApp</div><h1>Templates</h1><p class="sub">Bulk messages can only use Meta-approved templates.</p></div></div>
+      <div class="banner" style="background:var(--blue-soft);border-color:var(--stroke)"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg><div class="grow">Creating templates and getting them approved by Meta will happen here in <b>Step 7</b>. For now these come from the Templates tab in your Sheet.</div></div>
       <div class="tplgrid" id="tplgrid"></div>
+    </section>
+
+    <!-- PERFORMANCE MARKETING · META ADS -->
+    <section class="view" id="v-ads">
+      <div class="head"><div><div class="eyebrow">Performance Marketing</div><h1>Meta Ads</h1><p class="sub">Facebook & Instagram campaigns, connected to your pipeline.</p></div>
+        <div class="adhead-r"><span class="badge" id="adsMode">Sample data</span><select class="input" id="adsRange" style="width:auto"><option value="7">Last 7 days</option><option value="14">Last 14 days</option><option value="30">Last 30 days</option></select></div></div>
+      <div class="banner" style="background:var(--blue-soft);border-color:var(--stroke)"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg><div class="grow">Showing <b>sample ad data</b>. CRM numbers (leads, won deals, ROAS) are real. Live Meta numbers start once your ad account is connected.</div><button class="btn sm" data-adtab="connect">Connect</button></div>
+      <div class="subnav" id="adsTabs"></div>
+      <div id="adsBody"></div>
     </section>
 
     <!-- SCRIPTS & PRESETS -->
     <section class="view" id="v-scripts">
-      <div class="head"><div><div class="eyebrow">Pipeline</div><h1>Scripts & Presets</h1><p class="sub">Apne node presets banao. Save karte hi ye Pipeline ke <b>+ Node</b> menu mein apne folder mein dikhenge.</p></div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" id="scrFromPipe">Current pipeline se banao</button><button class="btn primary" id="scrNew"><svg class="i" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Naya Preset</button></div></div>
+      <div class="head"><div><div class="eyebrow">Pipeline</div><h1>Scripts & Presets</h1><p class="sub">Node presets for the <b>+ Node</b> menu, and code scripts that run in a locked sandbox.</p></div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" id="scrFromPipe">From current pipeline</button><button class="btn" id="scrNewCode"><svg class="i" viewBox="0 0 24 24"><path d="m8 7-5 5 5 5M16 7l5 5-5 5M13.5 4l-3 16"/></svg>New code script</button><button class="btn primary" id="scrNew"><svg class="i" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>New preset</button></div></div>
       <div class="scr">
         <div class="scr-list glass" id="scrList"></div>
         <div class="scr-ed glass">
-          <div class="top"><h3 id="scrTitle">Naya Preset</h3><span class="badge" id="scrBadge">Draft</span></div>
-          <div class="field"><label>Script (JSON) — name, folder, nodes, wires</label><textarea class="input code" id="scrCode" spellcheck="false" autocomplete="off"></textarea></div>
-          <div class="field"><label>Preview</label><div class="scr-prev" id="scrPrev"></div><div class="scr-msg" id="scrMsg"></div></div>
-          <p class="help"><b>wires</b>: <code>"chain"</code> = upar se neeche line mein jodo · <code>"none"</code> = mat jodo · ya <code>[["A","B"]]</code> jodiyan. Pipeline mein koi node select ho to preset uske <b>baad</b> beech mein jud jaata hai (Nuke jaisa).</p>
+          <div class="top"><h3 id="scrTitle">New Preset</h3><span class="badge" id="scrKind">Preset · JSON</span><span class="badge" id="scrBadge">Draft</span></div>
+          <div class="form scr-meta" id="scrMeta" hidden>
+            <div class="field"><label>Script name</label><input class="input" id="scrName" maxlength="40" placeholder="e.g. Hot leads → follow-up tomorrow"></div>
+            <div class="field"><label>Folder</label><input class="input" id="scrFolder" maxlength="30" placeholder="My Scripts"></div>
+          </div>
+          <div class="field"><label id="scrCodeLbl">Script (JSON) — name, folder, nodes, wires</label><textarea class="input code" id="scrCode" spellcheck="false" autocomplete="off" autocapitalize="off"></textarea></div>
+          <div class="field" id="scrPrevWrap"><label>Preview</label><div class="scr-prev" id="scrPrev"></div><div class="scr-msg" id="scrMsg"></div></div>
+          <div id="scrRunWrap" hidden>
+            <div class="sbx-note"><svg class="i" viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 4.4 3.4 8.3 8 9 4.6-.7 8-4.6 8-9V6Z"/><path d="m9 12 2 2 4-4"/></svg><div><b>Locked sandbox.</b> The script gets a read-only copy of your leads. It has no internet, no storage, no access to this page, and stops after 3 seconds. It can only <i>propose</i> changes — nothing is saved until you review and press <b>Apply</b>.</div></div>
+            <div class="run-row"><label class="muted" for="scrScope" style="font-size:12.5px;font-weight:600">Run on</label><select class="input" id="scrScope" style="width:auto"></select><div class="grow"></div><button class="btn" id="scrRun"><svg class="i" viewBox="0 0 24 24"><path d="M7 5v14l11-7Z"/></svg>Dry run</button></div>
+            <div class="run-out" id="scrOut" hidden></div>
+          </div>
+          <p class="help" id="scrHelp"></p>
           <div class="m-foot" style="margin-top:0;flex-wrap:wrap">
             <button class="btn danger" id="scrDel">Delete</button>
-            <button class="btn ghost" id="scrAi" data-tip="ChatGPT / Gemini ke liye prompt copy karo">AI prompt copy</button>
+            <button class="btn ghost" id="scrAi" data-tip="Copy a prompt for ChatGPT / Gemini">AI prompt copy</button>
             <div class="grow"></div>
-            <button class="btn" id="scrTry">Pipeline mein lagao</button>
+            <button class="btn" id="scrTry">Apply to pipeline</button>
             <button class="btn primary" id="scrSave">Save</button>
           </div>
         </div>
@@ -710,16 +817,16 @@ textarea.input.code{min-height:320px}
     <!-- COMING SOON -->
     <section class="view" id="v-whatsapp"><div class="soon glass">
       <div class="big"><svg class="i" viewBox="0 0 24 24"><path d="M3.5 20.5 5 16a8.5 8.5 0 1 1 3.2 3.2Z"/></svg></div>
-      <h2>WhatsApp Inbox</h2><p class="muted">Ye screen Step 5 aur 6 mein banegi, jab WhatsApp Cloud API jud jayega.</p>
-      <ul><li>Team inbox: saari WhatsApp chats ek jagah</li><li>Har chat ke saath lead ki info aur stage</li><li>Naya message aate hi lead apne aap CRM mein</li></ul></div></section>
+      <h2>WhatsApp Inbox</h2><p class="muted">Coming in Steps 5–6, once the WhatsApp Cloud API webhook is live.</p>
+      <ul><li>Team inbox: every WhatsApp chat in one place</li><li>Lead info and stage next to each chat</li><li>New messages create leads automatically</li></ul></div></section>
     <section class="view" id="v-broadcast"><div class="soon glass">
       <div class="big"><svg class="i" viewBox="0 0 24 24"><path d="m3 11 18-8-8 18-2-8Z"/></svg></div>
-      <h2>Bulk Broadcast</h2><p class="muted">Ye screen Step 7 mein banegi.</p>
-      <ul><li>Audience chuno (stage, city, tag)</li><li>Approved template + phone preview</li><li>Kharche ka andaaza aur Sent / Read report</li></ul></div></section>
+      <h2>Bulk Broadcast</h2><p class="muted">Coming in Step 7.</p>
+      <ul><li>Pick an audience (stage, city, tag)</li><li>Approved template + phone preview</li><li>Cost estimate and Sent / Read report</li></ul></div></section>
     <section class="view" id="v-automation"><div class="soon glass">
       <div class="big"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="4" width="6" height="5" rx="1.2"/><rect x="15" y="4" width="6" height="5" rx="1.2"/><rect x="9" y="15" width="6" height="5" rx="1.2"/><path d="M9 6.5h6M6 9v3a3 3 0 0 0 3 3M18 9v3a3 3 0 0 1-3 3"/></svg></div>
-      <h2>WhatsApp Automation (Node Builder)</h2><p class="muted">Ye screen Step 8 mein banegi, tumhare final design ke hisaab se.</p>
-      <ul><li>n8n jaisa canvas: drag, connect, zoom, minimap</li><li>Nodes: Trigger, Condition, Send Message, AI Reply, Save Lead, Assign</li><li>Phone preview aur Publish Flow</li></ul></div></section>
+      <h2>WhatsApp Automation (Node Builder)</h2><p class="muted">Coming in Step 8.</p>
+      <ul><li>n8n-style canvas: drag, connect, zoom, minimap</li><li>Nodes: Trigger, Condition, Send Message, AI Reply, Save Lead, Assign</li><li>Phone preview and Publish Flow</li></ul></div></section>
   </main>
 </div>
 
@@ -735,9 +842,9 @@ textarea.input.code{min-height:320px}
   <div class="m-head"><h2>Settings</h2><button class="ibtn" data-close><svg class="i" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
   <div class="seg"><button class="segb" data-stab="brand">Branding & Profile</button><button class="segb" data-stab="conn">Connection</button></div>
   <div class="stab" id="stab-brand">
-    <div class="brand-row"><div id="upLogo"></div><div class="field"><label>Website ka naam</label><input class="input" id="bName" maxlength="40" placeholder="LeadNode"></div></div>
-    <div class="brand-row"><div id="upPhoto"></div><div class="field"><label>Tumhara naam (profile)</label><input class="input" id="pName" maxlength="40" placeholder="Shivam"></div></div>
-    <p class="help" id="brandHelp">Logo aur photo gallery se chuno. Ye Google Sheet (Settings tab) aur Drive mein save hote hain, isliye har device pe same dikhenge.</p>
+    <div class="brand-row"><div id="upLogo"></div><div class="field"><label>Website name</label><input class="input" id="bName" maxlength="40" placeholder="LeadNode"></div></div>
+    <div class="brand-row"><div id="upPhoto"></div><div class="field"><label>Your name (profile)</label><input class="input" id="pName" maxlength="40" placeholder="Shivam"></div></div>
+    <p class="help" id="brandHelp">Pick a logo and photo from your gallery. They are saved to your Google Sheet (Settings tab) and Drive, so every device shows the same.</p>
     <div class="m-foot"><div class="grow"></div><button class="btn primary" id="bSave">Save</button></div>
   </div>
   <div class="stab" id="stab-conn" hidden>
@@ -745,7 +852,7 @@ textarea.input.code{min-height:320px}
       <div class="field"><label>Web App URL</label><input class="input" id="sUrl" placeholder="https://script.google.com/macros/s/…/exec"></div>
       <div class="field"><label>API Key</label>
         <div style="display:flex;gap:8px"><input class="input" id="sKey" type="password" placeholder="Apps Script → Project Settings → Script Properties → API_KEY"><button class="btn" id="sShow" type="button">Show</button></div></div>
-      <p class="help">URL aur key sirf isi browser mein save hote hain. Kisi aur ko ye key mat dena.</p>
+      <p class="help">The URL and key are saved only in this browser. Never share this key.</p>
       <div class="status" id="sStatus"></div>
     </div>
     <div class="m-foot">
@@ -793,7 +900,7 @@ const avatar = (name, cls = '', photo) => { const u = safeUrl(photo); return u ?
 const bizTile = (name, photo) => { const u = safeUrl(photo); if (u) return `<div class="biz img" style="background-image:url('${esc(u)}')"></div>`; const h = hue(name); return `<div class="biz" style="background:linear-gradient(135deg,hsl(${h} 55% 62%),hsl(${(h + 40) % 360} 50% 48%))">${esc(initials(name))}</div>`; };
 const waLink = (phone, text = '') => 'https://wa.me/' + String(phone || '').replace(/\D/g, '') + (text ? '?text=' + encodeURIComponent(text) : '');
 const reduceMotion = () => window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
-/** Numbers ko 0 se target tak ginte hue dikhana */
+/** Count numbers up from 0 to the target */
 function countUp(el, to, fmt) { if (reduceMotion() || !el) { if (el) el.textContent = fmt(to); return; } const t0 = performance.now(), d = 900; const f = t => { const p = Math.min(1, (t - t0) / d), e = 1 - Math.pow(1 - p, 3); el.textContent = fmt(to * e); if (p < 1) requestAnimationFrame(f); }; requestAnimationFrame(f); }
 let staggerTimer = {};
 function stagger(el, on) { if (!el) return; clearTimeout(staggerTimer[el.id]); el.classList.toggle('stagger', !!on); if (on) staggerTimer[el.id] = setTimeout(() => el.classList.remove('stagger'), 1800); }
@@ -879,7 +986,7 @@ async function callApi(conf, action, data = {}) {
     res = await fetch(conf.url, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ key: conf.key, action, data }) });
   }
   const text = await res.text();
-  let j; try { j = JSON.parse(text); } catch (e) { throw new Error('Backend se sahi jawab nahi aaya. URL check karo (end mein /exec hona chahiye).'); }
+  let j; try { j = JSON.parse(text); } catch (e) { throw new Error('The backend did not reply correctly. Check the URL (it must end with /exec).'); }
   if (!j.ok) throw new Error(j.error || 'Unknown error');
   return j.data;
 }
@@ -891,7 +998,7 @@ const DEFAULT_COLORS = { 'New Lead': '#8FA3D9', 'Contacted': '#6F8FE8', 'Interes
 const STAGE_COLORS = ['#8FA3D9', '#6F8FE8', '#4FB3D9', '#3CB4A0', '#2FA36B', '#9BC53D', '#F2C94C', '#F29A5C', '#E8707E', '#D77FC4', '#B08CEB', '#9AA0A6'];
 const autoColor = n => DEFAULT_COLORS[n] || STAGE_COLORS[hue(n) % STAGE_COLORS.length];
 const listDefs = () => (S.lists.stages && S.lists.stages.length ? S.lists.stages : DEFAULT_LISTS.stages).map(n => ({ name: String(n), color: autoColor(String(n)) }));
-/** Stages ab pipeline layout (Flows sheet → PIPELINE) mein rehte hain: [{name, color}] */
+/** Stages live in the pipeline layout (Flows sheet → PIPELINE): [{name, color}] */
 const stageDefs = () => (layout && layout.stages && layout.stages.length ? layout.stages : listDefs());
 const stages = () => stageDefs().map(d => d.name);
 const openStages = () => stages().filter(s => s !== 'Won' && s !== 'Lost');
@@ -911,30 +1018,52 @@ function ring(pct, label, val, color) {
 }
 
 /* ================= load ================= */
+function applyData(d) {
+  S = Object.assign({ leads: [], activities: [], team: [], templates: [], flows: [] }, d);
+  S.lists = Object.assign({}, DEFAULT_LISTS, d.lists || {});
+  stageSig = (d.lists && d.lists.stages || []).join('|');
+  S.leads.forEach(l => { l.leadId = String(l.leadId); l.phone = String(l.phone || ''); });
+}
+/** Instant start: show the last saved copy right away, then refresh from the Sheet in the background */
 async function load(silent) {
-  if (!silent) $('#lgrid').innerHTML = '<div class="loader"><div class="spin"></div>Loading…</div>';
-  try {
-    const d = demo ? demoData() : await api('getAll');
-    S = Object.assign({ leads: [], activities: [], team: [], templates: [], flows: [] }, d);
-    S.lists = Object.assign({}, DEFAULT_LISTS, d.lists || {});
-    S.leads.forEach(l => { l.leadId = String(l.leadId); l.phone = String(l.phone || ''); });
-  } catch (e) {
-    toast('Data load nahi hua: ' + e.message, true);
-    if (!silent) $('#lgrid').innerHTML = `<div class="empty glass">Data load nahi hua.<br><small>${esc(e.message)}</small><br><br><button class="btn" onclick="openSettings()">Settings kholo</button></div>`;
+  let cached = false;
+  if (!silent && !demo) { const c = store.get('leadnode.cache'); if (c && c.url === settings.url && c.data) { applyData(c.data); cached = true; layout = loadLayout(false); finishLoad(true); } }
+  if (!silent && !cached) $('#lgrid').innerHTML = '<div class="loader"><div class="spin"></div>Loading…</div>';
+  let d;
+  try { d = demo ? demoData() : await api('getAll'); }
+  catch (e) {
+    if (cached) { toast('Offline — showing your last saved data', true); return; }
+    toast('Could not load data: ' + e.message, true);
+    if (!silent) $('#lgrid').innerHTML = `<div class="empty glass">Could not load data.<br><small>${esc(e.message)}</small><br><br><button class="btn" onclick="openSettings()">Open Settings</button></div>`;
     return;
   }
-  layout = loadLayout(!!silent);
+  applyData(d);
+  if (!demo) store.set('leadnode.cache', { url: settings.url, at: Date.now(), data: d });
+  layout = loadLayout(!!silent || (cached && !!saveTimer));
+  finishLoad(!silent && !cached);
+}
+function finishLoad(anim) {
   $('#demoBanner').hidden = !demo; sizeCanvas();
   if (demo) S.settings = store.get('leadnode.branding') || {};
   applyBranding();
-  renderAll(!silent);
+  renderAll(anim);
 }
-function renderAll(anim) { fillSelects(); renderDashboard(anim); renderPipeline(anim); renderLeads(); renderTeam(); renderReports(); renderTemplates(); if ($('#v-scripts').classList.contains('active')) renderScripts(true); if (ui.openId) renderPanel(ui.openId); $('#bellDot').hidden = !S.leads.some(isDue); }
+/** Render only the screen you're looking at; the others re-render when you open them */
+const VIEW_RENDER = { dashboard: a => renderDashboard(a), pipeline: a => renderPipeline(a), leads: a => renderLeads(a), team: a => renderTeam(a), reports: a => renderReports(a), templates: () => renderTemplates(), scripts: () => renderScripts(true), ads: a => renderAds(a) };
+const staleViews = new Set();
+const activeView = () => { const v = $('.view.active'); return v ? v.id.slice(2) : 'dashboard'; };
+function renderAll(anim) {
+  fillSelects();
+  const cur = activeView();
+  Object.keys(VIEW_RENDER).forEach(k => { if (k === cur) VIEW_RENDER[k](anim); else staleViews.add(k); });
+  if (ui.openId) renderPanel(ui.openId);
+  $('#bellDot').hidden = !S.leads.some(isDue);
+}
 function fillSelects() {
   const opts = ['<option value="">All stages</option>'].concat(stages().map(s => `<option ${ui.stage === s ? 'selected' : ''}>${esc(s)}</option>`)).join('');
   $('#dstage').innerHTML = opts;
   const people = [...new Set(S.team.filter(t => t.active !== false && t.name).map(t => t.name))];
-  $('#pfilter').innerHTML = '<option value="">All team members</option>' + `<option value="__me" ${ui.pfilter === '__me' ? 'selected' : ''}>Sirf mere leads</option>` + people.map(p => `<option ${ui.pfilter === p ? 'selected' : ''}>${esc(p)}</option>`).join('');
+  $('#pfilter').innerHTML = '<option value="">All team members</option>' + `<option value="__me" ${ui.pfilter === '__me' ? 'selected' : ''}>Only my leads</option>` + people.map(p => `<option ${ui.pfilter === p ? 'selected' : ''}>${esc(p)}</option>`).join('');
 }
 
 /* ================= dashboard ================= */
@@ -945,7 +1074,7 @@ function renderDashboard(anim) {
   const wonVal = won.reduce((s, l) => s + (+l.budget || 0), 0), pipeVal = open.reduce((s, l) => s + (+l.budget || 0), 0);
   let si = 0; const stat = (ic, bg, fg, v, lbl, sub) => `<div class="stat glass" style="--i:${si++}"><div class="ic" style="background:${bg};color:${fg}">${ic}</div><div><b data-count>${v}</b><span>${lbl}${sub ? ' · ' + sub : ''}</span></div></div>`;
   $('#stats').innerHTML =
-    stat(I.users, 'var(--blue-soft)', 'var(--blue-2)', L.length, 'Total Leads', weekNew + ' is hafte') +
+    stat(I.users, 'var(--blue-soft)', 'var(--blue-2)', L.length, 'Total Leads', weekNew + ' this week') +
     stat(I.fire, 'var(--coral-soft)', 'var(--coral)', hot.length, 'Hot Leads', due.length + ' follow-up due') +
     stat(I.trophy, 'var(--green-soft)', 'var(--green)', won.length, 'Won Deals', inrShort(wonVal)) +
     stat(I.rupee, 'var(--yellow-soft)', '#B7861A', inrShort(pipeVal), 'Open Pipeline', open.length + ' open');
@@ -960,7 +1089,7 @@ function renderDashboard(anim) {
   if (ui.stage) list = list.filter(l => l.stage === ui.stage);
   list.sort((a, b) => (isDue(b) - isDue(a)) || String(b.createdOn).localeCompare(String(a.createdOn)));
   stagger($('#lgrid'), anim);
-  $('#lgrid').innerHTML = list.length ? list.map((l, i) => leadCard(l, i)).join('') : `<div class="empty glass" style="grid-column:1/-1">Koi lead nahi mili.<br><br><button class="btn primary" data-add>+ Add Lead</button></div>`;
+  $('#lgrid').innerHTML = list.length ? list.map((l, i) => leadCard(l, i)).join('') : `<div class="empty glass" style="grid-column:1/-1">No leads found.<br><br><button class="btn primary" data-add>+ Add Lead</button></div>`;
 }
 function leadCard(l, i = 0) {
   const tc = touchCount(l.leadId), p = progress(l);
@@ -969,7 +1098,7 @@ function leadCard(l, i = 0) {
   const people = [l.assignedTo].filter(Boolean), bp = safeUrl(l.businessPhoto), nm = l.businessName || l.name;
   const cover = bp ? `<div class="cover" style="background-image:url('${esc(bp)}')"></div>` : `<div class="cover ph" style="--h:${hue(nm)}"><span>${esc(initials(nm))}</span></div>`;
   return `<article class="lcard glass" data-open="${esc(l.leadId)}" style="--i:${Math.min(i, 12)}">${cover}
-    <button class="cover-edit" data-edit="${esc(l.leadId)}" title="Edit / photo badlo">${I.edit}</button>
+    <button class="cover-edit" data-edit="${esc(l.leadId)}" title="Edit / change photo">${I.edit}</button>
     <div class="lc-in">
     <div class="lc-top">${bizTile(nm, l.clientPhoto)}<div class="t"><b>${esc(nm)}</b><span>${esc(l.businessType || '-')} · ${I.pin} ${esc(l.city || '-')}</span></div>${tagPill}</div>
     <div class="lc-mid"><div><small>Budget</small><b>${inr(l.budget)}</b></div><span class="pill stage"><span class="sdot" style="background:${stageColor(l.stage)}"></span>${esc(l.stage)}</span></div>
@@ -984,10 +1113,11 @@ function leadCard(l, i = 0) {
 const COL_W = 280, GAP = 120, LEFT = 60, TOP = 50, HEAD_H = 78, PORT_Y = HEAD_H / 2, OFF = 5000;
 const view = { x: 0, y: 0, k: 1, fitted: false };
 let layout = null;               // { pos: {stage: {x, y}}, links: [[from, to], ...] }
+let stageSig = '';
 let selWire = null, animNodes = false, flashId = null, saveTimer = null, selNode = null;
 const bornNodes = new Set();
 const CARD_LIMIT = 5;
-/** Node mein kaunse cards upar: follow-up due → Hot → sabse recent */
+/** Card order in a node: follow-up due → Hot → most recent */
 const byPriority = (a, b) => (isDue(b) - isDue(a)) || ((b.tag === 'Hot' && !isClosed(b)) - (a.tag === 'Hot' && !isClosed(a))) || String(b.lastContact || b.createdOn || '').localeCompare(String(a.lastContact || a.createdOn || ''));
 
 function defaultLayout(st = stages()) {
@@ -997,18 +1127,18 @@ function defaultLayout(st = stages()) {
   if (st.includes('Lost')) links.push([st.includes('Negotiation') ? 'Negotiation' : (main[main.length - 2] || main[0]), 'Lost']);
   return { pos, links, stages: st.map(n => ({ name: n, color: stageColor(n) })) };
 }
-/** Layout Sheet (Flows tab, ID "PIPELINE") se, warna browser se, warna default */
+/** Layout from the Sheet (Flows tab, ID "PIPELINE"), else this browser, else default */
 function loadLayout(keepCurrent) {
   let l = keepCurrent && layout ? layout : null;
   if (!l) { const f = (S.flows || []).find(x => String(x.flowId) === 'PIPELINE'); if (f) { try { l = JSON.parse(f.flowJson); } catch (e) { } } }
   if (!l) l = store.get('leadnode.layout');
   if (!l || typeof l !== 'object') l = {};
-  // stage list: layout mein ho to wahi, warna Lists sheet se
+  // stage list: from the layout, else from the Lists sheet
   let defs = Array.isArray(l.stages) ? l.stages.filter(x => x && x.name).map(x => ({ name: String(x.name), color: /^#[0-9a-f]{6}$/i.test(x.color) ? x.color : autoColor(String(x.name)) })) : [];
   if (!defs.length) defs = listDefs();
   const have = new Set(defs.map(x => x.name));
   LOCKED.forEach(n => { if (!have.has(n)) { defs.push({ name: n, color: autoColor(n) }); have.add(n); } });
-  // Sheet mein kisi lead ka stage list mein nahi hai? use bhi node bana do (lead gayab na ho)
+  // A lead's stage is missing from the list? Add it as a node so the lead never disappears
   [...new Set(S.leads.map(x => x.stage).filter(Boolean))].forEach(n => { if (!have.has(n)) { defs.splice(closedIdx(defs), 0, { name: n, color: autoColor(n) }); have.add(n); } });
   const st = defs.map(x => x.name), d = defaultLayout(st);
   const fresh = !l.pos;
@@ -1023,10 +1153,14 @@ function saveLayout() {
   store.set('leadnode.layout', layout);
   if (demo) return;
   clearTimeout(saveTimer);
-  saveTimer = setTimeout(() => api('saveFlow', { flowId: 'PIPELINE', flowName: 'Pipeline Layout', trigger: 'system', status: 'Active', flowJson: JSON.stringify(layout) })
-    .catch(e => toast('Layout save nahi hua: ' + e.message, true)), 800);
+  saveTimer = setTimeout(() => {
+    api('saveFlow', { flowId: 'PIPELINE', flowName: 'Pipeline Layout', trigger: 'system', status: 'Active', flowJson: JSON.stringify(layout) })
+      .catch(e => toast('Could not save layout: ' + e.message, true));
+    const sig = stages().join('|');   // keep the Sheet's Stage dropdown (Lists tab) in sync
+    if (sig !== stageSig) api('saveStages', { stages: stages() }).then(() => { stageSig = sig; }).catch(() => { });
+  }, 800);
 }
-/** Wire ke hisaab se agla stage (Lost ko chhodke) */
+/** Next stage along the wires (ignoring Lost) */
 function nextStageOf(s) {
   if (s === 'Lost' || s === 'Won') return null;
   const outs = (layout ? layout.links : []).filter(([a, b]) => a === s && b !== 'Lost').map(([, b]) => b);
@@ -1046,12 +1180,12 @@ function renderPipeline(anim) {
     const items = leads.filter(l => l.stage === s).sort(byPriority), p = layout.pos[s];
     const total = items.reduce((a, l) => a + (+l.budget || 0), 0), lost = s === 'Lost';
     const open = ui.expanded.has(s), shown = open ? items : items.slice(0, CARD_LIMIT), extra = items.length - shown.length;
-    const more = extra > 0 ? `<button class="more" data-expand="${esc(s)}">+${extra} aur lead${extra > 1 ? 's' : ''} dekho</button>`
-      : open && items.length > CARD_LIMIT ? `<div class="more-row"><button class="more" data-expand="${esc(s)}">Kam dikhao</button><button class="more" data-stagelist="${esc(s)}">Table mein kholo</button></div>` : '';
+    const more = extra > 0 ? `<button class="more" data-expand="${esc(s)}">Show ${extra} more lead${extra > 1 ? 's' : ''}</button>`
+      : open && items.length > CARD_LIMIT ? `<div class="more-row"><button class="more" data-expand="${esc(s)}">Show less</button><button class="more" data-stagelist="${esc(s)}">Open in table</button></div>` : '';
     return `<div class="col ${shown.length ? '' : 'emptycol'} ${selNode === s ? 'sel' : ''} ${bornNodes.has(s) ? 'born' : ''}" data-stage="${esc(s)}" style="left:${p.x}px;top:${p.y}px;--i:${i}">
-      <div class="col-head" data-node="${esc(s)}" title="Pakad ke node hilao">
-        <span class="port l in ${lost ? 'coral' : ''} ${incoming.has(s) ? 'on' : ''}" data-in="${esc(s)}" title="Input: yahan wire chhodo / kheench ke hatao"></span>
-        <span class="port r out" data-out="${esc(s)}" title="Output: drag karke wire jodo"></span>
+      <div class="col-head" data-node="${esc(s)}" title="Drag to move the node">
+        <span class="port l in ${lost ? 'coral' : ''} ${incoming.has(s) ? 'on' : ''}" data-in="${esc(s)}" title="Input: drop a wire here / drag out to remove"></span>
+        <span class="port r out" data-out="${esc(s)}" title="Output: drag to connect a wire"></span>
         <div class="r1"><span class="sdot" style="background:${stageColor(s)}"></span><span class="nm">${esc(s)}</span><span class="n">${items.length}</span><button class="nmenu" data-nmenu="${esc(s)}" title="Node options">${I.dots || '⋯'}</button></div>
         <div class="r2">${inr(total)}</div></div>
       <div class="col-body">${shown.map(pCard).join('')}${more}
@@ -1089,15 +1223,15 @@ function drawWires(anim) {
 }
 function linkWire(from, to) {
   if (!from || !to || from === to) return false;
-  if (layout.links.some(([a, b]) => a === from && b === to)) { toast('Ye wire pehle se juda hai'); return false; }
-  layout.links.push([from, to]); selWire = null; renderPipeline(); saveLayout(); toast(`Wire joda: ${from} → ${to}`); return true;
+  if (layout.links.some(([a, b]) => a === from && b === to)) { toast('This wire already exists'); return false; }
+  layout.links.push([from, to]); selWire = null; renderPipeline(); saveLayout(); toast(`Wire connected: ${from} → ${to}`); return true;
 }
-function deleteWire(i) { const w = layout.links[i]; if (!w) return; layout.links.splice(i, 1); selWire = null; renderPipeline(); saveLayout(); toast(`Wire hataya: ${w[0]} → ${w[1]}`); }
+function deleteWire(i) { const w = layout.links[i]; if (!w) return; layout.links.splice(i, 1); selWire = null; renderPipeline(); saveLayout(); toast(`Wire removed: ${w[0]} → ${w[1]}`); }
 const colEl = s => $$('.col').find(c => c.dataset.stage === s);
-/** Nodes ko wires ke hisaab se layers mein set karna (left → right), branches upar-neeche */
+/** Arrange nodes in layers along the wires (left → right), branches stacked */
 function autoArrange() {
   const st = stages(), links = layout.links, depth = {};
-  const cvEl = $('#canvas'), wasFar = cvEl.classList.contains('far'); cvEl.classList.remove('far'); // asli height naapne ke liye
+  const cvEl = $('#canvas'), wasFar = cvEl.classList.contains('far'); cvEl.classList.remove('far'); // measure real heights
   st.forEach(s => depth[s] = 0);
   for (let it = 0; it < st.length; it++) { let ch = false; links.forEach(([a, b]) => { if (depth[a] + 1 > depth[b] && depth[a] + 1 < st.length) { depth[b] = depth[a] + 1; ch = true; } }); if (!ch) break; }
   const linked = new Set(links.flat()); let maxD = 0;
@@ -1115,11 +1249,11 @@ function autoArrange() {
     const p = dur ? Math.min(1, (t - t0) / dur) : 1, e = p < .5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
     st.forEach(s => { const a = from[s], b = target[s]; layout.pos[s] = { x: a.x + (b.x - a.x) * e, y: a.y + (b.y - a.y) * e }; const c = colEl(s); if (c) { c.style.left = layout.pos[s].x + 'px'; c.style.top = layout.pos[s].y + 'px'; } });
     drawWires();
-    if (p < 1) requestAnimationFrame(step); else { st.forEach(s => layout.pos[s] = target[s]); sortDefsByPos(); drawWires(); saveLayout(); fit(); toast('Nodes auto arrange ho gaye ✨'); }
+    if (p < 1) requestAnimationFrame(step); else { st.forEach(s => layout.pos[s] = target[s]); sortDefsByPos(); drawWires(); saveLayout(); fit(); toast('Nodes arranged ✨'); }
   };
   requestAnimationFrame(step);
 }
-function resetLayout() { layout = defaultLayout(); selWire = null; renderPipeline(true); saveLayout(); fit(); toast('Layout reset ho gaya'); }
+function resetLayout() { layout = defaultLayout(); selWire = null; renderPipeline(true); saveLayout(); fit(); toast('Layout reset'); }
 
 /* ---- view: zoom / pan / fit / minimap ---- */
 function worldBounds() {
@@ -1142,7 +1276,7 @@ function fit() {
   const k = Math.max(0.25, Math.min(1, cv.clientWidth / b.w, (cv.clientHeight - 50) / b.h));
   animateView(k, (cv.clientWidth - b.w * k) / 2 - b.x1 * k, 10 - b.y1 * k);
 }
-/** Pehli baar: padhne layak zoom (80%), left se shuru */
+/** First view: readable zoom (80%), starting at the left */
 function initialView() {
   sizeCanvas(); const cv = $('#canvas'), b = worldBounds(); if (!cv.clientWidth) return;
   const k = window.innerWidth < 820 ? 0.7 : 0.8;
@@ -1178,7 +1312,7 @@ function drawMinimap() {
     const out = t.closest('.port.out'), inn = t.closest('.port.in'), head = t.closest('.col-head'), wire = t.closest('.wire');
     if (out) { act = { type: 'wire', from: out.dataset.out }; }
     else if (inn) {
-      // Nuke jaisa: input se wire kheencho to wo nikal jaata hai
+      // Like Nuke: dragging from an input detaches the wire
       const idx = layout.links.map(([, b], i) => b === inn.dataset.in ? i : -1).filter(i => i > -1).pop();
       if (idx === undefined) return;
       const [from] = layout.links.splice(idx, 1)[0]; selWire = null; drawWires(); act = { type: 'wire', from, detached: true };
@@ -1219,7 +1353,7 @@ function drawMinimap() {
     }
     if (act && act.type === 'wire') {
       hotPort(null); const target = inPortAt(e.clientX, e.clientY);
-      if (!linkWire(act.from, target)) { if (act.detached) { renderPipeline(); saveLayout(); toast('Wire hataya'); } else drawWires(); }
+      if (!linkWire(act.from, target)) { if (act.detached) { renderPipeline(); saveLayout(); toast('Wire removed'); } else drawWires(); }
     }
     act = null;
   };
@@ -1239,7 +1373,7 @@ function drawMinimap() {
   $('#zFit').onclick = fit;
   $('#zAuto').onclick = autoArrange; $('#autoBtn').onclick = autoArrange;
   $('#addNodeBtn').onclick = e => { e.stopPropagation(); const r = e.currentTarget.getBoundingClientRect(); openPalette(r.left, r.bottom + 6); };
-  $('#zReset').onclick = () => { if (confirm('Nodes aur wires default layout pe wapas le jaayein?')) resetLayout(); };
+  $('#zReset').onclick = () => { if (confirm('Reset nodes and wires to the default layout?')) resetLayout(); };
   $('#minimap').addEventListener('click', e => { const mm = $('#minimap'), r = mm.getBoundingClientRect(), s = mm._s || 1, b = mm._b || { x1: 0, y1: 0 }; const wx = (e.clientX - r.left) / s + b.x1, wy = (e.clientY - r.top) / s + b.y1; animateView(view.k, cv.clientWidth / 2 - wx * view.k, cv.clientHeight / 2 - wy * view.k); });
   window.addEventListener('resize', () => { sizeCanvas(); drawMinimap(); });
 })();
@@ -1269,7 +1403,7 @@ let lastMouse = { x: 0, y: 0, in: false };
 const cleanName = v => String(v ?? '').replace(/\s+/g, ' ').trim();
 function screenToWorld(cx, cy) { const r = $('#canvas').getBoundingClientRect(); return { x: (cx - r.left - view.x) / view.k, y: (cy - r.top - view.y) / view.k }; }
 function viewCenterWorld() { const cv = $('#canvas'), r = cv.getBoundingClientRect(); const w = screenToWorld(r.left + cv.clientWidth / 2, r.top + 70); return { x: w.x - COL_W / 2, y: w.y }; }
-/** Bina selection ke naya node: sabse right mein khaali jagah (columns neeche badhte hain, right hamesha khaali) */
+/** New node without a selection: free space on the right (columns grow downward) */
 function freeSpot() { if (!$('.col')) return viewCenterWorld(); const b = worldBounds(); return { x: b.x1 + b.w - 40 + GAP, y: b.y1 + 60 }; }
 function focusNode(s) { const cv = $('#canvas'), p = layout.pos[s]; if (!p || !cv.clientWidth) return; animateView(view.k, cv.clientWidth / 2 - (p.x + COL_W / 2) * view.k, Math.min(90, cv.clientHeight / 4) - p.y * view.k); }
 function selectNode(s) { selNode = s && layout && layout.pos[s] ? s : null; $$('.col').forEach(c => c.classList.toggle('sel', c.dataset.stage === selNode)); }
@@ -1280,10 +1414,10 @@ function sortDefsByPos() {
 }
 async function runBatch(items, fn, size = 4) { for (let i = 0; i < items.length; i += size) await Promise.all(items.slice(i, i + size).map(fn)); }
 function nameErr(n, except) {
-  if (!n) return 'Stage ka naam likho';
-  if (n.length > 30) return 'Naam 30 akshar se chhota rakho';
-  if (/[<>|"]/.test(n) || /^__/.test(n)) return 'Naam mein < > | " mat likho';
-  if (stages().some(s => s.toLowerCase() === n.toLowerCase() && s !== except)) return 'Is naam ka stage pehle se hai';
+  if (!n) return 'Enter a stage name';
+  if (n.length > 30) return 'Keep the name under 30 characters';
+  if (/[<>|"]/.test(n) || /^__/.test(n)) return 'Name cannot contain < > | "';
+  if (stages().some(s => s.toLowerCase() === n.toLowerCase() && s !== except)) return 'A stage with this name already exists';
   return '';
 }
 
@@ -1301,12 +1435,13 @@ function openNodeMenu(s, x, y) {
   const locked = LOCKED.includes(s), n = S.leads.filter(l => l.stage === s).length;
   const m = $('#nodeMenu');
   m.innerHTML = `<div class="ttl">${esc(s)} · ${n} lead${n === 1 ? '' : 's'}</div>
-    <button class="mi" data-nm="edit">${I.edit}${locked ? 'Colour badlo' : 'Rename / colour'}</button>
+    <button class="mi" data-nm="edit">${I.edit}${locked ? 'Change colour' : 'Rename / colour'}</button>
     <div class="swatches">${STAGE_COLORS.map(c => `<button class="sw ${c.toLowerCase() === String(d.color).toLowerCase() ? 'on' : ''}" style="background:${c}" data-nmc="${c}" title="${c}"></button>`).join('')}</div>
-    <button class="mi" data-nm="after" ${locked ? 'disabled' : ''}>${I.plus}Iske baad naya node</button>
-    <button class="mi" data-nm="list">${I.list}Leads table mein dekho</button>
+    <button class="mi" data-nm="after" ${locked ? 'disabled' : ''}>${I.plus}Add node after this</button>
+    <button class="mi" data-nm="list">${I.list}View leads in table</button>
+    <button class="mi" data-nm="script">${I.code}Run a script on this stage</button>
     <div class="sep"></div>
-    <button class="mi danger" data-nm="del" ${locked ? 'disabled title="Won aur Lost locked hain"' : ''}>${I.trash}Node delete karo</button>`;
+    <button class="mi danger" data-nm="del" ${locked ? 'disabled title="Won and Lost are locked"' : ''}>${I.trash}Delete node</button>`;
   m.onclick = e => {
     const c = e.target.closest('[data-nmc]'); if (c) { closePops(); renameStage(s, s, c.dataset.nmc, true); return; }
     const b = e.target.closest('[data-nm]'); if (!b || b.disabled) return;
@@ -1314,6 +1449,7 @@ function openNodeMenu(s, x, y) {
     if (a === 'edit') openStageForm('edit', s);
     else if (a === 'after') { const col = colEl(s), r = col && col.getBoundingClientRect(); openPalette(r ? r.right + 12 : x, r ? r.top : y); }
     else if (a === 'list') { ui.lf.stage = s; go('leads'); }
+    else if (a === 'script') { go('scripts'); if (scr.kind !== 'code') loadBuiltinCode(0); $('#scrScope').value = s; }
     else if (a === 'del') requestDeleteStage(s);
   };
   placePop(m, x, y);
@@ -1321,57 +1457,57 @@ function openNodeMenu(s, x, y) {
 
 /* ---- presets: built-in ---- */
 const BUILTIN = [
-  ...[['Follow-up', '#6F8FE8', 'Dobara baat karni hai'], ['Site Visit', '#4FB3D9', 'Client ki jagah jaakar naap / dekhna'], ['Demo / Meeting', '#3CB4A0', 'Showroom visit ya video call'],
-    ['Sample Sent', '#B08CEB', 'Fabric / design sample bheja'], ['Payment Pending', '#F2C94C', 'Advance ya baaki payment ka intezaar'], ['Order Confirmed', '#9BC53D', 'Advance mil gaya, order pakka'],
-    ['In Production', '#F29A5C', 'Factory mein ban raha hai'], ['Delivered', '#2FA36B', 'Maal pahunch gaya'], ['Installation', '#D77FC4', 'Fitting / setup'], ['Feedback', '#9AA0A6', 'Review aur photos maango']]
+  ...[['Follow-up', '#6F8FE8', 'Reconnect with the client'], ['Site Visit', '#4FB3D9', 'Measure / inspect at client site'], ['Demo / Meeting', '#3CB4A0', 'Showroom visit or video call'],
+    ['Sample Sent', '#B08CEB', 'Fabric / design sample sent'], ['Payment Pending', '#F2C94C', 'Waiting for advance or balance'], ['Order Confirmed', '#9BC53D', 'Advance received, order confirmed'],
+    ['In Production', '#F29A5C', 'Being made in the factory'], ['Delivered', '#2FA36B', 'Order delivered'], ['Installation', '#D77FC4', 'Fitting / setup'], ['Feedback', '#9AA0A6', 'Ask for a review and photos']]
     .map(([name, color, description]) => ({ folder: 'Sales Stages', name, description, nodes: [{ name, color }], wires: 'chain' })),
-  { folder: 'Pipeline Presets', name: 'Furniture B2B (Cafe / Hotel)', description: 'Bulk seating order: visit se installation tak', wires: 'chain',
+  { folder: 'Pipeline Presets', name: 'Furniture B2B (Cafe / Hotel)', description: 'Bulk seating order: site visit to installation', wires: 'chain',
     nodes: [{ name: 'Site Visit', color: '#4FB3D9' }, { name: 'Sample Sent', color: '#B08CEB' }, { name: 'Order Confirmed', color: '#9BC53D' }, { name: 'In Production', color: '#F29A5C' }, { name: 'Delivered', color: '#2FA36B' }, { name: 'Installation', color: '#D77FC4' }] },
-  { folder: 'Pipeline Presets', name: 'Jewelry D2C (Instagram)', description: 'DM se delivery tak', wires: 'chain',
+  { folder: 'Pipeline Presets', name: 'Jewelry D2C (Instagram)', description: 'From DM to delivery', wires: 'chain',
     nodes: [{ name: 'DM Received', color: '#4FB3D9' }, { name: 'Catalogue Sent', color: '#B08CEB' }, { name: 'Payment Pending', color: '#F2C94C' }, { name: 'Order Packed', color: '#F29A5C' }, { name: 'Shipped', color: '#6F8FE8' }, { name: 'Delivered', color: '#2FA36B' }] },
-  { folder: 'Pipeline Presets', name: 'Service / Agency', description: 'Call se project delivery tak', wires: 'chain',
+  { folder: 'Pipeline Presets', name: 'Service / Agency', description: 'From first call to project delivery', wires: 'chain',
     nodes: [{ name: 'Discovery Call', color: '#4FB3D9' }, { name: 'Proposal Sent', color: '#B08CEB' }, { name: 'Advance Paid', color: '#9BC53D' }, { name: 'Work in Progress', color: '#F29A5C' }, { name: 'Delivered', color: '#2FA36B' }] },
 ];
-const AUTOMATION_SOON = [['Send WhatsApp', 'Stage mein aate hi template bhejo'], ['Wait / Delay', '1 din baad agla kaam'], ['Assign Member', 'Lead kisi ko de do'], ['Add Tag', 'Hot / Warm / Cold'], ['AI Reply', 'Gemini se jawab']];
+const AUTOMATION_SOON = [['Send WhatsApp', 'Send a template when a lead enters'], ['Wait / Delay', 'Next step after a delay'], ['Assign Member', 'Hand the lead to someone'], ['Add Tag', 'Hot / Warm / Cold'], ['AI Reply', 'Reply with Gemini']];
 
 /** Script (JSON) → saaf preset, ya Hinglish error */
 function parsePreset(text) {
   const err = e => ({ ok: false, error: e });
-  let o; try { o = typeof text === 'string' ? JSON.parse(text) : text; } catch (e) { return err('JSON galat hai — ' + e.message); }
-  if (!o || typeof o !== 'object' || Array.isArray(o)) return err('Script ek { } object hona chahiye');
-  const name = cleanName(o.name); if (!name) return err('"name" likho'); if (name.length > 40) return err('"name" 40 akshar se chhota rakho');
-  const folder = cleanName(o.folder) || 'My Presets'; if (folder.length > 30) return err('"folder" 30 akshar se chhota rakho');
-  if (!Array.isArray(o.nodes) || !o.nodes.length) return err('"nodes" mein kam se kam 1 node chahiye');
-  if (o.nodes.length > 15) return err('Ek preset mein 15 se zyada nodes nahi');
+  let o; try { o = typeof text === 'string' ? JSON.parse(text) : text; } catch (e) { return err('Invalid JSON — ' + e.message); }
+  if (!o || typeof o !== 'object' || Array.isArray(o)) return err('The script must be a { } object');
+  const name = cleanName(o.name); if (!name) return err('Add a "name"'); if (name.length > 40) return err('Keep "name" under 40 characters');
+  const folder = cleanName(o.folder) || 'My Presets'; if (folder.length > 30) return err('Keep "folder" under 30 characters');
+  if (!Array.isArray(o.nodes) || !o.nodes.length) return err('"nodes" needs at least 1 node');
+  if (o.nodes.length > 15) return err('A preset can have at most 15 nodes');
   const nodes = [];
   for (let i = 0; i < o.nodes.length; i++) {
     const n = o.nodes[i], nm = cleanName(typeof n === 'string' ? n : n && n.name);
-    if (!nm) return err(`nodes[${i}] ka "name" khaali hai`);
-    if (nm.length > 30 || /[<>|"]/.test(nm)) return err(`"${nm.slice(0, 30)}": naam 30 akshar tak, < > | " ke bina`);
-    if (nodes.some(x => x.name.toLowerCase() === nm.toLowerCase())) return err(`"${nm}" do baar likha hai`);
+    if (!nm) return err(`nodes[${i}] has an empty "name"`);
+    if (nm.length > 30 || /[<>|"]/.test(nm)) return err(`"${nm.slice(0, 30)}": max 30 characters, no < > | "`);
+    if (nodes.some(x => x.name.toLowerCase() === nm.toLowerCase())) return err(`"${nm}" appears twice`);
     const c = n && typeof n === 'object' ? n.color : '';
-    if (c && !/^#[0-9a-f]{6}$/i.test(c)) return err(`"${nm}" ka colour #RRGGBB jaisa ho (jaise #4FB3D9)`);
+    if (c && !/^#[0-9a-f]{6}$/i.test(c)) return err(`"${nm}": colour must look like #RRGGBB (e.g. #4FB3D9)`);
     nodes.push({ name: nm, color: c || autoColor(nm) });
   }
   let wires = o.wires === undefined ? 'chain' : o.wires;
   if (Array.isArray(wires)) {
-    if (wires.length > 40) return err('Bahut zyada wires (40 tak)');
-    for (const w of wires) if (!Array.isArray(w) || w.length !== 2 || !cleanName(w[0]) || !cleanName(w[1])) return err('"wires" ka har item ["A","B"] jaisa ho');
+    if (wires.length > 40) return err('Too many wires (max 40)');
+    for (const w of wires) if (!Array.isArray(w) || w.length !== 2 || !cleanName(w[0]) || !cleanName(w[1])) return err('Each item in "wires" must look like ["A","B"]');
     wires = wires.map(([a, b]) => [cleanName(a), cleanName(b)]);
-  } else if (wires !== 'chain' && wires !== 'none') return err('"wires" = "chain", "none" ya [["A","B"]] hona chahiye');
+  } else if (wires !== 'chain' && wires !== 'none') return err('"wires" must be "chain", "none" or [["A","B"]]');
   return { ok: true, preset: { name, folder, description: cleanName(o.description).slice(0, 120), nodes, wires } };
 }
 function userPresets() {
   return (S.flows || []).filter(f => String(f.trigger) === 'preset').map(f => { const r = parsePreset(f.flowJson); return r.ok ? Object.assign(r.preset, { id: String(f.flowId) }) : null; }).filter(Boolean);
 }
 
-/** Preset / naya node pipeline mein lagao. Node select ho to uske baad beech mein (Nuke jaisa). */
+/** Apply a preset / new node. If a node is selected, insert after it (like Nuke). */
 function applyPreset(p, at) {
   if (!layout) layout = loadLayout();
   const defs = layout.stages, canon = n => { const d = defs.find(x => x.name.toLowerCase() === cleanName(n).toLowerCase()); return d ? d.name : null; };
   const sel = selNode && layout.pos[selNode] && !LOCKED.includes(selNode) ? selNode : null;
   const fresh = p.nodes.filter(n => !canon(n.name));
-  if (!fresh.length && p.nodes.length === 1) { const ex = canon(p.nodes[0].name); selectNode(ex); focusNode(ex); toast(`"${ex}" pehle se pipeline mein hai`); return; }
+  if (!fresh.length && p.nodes.length === 1) { const ex = canon(p.nodes[0].name); selectNode(ex); focusNode(ex); toast(`"${ex}" is already in the pipeline`); return; }
   const base = sel ? { x: layout.pos[sel].x + COL_W + GAP, y: layout.pos[sel].y + 160 } : (at || freeSpot());
   const idx = sel ? defs.findIndex(d => d.name === sel) + 1 : closedIdx(defs);
   fresh.forEach((n, i) => { defs.splice(idx + i, 0, { name: n.name, color: n.color || autoColor(n.name) }); layout.pos[n.name] = { x: Math.round(base.x + i * (COL_W + GAP)), y: Math.round(base.y) }; });
@@ -1390,7 +1526,7 @@ function applyPreset(p, at) {
   if (fresh.length) selNode = fresh[fresh.length - 1].name;
   saveLayout(); renderAll();
   if (spliced) setTimeout(autoArrange, 80); else if (fresh.length) focusNode(fresh[0].name);
-  toast(fresh.length ? `${fresh.length === 1 ? 'Node' : fresh.length + ' nodes'} add: ${fresh.map(n => n.name).join(', ')}` + (spliced ? ` (${sel} ke baad)` : '') : added ? `${added} wires jod diye (nodes pehle se the)` : 'Kuch naya nahi — sab pehle se hai');
+  toast(fresh.length ? `${fresh.length === 1 ? 'Node' : fresh.length + ' nodes'} added: ${fresh.map(n => n.name).join(', ')}` + (spliced ? ` (after ${sel})` : '') : added ? `${added} wires connected (nodes already existed)` : 'Nothing new — everything already exists');
 }
 
 /* ---- Add Node menu (Tab / right-click / + Node) ---- */
@@ -1398,7 +1534,7 @@ let palItems = [], palAt = null;
 const palClosed = new Set(['Automation']);
 function paletteFolders() {
   const F = new Map(), add = (f, it) => { if (!F.has(f)) F.set(f, []); F.get(f).push(it); };
-  add('Basic', { kind: 'blank', name: 'Blank Stage', description: 'Apna naam aur colour do', nodes: [] });
+  add('Basic', { kind: 'blank', name: 'Blank Stage', description: 'Your own name and colour', nodes: [] });
   BUILTIN.forEach(p => add(p.folder, Object.assign({ kind: 'preset' }, p)));
   userPresets().forEach(p => add(p.folder, Object.assign({ kind: 'preset', mine: true }, p)));
   AUTOMATION_SOON.forEach(([name, description]) => add('Automation', { kind: 'soon', name, description, nodes: [] }));
@@ -1407,7 +1543,7 @@ function paletteFolders() {
 function paletteRow(it, i) {
   const ex = new Set(stages().map(s => s.toLowerCase())), nodes = it.nodes || [];
   const dot = nodes.length ? nodes[0].color : 'var(--line-2)';
-  const sub = nodes.length > 1 ? nodes.map(n => n.name).join(' → ') : nodes.length && ex.has(nodes[0].name.toLowerCase()) ? 'Pipeline mein pehle se hai' : (it.description || 'Ek stage node');
+  const sub = nodes.length > 1 ? nodes.map(n => n.name).join(' → ') : nodes.length && ex.has(nodes[0].name.toLowerCase()) ? 'Already in the pipeline' : (it.description || 'Single stage node');
   const chain = nodes.length > 1 ? `<div class="chain">${nodes.map(n => `<i style="background:${esc(n.color)}"></i>`).join('')}</div>` : '';
   const badge = it.kind === 'soon' ? '<span class="badge">Step 8</span>' : it.mine ? '<span class="badge mine">Mine</span>' : nodes.length > 1 ? `<span class="badge">${nodes.length} nodes</span>` : '';
   return `<button class="ni" data-pi="${i}" ${it.kind === 'soon' ? 'disabled' : ''}><span class="sdot" style="background:${esc(dot)}"></span><span class="tx">${esc(it.name)}<small>${esc(sub)}</small>${chain}</span>${badge}</button>`;
@@ -1420,17 +1556,17 @@ function drawPalette(q) {
     const open = q || !palClosed.has(f);
     return `<details ${open ? 'open' : ''} data-fold="${esc(f)}"><summary>${I.folder}${esc(f)}<span class="c">${vis.length}</span>${I.chev}</summary>${vis.map(it => paletteRow(it, palItems.push(it) - 1)).join('')}</details>`;
   }).join('');
-  $('#palBody').innerHTML = html || '<div class="empty" style="padding:24px">Kuch nahi mila</div>';
+  $('#palBody').innerHTML = html || '<div class="empty" style="padding:24px">Nothing found</div>';
   if (q) { const f = $('#palBody [data-pi]:not(:disabled)'); if (f) f.classList.add('kb'); }
   $$('#palBody details').forEach(d => d.addEventListener('toggle', () => { if (!q) d.open ? palClosed.delete(d.dataset.fold) : palClosed.add(d.dataset.fold); }));
 }
 function openPalette(x, y, at) {
   closePops(); palAt = at || null;
   const m = $('#nodePal'), sel = selNode && !LOCKED.includes(selNode) ? selNode : null;
-  m.innerHTML = `<div class="ph"><input class="input" id="palQ" placeholder="Node ya preset dhundo…" autocomplete="off">
-      <div class="note">${sel ? `Selected: <b>${esc(sel)}</b> — naya node iske <b>baad</b> beech mein judega` : `Koi node select nahi — naya node ${at ? 'yahin' : 'right side khaali jagah mein'} akela banega, wire baad mein jodo`}</div></div>
+  m.innerHTML = `<div class="ph"><input class="input" id="palQ" placeholder="Search nodes and presets…" autocomplete="off">
+      <div class="note">${sel ? `Selected: <b>${esc(sel)}</b> — the new node will be inserted <b>after</b> it` : `No node selected — the new node is placed ${at ? 'here' : 'in free space on the right'}; wire it up later`}</div></div>
     <div class="pb" id="palBody"></div>
-    <div class="pf"><button class="btn sm" data-palgo>${I.code}Apna preset banao (Scripts)</button></div>`;
+    <div class="pf"><button class="btn sm" data-palgo>${I.code}Create your own preset (Scripts)</button></div>`;
   drawPalette('');
   placePop(m, x, y);
   const q = $('#palQ'); setTimeout(() => q.focus(), 30);
@@ -1457,15 +1593,15 @@ function openStageForm(mode, s, at) {
   const locked = !!d && LOCKED.includes(d.name), n = d ? S.leads.filter(l => l.stage === d.name).length : 0;
   sfColor = d ? d.color : STAGE_COLORS[(stages().length * 5) % STAGE_COLORS.length];
   const after = mode === 'add' && selNode && !LOCKED.includes(selNode) ? selNode : '';
-  $('#stageBox').innerHTML = `<div class="m-head"><h2>${mode === 'add' ? 'Naya stage node' : 'Stage edit'}</h2><button class="ibtn" data-close>${I.x}</button></div>
+  $('#stageBox').innerHTML = `<div class="m-head"><h2>${mode === 'add' ? 'New stage node' : 'Edit stage'}</h2><button class="ibtn" data-close>${I.x}</button></div>
     <div class="form" style="grid-template-columns:1fr">
-      <div class="field"><label>Stage ka naam</label><input class="input" id="sfName" maxlength="30" value="${esc(d ? d.name : '')}" placeholder="jaise: Site Visit" ${locked ? 'disabled' : ''}></div>
-      ${locked ? '<p class="help">Won aur Lost system stages hain (reports inhi se bante hain), isliye inka naam nahi badalta. Colour badal sakte ho.</p>' : ''}
-      ${mode === 'edit' && n && !locked ? `<p class="help">Is stage mein ${n} lead${n > 1 ? 's' : ''} hain — naam badalne pe sab apne aap naye naam pe chale jayenge.</p>` : ''}
+      <div class="field"><label>Stage name</label><input class="input" id="sfName" maxlength="30" value="${esc(d ? d.name : '')}" placeholder="e.g. Site Visit" ${locked ? 'disabled' : ''}></div>
+      ${locked ? '<p class="help">Won and Lost are system stages (reports depend on them), so they cannot be renamed. You can change the colour.</p>' : ''}
+      ${mode === 'edit' && n && !locked ? `<p class="help">This stage has ${n} lead${n > 1 ? 's' : ''} — renaming moves them all to the new name automatically.</p>` : ''}
       <div class="field"><label>Colour</label><div class="cswatch" id="sfSw">${STAGE_COLORS.map(c => `<button type="button" class="sw ${c.toLowerCase() === String(sfColor).toLowerCase() ? 'on' : ''}" data-sfc="${c}" style="background:${c}"></button>`).join('')}</div></div>
-      ${after ? `<p class="help">Ye <b>${esc(after)}</b> ke baad judega (wire apne aap).</p>` : ''}
+      ${after ? `<p class="help">It will be connected after <b>${esc(after)}</b> automatically.</p>` : ''}
     </div>
-    <div class="m-foot">${mode === 'edit' && !locked ? `<button class="btn danger" id="sfDel">${I.trash}Delete</button>` : ''}<div class="grow"></div><button class="btn" data-close>Cancel</button><button class="btn primary" id="sfSave">${mode === 'add' ? 'Node banao' : 'Save'}</button></div>`;
+    <div class="m-foot">${mode === 'edit' && !locked ? `<button class="btn danger" id="sfDel">${I.trash}Delete</button>` : ''}<div class="grow"></div><button class="btn" data-close>Cancel</button><button class="btn primary" id="sfSave">${mode === 'add' ? 'Create node' : 'Save'}</button></div>`;
   $$('#sfSw [data-sfc]').forEach(b => b.onclick = () => { sfColor = b.dataset.sfc; $$('#sfSw .sw').forEach(x => x.classList.toggle('on', x === b)); });
   const name = $('#sfName');
   $('#sfSave').onclick = () => {
@@ -1481,28 +1617,28 @@ function openStageForm(mode, s, at) {
 async function renameStage(old, nu, color, quiet) {
   const d = layout.stages.find(x => x.name === old); if (!d) return;
   if (color) d.color = color;
-  if (!nu || nu === old) { saveLayout(); renderAll(); if (!quiet) toast('Stage update ho gaya'); return; }
+  if (!nu || nu === old) { saveLayout(); renderAll(); if (!quiet) toast('Stage updated'); return; }
   d.name = nu; layout.pos[nu] = layout.pos[old]; delete layout.pos[old];
   layout.links = layout.links.map(([a, b]) => [a === old ? nu : a, b === old ? nu : b]);
   if (selNode === old) selNode = nu; if (ui.stage === old) ui.stage = nu; if (ui.lf.stage === old) ui.lf.stage = nu;
   if (ui.expanded.delete(old)) ui.expanded.add(nu);
   const ls = S.leads.filter(l => l.stage === old); ls.forEach(l => { l.stage = nu; });
   saveLayout(); renderAll();
-  if (demo || !ls.length) { toast(`Rename ho gaya: ${old} → ${nu}`); return; }
-  toast(`${ls.length} leads update ho rahe hain…`);
-  try { await runBatch(ls, l => api('updateLead', { id: l.leadId, stage: nu })); toast(`Rename ho gaya: ${old} → ${nu} ✓`); }
-  catch (e) { toast('Kuch leads update nahi hue: ' + e.message, true); load(true); }
+  if (demo || !ls.length) { toast(`Renamed: ${old} → ${nu}`); return; }
+  toast(`Updating ${ls.length} leads…`);
+  try { await runBatch(ls, l => api('updateLead', { id: l.leadId, stage: nu })); toast(`Renamed: ${old} → ${nu} ✓`); }
+  catch (e) { toast('Some leads were not updated: ' + e.message, true); load(true); }
 }
 function requestDeleteStage(s) {
   closePops();
-  if (LOCKED.includes(s)) return toast('Won aur Lost delete nahi hote (reports inse bante hain)', true);
+  if (LOCKED.includes(s)) return toast('Won and Lost cannot be deleted (reports depend on them)', true);
   const n = S.leads.filter(l => l.stage === s).length;
-  if (!n) { if (confirm(`"${s}" node delete karna hai?\nIsme koi lead nahi hai. Aage-peeche ke wires apne aap jud jayenge.`)) deleteStage(s); return; }
+  if (!n) { if (confirm(`Delete the "${s}" node?\nIt has no leads. Wires on either side will be reconnected automatically.`)) deleteStage(s); return; }
   const others = stages().filter(x => x !== s), next = (layout.links.find(([a, b]) => a === s && b !== 'Lost') || [])[1] || others[0];
-  $('#stageBox').innerHTML = `<div class="m-head"><h2>"${esc(s)}" delete karo</h2><button class="ibtn" data-close>${I.x}</button></div>
-    <p class="help" style="margin-bottom:14px">Is node mein <b>${n} lead${n > 1 ? 's' : ''}</b> hain. Delete se pehle inhe kisi aur stage mein bhejna hoga (har lead ki journey mein entry ban jayegi).</p>
-    <div class="field"><label>Leads kahan bhejein?</label><select class="input" id="sdTo">${others.map(o => `<option ${o === next ? 'selected' : ''}>${esc(o)}</option>`).join('')}</select></div>
-    <div class="m-foot"><div class="grow"></div><button class="btn" data-close>Cancel</button><button class="btn danger" id="sdGo">${I.trash}Leads bhejo aur delete karo</button></div>`;
+  $('#stageBox').innerHTML = `<div class="m-head"><h2>Delete "${esc(s)}"</h2><button class="ibtn" data-close>${I.x}</button></div>
+    <p class="help" style="margin-bottom:14px">This node has <b>${n} lead${n > 1 ? 's' : ''}</b>. Move them to another stage before deleting (each lead's journey will record the move).</p>
+    <div class="field"><label>Move leads to</label><select class="input" id="sdTo">${others.map(o => `<option ${o === next ? 'selected' : ''}>${esc(o)}</option>`).join('')}</select></div>
+    <div class="m-foot"><div class="grow"></div><button class="btn" data-close>Cancel</button><button class="btn danger" id="sdGo">${I.trash}Move leads and delete</button></div>`;
   $('#sdGo').onclick = () => { const to = $('#sdTo').value; hideModal('#stageModal'); deleteStage(s, to); };
   showModal('#stageModal');
 }
@@ -1518,104 +1654,601 @@ async function deleteStage(s, to) {
   if (selNode === s) selNode = null; ui.expanded.delete(s);
   if (ui.stage === s) ui.stage = ''; if (ui.lf.stage === s) ui.lf.stage = '';
   saveLayout(); renderAll();
-  toast(`"${s}" node delete ho gaya` + (ls.length ? ` · ${ls.length} leads → ${to}` : ''));
+  toast(`"${s}" node deleted` + (ls.length ? ` · ${ls.length} leads → ${to}` : ''));
   if (!demo && ls.length) {
     try { await runBatch(ls, l => api('moveStage', { id: l.leadId, stage: to, by: me() })); load(true); }
-    catch (e) { toast('Kuch leads move nahi hue: ' + e.message, true); load(true); }
+    catch (e) { toast('Some leads were not moved: ' + e.message, true); load(true); }
   }
 }
 
+/* ---- Sandbox: run untrusted script code safely ----
+   Layer 1: hidden <iframe sandbox="allow-scripts"> → opaque origin: no cookies, storage, or access to this page.
+   Layer 2: CSP inside the iframe (default-src 'none') → no fetch / XHR / WebSocket / images / imports.
+   Layer 3: the code runs in a Web Worker inside that iframe → no DOM, can't navigate, killed after a timeout.
+   Layer 4: the script can only return a list of *proposed* actions; we validate every one and the user approves. */
+const SBX_BOOT = `<!doctype html><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' blob:; worker-src blob:">
+<script>
+addEventListener('message', function (e) {
+  if (e.source !== parent || !e.data || typeof e.data.src !== 'string') return;
+  var w;
+  try { w = new Worker(URL.createObjectURL(new Blob([e.data.src], { type: 'application/javascript' }))); }
+  catch (err) { parent.postMessage({ ok: false, error: 'Sandbox could not start: ' + err.message }, '*'); return; }
+  w.onmessage = function (m) { parent.postMessage(m.data, '*'); };
+  w.onerror = function (er) { er.preventDefault(); parent.postMessage({ ok: false, error: er.message, line: er.lineno }, '*'); };
+  w.postMessage(e.data.input);
+});
+<\/script>`;
+const SBX_PRELUDE = `"use strict";
+(function () { ['fetch','XMLHttpRequest','WebSocket','EventSource','importScripts','indexedDB','caches','Worker','SharedWorker','BroadcastChannel','WebTransport']
+  .forEach(function (k) { try { Object.defineProperty(self, k, { value: undefined, writable: false, configurable: false }); } catch (e) { try { self[k] = undefined; } catch (e2) {} } }); })();
+self.onmessage = async function (ev) {
+  const input = ev.data, actions = [], logs = [], S = v => String(v == null ? '' : v);
+  const push = (type, o) => { if (actions.length >= 500) throw new Error('Too many actions (max 500)'); actions.push(Object.assign({ type }, o)); };
+  const pad = n => String(n).padStart(2, '0');
+  const crm = Object.freeze({
+    leads: input.leads, stages: input.stages, team: input.team, tags: input.tags, today: input.today,
+    log: (...a) => { if (logs.length < 200) logs.push(a.map(x => typeof x === 'string' ? x : JSON.stringify(x)).join(' ').slice(0, 500)); },
+    moveStage: (id, stage) => push('moveStage', { id: S(id), stage: S(stage) }),
+    setTag: (id, tag) => push('setTag', { id: S(id), tag: S(tag) }),
+    setFollowUp: (id, date) => push('setFollowUp', { id: S(id), date: S(date) }),
+    assign: (id, member) => push('assign', { id: S(id), member: S(member) }),
+    addNote: (id, text) => push('addNote', { id: S(id), text: S(text) }),
+    addDays: (date, n) => { const d = new Date(S(date).slice(0, 10) + 'T00:00'); d.setDate(d.getDate() + Number(n || 0)); return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); },
+    daysSince: date => { if (!date) return Infinity; return Math.round((new Date(input.today + 'T00:00') - new Date(S(date).slice(0, 10) + 'T00:00')) / 864e5); },
+    isClosed: l => !!l && (l.stage === 'Won' || l.stage === 'Lost'),
+  });
+  try { await __userScript(crm); postMessage({ ok: true, actions, logs }); }
+  catch (e) { const m = /:(\\d+):\\d+\\)?\\s*$/m.exec(String(e && e.stack || '')); postMessage({ ok: false, error: String(e && e.message || e), line: m ? +m[1] : 0, logs }); }
+};
+async function __userScript(crm) {
+`;
+const SBX_LINES = SBX_PRELUDE.split('\n').length - 1;
+function runSandbox(code, input, timeoutMs = 3000) {
+  return new Promise(resolve => {
+    const f = document.createElement('iframe');
+    f.setAttribute('sandbox', 'allow-scripts'); f.setAttribute('aria-hidden', 'true'); f.tabIndex = -1;
+    f.style.cssText = 'position:absolute;width:0;height:0;border:0;visibility:hidden';
+    f.srcdoc = SBX_BOOT;
+    let done = false, timer = null;
+    const finish = r => { if (done) return; done = true; clearTimeout(timer); removeEventListener('message', onMsg); f.remove(); resolve(r); };
+    const onMsg = e => {
+      if (e.source !== f.contentWindow || !e.data || typeof e.data !== 'object') return;
+      const d = e.data;
+      if (d.line) d.line = Math.max(1, d.line - SBX_LINES);
+      finish({ ok: !!d.ok, error: d.error ? String(d.error).slice(0, 300) : '', line: d.line || 0, actions: Array.isArray(d.actions) ? d.actions : [], logs: Array.isArray(d.logs) ? d.logs.map(String) : [] });
+    };
+    addEventListener('message', onMsg);
+    f.onload = () => {
+      timer = setTimeout(() => finish({ ok: false, error: `Stopped: the script ran longer than ${timeoutMs / 1000} seconds`, actions: [], logs: [] }), timeoutMs);
+      f.contentWindow.postMessage({ src: SBX_PRELUDE + code + '\n}', input }, '*');
+    };
+    document.body.appendChild(f);
+  });
+}
+
 /* ---- Scripts & Presets page ---- */
-const scr = { id: null };
-const PRESET_EXAMPLE = { name: 'Cafe Order Flow', folder: 'Furniture', description: 'Cafe / restaurant ke bulk seating order ke liye',
+const scr = { id: null, kind: 'preset', last: null };
+const PRESET_EXAMPLE = { name: 'Cafe Order Flow', folder: 'Furniture', description: 'For bulk cafe / restaurant seating orders',
   nodes: [{ name: 'Site Visit', color: '#4FB3D9' }, { name: 'Sample Sent', color: '#B08CEB' }, { name: 'Order Confirmed', color: '#9BC53D' }], wires: 'chain' };
+const CODE_TEMPLATE = `// Runs in a locked sandbox. Use crm.* to read leads and propose changes.
+// Nothing is saved until you press Apply after the dry run.
+
+const tomorrow = crm.addDays(crm.today, 1);
+
+for (const lead of crm.leads) {
+  if (crm.isClosed(lead)) continue;
+  if (lead.tag === 'Hot' && !lead.followUpDate) {
+    crm.setFollowUp(lead.leadId, tomorrow);
+    crm.log('Follow-up set for', lead.name);
+  }
+}
+`;
+const BUILTIN_CODE = [
+  { name: 'Hot leads → follow-up tomorrow', folder: 'Built-in', description: 'Every open Hot lead without a follow-up date gets one for tomorrow.', code: CODE_TEMPLATE },
+  { name: 'Revive stale leads', folder: 'Built-in', description: 'Open leads with no contact for 7+ days: follow-up today + a note.', code:
+`const DAYS = 7;
+for (const lead of crm.leads) {
+  if (crm.isClosed(lead)) continue;
+  const quiet = crm.daysSince(lead.lastContact || lead.createdOn);
+  if (quiet >= DAYS) {
+    crm.setFollowUp(lead.leadId, crm.today);
+    crm.addNote(lead.leadId, 'No contact for ' + quiet + ' days — revive');
+  }
+}
+crm.log('Checked', crm.leads.length, 'leads');
+` },
+  { name: 'Round-robin assign', folder: 'Built-in', description: 'Shares unassigned open leads evenly across active team members.', code:
+`const team = crm.team.filter(m => m.active !== false).map(m => m.name);
+if (!team.length) throw new Error('No active team members');
+let i = 0;
+for (const lead of crm.leads) {
+  if (crm.isClosed(lead) || lead.assignedTo) continue;
+  crm.assign(lead.leadId, team[i % team.length]);
+  i++;
+}
+crm.log(i, 'leads assigned across', team.length, 'members');
+` },
+  { name: 'Big budget = Hot', folder: 'Built-in', description: 'Open leads with a budget of ₹5 lakh or more are tagged Hot.', code:
+`const MIN_BUDGET = 500000;
+for (const lead of crm.leads) {
+  if (!crm.isClosed(lead) && Number(lead.budget) >= MIN_BUDGET && lead.tag !== 'Hot') {
+    crm.setTag(lead.leadId, 'Hot');
+  }
+}
+` },
+  { name: 'Find duplicate phone numbers', folder: 'Built-in', description: 'Lists leads that share a phone number (read-only).', code:
+`const seen = {};
+for (const lead of crm.leads) {
+  const p = String(lead.phone || '').replace(/\\D/g, '').slice(-10);
+  if (!p) continue;
+  (seen[p] = seen[p] || []).push(lead.name + ' (' + lead.leadId + ')');
+}
+const dups = Object.entries(seen).filter(([, list]) => list.length > 1);
+dups.forEach(([phone, list]) => crm.log(phone + ': ' + list.join(', ')));
+crm.log(dups.length ? dups.length + ' duplicate numbers' : 'No duplicates found');
+` },
+];
 const presetJSON = p => JSON.stringify(Object.assign({ name: p.name, folder: p.folder }, p.description ? { description: p.description } : {}, { nodes: p.nodes, wires: p.wires }), null, 2);
-const AI_PROMPT = () => `Mere CRM ke liye ek "pipeline preset" JSON banao.
-Mera business: [YAHAN APNA BUSINESS LIKHO — jaise "cafe ke liye furniture banana aur install karna"]
+const AI_PROMPT_PRESET = () => `Create a "pipeline preset" JSON for my CRM.
+My business: [DESCRIBE YOUR BUSINESS — e.g. "we make and install furniture for cafes"]
 
 Rules:
-- Sirf JSON do, koi extra text ya explanation nahi.
-- Format bilkul aisa:
+- Reply with JSON only, no extra text.
+- Use exactly this format:
 {
-  "name": "Preset ka naam",
-  "folder": "Folder ka naam",
-  "description": "1 line: kis kaam ka hai",
+  "name": "Preset name",
+  "folder": "Folder name",
+  "description": "One line: what it is for",
   "nodes": [
     { "name": "Stage 1", "color": "#4FB3D9" },
     { "name": "Stage 2", "color": "#B08CEB" }
   ],
   "wires": "chain"
 }
-- nodes: 3 se 8 sales stages, sahi kram (order) mein. Har naam 30 akshar se chhota.
-- "New Lead", "Won", "Lost" mat daalna — ye CRM mein pehle se hain.
-- color sirf in mein se: ${STAGE_COLORS.join(', ')}
-- wires: "chain" (sab ek line mein) ya [["A","B"], ...] agar branch chahiye.`;
-function updateScrHead(p) {
-  $('#scrTitle').textContent = scr.id ? (p ? p.name : 'Preset') : 'Naya Preset';
+- nodes: 3 to 8 sales stages in the right order. Each name under 30 characters.
+- Do not include "New Lead", "Won" or "Lost" — the CRM already has them.
+- color must be one of: ${STAGE_COLORS.join(', ')}
+- wires: "chain" (all in one line) or [["A","B"], ...] for branches.`;
+const AI_PROMPT_CODE = () => `Write a JavaScript script for my CRM's script sandbox.
+What it should do: [DESCRIBE THE RULE — e.g. "leads from Instagram with budget over 1 lakh: tag Hot and set follow-up tomorrow"]
+
+Rules:
+- Reply with the JavaScript code only (no markdown fences, no explanation).
+- No imports, no fetch, no DOM — only the crm object below. Top-level await is allowed.
+- Available:
+  crm.leads   → array of { leadId, name, phone, businessName, businessType, city, source, budget, stage, tag, assignedTo, followUpDate, lastContact, createdOn, notes }
+  crm.stages  → array of stage names (in order)
+  crm.team    → array of { name, role, active }
+  crm.tags    → allowed tags, e.g. ["Hot","Warm","Cold"]
+  crm.today   → "YYYY-MM-DD"
+  crm.moveStage(leadId, stageName)
+  crm.setTag(leadId, tag)
+  crm.setFollowUp(leadId, "YYYY-MM-DD")
+  crm.assign(leadId, teamMemberName)
+  crm.addNote(leadId, text)
+  crm.log(...values)
+  crm.addDays("YYYY-MM-DD", n) → "YYYY-MM-DD"
+  crm.daysSince("YYYY-MM-DD") → number
+  crm.isClosed(lead) → true for Won / Lost
+- Dates are "YYYY-MM-DD" strings. Skip closed leads unless asked.
+- End with crm.log() summarising what changed.`;
+
+const savedItems = () => (S.flows || []).filter(f => f.trigger === 'preset' || f.trigger === 'script');
+function userScripts() {
+  return (S.flows || []).filter(f => String(f.trigger) === 'script').map(f => { try { const o = JSON.parse(f.flowJson); if (typeof o.code !== 'string') return null; return { id: String(f.flowId), name: cleanName(o.name) || 'Untitled', folder: cleanName(o.folder) || 'My Scripts', description: cleanName(o.description), code: o.code }; } catch (e) { return null; } }).filter(Boolean);
+}
+function setKind(kind) {
+  scr.kind = kind; const code = kind === 'code';
+  $('#scrMeta').hidden = !code; $('#scrRunWrap').hidden = !code; $('#scrPrevWrap').hidden = code; $('#scrTry').hidden = code;
+  $('#scrKind').textContent = code ? 'Code · JavaScript' : 'Preset · JSON';
+  $('#scrCodeLbl').textContent = code ? 'Code (JavaScript)' : 'Script (JSON) — name, folder, nodes, wires';
+  $('#scrHelp').innerHTML = code
+    ? 'Available: <code>crm.leads</code>, <code>crm.stages</code>, <code>crm.team</code>, <code>crm.today</code> · actions: <code>moveStage</code>, <code>setTag</code>, <code>setFollowUp</code>, <code>assign</code>, <code>addNote</code> · helpers: <code>log</code>, <code>addDays</code>, <code>daysSince</code>, <code>isClosed</code>.'
+    : '<b>wires</b>: <code>"chain"</code> = connect top to bottom · <code>"none"</code> = no wires · or <code>[["A","B"]]</code> pairs. If a node is selected in the Pipeline, the preset is inserted <b>after</b> it (like Nuke).';
+  if (code) { const sc = $('#scrScope'), cur = sc.value; sc.innerHTML = '<option value="">All leads</option>' + stages().map(s => `<option ${s === cur ? 'selected' : ''}>${esc(s)}</option>`).join(''); }
+  $('#scrOut').hidden = true; scr.last = null;
+}
+function updateScrHead(title) {
+  $('#scrTitle').textContent = title || (scr.kind === 'code' ? 'New code script' : 'New preset');
   $('#scrBadge').textContent = scr.id ? 'Saved' : 'Draft'; $('#scrBadge').className = 'badge' + (scr.id ? ' mine' : '');
   $('#scrDel').disabled = !scr.id;
 }
 function previewScript() {
+  if (scr.kind === 'code') return null;
   const r = parsePreset($('#scrCode').value), msg = $('#scrMsg');
-  if (!r.ok) { msg.className = 'scr-msg err'; msg.textContent = '✗ ' + r.error; $('#scrPrev').innerHTML = '<span class="muted" style="font-size:13px">Script theek karo, preview yahan dikhega</span>'; return null; }
+  if (!r.ok) { msg.className = 'scr-msg err'; msg.textContent = '✗ ' + r.error; $('#scrPrev').innerHTML = '<span class="muted" style="font-size:13px">Fix the script to see a preview here</span>'; return null; }
   const p = r.preset, ex = new Set(stages().map(s => s.toLowerCase())), chain = p.wires === 'chain';
   $('#scrPrev').innerHTML = p.nodes.map((n, i) => (i ? (chain ? '<span class="mwire"></span>' : '<span style="width:12px;flex:none"></span>') : '') +
-    `<span class="mnode ${ex.has(n.name.toLowerCase()) ? 'ex' : ''}" title="${ex.has(n.name.toLowerCase()) ? 'Pipeline mein pehle se hai (dobara nahi banega)' : 'Naya node'}"><span class="sdot" style="background:${esc(n.color)}"></span>${esc(n.name)}</span>`).join('');
+    `<span class="mnode ${ex.has(n.name.toLowerCase()) ? 'ex' : ''}" title="${ex.has(n.name.toLowerCase()) ? 'Already in the pipeline (won\'t be duplicated)' : 'New node'}"><span class="sdot" style="background:${esc(n.color)}"></span>${esc(n.name)}</span>`).join('');
   const nNew = p.nodes.filter(n => !ex.has(n.name.toLowerCase())).length;
   msg.className = 'scr-msg ok';
-  msg.textContent = `✓ Sahi hai — folder "${p.folder}" · ${p.nodes.length} node${p.nodes.length > 1 ? 's' : ''} (${nNew} naye)` + (Array.isArray(p.wires) ? ` · ${p.wires.length} wires` : p.wires === 'none' ? ' · wires nahi' : '');
+  msg.textContent = `✓ Valid — folder "${p.folder}" · ${p.nodes.length} node${p.nodes.length > 1 ? 's' : ''} (${nNew} new)` + (Array.isArray(p.wires) ? ` · ${p.wires.length} wires` : p.wires === 'none' ? ' · no wires' : '');
   return p;
 }
 function renderScripts(keep) {
-  const mine = userPresets(), groups = new Map();
-  mine.forEach(p => { if (!groups.has(p.folder)) groups.set(p.folder, []); groups.get(p.folder).push(p); });
-  let h = mine.length ? '' : '<div class="empty" style="padding:18px 10px;font-size:13px">Abhi tumhara koi preset nahi.<br>Naya banao, ya neeche built-in se copy karo.</div>';
-  groups.forEach((arr, f) => { h += `<div class="fold">${I.folder}${esc(f)}</div>` + arr.map(p => `<button class="scr-item ${scr.id === p.id ? 'active' : ''}" data-scr="${esc(p.id)}"><span class="sdot" style="background:${esc(p.nodes[0].color)}"></span><span class="nm">${esc(p.name)}</span><span class="badge">${p.nodes.length}</span></button>`).join(''); });
-  h += `<div class="fold">${I.folder}Built-in · copy karke edit karo</div>` + BUILTIN.map((p, i) => p.nodes.length > 1 ? `<button class="scr-item" data-scrb="${i}"><span class="sdot" style="background:${esc(p.nodes[0].color)}"></span><span class="nm">${esc(p.name)}</span><span class="badge">${p.nodes.length}</span></button>` : '').join('');
+  const items = userPresets().map(p => Object.assign({ kind: 'preset' }, p)).concat(userScripts().map(p => Object.assign({ kind: 'code' }, p)));
+  const groups = new Map(); items.forEach(p => { if (!groups.has(p.folder)) groups.set(p.folder, []); groups.get(p.folder).push(p); });
+  const row = (attr, kind, name, dot, badge, active) => `<button class="scr-item ${active ? 'active' : ''}" ${attr}><span class="sdot" style="background:${esc(dot)}"></span><span class="nm">${esc(name)}</span><span class="badge ${kind === 'code' ? 'js' : ''}">${badge}</span></button>`;
+  let h = items.length ? '' : '<div class="empty" style="padding:18px 10px;font-size:13px">No saved items yet.<br>Create one, or copy a built-in below.</div>';
+  groups.forEach((arr, f) => { h += `<div class="fold">${I.folder}${esc(f)}</div>` + arr.map(p => row(`data-scr="${esc(p.id)}"`, p.kind, p.name, p.kind === 'code' ? 'var(--blue-2)' : p.nodes[0].color, p.kind === 'code' ? 'JS' : p.nodes.length, scr.id === p.id)).join(''); });
+  h += `<div class="fold">${I.folder}Built-in presets · copy to edit</div>` + BUILTIN.map((p, i) => p.nodes.length > 1 ? row(`data-scrb="${i}"`, 'preset', p.name, p.nodes[0].color, p.nodes.length) : '').join('');
+  h += `<div class="fold">${I.code}Built-in scripts · copy to edit</div>` + BUILTIN_CODE.map((p, i) => row(`data-scrc="${i}"`, 'code', p.name, 'var(--blue-2)', 'JS')).join('');
   $('#scrList').innerHTML = h;
-  if (!keep && !$('#scrCode').value.trim()) newScript(); else { updateScrHead(mine.find(p => p.id === scr.id)); previewScript(); }
+  if (!keep && !$('#scrCode').value.trim()) newScript(); else previewScript();
 }
-function newScript() { scr.id = null; $('#scrCode').value = presetJSON(PRESET_EXAMPLE); updateScrHead(); previewScript(); $$('.scr-item.active').forEach(b => b.classList.remove('active')); }
-function loadScript(id) { const p = userPresets().find(x => x.id === id); if (!p) return; scr.id = id; $('#scrCode').value = presetJSON(p); updateScrHead(p); previewScript(); $$('.scr-item').forEach(b => b.classList.toggle('active', b.dataset.scr === id)); }
-function loadBuiltin(i) { const p = BUILTIN[i]; if (!p) return; scr.id = null; $('#scrCode').value = presetJSON(Object.assign({}, p, { name: p.name + ' (copy)', folder: 'My Presets' })); updateScrHead(); previewScript(); $$('.scr-item').forEach(b => b.classList.toggle('active', b.dataset.scrb === String(i))); toast('Copy ban gayi — edit karke Save dabao'); }
+function markActive(sel) { $$('.scr-item').forEach(b => b.classList.toggle('active', b.matches(sel))); }
+function newScript() { scr.id = null; setKind('preset'); $('#scrCode').value = presetJSON(PRESET_EXAMPLE); updateScrHead(); previewScript(); markActive('.none'); }
+function newCodeScript(src) { scr.id = null; setKind('code'); $('#scrName').value = src ? src.name + (src.folder === 'Built-in' ? ' (copy)' : '') : ''; $('#scrFolder').value = src && src.folder !== 'Built-in' ? src.folder : 'My Scripts'; $('#scrCode').value = src ? src.code : CODE_TEMPLATE; updateScrHead(src ? $('#scrName').value : ''); }
+function loadScript(id) {
+  const p = userPresets().find(x => x.id === id);
+  if (p) { scr.id = id; setKind('preset'); $('#scrCode').value = presetJSON(p); updateScrHead(p.name); previewScript(); markActive(`[data-scr="${CSS.escape(id)}"]`); return; }
+  const c = userScripts().find(x => x.id === id); if (!c) return;
+  scr.id = id; setKind('code'); $('#scrName').value = c.name; $('#scrFolder').value = c.folder; $('#scrCode').value = c.code; updateScrHead(c.name); markActive(`[data-scr="${CSS.escape(id)}"]`);
+}
+function loadBuiltin(i) { const p = BUILTIN[i]; if (!p) return; scr.id = null; setKind('preset'); $('#scrCode').value = presetJSON(Object.assign({}, p, { name: p.name + ' (copy)', folder: 'My Presets' })); updateScrHead(); previewScript(); markActive(`[data-scrb="${i}"]`); toast('Copied — edit it and press Save'); }
+function loadBuiltinCode(i) { const p = BUILTIN_CODE[i]; if (!p) return; newCodeScript(p); markActive(`[data-scrc="${i}"]`); }
+
+/* ---- dry run → review → apply ---- */
+const ACTION_LABEL = { moveStage: 'Stage', setTag: 'Tag', setFollowUp: 'Follow-up', assign: 'Assign', addNote: 'Note' };
+function validateActions(acts) {
+  const st = new Set(stages()), tags = new Set(S.lists.tags || ['Hot', 'Warm', 'Cold']), team = new Set(S.team.map(t => t.name).filter(Boolean));
+  const ok = [], bad = [], seen = new Set();
+  for (const a of acts.slice(0, 500)) {
+    if (!a || !ACTION_LABEL[a.type]) { bad.push('Unknown action'); continue; }
+    const l = S.leads.find(x => x.leadId === String(a.id));
+    if (!l) { bad.push(`${ACTION_LABEL[a.type]}: lead "${String(a.id).slice(0, 20)}" not found`); continue; }
+    let from = '', to = '';
+    if (a.type === 'moveStage') { if (!st.has(a.stage)) { bad.push(`${l.name}: stage "${String(a.stage).slice(0, 30)}" does not exist`); continue; } from = l.stage; to = a.stage; }
+    if (a.type === 'setTag') { if (!tags.has(a.tag)) { bad.push(`${l.name}: tag "${String(a.tag).slice(0, 20)}" is not allowed`); continue; } from = l.tag || '–'; to = a.tag; }
+    if (a.type === 'setFollowUp') { if (a.date && !/^\d{4}-\d{2}-\d{2}$/.test(a.date)) { bad.push(`${l.name}: date must be YYYY-MM-DD`); continue; } from = l.followUpDate ? fmtDate(l.followUpDate) : '–'; to = a.date ? fmtDate(a.date) : '(cleared)'; }
+    if (a.type === 'assign') { if (!team.has(a.member)) { bad.push(`${l.name}: "${String(a.member).slice(0, 30)}" is not a team member`); continue; } from = l.assignedTo || '–'; to = a.member; }
+    if (a.type === 'addNote') { const t = String(a.text || '').trim().slice(0, 500); if (!t) { bad.push(`${l.name}: empty note`); continue; } a.text = t; to = t; }
+    if (a.type !== 'addNote' && from === to) continue;            // no real change
+    const key = a.type + '|' + l.leadId + (a.type === 'addNote' ? '|' + a.text : '');
+    if (seen.has(key)) continue; seen.add(key);
+    ok.push(Object.assign({}, a, { lead: l, from, to }));
+  }
+  return { ok, bad };
+}
+function renderRunResult(r, ms) {
+  const out = $('#scrOut'); out.hidden = false;
+  if (!r.ok) { scr.last = null; out.innerHTML = `<div class="run-err">✗ ${esc(r.error)}${r.line ? ` <span class="muted">(line ${r.line})</span>` : ''}</div>${r.logs.length ? `<pre class="run-log">${esc(r.logs.join('\n'))}</pre>` : ''}`; return; }
+  const v = validateActions(r.actions); scr.last = v.ok;
+  out.innerHTML = `<div class="run-sum"><b>${v.ok.length}</b> change${v.ok.length === 1 ? '' : 's'} proposed${v.bad.length ? ` · <span style="color:var(--coral)">${v.bad.length} rejected</span>` : ''} <span class="muted">· ${ms} ms</span></div>
+    ${r.logs.length ? `<pre class="run-log">${esc(r.logs.join('\n'))}</pre>` : ''}
+    ${v.ok.length ? `<div class="run-tbl"><table class="tbl"><thead><tr><th>Lead</th><th>Change</th><th>From</th><th>To</th></tr></thead><tbody>${v.ok.slice(0, 200).map(a => `<tr style="cursor:default"><td>${esc(a.lead.name)}</td><td>${ACTION_LABEL[a.type]}</td><td class="muted">${esc(a.from || '')}</td><td>${esc(String(a.to).slice(0, 80))}</td></tr>`).join('')}</tbody></table>${v.ok.length > 200 ? `<p class="muted" style="font-size:12px;margin:6px 0 0">…and ${v.ok.length - 200} more</p>` : ''}</div>` : ''}
+    ${v.bad.length ? `<details class="run-bad"><summary>${v.bad.length} rejected action${v.bad.length > 1 ? 's' : ''}</summary><ul>${v.bad.slice(0, 50).map(b => `<li>${esc(b)}</li>`).join('')}</ul></details>` : ''}
+    ${v.ok.length ? `<div class="run-row" style="margin-top:10px"><span class="muted" style="font-size:12.5px">Review the list, then apply.</span><div class="grow"></div><button class="btn primary" id="scrApply">Apply ${v.ok.length} change${v.ok.length === 1 ? '' : 's'}</button></div>` : ''}`;
+  const ap = $('#scrApply'); if (ap) ap.onclick = applyRun;
+}
+async function dryRun() {
+  const code = $('#scrCode').value; if (!code.trim()) return toast('The script is empty', true);
+  if (code.length > 20000) return toast('Script is too long (max 20,000 characters)', true);
+  const scope = $('#scrScope').value, fields = ['leadId', 'name', 'phone', 'businessName', 'businessType', 'city', 'source', 'budget', 'stage', 'tag', 'assignedTo', 'followUpDate', 'lastContact', 'createdOn', 'notes'];
+  const leads = S.leads.filter(l => !scope || l.stage === scope).map(l => { const o = {}; fields.forEach(k => o[k] = k === 'budget' ? (+l[k] || 0) : String(l[k] ?? '')); o.followUpDate = dOnly(o.followUpDate); o.lastContact = dOnly(o.lastContact); o.createdOn = dOnly(o.createdOn); return o; });
+  const input = { leads, stages: stages(), team: S.team.map(t => ({ name: String(t.name || ''), role: String(t.role || ''), active: t.active !== false })), tags: S.lists.tags || ['Hot', 'Warm', 'Cold'], today: todayStr() };
+  const b = $('#scrRun'); b.disabled = true; b.lastChild.textContent = 'Running…';
+  const t0 = performance.now(); const r = await runSandbox(code, input); const ms = Math.round(performance.now() - t0);
+  b.disabled = false; b.lastChild.textContent = 'Dry run';
+  renderRunResult(r, ms);
+}
+async function applyRun() {
+  const list = scr.last; if (!list || !list.length) return;
+  const name = cleanName($('#scrName').value) || 'Script';
+  if (!confirm(`Apply ${list.length} change${list.length === 1 ? '' : 's'} from "${name}"?`)) return;
+  const byLead = new Map(); list.forEach(a => { if (!byLead.has(a.lead.leadId)) byLead.set(a.lead.leadId, []); byLead.get(a.lead.leadId).push(a); });
+  const jobs = [...byLead.entries()], ap = $('#scrApply'); if (ap) { ap.disabled = true; ap.textContent = 'Applying…'; }
+  let done = 0, failed = 0;
+  const call = (action, data) => demo ? Promise.resolve(demoApi(action, data)) : api(action, data);
+  await runBatch(jobs, async ([id, acts]) => {
+    try {
+      const patch = {};
+      acts.forEach(a => { if (a.type === 'setTag') patch.tag = a.tag; if (a.type === 'setFollowUp') patch.followUpDate = a.date; if (a.type === 'assign') patch.assignedTo = a.member; });
+      if (Object.keys(patch).length) await call('updateLead', Object.assign({ id }, patch));
+      const mv = acts.filter(a => a.type === 'moveStage').pop(); if (mv) await call('moveStage', { id, stage: mv.stage, by: me() + ' (script)' });
+      for (const n of acts.filter(a => a.type === 'addNote')) await call('addActivity', { leadId: id, type: 'Note', details: n.text, doneBy: me() + ' (script)' });
+      done += acts.length;
+    } catch (e) { failed += acts.length; }
+  });
+  scr.last = null; $('#scrOut').hidden = true;
+  toast(failed ? `${done} applied · ${failed} failed` : `✓ ${done} change${done === 1 ? '' : 's'} applied`, !!failed);
+  if (demo) renderAll(); else load(true);
+}
+
 (function scriptsEvents() {
   let t = null; const code = $('#scrCode');
-  code.addEventListener('input', () => { clearTimeout(t); t = setTimeout(previewScript, 250); });
-  code.addEventListener('keydown', e => { if (e.key === 'Tab') { e.preventDefault(); code.setRangeText('  ', code.selectionStart, code.selectionEnd, 'end'); } });
-  $('#scrList').addEventListener('click', e => { const a = e.target.closest('[data-scr]'); if (a) return loadScript(a.dataset.scr); const b = e.target.closest('[data-scrb]'); if (b) loadBuiltin(+b.dataset.scrb); });
+  code.addEventListener('input', () => { clearTimeout(t); t = setTimeout(previewScript, 250); if (scr.kind === 'code') { $('#scrOut').hidden = true; scr.last = null; } });
+  code.addEventListener('keydown', e => { if (e.key === 'Tab') { e.preventDefault(); code.setRangeText('  ', code.selectionStart, code.selectionEnd, 'end'); } if ((e.ctrlKey || e.metaKey) && e.key === 'Enter' && scr.kind === 'code') { e.preventDefault(); dryRun(); } });
+  $('#scrList').addEventListener('click', e => { const a = e.target.closest('[data-scr]'); if (a) return loadScript(a.dataset.scr); const b = e.target.closest('[data-scrb]'); if (b) return loadBuiltin(+b.dataset.scrb); const c = e.target.closest('[data-scrc]'); if (c) loadBuiltinCode(+c.dataset.scrc); });
   $('#scrNew').onclick = newScript;
+  $('#scrNewCode').onclick = () => { newCodeScript(); markActive('.none'); setTimeout(() => $('#scrName').focus(), 50); };
+  $('#scrRun').onclick = dryRun;
   $('#scrFromPipe').onclick = () => {
     if (!layout) layout = loadLayout();
-    scr.id = null;
-    $('#scrCode').value = presetJSON({ name: 'Mera Pipeline ' + fmtDate(todayStr()), folder: 'My Presets', description: 'Poora pipeline: saare stages aur wires', nodes: layout.stages.map(d => ({ name: d.name, color: d.color })), wires: layout.links.map(w => w.slice()) });
-    updateScrHead(); previewScript(); toast('Current pipeline script mein aa gaya — Save dabao');
+    scr.id = null; setKind('preset');
+    $('#scrCode').value = presetJSON({ name: 'My Pipeline ' + fmtDate(todayStr()), folder: 'My Presets', description: 'Full pipeline: all stages and wires', nodes: layout.stages.map(d => ({ name: d.name, color: d.color })), wires: layout.links.map(w => w.slice()) });
+    updateScrHead(); previewScript(); toast('Current pipeline loaded — press Save');
   };
   $('#scrSave').onclick = async () => {
-    const p = previewScript(); if (!p) return toast('Pehle script theek karo', true);
-    const id = scr.id || 'PRESET-' + Date.now().toString(36).toUpperCase();
-    const body = { flowId: id, flowName: p.name, trigger: 'preset', status: 'Active', flowJson: JSON.stringify(p) };
+    let body;
+    const id = scr.id || (scr.kind === 'code' ? 'SCRIPT-' : 'PRESET-') + Date.now().toString(36).toUpperCase();
+    if (scr.kind === 'code') {
+      const name = cleanName($('#scrName').value), folder = cleanName($('#scrFolder').value) || 'My Scripts', src = $('#scrCode').value;
+      if (!name) { $('#scrName').focus(); return toast('Give the script a name', true); }
+      if (!src.trim()) return toast('The script is empty', true);
+      if (src.length > 20000) return toast('Script is too long (max 20,000 characters)', true);
+      body = { flowId: id, flowName: name, trigger: 'script', status: 'Active', flowJson: JSON.stringify({ name, folder, code: src }) };
+    } else {
+      const p = previewScript(); if (!p) return toast('Fix the script first', true);
+      body = { flowId: id, flowName: p.name, trigger: 'preset', status: 'Active', flowJson: JSON.stringify(p) };
+    }
     const b = $('#scrSave'); b.disabled = true;
     try {
       await api('saveFlow', body);
       if (!demo) { const i = S.flows.findIndex(f => String(f.flowId) === id); if (i > -1) S.flows[i] = Object.assign(S.flows[i], body); else S.flows.push(body); }
-      scr.id = id; renderScripts(true); toast(`Saved ✓ — Pipeline → + Node → "${p.folder}" folder mein dikhega`);
-    } catch (e) { toast('Save nahi hua: ' + e.message, true); }
+      scr.id = id; renderScripts(true); updateScrHead(body.flowName); markActive(`[data-scr="${CSS.escape(id)}"]`);
+      toast(scr.kind === 'code' ? 'Script saved ✓' : `Saved ✓ — find it in Pipeline → + Node → "${JSON.parse(body.flowJson).folder}"`);
+    } catch (e) { toast('Could not save: ' + e.message, true); }
     finally { b.disabled = false; }
   };
   $('#scrDel').onclick = async () => {
-    if (!scr.id || !confirm('Ye preset delete karna hai? (Pipeline ke nodes pe asar nahi padega)')) return;
-    try { await api('deleteFlow', { id: scr.id }); if (!demo) S.flows = S.flows.filter(f => String(f.flowId) !== scr.id); toast('Preset delete ho gaya'); scr.id = null; newScript(); renderScripts(true); }
-    catch (e) { toast('Delete nahi hua: ' + e.message, true); }
+    if (!scr.id || !confirm(scr.kind === 'code' ? 'Delete this script?' : 'Delete this preset? (Nodes already in the pipeline are not affected)')) return;
+    try { await api('deleteFlow', { id: scr.id }); if (!demo) S.flows = S.flows.filter(f => String(f.flowId) !== scr.id); toast('Deleted'); scr.id = null; newScript(); renderScripts(true); }
+    catch (e) { toast('Could not delete: ' + e.message, true); }
   };
-  $('#scrTry').onclick = () => { const p = previewScript(); if (!p) return toast('Pehle script theek karo', true); go('pipeline'); setTimeout(() => applyPreset(p), 350); };
+  $('#scrTry').onclick = () => { const p = previewScript(); if (!p) return toast('Fix the script first', true); go('pipeline'); setTimeout(() => applyPreset(p), 350); };
   $('#scrAi').onclick = () => {
-    const txt = AI_PROMPT();
+    const txt = scr.kind === 'code' ? AI_PROMPT_CODE() : AI_PROMPT_PRESET();
     const fallback = () => {
-      $('#stageBox').innerHTML = `<div class="m-head"><h2>AI prompt</h2><button class="ibtn" data-close>${I.x}</button></div><p class="help" style="margin-bottom:10px">Ye copy karke ChatGPT / Gemini mein do. Jo JSON mile wo Script box mein paste karo.</p><textarea class="input code" style="min-height:260px" readonly>${esc(txt)}</textarea>`;
+      $('#stageBox').innerHTML = `<div class="m-head"><h2>AI prompt</h2><button class="ibtn" data-close>${I.x}</button></div><p class="help" style="margin-bottom:10px">Copy this into ChatGPT / Gemini, then paste what it returns into the editor.</p><textarea class="input code" style="min-height:260px" readonly>${esc(txt)}</textarea>`;
       showModal('#stageModal'); setTimeout(() => $('#stageBox textarea').select(), 60);
     };
-    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(() => toast('AI prompt copy ho gaya — ChatGPT / Gemini mein paste karo'), fallback); else fallback();
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(() => toast('AI prompt copied — paste it into ChatGPT / Gemini'), fallback); else fallback();
   };
+})();
+
+/* ================= Performance Marketing · Meta Ads ================= */
+const ADS = { tab: 'overview', range: 30, camp: '', data: null };
+const ADS_TABS = [['overview', 'Overview'], ['campaigns', 'Campaigns'], ['adsets', 'Ad sets'], ['ads', 'Ads'], ['audiences', 'Audiences'], ['creatives', 'Creatives'], ['forms', 'Lead forms'], ['funnel', 'Funnel'], ['connect', 'Connect']];
+const AD_SOURCES = ['Meta Ad', 'Instagram', 'Facebook'];
+const cmp = n => { n = Number(n) || 0; if (n >= 1e7) return (n / 1e7).toFixed(1) + ' Cr'; if (n >= 1e5) return (n / 1e5).toFixed(1) + 'L'; if (n >= 1e3) return (n / 1e3).toFixed(1) + 'K'; return String(Math.round(n)); };
+const pct = (a, b) => b ? (a / b * 100) : 0;
+function mulberry32(a) { return () => { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+
+/** Sample account (until the real ad account is connected). Deterministic, 60 days of daily rows per ad. */
+function adsSample() {
+  if (ADS.data) return ADS.data;
+  const r = mulberry32(20261001);
+  const C = [
+    { id: 'C1', name: 'Cafe Chairs — Lead Form', objective: 'Leads', dest: 'Instant form', status: 'Active', budget: 800, cpm: 110, ctr: 1.5, cpl: 175 },
+    { id: 'C2', name: 'Restaurant Seating — WhatsApp', objective: 'Messages', dest: 'WhatsApp chat', status: 'Active', budget: 600, cpm: 95, ctr: 2.1, cpl: 135 },
+    { id: 'C3', name: 'Retargeting — Website visitors', objective: 'Leads', dest: 'Instant form', status: 'Active', budget: 300, cpm: 160, ctr: 2.9, cpl: 105 },
+    { id: 'C4', name: 'Diwali Offer — Bar Stools', objective: 'Sales', dest: 'Website', status: 'Paused', budget: 500, cpm: 120, ctr: 1.1, cpl: 290 },
+  ];
+  const AS = {
+    C1: [['Mumbai · Cafe owners 25–45', 'Interests: cafe, coffee shop owners'], ['Pune · Restaurant owners', 'Interests: restaurant management']],
+    C2: [['Maharashtra · Hospitality', 'Interests: hospitality, hotels'], ['Lookalike 1% · Won clients', 'Lookalike of CRM Won stage']],
+    C3: [['Website visitors · 30 days', 'Custom audience: pixel'], ['Instagram engagers · 60 days', 'Custom audience: IG profile']],
+    C4: [['India · Bar & lounge owners', 'Interests: nightlife, bars']],
+  };
+  const FORMATS = ['Image', 'Video', 'Carousel'];
+  const HEAD = ['Premium cafe chairs from ₹2,499', 'Custom seating in 15 days', 'Free site visit in Mumbai', 'See 200+ restaurant setups', 'Bar stools — Diwali prices', 'Upgrade your cafe interiors'];
+  const adsets = [], ads = [];
+  C.forEach(c => (AS[c.id] || []).forEach(([name, aud], i) => {
+    const s = { id: c.id + 'S' + (i + 1), campaignId: c.id, name, audience: aud, placement: i ? 'Instagram feed + Reels' : 'Advantage+ placements', budget: Math.round(c.budget / (AS[c.id].length)) };
+    adsets.push(s);
+    for (let k = 0; k < 2; k++) {
+      const q = 0.75 + r() * 0.6, fq = 1.4 + r() * 2.6;
+      ads.push({ id: s.id + 'A' + (k + 1), adsetId: s.id, campaignId: c.id, name: (k ? 'Video' : 'Static') + ' · ' + name.split(' · ')[0], format: FORMATS[(i + k + c.id.charCodeAt(1)) % 3], headline: HEAD[(ads.length) % HEAD.length], text: 'Comfortable, durable seating made for busy cafes and restaurants. Free design consultation.', hue: (c.id.charCodeAt(1) * 47 + i * 30 + k * 70) % 360, q, freqBase: fq });
+    }
+  }));
+  const days = [];
+  for (let d = 59; d >= 0; d--) { const dt = new Date(); dt.setDate(dt.getDate() - d); days.push(dt.getFullYear() + '-' + pad(dt.getMonth() + 1) + '-' + pad(dt.getDate())); }
+  const rows = [];
+  ads.forEach(a => {
+    const c = C.find(x => x.id === a.campaignId), s = adsets.find(x => x.id === a.adsetId), per = s.budget / 2;
+    days.forEach((day, di) => {
+      if (c.status === 'Paused' && di > 38) return;
+      const wk = new Date(day + 'T00:00').getDay(), wkf = wk === 0 || wk === 6 ? 0.85 : 1.05;
+      const spend = per * (0.8 + r() * 0.35) * wkf;
+      const impressions = spend / (c.cpm * (0.85 + r() * 0.3)) * 1000;
+      const clicks = impressions * (c.ctr * a.q * (0.8 + r() * 0.4)) / 100;
+      const leads = Math.max(0, Math.round(spend / (c.cpl / a.q) * (0.6 + r() * 0.8)));
+      rows.push({ day, adId: a.id, spend, impressions, clicks, leads });
+    });
+  });
+  const audiences = [
+    { name: 'Website visitors · 30 days', type: 'Custom', source: 'Meta pixel', size: 4200, status: 'Ready' },
+    { name: 'Instagram engagers · 60 days', type: 'Custom', source: 'Instagram profile', size: 11800, status: 'Ready' },
+    { name: 'CRM · Won clients', type: 'Custom', source: 'CRM stage: Won', size: 140, status: 'Too small (min 100 matched)' },
+    { name: 'Lookalike 1% · Won clients', type: 'Lookalike', source: 'CRM · Won clients', size: 1450000, status: 'Ready' },
+    { name: 'Cafe & restaurant owners · Mumbai', type: 'Saved', source: 'Interests', size: 380000, status: 'Ready' },
+  ];
+  const forms = [
+    { id: 'F1', name: 'Cafe seating enquiry', campaignId: 'C1', fields: 'Name, Phone, City, Seats needed' },
+    { id: 'F2', name: 'Retargeting — quick quote', campaignId: 'C3', fields: 'Name, Phone, Budget' },
+  ];
+  ADS.data = { campaigns: C, adsets, ads, rows, days, audiences, forms };
+  return ADS.data;
+}
+function adsAgg(filter) {
+  const D = adsSample(), from = D.days[D.days.length - ADS.range];
+  const t = { spend: 0, impressions: 0, clicks: 0, leads: 0 };
+  D.rows.forEach(x => { if (x.day < from || (filter && !filter(x))) return; t.spend += x.spend; t.impressions += x.impressions; t.clicks += x.clicks; t.leads += x.leads; });
+  t.ctr = pct(t.clicks, t.impressions); t.cpl = t.leads ? t.spend / t.leads : 0; t.cpm = t.impressions ? t.spend / t.impressions * 1000 : 0; t.cpc = t.clicks ? t.spend / t.clicks : 0;
+  return t;
+}
+function adFreq(a) { return +(a.freqBase * (ADS.range / 30) ** 0.35).toFixed(1); }
+function crmFromAds() {
+  const from = (() => { const d = new Date(); d.setDate(d.getDate() - ADS.range + 1); return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); })();
+  const L = S.leads.filter(l => AD_SOURCES.includes(l.source) && dOnly(l.createdOn) >= from);
+  const won = L.filter(l => l.stage === 'Won'), worked = L.filter(l => l.stage !== 'New Lead');
+  return { L, won, worked, wonVal: won.reduce((s, l) => s + (+l.budget || 0), 0) };
+}
+const adStatus = s => `<span class="pill ${s === 'Active' ? 'won' : 'lost'}"><span class="sdot" style="background:${s === 'Active' ? 'var(--green)' : 'var(--faint)'}"></span>${esc(s)}</span>`;
+function dayChart(series, fmt, unit) {
+  const max = Math.max(1, ...series.map(p => p.v)), n = series.length;
+  return `<div class="dchart" style="--n:${n}">${series.map((p, i) => `<div class="dcol" data-tip="${esc(fmtDate(p.day))}: ${esc(fmt(p.v))} ${unit}"><div class="dbar" style="height:${Math.max(2, p.v / max * 100).toFixed(1)}%;--i:${Math.min(i, 30)}"></div></div>`).join('')}</div>
+    <div class="daxis"><span>${esc(fmtDate(series[0].day).replace(/ \d{4}$/, ''))}</span><span>${esc(fmtDate(series[Math.floor(n / 2)].day).replace(/ \d{4}$/, ''))}</span><span>${esc(fmtDate(series[n - 1].day).replace(/ \d{4}$/, ''))}</span></div>`;
+}
+function adsInsights() {
+  const D = adsSample(), out = [], tot = adsAgg();
+  const camps = D.campaigns.map(c => Object.assign({ c }, adsAgg(x => D.ads.find(a => a.id === x.adId).campaignId === c.id))).filter(x => x.c.status === 'Active' && x.leads);
+  const best = camps.slice().sort((a, b) => a.cpl - b.cpl)[0], worst = camps.slice().sort((a, b) => b.cpl - a.cpl)[0];
+  if (best) out.push(['good', 'Scale the winner', `“${best.c.name}” has the lowest cost per lead (${inr(best.cpl)}). Try raising its budget by about 20%.`]);
+  if (worst && worst !== best && worst.cpl > tot.cpl * 1.25) out.push(['warn', 'Expensive leads', `“${worst.c.name}” costs ${inr(worst.cpl)} per lead vs ${inr(tot.cpl)} average. Tighten the audience or test a new creative.`]);
+  D.ads.filter(a => D.campaigns.find(c => c.id === a.campaignId).status === 'Active' && adFreq(a) > 3).slice(0, 2).forEach(a => out.push(['warn', 'Creative fatigue', `“${a.name}” has frequency ${adFreq(a)} — people have seen it too often. Refresh the creative.`]));
+  const waiting = S.leads.filter(l => AD_SOURCES.includes(l.source) && l.stage === 'New Lead' && daysBetween(l.createdOn, todayStr()) >= 2);
+  if (waiting.length) out.push(['bad', 'Slow follow-up', `${waiting.length} ad lead${waiting.length > 1 ? 's are' : ' is'} still in New Lead after 2+ days. Fast replies are the cheapest way to improve ad ROI.`]);
+  return out;
+}
+function renderAds(anim) {
+  if (!$('#v-ads').classList.contains('active')) return;
+  $('#adsTabs').innerHTML = ADS_TABS.map(([k, n]) => `<button class="tab ${ADS.tab === k ? 'active' : ''}" data-adtab="${k}">${n}</button>`).join('');
+  $('#adsRange').value = String(ADS.range);
+  const body = $('#adsBody'), f = { overview: adsOverview, campaigns: adsCampaigns, adsets: adsAdsets, ads: adsAds, audiences: adsAudiences, creatives: adsCreatives, forms: adsForms, funnel: adsFunnel, connect: adsConnect }[ADS.tab] || adsOverview;
+  body.innerHTML = f();
+  stagger(body, anim);
+  if (ADS.tab === 'funnel') drawFunnelWires();
+}
+function adsOverview() {
+  const D = adsSample(), t = adsAgg(), crm = crmFromAds(), roas = t.spend ? crm.wonVal / t.spend : 0;
+  let si = 0; const tile = (ic, bg, fg, v, lbl) => `<div class="stat glass" style="--i:${si++}"><div class="ic" style="background:${bg};color:${fg}">${ic}</div><div><b>${v}</b><span>${lbl}</span></div></div>`;
+  const from = D.days.slice(-ADS.range);
+  const byDay = key => from.map(day => ({ day, v: D.rows.filter(x => x.day === day).reduce((s, x) => s + x[key], 0) }));
+  const steps = [['Impressions', cmp(t.impressions)], ['Clicks', cmp(t.clicks)], ['Meta leads', cmp(t.leads)], ['In your CRM', crm.L.length], ['Worked', crm.worked.length], ['Won', crm.won.length]];
+  const conv = [pct(t.clicks, t.impressions), pct(t.leads, t.clicks), null, null, pct(crm.worked.length, crm.L.length), pct(crm.won.length, crm.worked.length)];
+  const camps = D.campaigns.map(c => Object.assign({ c }, adsAgg(x => D.ads.find(a => a.id === x.adId).campaignId === c.id))).sort((a, b) => b.spend - a.spend);
+  const ins = adsInsights(), icon = { good: '▲', warn: '!', bad: '●' };
+  return `<div class="stats adstats">
+      ${tile(I.rupee, 'var(--yellow-soft)', '#B7861A', inrShort(t.spend), 'Amount spent')}
+      ${tile(I.users, 'var(--blue-soft)', 'var(--blue-2)', cmp(t.leads), 'Leads (Meta)')}
+      ${tile(I.rupee, 'var(--blue-soft)', 'var(--blue-2)', inr(t.cpl), 'Cost per lead')}
+      ${tile(I.fire, 'var(--coral-soft)', 'var(--coral)', t.ctr.toFixed(2) + '%', 'CTR (link)')}
+      ${tile(I.trophy, 'var(--green-soft)', 'var(--green)', inrShort(crm.wonVal), `Won from ads · ${crm.won.length} deals`)}
+      ${tile(I.trophy, 'var(--green-soft)', 'var(--green)', roas ? roas.toFixed(1) + '×' : '–', 'ROAS (CRM won ÷ spend)')}
+    </div>
+    <div class="glass adfunnel"><div class="sec-t">Ads → CRM funnel <span class="muted" style="font-weight:500;font-size:12px">Meta numbers + your real pipeline</span></div>
+      <div class="fsteps">${steps.map(([l, v], i) => `${i ? `<div class="fconv">${conv[i] == null ? '<span class="muted">→</span>' : conv[i].toFixed(1) + '%'}</div>` : ''}<div class="fstep ${i >= 3 ? 'crm' : ''}"><small>${l}</small><b>${v}</b></div>`).join('')}</div></div>
+    <div class="rgrid">
+      <div class="rcard glass"><h3>Leads per day</h3><p class="sub muted">Leads reported by Meta, last ${ADS.range} days</p>${dayChart(byDay('leads'), v => String(Math.round(v)), 'leads')}</div>
+      <div class="rcard glass"><h3>Spend per day</h3><p class="sub muted">Amount spent across all campaigns</p>${dayChart(byDay('spend'), inr, '')}</div>
+      <div class="rcard glass"><h3>Campaigns</h3><p class="sub muted">Sorted by spend</p>
+        <div class="tblwrap"><table class="tbl"><thead><tr><th>Campaign</th><th>Status</th><th class="num">Spend</th><th class="num">Leads</th><th class="num">CPL</th></tr></thead><tbody>${camps.map(x => `<tr data-adcamp="${x.c.id}"><td><b>${esc(x.c.name)}</b></td><td>${adStatus(x.c.status)}</td><td class="num">${inr(x.spend)}</td><td class="num">${x.leads}</td><td class="num">${x.leads ? inr(x.cpl) : '–'}</td></tr>`).join('')}</tbody></table></div></div>
+      <div class="rcard glass"><h3>Smart insights</h3><p class="sub muted">Rules that watch your ads and pipeline</p>
+        <div class="insights">${ins.map(([k, h, tx]) => `<div class="ins ${k}"><span class="ii">${icon[k]}</span><div><b>${esc(h)}</b><p>${esc(tx)}</p></div></div>`).join('') || '<p class="muted">All good — nothing needs attention.</p>'}</div></div>
+    </div>`;
+}
+function adsCampaigns() {
+  const D = adsSample();
+  return `<div class="glass tblcard"><div class="tblwrap"><table class="tbl"><thead><tr><th>On</th><th>Campaign</th><th>Objective</th><th class="num">Budget / day</th><th class="num">Spend</th><th class="num">Impressions</th><th class="num">CTR</th><th class="num">Leads</th><th class="num">CPL</th></tr></thead><tbody>
+    ${D.campaigns.map((c, i) => { const x = adsAgg(r => D.ads.find(a => a.id === r.adId).campaignId === c.id); return `<tr data-adcamp="${c.id}" style="--i:${i}"><td><button class="switch ${c.status === 'Active' ? 'on' : ''}" data-adtoggle="${c.id}" data-tip="${c.status === 'Active' ? 'Pause' : 'Turn on'}"></button></td><td><b>${esc(c.name)}</b><div class="muted" style="font-size:11.5px">${esc(c.dest)}</div></td><td>${esc(c.objective)}</td><td class="num">${inr(c.budget)}</td><td class="num">${inr(x.spend)}</td><td class="num">${cmp(x.impressions)}</td><td class="num">${x.ctr.toFixed(2)}%</td><td class="num">${x.leads}</td><td class="num">${x.leads ? inr(x.cpl) : '–'}</td></tr>`; }).join('')}
+    </tbody></table></div><p class="help" style="padding:10px 14px 14px">Click a campaign to see its ad sets.</p></div>`;
+}
+function adsAdsets() {
+  const D = adsSample(), list = D.adsets.filter(s => !ADS.camp || s.campaignId === ADS.camp);
+  return `<div class="adfilter"><select class="input" id="adCampSel" style="width:auto"><option value="">All campaigns</option>${D.campaigns.map(c => `<option value="${c.id}" ${ADS.camp === c.id ? 'selected' : ''}>${esc(c.name)}</option>`).join('')}</select></div>
+    <div class="glass tblcard"><div class="tblwrap"><table class="tbl"><thead><tr><th>Ad set</th><th>Audience</th><th>Placement</th><th class="num">Budget / day</th><th class="num">Spend</th><th class="num">Leads</th><th class="num">CPL</th></tr></thead><tbody>
+    ${list.map(s => { const x = adsAgg(r => D.ads.find(a => a.id === r.adId).adsetId === s.id); return `<tr style="cursor:default"><td><b>${esc(s.name)}</b><div class="muted" style="font-size:11.5px">${esc(D.campaigns.find(c => c.id === s.campaignId).name)}</div></td><td>${esc(s.audience)}</td><td>${esc(s.placement)}</td><td class="num">${inr(s.budget)}</td><td class="num">${inr(x.spend)}</td><td class="num">${x.leads}</td><td class="num">${x.leads ? inr(x.cpl) : '–'}</td></tr>`; }).join('')}
+    </tbody></table></div></div>`;
+}
+function creativeTile(a, big) {
+  return `<div class="creative ${big ? 'big' : ''}" style="--h:${a.hue}"><span class="fmt">${esc(a.format)}</span><b>${esc(a.headline)}</b></div>`;
+}
+function adsAds() {
+  const D = adsSample(), list = D.ads.filter(a => !ADS.camp || a.campaignId === ADS.camp);
+  return `<div class="adfilter"><select class="input" id="adCampSel" style="width:auto"><option value="">All campaigns</option>${D.campaigns.map(c => `<option value="${c.id}" ${ADS.camp === c.id ? 'selected' : ''}>${esc(c.name)}</option>`).join('')}</select></div>
+    <div class="adgrid">${list.map((a, i) => { const x = adsAgg(r => r.adId === a.id), f = adFreq(a), c = D.campaigns.find(z => z.id === a.campaignId); return `<div class="adcard glass" style="--i:${i}">${creativeTile(a)}
+      <div class="adin"><div class="r1"><b>${esc(a.name)}</b>${adStatus(c.status)}</div><p class="muted">${esc(c.name)}</p>
+      <div class="admet"><div><small>Spend</small><b>${inrShort(x.spend)}</b></div><div><small>Leads</small><b>${x.leads}</b></div><div><small>CPL</small><b>${x.leads ? inr(x.cpl) : '–'}</b></div><div><small>CTR</small><b>${x.ctr.toFixed(1)}%</b></div></div>
+      ${f > 3 && c.status === 'Active' ? `<span class="pill warm">! Frequency ${f} — refresh creative</span>` : `<span class="muted" style="font-size:12px">Frequency ${f}</span>`}</div></div>`; }).join('')}</div>`;
+}
+function adsAudiences() {
+  const D = adsSample();
+  return `<div class="glass tblcard"><div class="tblwrap"><table class="tbl"><thead><tr><th>Audience</th><th>Type</th><th>Source</th><th class="num">Size</th><th>Status</th></tr></thead><tbody>
+    ${D.audiences.map(a => `<tr style="cursor:default"><td><b>${esc(a.name)}</b></td><td><span class="pill stage">${esc(a.type)}</span></td><td>${esc(a.source)}</td><td class="num">${cmp(a.size)}</td><td>${a.status === 'Ready' ? '<span class="pill won">✓ Ready</span>' : `<span class="pill warm">! ${esc(a.status)}</span>`}</td></tr>`).join('')}
+    </tbody></table></div></div>
+    <div class="glass adcta"><div><h3>Build audiences from your CRM</h3><p class="muted">Turn a pipeline stage into a Meta custom audience (phone numbers are hashed before upload), then make a lookalike of your best clients.</p></div>
+      <div class="adcta-row"><select class="input" id="audStage" style="width:auto">${stages().map(s => `<option ${s === 'Won' ? 'selected' : ''}>${esc(s)}</option>`).join('')}</select><button class="btn primary" data-adconnect>Create audience</button></div></div>`;
+}
+function adsCreatives() {
+  const D = adsSample();
+  return `<div class="glass adcta"><div><h3>Creative library</h3><p class="muted">Every image and video used in your ads. Uploading new creatives and launching ads from here comes after the ad account is connected.</p></div><div class="adcta-row"><button class="btn" data-adconnect>Upload creative</button></div></div>
+    <div class="crgrid">${D.ads.map((a, i) => { const x = adsAgg(r => r.adId === a.id); return `<div class="crcard glass" style="--i:${i}">${creativeTile(a, true)}<div class="crin"><b>${esc(a.headline)}</b><span class="muted">${esc(a.format)} · CTR ${x.ctr.toFixed(1)}% · ${x.leads} leads</span></div></div>`; }).join('')}</div>`;
+}
+function adsForms() {
+  const D = adsSample(), map = store.get('leadnode.ads.forms') || {}, team = [...new Set(S.team.filter(t => t.active !== false && t.name).map(t => t.name))];
+  return `<div class="glass adcta"><div><h3>Lead forms → CRM</h3><p class="muted">Every Instant Form submission becomes a lead in your pipeline automatically — with the stage, owner and tag you choose here. Live import starts when the Meta webhook is connected.</p></div></div>
+    <div class="formlist">${D.forms.map((fm, i) => { const m = Object.assign({ auto: true, stage: stages()[0], assign: '', tag: 'Hot' }, map[fm.id]), x = adsAgg(r => D.ads.find(a => a.id === r.adId).campaignId === fm.campaignId); return `<div class="glass fmcard" style="--i:${i}">
+      <div class="fmhead"><div><b>${esc(fm.name)}</b><p class="muted">${esc(D.campaigns.find(c => c.id === fm.campaignId).name)} · ${x.leads} leads · fields: ${esc(fm.fields)}</p></div><button class="switch ${m.auto ? 'on' : ''}" data-formauto="${fm.id}" data-tip="Auto-import to CRM"></button></div>
+      <div class="fmmap"><div class="field"><label>Put new leads in</label><select class="input" data-formset="${fm.id}" data-k="stage">${stages().filter(s => !LOCKED.includes(s)).map(s => `<option ${s === m.stage ? 'selected' : ''}>${esc(s)}</option>`).join('')}</select></div>
+        <div class="field"><label>Assign to</label><select class="input" data-formset="${fm.id}" data-k="assign"><option value="">Round-robin (team)</option>${team.map(t => `<option ${t === m.assign ? 'selected' : ''}>${esc(t)}</option>`).join('')}</select></div>
+        <div class="field"><label>Tag</label><select class="input" data-formset="${fm.id}" data-k="tag">${(S.lists.tags || ['Hot', 'Warm', 'Cold']).map(t => `<option ${t === m.tag ? 'selected' : ''}>${esc(t)}</option>`).join('')}</select></div></div></div>`; }).join('')}</div>`;
+}
+/* Funnel: node graph Campaign → Ad set → Destination → CRM → Won */
+function adsFunnel() {
+  const D = adsSample(), crm = crmFromAds(), cols = [[], [], [], [], []];
+  D.campaigns.forEach(c => { const x = adsAgg(r => D.ads.find(a => a.id === r.adId).campaignId === c.id); cols[0].push({ id: c.id, name: c.name, meta: `${inrShort(x.spend)} · ${x.leads} leads`, dim: c.status !== 'Active' }); });
+  D.adsets.forEach(s => { const x = adsAgg(r => D.ads.find(a => a.id === r.adId).adsetId === s.id); cols[1].push({ id: s.id, name: s.name, meta: `${x.leads} leads · CPL ${x.leads ? inr(x.cpl) : '–'}`, from: [s.campaignId], dim: D.campaigns.find(c => c.id === s.campaignId).status !== 'Active' }); });
+  [...new Set(D.campaigns.map(c => c.dest))].forEach(d => { const cs = D.campaigns.filter(c => c.dest === d).map(c => c.id); const x = adsAgg(r => cs.includes(D.ads.find(a => a.id === r.adId).campaignId)); cols[2].push({ id: 'D-' + d, name: d, meta: `${x.leads} leads`, from: D.adsets.filter(s => cs.includes(s.campaignId)).map(s => s.id) }); });
+  cols[3].push({ id: 'CRM', name: 'CRM · ' + stages()[0], meta: `${crm.L.length} ad leads in pipeline`, from: cols[2].map(n => n.id), crm: true });
+  cols[4].push({ id: 'WON', name: 'Won', meta: `${crm.won.length} deals · ${inrShort(crm.wonVal)}`, from: ['CRM'], crm: true, won: true });
+  const W = 250, GX = 70, H = 64, GY = 18, maxN = Math.max(...cols.map(c => c.length)), totalH = maxN * (H + GY) - GY;
+  const pos = {};
+  cols.forEach((c, ci) => { const h = c.length * (H + GY) - GY, y0 = (totalH - h) / 2; c.forEach((n, i) => pos[n.id] = { x: ci * (W + GX), y: y0 + i * (H + GY) }); });
+  ADS.fpos = { pos, cols, W, H };
+  const heads = ['Campaigns', 'Ad sets', 'Destination', 'Your CRM', 'Result'];
+  return `<p class="help" style="margin:0 0 10px">How money flows from each campaign to real deals. Grey nodes are paused.</p>
+    <div class="fwrap glass"><div class="fworld" style="width:${5 * W + 4 * GX}px;height:${totalH + 40}px">
+      ${heads.map((h, i) => `<div class="fhead" style="left:${i * (W + GX)}px;width:${W}px">${h}</div>`).join('')}
+      <svg class="fwires" id="fwires" width="${5 * W + 4 * GX}" height="${totalH + 40}"></svg>
+      ${cols.flat().map((n, i) => `<div class="fnode ${n.dim ? 'dim' : ''} ${n.crm ? 'crm' : ''} ${n.won ? 'won' : ''}" style="left:${pos[n.id].x}px;top:${pos[n.id].y + 30}px;width:${W}px;height:${H}px;--i:${i}" title="${esc(n.name)}"><span class="port l in on"></span><span class="port r out"></span><b>${esc(n.name)}</b><small>${esc(n.meta)}</small></div>`).join('')}
+    </div></div>`;
+}
+function drawFunnelWires() {
+  const f = ADS.fpos, svg = $('#fwires'); if (!f || !svg) return;
+  let h = '', i = 0;
+  f.cols.flat().forEach(n => (n.from || []).forEach(src => {
+    const a = f.pos[src], b = f.pos[n.id]; if (!a || !b) return;
+    const A = { x: a.x + f.W, y: a.y + 30 + f.H / 2 }, B = { x: b.x, y: b.y + 30 + f.H / 2 }, d = wirePath(A, B);
+    const dim = f.cols.flat().find(z => z.id === src).dim;
+    h += `<g class="wire ${dim ? 'off' : ''}"><path class="ln" d="${d}"/>${dim ? '' : `<circle class="flow" r="3"><animateMotion dur="${(2.4 + (i++ % 4) * 0.4).toFixed(1)}s" repeatCount="indefinite" path="${d}"/></circle>`}</g>`;
+  }));
+  svg.innerHTML = h;
+}
+function adsConnect() {
+  const c = store.get('leadnode.ads.conn') || {};
+  const step = (n, t, d, done) => `<div class="cstep ${done ? 'done' : ''}"><span class="cn">${done ? '✓' : n}</span><div><b>${t}</b><p class="muted">${d}</p></div></div>`;
+  return `<div class="rgrid">
+    <div class="rcard glass"><h3>Connect your ad account</h3><p class="sub muted">Uses the same verified business (Vertex Media) and the leadnode-bot system user you already set up for WhatsApp.</p>
+      <div class="form" style="grid-template-columns:1fr">
+        <div class="field"><label>Ad account ID</label><input class="input" id="adAcc" placeholder="act_1234567890" value="${esc(c.account || '')}"></div>
+        <div class="field"><label>Pixel / Dataset ID (optional)</label><input class="input" id="adPixel" placeholder="1234567890" value="${esc(c.pixel || '')}"></div>
+        <p class="help">Never paste tokens here. The access token stays in Apps Script → Script Properties, like the WhatsApp token.</p>
+        <div class="m-foot" style="margin-top:4px"><div class="grow"></div><button class="btn primary" id="adConnSave">Save</button></div></div></div>
+    <div class="rcard glass"><h3>What happens next</h3><p class="sub muted">Step by step — start read-only, add control later</p>
+      ${step(1, 'Give leadnode-bot "View performance" on the ad account', 'Business settings → System users → Assign assets → Ad accounts. Read-only first (ads_read).', !!c.account)}
+      ${step(2, 'Live dashboard', 'Spend, leads, CPL and CTR from the Marketing API instead of sample data.', false)}
+      ${step(3, 'Lead forms → CRM', 'Meta lead webhook (leads_retrieval) creates leads in your pipeline instantly.', false)}
+      ${step(4, 'Send Won deals back to Meta', 'Conversions API tells Meta which leads became customers, so it finds more like them.', false)}
+      ${step(5, 'Control from here', 'Pause / resume campaigns and change budgets (ads_management).', false)}
+    </div></div>`;
+}
+(function adsEvents() {
+  $('#v-ads').addEventListener('click', e => {
+    const t = e.target;
+    const tab = t.closest('[data-adtab]'); if (tab) { ADS.tab = tab.dataset.adtab; renderAds(true); return; }
+    const tg = t.closest('[data-adtoggle]'); if (tg) { e.stopPropagation(); toast('Sample data — connect your ad account to pause or resume campaigns', true); return; }
+    const cp = t.closest('[data-adcamp]'); if (cp) { ADS.camp = cp.dataset.adcamp; ADS.tab = 'adsets'; renderAds(true); return; }
+    const fa = t.closest('[data-formauto]'); if (fa) { const m = store.get('leadnode.ads.forms') || {}; const id = fa.dataset.formauto; m[id] = Object.assign({ auto: true }, m[id]); m[id].auto = !m[id].auto; store.set('leadnode.ads.forms', m); fa.classList.toggle('on', m[id].auto); toast(m[id].auto ? 'Auto-import on' : 'Auto-import off'); return; }
+    if (t.closest('[data-adconnect]')) { toast('Connect your ad account first (Connect tab)'); ADS.tab = 'connect'; renderAds(true); return; }
+    if (t.id === 'adConnSave') { const acc = $('#adAcc').value.trim(), px = $('#adPixel').value.trim(); if (acc && !/^act_\d{5,20}$/.test(acc)) return toast('Ad account ID looks like act_ followed by numbers', true); if (px && !/^\d{5,20}$/.test(px)) return toast('Pixel ID should be numbers only', true); store.set('leadnode.ads.conn', { account: acc, pixel: px }); toast('Saved ✓ — next: give leadnode-bot access to this ad account'); renderAds(); }
+  });
+  $('#v-ads').addEventListener('change', e => {
+    if (e.target.id === 'adCampSel') { ADS.camp = e.target.value; renderAds(); return; }
+    if (e.target.id === 'adsRange') { ADS.range = +e.target.value; renderAds(true); return; }
+    const fs = e.target.closest('[data-formset]'); if (fs) { const m = store.get('leadnode.ads.forms') || {}; const id = fs.dataset.formset; m[id] = Object.assign({ auto: true }, m[id], { [fs.dataset.k]: fs.value }); store.set('leadnode.ads.forms', m); toast('Mapping saved'); }
+  });
 })();
 
 /* ================= actions ================= */
@@ -1628,21 +2261,21 @@ async function moveStage(id, stage) {
   S.activities.push({ activityId: 'tmp' + Date.now(), leadId: id, dateTime: nowStr(), type: 'Stage Changed', details: old + ' → ' + stage, doneBy: me() });
   renderAll();
   try { await api('moveStage', { id, stage, by: me() }); toast(`${l.name}: ${stage}`); if (!demo) load(true); }
-  catch (e) { l.stage = old; toast('Stage save nahi hua: ' + e.message, true); load(true); }
+  catch (e) { l.stage = old; toast('Could not save stage: ' + e.message, true); load(true); }
 }
 async function addNote(id, type, details) {
-  if (!details.trim() && type === 'Note') return toast('Note khaali hai', true);
-  try { await api('addActivity', { leadId: id, type, details, doneBy: me() }); toast('Journey mein add ho gaya'); if (demo) renderAll(); else await load(true); }
-  catch (e) { toast('Save nahi hua: ' + e.message, true); }
+  if (!details.trim() && type === 'Note') return toast('The note is empty', true);
+  try { await api('addActivity', { leadId: id, type, details, doneBy: me() }); toast('Added to journey'); if (demo) renderAll(); else await load(true); }
+  catch (e) { toast('Could not save: ' + e.message, true); }
 }
 
 /* ================= WhatsApp send (Cloud API) ================= */
 async function sendWa(id) {
   const box = $('#watext'), text = box.value.trim(), btn = $('#wasend');
-  if (!text) return toast('Message likho', true);
-  if (demo) return toast('Demo mode mein WhatsApp nahi jaata. Settings mein Sheet connect karo.', true);
+  if (!text) return toast('Type a message', true);
+  if (demo) return toast('WhatsApp is not sent in demo mode. Connect your Sheet in Settings.', true);
   btn.disabled = true; btn.textContent = 'Sending…';
-  try { await api('sendText', { leadId: id, text, by: me() }); toast('WhatsApp message chala gaya ✓'); box.value = ''; await load(true); }
+  try { await api('sendText', { leadId: id, text, by: me() }); toast('WhatsApp message sent ✓'); box.value = ''; await load(true); }
   catch (e) { toast(e.message, true); }
   finally { const b = $('#wasend'); if (b) { b.disabled = false; b.innerHTML = I.wa + 'Send'; } }
 }
@@ -1685,14 +2318,14 @@ function renderPanel(id) {
         ${l.notes ? `<div style="grid-column:1/-1"><small>Notes</small><b style="font-weight:500">${esc(l.notes)}</b></div>` : ''}
       </div>
       <div class="notebox wa-box">
-        <div style="display:flex;align-items:center;gap:8px;font-weight:700;font-size:13px;color:var(--wa)">${I.wa}<span style="color:var(--text)">CRM number se WhatsApp bhejo</span></div>
+        <div style="display:flex;align-items:center;gap:8px;font-weight:700;font-size:13px;color:var(--wa)">${I.wa}<span style="color:var(--text)">Send WhatsApp from your CRM number</span></div>
         <textarea class="input" id="watext" rows="2" style="min-height:64px" placeholder="Hi ${esc((l.name || '').split(' ')[0])}, …"></textarea>
-        <div class="row" style="justify-content:space-between;align-items:center"><small class="muted" style="font-size:11.5px">Free text tabhi jaata hai jab customer ne pichhle 24 ghante mein message kiya ho.</small><button class="btn wa sm" id="wasend">${I.wa}Send</button></div></div>
+        <div class="row" style="justify-content:space-between;align-items:center"><small class="muted" style="font-size:11.5px">Free text only works if the customer messaged you in the last 24 hours.</small><button class="btn wa sm" id="wasend">${I.wa}Send</button></div></div>
       <div class="notebox"><div class="row"><select class="input" id="ntype" style="width:150px">${types.map(t => `<option>${esc(t)}</option>`).join('')}</select>
-        <input class="input" id="ntext" placeholder="Kya hua? (e.g. call pe baat hui)"></div>
+        <input class="input" id="ntext" placeholder="What happened? (e.g. spoke on a call)"></div>
         <div class="row" style="justify-content:flex-end"><button class="btn primary sm" id="nsave">Add to Journey</button></div></div>
       <div><div class="sec-t" style="margin-bottom:12px">Journey <span class="muted" style="font-weight:500;font-size:12px">${acts.length} steps</span></div>
-        <div class="journey">${journey || '<p class="muted">Abhi koi activity nahi.</p>'}</div></div>
+        <div class="journey">${journey || '<p class="muted">No activity yet.</p>'}</div></div>
     </div>
     <div class="p-foot">
       ${l.stage !== 'Lost' && l.stage !== 'Won' ? '<button class="btn danger" data-move="Lost">Mark as Lost</button>' : `<button class="btn danger" data-delete="${esc(l.leadId)}">Delete Lead</button>`}
@@ -1714,7 +2347,7 @@ function openLeadModal(lead, presetStage) {
     <div class="m-head"><h2>${lead ? 'Edit Lead' : 'Add New Lead'}</h2><button class="ibtn" data-close>${I.x}</button></div>
     <form class="form" id="lform" autocomplete="off">
       <div class="field full photos-row">
-        <div class="field"><label>Business photo (card ki cover image)</label>${uploaderHTML('lead', 'businessPhoto', 'business', 1200, 'wide', 'Gallery se shop / cafe ki photo')}</div>
+        <div class="field"><label>Business photo (card cover image)</label>${uploaderHTML('lead', 'businessPhoto', 'business', 1200, 'wide', 'Shop / cafe photo from gallery')}</div>
         <div class="field"><label>Client photo / logo</label>${uploaderHTML('lead', 'clientPhoto', 'client', 400, 'round', 'Photo')}</div>
       </div>
       <div class="field"><label>Full name *</label><input class="input" name="name" required value="${esc(l.name || '')}" placeholder="Aarav Mehta"></div>
@@ -1731,7 +2364,7 @@ function openLeadModal(lead, presetStage) {
       <div class="field full"><label>Notes</label><textarea class="input" name="notes" placeholder="Requirement, quantity, special request…">${esc(l.notes || '')}</textarea></div>
     </form>
     <div class="m-foot">
-      <label class="check"><input type="checkbox" disabled> WhatsApp pe welcome message bhejo <small>(Step 7 ke baad)</small></label>
+      <label class="check"><input type="checkbox" disabled> Send a WhatsApp welcome message <small>(after Step 7)</small></label>
       <div class="grow"></div>
       <button class="btn" data-close>Cancel</button>
       <button class="btn primary" id="lsave">${lead ? 'Save Changes' : 'Save Lead'}</button>
@@ -1748,10 +2381,10 @@ function drawFormStage() {
   $$('#fstage [data-fs]').forEach(b => b.onclick = () => { formStage = b.dataset.fs; drawFormStage(); });
 }
 async function saveLead(lead) {
-  if (upBusy) return toast('Photo upload ho rahi hai, 2 second ruko…', true);
+  if (upBusy) return toast('Photo is still uploading, wait 2 seconds…', true);
   const f = $('#lform'); const fd = Object.fromEntries(new FormData(f).entries());
-  if (!fd.name.trim()) return toast('Naam zaroori hai', true);
-  const digits = fd.phone.replace(/\D/g, ''); if (digits.length < 10) return toast('Sahi WhatsApp number daalo (10 digit)', true);
+  if (!fd.name.trim()) return toast('Name is required', true);
+  const digits = fd.phone.replace(/\D/g, ''); if (digits.length < 10) return toast('Enter a valid WhatsApp number (10 digits)', true);
   const data = { name: fd.name.trim(), phone: digits.length === 10 ? '91' + digits : digits, businessName: fd.businessName.trim(), businessType: fd.businessType, city: fd.city.trim(), source: fd.source, budget: fd.budget ? Number(fd.budget) : '', followUpDate: fd.followUpDate, assignedTo: fd.assignedTo, notes: fd.notes.trim(), tag: formTag, stage: formStage, businessPhoto: upStore.lead.businessPhoto || '', clientPhoto: upStore.lead.clientPhoto || '' };
   const btn = $('#lsave'); btn.disabled = true; btn.textContent = 'Saving…';
   try {
@@ -1760,24 +2393,24 @@ async function saveLead(lead) {
       if (stageChanged) delete data.stage;
       await api('updateLead', Object.assign({ id: lead.leadId }, data));
       if (stageChanged) await api('moveStage', { id: lead.leadId, stage: newStage, by: me() });
-      toast('Lead update ho gayi');
+      toast('Lead updated');
     } else {
       const saved = await api('addLead', Object.assign({ by: me() }, data));
-      toast('Nayi lead save: ' + (saved.leadId || ''));
+      toast('New lead saved: ' + (saved.leadId || ''));
     }
     hideModal('#leadModal');
     if (demo) renderAll(); else await load(true);
-  } catch (e) { toast('Save nahi hua: ' + e.message, true); }
+  } catch (e) { toast('Could not save: ' + e.message, true); }
   finally { btn.disabled = false; btn.textContent = lead ? 'Save Changes' : 'Save Lead'; }
 }
 
 /* ================= photos (gallery upload) ================= */
 const upStore = { lead: {}, brand: {} };
 let upBusy = 0, pendingUp = null;
-/** Photo ko browser mein hi chhota karna (fast upload, kam Drive space) */
+/** Shrink photos in the browser (faster upload, less Drive space) */
 function compressImage(file, max, png) {
   return new Promise((res, rej) => {
-    if (!file || !/^image\//.test(file.type)) return rej(new Error('Sirf image file chuno'));
+    if (!file || !/^image\//.test(file.type)) return rej(new Error('Please choose an image file'));
     const img = new Image(), url = URL.createObjectURL(file);
     img.onload = () => {
       let w = img.naturalWidth, h = img.naturalHeight; const k = Math.min(1, max / Math.max(w, h)); w = Math.round(w * k); h = Math.round(h * k);
@@ -1786,21 +2419,21 @@ function compressImage(file, max, png) {
       x.drawImage(img, 0, 0, w, h); URL.revokeObjectURL(url);
       res(c.toDataURL(png ? 'image/png' : 'image/jpeg', 0.84));
     };
-    img.onerror = () => { URL.revokeObjectURL(url); rej(new Error('Ye image khul nahi rahi')); };
+    img.onerror = () => { URL.revokeObjectURL(url); rej(new Error('This image could not be opened')); };
     img.src = url;
   });
 }
 async function uploadPhoto(file, kind, max) {
   const png = kind === 'logo' && file.type === 'image/png';
   const dataUrl = await compressImage(file, max, png);
-  if (demo) return dataUrl;                      // demo: sirf is browser mein
+  if (demo) return dataUrl;                      // demo: this browser only
   const r = await api('uploadImage', { base64: dataUrl, mimeType: png ? 'image/png' : 'image/jpeg', kind });
   return r.url;
 }
 function uploaderHTML(scope, key, kind, max, shape, label) {
   const u = safeUrl(upStore[scope][key]);
-  return `<div class="uploader ${shape}" data-scope="${scope}" data-up="${key}" data-kind="${kind}" data-max="${max}" data-shape="${shape}" data-label="${esc(label)}" title="Gallery se photo chuno">
-    ${u ? `<div class="up-img" style="background-image:url('${esc(u)}')"></div><button type="button" class="up-x" data-upclear title="Photo hatao">${I.x}</button>`
+  return `<div class="uploader ${shape}" data-scope="${scope}" data-up="${key}" data-kind="${kind}" data-max="${max}" data-shape="${shape}" data-label="${esc(label)}" title="Choose a photo from gallery">
+    ${u ? `<div class="up-img" style="background-image:url('${esc(u)}')"></div><button type="button" class="up-x" data-upclear title="Remove photo">${I.x}</button>`
         : `<div class="up-ph"><svg class="i" viewBox="0 0 24 24"><path d="M4 7h3l2-3h6l2 3h3a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1Z"/><circle cx="12" cy="13" r="3.5"/></svg><span>${esc(label)}</span></div>`}
     <div class="up-busy"><div class="spin"></div></div></div>`;
 }
@@ -1813,12 +2446,12 @@ $('#fileIn').addEventListener('change', async e => {
   el.classList.add('busy'); upBusy++;
   try {
     upStore[tgt.scope][tgt.key] = await uploadPhoto(file, el.dataset.kind, +el.dataset.max || 1000);
-    toast('Photo upload ho gayi ✓');
-  } catch (err) { toast('Photo upload nahi hui: ' + err.message, true); }
+    toast('Photo uploaded ✓');
+  } catch (err) { toast('Photo upload failed: ' + err.message, true); }
   finally { upBusy--; const now = findUploader(tgt.scope, tgt.key); if (now) refreshUploader(now); }
 });
 
-/* ================= branding (logo, naam, profile) ================= */
+/* ================= branding (logo, name, profile) ================= */
 const DEFAULT_BRAND = { brandName: 'LeadNode', logoUrl: '', userName: 'Shivam', userPhoto: '' };
 function brand() { const b = Object.assign({}, DEFAULT_BRAND), src = S.settings || {}; Object.keys(DEFAULT_BRAND).forEach(k => { if (src[k]) b[k] = String(src[k]); }); return b; }
 const LOGO_DEFAULT = '<svg class="i" viewBox="0 0 24 24" style="width:22px;height:22px"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="12" r="2.5"/><circle cx="6" cy="18" r="2.5"/><path d="M8.3 7.2 15.7 11M8.3 16.8 15.7 13"/></svg>';
@@ -1841,28 +2474,28 @@ function openSettings(tab) {
   $('#bName').value = b.brandName; $('#pName').value = b.userName;
   $('#upLogo').innerHTML = uploaderHTML('brand', 'logoUrl', 'logo', 400, 'square', 'Logo');
   $('#upPhoto').innerHTML = uploaderHTML('brand', 'userPhoto', 'profile', 400, 'round', 'Photo');
-  $('#brandHelp').textContent = demo ? 'Demo mode: ye sirf is browser mein save hoga. Sheet connect karoge to Drive + Sheet mein save hoga.' : 'Logo aur photo gallery se chuno. Ye Google Sheet (Settings tab) aur Drive mein save hote hain, isliye har device pe same dikhenge.';
+  $('#brandHelp').textContent = demo ? 'Demo mode: saved in this browser only. Once your Sheet is connected it saves to Drive + Sheet.' : 'Pick a logo and photo from your gallery. They are saved to your Google Sheet (Settings tab) and Drive, so every device shows the same.';
   $('#sUrl').value = settings.url || ''; $('#sKey').value = settings.key || ''; $('#sStatus').textContent = ''; $('#sStatus').className = 'status';
   setSTab(tab || (demo ? 'conn' : 'brand'));
   showModal('#setModal');
 }
 $('#bSave').onclick = async () => {
-  if (upBusy) return toast('Photo upload ho rahi hai, 2 second ruko…', true);
+  if (upBusy) return toast('Photo is still uploading, wait 2 seconds…', true);
   const data = { brandName: $('#bName').value.trim() || 'LeadNode', userName: $('#pName').value.trim() || 'Shivam', logoUrl: upStore.brand.logoUrl || '', userPhoto: upStore.brand.userPhoto || '' };
   const btn = $('#bSave'); btn.disabled = true; btn.textContent = 'Saving…';
   try {
     if (demo) { store.set('leadnode.branding', data); S.settings = data; }
     else S.settings = await api('saveSettings', data);
-    applyBranding(); renderAll(); hideModal('#setModal'); toast('Branding save ho gayi ✓');
-  } catch (e) { toast('Save nahi hua: ' + e.message, true); }
+    applyBranding(); renderAll(); hideModal('#setModal'); toast('Branding saved ✓');
+  } catch (e) { toast('Could not save: ' + e.message, true); }
   finally { btn.disabled = false; btn.textContent = 'Save'; }
 };
 function readSettingsForm() { return { url: $('#sUrl').value.trim(), key: $('#sKey').value.trim(), name: settings.name || '' }; }
 async function testConn(conf) {
   const s = $('#sStatus'); s.className = 'status'; s.textContent = 'Checking…';
-  if (!/^https:\/\/script\.google\.com\/macros\/s\/.+\/exec$/.test(conf.url)) { s.className = 'status err'; s.textContent = 'URL sahi nahi lag raha. Wo https://script.google.com/macros/s/…/exec jaisa hona chahiye.'; return false; }
-  if (!conf.key) { s.className = 'status err'; s.textContent = 'API key daalo.'; return false; }
-  try { const r = await callApi(conf, 'ping'); if (r === 'pong') { s.className = 'status ok'; s.textContent = '✓ Connected! Backend se jawab aa gaya.'; return true; } throw new Error('Unexpected reply'); }
+  if (!/^https:\/\/script\.google\.com\/macros\/s\/.+\/exec$/.test(conf.url)) { s.className = 'status err'; s.textContent = 'That URL doesn\'t look right. It should look like https://script.google.com/macros/s/…/exec'; return false; }
+  if (!conf.key) { s.className = 'status err'; s.textContent = 'Enter the API key.'; return false; }
+  try { const r = await callApi(conf, 'ping'); if (r === 'pong') { s.className = 'status ok'; s.textContent = '✓ Connected! The backend replied.'; return true; } throw new Error('Unexpected reply'); }
   catch (e) { s.className = 'status err'; s.textContent = '✗ ' + e.message; return false; }
 }
 $('#sTest').onclick = () => testConn(readSettingsForm());
@@ -1871,7 +2504,7 @@ $('#sSave').onclick = async () => {
   settings = conf; store.set('leadnode.settings', settings); demo = false; view.fitted = false; layout = null;
   hideModal('#setModal'); toast('Google Sheet connected ✓'); load();
 };
-$('#sClear').onclick = () => { store.del('leadnode.settings'); settings = {}; demo = true; view.fitted = false; layout = null; hideModal('#setModal'); toast('Demo mode'); load(); };
+$('#sClear').onclick = () => { store.del('leadnode.settings'); store.del('leadnode.cache'); settings = {}; demo = true; view.fitted = false; layout = null; hideModal('#setModal'); toast('Demo mode'); load(); };
 $('#sShow').onclick = () => { const k = $('#sKey'); k.type = k.type === 'password' ? 'text' : 'password'; $('#sShow').textContent = k.type === 'password' ? 'Show' : 'Hide'; };
 
 /* ================= leads table ================= */
@@ -1886,7 +2519,7 @@ function renderLeads(anim) {
   let list = S.leads.filter(l => matchQ(l, f.q) && (!f.stage || l.stage === f.stage) && (!f.tag || l.tag === f.tag) && (!f.source || l.source === f.source));
   const { k, d } = ui.sort;
   list.sort((a, b) => k === 'budget' ? ((+a.budget || 0) - (+b.budget || 0)) * d : String(a[k] || '').localeCompare(String(b[k] || '')) * d);
-  $('#leadsCount').textContent = `${list.length} / ${S.leads.length} leads dikh rahi hain`;
+  $('#leadsCount').textContent = `Showing ${list.length} of ${S.leads.length} leads`;
   const head = '<thead><tr>' + LCOLS.map(([key, lab, cls]) => `<th data-sort="${key}" class="${cls || ''} ${k === key ? 'on' : ''}">${lab}<span class="ar">${k === key ? (d > 0 ? '↑' : '↓') : '↕'}</span></th>`).join('') + '</tr></thead>';
   const body = list.map((l, i) => `<tr data-open="${esc(l.leadId)}" style="--i:${anim ? Math.min(i, 25) : 0}">
     <td><div class="who">${avatar(l.name, 'sm', l.clientPhoto)}${esc(l.name)}</div></td>
@@ -1896,7 +2529,7 @@ function renderLeads(anim) {
     <td>${l.tag ? `<span class="pill ${tagCls(l.tag)}">${esc(l.tag)}</span>` : '-'}</td>
     <td style="${isDue(l) ? 'color:var(--coral);font-weight:700' : ''}">${l.followUpDate ? esc(fmtDate(l.followUpDate)) : '-'}</td>
     <td>${esc(l.assignedTo || '-')}</td><td class="muted">${esc(fmtDate(l.createdOn))}</td></tr>`).join('');
-  $('#ltable').innerHTML = head + '<tbody>' + (body || `<tr><td colspan="${LCOLS.length}" class="empty">Koi lead nahi mili.</td></tr>`) + '</tbody>';
+  $('#ltable').innerHTML = head + '<tbody>' + (body || `<tr><td colspan="${LCOLS.length}" class="empty">No leads found.</td></tr>`) + '</tbody>';
 }
 $('#lsearch').oninput = e => { ui.lf.q = e.target.value; renderLeads(); };
 $('#lfStage').onchange = e => { ui.lf.stage = e.target.value; renderLeads(); };
@@ -1910,7 +2543,7 @@ function exportCSV() {
   const rows = [CSV_COLS.map(c => c[1])].concat(S.leads.map(l => CSV_COLS.map(([k]) => k === 'phone' && l.phone ? '+' + l.phone : l[k])));
   const blob = new Blob(['﻿' + rows.map(r => r.map(q).join(',')).join('\r\n')], { type: 'text/csv;charset=utf-8' });
   const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `leads-${todayStr()}.csv`; document.body.appendChild(a); a.click(); a.remove();
-  setTimeout(() => URL.revokeObjectURL(a.href), 2000); toast(S.leads.length + ' leads export ho gayi');
+  setTimeout(() => URL.revokeObjectURL(a.href), 2000); toast(S.leads.length + ' leads exported');
 }
 function parseCSV(text) {
   const rows = []; let row = [], f = '', q = false;
@@ -1926,12 +2559,12 @@ function parseCSV(text) {
 }
 async function importCSV(file) {
   const rows = parseCSV((await file.text()).replace(/^﻿/, '')).filter(r => r.some(c => c.trim()));
-  if (rows.length < 2) return toast('CSV khaali hai', true);
+  if (rows.length < 2) return toast('The CSV is empty', true);
   const MAP = { name: 'name', fullname: 'name', leadname: 'name', phone: 'phone', whatsapp: 'phone', whatsappnumber: 'phone', mobile: 'phone', number: 'phone', businessname: 'businessName', business: 'businessName', company: 'businessName', businesstype: 'businessType', type: 'businessType', city: 'city', source: 'source', budget: 'budget', stage: 'stage', tag: 'tag', assignedto: 'assignedTo', owner: 'assignedTo', followupdate: 'followUpDate', followup: 'followUpDate', notes: 'notes', note: 'notes' };
   const keys = rows[0].map(h => MAP[h.toLowerCase().replace(/[^a-z]/g, '')] || null);
-  if (!keys.includes('name') || !keys.includes('phone')) return toast('CSV mein kam se kam "Name" aur "Phone" column chahiye', true);
+  if (!keys.includes('name') || !keys.includes('phone')) return toast('The CSV needs at least "Name" and "Phone" columns', true);
   const items = rows.slice(1, 301);
-  if (!confirm(`${items.length} leads import karni hain?${rows.length > 301 ? ' (ek baar mein max 300)' : ''}`)) return;
+  if (!confirm(`Import ${items.length} leads?${rows.length > 301 ? ' (max 300 at a time)' : ''}`)) return;
   let ok = 0, skip = 0;
   for (const r of items) {
     const d = {}; keys.forEach((k, i) => { if (k) d[k] = String(r[i] || '').trim(); });
@@ -1942,9 +2575,9 @@ async function importCSV(file) {
     if (d.stage && !stages().includes(d.stage)) delete d.stage;
     if (d.followUpDate && !/^\d{4}-\d{2}-\d{2}$/.test(d.followUpDate)) delete d.followUpDate;
     d.by = me();
-    try { await api('addLead', d); ok++; if (ok % 10 === 0) toast(`${ok} leads import ho gayi…`); } catch (e) { skip++; }
+    try { await api('addLead', d); ok++; if (ok % 10 === 0) toast(`${ok} leads imported…`); } catch (e) { skip++; }
   }
-  toast(`✓ ${ok} leads import hui${skip ? ` · ${skip} skip (naam/phone galat)` : ''}`);
+  toast(`✓ ${ok} leads imported${skip ? ` · ${skip} skipped (bad name/phone)` : ''}`);
   if (demo) renderAll(); else load(true);
 }
 $('#csvExport').onclick = exportCSV;
@@ -1965,27 +2598,27 @@ function renderTeam(anim) {
         <span class="pill ${on ? 'won' : 'lost'}">${on ? 'Active' : 'Inactive'}</span></div>
       <div class="tstats"><div><b>${st.total}</b><small>Leads</small></div><div><b>${st.open}</b><small>Open</small></div><div><b>${st.won}</b><small>Won</small></div></div>
       <div class="contact"><span>${I.phone.replace('class="i"', 'class="i" style="width:13px;height:13px;vertical-align:-2px"')} ${m.phone ? '+' + esc(String(m.phone).replace(/^\+/, '')) : '-'}</span><span>✉ ${esc(m.email || '-')}</span><span>🏆 Won value: <b>${inr(st.wonVal)}</b></span></div>
-      <div class="r3"><button class="switch ${on ? 'on' : ''}" data-memtoggle="${esc(m.memberId)}" data-tip="${on ? 'Inactive karo' : 'Active karo'}"></button><span class="muted" style="font-size:12.5px;flex:1">Active</span>
+      <div class="r3"><button class="switch ${on ? 'on' : ''}" data-memtoggle="${esc(m.memberId)}" data-tip="${on ? 'Make inactive' : 'Make active'}"></button><span class="muted" style="font-size:12.5px;flex:1">Active</span>
         <button class="btn sm" data-mem="${esc(m.memberId)}">${I.edit}Edit</button></div></div>`;
-  }).join('') || '<div class="empty glass">Abhi team mein koi nahi.</div>';
+  }).join('') || '<div class="empty glass">No team members yet.</div>';
 }
 function openMemberModal(m) {
   const x = m || {};
   $('#memBox').innerHTML = `<div class="m-head"><h2>${m ? 'Edit Member' : 'Add Team Member'}</h2><button class="ibtn" data-close>${I.x}</button></div>
     <div class="form" style="grid-template-columns:1fr 1fr">
-      <div class="field full"><label>Naam *</label><input class="input" id="mName" value="${esc(x.name || '')}" placeholder="Riya Patil"></div>
+      <div class="field full"><label>Name *</label><input class="input" id="mName" value="${esc(x.name || '')}" placeholder="Riya Patil"></div>
       <div class="field"><label>Role</label><select class="input" id="mRole">${['Admin', 'Sales', 'Support', 'Marketing'].map(r => `<option ${r === x.role ? 'selected' : ''}>${r}</option>`).join('')}</select></div>
       <div class="field"><label>Phone</label><input class="input" id="mPhone" value="${esc(x.phone || '')}" placeholder="+91 98765 43210"></div>
       <div class="field full"><label>Email</label><input class="input" id="mEmail" type="email" value="${esc(x.email || '')}" placeholder="name@gmail.com"></div>
     </div>
     <div class="m-foot"><div class="grow"></div><button class="btn" data-close>Cancel</button><button class="btn primary" id="mSave">${m ? 'Save Changes' : 'Add Member'}</button></div>`;
   $('#mSave').onclick = async () => {
-    const name = $('#mName').value.trim(); if (!name) return toast('Naam zaroori hai', true);
+    const name = $('#mName').value.trim(); if (!name) return toast('Name is required', true);
     const data = { name, role: $('#mRole').value, phone: $('#mPhone').value.replace(/[^\d+]/g, ''), email: $('#mEmail').value.trim() };
     try {
       if (m) await api('updateTeamMember', Object.assign({ id: m.memberId }, data)); else await api('addTeamMember', data);
-      hideModal('#memModal'); toast(m ? 'Member update ho gaya' : 'Naya member add ho gaya'); if (demo) renderAll(); else load(true);
-    } catch (e) { toast('Save nahi hua: ' + e.message, true); }
+      hideModal('#memModal'); toast(m ? 'Member updated' : 'Member added'); if (demo) renderAll(); else load(true);
+    } catch (e) { toast('Could not save: ' + e.message, true); }
   };
   showModal('#memModal'); setTimeout(() => $('#mName').focus(), 50);
 }
@@ -2023,12 +2656,12 @@ function renderReports(anim) {
   const mMax = Math.max(1, ...months.map(m => m.value));
   const team = S.team.map(m => Object.assign({ name: m.name }, memberStats(m.name))).filter(t => t.total).sort((a, b) => b.won - a.won || b.total - a.total);
   $('#rgrid').innerHTML = `
-    <div class="rcard glass"><h3>Leads by stage</h3><p class="sub muted">Har stage mein kitni leads aur kitna ₹</p>${barRows(byStage, v => v)}</div>
-    <div class="rcard glass"><h3>Leads by source</h3><p class="sub muted">Leads kahan se aa rahi hain</p>${bySource.length ? barRows(bySource, v => v) : '<p class="muted">Abhi data nahi.</p>'}</div>
-    <div class="rcard glass"><h3>Nayi leads, pichhle 6 mahine</h3><p class="sub muted">Har mahine kitni leads aayi</p>
+    <div class="rcard glass"><h3>Leads by stage</h3><p class="sub muted">Leads and ₹ value in each stage</p>${barRows(byStage, v => v)}</div>
+    <div class="rcard glass"><h3>Leads by source</h3><p class="sub muted">Where your leads come from</p>${bySource.length ? barRows(bySource, v => v) : '<p class="muted">No data yet.</p>'}</div>
+    <div class="rcard glass"><h3>New leads, last 6 months</h3><p class="sub muted">Leads added each month</p>
       <div class="colchart">${months.map((m, i) => `<div class="colw" data-tip="${m.label}: ${m.value} leads"><span class="v">${m.value}</span><div class="colb" style="height:${(m.value / mMax * 150).toFixed(0)}px;--i:${i}"></div><span class="m">${m.label}</span></div>`).join('')}</div></div>
-    <div class="rcard glass"><h3>Team performance</h3><p class="sub muted">Kisne kitni leads close ki</p>
-      ${team.length ? `<table class="tbl"><thead><tr><th>Member</th><th class="num">Leads</th><th class="num">Open</th><th class="num">Won</th><th class="num">Won ₹</th></tr></thead><tbody>${team.map(t => `<tr style="cursor:default"><td><div class="who">${avatar(t.name, 'sm', memberPhoto(t.name))}${esc(t.name)}</div></td><td class="num">${t.total}</td><td class="num">${t.open}</td><td class="num">${t.won}</td><td class="num">${inr(t.wonVal)}</td></tr>`).join('')}</tbody></table>` : '<p class="muted">Leads ko team member assign karo, tab yahan dikhega.</p>'}</div>`;
+    <div class="rcard glass"><h3>Team performance</h3><p class="sub muted">Who closed how many leads</p>
+      ${team.length ? `<table class="tbl"><thead><tr><th>Member</th><th class="num">Leads</th><th class="num">Open</th><th class="num">Won</th><th class="num">Won ₹</th></tr></thead><tbody>${team.map(t => `<tr style="cursor:default"><td><div class="who">${avatar(t.name, 'sm', memberPhoto(t.name))}${esc(t.name)}</div></td><td class="num">${t.total}</td><td class="num">${t.open}</td><td class="num">${t.won}</td><td class="num">${inr(t.wonVal)}</td></tr>`).join('')}</tbody></table>` : '<p class="muted">Assign leads to team members to see this.</p>'}</div>`;
   stagger($('#rgrid'), anim);
 }
 
@@ -2041,7 +2674,7 @@ function renderTemplates() {
       <div class="chatbg"><div class="bubble">${t.header ? `<div class="hdr">${esc(t.header)}</div>` : ''}${esc(t.body || '')}</div>
       ${btns.length ? `<div class="qbtns">${btns.map(b => `<span>${esc(b)}</span>`).join('')}</div>` : ''}</div>
       <span class="muted" style="font-size:12px">Language: ${esc(t.language || '-')}</span></div>`;
-  }).join('') || '<div class="empty glass" style="grid-column:1/-1">Abhi koi template nahi. Step 7 mein banayenge.</div>';
+  }).join('') || '<div class="empty glass" style="grid-column:1/-1">No templates yet. We will build them in Step 7.</div>';
 }
 
 /* ================= tooltip ================= */
@@ -2066,12 +2699,15 @@ function go(name) {
   $$('.view').forEach(v => v.classList.toggle('active', v.id === 'v-' + name));
   $$('[data-go]').forEach(a => a.classList.toggle('active', a.dataset.go === name));
   if (location.hash !== '#' + name) history.replaceState(null, '', '#' + name);
-  if (name === 'pipeline') requestAnimationFrame(() => { sizeCanvas(); if (!view.fitted) { renderPipeline(true); } else applyView(); });
+  const stale = staleViews.delete(name);
+  if (name === 'pipeline') requestAnimationFrame(() => { sizeCanvas(); if (!view.fitted || stale) { renderPipeline(!view.fitted); } else applyView(); });
   if (name === 'dashboard' && S.leads.length) renderDashboard(true);
   if (name === 'reports') renderReports(true);
   if (name === 'leads') renderLeads(true);
   if (name === 'team') renderTeam(true);
   if (name === 'scripts') renderScripts();
+  if (name === 'ads') renderAds(true);
+  if (name === 'templates' && stale) renderTemplates();
   closePops();
   window.scrollTo(0, 0);
 }
@@ -2090,7 +2726,7 @@ document.addEventListener('click', e => {
   const mv = t.closest('[data-move]'); if (mv && ui.openId) { moveStage(ui.openId, mv.dataset.move); return; }
   const sb = t.closest('#panel .sb[data-stage]'); if (sb && ui.openId) { moveStage(ui.openId, sb.dataset.stage); return; }
   const ed = t.closest('[data-edit]'); if (ed) { openLeadModal(S.leads.find(l => l.leadId === ed.dataset.edit)); return; }
-  const del = t.closest('[data-delete]'); if (del) { if (confirm('Ye lead hamesha ke liye delete karni hai?')) api('deleteLead', { id: del.dataset.delete }).then(() => { toast('Lead delete ho gayi'); closePanel(); demo ? renderAll() : load(true); }).catch(er => toast(er.message, true)); return; }
+  const del = t.closest('[data-delete]'); if (del) { if (confirm('Delete this lead permanently?')) api('deleteLead', { id: del.dataset.delete }).then(() => { toast('Lead deleted'); closePanel(); demo ? renderAll() : load(true); }).catch(er => toast(er.message, true)); return; }
   if (t.closest('[data-focus-note]')) { $('#ntext').focus(); return; }
   const upx = t.closest('[data-upclear]'); if (upx) { e.stopPropagation(); const u = upx.closest('.uploader'); upStore[u.dataset.scope][u.dataset.up] = ''; refreshUploader(u); return; }
   const up = t.closest('.uploader'); if (up) { if (up.classList.contains('busy')) return; pendingUp = { scope: up.dataset.scope, key: up.dataset.up }; $('#fileIn').value = ''; $('#fileIn').click(); return; }
@@ -2118,7 +2754,7 @@ $('#dsearch').oninput = e => { ui.q = e.target.value; $('#gsearch').value = ui.q
 $('#gsearch').oninput = e => { ui.q = e.target.value; $('#dsearch').value = ui.q; renderDashboard(); renderPipeline(); };
 $('#dstage').onchange = e => { ui.stage = e.target.value; renderDashboard(); };
 $('#pfilter').onchange = e => { ui.pfilter = e.target.value; renderPipeline(); };
-$('#refreshBtn').onclick = () => { load(true).then(() => toast('Data refresh ho gaya')); };
+$('#refreshBtn').onclick = () => { load(true).then(() => toast('Data refreshed')); };
 $('#bellBtn').onclick = () => { ui.tab = 'due'; go('dashboard'); renderDashboard(); };
 $('#sideSettings').onclick = () => openSettings(); $('#bannerSettings').onclick = () => openSettings('conn'); $('#meBtn').onclick = () => openSettings('brand');
 function setTheme(t) { document.documentElement.dataset.theme = t; store.set('leadnode.theme', t); }
