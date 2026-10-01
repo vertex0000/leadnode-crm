@@ -630,6 +630,30 @@ textarea.input.code{min-height:320px}
 .acct-imp{display:flex;gap:12px;align-items:center;flex-wrap:wrap;padding:12px;border:1px dashed var(--line-2);border-radius:12px;margin-bottom:12px}.acct-imp>div{flex:1 1 240px;display:flex;flex-direction:column;gap:3px}.acct-imp small{color:var(--muted);font-size:12px}
 .auth-demo{display:block;margin:12px auto 0;border:0;background:none;color:var(--muted);font-weight:600}.auth-demo:hover{color:var(--text)}
 input:-webkit-autofill,input:-webkit-autofill:hover,input:-webkit-autofill:focus{-webkit-text-fill-color:var(--text);caret-color:var(--text);transition:background-color 99999s ease-out 0s}
+.ro-banner{display:none}body.ro .ro-banner{display:flex}
+.lg-card{padding:18px;border-radius:16px;margin-top:18px}.lg-h{display:flex;gap:12px;align-items:flex-start;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap}.lg-h h3{margin:0 0 4px}.lg-h p{margin:0;font-size:13px}
+.lg-p{display:flex;gap:10px;align-items:center}.lg-p>div:last-child{display:flex;flex-direction:column}.lg-p small{font-size:12px}.input.sm{padding:6px 8px;font-size:12.5px;height:auto;width:auto}
+.lg-sub{margin:16px 0 8px;font-size:13px}.lg-inv{display:flex;flex-direction:column;gap:8px}.lg-i{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:8px 10px;border:1px solid var(--line);border-radius:10px;font-size:13px}
+.lg-roles{display:flex;flex-direction:column;gap:8px}.lg-r{display:flex;gap:10px;align-items:flex-start;padding:10px;border:1px solid var(--line);border-radius:10px;cursor:pointer}.lg-r:has(input:checked){border-color:var(--blue-2);background:var(--blue-soft)}.lg-r span{display:flex;flex-direction:column;gap:2px}.lg-r small{color:var(--muted);font-size:12px}
+.wa-on{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:13px;margin-bottom:12px}.wa-on .dot{width:8px;height:8px;border-radius:50%;background:var(--wa,#25A55F);box-shadow:0 0 0 3px color-mix(in srgb,var(--wa,#25A55F) 25%,transparent)}
+.wa-conn{padding:16px;border-radius:14px;margin-bottom:14px;display:flex;flex-direction:column;gap:4px;font-size:13.5px}.wa-fh{display:flex;justify-content:space-between;gap:10px}.wa-fh h3{margin:0 0 4px}.wa-fh p{margin:0 0 10px;font-size:13px}
+.wa-grid{grid-template-columns:1fr 1fr}.wa-grid .span2{grid-column:1/-1}.wa-help{margin:6px 0 4px;font-size:13px}.wa-help summary{cursor:pointer;font-weight:700}.wa-help p{color:var(--muted)}
+.inbox{display:grid;grid-template-columns:320px 1fr;height:calc(100vh - 250px);min-height:460px;border-radius:16px;overflow:hidden}
+.ib-list{border-right:1px solid var(--line);display:flex;flex-direction:column;min-height:0}.ib-search{padding:10px}.ib-scroll{overflow:auto;flex:1}
+.ib-c{display:flex;gap:10px;align-items:center;width:100%;padding:10px 12px;border:0;background:none;text-align:left;color:inherit;cursor:pointer;border-bottom:1px solid var(--line)}.ib-c:hover{background:var(--glass-3)}.ib-c.on{background:var(--blue-soft)}
+.ib-m{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}.ib-t{display:flex;justify-content:space-between;gap:6px}.ib-t b{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ib-t small{color:var(--muted);font-size:11px;white-space:nowrap}
+.ib-s{font-size:12.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ib-u{background:var(--wa,#25A55F);color:#fff;font-size:11px;font-weight:700;border-radius:10px;padding:1px 7px}
+.ib-sep{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);padding:12px 12px 6px}
+.ib-empty{padding:24px;color:var(--muted);font-size:13px;text-align:center}.ib-empty.big{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;height:100%}.ib-empty.big b{color:var(--text)}
+.ib-thread{display:flex;flex-direction:column;min-height:0;min-width:0}.ib-h{display:flex;gap:10px;align-items:center;padding:10px 14px;border-bottom:1px solid var(--line);flex-wrap:wrap}.ib-h .grow{display:flex;flex-direction:column;min-width:0}.ib-back{display:none}
+.ib-msgs{flex:1;overflow:auto;padding:14px 16px;display:flex;flex-direction:column;gap:6px;background:color-mix(in srgb,var(--glass-3) 60%,transparent)}
+.ib-day{align-self:center;font-size:11px;color:var(--muted);background:var(--glass-3);border:1px solid var(--line);padding:2px 10px;border-radius:10px;margin:8px 0}
+.bub{max-width:min(75%,560px);padding:8px 10px 6px;border-radius:12px;font-size:13.5px;line-height:1.45;display:flex;flex-direction:column;gap:2px;white-space:pre-wrap;word-break:break-word}
+.bub.in{align-self:flex-start;background:var(--glass-3);border:1px solid var(--line);border-top-left-radius:4px}.bub.out{align-self:flex-end;background:color-mix(in srgb,var(--wa,#25A55F) 18%,var(--glass-3));border-top-right-radius:4px}
+.bub small{align-self:flex-end;font-size:10.5px;color:var(--muted)}.tk{letter-spacing:-2px}.tk.rd{color:#34B7F1}.tk.fl{color:var(--coral)}
+.ib-comp{display:flex;gap:8px;padding:10px;border-top:1px solid var(--line);align-items:flex-end;flex-wrap:wrap}.ib-comp textarea{flex:1;resize:none;min-height:40px;max-height:140px}.ib-comp.tpl select{flex:1;min-width:180px}
+.ib-note{font-size:12px;color:var(--muted);padding:8px 12px;width:100%}
+@media (max-width:760px){.inbox{grid-template-columns:1fr;height:calc(100vh - 210px)}.inbox .ib-thread{display:none}.inbox.thread-open .ib-list{display:none}.inbox.thread-open .ib-thread{display:flex}.ib-back{display:inline-flex}.wa-grid{grid-template-columns:1fr}}
 .srcTag{font-style:normal;font-size:10px;font-weight:700;padding:1px 5px;border-radius:4px;margin-left:4px;vertical-align:1px}
 .srcTag.real{background:var(--green-soft);color:var(--green)}.srcTag.sample{background:var(--line);color:var(--muted)}
 .rcard.span2{grid-column:1/-1}
@@ -968,6 +992,7 @@ input:-webkit-autofill,input:-webkit-autofill:hover,input:-webkit-autofill:focus
       <button class="me" id="meBtn" title="Profile & Branding"><div class="avatar">S</div></button>
     </header>
 
+    <div class="banner ro-banner" id="roBanner"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg><div class="grow"><b>View only:</b> you can see this workspace but not change it. Ask the owner for edit access.</div></div>
     <div class="banner" id="demoBanner" hidden>
       <svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
       <div class="grow"><b>Demo mode:</b> you're looking at sample data. To connect your Google Sheet, add the Web App URL and API key in Settings.</div>
@@ -1056,6 +1081,7 @@ input:-webkit-autofill,input:-webkit-autofill:hover,input:-webkit-autofill:focus
         <div class="head-actions"><button class="btn primary" id="addMember"><svg class="i" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Add Member</button></div>
       </div>
       <div class="tgrid" id="tgrid"></div>
+      <div id="logins"></div>
     </section>
 
     <!-- REPORTS -->
@@ -1141,10 +1167,11 @@ input:-webkit-autofill,input:-webkit-autofill:hover,input:-webkit-autofill:focus
     </section>
 
     <!-- COMING SOON -->
-    <section class="view" id="v-whatsapp"><div class="soon glass">
-      <div class="big"><svg class="i" viewBox="0 0 24 24"><path d="M3.5 20.5 5 16a8.5 8.5 0 1 1 3.2 3.2Z"/></svg></div>
-      <h2>WhatsApp Inbox</h2><p class="muted">Coming soon — once incoming WhatsApp messages are connected.</p>
-      <ul><li>Team inbox: every WhatsApp chat in one place</li><li>Lead info and stage next to each chat</li><li>New messages create leads automatically</li></ul></div></section>
+    <section class="view" id="v-whatsapp">
+      <div class="head"><div><div class="eyebrow">WhatsApp</div><h1>Inbox</h1><p class="sub">Every WhatsApp chat with your leads, in one place.</p></div></div>
+      <div id="waConn"></div>
+      <div class="inbox glass" id="inbox"><div class="ib-list"><div class="ib-search"><input class="input" id="ibQ" type="search" name="q-inbox" autocomplete="off" placeholder="Search chats or start one with a lead"></div><div class="ib-scroll" id="ibList"></div></div><div class="ib-thread" id="ibThread"></div></div>
+    </section>
     <section class="view" id="v-broadcast"><div class="soon glass">
       <div class="big"><svg class="i" viewBox="0 0 24 24"><path d="m3 11 18-8-8 18-2-8Z"/></svg></div>
       <h2>Bulk Broadcast</h2><p class="muted">Coming soon.</p>
@@ -1197,6 +1224,7 @@ input:-webkit-autofill,input:-webkit-autofill:hover,input:-webkit-autofill:focus
   <div class="stab" id="stab-acct" hidden>
     <div id="acctSigned" class="acct-me" hidden></div>
     <div id="acctPw" class="acct-ws" hidden><label>Change password</label><div class="acct-wsrow"><input class="input" id="pwNew" type="password" autocomplete="new-password" placeholder="New password (8+ characters)"><button class="btn" id="pwSave" type="button">Update</button></div></div>
+    <div id="acctSw" class="acct-ws" hidden><label>Switch workspace</label><select class="input" id="wsSwitch"></select></div>
     <div id="acctWs" class="acct-ws" hidden><label>Workspace name</label><div class="acct-wsrow"><input class="input" id="wsNameIn" maxlength="80" placeholder="Your business name"><button class="btn" id="wsRename" type="button">Rename</button></div></div>
     <div id="acctImport" class="acct-imp" hidden><div><b>Move your Google Sheet data here</b><small>Copies leads, journey, team, templates, pipeline and settings to your cloud workspace. Your Sheet is not changed. Safe to run again.</small></div><button class="btn primary" id="sbImport">Move my Google Sheet data here</button></div>
     <div class="form" style="grid-template-columns:1fr">
@@ -1357,7 +1385,7 @@ function demoData() {
     A('L007', 0, 'Lead Added', 'Website form'),
     A('L008', 25, 'Lead Added', 'Meta ad'), A('L008', 9, 'Stage Changed', 'Quotation Sent → Lost'),
   ];
-  return { leads, activities: acts, team: [{ memberId: 'T001', name: 'Shivam', role: 'Admin', active: true }, { memberId: 'T002', name: 'Riya Patil', role: 'Sales', active: true }, { memberId: 'T003', name: 'Amit Rao', role: 'Sales', active: true }], lists: DEFAULT_LISTS, templates: [], flows: store.get('leadnode.demoFlows') || [] };
+  return { messages: demoMessages(), leads, activities: acts, team: [{ memberId: 'T001', name: 'Shivam', role: 'Admin', active: true }, { memberId: 'T002', name: 'Riya Patil', role: 'Sales', active: true }, { memberId: 'T003', name: 'Amit Rao', role: 'Sales', active: true }], lists: DEFAULT_LISTS, templates: [], flows: store.get('leadnode.demoFlows') || [] };
 }
 function nextId(arr, key, prefix) { let m = 0; arr.forEach(o => { const x = String(o[key] || '').match(new RegExp('^' + prefix + '(\\d+)$')); if (x) m = Math.max(m, +x[1]); }); return prefix + String(m + 1).padStart(3, '0'); }
 function demoApi(action, d) {
@@ -1424,7 +1452,7 @@ function ring(pct, label, val, color) {
 
 /* ================= load ================= */
 function applyData(d) {
-  S = Object.assign({ leads: [], activities: [], team: [], templates: [], flows: [] }, d);
+  S = Object.assign({ leads: [], activities: [], team: [], templates: [], flows: [], messages: [] }, d);
   S.lists = Object.assign({}, DEFAULT_LISTS, d.lists || {});
   stageSig = (d.lists && d.lists.stages || []).join('|');
   S.leads.forEach(l => { l.leadId = String(l.leadId); l.phone = String(l.phone || ''); });
@@ -1456,7 +1484,7 @@ function finishLoad(anim) {
   renderAll(anim);
 }
 /** Render only the screen you're looking at; the others re-render when you open them */
-const VIEW_RENDER = { analytics: a => renderAnalytics(a), industry: a => renderIndustry(a), n8n: a => renderN8n(a), automation: () => autoCanvas().sync(), dashboard: a => renderDashboard(a), pipeline: a => renderPipeline(a), leads: a => renderLeads(a), team: a => renderTeam(a), reports: a => renderReports(a), templates: () => renderTemplates(), scripts: () => renderScripts(true), ads: a => renderAds(a) };
+const VIEW_RENDER = { analytics: a => renderAnalytics(a), industry: a => renderIndustry(a), n8n: a => renderN8n(a), automation: () => autoCanvas().sync(), dashboard: a => renderDashboard(a), pipeline: a => renderPipeline(a), leads: a => renderLeads(a), team: a => { renderTeam(a); renderLogins(); }, whatsapp: () => renderInbox(), reports: a => renderReports(a), templates: () => renderTemplates(), scripts: () => renderScripts(true), ads: a => renderAds(a) };
 const staleViews = new Set();
 const activeView = () => { const v = $('.view.active'); return v ? v.id.slice(2) : 'dashboard'; };
 function renderAll(anim) {
@@ -4150,15 +4178,15 @@ async function authInit() {
   const fallback = (settings.url && settings.key) || demoChosen();      // your Google Sheet on this browser, or the demo
   const urlErr = new URLSearchParams(location.hash.slice(1)).get('error_description');
   if (urlErr) { history.replaceState(null, '', location.pathname + '#dashboard'); showAuth('in'); authMsg(/expired|invalid/i.test(urlErr) ? 'This email link has expired or was already used. Ask for a new one.' : urlErr); return false; }
-  if (!hasSbSession() && !/access_token=|[?&]code=|type=recovery/.test(location.href)) { if (fallback) return true; showAuth('in'); return false; }
+  if (!hasSbSession() && !/access_token=|[?&]code=|type=recovery/.test(location.href)) { if (fallback && !pendingInvite()) return true; showAuth(pendingInvite() ? 'up' : 'in'); return false; }
   try { const cl = await authClient(); const { data } = await cl.auth.getSession(); AUTH.session = data.session; }
   catch (e) { toast('Login service unavailable: ' + e.message, true); return true; }
   if (AUTH.session) {
     try { await cloudStart(); return true; }
     catch (e) { toast(e.message, true); cloudStop(); if (settings.url && settings.key) return true; showAuth('in'); authMsg(e.message); return false; }
   }
-  if (fallback) return true;
-  showAuth('in'); return false;
+  if (fallback && !pendingInvite()) return true;
+  showAuth(pendingInvite() ? 'up' : 'in'); return false;
 }
 function authUser() { const u = AUTH.session && AUTH.session.user; return u ? { email: u.email, name: (u.user_metadata && (u.user_metadata.full_name || u.user_metadata.name)) || u.email } : null; }
 function showAuth(mode, preview) {
@@ -4175,7 +4203,8 @@ function drawAuth() {
   $('#authSub').textContent = up ? 'Free to start. Your team can join later.' : forgot ? 'We will email you a reset link.' : reset ? 'Choose a new password for your account.' : 'Sign in to your workspace';
   $('#authTabs').hidden = forgot || reset;
   $$('#authTabs .segb').forEach(x => x.classList.toggle('active', x.dataset.auth === (up ? 'up' : 'in')));
-  $$('.auth-up').forEach(x => x.hidden = !up);
+  $$('.auth-up').forEach(x => x.hidden = !up); const invited = !!pendingInvite(); $('#auBiz').closest('.field').hidden = !up || invited;
+  if (invited && (up || m === 'in')) $('#authSub').textContent = up ? 'You were invited to a workspace — create your login to join.' : 'You were invited — sign in to join the workspace.';
   $('.auth-mail').hidden = reset; $('.auth-pass').hidden = forgot; $('#authForgot').hidden = up || reset;
   $('#auPass').autocomplete = up || reset ? 'new-password' : 'current-password';
   $('#authGo').textContent = up ? 'Create account' : forgot ? 'Send reset link' : reset ? 'Save password' : 'Sign in';
@@ -4189,7 +4218,7 @@ async function authSubmit(e) {
   const email = $('#auEmail').value.trim(), pass = $('#auPass').value, m = AUTH.mode;
   if (m !== 'reset' && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return authMsg('Enter a valid email.');
   if ((m === 'in' || m === 'up' || m === 'reset') && pass.length < 8) return authMsg('Password must be at least 8 characters.');
-  if (m === 'up' && !$('#auBiz').value.trim()) return authMsg('Enter your business name.');
+  if (m === 'up' && !pendingInvite() && !$('#auBiz').value.trim()) return authMsg('Enter your business name.');
   if (AUTH.preview || !sbConf().url) return authMsg('Preview only — add your Supabase details in Settings → Accounts to make this work.', true);
   const btn = $('#authGo'), label = btn.textContent; btn.disabled = true; btn.textContent = 'Please wait…';
   try {
@@ -4220,6 +4249,8 @@ function fillAcct() {
   $('#acctSigned').hidden = !u; $('#sbLogin').hidden = !c.url || !!u; $('#acctImport').hidden = !(cloud && settings.url && settings.key);
   if (u) $('#acctSigned').innerHTML = `${avatar(u.name, '', brand().userPhoto)}<div class="grow"><b>${esc(u.name)}</b><small>${esc(u.email)}${cloud ? ` · ${esc(AUTH.wsName || 'Workspace')} (${esc(AUTH.role)})` : ''}</small></div><button class="btn sm" id="sbOut">Sign out</button>`;
   $('#acctPw').hidden = !u; $('#pwNew').value = '';
+  const wl = cloud ? (AUTH.wsList || []) : []; $('#acctSw').hidden = wl.length < 2;
+  if (wl.length > 1) $('#wsSwitch').innerHTML = wl.map(w => `<option value="${esc(w.workspace_id)}" ${w.workspace_id === AUTH.ws ? 'selected' : ''}>${esc(w.name)} · ${esc(ROLE_LABEL[w.role] || w.role)}</option>`).join('');
   $('#acctWs').hidden = !(cloud && /owner|admin/.test(AUTH.role || '')); if (cloud) $('#wsNameIn').value = AUTH.wsName || '';
   if (u && cloud) { $('#sbStatus').className = 'status ok'; $('#sbStatus').textContent = '✓ Your data is saved in the Nodevers cloud. Only people in your workspace can see it.'; }
 }
@@ -4524,14 +4555,16 @@ async function sbUpsert(table, rows, conflict) {
 }
 async function sbApi(action, d = {}) {
   const cl = AUTH.client, ws = AUTH.ws, T = n => cl.from(n);
+  if (AUTH.role === 'client' && !['ping', 'getAll'].includes(action)) throw new Error('View-only access — ask the workspace owner for edit rights.');
   switch (action) {
     case 'ping': return 'pong';
     case 'getAll': {
-      const [leads, activities, team, templates, broadcasts, flows, settings] = await Promise.all([
+      const [leads, activities, team, templates, broadcasts, flows, settings, messages] = await Promise.all([
         sbAll('leads', 'created_at'), sbAll('activities', 'date_time'), sbAll('team', 'member_id'), sbAll('templates', 'template_name'),
-        sbAll('broadcasts', 'broadcast_id'), sbAll('flows', 'flow_id'), sbSettings()]);
+        sbAll('broadcasts', 'broadcast_id'), sbAll('flows', 'flow_id'), sbSettings(),
+        sbq(T('messages').select('*').eq('workspace_id', ws).order('time', { ascending: false }).limit(1500))]);
       let stages = null; try { stages = JSON.parse(settings.stagesJson || 'null'); } catch (e) { }
-      return { leads: leads.map(fromRow), activities: activities.map(fromRow), team: team.map(fromRow), templates: templates.map(fromRow), broadcasts: broadcasts.map(fromRow), flows: flows.map(fromRow), lists: Array.isArray(stages) && stages.length ? { stages } : {}, settings };
+      return { leads: leads.map(fromRow), activities: activities.map(fromRow), team: team.map(fromRow), templates: templates.map(fromRow), broadcasts: broadcasts.map(fromRow), flows: flows.map(fromRow), messages: messages.reverse().map(fromRow), lists: Array.isArray(stages) && stages.length ? { stages } : {}, settings };
     }
     case 'addLead': {
       if (!String(d.name || '').trim()) throw new Error('Name is required');
@@ -4585,19 +4618,28 @@ async function sbApi(action, d = {}) {
       const up = await cl.storage.from('media').upload(path, blob, { contentType: type, cacheControl: '31536000' }); if (up.error) throw new Error(up.error.message);
       return { fileId: path, url: cl.storage.from('media').getPublicUrl(path).data.publicUrl };
     }
-    case 'sendText': case 'sendTemplate': throw new Error('Sending WhatsApp from the cloud is being set up — use the WhatsApp button for now.');
+    case 'sendText': return fnCall('wa-send', { lead_id: d.leadId, phone: d.phone, text: d.text, by: d.by });
+    case 'sendTemplate': return fnCall('wa-send', { lead_id: d.leadId, phone: d.phone, template: d.templateName, language: d.language, params: d.params, by: d.by });
   }
   throw new Error('Unknown action: ' + action);
 }
 /** After sign-in: find (or create on first login) this user's workspace */
 async function cloudStart() {
   const cl = await authClient(), u = AUTH.session.user, meta = u.user_metadata || {};
+  const inv = pendingInvite();
+  if (inv) {
+    const r = await cl.rpc('accept_invite', { p_token: inv, p_name: meta.full_name || meta.name || '' }); store.del('leadnode.invite');
+    if (r.error) toast(r.error.message, true); else { store.set('leadnode.ws', r.data.workspace_id); toast(`✓ You joined ${r.data.name}`); }
+  }
   const { data, error } = await cl.rpc('ensure_workspace', { p_business: meta.business_name || '', p_name: meta.full_name || meta.name || '' });
   if (error) throw new Error(/ensure_workspace|schema cache|does not exist/i.test(error.message) ? 'The database is not set up yet — run the Nodevers SQL in Supabase first.' : error.message);
-  AUTH.ws = data.workspace_id; AUTH.role = data.role; AUTH.wsName = data.name;
-  cloud = true; demo = false;
+  let pick = { workspace_id: data.workspace_id, role: data.role, name: data.name };
+  try { AUTH.wsList = (await cl.rpc('my_workspaces')).data || []; } catch (e) { AUTH.wsList = []; }
+  const pref = store.get('leadnode.ws'), w = AUTH.wsList.find(x => x.workspace_id === pref); if (w) pick = w;
+  AUTH.ws = pick.workspace_id; AUTH.role = pick.role; AUTH.wsName = pick.name;
+  cloud = true; demo = false; WA.status = null; document.body.classList.toggle('ro', AUTH.role === 'client'); liveStart();
 }
-function cloudStop() { cloud = false; AUTH.ws = null; AUTH.role = null; demo = !(settings.url && settings.key); }
+function cloudStop() { liveStop(); cloud = false; AUTH.ws = null; AUTH.role = null; AUTH.wsList = []; WA.status = null; document.body.classList.remove('ro'); demo = !(settings.url && settings.key); }
 /** One-time move: Google Sheet → cloud (keeps your IDs like L001) */
 async function importSheet() {
   if (!cloud) return toast('Sign in first', true);
@@ -4627,6 +4669,212 @@ async function importSheet() {
   } catch (e) { toast('Import stopped: ' + e.message + ' — nothing is lost, you can run it again.', true); }
   finally { b.disabled = false; b.textContent = 'Move my Google Sheet data here'; }
 }
+
+/* ================= invites, roles, workspaces ================= */
+const ROLE_INFO = { owner: 'Owner — everything, billing, cannot be removed', admin: 'Admin — everything incl. inviting people and WhatsApp setup', member: 'Member — works on leads, chats and automations', client: 'Client — view only (dashboard, pipeline, reports)' };
+const ROLE_LABEL = { owner: 'Owner', admin: 'Admin', member: 'Member', client: 'Client (view only)' };
+const pendingInvite = () => { const v = store.get('leadnode.invite'); return v && v.t && Date.now() - v.at < 7 * 864e5 ? v.t : null; };
+const canAdmin = () => cloud && /^(owner|admin)$/.test(AUTH.role || '');
+const inviteLink = t => `${location.origin}${location.pathname}#invite=${t}`;
+function copyText(v) { (navigator.clipboard ? navigator.clipboard.writeText(v) : Promise.reject()).then(() => toast('Link copied'), () => { const i = document.createElement('textarea'); i.value = v; document.body.appendChild(i); i.select(); document.execCommand('copy'); i.remove(); toast('Link copied'); }); }
+async function switchWorkspace(id) {
+  const w = (AUTH.wsList || []).find(x => x.workspace_id === id); if (!w) return;
+  liveStop(); store.set('leadnode.ws', id); store.del('leadnode.cache');
+  AUTH.ws = w.workspace_id; AUTH.role = w.role; AUTH.wsName = w.name; document.body.classList.toggle('ro', AUTH.role === 'client');
+  view.fitted = false; layout = null; WA.status = null; hideModal('#setModal'); toast(`Switched to ${w.name}`); liveStart(); load();
+}
+async function renderLogins() {
+  const box = $('#logins'); if (!box) return;
+  if (!cloud) { box.innerHTML = sbConf().url ? `<div class="glass lg-card"><div class="lg-h"><div><h3>Logins & access</h3><p class="muted">Sign in to the Nodevers cloud to invite your team and clients.</p></div><button class="btn" data-lgsign>Sign in</button></div></div>` : ''; return; }
+  box.innerHTML = `<div class="glass lg-card"><div class="loader"><div class="spin"></div>Loading people…</div></div>`;
+  try {
+    const [mem, inv] = await Promise.all([sbq(AUTH.client.rpc('list_members', { p_ws: AUTH.ws })), canAdmin() ? sbq(AUTH.client.from('invites').select('*').eq('workspace_id', AUTH.ws).is('used_at', null).gt('expires_at', new Date().toISOString()).order('created_at', { ascending: false })) : Promise.resolve([])]);
+    const me = AUTH.session.user.id, admin = canAdmin();
+    box.innerHTML = `<div class="glass lg-card"><div class="lg-h"><div><h3>Logins & access</h3><p class="muted">People who can sign in to <b>${esc(AUTH.wsName || 'this workspace')}</b>. Each workspace's data is private.</p></div>${admin ? `<button class="btn primary" data-lginvite>${I.users}Invite</button>` : ''}</div>
+      <div class="tblwrap"><table class="tbl"><thead><tr><th>Person</th><th>Role</th><th>Joined</th><th></th></tr></thead><tbody>
+      ${mem.map(m => `<tr style="cursor:default"><td><div class="lg-p">${avatar(m.name)}<div><b>${esc(m.name)}${m.user_id === me ? ' <span class="muted">(you)</span>' : ''}</b><small class="muted">${esc(m.email)}</small></div></div></td>
+        <td>${admin && m.role !== 'owner' && m.user_id !== me ? `<select class="input sm" data-lgrole="${esc(m.user_id)}">${['admin', 'member', 'client'].map(r => `<option value="${r}" ${r === m.role ? 'selected' : ''}>${ROLE_LABEL[r]}</option>`).join('')}</select>` : `<span class="pill ${m.role === 'owner' ? 'won' : 'stage'}">${ROLE_LABEL[m.role] || esc(m.role)}</span>`}</td>
+        <td class="muted">${esc(fmtDate(String(m.joined).slice(0, 10)))}</td>
+        <td class="num">${m.role !== 'owner' && (admin || m.user_id === me) ? `<button class="btn sm danger" data-lgrm="${esc(m.user_id)}" data-lgname="${esc(m.name)}">${m.user_id === me ? 'Leave' : 'Remove'}</button>` : ''}</td></tr>`).join('')}
+      </tbody></table></div>
+      ${inv.length ? `<h4 class="lg-sub">Pending invites</h4><div class="lg-inv">${inv.map(i => `<div class="lg-i"><span class="pill stage">${ROLE_LABEL[i.role]}</span><span class="grow">${esc(i.email || i.note || 'Anyone with the link')}<small class="muted"> · expires ${esc(fmtDate(i.expires_at.slice(0, 10)))}</small></span><button class="btn sm" data-lgcopy="${esc(i.token)}">Copy link</button><button class="btn sm" data-lgrevoke="${esc(i.token)}">Revoke</button></div>`).join('')}</div>` : ''}
+    </div>`;
+  } catch (e) { box.innerHTML = `<div class="glass lg-card"><p class="muted">Could not load people: ${esc(e.message)}</p></div>`; }
+}
+function openInvite() {
+  $('#stageBox').innerHTML = `<div class="m-head"><h2>Invite someone</h2><button class="ibtn" data-close>${I.x}</button></div>
+    <p class="help" style="margin-bottom:12px">Create a link and send it on WhatsApp or email. They open it, create a login, and join <b>${esc(AUTH.wsName)}</b> with the role you pick. Links work once and expire in 7 days.</p>
+    <div class="field"><label>Role</label><div class="lg-roles">${['member', 'admin', 'client'].map((r, i) => `<label class="lg-r"><input type="radio" name="lgr" value="${r}" ${i === 0 ? 'checked' : ''}><span><b>${ROLE_LABEL[r]}</b><small>${ROLE_INFO[r].split('— ')[1]}</small></span></label>`).join('')}</div></div>
+    <div class="field"><label>Their email (optional — locks the link to this email)</label><input class="input" id="lgEmail" type="email" placeholder="name@business.com" autocomplete="off"></div>
+    <div class="field"><label>Note (optional)</label><input class="input" id="lgNote" maxlength="120" placeholder="e.g. Riya — sales"></div>
+    <div id="lgOut"></div>
+    <div class="m-foot"><div class="grow"></div><button class="btn primary" id="lgCreate">Create invite link</button></div>`;
+  $('#lgCreate').onclick = async () => {
+    const email = $('#lgEmail').value.trim().toLowerCase(), role = ($('input[name="lgr"]:checked') || {}).value || 'member';
+    if (email && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return toast('Enter a valid email or leave it empty', true);
+    const b = $('#lgCreate'); b.disabled = true;
+    try {
+      const r = await sbq(AUTH.client.from('invites').insert({ workspace_id: AUTH.ws, role, email, note: $('#lgNote').value.trim() }).select('token').single());
+      const link = inviteLink(r.token), msg = `You're invited to join ${AUTH.wsName} on Nodevers. Open this link to create your login: ${link}`;
+      $('#lgOut').innerHTML = `<div class="field"><label>Invite link</label><div style="display:flex;gap:8px"><input class="input" readonly value="${esc(link)}"><button class="btn" data-lgcopy="${esc(r.token)}">Copy</button></div></div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:6px"><a class="btn wa" target="_blank" rel="noopener" href="https://wa.me/?text=${encodeURIComponent(msg)}">${I.wa}Send on WhatsApp</a><a class="btn" href="mailto:${esc(email)}?subject=${encodeURIComponent('Invite to ' + AUTH.wsName)}&body=${encodeURIComponent(msg)}">Send email</a></div>`;
+      b.textContent = 'Create another'; renderLogins();
+    } catch (e) { toast('Could not create invite: ' + e.message, true); } finally { b.disabled = false; }
+  };
+  showModal('#stageModal');
+}
+(function loginEvents() {
+  document.addEventListener('click', async e => {
+    const t = e.target;
+    if (t.closest('[data-lgsign]')) return showAuth('in');
+    if (t.closest('[data-lginvite]')) return openInvite();
+    const cp = t.closest('[data-lgcopy]'); if (cp) return copyText(inviteLink(cp.dataset.lgcopy));
+    const rv = t.closest('[data-lgrevoke]'); if (rv) { try { await sbq(AUTH.client.from('invites').delete().eq('token', rv.dataset.lgrevoke)); toast('Invite revoked'); renderLogins(); } catch (err) { toast(err.message, true); } return; }
+    const rm = t.closest('[data-lgrm]'); if (rm) {
+      const self = rm.dataset.lgrm === AUTH.session.user.id;
+      if (!confirm(self ? `Leave ${AUTH.wsName}? You will lose access to its data.` : `Remove ${rm.dataset.lgname}? They lose access right away. Their leads and history stay.`)) return;
+      try { await sbq(AUTH.client.rpc('remove_member', { p_ws: AUTH.ws, p_user: rm.dataset.lgrm })); toast(self ? 'You left the workspace' : 'Removed'); if (self) { store.del('leadnode.ws'); location.reload(); } else renderLogins(); } catch (err) { toast(err.message, true); }
+    }
+  });
+  document.addEventListener('change', async e => {
+    const s = e.target.closest('[data-lgrole]'); if (s) { try { await sbq(AUTH.client.rpc('set_member_role', { p_ws: AUTH.ws, p_user: s.dataset.lgrole, p_role: s.value })); toast('Role updated'); } catch (err) { toast(err.message, true); renderLogins(); } }
+    if (e.target.id === 'wsSwitch') switchWorkspace(e.target.value);
+  });
+})();
+
+/* ================= live updates (Supabase Realtime) ================= */
+let liveT = null, liveDirty = false;
+function liveStart() {
+  liveStop(); if (!cloud || !AUTH.client || !AUTH.ws) return;
+  try {
+    const ch = AUTH.client.channel('ws-' + AUTH.ws);
+    ['leads', 'activities', 'messages'].forEach(t => ch.on('postgres_changes', { event: '*', schema: 'public', table: t, filter: 'workspace_id=eq.' + AUTH.ws }, () => liveKick()));
+    ch.subscribe(); AUTH.live = ch;
+  } catch (e) { /* live updates are a bonus — the app works without them */ }
+}
+function liveStop() { if (AUTH.live) { try { AUTH.client.removeChannel(AUTH.live); } catch (e) { } AUTH.live = null; } }
+function liveKick() { clearTimeout(liveT); liveT = setTimeout(() => { if (document.hidden) { liveDirty = true; return; } if (cloud) load(true); }, 900); }
+document.addEventListener('visibilitychange', () => { if (!document.hidden && liveDirty) { liveDirty = false; if (cloud) load(true); } });
+
+/* ================= WhatsApp inbox ================= */
+const WA = { open: null, q: '', status: null, mobileThread: false };
+const WEBHOOK_URL = () => (sbConf().url || SB_DEFAULT.url) + '/functions/v1/wa-webhook';
+function demoMessages() {
+  const t = new Date(), at = (dAgo, h, m) => { const d = new Date(t); d.setDate(d.getDate() - dAgo); d.setHours(h, m, 0, 0); return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(h)}:${pad(m)}`; };
+  const M = (leadId, phone, direction, text, time, status) => ({ messageId: leadId + time + direction, leadId, phone, direction, type: 'text', text, time, status: status || (direction === 'in' ? 'received' : 'read') });
+  return [
+    M('L001', '919800000001', 'in', 'Hi, I saw your cafe chairs on Instagram. Do you have them in black?', at(2, 11, 4)),
+    M('L001', '919800000001', 'out', 'Hi Aarav! Yes — black, walnut and teak. Sharing the catalogue now.', at(2, 11, 9)),
+    M('L001', '919800000001', 'in', 'Great. Need 20 pieces for Brew & Bites. Can you send a sample?', at(0, 10, 12)),
+    M('L005', '919800000005', 'out', 'Hi Karan, the quotation for 30 chairs is attached. Valid till Friday.', at(3, 16, 30), 'delivered'),
+    M('L002', '919800000002', 'in', 'Please share the restaurant seating catalogue', at(1, 18, 41)),
+    M('L004', '919800000004', 'in', 'Can you do 10% off on 40 bar stools?', at(0, 9, 2)),
+  ];
+}
+const msgs = () => S.messages || [];
+function convos() {
+  const by = new Map();
+  msgs().forEach(m => { const k = m.leadId || ('p:' + m.phone); const c = by.get(k) || { key: k, leadId: m.leadId, phone: m.phone, list: [] }; c.list.push(m); by.set(k, c); });
+  const seen = store.get('leadnode.waSeen') || {};
+  return [...by.values()].map(c => { c.list.sort((a, b) => String(a.time).localeCompare(String(b.time))); c.last = c.list[c.list.length - 1]; c.lead = S.leads.find(l => l.leadId === c.leadId); c.name = c.lead ? c.lead.name : '+' + c.phone; c.unread = c.list.filter(m => m.direction === 'in' && String(m.time) > String(seen[c.key] || '')).length; return c; })
+    .sort((a, b) => String(b.last.time).localeCompare(String(a.last.time)));
+}
+const tick = s => s === 'read' ? '<span class="tk rd">✓✓</span>' : s === 'delivered' ? '<span class="tk">✓✓</span>' : s === 'failed' ? '<span class="tk fl">!</span>' : s === 'sent' ? '<span class="tk">✓</span>' : '';
+const msgTime = v => { const s = String(v || ''); const d = s.slice(0, 10); return (d === todayStr() ? '' : fmtDate(d).replace(/ \d{4}$/, '') + ' · ') + s.slice(11, 16); };
+async function waLoadStatus() {
+  if (demo) return WA.status = { connected: true, demo: true, verified_name: 'Demo Business', display_phone: '+91 98000 00000' };
+  if (!cloud) return WA.status = { connected: false, sheet: true };
+  try { WA.status = await sbq(AUTH.client.rpc('wa_status', { p_ws: AUTH.ws })); } catch (e) { WA.status = { connected: false, error: e.message }; }
+  return WA.status;
+}
+function waConnHTML() {
+  const s = WA.status || {};
+  if (s.sheet) return `<div class="glass wa-conn"><b>The inbox runs on the Nodevers cloud.</b><span class="muted">Sign in (Settings → Accounts) to receive and reply to WhatsApp chats here.</span></div>`;
+  if (s.connected && !WA.manage) return `<div class="wa-on"><span class="dot"></span>Connected · <b>${esc(s.verified_name || 'WhatsApp')}</b> ${esc(s.display_phone || '')}${s.demo ? ' <em class="srcTag sample">demo</em>' : ''}${canAdmin() ? '<button class="btn sm" data-wamanage>Manage</button>' : ''}</div>`;
+  if (!canAdmin()) return `<div class="glass wa-conn"><b>WhatsApp is not connected yet.</b><span class="muted">Ask the workspace owner to connect the business number.</span></div>`;
+  return `<div class="glass wa-conn wa-form"><div class="wa-fh"><div><h3>${s.connected ? 'WhatsApp connection' : 'Connect your WhatsApp number'}</h3><p class="muted">From Meta → WhatsApp Manager → <b>API Setup</b>. The token is saved on the server only — it never comes back to the browser.</p></div>${s.connected ? '<button class="btn sm" data-waclose>Close</button>' : ''}</div>
+    <div class="form wa-grid"><div class="field"><label>Phone number ID</label><input class="input" id="waPid" inputmode="numeric" autocomplete="off" value="${esc(s.phone_number_id || '')}" placeholder="e.g. 1234567890123"></div>
+    <div class="field"><label>WhatsApp Business Account ID</label><input class="input" id="waWaba" inputmode="numeric" autocomplete="off" value="${esc(s.waba_id || '')}" placeholder="e.g. 9876543210987"></div>
+    <div class="field span2"><label>Permanent access token (System user)</label><input class="input" id="waTok" type="password" autocomplete="off" placeholder="${s.connected ? 'Leave empty to keep the saved token' : 'EAA…'}"></div></div>
+    <details class="wa-help"><summary>Webhook — so incoming messages arrive here</summary><p>Meta app → WhatsApp → Configuration → Webhook → Edit:</p>
+      <div class="field"><label>Callback URL</label><div style="display:flex;gap:8px"><input class="input" readonly value="${esc(WEBHOOK_URL())}"><button class="btn" type="button" data-wacopy>Copy</button></div></div>
+      <p>Verify token: the same text you saved as <code>WA_VERIFY_TOKEN</code> in Supabase → Edge Functions → Secrets. Then subscribe to the <b>messages</b> field.</p></details>
+    <div class="m-foot">${s.connected ? '<button class="btn danger" data-wadisc>Disconnect</button>' : ''}<div class="grow"></div><button class="btn primary" data-waconnect>${s.connected ? 'Save' : 'Connect WhatsApp'}</button></div></div>`;
+}
+async function fnCall(name, body) {
+  const { data, error } = await AUTH.client.functions.invoke(name, { body: Object.assign({ workspace_id: AUTH.ws }, body) });
+  if (error) { let m = error.message; try { const j = await error.context.json(); m = j.error || m; } catch (e) { } if (/Failed to send a request|FunctionsFetchError|not found/i.test(m)) m = 'The WhatsApp server function is not set up yet (Supabase → Edge Functions).'; throw new Error(m); }
+  if (data && data.error) throw new Error(data.error); return data;
+}
+async function renderInbox() {
+  if (!$('#v-whatsapp').classList.contains('active')) return;
+  if (!WA.status) { $('#waConn').innerHTML = ''; await waLoadStatus(); }
+  $('#waConn').innerHTML = waConnHTML();
+  const all = convos(), q = WA.q.toLowerCase(), list = all.filter(c => !q || [c.name, c.phone, c.lead && c.lead.businessName].some(v => String(v || '').toLowerCase().includes(q)));
+  const extra = q ? S.leads.filter(l => !all.some(c => c.leadId === l.leadId) && matchQ(l, q)).slice(0, 6) : [];
+  if (!WA.open && list[0] && innerWidth > 760) WA.open = list[0].key;
+  $('#ibList').innerHTML = (list.map(c => `<button class="ib-c ${c.key === WA.open ? 'on' : ''}" data-ibopen="${esc(c.key)}">${avatar(c.name, '', c.lead && c.lead.clientPhoto)}<span class="ib-m"><span class="ib-t"><b>${esc(c.name)}</b><small>${esc(msgTime(c.last.time))}</small></span><span class="ib-s">${c.last.direction === 'out' ? tick(c.last.status) + ' ' : ''}${esc(String(c.last.text).slice(0, 70))}</span></span>${c.unread ? `<span class="ib-u">${c.unread}</span>` : ''}</button>`).join('')
+    + (extra.length ? `<div class="ib-sep">Start a new chat</div>` + extra.map(l => `<button class="ib-c" data-ibnew="${esc(l.leadId)}">${avatar(l.name)}<span class="ib-m"><span class="ib-t"><b>${esc(l.name)}</b></span><span class="ib-s">${esc(l.businessName || '+' + l.phone)}</span></span></button>`).join('') : ''))
+    || `<div class="ib-empty">${msgs().length ? 'No chats match.' : 'No chats yet. Messages appear here when customers write to your WhatsApp number — or start one from a lead.'}</div>`;
+  $('#inbox').classList.toggle('thread-open', WA.mobileThread);
+  renderThread();
+}
+function renderThread() {
+  const box = $('#ibThread'), all = convos(); let c = all.find(x => x.key === WA.open);
+  if (!c && WA.open && WA.open.startsWith('new:')) { const l = S.leads.find(x => x.leadId === WA.open.slice(4)); if (l) c = { key: WA.open, leadId: l.leadId, phone: l.phone, list: [], lead: l, name: l.name }; }
+  if (!c) { box.innerHTML = `<div class="ib-empty big">${I.chat}<b>Select a chat</b><span>Replies go out from your business WhatsApp number and are saved in the lead's journey.</span></div>`; return; }
+  const seen = store.get('leadnode.waSeen') || {}; if (c.last) { seen[c.key] = c.last.time; store.set('leadnode.waSeen', seen); }
+  const lastIn = [...c.list].reverse().find(m => m.direction === 'in'), open24 = demo || (lastIn && (Date.now() - new Date(String(lastIn.time).replace(' ', 'T')).getTime()) < 24 * 36e5);
+  const tpls = (S.templates || []).filter(t => t.templateName), l = c.lead, ro = AUTH.role === 'client';
+  let lastDay = '';
+  box.innerHTML = `<div class="ib-h"><button class="ibtn ib-back" data-ibback title="Back">‹</button>${avatar(c.name, '', l && l.clientPhoto)}<div class="grow"><b>${esc(c.name)}</b><small class="muted">+${esc(c.phone || '')}${l ? ` · ${esc(l.businessName || '')}` : ''}</small></div>${l ? `<span class="pill stage" style="--c:${stageColor(l.stage)}">${esc(l.stage)}</span><button class="btn sm" data-ibl="${esc(l.leadId)}">Open lead</button>` : ''}</div>
+    <div class="ib-msgs" id="ibMsgs">${c.list.map(m => { const d = String(m.time).slice(0, 10), sep = d !== lastDay ? `<div class="ib-day">${esc(d === todayStr() ? 'Today' : relDay(d))}</div>` : ''; lastDay = d; return sep + `<div class="bub ${m.direction === 'out' ? 'out' : 'in'}"><span>${esc(m.text)}</span><small>${esc(String(m.time).slice(11, 16))} ${m.direction === 'out' ? tick(m.status) : ''}</small></div>`; }).join('') || '<div class="ib-empty">No messages yet — say hello.</div>'}</div>
+    ${ro ? '<div class="ib-note">View-only access.</div>' : open24 ? `<div class="ib-comp"><textarea class="input" id="ibText" rows="1" placeholder="Type a message…"></textarea><button class="btn wa" id="ibSend">${I.wa}Send</button></div>`
+      : `<div class="ib-comp tpl"><div class="ib-note">24-hour window closed — WhatsApp only allows an approved template until the customer replies.</div><select class="input" id="ibTpl">${tpls.length ? tpls.map(t => `<option value="${esc(t.templateName)}" data-lang="${esc(t.language || 'en')}">${esc(t.templateName)}${t.metaStatus ? ' · ' + esc(t.metaStatus) : ''}</option>`).join('') : '<option value="">No templates yet — add one in Templates</option>'}</select><button class="btn wa" id="ibSendTpl" ${tpls.length ? '' : 'disabled'}>${I.wa}Send template</button></div>`}`;
+  const mb = $('#ibMsgs'); mb.scrollTop = mb.scrollHeight;
+  const ta = $('#ibText'); if (ta) { ta.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); ibSend(c); } }); ta.addEventListener('input', () => { ta.style.height = 'auto'; ta.style.height = Math.min(140, ta.scrollHeight) + 'px'; }); }
+  const sb = $('#ibSend'); if (sb) sb.onclick = () => ibSend(c);
+  const st = $('#ibSendTpl'); if (st) st.onclick = () => ibSendTpl(c);
+}
+async function ibSend(c) {
+  const ta = $('#ibText'), text = ta.value.trim(); if (!text) return;
+  if (demo) { S.messages.push({ messageId: 'd' + Date.now(), leadId: c.leadId, phone: c.phone, direction: 'out', type: 'text', text, time: nowStr(), status: 'sent' }); WA.open = c.leadId || c.key; ta.value = ''; renderInbox(); return toast('Demo: shown here only — connect WhatsApp to send for real'); }
+  const btn = $('#ibSend'); btn.disabled = true;
+  try { await fnCall('wa-send', { lead_id: c.leadId, phone: c.phone, text, by: me() }); S.messages.push({ messageId: 'tmp' + Date.now(), leadId: c.leadId, phone: c.phone, direction: 'out', type: 'text', text, time: nowStr(), status: 'sent' }); WA.open = c.leadId || c.key; ta.value = ''; renderInbox(); load(true); }
+  catch (e) { toast(e.message, true); } finally { const b = $('#ibSend'); if (b) b.disabled = false; }
+}
+async function ibSendTpl(c) {
+  const sel = $('#ibTpl'), name = sel.value; if (!name) return;
+  const t = (S.templates || []).find(x => x.templateName === name) || {}, n = (String(t.body || '').match(/\{\{\d+\}\}/g) || []).length, first = String(c.name || '').split(' ')[0];
+  const params = Array.from({ length: n }, (_, i) => i === 0 ? first : '');
+  if (n > 1) { for (let i = 1; i < n; i++) { const v = prompt(`Value for {{${i + 1}}} in "${name}"`, ''); if (v === null) return; params[i] = v; } }
+  if (demo) return toast('Demo: templates are sent after WhatsApp is connected');
+  try { await fnCall('wa-send', { lead_id: c.leadId, phone: c.phone, template: name, language: sel.selectedOptions[0].dataset.lang || 'en', params, preview: String(t.body || name).replace(/\{\{(\d+)\}\}/g, (m, k) => params[k - 1] || m), by: me() }); toast('Template sent ✓'); load(true); }
+  catch (e) { toast(e.message, true); }
+}
+(function inboxEvents() {
+  $('#v-whatsapp').addEventListener('click', async e => {
+    const t = e.target;
+    const o = t.closest('[data-ibopen]'); if (o) { WA.open = o.dataset.ibopen; WA.mobileThread = true; return renderInbox(); }
+    const n = t.closest('[data-ibnew]'); if (n) { WA.open = 'new:' + n.dataset.ibnew; WA.mobileThread = true; WA.q = ''; $('#ibQ').value = ''; return renderInbox(); }
+    if (t.closest('[data-ibback]')) { WA.mobileThread = false; return renderInbox(); }
+    const ol = t.closest('[data-ibl]'); if (ol) return openPanel(ol.dataset.ibl);
+    if (t.closest('[data-wamanage]')) { WA.manage = true; return renderInbox(); }
+    if (t.closest('[data-waclose]')) { WA.manage = false; return renderInbox(); }
+    if (t.closest('[data-wacopy]')) return copyText(WEBHOOK_URL());
+    if (t.closest('[data-wadisc]')) { if (!confirm('Disconnect this WhatsApp number from Nodevers? Chats stay saved.')) return; try { await fnCall('wa-connect', { disconnect: true }); WA.status = null; WA.manage = false; toast('Disconnected'); renderInbox(); } catch (err) { toast(err.message, true); } return; }
+    const cb = t.closest('[data-waconnect]'); if (cb) {
+      const pid = $('#waPid').value.trim(), waba = $('#waWaba').value.trim(), tok = $('#waTok').value.trim();
+      if (!/^\d{6,20}$/.test(pid)) return toast('Phone number ID should be only digits', true);
+      if (!tok && !(WA.status && WA.status.connected)) return toast('Paste the access token', true);
+      if (!tok) return toast('Paste the token again to save changes (it is never shown back)', true);
+      cb.disabled = true; cb.textContent = 'Checking with Meta…';
+      try { const r = await fnCall('wa-connect', { phone_number_id: pid, waba_id: waba, token: tok }); WA.status = null; WA.manage = false; toast(`✓ Connected ${r.verified_name || ''} ${r.display_phone || ''}${waba && !r.subscribed ? ' — webhook subscription failed, check the WABA ID' : ''}`); renderInbox(); }
+      catch (err) { toast(err.message, true); cb.disabled = false; cb.textContent = 'Connect WhatsApp'; }
+    }
+  });
+  $('#ibQ').addEventListener('input', e => { WA.q = e.target.value; renderInbox(); });
+})();
 
 /* ================= branding (logo, name, profile) ================= */
 const DEFAULT_BRAND = { brandName: 'Nodevers', logoUrl: '', userName: 'Shivam', userPhoto: '' };
@@ -4891,7 +5139,8 @@ function go(name) {
   if (name === 'dashboard' && S.leads.length) renderDashboard(true);
   if (name === 'reports') renderReports(true);
   if (name === 'leads') renderLeads(true);
-  if (name === 'team') renderTeam(true);
+  if (name === 'team') { renderTeam(true); renderLogins(); }
+  if (name === 'whatsapp') renderInbox();
   if (name === 'scripts') renderScripts();
   if (name === 'ads') renderAds(true);
   if (name === 'n8n') renderN8n(true);
@@ -4961,6 +5210,7 @@ $('#mSetBtn').onclick = () => openSettings();
 setTheme(store.get('leadnode.theme') || 'light');
 
 /* ================= start ================= */
+(function grabInvite() { const m = location.hash.match(/^#invite=([a-f0-9]{20,80})$/i); if (m) { store.set('leadnode.invite', { t: m[1], at: Date.now() }); history.replaceState(null, '', location.pathname + '#dashboard'); } })();
 go(location.hash.slice(1) || 'dashboard');
 authInit().then(ok => { if (ok) load(); });
 </script>
