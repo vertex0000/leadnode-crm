@@ -716,14 +716,15 @@ body.ro [data-add],body.ro .addcard,body.ro #addMember,body.ro [data-lginvite],b
 .ib-c .avatar{box-shadow:0 0 0 2px var(--glass-2,var(--card))}.ib-u{background:linear-gradient(135deg,var(--blue-2),#A78BFA);box-shadow:0 2px 8px color-mix(in srgb,var(--blue-2) 45%,transparent)}
 .ib-h{background:linear-gradient(90deg,var(--glass-3),transparent)}.ib-h .avatar{box-shadow:0 0 0 2px var(--wa,#25A55F)}
 /* ---- glass chat surface (no WhatsApp green) ---- */
-.ib-msgs{background:radial-gradient(620px 420px at 0% 0%,color-mix(in srgb,var(--blue-2) 17%,transparent),transparent 62%),radial-gradient(560px 460px at 100% 100%,color-mix(in srgb,#A78BFA 15%,transparent),transparent 62%),radial-gradient(420px 300px at 85% 8%,color-mix(in srgb,#5EEAD4 7%,transparent),transparent 60%),linear-gradient(180deg,color-mix(in srgb,#fff 3%,var(--glass-3)),var(--glass-3));padding:18px 22px;gap:8px}
+.ib-msgs{background:var(--glass-3);padding:18px 22px;gap:8px}
 .bub{position:relative;border-radius:16px;padding:9px 12px 6px;-webkit-backdrop-filter:blur(14px) saturate(150%);backdrop-filter:blur(14px) saturate(150%);box-shadow:0 6px 18px rgba(15,18,40,.08),inset 0 1px 0 rgba(255,255,255,.08)}
 .bub.in{background:color-mix(in srgb,var(--glass-2,var(--card)) 72%,transparent);border:1px solid color-mix(in srgb,#fff 10%,var(--line));border-top-left-radius:6px}
 .bub.out{background:linear-gradient(135deg,color-mix(in srgb,var(--blue-2) 30%,transparent),color-mix(in srgb,#A78BFA 24%,transparent));border:1px solid color-mix(in srgb,var(--blue-2) 34%,transparent);border-top-right-radius:6px}
 .bub.out small{color:color-mix(in srgb,var(--text) 60%,transparent)}
 .ib-msgs .bub::before{display:none}
 .ib-h{background:linear-gradient(90deg,color-mix(in srgb,var(--blue-2) 8%,var(--glass-3)),transparent)}.ib-h .avatar{box-shadow:0 0 0 2px var(--blue-2),0 0 14px color-mix(in srgb,var(--blue-2) 45%,transparent)}
-:root[data-theme="dark"] .ib-msgs{background:radial-gradient(640px 440px at 0% 0%,rgba(111,143,232,.22),transparent 62%),radial-gradient(580px 480px at 100% 100%,rgba(167,139,250,.20),transparent 62%),radial-gradient(420px 300px at 85% 8%,rgba(94,234,212,.08),transparent 60%),linear-gradient(180deg,#1A1A1F,#141418)}
+:root[data-theme="dark"] .ib-msgs{background:#000}
+:root[data-theme="dark"]{color-scheme:dark}
 :root[data-theme="dark"] .tp-phone,:root[data-theme="dark"] .wa-chat{background:radial-gradient(120% 90% at 0% 0%,rgba(111,143,232,.22),transparent 60%),radial-gradient(110% 90% at 100% 100%,rgba(167,139,250,.20),transparent 62%),#17171C}
 .ib-comp #ibSend{background:linear-gradient(135deg,var(--blue-2),#A78BFA);border:0;color:#fff;box-shadow:0 6px 16px color-mix(in srgb,var(--blue-2) 35%,transparent)}
 .ib-day{background:color-mix(in srgb,var(--glass-2,var(--card)) 70%,transparent);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border:1px solid var(--line)}
@@ -732,6 +733,8 @@ body.ro [data-add],body.ro .addcard,body.ro #addMember,body.ro [data-lginvite],b
 .wa-qb{color:var(--blue-2);background:color-mix(in srgb,var(--glass-2,var(--card)) 72%,transparent);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-color:color-mix(in srgb,var(--blue-2) 22%,var(--line));border-radius:12px}
 .ib-day{box-shadow:0 1px 2px rgba(0,0,0,.06);font-weight:600}
 .ib-comp{background:var(--glass-2,var(--card));gap:10px}.ib-comp textarea{border-radius:22px;padding:10px 16px}.ib-comp #ibSend{border-radius:22px;padding:0 18px;height:42px}
+.imp-batch{display:flex;flex-direction:column;gap:6px;margin:12px 0 4px;font-size:13px;font-weight:600}.imp-batch small{font-weight:500;color:var(--muted)}.imp-batch .input{max-width:320px}
+.imp-done{display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px;padding:18px 8px}.imp-ok{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;font-size:22px;font-weight:800;color:#fff;background:linear-gradient(135deg,var(--blue-2),#A78BFA)}
 .srcTag{font-style:normal;font-size:10px;font-weight:700;padding:1px 5px;border-radius:4px;margin-left:4px;vertical-align:1px}
 .srcTag.real{background:var(--green-soft);color:var(--green)}.srcTag.sample{background:var(--line);color:var(--muted)}
 .rcard.span2{grid-column:1/-1}
@@ -5049,14 +5052,17 @@ async function openImport(file) {
   const used = new Set(); IMP.map = IMP.head.map(h => { const k = IMPORT_MAP[h.toLowerCase().replace(/[^a-z]/g, '')] || ''; if (!k || used.has(k)) return ''; used.add(k); return k; });
   $('#leadBox').innerHTML = `<div class="m-head"><h2>Import leads</h2><button class="ibtn" data-close>${I.x}</button></div>
     <p class="help" style="margin-bottom:10px"><b>${esc(file.name)}</b> · ${IMP.rows.length} rows. Check which column is what — we guessed from the headings.</p>
-    <div class="imp-map" id="impMap"></div><div class="imp-sum" id="impSum"></div><div class="imp-prog" id="impProg" hidden><div class="imp-bar"><i id="impBar"></i></div><span id="impTxt"></span></div>
+    <div class="imp-map" id="impMap"></div>
+    <label class="imp-batch"><span>Batch name <small>— saved as the lead's Source. In Broadcast → Audience → Source pick this name to message only these leads.</small></span><input class="input sm" id="impSrc" maxlength="40" value="${esc('Excel ' + new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'short' }))}"></label>
+    <div class="imp-sum" id="impSum"></div><div class="imp-prog" id="impProg" hidden><div class="imp-bar"><i id="impBar"></i></div><span id="impTxt"></span></div>
     <div class="m-foot"><button class="btn" data-impsample>Download sample file</button><div class="grow"></div><button class="btn" data-close>Cancel</button><button class="btn primary" id="impGo">Import leads</button></div>`;
   $('#impMap').addEventListener('change', e => { const s = e.target.closest('[data-impcol]'); if (!s) return; const i = +s.dataset.impcol; if (s.value) IMP.map = IMP.map.map((k, j) => j !== i && k === s.value ? '' : k); IMP.map[i] = s.value; drawImport(); });
   $('#impGo').onclick = runImport;
   drawImport(); showModal('#leadModal');
 }
 async function runImport() {
-  const p = importPlan(), max = demo || !cloud ? 300 : 5000, list = p.list.slice(0, max), btn = $('#impGo');
+  const p = importPlan(), max = demo || !cloud ? 300 : 5000, list = p.list.slice(0, max), btn = $('#impGo'), batch = ($('#impSrc') ? $('#impSrc').value : '').trim();
+  if (batch) list.forEach(d => { d.source = batch; });
   btn.disabled = true; $('#impProg').hidden = false;
   const prog = n => { $('#impBar').style.width = Math.round(n / list.length * 100) + '%'; $('#impTxt').textContent = `${n} / ${list.length}`; };
   let ok = 0, fail = 0;
@@ -5067,8 +5073,14 @@ async function runImport() {
       for (const d of list) { try { await api('addLead', Object.assign({ by: me() }, d)); ok++; } catch (e) { fail++; } if ((ok + fail) % 5 === 0) prog(ok + fail); }
       prog(list.length);
     }
-    hideModal('#leadModal');
-    toast(`✓ ${ok} leads imported${p.dup ? ` · ${p.dup} already existed` : ''}${p.bad ? ` · ${p.bad} skipped` : ''}${fail ? ` · ${fail} failed` : ''}`);
+    const msg = `${ok} leads imported${p.dup ? ` · ${p.dup} already existed` : ''}${p.bad ? ` · ${p.bad} skipped` : ''}${fail ? ` · ${fail} failed` : ''}`;
+    if (demo) renderAll(); else await load(true);
+    if (!ok) { hideModal('#leadModal'); return toast(msg, true); }
+    IMP.batch = batch;
+    $('#leadBox').innerHTML = `<div class="m-head"><h2>Import done</h2><button class="ibtn" data-close>${I.x}</button></div>
+      <div class="imp-done"><div class="imp-ok">✓</div><b>${esc(msg)}</b>${batch ? `<p class="help">Batch name: <b>${esc(batch)}</b>. Send them a WhatsApp template or an email now — the audience is already set to this batch.</p>` : ''}</div>
+      <div class="m-foot"><div class="grow"></div><button class="btn" data-close>Done</button>${batch ? `<button class="btn" data-impbc="email">Send email</button><button class="btn primary" data-impbc="whatsapp">Send WhatsApp broadcast</button>` : ''}</div>`;
+    return;
   } catch (e) { toast('Import stopped: ' + e.message, true); btn.disabled = false; }
   if (demo) renderAll(); else load(true);
 }
@@ -5084,7 +5096,11 @@ async function downloadSample() {
     const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'nodevers-leads-sample.csv'; a.click();
   }
 }
-document.addEventListener('click', e => { if (e.target.closest('[data-impsample]')) downloadSample(); });
+document.addEventListener('click', e => { if (e.target.closest('[data-impsample]')) downloadSample();
+  const b = e.target.closest('[data-impbc]'); if (!b || !IMP.batch) return;
+  hideModal('#leadModal'); BC.tab = b.dataset.impbc; BC.node = 'msg'; BC.excluded = new Set(); BC.showList = false;
+  BC.aud = Object.assign({}, BC.aud, { src: 'filters', stages: [], tag: '', source: IMP.batch, city: '', assigned: '', past: '', cap: 0 });
+  go('broadcast'); });
 
 /* ================= broadcast: node flow (Audience → Message → Test → Send) ================= */
 const BC = { tab: 'whatsapp', node: 'aud', aud: { src: 'filters', stages: [], tag: '', source: '', city: '', assigned: '', past: '', pastMode: 'unread', cap: 0 }, excluded: new Set(), showList: false, tpl: '', vars: [], name: '', subject: '', body: 'Hi {{first_name}},\n\n', email: null, running: false, stop: false, tested: {}, testTo: '' };
