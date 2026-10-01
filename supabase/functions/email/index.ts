@@ -53,7 +53,7 @@ function wrap(inner: string, from: string, unsub: string) {
 async function brevoSend(acc: any, to: { email: string; name: string }, subject: string, html: string, unsubUrl: string, oneClick: string) {
   const r = await fetch(`${BREVO}/smtp/email`, {
     method: 'POST', headers: { 'api-key': acc.api_key, 'content-type': 'application/json', accept: 'application/json' },
-    body: JSON.stringify({ sender: { email: acc.from_email, name: acc.from_name || acc.from_email }, to: [to], subject, htmlContent: html, tags: ['nodevers'],
+    body: JSON.stringify({ sender: { email: acc.from_email, name: acc.from_name || acc.from_email }, replyTo: { email: acc.from_email, name: acc.from_name || acc.from_email }, to: [to], subject, htmlContent: html, tags: ['nodevers'],
       ...(unsubUrl ? { headers: { 'List-Unsubscribe': `<${oneClick}>, <${unsubUrl}>`, 'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click' } } : {}) }),
   });
   const out = await r.json().catch(() => ({}));
