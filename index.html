@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Nodevers CRM</title>
+<title>Nodevers</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -631,6 +631,7 @@ textarea.input.code{min-height:320px}
 .auth-demo{display:block;margin:12px auto 0;border:0;background:none;color:var(--muted);font-weight:600}.auth-demo:hover{color:var(--text)}
 input:-webkit-autofill,input:-webkit-autofill:hover,input:-webkit-autofill:focus{-webkit-text-fill-color:var(--text);caret-color:var(--text);transition:background-color 99999s ease-out 0s}
 .ro-banner{display:none}body.ro .ro-banner{display:flex}
+body.ro [data-add],body.ro .addcard,body.ro #addMember,body.ro [data-lginvite],body.ro #pImport,body.ro #scrNew,body.ro [data-go="industry"],body.ro [data-go="scripts"],body.ro [data-go="automation"],body.ro [data-go="broadcast"],body.ro [data-stab="conn"],body.ro [data-stab="wl"],body.ro #acctImport,body.ro #acctWs{display:none!important}
 .lg-card{padding:18px;border-radius:16px;margin-top:18px}.lg-h{display:flex;gap:12px;align-items:flex-start;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap}.lg-h h3{margin:0 0 4px}.lg-h p{margin:0;font-size:13px}
 .lg-p{display:flex;gap:10px;align-items:center}.lg-p>div:last-child{display:flex;flex-direction:column}.lg-p small{font-size:12px}.input.sm{padding:6px 8px;font-size:12.5px;height:auto;width:auto}
 .lg-sub{margin:16px 0 8px;font-size:13px}.lg-inv{display:flex;flex-direction:column;gap:8px}.lg-i{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:8px 10px;border:1px solid var(--line);border-radius:10px;font-size:13px}
@@ -966,7 +967,7 @@ input:-webkit-autofill,input:-webkit-autofill:hover,input:-webkit-autofill:focus
 
   <main class="main">
     <header class="top glass">
-      <div class="brand" id="brandBox" data-go="dashboard"><span id="brandName">Nodevers</span> <small>CRM</small></div>
+      <div class="brand" id="brandBox" data-go="dashboard"><span id="brandName">Nodevers</span></div>
       <nav class="nav" id="nav">
         <a href="#dashboard" data-go="dashboard">Dashboard</a>
         <a href="#pipeline" data-go="pipeline">Pipeline</a>
@@ -3474,8 +3475,11 @@ function n8SampleOut(node, client) {
 /* ---- page ---- */
 function renderN8n(anim) {
   if (!$('#v-n8n').classList.contains('active')) return;
+  const lockedClient = cloud && AUTH.role === 'client';           // a real client login: always their own view, no switch
+  if (lockedClient) N8.role = 'client';
   const D = n8Data(), tabs = N8_TABS[N8.role];
   if (!tabs.some(([k]) => k === N8.tab)) N8.tab = 'services';
+  $('#n8Role').hidden = lockedClient || (cloud && !canAdmin()); $('#n8RoleHelp').hidden = $('#n8Role').hidden;
   $('#n8Role').value = N8.role;
   $('#n8ClientWrap').hidden = N8.role === 'client' || ['templates', 'clients'].includes(N8.tab);
   $('#n8RoleHelp').textContent = N8.role === 'client' ? `Previewing exactly what ${n8Client(N8.client).name} sees after login — only their own services and runs.` : 'Admin: you see every client. Switch to "Client" to preview one client\'s view.';
@@ -4884,9 +4888,8 @@ const memberPhoto = name => { const b = brand(); return name && name === b.userN
 function applyBranding() {
   const b = brand(), logo = safeUrl(b.logoUrl);
   $$('.brandTxt').forEach(e => e.textContent = b.brandName);
-  const hasCRM = /\bcrm\b/i.test(b.brandName);
-  $('#brandName').textContent = b.brandName; $('#brandBox small') && ($('#brandBox small').hidden = hasCRM);
-  document.title = hasCRM ? b.brandName : b.brandName + ' CRM';
+  $('#brandName').textContent = b.brandName;
+  document.title = b.brandName;
   $$('.brand-logo').forEach(e => { e.innerHTML = logo ? `<img src="${esc(logo)}" alt="" referrerpolicy="no-referrer">` : LOGO_DEFAULT; e.style.background = logo ? 'transparent' : ''; });
   $('#meBtn').innerHTML = avatar(b.userName, '', b.userPhoto);
   applyWhiteLabel();
