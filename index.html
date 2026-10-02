@@ -632,6 +632,7 @@ textarea.input.code{min-height:320px}
 input:-webkit-autofill,input:-webkit-autofill:hover,input:-webkit-autofill:focus{-webkit-text-fill-color:var(--text);caret-color:var(--text);transition:background-color 99999s ease-out 0s}
 .nav-badge{display:inline-block;min-width:16px;padding:0 5px;margin-left:5px;border-radius:9px;background:var(--wa,#25A55F);color:#fff;font-size:10.5px;font-weight:800;line-height:16px;text-align:center;vertical-align:1px}.nav-badge[hidden]{display:none}
 .ro-banner{display:none}body.ro .ro-banner{display:flex}
+body.np-add [data-add],body.np-add .addcard,body.np-import #csvImportBtn,body.np-import #pImport,body.np-import [data-bcimport],body.np-import .bc-imp,body.np-export #csvExport,body.np-delete #panel [data-delete],body.np-edit #panel [data-edit],body.np-broadcast [data-go="broadcast"],body.np-automation [data-go="automation"],body.np-automation [data-go="scripts"],body.np-automation [data-go="n8n"],body.np-analytics [data-go="analytics"],body.np-analytics [data-go="reports"],body.np-analytics [data-go="performance"],body.np-calls [data-calllog],body.np-tasks [data-go="tasks"],body.np-whatsapp #inbox .ib-comp,body.np-email [data-bctab="email"]{display:none!important}body.np-edit #panel .stagebar{pointer-events:none}
 body.ro [data-add],body.ro .addcard,body.ro #addMember,body.ro [data-lginvite],body.ro #pImport,body.ro #scrNew,body.ro [data-go="industry"],body.ro [data-go="scripts"],body.ro [data-go="automation"],body.ro [data-go="broadcast"],body.ro [data-stab="conn"],body.ro [data-stab="wl"],body.ro #acctImport,body.ro #acctWs,body.ro #panel .notebox,body.ro #panel [data-delete],body.ro #panel [data-edit],body.ro #panel [data-focus-note],body.ro #panel .p-foot,body.ro #panel .aisum-act button{display:none!important}body.ro #panel .stagebar{pointer-events:none}
 .lg-card{padding:18px;border-radius:16px;margin-top:18px}.lg-h{display:flex;gap:12px;align-items:flex-start;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap}.lg-h h3{margin:0 0 4px}.lg-h p{margin:0;font-size:13px}
 .lg-p{display:flex;gap:10px;align-items:center}.lg-p>div:last-child{display:flex;flex-direction:column}.lg-p small{font-size:12px}.input.sm{padding:6px 8px;font-size:12.5px;height:auto;width:auto}
@@ -755,6 +756,10 @@ body.n8l-noscroll{overflow:hidden}
 @media (max-width:900px){.n8det.live .n8det-b{grid-template-columns:1fr}.n8det.live .n8side{max-height:none;min-height:0}}
 .n8l-name{cursor:pointer}.n8l-name:hover{color:var(--blue-2)}.n8l-need,.n8l-ok{font-size:11.5px;font-weight:700;padding:4px 9px;border-radius:8px;border:0;cursor:pointer;white-space:nowrap}.n8l-need{background:var(--yellow-soft);color:#C9971C}.n8l-ok{background:var(--green-soft);color:var(--green)}
 .n8l-i{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:800;background:var(--line);flex:none}.n8l-r.st-success .n8l-i{background:var(--green-soft);color:var(--green)}.n8l-r.st-error .n8l-i,.n8l-r.st-crashed .n8l-i{background:color-mix(in srgb,var(--coral) 16%,transparent);color:var(--coral)}
+.acc-c{display:flex;flex-wrap:wrap;gap:5px;align-items:center}.acc-s{font-size:12px;font-weight:700}.acc-a{font-size:11.5px;font-weight:600;padding:2px 8px;border-radius:20px;background:var(--blue-soft);color:var(--blue-2);text-transform:capitalize}.acc-a.big{font-size:12.5px;padding:4px 6px 4px 10px;display:inline-flex;gap:6px;align-items:center}.acc-a button{border:0;background:none;color:inherit;font-size:15px;line-height:1;cursor:pointer}
+.acc-opts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.acc-opt{text-align:left;border:1px solid var(--line);background:var(--glass-3);border-radius:12px;padding:10px 12px;cursor:pointer;color:var(--text);display:flex;flex-direction:column;gap:3px}.acc-opt small{font-size:11.5px;color:var(--muted);line-height:1.35}.acc-opt.on{border-color:var(--blue-2);box-shadow:0 0 0 3px var(--blue-soft)}
+.acc-areas{display:flex;flex-wrap:wrap;gap:6px;min-height:30px;align-items:center}.acc-perms{display:grid;grid-template-columns:1fr 1fr;gap:6px 18px}.acc-p{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:6px 0;border-bottom:1px solid var(--line);font-size:13px;font-weight:600}
+@media (max-width:640px){.acc-opts,.acc-perms{grid-template-columns:1fr}}
 .imp-batch{display:flex;flex-direction:column;gap:6px;margin:12px 0 4px;font-size:13px;font-weight:600}.imp-batch small{font-weight:500;color:var(--muted)}.imp-batch .input{max-width:320px}
 .imp-done{display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px;padding:18px 8px}.imp-ok{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;font-size:22px;font-weight:800;color:#fff;background:linear-gradient(135deg,var(--blue-2),#A78BFA)}
 .srcTag{font-style:normal;font-size:10px;font-weight:700;padding:1px 5px;border-radius:4px;margin-left:4px;vertical-align:1px}
@@ -1173,6 +1178,7 @@ body.n8l-noscroll{overflow:hidden}
         <select class="input" id="lfStage" style="width:auto"></select>
         <select class="input" id="lfTag" style="width:auto"></select>
         <select class="input" id="lfSource" style="width:auto"></select>
+        <select class="input" id="lfArea" style="width:auto"></select>
       </div>
       <div class="table-wrap glass"><table class="tbl" id="ltable"></table></div>
     </section>
@@ -1549,7 +1555,7 @@ const touchCount = id => actsOf(id).filter(a => a.type !== 'Lead Added' && a.typ
 const isDue = l => !isClosed(l) && l.followUpDate && dOnly(l.followUpDate) <= todayStr();
 const stageColor = s => { const d = stageDefs().find(x => x.name === s); return (d && /^#[0-9a-f]{6}$/i.test(d.color) ? d.color : '') || autoColor(String(s || '')); };
 const tagCls = t => ({ Hot: 'hot', Warm: 'warm', Cold: 'cold' }[t] || 'stage');
-function matchQ(l, q) { if (!q) return true; q = q.toLowerCase(); return [l.name, l.businessName, l.city, l.phone, l.businessType, l.notes, l.leadId].some(v => String(v || '').toLowerCase().includes(q)); }
+function matchQ(l, q) { if (!q) return true; q = q.toLowerCase(); return [l.name, l.businessName, l.city, l.state, l.district, l.phone, l.businessType, l.notes, l.leadId].some(v => String(v || '').toLowerCase().includes(q)); }
 function ring(pct, label, val, color) {
   const r = 30, c = 2 * Math.PI * r, p = Math.max(0, Math.min(100, pct));
   return `<div class="ring"><svg viewBox="0 0 78 78"><circle cx="39" cy="39" r="${r}" stroke="var(--line-2)" stroke-width="6" fill="none"/>
@@ -1559,7 +1565,7 @@ function ring(pct, label, val, color) {
 
 /* ================= load ================= */
 function applyData(d) {
-  S = Object.assign({ leads: [], activities: [], team: [], templates: [], flows: [], messages: [] }, d);
+  S = Object.assign({ leads: [], activities: [], team: [], templates: [], flows: [], messages: [], calls: [], tasks: [], campaignStats: [] }, d);
   S.lists = Object.assign({}, DEFAULT_LISTS, d.lists || {});
   stageSig = (d.lists && d.lists.stages || []).join('|');
   S.leads.forEach(l => { l.leadId = String(l.leadId); l.phone = String(l.phone || ''); });
@@ -1588,6 +1594,7 @@ function finishLoad(anim) {
   if (demo) S.settings = store.get('leadnode.branding') || {};
   mergeSavedLists();
   applyBranding();
+  applyAccess();
   renderAll(anim);
 }
 /** Render only the screen you're looking at; the others re-render when you open them */
@@ -4612,7 +4619,14 @@ function fillAcct() {
 })();
 
 /* ================= actions ================= */
-const me = () => brand().userName || settings.name || 'Shivam';
+const me = () => (cloud && AUTH.access && AUTH.access.name) || brand().userName || settings.name || 'Shivam';
+/* ---------- teams, areas & permissions ---------- */
+const IN_STATES = ['Andhra Pradesh', 'Arunachal Pradesh', 'Assam', 'Bihar', 'Chhattisgarh', 'Goa', 'Gujarat', 'Haryana', 'Himachal Pradesh', 'Jharkhand', 'Karnataka', 'Kerala', 'Madhya Pradesh', 'Maharashtra', 'Manipur', 'Meghalaya', 'Mizoram', 'Nagaland', 'Odisha', 'Punjab', 'Rajasthan', 'Sikkim', 'Tamil Nadu', 'Telangana', 'Tripura', 'Uttar Pradesh', 'Uttarakhand', 'West Bengal', 'Delhi', 'Jammu and Kashmir', 'Ladakh', 'Chandigarh', 'Puducherry', 'Andaman and Nicobar Islands', 'Dadra and Nagar Haveli and Daman and Diu', 'Lakshadweep'];
+const areaValues = k => [...new Set((S.leads || []).map(l => String(l[k] || '').trim()).filter(Boolean))].sort();
+const PERMS = [['add', 'Add leads'], ['edit', 'Edit leads & move stages'], ['delete', 'Delete leads'], ['import', 'Import Excel / CSV'], ['export', 'Export leads'], ['whatsapp', 'WhatsApp chats'], ['email', 'Send emails'], ['broadcast', 'Bulk broadcasts'], ['calls', 'Log calls'], ['tasks', 'Tasks'], ['analytics', 'See team analytics'], ['automation', 'Automation & n8n']];
+const SCOPES = { all: ['All leads', 'Sees every lead in the business'], area: ['Only their area', 'Leads whose State, District or City is in their areas — plus leads assigned to them'], own: ['Only assigned to them', 'Just the leads where “Assign to” is this person'] };
+const can = k => !cloud || /^(owner|admin)$/.test(AUTH.role || '') || (AUTH.role === 'member' && !(AUTH.access && AUTH.access.perms && AUTH.access.perms[k] === false));
+function applyAccess() { PERMS.forEach(([k]) => document.body.classList.toggle('np-' + k, !can(k))); }
 async function moveStage(id, stage) {
   const l = S.leads.find(x => x.leadId === id); if (!l || l.stage === stage) return;
   flashId = id; setTimeout(() => { flashId = null; }, 1500);
@@ -4719,6 +4733,9 @@ function openLeadModal(lead, presetStage) {
       <div class="field"><label>Business name</label><input class="input" name="businessName" value="${esc(l.businessName || '')}" placeholder="Brew & Bites Cafe"></div>
       <div class="field"><label>Business type</label><select class="input" name="businessType">${opt(S.lists.businessTypes || [], l.businessType)}</select></div>
       <div class="field"><label>City</label><input class="input" name="city" value="${esc(l.city || '')}" placeholder="Mumbai"></div>
+      <div class="field"><label>District</label><input class="input" name="district" list="dlDistricts" value="${esc(l.district || '')}" placeholder="Mumbai Suburban"></div>
+      <div class="field"><label>State</label><input class="input" name="state" list="dlStates" value="${esc(l.state || '')}" placeholder="Maharashtra"></div>
+      <datalist id="dlStates">${IN_STATES.concat(areaValues('state')).filter((v, i, a) => a.indexOf(v) === i).map(x => `<option value="${esc(x)}">`).join('')}</datalist><datalist id="dlDistricts">${areaValues('district').map(x => `<option value="${esc(x)}">`).join('')}</datalist>
       <div class="field"><label>Source</label><select class="input" name="source">${opt(S.lists.sources || [], l.source)}</select></div>
       <div class="field"><label>Budget (₹)</label><input class="input" name="budget" type="number" min="0" step="1000" value="${esc(l.budget || '')}" placeholder="250000"></div>
       <div class="field"><label>Follow-up date</label><input class="input" name="followUpDate" type="date" value="${esc(dOnly(l.followUpDate))}"></div>
@@ -4753,7 +4770,7 @@ async function saveLead(lead) {
   if (digits && digits.length < 10) return toast('Enter a valid WhatsApp number (10 digits)', true);
   if (email && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return toast('Enter a valid email', true);
   if (fd.budget && Number(fd.budget) < 0) return toast('Budget cannot be negative', true);
-  const data = { name: fd.name.trim(), phone: !digits ? '' : digits.length === 10 ? '91' + digits : digits, email, businessName: fd.businessName.trim(), businessType: fd.businessType, city: fd.city.trim(), source: fd.source, budget: fd.budget ? Number(fd.budget) : '', followUpDate: fd.followUpDate, assignedTo: fd.assignedTo, notes: fd.notes.trim(), tag: formTag, stage: formStage, businessPhoto: upStore.lead.businessPhoto || '', clientPhoto: upStore.lead.clientPhoto || '' };
+  const data = { name: fd.name.trim(), phone: !digits ? '' : digits.length === 10 ? '91' + digits : digits, email, businessName: fd.businessName.trim(), businessType: fd.businessType, city: fd.city.trim(), state: String(fd.state || '').trim(), district: String(fd.district || '').trim(), source: fd.source, budget: fd.budget ? Number(fd.budget) : '', followUpDate: fd.followUpDate, assignedTo: fd.assignedTo, notes: fd.notes.trim(), tag: formTag, stage: formStage, businessPhoto: upStore.lead.businessPhoto || '', clientPhoto: upStore.lead.clientPhoto || '' };
   const btn = $('#lsave'); btn.disabled = true; btn.textContent = 'Saving…';
   try {
     if (lead) {
@@ -4823,15 +4840,17 @@ $('#fileIn').addEventListener('change', async e => {
    After sign-in every read/write goes to Supabase. Row Level Security on the
    server keeps each workspace's rows private — the browser only ever gets its own. */
 const SB_COLS = {
-  leads: ['lead_id', 'created_on', 'name', 'phone', 'email', 'email_opt_out', 'wa_opt_out', 'business_name', 'business_type', 'city', 'source', 'budget', 'stage', 'tag', 'assigned_to', 'follow_up_date', 'last_contact', 'notes', 'business_photo', 'client_photo'],
+  leads: ['lead_id', 'created_on', 'name', 'phone', 'email', 'email_opt_out', 'wa_opt_out', 'business_name', 'business_type', 'city', 'state', 'district', 'source', 'budget', 'stage', 'tag', 'assigned_to', 'follow_up_date', 'last_contact', 'notes', 'business_photo', 'client_photo'],
   activities: ['activity_id', 'lead_id', 'date_time', 'type', 'details', 'done_by'],
   templates: ['template_name', 'category', 'language', 'header', 'body', 'footer', 'buttons', 'meta_status', 'meta_id', 'quality', 'reject_reason'],
   broadcasts: ['broadcast_id', 'name', 'channel', 'template', 'subject', 'body', 'audience_filter', 'contacts', 'sent', 'failed', 'delivered', 'read', 'replies', 'scheduled_for', 'sent_at', 'status'],
   flows: ['flow_id', 'flow_name', 'trigger', 'status', 'flow_json', 'updated_on'],
   team: ['member_id', 'name', 'role', 'phone', 'email', 'active'],
+  calls: ['call_id', 'lead_id', 'member', 'phone', 'direction', 'outcome', 'duration_sec', 'notes', 'called_at'],
+  tasks: ['task_id', 'lead_id', 'title', 'notes', 'due_at', 'priority', 'assigned_to', 'status', 'source', 'stage', 'remind', 'done_at', 'done_by'],
 };
-const SB_DATE = ['created_on', 'follow_up_date', 'last_contact'], SB_TS = ['date_time', 'updated_on', 'scheduled_for', 'time', 'sent_at'];
-const SB_INT = ['contacts', 'sent', 'failed', 'delivered', 'read', 'replies'], SB_HIDE = ['workspace_id', 'created_at', 'updated_at', 'user_id'];
+const SB_DATE = ['created_on', 'follow_up_date', 'last_contact'], SB_TS = ['date_time', 'updated_on', 'scheduled_for', 'time', 'sent_at', 'called_at', 'due_at', 'done_at'];
+const SB_INT = ['contacts', 'sent', 'failed', 'delivered', 'read', 'replies', 'duration_sec'], SB_HIDE = ['workspace_id', 'created_at', 'updated_at', 'user_id'];
 const toCamel = k => k.replace(/_([a-z])/g, (m, c) => c.toUpperCase());
 const toSnake = k => k.replace(/[A-Z]/g, c => '_' + c.toLowerCase());
 /** 'YYYY-MM-DD HH:MM' (this browser's time) → ISO; ISO passes through */
@@ -4886,17 +4905,19 @@ async function sbApi(action, d = {}) {
   switch (action) {
     case 'ping': return 'pong';
     case 'getAll': {
-      const [leads, activities, team, templates, broadcasts, flows, settings, messages] = await Promise.all([
+      const acc = await cl.rpc('my_access', { p_ws: ws }); AUTH.access = acc.error ? null : acc.data; AUTH.v7 = !acc.error;
+      const [leads, activities, team, templates, broadcasts, flows, settings, messages, calls, tasks, cstats] = await Promise.all([
         sbAll('leads', 'created_at'), sbAll('activities', 'date_time'), sbAll('team', 'member_id'), sbAll('templates', 'template_name'),
         sbAll('broadcasts', 'broadcast_id'), sbAll('flows', 'flow_id'), sbSettings(),
-        sbq(T('messages').select('*').eq('workspace_id', ws).order('time', { ascending: false }).limit(1500))]);
+        sbq(T('messages').select('*').eq('workspace_id', ws).order('time', { ascending: false }).limit(1500)),
+        AUTH.v7 ? sbAll('calls', 'called_at') : [], AUTH.v7 ? sbAll('tasks', 'due_at') : [], AUTH.v7 ? sbq(T('campaign_stats').select('*').eq('workspace_id', ws)).catch(() => []) : []]);
       let stages = null; try { stages = JSON.parse(settings.stagesJson || 'null'); } catch (e) { }
-      return { leads: leads.map(fromRow), activities: activities.map(fromRow), team: team.map(fromRow), templates: templates.map(fromRow), broadcasts: broadcasts.map(fromRow), flows: flows.map(fromRow), messages: messages.reverse().map(fromRow), lists: Array.isArray(stages) && stages.length ? { stages } : {}, settings };
+      return { calls: calls.map(fromRow), tasks: tasks.map(fromRow), campaignStats: cstats.map(fromRow), leads: leads.map(fromRow), activities: activities.map(fromRow), team: team.map(fromRow), templates: templates.map(fromRow), broadcasts: broadcasts.map(fromRow), flows: flows.map(fromRow), messages: messages.reverse().map(fromRow), lists: Array.isArray(stages) && stages.length ? { stages } : {}, settings };
     }
     case 'addLead': {
       if (!String(d.name || '').trim()) throw new Error('Name is required');
       const row = toRow('leads', Object.assign({ stage: stages()[0] || 'New Lead' }, d)); delete row.lead_id; row.phone = cleanPhone(row.phone); row.workspace_id = ws;
-      if (!row.created_on) delete row.created_on; if (!row.email) delete row.email; delete row.email_opt_out; delete row.wa_opt_out;
+      if (!row.created_on) delete row.created_on; if (!row.email) delete row.email; delete row.email_opt_out; delete row.wa_opt_out; if (!AUTH.v7) { delete row.state; delete row.district; }
       const l = fromRow(await sbq(T('leads').insert(row).select().single()));
       await sbLog(l.leadId, 'Lead Added', 'Source: ' + (l.source || '-'), d.by || l.assignedTo); return l;
     }
@@ -4905,6 +4926,7 @@ async function sbApi(action, d = {}) {
       const blank = Object.fromEntries(SB_COLS.leads.map(c => [toCamel(c), '']));
       const rows = (d.leads || []).map(x => { const r = toRow('leads', Object.assign({}, blank, base, x)); delete r.lead_id; delete r.email_opt_out; delete r.wa_opt_out; r.phone = cleanPhone(r.phone); r.workspace_id = ws; return r; });
       if (rows.length && rows.every(r => !r.email)) rows.forEach(r => delete r.email);          // works before the email update too
+      if (!AUTH.v7) rows.forEach(r => { delete r.state; delete r.district; });
       const ins = await sbq(T('leads').insert(rows).select());
       if (ins.length) await sbq(T('activities').insert(ins.map(l => ({ workspace_id: ws, lead_id: l.lead_id, type: 'Lead Added', details: 'Imported from file' + (l.source ? ' · ' + l.source : ''), done_by: String(d.by || '') }))));
       return ins.map(fromRow);
@@ -4915,7 +4937,7 @@ async function sbApi(action, d = {}) {
       return fromRow(await sbq(T('broadcasts').upsert(row, { onConflict: 'workspace_id,broadcast_id' }).select().single()));
     }
     case 'updateLead': {
-      const row = toRow('leads', d); delete row.lead_id; if ('phone' in row) row.phone = cleanPhone(row.phone);
+      const row = toRow('leads', d); delete row.lead_id; if ('phone' in row) row.phone = cleanPhone(row.phone); if (!AUTH.v7) { delete row.state; delete row.district; }
       const r = await sbq(T('leads').update(row).eq('workspace_id', ws).eq('lead_id', d.id).select());
       if (!r.length) throw new Error('Lead not found'); return fromRow(r[0]);
     }
@@ -4924,7 +4946,23 @@ async function sbApi(action, d = {}) {
       const r = await sbq(T('leads').update({ stage: d.stage, last_contact: todayStr() }).eq('workspace_id', ws).eq('lead_id', d.id).select().single());
       await sbLog(d.id, 'Stage Changed', old.stage + ' → ' + d.stage, d.by); return fromRow(r);
     }
-    case 'deleteLead': await sbq(T('leads').delete().eq('workspace_id', ws).eq('lead_id', d.id)); return { deleted: d.id };
+    case 'deleteLead': { const r = await sbq(T('leads').delete().eq('workspace_id', ws).eq('lead_id', d.id).select('lead_id')); if (AUTH.v7 && !r.length) throw new Error('You do not have permission to delete this lead.'); return { deleted: d.id }; }
+    case 'logCall': {
+      if (!AUTH.v7) throw new Error('Run the database update 07_teams_tasks_calls.sql first.');
+      const row = toRow('calls', d); delete row.call_id; row.workspace_id = ws; row.member = String(d.member || me()).slice(0, 60);
+      const c = fromRow(await sbq(T('calls').insert(row).select().single()));
+      if (d.leadId) { await sbLog(d.leadId, 'Call', [d.outcome, d.durationSec ? Math.round(d.durationSec / 60) + ' min' : '', d.notes].filter(Boolean).join(' · '), row.member); await sbq(T('leads').update({ last_contact: todayStr() }).eq('workspace_id', ws).eq('lead_id', d.leadId)); }
+      return c;
+    }
+    case 'deleteCall': await sbq(T('calls').delete().eq('workspace_id', ws).eq('call_id', d.id)); return { deleted: d.id };
+    case 'saveTask': {
+      if (!AUTH.v7) throw new Error('Run the database update 07_teams_tasks_calls.sql first.');
+      const row = toRow('tasks', d); row.workspace_id = ws; if (!row.lead_id) row.lead_id = null;
+      if (!row.task_id) { delete row.task_id; return fromRow(await sbq(T('tasks').insert(row).select().single())); }
+      return fromRow(await sbq(T('tasks').update(row).eq('workspace_id', ws).eq('task_id', d.taskId).select().single()));
+    }
+    case 'deleteTask': await sbq(T('tasks').delete().eq('workspace_id', ws).eq('task_id', d.id)); return { deleted: d.id };
+    case 'refreshCampaigns': { if (!AUTH.v7) return []; await sbq(cl.rpc('refresh_campaign_stats', { p_ws: ws })); return (await sbq(T('campaign_stats').select('*').eq('workspace_id', ws))).map(fromRow); }
     case 'addActivity': {
       const a = await sbLog(d.leadId, d.type, d.details, d.doneBy);
       await sbq(T('leads').update({ last_contact: todayStr() }).eq('workspace_id', ws).eq('lead_id', d.leadId)); return a;
@@ -5031,17 +5069,66 @@ async function renderLogins() {
   box.innerHTML = `<div class="glass lg-card"><div class="loader"><div class="spin"></div>Loading people…</div></div>`;
   try {
     const [mem, inv] = await Promise.all([sbq(AUTH.client.rpc('list_members', { p_ws: AUTH.ws })), canAdmin() ? sbq(AUTH.client.from('invites').select('*').eq('workspace_id', AUTH.ws).is('used_at', null).gt('expires_at', new Date().toISOString()).order('created_at', { ascending: false })) : Promise.resolve([])]);
-    const me = AUTH.session.user.id, admin = canAdmin();
+    const me = AUTH.session.user.id, admin = canAdmin(); AUTH.members = mem;
     box.innerHTML = `<div class="glass lg-card"><div class="lg-h"><div><h3>Logins & access</h3><p class="muted">People who can sign in to <b>${esc(AUTH.wsName || 'this workspace')}</b>. Each workspace's data is private.</p></div>${admin ? `<button class="btn primary" data-lginvite>${I.users}Invite</button>` : ''}</div>
-      <div class="tblwrap"><table class="tbl"><thead><tr><th>Person</th><th>Role</th><th>Joined</th><th></th></tr></thead><tbody>
+      <div class="tblwrap"><table class="tbl"><thead><tr><th>Person</th><th>Role</th><th>Team & area</th><th>Joined</th><th></th></tr></thead><tbody>
       ${mem.map(m => `<tr style="cursor:default"><td><div class="lg-p">${avatar(m.name)}<div><b>${esc(m.name)}${m.user_id === me ? ' <span class="muted">(you)</span>' : ''}</b><small class="muted">${esc(m.email)}</small></div></div></td>
         <td>${admin && m.role !== 'owner' && m.user_id !== me ? `<select class="input sm" data-lgrole="${esc(m.user_id)}">${['admin', 'member', 'client'].map(r => `<option value="${r}" ${r === m.role ? 'selected' : ''}>${ROLE_LABEL[r]}</option>`).join('')}</select>` : `<span class="pill ${m.role === 'owner' ? 'won' : 'stage'}">${ROLE_LABEL[m.role] || esc(m.role)}</span>`}</td>
+        <td>${accessCell(m, admin && m.user_id !== me)}</td>
         <td class="muted">${esc(fmtDate(String(m.joined).slice(0, 10)))}</td>
         <td class="num">${m.role !== 'owner' && (admin || m.user_id === me) ? `<button class="btn sm danger" data-lgrm="${esc(m.user_id)}" data-lgname="${esc(m.name)}">${m.user_id === me ? 'Leave' : 'Remove'}</button>` : ''}</td></tr>`).join('')}
       </tbody></table></div>
       ${inv.length ? `<h4 class="lg-sub">Pending invites</h4><div class="lg-inv">${inv.map(i => `<div class="lg-i"><span class="pill stage">${ROLE_LABEL[i.role]}</span><span class="grow">${esc(i.email || i.note || 'Anyone with the link')}<small class="muted"> · expires ${esc(fmtDate(i.expires_at.slice(0, 10)))}</small></span><button class="btn sm" data-lgcopy="${esc(i.token)}">Copy link</button><button class="btn sm" data-lgrevoke="${esc(i.token)}">Revoke</button></div>`).join('')}</div>` : ''}
     </div>`;
   } catch (e) { box.innerHTML = `<div class="glass lg-card"><p class="muted">Could not load people: ${esc(e.message)}</p></div>`; }
+}
+function accessCell(m, edit) {
+  if (m.role === 'owner' || m.role === 'admin') return `<span class="muted">Full access</span>${m.team_name ? ` <span class="pill stage">${esc(m.team_name)}</span>` : ''}`;
+  if (!('scope' in m)) return '<span class="muted">—</span>';
+  const off = PERMS.filter(([k]) => m.perms && m.perms[k] === false).length;
+  return `<div class="acc-c">${m.team_name ? `<span class="pill stage">${esc(m.team_name)}</span>` : ''}<span class="acc-s">${esc(SCOPES[m.scope || 'all'][0])}</span>${m.scope === 'area' ? (m.areas || []).slice(0, 4).map(a => `<span class="acc-a">${esc(a)}</span>`).join('') + ((m.areas || []).length > 4 ? `<span class="acc-a">+${m.areas.length - 4}</span>` : '') : ''}${off ? `<small class="muted">${off} switch${off > 1 ? 'es' : ''} off</small>` : ''}${edit ? `<button class="btn sm" data-lgacc="${esc(m.user_id)}">Access</button>` : ''}</div>`;
+}
+function openAccess(uid) {
+  const m = (AUTH.members || []).find(x => x.user_id === uid); if (!m) return;
+  if (!('scope' in m)) return toast('Run the database update 07_teams_tasks_calls.sql in Supabase first.', true);
+  const A = { scope: m.scope || 'all', areas: (m.areas || []).slice(), perms: Object.assign({}, m.perms || {}) };
+  const teams = [...new Set((AUTH.members || []).map(x => x.team_name).filter(Boolean))];
+  const sugg = () => [...new Set(areaValues('state').concat(areaValues('district'), areaValues('city')))].filter(a => !A.areas.includes(a.toLowerCase())).slice(0, 24);
+  const draw = () => {
+    $('#accScope').innerHTML = Object.entries(SCOPES).map(([k, [n, d]]) => `<button type="button" class="acc-opt ${A.scope === k ? 'on' : ''}" data-accscope="${k}"><b>${n}</b><small>${d}</small></button>`).join('');
+    $('#accAreaBox').hidden = A.scope !== 'area';
+    $('#accAreas').innerHTML = A.areas.map(a => `<span class="acc-a big">${esc(a)}<button type="button" data-accrm="${esc(a)}" title="Remove">×</button></span>`).join('') || '<span class="muted">No areas yet — add a state, district or city below.</span>';
+    $('#accSugg').innerHTML = sugg().map(a => `<button type="button" class="chip" data-accadd="${esc(a)}">+ ${esc(a)}</button>`).join('');
+    $('#accPerms').innerHTML = PERMS.map(([k, n]) => `<label class="acc-p"><span>${esc(n)}</span><button type="button" class="switch ${A.perms[k] === false ? '' : 'on'}" data-accperm="${k}"></button></label>`).join('');
+  };
+  $('#stageBox').innerHTML = `<div class="m-head"><h2>Access for ${esc(m.name)}</h2><button class="ibtn" data-close>${I.x}</button></div>
+    <p class="help" style="margin-bottom:12px">Decide what <b>${esc(m.name)}</b> sees and can do. The database enforces it — even a direct link cannot open other areas' leads.</p>
+    <div class="field"><label>Team</label><input class="input" id="accTeam" list="dlTeams" maxlength="60" value="${esc(m.team_name || '')}" placeholder="e.g. Mumbai Team, Pune Sales"><datalist id="dlTeams">${teams.map(t => `<option value="${esc(t)}">`).join('')}</datalist></div>
+    <div class="field"><label>Which leads can they see?</label><div class="acc-opts" id="accScope"></div></div>
+    <div class="field" id="accAreaBox"><label>Their areas (State, District or City)</label><div class="acc-areas" id="accAreas"></div>
+      <div style="display:flex;gap:8px;margin-top:8px"><input class="input" id="accIn" list="dlAccStates" placeholder="Type e.g. Maharashtra or Mumbai, press Enter"><datalist id="dlAccStates">${IN_STATES.map(x => `<option value="${esc(x)}">`).join('')}</datalist><button type="button" class="btn" id="accAddBtn">Add</button></div>
+      <div class="chips" id="accSugg" style="margin-top:8px"></div></div>
+    <div class="field"><label>What can they do?</label><div class="acc-perms" id="accPerms"></div></div>
+    <div class="m-foot"><div class="grow"></div><button class="btn" data-close>Cancel</button><button class="btn primary" id="accSave">Save access</button></div>`;
+  const add = v => { v = String(v || '').trim().toLowerCase(); if (v && !A.areas.includes(v)) A.areas.push(v); draw(); };
+  $('#stageBox').onclick = e => {
+    const t = e.target, sc = t.closest('[data-accscope]'); if (sc) { A.scope = sc.dataset.accscope; return draw(); }
+    const rm = t.closest('[data-accrm]'); if (rm) { A.areas = A.areas.filter(a => a !== rm.dataset.accrm); return draw(); }
+    const ad = t.closest('[data-accadd]'); if (ad) return add(ad.dataset.accadd);
+    const pm = t.closest('[data-accperm]'); if (pm) { const k = pm.dataset.accperm; A.perms[k] = A.perms[k] === false; return draw(); }
+    if (t.closest('#accAddBtn')) { add($('#accIn').value); $('#accIn').value = ''; }
+  };
+  $('#accIn').onkeydown = e => { if (e.key === 'Enter') { e.preventDefault(); add(e.target.value); e.target.value = ''; } };
+  $('#accSave').onclick = async () => {
+    if (A.scope === 'area' && !A.areas.length) return toast('Add at least one area, or choose "All leads"', true);
+    const b = $('#accSave'); b.disabled = true;
+    try {
+      const perms = {}; PERMS.forEach(([k]) => { if (A.perms[k] === false) perms[k] = false; });
+      await sbq(AUTH.client.rpc('set_member_access', { p_ws: AUTH.ws, p_user: uid, p_team: $('#accTeam').value.trim(), p_scope: A.scope, p_areas: A.areas, p_perms: perms }));
+      hideModal('#stageModal'); toast(`✓ Access saved for ${m.name}`); renderLogins();
+    } catch (er) { toast(/set_member_access|function/i.test(er.message) ? 'Run the database update 07_teams_tasks_calls.sql first.' : er.message, true); b.disabled = false; }
+  };
+  draw(); showModal('#stageModal');
 }
 function openInvite() {
   $('#stageBox').innerHTML = `<div class="m-head"><h2>Invite someone</h2><button class="ibtn" data-close>${I.x}</button></div>
@@ -5070,6 +5157,7 @@ function openInvite() {
     const t = e.target;
     if (t.closest('[data-lgsign]')) return showAuth('in');
     if (t.closest('[data-lginvite]')) return openInvite();
+    const ac = t.closest('[data-lgacc]'); if (ac) return openAccess(ac.dataset.lgacc);
     const cp = t.closest('[data-lgcopy]'); if (cp) return copyText(inviteLink(cp.dataset.lgcopy));
     const rv = t.closest('[data-lgrevoke]'); if (rv) { try { await sbq(AUTH.client.from('invites').delete().eq('token', rv.dataset.lgrevoke)); toast('Invite revoked'); renderLogins(); } catch (err) { toast(err.message, true); } return; }
     const rm = t.closest('[data-lgrm]'); if (rm) {
@@ -5249,8 +5337,8 @@ async function ibSendTpl(c) {
 
 /* ================= import leads from Excel / CSV ================= */
 const XLSX_SRC = 'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';
-const IMPORT_FIELDS = [['', '— Skip this column —'], ['name', 'Name *'], ['phone', 'Phone / WhatsApp'], ['email', 'Email'], ['businessName', 'Business name'], ['businessType', 'Business type'], ['city', 'City'], ['source', 'Source'], ['budget', 'Budget (₹)'], ['stage', 'Stage'], ['tag', 'Tag'], ['assignedTo', 'Assigned to'], ['followUpDate', 'Follow-up date'], ['notes', 'Notes']];
-const IMPORT_MAP = { name: 'name', fullname: 'name', leadname: 'name', customername: 'name', clientname: 'name', contactname: 'name', phone: 'phone', phoneno: 'phone', phonenumber: 'phone', whatsapp: 'phone', whatsappnumber: 'phone', whatsappno: 'phone', mobile: 'phone', mobileno: 'phone', mobilenumber: 'phone', contact: 'phone', contactno: 'phone', number: 'phone', email: 'email', emailaddress: 'email', emailid: 'email', mail: 'email', businessname: 'businessName', business: 'businessName', company: 'businessName', companyname: 'businessName', firm: 'businessName', shop: 'businessName', businesstype: 'businessType', type: 'businessType', category: 'businessType', industry: 'businessType', city: 'city', location: 'city', area: 'city', source: 'source', leadsource: 'source', budget: 'budget', amount: 'budget', value: 'budget', dealvalue: 'budget', stage: 'stage', status: 'stage', tag: 'tag', priority: 'tag', assignedto: 'assignedTo', owner: 'assignedTo', salesperson: 'assignedTo', followupdate: 'followUpDate', followup: 'followUpDate', nextfollowup: 'followUpDate', notes: 'notes', note: 'notes', remarks: 'notes', requirement: 'notes', comments: 'notes' };
+const IMPORT_FIELDS = [['', '— Skip this column —'], ['name', 'Name *'], ['phone', 'Phone / WhatsApp'], ['email', 'Email'], ['businessName', 'Business name'], ['businessType', 'Business type'], ['city', 'City'], ['district', 'District'], ['state', 'State'], ['source', 'Source'], ['budget', 'Budget (₹)'], ['stage', 'Stage'], ['tag', 'Tag'], ['assignedTo', 'Assigned to'], ['followUpDate', 'Follow-up date'], ['notes', 'Notes']];
+const IMPORT_MAP = { state: 'state', province: 'state', region: 'state', district: 'district', zone: 'district', territory: 'district', name: 'name', fullname: 'name', leadname: 'name', customername: 'name', clientname: 'name', contactname: 'name', phone: 'phone', phoneno: 'phone', phonenumber: 'phone', whatsapp: 'phone', whatsappnumber: 'phone', whatsappno: 'phone', mobile: 'phone', mobileno: 'phone', mobilenumber: 'phone', contact: 'phone', contactno: 'phone', number: 'phone', email: 'email', emailaddress: 'email', emailid: 'email', mail: 'email', businessname: 'businessName', business: 'businessName', company: 'businessName', companyname: 'businessName', firm: 'businessName', shop: 'businessName', businesstype: 'businessType', type: 'businessType', category: 'businessType', industry: 'businessType', city: 'city', location: 'city', area: 'city', source: 'source', leadsource: 'source', budget: 'budget', amount: 'budget', value: 'budget', dealvalue: 'budget', stage: 'stage', status: 'stage', tag: 'tag', priority: 'tag', assignedto: 'assignedTo', owner: 'assignedTo', salesperson: 'assignedTo', followupdate: 'followUpDate', followup: 'followUpDate', nextfollowup: 'followUpDate', notes: 'notes', note: 'notes', remarks: 'notes', requirement: 'notes', comments: 'notes' };
 const IMP = { rows: [], map: [] };
 async function readSheetFile(file) {
   if (/\.(xlsx|xlsm|xls|ods)$/i.test(file.name)) {
@@ -5778,8 +5866,9 @@ function renderLeads(anim) {
   fillFilter('#lfStage', 'All stages', stages(), ui.lf.stage);
   fillFilter('#lfTag', 'All tags', S.lists.tags || [], ui.lf.tag);
   fillFilter('#lfSource', 'All sources', S.lists.sources || [], ui.lf.source);
+  fillFilter('#lfArea', 'All areas', areaValues('state').concat(areaValues('district')).filter((v, i, a) => a.indexOf(v) === i), ui.lf.area);
   const f = ui.lf;
-  let list = S.leads.filter(l => matchQ(l, f.q) && (!f.stage || l.stage === f.stage) && (!f.tag || l.tag === f.tag) && (!f.source || l.source === f.source));
+  let list = S.leads.filter(l => matchQ(l, f.q) && (!f.stage || l.stage === f.stage) && (!f.tag || l.tag === f.tag) && (!f.source || l.source === f.source) && (!f.area || l.state === f.area || l.district === f.area));
   ui.leadList = list;
   const { k, d } = ui.sort;
   list.sort((a, b) => k === 'budget' ? ((+a.budget || 0) - (+b.budget || 0)) * d : String(a[k] || '').localeCompare(String(b[k] || '')) * d);
@@ -5787,7 +5876,7 @@ function renderLeads(anim) {
   const head = '<thead><tr>' + LCOLS.map(([key, lab, cls]) => `<th data-sort="${key}" class="${cls || ''} ${k === key ? 'on' : ''}">${lab}<span class="ar">${k === key ? (d > 0 ? '↑' : '↓') : '↕'}</span></th>`).join('') + '</tr></thead>';
   const body = list.map((l, i) => `<tr data-open="${esc(l.leadId)}" style="--i:${anim ? Math.min(i, 25) : 0}">
     <td><div class="who">${avatar(l.name, 'sm', l.clientPhoto)}${esc(l.name)}</div></td>
-    <td>${esc(l.businessName || '-')}</td><td>${l.phone ? '+' + esc(l.phone) : '-'}</td><td>${esc(l.city || '-')}</td><td>${esc(l.source || '-')}</td>
+    <td>${esc(l.businessName || '-')}</td><td>${l.phone ? '+' + esc(l.phone) : '-'}</td><td>${esc([l.city, l.state].filter(Boolean).join(', ') || '-')}</td><td>${esc(l.source || '-')}</td>
     <td class="num">${inr(l.budget)}</td>
     <td><span class="pill stage"><span class="sdot" style="background:${stageColor(l.stage)}"></span>${esc(l.stage)}</span></td>
     <td>${l.tag ? `<span class="pill ${tagCls(l.tag)}">${esc(l.tag)}</span>` : '-'}</td>
@@ -5799,6 +5888,7 @@ $('#lsearch').oninput = e => { ui.lf.q = e.target.value; renderLeads(); };
 $('#lfStage').onchange = e => { ui.lf.stage = e.target.value; renderLeads(); };
 $('#lfTag').onchange = e => { ui.lf.tag = e.target.value; renderLeads(); };
 $('#lfSource').onchange = e => { ui.lf.source = e.target.value; renderLeads(); };
+$('#lfArea').onchange = e => { ui.lf.area = e.target.value; renderLeads(); };
 
 /* ---- CSV export / import ---- */
 const CSV_COLS = [['leadId', 'Lead ID'], ['createdOn', 'Created On'], ['name', 'Name'], ['phone', 'Phone'], ['email', 'Email'], ['businessName', 'Business Name'], ['businessType', 'Business Type'], ['city', 'City'], ['source', 'Source'], ['budget', 'Budget'], ['stage', 'Stage'], ['tag', 'Tag'], ['assignedTo', 'Assigned To'], ['followUpDate', 'Follow-up Date'], ['lastContact', 'Last Contact'], ['notes', 'Notes']];

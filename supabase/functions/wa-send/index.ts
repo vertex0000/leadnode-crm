@@ -31,8 +31,8 @@ async function graphSend(acc: any, payload: unknown) {
   if (!r.ok) { const code = String(out?.error?.code ?? ''); return { ok: false, code, error: FRIENDLY[code] ?? ('WhatsApp error: ' + (out?.error?.message ?? r.status)) }; }
   return { ok: true, code: '', id: out?.messages?.[0]?.id ?? null };
 }
-async function logSent(ws: string, leadId: string | null, to: string, type: string, text: string, wamid: string | null, by: string, broadcastId: string | null, journeyText: string) {
-  await db.from('messages').insert({ workspace_id: ws, lead_id: leadId, phone: to, direction: 'out', type, text, status: 'sent', whatsapp_msg_id: wamid, ...(broadcastId ? { broadcast_id: broadcastId } : {}) });
+async function logSent(ws: string, leadId: string | null, to: string, type: string, text: string, wamid: string | null, by: string, broadcastId: string | null, journeyText: string, sentBy: string | null = null) {
+  await db.from('messages').insert({ workspace_id: ws, lead_id: leadId, phone: to, direction: 'out', type, text, status: 'sent', whatsapp_msg_id: wamid, ...(broadcastId ? { broadcast_id: broadcastId } : {}), ...(sentBy !== null ? { sent_by: sentBy } : {}) });
   if (leadId) {
     await db.from('activities').insert({ workspace_id: ws, lead_id: leadId, type: 'WhatsApp Sent', details: journeyText.slice(0, 300), done_by: by });
     await db.from('leads').update({ last_contact: today() }).eq('workspace_id', ws).eq('lead_id', leadId);
@@ -50,14 +50,22 @@ Deno.serve(async (req) => {
     const { data: m } = await db.from('workspace_members').select('role').eq('workspace_id', ws).eq('user_id', u.user.id).maybeSingle();
     if (!m || m.role === 'client') return json({ error: 'You do not have permission to send messages here.' }, 403);
 
+    // Team access (07 update): switches set by the owner + which leads this person may reach
+    const { data: ax } = await db.rpc('member_access', { p_ws: ws, p_uid: u.user.id });
+    const full = m.role === 'owner' || m.role === 'admin' || !ax || ax.scope === 'all';
+    const perm = (k: string) => m.role === 'owner' || m.role === 'admin' || !ax || ax?.perms?.[k] !== false;
+    const visible = async (ids: string[]) => { if (full) return new Set(ids); const { data } = await db.rpc('visible_lead_ids', { p_ws: ws, p_uid: u.user.id, p_ids: ids }); return new Set((data ?? []).map((x: any) => typeof x === 'string' ? x : x.visible_lead_ids)); };
+
     const { data: acc } = await db.from('wa_accounts').select('*').eq('workspace_id', ws).maybeSingle();
     if (!acc) return json({ error: 'Connect your WhatsApp number first (WhatsApp → Inbox → Connect WhatsApp).' }, 400);
-    const by = String(b.by ?? '');
+    const by = String(ax?.name || b.by || '');
+    const sentBy = ax ? by : null;   // column exists once the 07 update is installed
 
     // ---- Broadcast batch: { bulk: [{ lead_id, params, preview }], template, language, broadcast_id } ----
     if (Array.isArray(b.bulk)) {
+      if (!perm('broadcast')) return json({ error: 'Your access does not include bulk broadcasts — ask the owner.' }, 403);
       if (!b.template) return json({ error: 'Pick an approved template' }, 400);
-      const items = b.bulk.slice(0, 50), ids = items.map((x: any) => String(x.lead_id));
+      const items = b.bulk.slice(0, 50), ids = items.map((x: any) => String(x.lead_id)), ok = await visible(ids);
       const { data: leads, error } = await db.from('leads').select('lead_id, phone, wa_opt_out').eq('workspace_id', ws).in('lead_id', ids);
       if (error) return json({ error: /wa_opt_out/.test(error.message) ? 'Run the database update 03_broadcast_email.sql first.' : error.message }, 500);
       const byId = new Map((leads ?? []).map((l: any) => [l.lead_id, l]));
@@ -66,21 +74,24 @@ Deno.serve(async (req) => {
       for (const it of items) {
         const l: any = byId.get(String(it.lead_id));
         if (stop) { results.push({ lead_id: it.lead_id, ok: false, error: stop }); continue; }
-        if (!l) { results.push({ lead_id: it.lead_id, ok: false, error: 'Lead not found' }); continue; }
+        if (!l || !ok.has(l.lead_id)) { results.push({ lead_id: it.lead_id, ok: false, error: 'Lead not found' }); continue; }
         if (l.wa_opt_out) { results.push({ lead_id: it.lead_id, ok: false, skipped: true, error: 'Opted out (said STOP)' }); continue; }
         const to = cleanPhone(l.phone);
         if (!/^\d{8,15}$/.test(to)) { results.push({ lead_id: it.lead_id, ok: false, error: 'No valid phone' }); continue; }
         const r = await graphSend(acc, templatePayload(to, String(b.template), String(b.language || 'en'), it.params ?? []));
         if (!r.ok) { if (['190', '131042', '132001', '131048'].includes(r.code)) stop = r.error; results.push({ lead_id: it.lead_id, ok: false, error: r.error, code: r.code }); continue; }
         const text = String(it.preview || `Template: ${b.template}`);
-        await logSent(ws, l.lead_id, to, 'template', text, r.id, by, b.broadcast_id ? String(b.broadcast_id) : null, `Broadcast: ${text}`);
+        await logSent(ws, l.lead_id, to, 'template', text, r.id, by, b.broadcast_id ? String(b.broadcast_id) : null, `Broadcast: ${text}`, sentBy);
         results.push({ lead_id: it.lead_id, ok: true, id: r.id });
       }
       return json({ ok: true, results, stopped: stop || null });
     }
 
     // ---- Single message ----
+    if (!perm('whatsapp')) return json({ error: 'Your access does not include WhatsApp chats — ask the owner.' }, 403);
     let leadId: string | null = b.lead_id ? String(b.lead_id) : null, to = cleanPhone(b.phone);
+    if (leadId && !(await visible([leadId])).has(leadId)) return json({ error: 'Lead not found' }, 404);
+    if (!leadId && !full) return json({ error: 'Pick a lead from your area to message.' }, 403);
     if (leadId) { const { data: l } = await db.from('leads').select('phone').eq('workspace_id', ws).eq('lead_id', leadId).maybeSingle(); if (!l) return json({ error: 'Lead not found' }, 404); to = cleanPhone(l.phone); }
     if (!/^\d{8,15}$/.test(to)) return json({ error: 'This lead has no valid phone number.' }, 400);
 
@@ -96,7 +107,7 @@ Deno.serve(async (req) => {
     const r = await graphSend(acc, payload);
     if (!r.ok) return json({ error: r.error, code: r.code }, 400);
     if (!leadId) { const { data: l } = await db.from('leads').select('lead_id').eq('workspace_id', ws).eq('phone', to).limit(1).maybeSingle(); leadId = l?.lead_id ?? null; }
-    await logSent(ws, leadId, to, type, logText, r.id, by, null, logText);
+    await logSent(ws, leadId, to, type, logText, r.id, by, null, logText, sentBy);
     return json({ ok: true, id: r.id, lead_id: leadId });
   } catch (e) {
     return json({ error: String((e as Error)?.message ?? e) }, 500);
