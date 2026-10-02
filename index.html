@@ -760,7 +760,7 @@ body.brand-ro #brandRowSite,body.brand-ro #setModal .acc[data-acc="s-wl"]{displa
 .cap-code{background:#0F1115;color:#E5E7EB;border-radius:10px;padding:12px;font-size:12px;overflow:auto;white-space:pre;max-height:260px;margin:8px 0}
 .pr-off{margin:2px 0 4px;padding:10px 12px;border-radius:12px;background:color-mix(in srgb,var(--pa) 12%,transparent);border:1px dashed color-mix(in srgb,var(--pa) 55%,transparent);font-size:13.5px;display:flex;flex-direction:column;gap:2px}
 .pr-off-t{font-size:11.5px;font-weight:800;letter-spacing:.02em;color:var(--pa)}.pr-off b{font-size:17px}.pr-off small{opacity:.7;font-size:12px}
-.pl-off-h{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px}.pl-off-sw{display:flex;align-items:center;gap:8px;cursor:pointer;margin:0}.pl-offer.off .pl-offer-r{opacity:.45}.pl-offer-r{display:grid;grid-template-columns:minmax(90px,130px) auto minmax(54px,70px) auto minmax(0,1fr);gap:8px;align-items:center}.pl-offer-r .muted{font-size:12.5px;white-space:nowrap}@media (max-width:640px){.pl-offer-r{grid-template-columns:1fr 1fr}}
+.cm-g2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:14px}@media (max-width:900px){.cm-g2{grid-template-columns:1fr}}.inv-auto{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:12px 16px;border-radius:14px;margin-top:14px;cursor:pointer}.inv-auto b{display:block;font-size:13.5px}.inv-auto small{font-size:12px}.inv-flow{display:flex;flex-direction:column;margin-top:6px}.inv-flow div{display:flex;justify-content:space-between;padding:9px 0;border-top:1px solid var(--line);font-size:13.5px}.inv-flow b{font-size:15px}.pl-off-h{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px}.pl-off-sw{display:flex;align-items:center;gap:8px;cursor:pointer;margin:0}.pl-offer.off .pl-offer-r{opacity:.45}.pl-offer-r{display:grid;grid-template-columns:minmax(90px,130px) auto minmax(54px,70px) auto minmax(0,1fr);gap:8px;align-items:center}.pl-offer-r .muted{font-size:12.5px;white-space:nowrap}@media (max-width:640px){.pl-offer-r{grid-template-columns:1fr 1fr}}
 .pr-top{display:inline-flex;align-items:center;gap:7px;height:38px;padding:0 14px;border-radius:var(--r-ctl);border:1px solid color-mix(in srgb,#8B5CF6 35%,var(--stroke));background:linear-gradient(135deg,color-mix(in srgb,#8B5CF6 12%,var(--glass-2)),var(--glass-2));color:var(--text);font-weight:700;font-size:13.5px;white-space:nowrap;transition:transform .2s,box-shadow .2s,border-color .2s}
 .pr-top .i{width:17px;height:17px;color:#8B5CF6}.pr-top:hover{transform:translateY(-1px);border-color:#8B5CF6;box-shadow:0 8px 20px -10px #8B5CF6}.pr-top[hidden]{display:none}
 @media (max-width:760px){.pr-top{width:38px;padding:0;justify-content:center}.pr-top span{display:none}}
@@ -1674,7 +1674,7 @@ body.ro [data-cmw],body.np-commerce [data-cmw]{display:none!important}
     <section class="view" id="v-ads">
       <div class="head"><div><div class="eyebrow">Marketing</div><h1>Ads Manager</h1><p class="sub">Meta, Google and marketplace ads — campaigns, lead forms, spend and ROAS against your real sales.</p></div>
         <div class="adhead-r"><span class="badge" id="adsMode">Sample data</span><select class="input" id="adsRange" style="width:auto"><option value="7">Last 7 days</option><option value="14">Last 14 days</option><option value="30">Last 30 days</option></select></div></div>
-      <div class="banner" style="background:var(--blue-soft);border-color:var(--stroke)"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg><div class="grow">Showing <b>sample ad data</b>. CRM numbers (leads, won deals, ROAS) are real. Live Meta numbers start once your ad account is connected.</div><button class="btn sm" data-adtab="connect">Connect</button></div>
+      <div class="banner" id="adsBanner" style="background:var(--blue-soft);border-color:var(--stroke)"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg><div class="grow">Showing <b>sample ad data</b>. CRM numbers (leads, won deals, ROAS) are real. Live Meta numbers start once your ad account is connected.</div><button class="btn sm" data-adtab="connect">Connect</button></div>
       <div class="subnav" id="adsTabs"></div>
       <div id="adsBody"></div>
       <div class="fx-host" id="adsCanvas" hidden></div>
@@ -1867,7 +1867,7 @@ const $ = (s, el = document) => el.querySelector(s);
 const $$ = (s, el = document) => [...el.querySelectorAll(s)];
 const esc = v => String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const inr = n => '₹' + Math.round(Number(n) || 0).toLocaleString('en-IN');
-const inrShort = n => { n = Number(n) || 0; if (n >= 1e7) return '₹' + (n / 1e7).toFixed(n % 1e7 ? 1 : 0) + ' Cr'; if (n >= 1e5) return '₹' + (n / 1e5).toFixed(n % 1e5 ? 1 : 0) + 'L'; if (n >= 1e3) return '₹' + (n / 1e3).toFixed(0) + 'K'; return '₹' + n; };
+const inrShort = n => { n = Number(n) || 0; if (n < 0) return '−' + inrShort(-n); if (n < 1e3) n = Math.round(n); if (n >= 1e7) return '₹' + (n / 1e7).toFixed(n % 1e7 ? 1 : 0) + ' Cr'; if (n >= 1e5) return '₹' + (n / 1e5).toFixed(n % 1e5 ? 1 : 0) + 'L'; if (n >= 1e3) return '₹' + (n / 1e3).toFixed(0) + 'K'; return '₹' + n; };
 const pad = n => String(n).padStart(2, '0');
 const todayStr = () => { const d = new Date(); return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); };
 const nowStr = () => { const d = new Date(); return todayStr() + ' ' + pad(d.getHours()) + ':' + pad(d.getMinutes()); };
@@ -1945,7 +1945,7 @@ function demoData() {
   const who = ['Riya Patil', 'Amit Rao', 'Shivam']; acts.forEach((a, i) => { if (a.type !== 'Lead Added') a.doneBy = (leads.find(l => l.leadId === a.leadId) || {}).assignedTo || who[i % 3]; });
   for (let i = 0; i < 26; i++) { const l = leads[i % leads.length]; acts.push(A(l.leadId, i % 12, i % 3 ? 'WhatsApp Sent' : 'Email Sent', i % 3 ? 'Follow-up message' : 'Catalogue email')); acts[acts.length - 1].doneBy = l.assignedTo; }
   const cm = demoCommerce();
-  return { messages: demoMessages(), broadcasts: [], leads, activities: acts, calls: demoCalls(), tasks: demoTasks(), orders: (() => { return [{ orderId: 'O001', leadId: 'L006', items: '20 × Cafe chair (walnut)', amount: 120000, status: 'Delivered', payment: 'UPI', trackingUrl: '', source: 'Team', createdAt: new Date(Date.now() - 6 * 864e5).toISOString() }, { orderId: 'O002', leadId: 'L005', items: '30 × Cafe chair', amount: 180000, status: 'COD', payment: 'COD', trackingUrl: 'https://track.example/abc', source: 'WhatsApp · order_menu', createdAt: new Date(Date.now() - 864e5).toISOString() }, { orderId: 'O003', leadId: 'L009', items: 'Order Now', amount: '', status: 'New', payment: '', trackingUrl: '', source: 'WhatsApp · order_menu', createdAt: new Date(Date.now() - 36e5).toISOString() }].map(o => Object.assign({ channel: 'WhatsApp', orderDate: dOnly(o.createdAt), qty: (/^(\d+) ×/.exec(o.items) || [0, 1])[1] * 1, customerState: 'Maharashtra' }, /Cafe chair/.test(o.items) ? { sku: 'CH-WAL-01', productName: 'Cafe chair (walnut)', productCost: 1350 * ((/^(\d+) ×/.exec(o.items) || [0, 1])[1] * 1), shippingFee: 2500 } : {}, o)).concat(cm.orders); })(), products: cm.products, adSpend: cm.adSpend, team: [{ memberId: 'T001', name: 'Shivam', role: 'Admin', active: true, team: 'Head office' }, { memberId: 'T002', name: 'Riya Patil', role: 'Sales', active: true, team: 'Mumbai Team' }, { memberId: 'T003', name: 'Amit Rao', role: 'Sales', active: true, team: 'Pune Team' }], lists: DEFAULT_LISTS, templates: demoTemplates(), flows: store.get('leadnode.demoFlows') || [] };
+  return { messages: demoMessages(), broadcasts: [], leads, activities: acts, calls: demoCalls(), tasks: demoTasks(), orders: (() => { return [{ orderId: 'O001', leadId: 'L006', items: '20 × Cafe chair (walnut)', amount: 120000, status: 'Delivered', payment: 'UPI', trackingUrl: '', source: 'Team', createdAt: new Date(Date.now() - 6 * 864e5).toISOString() }, { orderId: 'O002', leadId: 'L005', items: '30 × Cafe chair', amount: 180000, status: 'COD', payment: 'COD', trackingUrl: 'https://track.example/abc', source: 'WhatsApp · order_menu', createdAt: new Date(Date.now() - 864e5).toISOString() }, { orderId: 'O003', leadId: 'L009', items: 'Order Now', amount: '', status: 'New', payment: '', trackingUrl: '', source: 'WhatsApp · order_menu', createdAt: new Date(Date.now() - 36e5).toISOString() }].map(o => Object.assign({ channel: 'WhatsApp', orderDate: dOnly(o.createdAt), qty: (/^(\d+) ×/.exec(o.items) || [0, 1])[1] * 1, customerState: 'Maharashtra' }, /Cafe chair/.test(o.items) ? { sku: 'CH-WAL-01', productName: 'Cafe chair (walnut)', productCost: 1350 * ((/^(\d+) ×/.exec(o.items) || [0, 1])[1] * 1), shippingFee: 2500 } : {}, o)).concat(cm.orders); })(), products: cm.products, adSpend: cm.adSpend, stockMoves: cm.stockMoves, team: [{ memberId: 'T001', name: 'Shivam', role: 'Admin', active: true, team: 'Head office' }, { memberId: 'T002', name: 'Riya Patil', role: 'Sales', active: true, team: 'Mumbai Team' }, { memberId: 'T003', name: 'Amit Rao', role: 'Sales', active: true, team: 'Pune Team' }], lists: DEFAULT_LISTS, templates: demoTemplates(), flows: store.get('leadnode.demoFlows') || [] };
 }
 function demoAutoTask(l, old) {
   S.tasks = S.tasks || []; S.tasks.filter(t => t.leadId === l.leadId && t.source === 'auto' && t.status === 'Open' && t.stage === old).forEach(t => { t.status = 'Closed'; t.doneBy = 'Moved to ' + l.stage; });
@@ -1983,7 +1983,22 @@ function demoCommerce() {
   }
   const adSpend = []; let id = 1;
   for (let k = 0; k < 75; k++) [['Diwali chairs — Advantage+', 2600], ['Retargeting — website visitors', 1100]].forEach(([c, base], j) => { const sp = Math.round(base * (0.7 + rnd() * 0.6)), imp = Math.round(sp / (110 + rnd() * 60) * 1000), cl = Math.round(sp / (7 + rnd() * 8)), pu = Math.round(cl * (j ? 0.035 : 0.018) * (0.6 + rnd() * 0.8)); adSpend.push({ id: id++, day: day(k), platform: 'Meta', campaign: c, impressions: imp, clicks: cl, spend: sp, purchases: pu, revenue: pu * (2400 + Math.round(rnd() * 1500)) }); });
-  return { products: P, orders, adSpend };
+  const stockMoves = [];
+  P.forEach((p, i) => stockMoves.push({ sku: p.sku, change: 40 + i * 5, stockAfter: '', reason: 'Stock in', channel: '', orderId: '', byName: 'Owner', at: day(110 - i * 9) + 'T09:30:00' }));
+  orders.forEach(o => { if (STOCK_DEAD.includes(o.status)) return; o.stockTaken = o.qty; o.stockSku = o.sku; stockMoves.push({ sku: o.sku, change: -o.qty, stockAfter: '', reason: 'Sold', channel: o.channel, orderId: o.extId || o.orderId, byName: o.source, at: o.orderDate + 'T10:00:00' }); });
+  stockMoves.sort((a, b) => b.at.localeCompare(a.at));
+  return { products: P, orders, adSpend, stockMoves };
+}
+/* ---- stock follows sales: same rules as the database (16_stock_amazon_meta.sql) — used by the demo ---- */
+const STOCK_DEAD = ['Cart', 'Cancelled', 'Refunded', 'RTO', 'Returned'];
+function demoStock(o, del) {
+  if ((S.settings || {}).stockAuto === 'off') return;
+  const want = !del && o.sku && !STOCK_DEAD.includes(o.status) && !o.stockSkip && (S.products || []).some(p => p.sku === o.sku) ? Math.max(0, parseInt(o.qty, 10) || 1) : 0;
+  const ot = +o.stockTaken || 0, os = o.stockSku || '', wsku = want ? o.sku : os; S.stockMoves = S.stockMoves || [];
+  const mv = (sku, ch, reason) => { const p = (S.products || []).find(x => x.sku === sku); if (!p || !ch) return; p.stock = (+p.stock || 0) + ch; S.stockMoves.unshift({ sku, change: ch, stockAfter: p.stock, reason, channel: o.channel || '', orderId: o.extId || o.orderId || '', byName: me() || 'You', at: new Date().toISOString() }); };
+  if (os === wsku) { if (want !== ot) mv(wsku, ot - want, want > ot && ot === 0 ? 'Sold' : want === 0 ? (del ? 'Order deleted' : 'Order cancelled / returned') : 'Order changed'); }
+  else { if (ot && os) mv(os, ot, 'Order changed'); if (want) mv(wsku, -want, 'Sold'); }
+  o.stockTaken = want; o.stockSku = wsku;
 }
 function demoTemplates() {
   const B = (kind, label, meta, actions, extra) => Object.assign({ kind, label, meta, url: '', phone: '', actions: actions || [] }, extra || {});
@@ -2035,14 +2050,14 @@ function demoApi(action, d) {
     case 'deleteTask': S.tasks = (S.tasks || []).filter(t => t.taskId !== d.id); return { deleted: d.id };
     case 'refreshCampaigns': return [];
     case 'saveTplFlow': { const t = (S.templates || []).find(x => x.templateName === d.templateName); if (!t) throw new Error('Template not found'); t.flow = d.flow; return t; }
-    case 'saveOrder': { S.orders = S.orders || []; d = demoOrderFill(Object.assign({}, d)); if (d.orderId) { const o = S.orders.find(x => x.orderId === d.orderId); Object.assign(o, d, { updatedAt: new Date().toISOString() }); if (o.leadId && d.logMsg) log(o.leadId, 'Order', d.logMsg, me()); return o; } const o = Object.assign({ status: 'New', channel: 'Direct', orderDate: todayStr(), createdAt: new Date().toISOString() }, d, { orderId: nextId(S.orders, 'orderId', 'O') }); S.orders.unshift(o); if (o.leadId) log(o.leadId, 'Order', `${o.orderId} created · ${o.status}`, me()); return o; }
-    case 'deleteOrder': S.orders = (S.orders || []).filter(o => o.orderId !== d.id); return { deleted: d.id };
+    case 'saveOrder': { S.orders = S.orders || []; d = demoOrderFill(Object.assign({}, d)); if (d.orderId) { const o = S.orders.find(x => x.orderId === d.orderId); Object.assign(o, d, { updatedAt: new Date().toISOString() }); demoStock(o); if (o.leadId && d.logMsg) log(o.leadId, 'Order', d.logMsg, me()); return o; } const o = Object.assign({ status: 'New', channel: 'Direct', orderDate: todayStr(), createdAt: new Date().toISOString() }, d, { orderId: nextId(S.orders, 'orderId', 'O') }); S.orders.unshift(o); demoStock(o); if (o.leadId) log(o.leadId, 'Order', `${o.orderId} created · ${o.status}`, me()); return o; }
+    case 'deleteOrder': { const o = (S.orders || []).find(x => x.orderId === d.id); if (o) demoStock(o, true); S.orders = (S.orders || []).filter(x => x.orderId !== d.id); return { deleted: d.id }; }
     case 'saveProduct': { S.products = S.products || []; const p = Object.assign({}, d); delete p.oldSku; ['price', 'cost'].forEach(k => { p[k] = p[k] === '' || p[k] == null ? '' : +p[k]; }); p.stock = parseInt(p.stock, 10) || 0; p.reorderLevel = p.reorderLevel === '' || p.reorderLevel == null ? 5 : Math.max(0, parseInt(p.reorderLevel, 10) || 0);
       const i = S.products.findIndex(x => x.sku === (d.oldSku || d.sku)); if (i >= 0) { Object.assign(S.products[i], p); if (d.oldSku && d.oldSku !== d.sku) S.orders.forEach(o => { if (o.sku === d.oldSku) o.sku = d.sku; }); return S.products[i]; } S.products.push(p); return p; }
     case 'deleteProduct': S.products = (S.products || []).filter(p => p.sku !== d.sku); return { deleted: d.sku };
-    case 'setStock': { const p = (S.products || []).find(x => x.sku === d.sku); if (!p) throw new Error('Product not found'); p.stock = parseInt(d.stock, 10) || 0; return p; }
+    case 'setStock': { const p = (S.products || []).find(x => x.sku === d.sku); if (!p) throw new Error('Product not found'); const nv = parseInt(d.stock, 10) || 0, ch = nv - (+p.stock || 0); p.stock = nv; if (ch) (S.stockMoves = S.stockMoves || []).unshift({ sku: p.sku, change: ch, stockAfter: nv, reason: ch > 0 ? 'Stock in' : 'Adjusted', channel: '', orderId: '', byName: me() || 'You', at: new Date().toISOString() }); return p; }
     case 'importProducts': S.products = S.products || []; d.rows.forEach(r => { const p = S.products.find(x => x.sku === r.sku); if (p) Object.assign(p, r); else S.products.push(Object.assign({ name: '', category: '', price: '', cost: '', stock: 0, reorderLevel: 5, imageUrl: '', amazonAsin: '', websiteUrl: '', notes: '', active: true }, r)); }); return { count: d.rows.length };
-    case 'importOrders': S.orders = S.orders || []; d.rows.forEach(r => { const f = demoOrderFill(Object.assign({}, r)), o = f.extId && S.orders.find(x => x.extId === f.extId && x.channel === f.channel); if (o) Object.assign(o, f); else S.orders.unshift(Object.assign({ leadId: '', payment: '', trackingUrl: '', notes: '', createdAt: new Date().toISOString() }, f, { orderId: nextId(S.orders, 'orderId', 'O') })); }); return { count: d.rows.length };
+    case 'importOrders': S.orders = S.orders || []; d.rows.forEach(r => { const f = demoOrderFill(Object.assign({}, r)), o = f.extId && S.orders.find(x => x.extId === f.extId && x.channel === f.channel); if (o) { Object.assign(o, f); demoStock(o); } else { const n = Object.assign({ leadId: '', payment: '', trackingUrl: '', notes: '', createdAt: new Date().toISOString() }, f, { orderId: nextId(S.orders, 'orderId', 'O') }); S.orders.unshift(n); demoStock(n); } }); return { count: d.rows.length };
     case 'importAds': S.adSpend = S.adSpend || []; d.rows.forEach(r => { const a = S.adSpend.find(x => x.day === r.day && x.platform === r.platform && x.campaign === r.campaign); if (a) Object.assign(a, r); else S.adSpend.push(Object.assign({ id: 1 + Math.max(0, ...S.adSpend.map(x => +x.id || 0)), impressions: '', clicks: '', purchases: '', revenue: '' }, r)); }); return { count: d.rows.length };
     case 'saveAdSpend': { S.adSpend = S.adSpend || []; const r = Object.assign({}, d); ['spend', 'impressions', 'clicks', 'purchases', 'revenue'].forEach(k => { r[k] = r[k] === '' || r[k] == null ? '' : +r[k]; }); if (S.adSpend.some(x => String(x.id) !== String(d.id) && x.day === r.day && x.platform === r.platform && x.campaign === r.campaign)) throw new Error('duplicate key value violates unique constraint');
       if (d.id) { const a = S.adSpend.find(x => String(x.id) === String(d.id)); Object.assign(a, r); return a; } r.id = 1 + Math.max(0, ...S.adSpend.map(x => +x.id || 0)); S.adSpend.push(r); return r; }
@@ -2098,7 +2113,7 @@ function ring(pct, label, val, color) {
 
 /* ================= load ================= */
 function applyData(d) {
-  S = Object.assign({ leads: [], activities: [], team: [], templates: [], flows: [], messages: [], calls: [], tasks: [], campaignStats: [], orders: [], products: [], adSpend: [] }, d);
+  S = Object.assign({ leads: [], activities: [], team: [], templates: [], flows: [], messages: [], calls: [], tasks: [], campaignStats: [], orders: [], products: [], adSpend: [], stockMoves: [] }, d);
   S.lists = Object.assign({}, DEFAULT_LISTS, d.lists || {});
   stageSig = (d.lists && d.lists.stages || []).join('|');
   S.leads.forEach(l => { l.leadId = String(l.leadId); l.phone = String(l.phone || ''); });
@@ -3261,8 +3276,23 @@ const cmp = n => { n = Number(n) || 0; if (n >= 1e7) return (n / 1e7).toFixed(1)
 const pct = (a, b) => b ? (a / b * 100) : 0;
 function mulberry32(a) { return () => { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
 
+/** Real Meta numbers: daily spend per campaign from Connections → Meta Ads (or imported / typed spend). One ad set + one ad per campaign. */
+function adsReal() {
+  const R = (S.adSpend || []).filter(a => /meta|facebook|instagram/i.test(a.platform || 'Meta') && a.day);
+  if (demo || !R.length) return null;
+  const key = R.length + '|' + R.reduce((x, a) => x + (+a.spend || 0), 0); if (ADS.real && ADS.real.key === key) return ADS.real.d;
+  const days = []; for (let d = 59; d >= 0; d--) { const dt = new Date(); dt.setDate(dt.getDate() - d); days.push(dt.getFullYear() + '-' + pad(dt.getMonth() + 1) + '-' + pad(dt.getDate())); }
+  const names = [...new Set(R.map(a => a.campaign || 'Campaign'))], last3 = days[days.length - 3], last7 = days[days.length - 7];
+  const campaigns = names.map((n, i) => { const rr = R.filter(a => (a.campaign || 'Campaign') === n), sp7 = rr.filter(a => dOnly(a.day) >= last7).reduce((x, a) => x + (+a.spend || 0), 0);
+    return { id: 'R' + (i + 1), name: n, objective: rr.some(a => +a.leads) ? 'Leads' : rr.some(a => +a.purchases) ? 'Sales' : 'Traffic', dest: '—', status: rr.some(a => dOnly(a.day) >= last3 && +a.spend) ? 'Active' : 'Paused', budget: Math.round(sp7 / 7) }; });
+  const adsets = campaigns.map(c => ({ id: c.id + 'S1', campaignId: c.id, name: 'All ad sets', audience: '—', placement: '—', budget: c.budget }));
+  const ads = campaigns.map(c => ({ id: c.id + 'S1A1', adsetId: c.id + 'S1', campaignId: c.id, name: 'All ads · ' + c.name, format: '—', headline: '', text: '', q: 1, freqBase: 0 }));
+  const rows = R.map(a => ({ day: dOnly(a.day), adId: campaigns[names.indexOf(a.campaign || 'Campaign')].id + 'S1A1', spend: +a.spend || 0, impressions: +a.impressions || 0, clicks: +a.clicks || 0, leads: +a.leads || 0 }));
+  const d = { campaigns, adsets, ads, rows, days, audiences: [], forms: [], real: true }; ADS.real = { key, d }; return d;
+}
+function adsSample() { return adsReal() || adsSampleData(); }
 /** Sample account (until the real ad account is connected). Deterministic, 60 days of daily rows per ad. */
-function adsSample() {
+function adsSampleData() {
   if (ADS.data) return ADS.data;
   const r = mulberry32(20261001);
   const C = [
@@ -3350,6 +3380,9 @@ function adsInsights() {
 }
 function renderAds(anim) {
   if (!$('#v-ads').classList.contains('active')) return;
+  { const real = !!adsReal(), meta = ((CONN.list || {}).meta_ads || {}).connected, mb = $('#adsMode'), bn = $('#adsBanner .grow');
+    if (mb) mb.textContent = real ? (meta ? 'Live from Meta' : 'Your spend data') : 'Sample data';
+    if (bn) bn.innerHTML = real ? `Showing <b>your real ad spend</b>${meta ? ' synced from Meta' : ' (added by hand or imported)'} — it is also counted in <b>Store → Overview</b> net profit. Audiences, creatives and lead forms appear here in a later update.` : 'Showing <b>sample ad data</b>. CRM numbers (leads, won deals, ROAS) are real. Connect Meta Ads (or add spend in Spend & ROAS) to see your own numbers — they also go into your net profit.'; }
   $('#adsTabs').innerHTML = ADS_TABS.map(([k, n]) => `<button class="tab ${ADS.tab === k ? 'active' : ''}" data-adtab="${k}">${n}</button>`).join('');
   $('#adsRange').value = String(ADS.range);
   const isCv = ADS.tab === 'canvas'; $('#adsCanvas').hidden = !isCv; $('#adsBody').hidden = isCv;
@@ -3465,21 +3498,19 @@ function drawFunnelWires() {
   svg.innerHTML = h;
 }
 function adsConnect() {
-  const c = store.get('leadnode.ads.conn') || {};
+  if (cloud && !CONN.list && !CONN.loading) connLoad().then(() => { if (ADS.tab === 'connect') renderAds(); });
+  const c = (CONN.list || {}).meta_ads, on = !!(c && c.connected), spend = (S.adSpend || []).length;
   const step = (n, t, d, done) => `<div class="cstep ${done ? 'done' : ''}"><span class="cn">${done ? '✓' : n}</span><div><b>${t}</b><p class="muted">${d}</p></div></div>`;
   return `<div class="rgrid">
-    <div class="rcard glass"><h3>Connect your ad account</h3><p class="sub muted">Uses the same verified business (Vertex Media) and the leadnode-bot system user you already set up for WhatsApp.</p>
-      <div class="form" style="grid-template-columns:1fr">
-        <div class="field"><label>Ad account ID</label><input class="input" id="adAcc" placeholder="act_1234567890" value="${esc(c.account || '')}"></div>
-        <div class="field"><label>Pixel / Dataset ID (optional)</label><input class="input" id="adPixel" placeholder="1234567890" value="${esc(c.pixel || '')}"></div>
-        <p class="help">Never paste tokens here. The access token stays in Apps Script → Script Properties, like the WhatsApp token.</p>
-        <div class="m-foot" style="margin-top:4px"><div class="grow"></div><button class="btn primary" id="adConnSave">Save</button></div></div></div>
-    <div class="rcard glass"><h3>What happens next</h3><p class="sub muted">Step by step — start read-only, add control later</p>
-      ${step(1, 'Give leadnode-bot "View performance" on the ad account', 'Business settings → System users → Assign assets → Ad accounts. Read-only first (ads_read).', !!c.account)}
-      ${step(2, 'Live dashboard', 'Spend, leads, CPL and CTR from the Marketing API instead of sample data.', false)}
-      ${step(3, 'Lead forms → CRM', 'Meta lead webhook (leads_retrieval) creates leads in your pipeline instantly.', false)}
-      ${step(4, 'Send Won deals back to Meta', 'Conversions API tells Meta which leads became customers, so it finds more like them.', false)}
-      ${step(5, 'Control from here', 'Pause / resume campaigns and change budgets (ads_management).', false)}
+    <div class="rcard glass"><h3>${on ? 'Meta Ads is connected' : 'Connect your ad account'}</h3><p class="sub muted">${on ? `Ad account act_${esc(c.config.ad_account || '')}${c.last_sync_at ? ' · synced ' + esc(ago(c.last_sync_at)) : ''}${c.last_status === 'error' ? ' · last sync failed: ' + esc(c.last_error || '') : ''}` : 'Paste your ad account ID and an access token (ads_read) once — your daily spend then comes in by itself.'}</p>
+      <p class="help">The token is saved on the server only and never shown again. Spend goes into <b>Spend & ROAS</b>, this Ads Manager and your <b>net profit</b> in Store → Overview.</p>
+      <div class="m-foot" style="margin-top:8px"><div class="grow"></div><button class="btn" data-adtab="spend">Add spend by hand</button><button class="btn primary" data-adsconn>${on ? 'Manage connection' : 'Connect Meta Ads'}</button></div></div>
+    <div class="rcard glass"><h3>What happens next</h3><p class="sub muted">Step by step — read-only first</p>
+      ${step(1, 'Connect Meta Ads', 'Connections → Meta Ads: ad account ID + access token with ads_read.', on)}
+      ${step(2, 'Real spend everywhere', 'Daily spend, clicks and leads per campaign → Ads Manager, Spend & ROAS and Store net profit.', on || spend > 0)}
+      ${step(3, 'Lead forms → CRM', 'Connections → Lead capture link with Zapier / Make / n8n (Facebook Lead Ads) creates leads instantly.', false)}
+      ${step(4, 'Send Won deals back to Meta', 'Conversions API tells Meta which leads became customers (coming later).', false)}
+      ${step(5, 'Control from here', 'Pause / resume campaigns and change budgets (coming later).', false)}
     </div></div>`;
 }
 (function adsEvents() {
@@ -3490,7 +3521,7 @@ function adsConnect() {
     const cp = t.closest('[data-adcamp]'); if (cp) { ADS.camp = cp.dataset.adcamp; ADS.tab = 'adsets'; renderAds(true); return; }
     const fa = t.closest('[data-formauto]'); if (fa) { const m = store.get('leadnode.ads.forms') || {}; const id = fa.dataset.formauto; m[id] = Object.assign({ auto: true }, m[id]); m[id].auto = !m[id].auto; store.set('leadnode.ads.forms', m); fa.classList.toggle('on', m[id].auto); toast(m[id].auto ? 'Auto-import on' : 'Auto-import off'); return; }
     if (t.closest('[data-adconnect]')) { toast('Connect your ad account first (Connect tab)'); ADS.tab = 'connect'; renderAds(true); return; }
-    if (t.id === 'adConnSave') { const acc = $('#adAcc').value.trim(), px = $('#adPixel').value.trim(); if (acc && !/^act_\d{5,20}$/.test(acc)) return toast('Ad account ID looks like act_ followed by numbers', true); if (px && !/^\d{5,20}$/.test(px)) return toast('Pixel ID should be numbers only', true); store.set('leadnode.ads.conn', { account: acc, pixel: px }); toast('Saved ✓ — next: give leadnode-bot access to this ad account'); renderAds(); }
+    if (t.closest('[data-adsconn]')) { CONN.open = 'meta_ads'; store.set('nv.connOpen', 'meta_ads'); return go('connections'); }
   });
   $('#v-ads').addEventListener('change', e => {
     if (e.target.id === 'adCampSel') { ADS.camp = e.target.value; renderAds(); return; }
@@ -5592,16 +5623,17 @@ async function sbApi(action, d = {}) {
     case 'ping': return 'pong';
     case 'getAll': {
       const acc = await cl.rpc('my_access', { p_ws: ws }); AUTH.access = acc.error ? null : acc.data; AUTH.v7 = !acc.error;
-      const [leads, activities, team, templates, broadcasts, flows, settings, messages, calls, tasks, cstats, orders, products, adSpend] = await Promise.all([
+      const [leads, activities, team, templates, broadcasts, flows, settings, messages, calls, tasks, cstats, orders, products, adSpend, moves] = await Promise.all([
         sbAll('leads', 'created_at'), sbAll('activities', 'date_time'), sbAll('team', 'member_id'), sbAll('templates', 'template_name'),
         sbAll('broadcasts', 'broadcast_id'), sbAll('flows', 'flow_id'), sbSettings(),
         sbq(T('messages').select('*').eq('workspace_id', ws).order('time', { ascending: false }).limit(1500)),
         AUTH.v7 ? sbAll('calls', 'called_at') : [], AUTH.v7 ? sbAll('tasks', 'due_at') : [], AUTH.v7 ? sbq(T('campaign_stats').select('*').eq('workspace_id', ws)).catch(() => []) : [],
         sbAll('orders', 'created_at').then(r => { AUTH.v8 = true; return r; }, () => { AUTH.v8 = false; return []; }),
         sbAll('products', 'sku').then(r => { AUTH.v9 = true; return r; }, () => { AUTH.v9 = false; return []; }),
-        sbq(T('ad_spend').select('*').eq('workspace_id', ws).order('day', { ascending: false }).limit(5000)).catch(() => [])]);
+        sbq(T('ad_spend').select('*').eq('workspace_id', ws).order('day', { ascending: false }).limit(5000)).catch(() => []),
+        sbq(T('stock_moves').select('*').eq('workspace_id', ws).order('at', { ascending: false }).limit(3000)).then(r => { AUTH.v16 = true; return r; }, () => { AUTH.v16 = false; return []; })]);
       let stages = null; try { stages = JSON.parse(settings.stagesJson || 'null'); } catch (e) { }
-      return { products: products.map(fromRow), adSpend: adSpend.map(r => Object.assign(fromRow(r), { id: r.id })), orders: orders.map(fromRow), calls: calls.map(fromRow), tasks: tasks.map(fromRow), campaignStats: cstats.map(fromRow), leads: leads.map(fromRow), activities: activities.map(fromRow), team: team.map(fromRow), templates: templates.map(fromRow), broadcasts: broadcasts.map(fromRow), flows: flows.map(fromRow), messages: messages.reverse().map(fromRow), lists: Array.isArray(stages) && stages.length ? { stages } : {}, settings };
+      return { stockMoves: moves.map(fromRow), products: products.map(fromRow), adSpend: adSpend.map(r => Object.assign(fromRow(r), { id: r.id })), orders: orders.map(fromRow), calls: calls.map(fromRow), tasks: tasks.map(fromRow), campaignStats: cstats.map(fromRow), leads: leads.map(fromRow), activities: activities.map(fromRow), team: team.map(fromRow), templates: templates.map(fromRow), broadcasts: broadcasts.map(fromRow), flows: flows.map(fromRow), messages: messages.reverse().map(fromRow), lists: Array.isArray(stages) && stages.length ? { stages } : {}, settings };
     }
     case 'addLead': {
       if (!String(d.name || '').trim()) throw new Error('Name is required');
@@ -7147,7 +7179,7 @@ const CM_CH = ['Amazon', 'Website', 'WhatsApp', 'Direct', 'Flipkart', 'Meesho', 
 const CM_CHC = { Amazon: '#F59E0B', Website: 'var(--blue-2)', WhatsApp: 'var(--wa)', Direct: 'var(--green)', Flipkart: '#A78BFA', Meesho: 'var(--coral)', Other: 'var(--faint)' };
 const CM_DEAD = ['Cart', 'Cancelled', 'Refunded', 'RTO', 'Returned'], CM_RET = ['RTO', 'Returned', 'Refunded'];
 const CM_COSTS = [['productCost', 'Product cost'], ['marketplaceFee', 'Marketplace / gateway fees'], ['shippingFee', 'Shipping'], ['packagingCost', 'Packaging'], ['rtoCharges', 'RTO / return charges'], ['adSpend', 'Ad spend on order'], ['otherCost', 'Other costs']];
-const CM = Object.assign({ tab: 'overview', range: 30, ch: '', state: '', st: '', pq: '', cat: '', inv: 'all', an: 'sales', grain: 'day', oq: '', aq: '' }, { tab: store.get('nv.cmTab') || 'overview' });
+const CM = Object.assign({ tab: 'overview', range: 30, ch: '', state: '', st: '', pq: '', cat: '', inv: 'all', mvsku: '', mvr: '', an: 'sales', grain: 'day', oq: '', aq: '' }, { tab: store.get('nv.cmTab') || 'overview' });
 const cmN = v => { const n = Number(String(v == null ? '' : v).replace(/[^\d.-]/g, '')); return isFinite(n) ? n : 0; };
 const cmOk = () => demo || (cloud && AUTH.v9);
 const cmDate = o => dOnly(o.orderDate || o.createdAt || '');
@@ -7256,10 +7288,10 @@ function cmOverview() {
   return `${nada ? cmStart() : ''}${cmFilterBar({ right: '<button class="btn sm" data-cmimport data-cmw>⇪ Import</button><button class="btn sm primary" data-ordnew="" data-cmw>+ Order</button>' })}
     <div class="cm-ks">
       ${cmK('Total revenue', inrShort(rev), byCh.slice(0, 3).map(p => `${esc(p.label)} <b>${inrShort(p.value)}</b>`).join(' · ') || '—')}
-      ${cmK('Net profit', inrShort(profit), `Margin <b>${cmPct(profit, rev)}%</b>`, profit < 0 ? 'var(--coral)' : 'var(--green)')}
+      ${(() => { const net = CM.ch ? profit : profit - ads; return cmK('Net profit', inrShort(net), ads && !CM.ch ? `After <b>${inrShort(ads)}</b> ad spend · margin <b>${cmPct(net, rev)}%</b>` : `Margin <b>${cmPct(net, rev)}%</b>`, net < 0 ? 'var(--coral)' : 'var(--green)'); })()}
       ${cmK('Orders', o.length, `${live.length} active · ${o.length - live.length} cancelled/returned`)}
       ${cmK('Units sold', units, `Avg order <b>${inr(live.length ? rev / live.length : 0)}</b>`)}
-      ${cmK('Ad spend', inrShort(ads), ads ? `ROAS <b>${(rev / ads).toFixed(1)}×</b> · after ads <b>${inrShort(profit - ads)}</b>` : 'Add in Ads Manager')}
+      ${cmK('Ad spend', inrShort(ads), ads ? `ROAS <b>${(rev / ads).toFixed(1)}×</b> · profit before ads <b>${inrShort(profit)}</b>` : ((CONN.list || {}).meta_ads || {}).connected ? 'Meta connected — no spend in this period' : 'Connect Meta Ads or add spend in Ads Manager')}
       ${cmK('Return / RTO rate', cmPct(ret, o.length) + '%', `${ret} orders came back`, cmPct(ret, o.length) > 10 ? 'var(--coral)' : '')}
       ${cmK('Inventory value', inrShort(invVal), `${P.length} products · at cost`)}
       ${cmK('Stock alerts', low, low ? 'Low or out of stock' : 'All good', low ? '#D97706' : 'var(--green)')}
@@ -7287,15 +7319,37 @@ function cmProducts() {
       </tbody></table></div>` : `<div class="tp-empty glass" style="margin-top:14px"><b>No products yet</b><p class="muted">Add your first product or import your product sheet (SKU, name, price, cost, stock).</p><div style="display:flex;gap:8px;justify-content:center;margin-top:10px"><button class="btn" data-cmimport="products" data-cmw>⇪ Import products</button><button class="btn primary" data-cmprod="" data-cmw>+ Add product</button></div></div>`}`;
 }
 function cmInventory() {
-  const P = S.products || [], o30 = (S.orders || []).filter(o => cmDate(o) >= (() => { const d = new Date(); d.setDate(d.getDate() - 29); return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); })());
-  const sold30 = new Map(cmBySku(o30).map(r => [r.sku, r.units])), cnt = k => P.filter(p => cmStock(p)[0] === k).length;
+  const P = S.products || [], from30 = (() => { const d = new Date(); d.setDate(d.getDate() - 29); return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); })(), o30 = (S.orders || []).filter(o => cmDate(o) >= from30);
+  const sold30 = new Map(cmBySku(o30).map(r => [r.sku, r.units])), cnt = k => P.filter(p => cmStock(p)[0] === k).length, fba = P.some(p => p.fbaStock !== '' && p.fbaStock != null);
   const list = P.filter(p => CM.inv === 'all' || cmStock(p)[0] === CM.inv).sort((a, b) => cmN(a.stock) - cmN(b.stock));
-  return `<div class="cm-ks">${cmK('Products', P.length, `${cmSum(P, p => Math.max(0, cmN(p.stock)))} units in stock`)}${cmK('Stock value (cost)', inrShort(cmSum(P, p => Math.max(0, cmN(p.stock)) * cmN(p.cost))), 'What your stock cost you')}${cmK('Stock value (selling)', inrShort(cmSum(P, p => Math.max(0, cmN(p.stock)) * cmN(p.price))), 'If everything sells at price')}${cmK('Low stock', cnt('low'), 'At or below reorder level', cnt('low') ? '#D97706' : '')}${cmK('Out of stock', cnt('out'), 'Can not be sold now', cnt('out') ? 'var(--coral)' : '')}</div>
-    <div class="toolbar glass cm-fb" style="margin-top:14px"><div class="tp-chips">${[['all', 'All', P.length], ['low', 'Low stock', cnt('low')], ['out', 'Out of stock', cnt('out')], ['ok', 'In stock', cnt('ok')]].map(([k, n, c]) => `<button class="chip ${CM.inv === k ? 'on' : ''}" data-cminv="${k}">${n} <span class="n">${c}</span></button>`).join('')}</div><div class="grow"></div><button class="btn sm" data-cmimport="products" data-cmw>⇪ Update stock from sheet</button></div>
-    <div class="table-wrap glass" style="margin-top:14px"><table class="tbl cm-tbl"><thead><tr><th>Product</th><th>Status</th><th class="num">In stock</th><th class="num">Reorder at</th><th class="num">Sold (30 days)</th><th class="num">Days left</th><th class="num">Value (cost)</th><th>Update stock</th><th></th></tr></thead><tbody>
+  const auto = (S.settings || {}).stockAuto !== 'off', canEdit = demo || (cloud && canAdmin());
+  return `<div class="cm-ks">${cmK('Products', P.length, `${cmSum(P, p => Math.max(0, cmN(p.stock)))} units in stock${fba ? ` · ${cmSum(P, p => cmN(p.fbaStock))} at Amazon FBA` : ''}`)}${cmK('Stock value (cost)', inrShort(cmSum(P, p => Math.max(0, cmN(p.stock)) * cmN(p.cost))), 'What your stock cost you')}${cmK('Stock value (selling)', inrShort(cmSum(P, p => Math.max(0, cmN(p.stock)) * cmN(p.price))), 'If everything sells at price')}${cmK('Low stock', cnt('low'), 'At or below reorder level', cnt('low') ? '#D97706' : '')}${cmK('Out of stock', cnt('out'), 'Can not be sold now', cnt('out') ? 'var(--coral)' : '')}</div>
+    <label class="inv-auto glass"><div><b>Reduce stock automatically when something sells</b><small class="muted">Every order (Amazon, website, WhatsApp, added by your team or imported) takes its units out of stock; cancelled, RTO and returned orders put them back. Shopify / WooCommerce stock and Amazon FBA orders come from the store itself.</small></div><span class="sw"><input type="checkbox" id="cmStockAuto" ${auto ? 'checked' : ''} ${canEdit ? '' : 'disabled'}><i></i></span></label>
+    <div class="toolbar glass cm-fb" style="margin-top:14px"><div class="tp-chips">${[['all', 'All', P.length], ['low', 'Low stock', cnt('low')], ['out', 'Out of stock', cnt('out')], ['ok', 'In stock', cnt('ok')]].map(([k, n, c]) => `<button class="chip ${CM.inv === k ? 'on' : ''}" data-cminv="${k}">${n} <span class="n">${c}</span></button>`).join('')}</div><div class="grow"></div><select class="input sm" data-cmf="range" title="Period for the stock history">${[[7, 'History: 7 days'], [30, 'History: 30 days'], [90, 'History: 90 days'], [365, 'History: 12 months'], [0, 'History: all time']].map(([v, l]) => `<option value="${v}" ${CM.range === v ? 'selected' : ''}>${l}</option>`).join('')}</select><button class="btn sm" data-cmimport="products" data-cmw>⇪ Update stock from sheet</button></div>
+    <div class="table-wrap glass" style="margin-top:14px"><table class="tbl cm-tbl"><thead><tr><th>Product</th><th>Status</th><th class="num">In stock</th>${fba ? '<th class="num">At Amazon (FBA)</th>' : ''}<th class="num">Reorder at</th><th class="num">Sold (30 days)</th><th class="num">Days left</th><th class="num">Value (cost)</th><th>Update stock</th><th></th></tr></thead><tbody>
     ${list.map(p => { const [k, lbl, c] = cmStock(p), s30 = sold30.get(p.sku) || 0, days = s30 ? Math.floor(cmN(p.stock) / (s30 / 30)) : null;
-      return `<tr><td><a data-cmprod="${esc(p.sku)}"><b>${esc(p.name || p.sku)}</b></a><br><small class="muted">${esc(p.sku)}</small></td><td><span class="cm-sb" style="--c:${c}">${lbl}</span></td><td class="num"><b>${cmN(p.stock)}</b></td><td class="num">${p.reorderLevel === '' ? 5 : cmN(p.reorderLevel)}</td><td class="num">${s30}</td><td class="num" style="color:${days !== null && days < 15 ? 'var(--coral)' : ''}">${days === null ? '—' : days + ' d'}</td><td class="num">${inr(Math.max(0, cmN(p.stock)) * cmN(p.cost))}</td>
-        <td><div class="cm-adj" data-cmw><input class="input sm" type="number" value="${cmN(p.stock)}" data-cmstock="${esc(p.sku)}" aria-label="Stock for ${esc(p.name || p.sku)}"><button class="btn sm" data-cmstocksave="${esc(p.sku)}">Save</button></div></td><td>${k !== 'ok' ? `<button class="btn sm" data-cmreorder="${esc(p.sku)}" data-cmw>Reorder task</button>` : ''}</td></tr>`; }).join('') || `<tr><td colspan="9" class="muted" style="text-align:center;padding:20px">${P.length ? 'Nothing here' : 'Add or import products first'}</td></tr>`}
+      return `<tr><td><a data-cmprod="${esc(p.sku)}"><b>${esc(p.name || p.sku)}</b></a><br><small class="muted">${esc(p.sku)}</small></td><td><span class="cm-sb" style="--c:${c}">${lbl}</span></td><td class="num"><b>${cmN(p.stock)}</b></td>${fba ? `<td class="num">${p.fbaStock === '' || p.fbaStock == null ? '—' : cmN(p.fbaStock)}</td>` : ''}<td class="num">${p.reorderLevel === '' ? 5 : cmN(p.reorderLevel)}</td><td class="num">${s30}</td><td class="num" style="color:${days !== null && days < 15 ? 'var(--coral)' : ''}">${days === null ? '—' : days + ' d'}</td><td class="num">${inr(Math.max(0, cmN(p.stock)) * cmN(p.cost))}</td>
+        <td><div class="cm-adj" data-cmw><input class="input sm" type="number" value="${cmN(p.stock)}" data-cmstock="${esc(p.sku)}" aria-label="Stock for ${esc(p.name || p.sku)}"><button class="btn sm" data-cmstocksave="${esc(p.sku)}">Save</button></div></td><td style="white-space:nowrap"><button class="btn sm" data-cmhist="${esc(p.sku)}" title="Where this stock went">History</button>${k !== 'ok' ? ` <button class="btn sm" data-cmreorder="${esc(p.sku)}" data-cmw>Reorder task</button>` : ''}</td></tr>`; }).join('') || `<tr><td colspan="${fba ? 10 : 9}" class="muted" style="text-align:center;padding:20px">${P.length ? 'Nothing here' : 'Add or import products first'}</td></tr>`}
+    </tbody></table></div>
+    ${cmStockFlow()}`;
+}
+const MV_IN = ['Order cancelled / returned', 'Order deleted'];
+/** where the stock went: sold per channel, came back, stock in, adjustments — and the full log */
+function cmStockFlow() {
+  if (cloud && AUTH.v16 === false) return `<div class="tp-empty glass" style="margin-top:14px"><b>Track where every unit goes</b><p class="muted">Run the database update <code>16_stock_amazon_meta.sql</code> in Supabase — then every sale, return and stock change is logged here.</p></div>`;
+  const M = S.stockMoves || [], from = cmFrom(), inR = M.filter(m => !from || String(m.at).slice(0, 10) >= from), P = S.products || [], name = sku => ((P.find(p => p.sku === sku) || {}).name || sku);
+  const soldBy = {}; inR.filter(m => m.reason === 'Sold' || m.reason === 'Order changed' || MV_IN.includes(m.reason)).forEach(m => { const c = m.channel || 'Direct'; soldBy[c] = (soldBy[c] || 0) - cmN(m.change); });
+  const sum = f => inR.filter(f).reduce((a, m) => a + cmN(m.change), 0), sold = -sum(m => m.reason === 'Sold'), back = sum(m => MV_IN.includes(m.reason)), inn = sum(m => m.reason === 'Stock in' || m.reason === 'Opening stock'), adj = sum(m => m.reason === 'Adjusted'), syn = sum(m => m.reason === 'Synced from store');
+  const reasons = [...new Set(M.map(m => m.reason))].sort(), L = inR.filter(m => (!CM.mvsku || m.sku === CM.mvsku) && (!CM.mvr || m.reason === CM.mvr)).slice(0, 150);
+  const rows = Object.entries(soldBy).filter(([, v]) => v > 0).sort((a, b) => b[1] - a[1]).map(([k, v]) => ({ label: k, value: v }));
+  return `<div class="cm-g2" style="margin-top:14px"><div class="rcard glass"><h3>Where your stock went</h3><p class="sub muted">${from ? 'Since ' + esc(fmtDate(from)) : 'All time'}</p>
+      <div class="inv-flow">${[['Sold', -sold, 'var(--coral)'], ['Came back (cancel / return)', back, 'var(--green)'], ['Stock in', inn, 'var(--blue-2)'], ['Adjusted by hand', adj, '#D97706'], ['Synced from your store', syn, 'var(--muted)']].filter(([, v], i) => i < 3 || v).map(([l, v, c]) => `<div><span>${l}</span><b style="color:${c}">${v > 0 ? '+' : ''}${v}</b></div>`).join('')}</div></div>
+    <div class="rcard glass"><h3>Units sold by channel</h3><p class="sub muted">After cancellations and returns</p>${cmBars(rows, v => v + ' units', 'var(--blue-2)')}</div></div>
+    <div class="table-wrap glass" style="margin-top:14px" id="cmMoves"><div class="cm-th"><b>Stock movements</b><span class="muted">${L.length} shown${CM.mvsku ? ' · ' + esc(name(CM.mvsku)) : ''}</span><div class="grow"></div>
+      <select class="input sm" data-cmf="mvsku"><option value="">All products</option>${P.map(p => `<option value="${esc(p.sku)}" ${CM.mvsku === p.sku ? 'selected' : ''}>${esc(p.name || p.sku)}</option>`).join('')}</select>
+      <select class="input sm" data-cmf="mvr"><option value="">Every reason</option>${reasons.map(r => `<option ${CM.mvr === r ? 'selected' : ''}>${esc(r)}</option>`).join('')}</select></div>
+    <table class="tbl cm-tbl"><thead><tr><th>When</th><th>Product</th><th class="num">Change</th><th>Reason</th><th>Channel</th><th>Order</th><th class="num">Stock after</th><th>By</th></tr></thead><tbody>
+    ${L.map(m => `<tr style="cursor:default"><td style="white-space:nowrap">${esc(fmtDate(String(m.at).slice(0, 10)))}${/T\d/.test(m.at) ? ` <small class="muted">${esc(new Date(m.at).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' }))}</small>` : ''}</td><td><b>${esc(name(m.sku))}</b><br><small class="muted">${esc(m.sku)}</small></td><td class="num"><b style="color:${cmN(m.change) < 0 ? 'var(--coral)' : 'var(--green)'}">${cmN(m.change) > 0 ? '+' : ''}${cmN(m.change)}</b></td><td>${esc(m.reason)}</td><td>${m.channel ? cmChTag(m.channel) : '<span class="muted">—</span>'}</td><td>${esc(m.orderId || '—')}</td><td class="num">${m.stockAfter === '' || m.stockAfter == null ? '—' : cmN(m.stockAfter)}</td><td class="muted">${esc(m.byName || '')}</td></tr>`).join('') || '<tr><td colspan="8" class="muted" style="text-align:center;padding:20px">No stock movements in this period yet — they appear as soon as something sells or you change stock.</td></tr>'}
     </tbody></table></div>`;
 }
 function cmOrderTable(list, cols) {
@@ -7593,6 +7647,7 @@ function cmBind(v, rerender) {
     const an = t.closest('[data-cman]'); if (an) { CM.an = an.dataset.cman; return rerender(true); }
     const gr = t.closest('[data-cmgrain]'); if (gr) { CM.grain = gr.dataset.cmgrain; return rerender(); }
     const iv = t.closest('[data-cminv]'); if (iv) { CM.inv = iv.dataset.cminv; return rerender(); }
+    const hs = t.closest('[data-cmhist]'); if (hs) { CM.mvsku = hs.dataset.cmhist; CM.mvr = ''; rerender(); const m = $('#cmMoves'); if (m) m.scrollIntoView({ behavior: 'smooth', block: 'start' }); return; }
     if (t.closest('[data-cmclear]')) { CM.ch = CM.state = CM.st = ''; return rerender(); }
     const imp = t.closest('[data-cmimport]'); if (imp) return openCmImport(imp.dataset.cmimport, imp.dataset.cmch);
     const pr = t.closest('[data-cmprod]'); if (pr) return openProduct(pr.dataset.cmprod);
@@ -7603,7 +7658,8 @@ function cmBind(v, rerender) {
     if (t.closest('[data-cmcsv]')) return cmCsv();
     const ld = t.closest('[data-cmlead]'); if (ld) { ld.disabled = true; return api('addLead', { name: ld.dataset.cmlead, state: ld.dataset.cmstate2, city: ld.dataset.cmcity, source: ld.dataset.cmch2 || 'Store', stage: stages()[0], by: me() }).then(async () => { toast('✓ Added to CRM leads'); await refreshData(); }, er => { toast(er.message, true); ld.disabled = false; }); }
   });
-  v.addEventListener('change', e => { const f = e.target.closest('[data-cmf]'); if (!f) return; const k = f.dataset.cmf; CM[k] = k === 'range' ? +f.value : f.value; rerender(); });
+  v.addEventListener('change', e => { if (e.target.id === 'cmStockAuto') { const on = e.target.checked; return (demo ? Promise.resolve(S.settings = Object.assign({}, S.settings, { stockAuto: on ? 'on' : 'off' })) : api('saveSettings', { stockAuto: on ? 'on' : 'off' }).then(r => { S.settings = Object.assign({}, S.settings, r); })).then(() => toast(on ? '✓ Stock now goes down with every sale' : 'Automatic stock is off — change stock by hand'), er => { toast(er.message, true); e.target.checked = !on; }); }
+    const f = e.target.closest('[data-cmf]'); if (!f) return; const k = f.dataset.cmf; CM[k] = k === 'range' ? +f.value : f.value; rerender(); });
   v.addEventListener('input', e => { const id = e.target.id, map = { cmPq: 'pq', cmOq: 'oq', cmAq: 'aq' }; if (!map[id]) return; CM[map[id]] = e.target.value; clearTimeout(CM.tm); CM.tm = setTimeout(() => { const pos = e.target.selectionStart; rerender(); const n = $('#' + id); if (n) { n.focus(); try { n.setSelectionRange(pos, pos); } catch (er) { } } }, 250); });
   v.addEventListener('keydown', e => { if (e.key === 'Enter' && e.target.matches('[data-cmstock]')) { const b = e.target.parentElement.querySelector('[data-cmstocksave]'); if (b) b.click(); } });
 }
@@ -7711,10 +7767,11 @@ function insKpis(d) {
   const rev = cmSum(cur, cmRev), prevRev = cmSum(prev, cmRev), pr = cmSum(cur, cmProfit), prevPr = cmSum(prev, cmProfit), adsC = d.ads(P.from, P.to), adsP = d.ads(P.pfrom, P.pto);
   const nl = d.L.filter(l => inRange(dOnly(l.createdOn), P.from, P.to)), nlP = d.L.filter(l => inRange(dOnly(l.createdOn), P.pfrom, P.pto));
   const wc = d.wonIn(P.from, P.to), wp = d.wonIn(P.pfrom, P.pto), rr = d.replyRate(P.from, P.to), rrP = d.replyRate(P.pfrom, P.pto), ret = d.retRate(cur), retP = d.retRate(prev), cl = d.calls(P.from, P.to), clP = d.calls(P.pfrom, P.pto);
+  const camp = (a, b) => (S.adSpend || []).filter(x => inRange(dOnly(x.day), a, b)).reduce((s2, x) => s2 + cmN(x.spend), 0), campC = camp(P.from, P.to), campP = camp(P.pfrom, P.pto);   // campaign spend (order-level ad cost is already inside the order profit)
   const K = [];
   if (d.store) K.push(
     { label: 'Revenue', ic: INS_IC.rev, color: 'var(--blue-2)', value: inrShort(rev), delta: insDelta(rev, prevRev), sub: 'vs previous ' + INS.range + ' days', spark: day(dd => cmSum(ordDay(dd), cmRev)), go: 'insales' },
-    { label: 'Net profit', ic: INS_IC.profit, color: 'var(--green)', value: inrShort(pr), delta: insDelta(pr, prevPr), sub: `${cmPct(pr, rev)}% margin`, spark: day(dd => cmSum(ordDay(dd), cmProfit)), go: 'insales' },
+    { label: 'Net profit', ic: INS_IC.profit, color: 'var(--green)', value: inrShort(pr - campC), delta: insDelta(pr - campC, prevPr - campP), sub: campC ? `after ${inrShort(campC)} ad spend · ${cmPct(pr - campC, rev)}% margin` : `${cmPct(pr, rev)}% margin`, spark: day(dd => cmSum(ordDay(dd), cmProfit)), go: 'insales' },
     { label: 'Orders', ic: INS_IC.orders, color: '#64748B', value: cur.length, delta: insDelta(cur.length, prev.length), sub: `${cmSum(cur, cmUnits)} units`, spark: day(dd => ordDay(dd).length), go: 'orders' });
   K.push({ label: 'New leads', ic: INS_IC.leads, color: '#A78BFA', value: nl.length, delta: insDelta(nl.length, nlP.length), sub: 'vs previous ' + INS.range + ' days', spark: day(dd => d.L.filter(l => dOnly(l.createdOn) === dd).length), go: 'leads' });
   if (!d.store || wc.length) K.push({ label: 'Deals won', ic: INS_IC.won, color: '#F59E0B', value: wc.length, delta: insDelta(wc.length, wp.length), sub: inrShort(cmSum(wc, l => cmN(l.budget))) + ' value', spark: day(dd => d.won.filter(l => wonDate(l) === dd).length), go: 'analytics' });
@@ -7968,12 +8025,35 @@ async function connLoad(force) {
 function connStatus(c) {
   if (!c || !c.connected) return ['off', 'Not connected'];
   if (c.last_status === 'error') return ['bad', `Sync failed · ${esc(c.last_error || 'check the key')}`];
-  return ['ok', `Connected · ${esc(c.config && (c.config.store_url || c.config.site_url || c.config.orders_url || '').replace(/^https?:\/\//, '').slice(0, 40))}${c.last_sync_at ? ` · synced ${ago(c.last_sync_at)}${c.last_count != null ? ` (${c.last_count} updates)` : ''}` : ''}`];
+  return ['ok', `Connected · ${esc(c.config && (c.config.marketplace_name || (c.config.ad_account ? 'act_' + c.config.ad_account : '') || c.config.store_url || c.config.site_url || c.config.orders_url || '').replace(/^https?:\/\//, '').slice(0, 40))}${c.last_sync_at ? ` · synced ${ago(c.last_sync_at)}${c.last_count != null ? ` (${c.last_count} updates)` : ''}` : ''}`];
 }
 const connField = (id, label, val, opt = {}) => `<div class="field ${opt.full ? 'full' : ''}"><label>${label}</label><div class="cf-in">${opt.ic || ''}<input class="input" id="${id}" ${opt.type ? `type="${opt.type}"` : ''} value="${esc(val || '')}" placeholder="${esc(opt.ph || '')}" autocomplete="off" data-lpignore="true" data-1p-ignore spellcheck="false">${opt.type === 'password' ? `<button type="button" class="cf-eye" data-cfeye="${id}" title="Show / hide">👁</button>` : ''}</div>${opt.help ? `<small class="muted">${opt.help}</small>` : ''}</div>`;
 const cfSyncSel = (id, v) => `<div class="field"><label>Sync every</label><select class="input" id="${id}">${SYNC_OPTS.map(([m, l]) => `<option value="${m}" ${+v === m ? 'selected' : ''}>${l}</option>`).join('')}</select></div>`;
+const AMZ_MKTS = [['A21TBJUM6AAA2I', 'Amazon.in (India)'], ['A2VIGQ35RCS4UG', 'Amazon.ae (UAE)'], ['A17E79C6D8DWNP', 'Amazon.sa (Saudi Arabia)'], ['A1F83G8C2ARO7P', 'Amazon.co.uk'], ['A1PA6795UKMFR9', 'Amazon.de'], ['ATVPDKIKX0DER', 'Amazon.com (US)'], ['A2EUQ1WTGCTBG2', 'Amazon.ca'], ['A39IBJ37TRP1C6', 'Amazon.com.au'], ['A19VAU5U5O7RUS', 'Amazon.sg']];
 function connStoreBody(k, c) {
   const cf = (c && c.config) || {}, on = c && c.connected, foot = `<div class="cf-foot"><span class="cf-safe">${CONN_IC.lock} Your key is stored on the server and never shown again.</span><div class="grow"></div>${on ? `<button class="btn sm danger" data-connx="${k}">Disconnect</button><button class="btn sm" data-connsync="${k}">⟳ Sync now</button>` : ''}<button class="btn sm" data-conntest="${k}">Test connection</button><button class="btn sm primary" data-connsave="${k}">${on ? 'Save changes' : 'Connect'}</button></div><div class="cf-msg" id="cfMsg-${k}"></div>`;
+  if (k === 'amazon') return `<p class="help" style="margin-top:0">Orders, items, status changes and FBA stock from your Amazon seller account. Self-ship (Easy Ship / MFN) orders take units out of your stock; FBA orders come out of Amazon's stock, shown as <b>At Amazon (FBA)</b>.</p>
+    <div class="form cf-grid"><div class="field"><label>Marketplace</label><select class="input" id="cfAmzMkt">${AMZ_MKTS.map(([id, n]) => `<option value="${id}" ${(cf.marketplace || 'A21TBJUM6AAA2I') === id ? 'selected' : ''}>${n}</option>`).join('')}</select></div>
+      ${connField('cfAmzSeller', 'Seller ID <span class="muted">(optional)</span>', cf.seller_id, { ph: 'A1B2C3D4E5F6G7' })}
+      ${connField('cfAmzCid', 'LWA client ID', '', { type: 'password', ph: on ? '•••••••• saved — paste only to change' : 'amzn1.application-oa2-client.…' })}
+      ${connField('cfAmzSec', 'LWA client secret', '', { type: 'password', ph: on ? '•••••••• saved' : 'amzn1.oa2-cs.v1.…' })}
+      ${connField('cfAmzRt', 'Refresh token', '', { type: 'password', ph: on ? '•••••••• saved' : 'Atzr|…' })}
+      <div class="field"><label>FBA stock</label><select class="input" id="cfAmzFba"><option value="1" ${cf.fba !== false ? 'selected' : ''}>Read my FBA stock</option><option value="0" ${cf.fba === false ? 'selected' : ''}>I do not use FBA</option></select></div>${cfSyncSel('cfAmzSync', cf.sync_minutes ?? 60)}</div>
+    <details class="cf-how"><summary>Where do I get these? (one time, about 15 minutes)</summary><ol>
+      <li>Seller Central → <b>Apps and Services → Develop Apps</b>. The first time, fill the developer profile and choose <b>Private developer — I build apps for my own business</b>. Amazon can take a few days to approve it.</li>
+      <li><b>Add new app client</b> → name “Nodevers”, API type <b>SP API</b>, roles: <b>Orders</b> (and <b>Amazon Fulfillment / Inventory</b> if you use FBA) → Save.</li>
+      <li>Next to the app press <b>View</b> under LWA credentials → copy the <b>Client ID</b> and <b>Client secret</b>.</li>
+      <li>Press <b>Authorize</b> (arrow next to Edit App) → copy the <b>Refresh token</b> (starts with Atzr|).</li>
+      <li>Paste the three here, pick your marketplace → <b>Test connection</b> → <b>Connect</b>.</li></ol>
+      <p class="help">Amazon hides buyer names and full addresses unless your app is approved for personal data — state and city usually still come through. Amazon fees: import the payment report from Seller Central (Reports → Payments) in Store → Import, it fills the fee of each order.</p></details>${foot}`;
+  if (k === 'meta_ads') return `<p class="help" style="margin-top:0">Daily spend, impressions, clicks, leads and purchases of every campaign. They are saved as your ad spend, so <b>Store → Overview</b> net profit, ROAS and the <b>Ads Manager</b> use your real numbers.</p>
+    <div class="form cf-grid">${connField('cfMetaAct', 'Ad account ID', cf.ad_account, { ph: '1234567890' })}${connField('cfMetaTok', 'Access token (ads_read)', '', { type: 'password', ph: on ? '•••••••• saved — paste only to change' : 'EAAB…' })}${cfSyncSel('cfMetaSync', cf.sync_minutes ?? 360)}</div>
+    <details class="cf-how"><summary>Where do I get these?</summary><ol>
+      <li><b>Ad account ID</b>: Meta Ads Manager → the account menu at the top left → the number (e.g. 1234567890).</li>
+      <li><b>Token</b>: business.facebook.com → <b>Settings → Users → System users</b> → Add (Admin) → <b>Assign assets</b> → your ad account → <i>View performance</i>.</li>
+      <li>Press <b>Generate new token</b> → pick your business app (no app yet? developers.facebook.com → Create app → type <i>Business</i>) → tick only <b>ads_read</b> → copy the token.</li>
+      <li>Paste both here → <b>Test connection</b> → <b>Connect</b>. The last 90 days come in at once, then it keeps updating.</li></ol>
+      <p class="help">Until you connect, add spend by hand or import it in Ads Manager → Spend & ROAS — it is counted the same way.</p></details>${foot}`;
   if (k === 'shopify') return `<div class="form cf-grid">${connField('cfShopUrl', 'Store link', cf.store_url, { ph: 'yourstore.myshopify.com' })}${connField('cfShopTok', 'Admin API access token', '', { type: 'password', ph: on ? '•••••••• saved — paste only to change' : 'shpat_…' })}${cfSyncSel('cfShopSync', cf.sync_minutes ?? 15)}</div>
     <details class="cf-how"><summary>Where do I get the token?</summary><ol><li>Shopify admin → <b>Settings → Apps and sales channels → Develop apps</b> → Create an app (name it “Nodevers”).</li><li><b>Configure Admin API scopes</b>: tick <code>read_orders</code>, <code>read_products</code>, <code>read_inventory</code> → Save.</li><li><b>Install app</b> → <b>Reveal token once</b> → copy it here.</li></ol></details>${foot}`;
   if (k === 'woocommerce') return `<div class="form cf-grid">${connField('cfWooUrl', 'Website link', cf.site_url, { ph: 'https://yourshop.com' })}${connField('cfWooKey', 'Consumer key', '', { type: 'password', ph: on ? '•••••••• saved' : 'ck_…' })}${connField('cfWooSec', 'Consumer secret', '', { type: 'password', ph: on ? '•••••••• saved' : 'cs_…' })}${cfSyncSel('cfWooSync', cf.sync_minutes ?? 15)}</div>
@@ -8074,7 +8154,7 @@ function renderConnections(anim) {
   const L = CONN.list || {}, wa = WA.status || {}, em = BC.email || {}, al = alertsCfg(), alOn = al.emails.length || al.phones.length, open = CONN.open, n8 = N8L.st;
   const grp = (title, items) => `<div class="conn-g"><div class="conn-gt">${title}</div><div class="acc-list" data-acckey="nv.connOpen">${items.join('')}</div></div>`;
   const soon = (k, n, ic, c, d) => accItem(k, { title: n, icon: ic, color: c, dot: 'soon', status: 'Coming soon — needs the marketplace’s approval', badge: 'Soon', open: open === k, keywords: 'marketplace', body: `<p class="help" style="margin-top:0">${d}</p><div class="cf-foot"><span class="cf-safe">Until then, import its order report — the dashboards work the same.</span><div class="grow"></div><button class="btn sm primary" data-cmimport="orders" data-cmch="${n.split(' ')[0]}">⇪ Import ${n.split(' ')[0]} orders</button></div>` });
-  const [sd, ss] = connStatus(L.shopify), [wd, wsx] = connStatus(L.woocommerce), [cd, cs] = connStatus(L.custom);
+  const [sd, ss] = connStatus(L.shopify), [wd, wsx] = connStatus(L.woocommerce), [cd, cs] = connStatus(L.custom), [ad, as] = connStatus(L.amazon), [md, ms] = connStatus(L.meta_ads);
   box.innerHTML = `${CONN.err ? `<div class="banner" style="margin-bottom:12px"><div class="grow">Store connections need the <b>store-sync</b> function and the 10 database update. (${esc(CONN.err)})</div></div>` : ''}
   ${grp('Messaging', [
     accItem('wa', { title: 'WhatsApp', icon: CONN_IC.wa, color: 'var(--wa)', open: open === 'wa', keywords: 'meta business number token inbox', dot: wa.connected ? 'ok' : wa.error ? 'bad' : 'off', status: wa.connected ? `Connected · ${esc(wa.verified_name || '')} ${esc(wa.display_phone || '')}` : 'Not connected',
@@ -8092,7 +8172,7 @@ function renderConnections(anim) {
     accItem('custom', { title: 'Custom website (API)', icon: CONN_IC.code, color: '#64748B', open: open === 'custom', keywords: 'api custom website wix webflow magento opencart json developer', dot: cd, status: cs, body: connStoreBody('custom', L.custom) }),
     accItem('sheet', { title: 'Excel / Google Sheet import', icon: CONN_IC.sheet, color: '#16A34A', open: open === 'sheet', keywords: 'excel csv google sheet import upload', dot: (S.products || []).length ? 'ok' : 'off', status: (S.products || []).length ? `${(S.products || []).length} products · ${(S.orders || []).filter(o => /^Import/.test(o.source || '')).length} imported orders` : 'Any sheet — products, orders, ad spend',
       body: `<p class="help" style="margin-top:0">Upload an Excel file (all tabs) or paste a Google Sheet link. Re-importing updates rows instead of duplicating.</p><div class="cf-foot"><div class="grow"></div><button class="btn sm primary" data-cmimport>⇪ Import Excel / Google Sheet</button></div>` }),
-    soon('amazon', 'Amazon Seller Central', CONN_IC.amazon, '#F59E0B', 'Orders, Amazon fees, FBA / self-ship status, returns and inventory — synced automatically once Amazon approves Nodevers (SP-API).'),
+    accItem('amazon', { title: 'Amazon Seller Central', icon: CONN_IC.amazon, color: '#F59E0B', open: open === 'amazon', keywords: 'amazon seller central sp-api fba orders marketplace', dot: ad, status: L.amazon && L.amazon.connected ? as : 'Not connected — orders, status and FBA stock (SP-API)', body: connStoreBody('amazon', L.amazon) }),
     soon('flipkart', 'Flipkart Seller Hub', CONN_IC.flipkart, '#3B82F6', 'Orders, commission, returns and payouts from Flipkart.'),
     soon('meesho', 'Meesho Supplier', CONN_IC.meesho, '#EC4899', 'Orders, returns and payouts from Meesho.'),
   ])}
@@ -8102,8 +8182,7 @@ function renderConnections(anim) {
   ${grp('Automation & ads', [
     accItem('n8n', { title: 'n8n', icon: CONN_IC.n8n, color: '#EA4B71', open: open === 'n8n', keywords: 'n8n automation workflows docker', dot: n8 && n8.connected ? 'ok' : 'off', status: n8 && n8.connected ? `Connected · ${esc(String(n8.base_url || n8.url || '').replace(/^https?:\/\//, '').slice(0, 40))}` : 'Not connected',
       body: `<p class="help" style="margin-top:0">Run your n8n workflows from Nodevers and fill in their keys, links and settings.</p><div class="cf-foot"><div class="grow"></div><button class="btn sm primary" data-connopen="n8n">${n8 && n8.connected ? 'Open n8n services' : 'Connect n8n'}</button></div>` }),
-    accItem('meta', { title: 'Meta Ads', icon: CONN_IC.meta, color: '#3B82F6', open: open === 'meta', keywords: 'facebook instagram ads meta campaign', dot: 'off', status: 'Sample data until your ad account is connected',
-      body: `<p class="help" style="margin-top:0">Campaign results, lead forms and spend. Add spend by hand or import it in Ads Manager → Spend & ROAS meanwhile.</p><div class="cf-foot"><div class="grow"></div><button class="btn sm" data-goads="spend">Spend & ROAS</button><button class="btn sm primary" data-goads="connect">Open Ads Manager</button></div>` }),
+    accItem('meta_ads', { title: 'Meta Ads (ad spend)', icon: CONN_IC.meta, color: '#3B82F6', open: open === 'meta_ads' || open === 'meta', keywords: 'facebook instagram ads meta campaign spend roas', dot: md, status: L.meta_ads && L.meta_ads.connected ? ms : 'Not connected — add spend by hand or import it meanwhile', body: connStoreBody('meta_ads', L.meta_ads) + '<div class="cf-foot" style="border:0;padding-top:0"><div class="grow"></div><button class="btn sm" data-goads="spend">Spend & ROAS</button><button class="btn sm" data-goads="overview">Open Ads Manager</button></div>' }),
   ])}`;
   if (CONN.q) connFilter();
   stagger(box, anim);
@@ -8112,6 +8191,8 @@ function connFilter() { const q = CONN.q.toLowerCase(); $$('#connBody .acc').for
 function connRead(k) {
   const v = id => ($('#' + id) || {}).value || '';
   if (k === 'shopify') return { config: { store_url: v('cfShopUrl').trim().replace(/^https?:\/\//, '').replace(/\/.*$/, ''), sync_minutes: +v('cfShopSync') }, secret: v('cfShopTok').trim() ? { token: v('cfShopTok').trim() } : null };
+  if (k === 'amazon') { const sec = { client_id: v('cfAmzCid').trim(), client_secret: v('cfAmzSec').trim(), refresh_token: v('cfAmzRt').trim() }; return { config: { marketplace: v('cfAmzMkt'), seller_id: v('cfAmzSeller').trim(), fba: v('cfAmzFba') !== '0', sync_minutes: +v('cfAmzSync') }, secret: Object.values(sec).some(Boolean) ? Object.fromEntries(Object.entries(sec).filter(([, x]) => x)) : null }; }
+  if (k === 'meta_ads') return { config: { ad_account: v('cfMetaAct').trim().replace(/^act_/i, ''), sync_minutes: +v('cfMetaSync') }, secret: v('cfMetaTok').trim() ? { token: v('cfMetaTok').trim() } : null };
   if (k === 'woocommerce') return { config: { site_url: v('cfWooUrl').trim().replace(/\/+$/, ''), sync_minutes: +v('cfWooSync') }, secret: v('cfWooKey').trim() || v('cfWooSec').trim() ? { key: v('cfWooKey').trim(), secret: v('cfWooSec').trim() } : null };
   const cur = ((CONN.list || {}).custom || {}).config || {}, map = Object.assign({}, cur.map || {}, CONN.draft.map || {}), pmap = Object.assign({}, cur.pmap || {}, CONN.draft.pmap || {});
   return { config: { orders_url: v('cfCusUrl').trim(), products_url: v('cfCusPUrl').trim(), auth: v('cfCusAuth') || 'bearer', auth_name: v('cfCusName').trim(), sync_minutes: +v('cfCusSync'), map, pmap, keys: CONN.draft.customKeys || cur.keys || [], pkeys: CONN.draft.customPKeys || cur.pkeys || [], list_path: CONN.draft.listPath ?? cur.list_path ?? '', plist_path: CONN.draft.plistPath ?? cur.plist_path ?? '' }, secret: v('cfCusKey').trim() ? { key: v('cfCusKey').trim() } : null };
