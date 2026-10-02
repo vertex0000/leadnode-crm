@@ -823,6 +823,51 @@ body.no-sales [data-go="tasks"],body.no-sales [data-go="calls"],body.no-orders [
 .srcTag{font-style:normal;font-size:10px;font-weight:700;padding:1px 5px;border-radius:4px;margin-left:4px;vertical-align:1px}
 .srcTag.real{background:var(--green-soft);color:var(--green)}.srcTag.sample{background:var(--line);color:var(--muted)}
 .rcard.span2{grid-column:1/-1}
+/* ---------- commerce ---------- */
+.cm-tabs{margin:-4px 0 14px;overflow-x:auto;flex-wrap:nowrap;scrollbar-width:none}.cm-tabs::-webkit-scrollbar{display:none}.cm-tabs .tab{white-space:nowrap}
+.cm-fb{gap:8px}.cm-fb select.input{width:auto;max-width:190px}
+.cm-ks{display:grid;grid-template-columns:repeat(var(--c,4),minmax(0,1fr));gap:12px;margin-bottom:14px}.cm-conn .grow{flex:1}.ins>.btn{margin-left:auto;align-self:center;flex:none}
+.cm-k{padding:14px 16px;border-radius:14px;display:flex;flex-direction:column;gap:3px;min-width:0}.cm-k>span{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.cm-k>b{font-size:24px;font-weight:800;letter-spacing:-.02em;line-height:1.15}.cm-k small{font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.cm-k small b{color:var(--text);font-weight:700}
+.cm-ch-h{display:flex;align-items:flex-start;gap:10px;justify-content:space-between;flex-wrap:wrap}
+.cm-seg{display:flex;gap:3px;background:var(--line);padding:3px;border-radius:9px}.cm-seg button{border:0;background:transparent;padding:5px 10px;border-radius:7px;font-weight:600;font-size:12.5px;color:var(--muted)}.cm-seg button.on{background:var(--glass-3);color:var(--text);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.cm-tr{position:relative;padding-left:46px;margin-top:4px}.cm-yl span{position:absolute;left:0;width:40px;text-align:right;transform:translateY(-50%);font-size:10.5px;color:var(--muted)}.cm-plot{position:relative;height:230px}.cm-plot svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}.cm-hov{position:absolute;inset:0;display:flex}.cm-hov i{flex:1;border-radius:4px}.cm-hov i:hover{background:color-mix(in srgb,var(--blue-2) 12%,transparent)}.cm-xl{display:flex;justify-content:space-between;padding-left:46px;font-size:11px;color:var(--muted);margin-top:6px}@media (max-width:640px){.cm-plot{height:170px}}.cm-gl{stroke:var(--line);stroke-width:1}.cm-ax{fill:var(--muted);font-size:10.5px;font-family:inherit}.cm-dc{fill:var(--text);font-size:17px;font-weight:800;font-family:inherit}
+.cm-area{fill:var(--blue-2);opacity:.12}.cm-l1{fill:none;stroke:var(--blue-2);stroke-width:2.2;stroke-linejoin:round}.cm-l2{fill:none;stroke:var(--green);stroke-width:2;stroke-dasharray:5 4;stroke-linejoin:round}
+.cm-d1{fill:var(--blue-2);opacity:0;transition:opacity .15s}.cm-pt:hover .cm-d1{opacity:1}
+.cm-leg{display:flex;gap:14px;font-size:12px;color:var(--muted);margin-top:6px}.cm-leg i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.cm-empty{padding:28px 10px;text-align:center;color:var(--muted);font-size:13px}
+.cm-donut{display:flex;gap:16px;align-items:center;flex-wrap:wrap}.cm-donut svg{flex:none}
+.cm-dl{display:flex;flex-direction:column;gap:7px;flex:1;min-width:160px}.cm-dl>div{display:grid;grid-template-columns:10px 1fr auto 44px;gap:8px;align-items:center;font-size:13px}.cm-dl i{width:10px;height:10px;border-radius:3px}.cm-dl span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.cm-dl small{color:var(--muted);text-align:right}
+.cm-dl2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px 18px;margin-top:12px}
+.cm-bars{display:flex;flex-direction:column;gap:9px}.cm-br{display:grid;grid-template-columns:minmax(90px,34%) 1fr auto;gap:4px 10px;align-items:center;font-size:13px}.cm-br[data-cmprod]{cursor:pointer}.cm-br[data-cmprod]:hover .cm-bl{color:var(--blue-2)}
+.cm-bl{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.cm-bt{height:9px;border-radius:5px;background:var(--line);overflow:hidden}.cm-bt i{display:block;height:100%;border-radius:5px}.cm-br b{font-size:12.5px;text-align:right}.cm-br small{grid-column:2/4;margin-top:-4px;font-size:11.5px;color:var(--muted)}
+.cm-stack{display:flex;height:16px;border-radius:8px;overflow:hidden;background:var(--line);gap:2px}.cm-stack i{display:block;height:100%;min-width:2px}
+.cm-ch{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:700;padding:2px 8px;border-radius:20px;background:color-mix(in srgb,var(--c) 14%,transparent);color:var(--c);white-space:nowrap}
+.cm-sb{display:inline-flex;font-size:12px;font-weight:700;padding:2px 8px;border-radius:20px;background:color-mix(in srgb,var(--c) 14%,transparent);color:var(--c);white-space:nowrap}
+.cm-tbl td{vertical-align:middle}.cm-tbl tr[data-cmprod],.cm-tbl tr[data-ordedit],.cm-tbl tr[data-cmad],.cm-tbl tr[data-cmstate]{cursor:pointer}.cm-tot td{font-weight:800;border-top:2px solid var(--line-2)}
+.cm-pn{display:flex;gap:10px;align-items:center;min-width:180px}.cm-pn small{display:block;color:var(--muted);font-size:11.5px}.cm-pi{width:34px;height:34px;border-radius:9px;flex:none;background:var(--line) center/cover}.cm-pi.ph{display:grid;place-items:center;font-weight:800;color:var(--blue-2);background:var(--blue-soft)}
+.cm-adj{display:flex;gap:6px;align-items:center}.cm-adj .input{width:80px}
+.cm-th{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:12px 14px;border-bottom:1px solid var(--line)}.cm-th .muted{font-size:12.5px}
+.cm-sub{margin:-2px 0 14px}
+.cm-conn{display:flex;gap:12px;align-items:center;padding:12px 14px;border-radius:14px;margin-bottom:14px;flex-wrap:wrap}.cm-conn small{display:block;font-size:12.5px;max-width:560px}
+.cm-ci{width:38px;height:38px;border-radius:11px;flex:none;display:grid;place-items:center;font-weight:800;font-size:17px;color:var(--c);background:color-mix(in srgb,var(--c) 16%,transparent)}
+.cm-start{display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap;padding:18px;border-radius:16px;margin-bottom:14px}.cm-start p{margin:4px 0 0;font-size:13px;max-width:420px}
+.cm-steps{display:flex;gap:10px;flex-wrap:wrap}.cm-step{display:flex;flex-direction:column;align-items:flex-start;gap:3px;text-align:left;padding:12px;border-radius:12px;border:1px solid var(--line-2);background:var(--glass-3);width:200px;color:var(--text)}.cm-step:hover{border-color:var(--blue-2)}
+.cm-step span{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:var(--blue-soft);color:var(--blue-2);font-size:12px;font-weight:800}.cm-step small{color:var(--muted);font-size:12px}
+.cm-chan-head{display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap;padding:16px;border-radius:14px;margin-bottom:14px}.cm-chan-head p{margin:4px 0 0;font-size:13px}
+.cm-chan{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.cm-cc{padding:16px;border-radius:14px;display:flex;flex-direction:column;gap:10px}.cm-cc p{margin:0;font-size:13px;color:var(--muted)}
+.cm-cc-h{display:flex;gap:10px;align-items:center}.cm-cc-h b{display:block}.cm-soon{font-size:11px;font-weight:800;color:#B7861A;background:var(--yellow-soft);padding:2px 8px;border-radius:20px}
+.cm-need{display:flex;flex-direction:column;gap:3px;font-size:12.5px}.cm-need small{font-weight:700;color:var(--muted);text-transform:uppercase;font-size:10.5px;letter-spacing:.05em}.cm-cc-f{display:flex;gap:8px;margin-top:auto;flex-wrap:wrap}
+.cm-costs summary{cursor:pointer;font-weight:700;font-size:13px}
+.cmi-src{display:grid;grid-template-columns:1fr 1.4fr;gap:12px;margin-bottom:12px}.cmi-drop{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:16px;border-radius:12px;border:1.5px dashed var(--line-2);cursor:pointer;text-align:center}.cmi-drop:hover{border-color:var(--blue-2)}
+.cmi-g{padding:12px;border-radius:12px;display:flex;flex-direction:column;gap:2px}.cmi-g .input{flex:1;min-width:0}
+.cmi-h{font-size:13px;margin:4px 0 8px}.cmi-s{padding:12px;border-radius:12px;margin-bottom:10px;display:flex;flex-direction:column;gap:8px}.cmi-s.off{opacity:.7}
+.cmi-sh{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.cmi-sh b{max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.cmi-sh select{width:auto}.cmi-sum{font-size:12.5px}.cmi-sum .ok{color:var(--green);font-weight:700}
+.cmi-m{display:flex;gap:5px;flex-wrap:wrap}.cmi-m span{font-size:11.5px;padding:2px 8px;border-radius:20px;background:var(--line)}
+@media (max-width:1100px){.cm-ks{grid-template-columns:repeat(2,minmax(0,1fr))}.cm-chan{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:640px){.cm-ks{grid-template-columns:1fr 1fr;gap:8px}.cm-k{padding:12px}.cm-k>b{font-size:19px}.cm-chan{grid-template-columns:1fr}.cmi-src{grid-template-columns:1fr}.cm-dl2{grid-template-columns:1fr}.cm-step{width:100%}.cm-fb select.input{max-width:none;flex:1 1 40%}}
+body.ro [data-cmw],body.np-commerce [data-cmw]{display:none!important}
+
 .wchart{display:flex;align-items:flex-end;gap:10px;height:190px;padding-top:6px}
 .wcol{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:5px;height:100%;min-width:0}
 .wcol .v{font-size:11.5px;font-weight:700}.wcol .m{font-size:11px;color:var(--muted);white-space:nowrap}
@@ -1112,9 +1157,17 @@ body.no-sales [data-go="tasks"],body.no-sales [data-go="calls"],body.no-orders [
     <button class="sbtn" data-go="pipeline"><svg class="i" viewBox="0 0 24 24"><circle cx="5" cy="6" r="2"/><circle cx="19" cy="6" r="2"/><circle cx="12" cy="18" r="2"/><path d="M7 6h10M6 8l5 8.3M18 8l-5 8.3"/></svg><span class="lbl">Pipeline</span></button>
     <button class="sbtn" data-go="leads"><svg class="i" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13"/><circle cx="3.5" cy="6" r="1"/><circle cx="3.5" cy="12" r="1"/><circle cx="3.5" cy="18" r="1"/></svg><span class="lbl">Leads</span></button>
     <button class="sbtn" data-go="tasks"><svg class="i" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg><span class="lbl">Tasks</span><span class="nbadge" id="tasksBadge" hidden></span></button>
-    <button class="sbtn" data-go="orders"><svg class="i" viewBox="0 0 24 24"><path d="M6 7h12l-1 13H7Z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg><span class="lbl">Orders</span></button>
     <button class="sbtn" data-go="calls"><svg class="i" viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg><span class="lbl">Calls</span></button>
     <button class="sbtn" data-go="industry"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M17.5 14v7M14 17.5h7"/></svg><span class="lbl">Industry Kits</span></button>
+    <div class="sgrp">Commerce</div>
+    <button class="sbtn" data-go="commerce" data-cm="overview"><svg class="i" viewBox="0 0 24 24"><path d="M4 9h16l-1.2-4.2A1 1 0 0 0 17.8 4H6.2a1 1 0 0 0-1 .8Z"/><path d="M5 9v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9M9 20v-6h6v6"/></svg><span class="lbl">Store Overview</span></button>
+    <button class="sbtn" data-go="commerce" data-cm="products"><svg class="i" viewBox="0 0 24 24"><path d="m12 3 8 4.5v9L12 21l-8-4.5v-9Z"/><path d="m4 7.5 8 4.5 8-4.5M12 12v9"/></svg><span class="lbl">Products</span></button>
+    <button class="sbtn" data-go="commerce" data-cm="inventory"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="5" rx="1"/><path d="M5 9v10h14V9M10 13h4"/></svg><span class="lbl">Inventory</span></button>
+    <button class="sbtn" data-go="commerce" data-cm="amazon"><svg class="i" viewBox="0 0 24 24"><path d="M4 15c4.5 3 11.5 3 16 0"/><path d="m17 13 3 2-1 3.5"/><path d="M8 11.5c0-2 1.5-3 4-3s4 1 4 3"/></svg><span class="lbl">Amazon</span></button>
+    <button class="sbtn" data-go="commerce" data-cm="website"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3"/></svg><span class="lbl">Website</span></button>
+    <button class="sbtn" data-go="orders"><svg class="i" viewBox="0 0 24 24"><path d="M6 7h12l-1 13H7Z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg><span class="lbl">Orders</span></button>
+    <button class="sbtn" data-go="commerce" data-cm="analytics"><svg class="i" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg><span class="lbl">Store Analytics</span></button>
+    <button class="sbtn" data-go="commerce" data-cm="channels"><svg class="i" viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg><span class="lbl">Channels</span></button>
     <div class="sgrp">Messaging</div>
     <button class="sbtn" data-go="whatsapp"><svg class="i" viewBox="0 0 24 24"><path d="M3.5 20.5 5 16a8.5 8.5 0 1 1 3.2 3.2Z"/><path d="M9 9.5c0 3 2.5 5.5 5.5 5.5l1.2-1.4-1.9-1-1 .8a4 4 0 0 1-2.2-2.2l.8-1-1-1.9Z"/></svg><span class="lbl">Inbox</span></button>
     <button class="sbtn" data-go="broadcast"><svg class="i" viewBox="0 0 24 24"><path d="m3 11 18-8-8 18-2-8Z"/></svg><span class="lbl">Broadcast</span></button>
@@ -1144,6 +1197,7 @@ body.no-sales [data-go="tasks"],body.no-sales [data-go="calls"],body.no-orders [
         <a href="#pipeline" data-go="pipeline">Pipeline</a>
         <a href="#leads" data-go="leads">Leads</a>
         <a href="#industry" data-go="industry" class="mob">Kits</a>
+        <a href="#commerce" data-go="commerce">Store</a>
         <a href="#whatsapp" data-go="whatsapp">Inbox<span class="nav-badge" id="waBadge" hidden></span></a>
         <a href="#broadcast" data-go="broadcast" class="mob">Broadcast</a>
         <a href="#automation" data-go="automation" class="mob">Automation</a>
@@ -1264,9 +1318,17 @@ body.no-sales [data-go="tasks"],body.no-sales [data-go="calls"],body.no-orders [
 
     <!-- ORDERS -->
     <section class="view" id="v-orders">
-      <div class="head"><div><div class="eyebrow">Sales</div><h1>Orders</h1><p class="sub">Orders placed from WhatsApp buttons (Order Now, Add to Cart, Cash on Delivery…) or added by your team.</p></div>
+      <div class="head"><div><div class="eyebrow">Commerce</div><h1>Orders</h1><p class="sub">Every order in one place — Amazon, website, WhatsApp buttons (Order Now, Cash on Delivery…) and orders added by your team.</p></div>
         <div class="head-actions"><button class="btn primary" data-ordnew=""><svg class="i" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>New order</button></div></div>
       <div id="ordersBody"></div>
+    </section>
+
+    <!-- COMMERCE -->
+    <section class="view" id="v-commerce">
+      <div class="head"><div><div class="eyebrow">Commerce</div><h1>Store</h1><p class="sub">Products, inventory, Amazon and website sales, profit after every fee and ad — for your own business.</p></div>
+        <div class="head-actions"><button class="btn" data-cmimport data-cmw>⇪ Import Excel / Sheet</button><button class="btn primary" data-cmprod="" data-cmw><svg class="i" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Product</button></div></div>
+      <div class="tabs cm-tabs" id="cmTabs"></div>
+      <div id="cmBody"></div>
     </section>
 
     <!-- CALLS -->
@@ -1602,7 +1664,8 @@ function demoData() {
   leads.push(Object.assign(L('L009', 'Hardik Shah', '919800000009', 'Café Mocha', 'Cafe', 'Ahmedabad', 'Meta Ad', 220000, 'Contacted', 'Warm', ago(-1), ago(1), 'Wants catalogue for 15 chairs', ago(4)), { state: 'Gujarat', district: 'Ahmedabad', assignedTo: 'Amit Rao', email: '' }));
   const who = ['Riya Patil', 'Amit Rao', 'Shivam']; acts.forEach((a, i) => { if (a.type !== 'Lead Added') a.doneBy = (leads.find(l => l.leadId === a.leadId) || {}).assignedTo || who[i % 3]; });
   for (let i = 0; i < 26; i++) { const l = leads[i % leads.length]; acts.push(A(l.leadId, i % 12, i % 3 ? 'WhatsApp Sent' : 'Email Sent', i % 3 ? 'Follow-up message' : 'Catalogue email')); acts[acts.length - 1].doneBy = l.assignedTo; }
-  return { messages: demoMessages(), broadcasts: [], leads, activities: acts, calls: demoCalls(), tasks: demoTasks(), orders: [{ orderId: 'O001', leadId: 'L006', items: '20 × Cafe chair (walnut)', amount: 120000, status: 'Delivered', payment: 'UPI', trackingUrl: '', source: 'Team', createdAt: new Date(Date.now() - 6 * 864e5).toISOString() }, { orderId: 'O002', leadId: 'L005', items: '30 × Cafe chair', amount: 180000, status: 'COD', payment: 'COD', trackingUrl: 'https://track.example/abc', source: 'WhatsApp · order_menu', createdAt: new Date(Date.now() - 864e5).toISOString() }, { orderId: 'O003', leadId: 'L009', items: 'Order Now', amount: '', status: 'New', payment: '', trackingUrl: '', source: 'WhatsApp · order_menu', createdAt: new Date(Date.now() - 36e5).toISOString() }], team: [{ memberId: 'T001', name: 'Shivam', role: 'Admin', active: true, team: 'Head office' }, { memberId: 'T002', name: 'Riya Patil', role: 'Sales', active: true, team: 'Mumbai Team' }, { memberId: 'T003', name: 'Amit Rao', role: 'Sales', active: true, team: 'Pune Team' }], lists: DEFAULT_LISTS, templates: demoTemplates(), flows: store.get('leadnode.demoFlows') || [] };
+  const cm = demoCommerce();
+  return { messages: demoMessages(), broadcasts: [], leads, activities: acts, calls: demoCalls(), tasks: demoTasks(), orders: (() => { return [{ orderId: 'O001', leadId: 'L006', items: '20 × Cafe chair (walnut)', amount: 120000, status: 'Delivered', payment: 'UPI', trackingUrl: '', source: 'Team', createdAt: new Date(Date.now() - 6 * 864e5).toISOString() }, { orderId: 'O002', leadId: 'L005', items: '30 × Cafe chair', amount: 180000, status: 'COD', payment: 'COD', trackingUrl: 'https://track.example/abc', source: 'WhatsApp · order_menu', createdAt: new Date(Date.now() - 864e5).toISOString() }, { orderId: 'O003', leadId: 'L009', items: 'Order Now', amount: '', status: 'New', payment: '', trackingUrl: '', source: 'WhatsApp · order_menu', createdAt: new Date(Date.now() - 36e5).toISOString() }].map(o => Object.assign({ channel: 'WhatsApp', orderDate: dOnly(o.createdAt), qty: (/^(\d+) ×/.exec(o.items) || [0, 1])[1] * 1, customerState: 'Maharashtra' }, /Cafe chair/.test(o.items) ? { sku: 'CH-WAL-01', productName: 'Cafe chair (walnut)', productCost: 1350 * ((/^(\d+) ×/.exec(o.items) || [0, 1])[1] * 1), shippingFee: 2500 } : {}, o)).concat(cm.orders); })(), products: cm.products, adSpend: cm.adSpend, team: [{ memberId: 'T001', name: 'Shivam', role: 'Admin', active: true, team: 'Head office' }, { memberId: 'T002', name: 'Riya Patil', role: 'Sales', active: true, team: 'Mumbai Team' }, { memberId: 'T003', name: 'Amit Rao', role: 'Sales', active: true, team: 'Pune Team' }], lists: DEFAULT_LISTS, templates: demoTemplates(), flows: store.get('leadnode.demoFlows') || [] };
 }
 function demoAutoTask(l, old) {
   S.tasks = S.tasks || []; S.tasks.filter(t => t.leadId === l.leadId && t.source === 'auto' && t.status === 'Open' && t.stage === old).forEach(t => { t.status = 'Closed'; t.doneBy = 'Moved to ' + l.stage; });
@@ -1612,6 +1675,35 @@ function demoAutoTask(l, old) {
 function demoCalls() {
   const t = Date.now(), O = ['Interested', 'Answered', 'No answer', 'Callback', 'Not interested', 'Answered', 'Busy / switched off', 'Interested', 'Wrong number', 'Answered', 'No answer', 'Callback'], L = ['L001', 'L002', 'L003', 'L004', 'L005', 'L007', 'L008', 'L009'], W = { L001: 'Riya Patil', L002: 'Riya Patil', L003: 'Amit Rao', L004: 'Riya Patil', L005: 'Amit Rao', L007: 'Amit Rao', L008: 'Riya Patil', L009: 'Amit Rao' };
   return O.map((o, i) => { const lid = L[i % L.length]; return { callId: 'C' + String(i + 1).padStart(3, '0'), leadId: lid, member: W[lid], phone: '9198000000' + lid.slice(-2), direction: 'out', outcome: o, durationSec: /No answer|Busy|Wrong/.test(o) ? 0 : 60 + i * 40, notes: o === 'Interested' ? 'Wants price list' : '', calledAt: new Date(t - i * 0.8 * 864e5).toISOString() }; });
+}
+/** Same gap-filling as the database trigger: product name, price, revenue, product cost, items text */
+function demoOrderFill(o) {
+  const p = o.sku && (S.products || []).find(x => x.sku === o.sku), q = o.qty === '' || o.qty == null ? 1 : +o.qty || 0;
+  ['amount', 'unitPrice', 'productCost', 'marketplaceFee', 'shippingFee', 'packagingCost', 'rtoCharges', 'adSpend', 'otherCost'].forEach(k => { if (k in o) o[k] = o[k] === '' || o[k] == null ? '' : +o[k]; });
+  if ('qty' in o || o.sku) o.qty = q;
+  if (p) { if (!o.productName) o.productName = p.name; if (o.unitPrice === '' || o.unitPrice == null) o.unitPrice = p.price; if ((o.productCost === '' || o.productCost == null) && p.cost !== '') o.productCost = +p.cost * q; }
+  if ((o.amount === '' || o.amount == null) && o.unitPrice !== '' && o.unitPrice != null) o.amount = +o.unitPrice * q;
+  if (!o.items && (o.productName || o.sku)) o.items = `${q} × ${o.productName || o.sku}`;
+  return o;
+}
+function demoCommerce() {
+  let seed = 7; const rnd = () => (seed = (seed * 9301 + 49297) % 233280) / 233280, pick = a => a[Math.floor(rnd() * a.length)], w = (pairs) => { let r = rnd() * pairs.reduce((a, p) => a + p[1], 0); for (const [v, n] of pairs) { if ((r -= n) <= 0) return v; } return pairs[0][0]; };
+  const day = k => { const d = new Date(); d.setDate(d.getDate() - k); return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); };
+  const P = [['CH-WAL-01', 'Cafe chair (walnut)', 'Chairs', 2499, 1350, 46, 10], ['CH-BLK-02', 'Cafe chair (black metal)', 'Chairs', 1999, 1050, 8, 10], ['ST-BAR-01', 'Bar stool (cane)', 'Stools', 3299, 1800, 0, 5], ['TB-RND-60', 'Round table 60 cm', 'Tables', 5499, 3100, 14, 4], ['TB-SQ-75', 'Square table 75 cm', 'Tables', 6299, 3600, 3, 4], ['SF-2S-01', '2-seater cafe sofa', 'Sofas', 18999, 11200, 6, 2], ['BN-OUT-01', 'Outdoor bench (teak)', 'Outdoor', 7499, 4300, 22, 5], ['CU-SET-04', 'Seat cushion set of 4', 'Accessories', 1299, 520, 60, 15]]
+    .map(([sku, name, category, price, cost, stock, reorderLevel]) => ({ sku, name, category, price, cost, stock, reorderLevel, imageUrl: '', amazonAsin: '', websiteUrl: '', notes: '', active: true }));
+  const states = [['Maharashtra', 30], ['Delhi', 14], ['Karnataka', 12], ['Gujarat', 9], ['Tamil Nadu', 8], ['Telangana', 7], ['Uttar Pradesh', 7], ['West Bengal', 5], ['Rajasthan', 4], ['Punjab', 4]];
+  const names = ['Aarav Shah', 'Isha Kapoor', 'Rohan Iyer', 'Neha Gupta', 'Kabir Singh', 'Ananya Rao', 'Vihaan Joshi', 'Diya Menon', 'Arjun Nair', 'Sara Khan', 'Kunal Desai', 'Meera Pillai', 'Dev Malhotra', 'Pooja Reddy', 'Yash Patil', 'Tara Bose'];
+  const orders = []; let n = 4;
+  for (let i = 0; i < 150; i++) {
+    const ch = w([['Amazon', 55], ['Website', 32], ['Direct', 8], ['Flipkart', 5]]), p = w(P.map((x, j) => [x, [26, 18, 9, 12, 7, 3, 8, 17][j]])), qty = p.price < 2000 ? pick([1, 1, 2, 4]) : pick([1, 1, 1, 2]), st = w([['Delivered', 70], ['Shipped', 8], ['Processing', 6], ['Cancelled', 5], ['RTO', 6], ['Returned', 3], ['New', 2]]), rev = p.price * qty, k = Math.floor(rnd() * rnd() * 118);
+    orders.push({ orderId: 'O' + String(n++).padStart(3, '0'), leadId: '', channel: ch, extId: ch === 'Amazon' ? `402-${1000000 + i * 7919 % 9000000}-${String(1000 + i).slice(-4)}` : ch === 'Website' ? 'W' + (2100 + i) : ch === 'Flipkart' ? 'OD' + (33000 + i) : '', orderDate: day(k), sku: p.sku, productName: p.name, qty, unitPrice: p.price, amount: rev, productCost: p.cost * qty,
+      marketplaceFee: ch === 'Amazon' ? Math.round(rev * 0.15 + 60) : ch === 'Flipkart' ? Math.round(rev * 0.17 + 50) : ch === 'Website' ? Math.round(rev * 0.02) : '', shippingFee: ch === 'Direct' ? '' : 90 + Math.round(rnd() * 90) + (p.price > 5000 ? 250 : 0), packagingCost: ch === 'Website' || ch === 'Direct' ? 35 * qty : '', rtoCharges: st === 'RTO' ? 160 : st === 'Returned' ? 120 : '', adSpend: '', otherCost: '',
+      status: st, payment: ch === 'Amazon' ? 'Amazon Pay' : pick(['Prepaid', 'Prepaid', 'COD']), customerName: ch === 'Amazon' ? '' : pick(names), customerState: w(states), customerCity: '', courier: ch === 'Amazon' ? 'Amazon Shipping' : ch === 'Direct' ? 'Own delivery' : pick(['Delhivery', 'Blue Dart', 'Xpressbees', 'Ekart']), returnReason: st === 'RTO' ? pick(['Customer not available', 'Refused at door', 'Wrong address']) : st === 'Returned' ? pick(['Damaged in transit', 'Colour different from photo', 'Size not suitable']) : '',
+      items: `${qty} × ${p.name}`, trackingUrl: '', notes: '', source: ch === 'Direct' ? 'Team' : 'Import · ' + ch, createdAt: day(k) + 'T10:00:00' });
+  }
+  const adSpend = []; let id = 1;
+  for (let k = 0; k < 75; k++) [['Diwali chairs — Advantage+', 2600], ['Retargeting — website visitors', 1100]].forEach(([c, base], j) => { const sp = Math.round(base * (0.7 + rnd() * 0.6)), imp = Math.round(sp / (110 + rnd() * 60) * 1000), cl = Math.round(sp / (7 + rnd() * 8)), pu = Math.round(cl * (j ? 0.035 : 0.018) * (0.6 + rnd() * 0.8)); adSpend.push({ id: id++, day: day(k), platform: 'Meta', campaign: c, impressions: imp, clicks: cl, spend: sp, purchases: pu, revenue: pu * (2400 + Math.round(rnd() * 1500)) }); });
+  return { products: P, orders, adSpend };
 }
 function demoTemplates() {
   const B = (kind, label, meta, actions, extra) => Object.assign({ kind, label, meta, url: '', phone: '', actions: actions || [] }, extra || {});
@@ -1663,8 +1755,18 @@ function demoApi(action, d) {
     case 'deleteTask': S.tasks = (S.tasks || []).filter(t => t.taskId !== d.id); return { deleted: d.id };
     case 'refreshCampaigns': return [];
     case 'saveTplFlow': { const t = (S.templates || []).find(x => x.templateName === d.templateName); if (!t) throw new Error('Template not found'); t.flow = d.flow; return t; }
-    case 'saveOrder': { S.orders = S.orders || []; if (d.orderId) { const o = S.orders.find(x => x.orderId === d.orderId); Object.assign(o, d, { updatedAt: new Date().toISOString() }); if (o.leadId && d.logMsg) log(o.leadId, 'Order', d.logMsg, me()); return o; } const o = Object.assign({ status: 'New', createdAt: new Date().toISOString() }, d, { orderId: nextId(S.orders, 'orderId', 'O') }); S.orders.unshift(o); if (o.leadId) log(o.leadId, 'Order', `${o.orderId} created · ${o.status}`, me()); return o; }
+    case 'saveOrder': { S.orders = S.orders || []; d = demoOrderFill(Object.assign({}, d)); if (d.orderId) { const o = S.orders.find(x => x.orderId === d.orderId); Object.assign(o, d, { updatedAt: new Date().toISOString() }); if (o.leadId && d.logMsg) log(o.leadId, 'Order', d.logMsg, me()); return o; } const o = Object.assign({ status: 'New', channel: 'Direct', orderDate: todayStr(), createdAt: new Date().toISOString() }, d, { orderId: nextId(S.orders, 'orderId', 'O') }); S.orders.unshift(o); if (o.leadId) log(o.leadId, 'Order', `${o.orderId} created · ${o.status}`, me()); return o; }
     case 'deleteOrder': S.orders = (S.orders || []).filter(o => o.orderId !== d.id); return { deleted: d.id };
+    case 'saveProduct': { S.products = S.products || []; const p = Object.assign({}, d); delete p.oldSku; ['price', 'cost'].forEach(k => { p[k] = p[k] === '' || p[k] == null ? '' : +p[k]; }); p.stock = parseInt(p.stock, 10) || 0; p.reorderLevel = p.reorderLevel === '' || p.reorderLevel == null ? 5 : Math.max(0, parseInt(p.reorderLevel, 10) || 0);
+      const i = S.products.findIndex(x => x.sku === (d.oldSku || d.sku)); if (i >= 0) { Object.assign(S.products[i], p); if (d.oldSku && d.oldSku !== d.sku) S.orders.forEach(o => { if (o.sku === d.oldSku) o.sku = d.sku; }); return S.products[i]; } S.products.push(p); return p; }
+    case 'deleteProduct': S.products = (S.products || []).filter(p => p.sku !== d.sku); return { deleted: d.sku };
+    case 'setStock': { const p = (S.products || []).find(x => x.sku === d.sku); if (!p) throw new Error('Product not found'); p.stock = parseInt(d.stock, 10) || 0; return p; }
+    case 'importProducts': S.products = S.products || []; d.rows.forEach(r => { const p = S.products.find(x => x.sku === r.sku); if (p) Object.assign(p, r); else S.products.push(Object.assign({ name: '', category: '', price: '', cost: '', stock: 0, reorderLevel: 5, imageUrl: '', amazonAsin: '', websiteUrl: '', notes: '', active: true }, r)); }); return { count: d.rows.length };
+    case 'importOrders': S.orders = S.orders || []; d.rows.forEach(r => { const f = demoOrderFill(Object.assign({}, r)), o = f.extId && S.orders.find(x => x.extId === f.extId && x.channel === f.channel); if (o) Object.assign(o, f); else S.orders.unshift(Object.assign({ leadId: '', payment: '', trackingUrl: '', notes: '', createdAt: new Date().toISOString() }, f, { orderId: nextId(S.orders, 'orderId', 'O') })); }); return { count: d.rows.length };
+    case 'importAds': S.adSpend = S.adSpend || []; d.rows.forEach(r => { const a = S.adSpend.find(x => x.day === r.day && x.platform === r.platform && x.campaign === r.campaign); if (a) Object.assign(a, r); else S.adSpend.push(Object.assign({ id: 1 + Math.max(0, ...S.adSpend.map(x => +x.id || 0)), impressions: '', clicks: '', purchases: '', revenue: '' }, r)); }); return { count: d.rows.length };
+    case 'saveAdSpend': { S.adSpend = S.adSpend || []; const r = Object.assign({}, d); ['spend', 'impressions', 'clicks', 'purchases', 'revenue'].forEach(k => { r[k] = r[k] === '' || r[k] == null ? '' : +r[k]; }); if (S.adSpend.some(x => String(x.id) !== String(d.id) && x.day === r.day && x.platform === r.platform && x.campaign === r.campaign)) throw new Error('duplicate key value violates unique constraint');
+      if (d.id) { const a = S.adSpend.find(x => String(x.id) === String(d.id)); Object.assign(a, r); return a; } r.id = 1 + Math.max(0, ...S.adSpend.map(x => +x.id || 0)); S.adSpend.push(r); return r; }
+    case 'deleteAdSpend': S.adSpend = (S.adSpend || []).filter(a => String(a.id) !== String(d.id)); return { deleted: d.id };
     case 'saveTplInfo': { const t = (S.templates || []).find(x => x.templateName === d.templateName); if (!t) throw new Error('Template not found'); Object.assign(t, { useCase: d.useCase, segment: d.segment, tags: d.tags, notes: d.notes }); return t; }
     case 'updateTeamMember': { const m = S.team.find(x => x.memberId === d.id); if (!m) throw new Error('Member not found'); Object.assign(m, d); delete m.id; return m; }
   }
@@ -1716,7 +1818,7 @@ function ring(pct, label, val, color) {
 
 /* ================= load ================= */
 function applyData(d) {
-  S = Object.assign({ leads: [], activities: [], team: [], templates: [], flows: [], messages: [], calls: [], tasks: [], campaignStats: [], orders: [] }, d);
+  S = Object.assign({ leads: [], activities: [], team: [], templates: [], flows: [], messages: [], calls: [], tasks: [], campaignStats: [], orders: [], products: [], adSpend: [] }, d);
   S.lists = Object.assign({}, DEFAULT_LISTS, d.lists || {});
   stageSig = (d.lists && d.lists.stages || []).join('|');
   S.leads.forEach(l => { l.leadId = String(l.leadId); l.phone = String(l.phone || ''); });
@@ -1750,7 +1852,7 @@ function finishLoad(anim) {
   taskReminders(); { const b = $('#tasksBadge'), n = salesReady() ? (S.tasks || []).filter(t => t.status === 'Open' && taskState(t) === 'overdue' && (AUTH.role !== 'member' || t.assignedTo === me())).length : 0; if (b) { b.hidden = !n; b.textContent = n; } }
 }
 /** Render only the screen you're looking at; the others re-render when you open them */
-const VIEW_RENDER = { orders: a => renderOrders(a), admin: a => renderAdmin(a), tasks: a => renderTasks(a), calls: a => renderCalls(a), performance: a => renderPerformance(a), analytics: a => renderAnalytics(a), industry: a => renderIndustry(a), n8n: a => renderN8n(a), automation: () => autoCanvas().sync(), dashboard: a => renderDashboard(a), pipeline: a => renderPipeline(a), leads: a => renderLeads(a), team: a => { renderTeam(a); renderLogins(); }, broadcast: () => renderBroadcast(), whatsapp: () => renderInbox(), reports: a => renderReports(a), templates: () => renderTemplates(), scripts: () => renderScripts(true), ads: a => renderAds(a) };
+const VIEW_RENDER = { commerce: a => renderCommerce(a), orders: a => renderOrders(a), admin: a => renderAdmin(a), tasks: a => renderTasks(a), calls: a => renderCalls(a), performance: a => renderPerformance(a), analytics: a => renderAnalytics(a), industry: a => renderIndustry(a), n8n: a => renderN8n(a), automation: () => autoCanvas().sync(), dashboard: a => renderDashboard(a), pipeline: a => renderPipeline(a), leads: a => renderLeads(a), team: a => { renderTeam(a); renderLogins(); }, broadcast: () => renderBroadcast(), whatsapp: () => renderInbox(), reports: a => renderReports(a), templates: () => renderTemplates(), scripts: () => renderScripts(true), ads: a => renderAds(a) };
 const staleViews = new Set();
 const activeView = () => { const v = $('.view.active'); return v ? v.id.slice(2) : 'dashboard'; };
 function renderAll(anim) {
@@ -4678,7 +4780,7 @@ const SB_DEFAULT = { url: 'https://ljllsrinjjbraumacobz.supabase.co', key: 'sb_p
 const sbConf = () => { const c = store.get('leadnode.supabase'); return c ? (c.off ? {} : c) : SB_DEFAULT; };
 const demoChosen = () => { if (/[?&]demo\b/.test(location.search)) return true; try { return sessionStorage.getItem('leadnode.demo') === '1'; } catch (e) { return false; } };
 const hasSbSession = () => { try { return Object.keys(localStorage).some(k => /^sb-.+-auth-token$/.test(k)); } catch (e) { return false; } };
-function loadScriptOnce(src) { return new Promise((res, rej) => { if ($(`script[src="${src}"]`)) return res(); const sc = document.createElement('script'); sc.src = src; sc.onload = res; sc.onerror = () => rej(new Error('Could not load the login library')); document.head.appendChild(sc); }); }
+function loadScriptOnce(src) { return new Promise((res, rej) => { if ($(`script[src="${src}"]`)) return res(); const sc = document.createElement('script'); sc.src = src; sc.onload = res; sc.onerror = () => rej(new Error('Could not load a needed library — check your internet and try again')); document.head.appendChild(sc); }); }
 async function authClient() {
   const c = sbConf(); if (!c.url || !c.key) return null;
   if (AUTH.client) return AUTH.client;
@@ -4813,7 +4915,7 @@ const me = () => (cloud && AUTH.access && AUTH.access.name) || brand().userName 
 /* ---------- teams, areas & permissions ---------- */
 const IN_STATES = ['Andhra Pradesh', 'Arunachal Pradesh', 'Assam', 'Bihar', 'Chhattisgarh', 'Goa', 'Gujarat', 'Haryana', 'Himachal Pradesh', 'Jharkhand', 'Karnataka', 'Kerala', 'Madhya Pradesh', 'Maharashtra', 'Manipur', 'Meghalaya', 'Mizoram', 'Nagaland', 'Odisha', 'Punjab', 'Rajasthan', 'Sikkim', 'Tamil Nadu', 'Telangana', 'Tripura', 'Uttar Pradesh', 'Uttarakhand', 'West Bengal', 'Delhi', 'Jammu and Kashmir', 'Ladakh', 'Chandigarh', 'Puducherry', 'Andaman and Nicobar Islands', 'Dadra and Nagar Haveli and Daman and Diu', 'Lakshadweep'];
 const areaValues = k => [...new Set((S.leads || []).map(l => String(l[k] || '').trim()).filter(Boolean))].sort();
-const PERMS = [['add', 'Add leads'], ['edit', 'Edit leads & move stages'], ['delete', 'Delete leads'], ['import', 'Import Excel / CSV'], ['export', 'Export leads'], ['whatsapp', 'WhatsApp chats'], ['email', 'Send emails'], ['broadcast', 'Bulk broadcasts'], ['calls', 'Log calls'], ['tasks', 'Tasks'], ['analytics', 'See team analytics'], ['automation', 'Automation & n8n']];
+const PERMS = [['add', 'Add leads'], ['edit', 'Edit leads & move stages'], ['delete', 'Delete leads'], ['import', 'Import Excel / CSV'], ['export', 'Export leads'], ['whatsapp', 'WhatsApp chats'], ['email', 'Send emails'], ['broadcast', 'Bulk broadcasts'], ['calls', 'Log calls'], ['tasks', 'Tasks'], ['analytics', 'See team analytics'], ['automation', 'Automation & n8n'], ['commerce', 'Store: products, stock & orders']];
 const SCOPES = { all: ['All leads', 'Sees every lead in the business'], area: ['Only their area', 'Leads whose State, District or City is in their areas — plus leads assigned to them'], own: ['Only assigned to them', 'Just the leads where “Assign to” is this person'] };
 const can = k => !cloud || /^(owner|admin)$/.test(AUTH.role || '') || (AUTH.role === 'member' && !(AUTH.access && AUTH.access.perms && AUTH.access.perms[k] === false));
 function applyAccess() { document.body.classList.toggle('is-platform', !!(cloud && AUTH.platform)); document.body.classList.toggle('cl-tenant', !!(cloud && !AUTH.platform)); PERMS.forEach(([k]) => document.body.classList.toggle('np-' + k, !can(k))); document.body.classList.toggle('no-sales', !(demo || (cloud && AUTH.v7))); document.body.classList.toggle('no-orders', !(demo || (cloud && AUTH.v8))); }
@@ -5039,14 +5141,17 @@ const SB_COLS = {
   leads: ['lead_id', 'created_on', 'name', 'phone', 'email', 'email_opt_out', 'wa_opt_out', 'business_name', 'business_type', 'city', 'state', 'district', 'source', 'budget', 'stage', 'tag', 'assigned_to', 'follow_up_date', 'last_contact', 'notes', 'business_photo', 'client_photo'],
   activities: ['activity_id', 'lead_id', 'date_time', 'type', 'details', 'done_by'],
   templates: ['template_name', 'category', 'language', 'header', 'body', 'footer', 'buttons', 'meta_status', 'meta_id', 'quality', 'reject_reason', 'use_case', 'segment', 'tags', 'notes', 'flow'],
-  orders: ['order_id', 'lead_id', 'items', 'amount', 'status', 'payment', 'tracking_url', 'notes', 'source'],
+  orders: ['order_id', 'lead_id', 'items', 'amount', 'status', 'payment', 'tracking_url', 'notes', 'source', 'channel', 'ext_id', 'order_date', 'sku', 'product_name', 'qty', 'unit_price', 'product_cost', 'marketplace_fee', 'shipping_fee', 'packaging_cost', 'rto_charges', 'ad_spend', 'other_cost', 'customer_name', 'customer_state', 'customer_city', 'courier', 'return_reason'],
+  products: ['sku', 'name', 'category', 'price', 'cost', 'stock', 'reorder_level', 'image_url', 'amazon_asin', 'website_url', 'notes', 'active'],
+  ad_spend: ['day', 'platform', 'campaign', 'impressions', 'clicks', 'spend', 'purchases', 'revenue'],
   broadcasts: ['broadcast_id', 'name', 'channel', 'template', 'subject', 'body', 'audience_filter', 'contacts', 'sent', 'failed', 'delivered', 'read', 'replies', 'scheduled_for', 'sent_at', 'status'],
   flows: ['flow_id', 'flow_name', 'trigger', 'status', 'flow_json', 'updated_on'],
   team: ['member_id', 'name', 'role', 'phone', 'email', 'active'],
   calls: ['call_id', 'lead_id', 'member', 'phone', 'direction', 'outcome', 'duration_sec', 'notes', 'called_at'],
   tasks: ['task_id', 'lead_id', 'title', 'notes', 'due_at', 'priority', 'assigned_to', 'status', 'source', 'stage', 'remind', 'done_at', 'done_by'],
 };
-const SB_DATE = ['created_on', 'follow_up_date', 'last_contact'], SB_TS = ['date_time', 'updated_on', 'scheduled_for', 'time', 'sent_at', 'called_at', 'due_at', 'done_at'];
+const SB_DATE = ['created_on', 'follow_up_date', 'last_contact', 'order_date', 'day'], SB_TS = ['date_time', 'updated_on', 'scheduled_for', 'time', 'sent_at', 'called_at', 'due_at', 'done_at'];
+const SB_NUM = ['amount', 'unit_price', 'product_cost', 'marketplace_fee', 'shipping_fee', 'packaging_cost', 'rto_charges', 'ad_spend', 'other_cost', 'price', 'cost', 'spend', 'revenue'], SB_NINT = ['qty', 'stock', 'reorder_level', 'impressions', 'clicks', 'purchases'];
 const SB_INT = ['contacts', 'sent', 'failed', 'delivered', 'read', 'replies', 'duration_sec'], SB_HIDE = ['workspace_id', 'created_at', 'updated_at', 'user_id'];
 const toCamel = k => k.replace(/_([a-z])/g, (m, c) => c.toUpperCase());
 const toSnake = k => k.replace(/[A-Z]/g, c => '_' + c.toLowerCase());
@@ -5075,7 +5180,8 @@ function toRow(table, obj) {
     else if (col === 'active' || col === 'email_opt_out' || col === 'wa_opt_out') v = v === true || v === 1 || /^(true|1|yes)$/i.test(String(v));
     else if (col === 'flow_json') v = typeof v === 'string' ? v : JSON.stringify(v || {});
     else if (col === 'flow') v = v && typeof v === 'object' ? v : {};
-    else if (col === 'amount') { const n = Number(String(v == null ? '' : v).replace(/[^\d.]/g, '')); v = v === '' || v == null || isNaN(n) ? null : n; }
+    else if (SB_NUM.includes(col)) { const n = Number(String(v == null ? '' : v).replace(/[^\d.]/g, '')); v = v === '' || v == null || isNaN(n) ? null : n; }
+    else if (SB_NINT.includes(col)) { const n = parseInt(String(v == null ? '' : v).replace(/[^\d-]/g, ''), 10); v = isNaN(n) ? (col === 'qty' ? 1 : col === 'reorder_level' ? 5 : col === 'stock' ? 0 : null) : (col === 'stock' ? n : Math.max(0, n)); }
     else v = v == null ? '' : String(v);
     row[col] = v;
   });
@@ -5105,14 +5211,16 @@ async function sbApi(action, d = {}) {
     case 'ping': return 'pong';
     case 'getAll': {
       const acc = await cl.rpc('my_access', { p_ws: ws }); AUTH.access = acc.error ? null : acc.data; AUTH.v7 = !acc.error;
-      const [leads, activities, team, templates, broadcasts, flows, settings, messages, calls, tasks, cstats, orders] = await Promise.all([
+      const [leads, activities, team, templates, broadcasts, flows, settings, messages, calls, tasks, cstats, orders, products, adSpend] = await Promise.all([
         sbAll('leads', 'created_at'), sbAll('activities', 'date_time'), sbAll('team', 'member_id'), sbAll('templates', 'template_name'),
         sbAll('broadcasts', 'broadcast_id'), sbAll('flows', 'flow_id'), sbSettings(),
         sbq(T('messages').select('*').eq('workspace_id', ws).order('time', { ascending: false }).limit(1500)),
         AUTH.v7 ? sbAll('calls', 'called_at') : [], AUTH.v7 ? sbAll('tasks', 'due_at') : [], AUTH.v7 ? sbq(T('campaign_stats').select('*').eq('workspace_id', ws)).catch(() => []) : [],
-        sbq(T('orders').select('*').eq('workspace_id', ws).order('created_at', { ascending: false }).limit(2000)).then(r => { AUTH.v8 = true; return r; }, () => { AUTH.v8 = false; return []; })]);
+        sbAll('orders', 'created_at').then(r => { AUTH.v8 = true; return r; }, () => { AUTH.v8 = false; return []; }),
+        sbAll('products', 'sku').then(r => { AUTH.v9 = true; return r; }, () => { AUTH.v9 = false; return []; }),
+        sbq(T('ad_spend').select('*').eq('workspace_id', ws).order('day', { ascending: false }).limit(5000)).catch(() => [])]);
       let stages = null; try { stages = JSON.parse(settings.stagesJson || 'null'); } catch (e) { }
-      return { orders: orders.map(fromRow), calls: calls.map(fromRow), tasks: tasks.map(fromRow), campaignStats: cstats.map(fromRow), leads: leads.map(fromRow), activities: activities.map(fromRow), team: team.map(fromRow), templates: templates.map(fromRow), broadcasts: broadcasts.map(fromRow), flows: flows.map(fromRow), messages: messages.reverse().map(fromRow), lists: Array.isArray(stages) && stages.length ? { stages } : {}, settings };
+      return { products: products.map(fromRow), adSpend: adSpend.map(r => Object.assign(fromRow(r), { id: r.id })), orders: orders.map(fromRow), calls: calls.map(fromRow), tasks: tasks.map(fromRow), campaignStats: cstats.map(fromRow), leads: leads.map(fromRow), activities: activities.map(fromRow), team: team.map(fromRow), templates: templates.map(fromRow), broadcasts: broadcasts.map(fromRow), flows: flows.map(fromRow), messages: messages.reverse().map(fromRow), lists: Array.isArray(stages) && stages.length ? { stages } : {}, settings };
     }
     case 'addLead': {
       if (!String(d.name || '').trim()) throw new Error('Name is required');
@@ -5172,10 +5280,38 @@ async function sbApi(action, d = {}) {
     case 'saveOrder': {
       if (!AUTH.v8) throw new Error('Run the database update 08_platform_flows.sql first.');
       const row = toRow('orders', d); row.workspace_id = ws; if (!row.lead_id) row.lead_id = null;
+      if (!AUTH.v9) SB_COLS.orders.slice(9).forEach(c => delete row[c]); else { if (!row.ext_id) row.ext_id = null; if (!row.order_date) delete row.order_date; }
       if (!row.order_id) { delete row.order_id; const o = fromRow(await sbq(T('orders').insert(row).select().single())); if (o.leadId) await sbLog(o.leadId, 'Order', `${o.orderId} created · ${o.status}${o.amount ? ' · ₹' + o.amount : ''}`, me()); return o; }
       const o = fromRow(await sbq(T('orders').update(row).eq('workspace_id', ws).eq('order_id', d.orderId).select().single())); if (o.leadId && d.logMsg) await sbLog(o.leadId, 'Order', d.logMsg, me()); return o;
     }
     case 'deleteOrder': await sbq(T('orders').delete().eq('workspace_id', ws).eq('order_id', d.id)); return { deleted: d.id };
+    case 'saveProduct': {
+      if (!AUTH.v9) throw new Error('Run the database update 09_commerce.sql first.');
+      const row = toRow('products', d); row.workspace_id = ws; row.sku = String(row.sku || '').trim();
+      if (d.oldSku && d.oldSku !== row.sku) return fromRow(await sbq(T('products').update(row).eq('workspace_id', ws).eq('sku', d.oldSku).select().single()));
+      return fromRow(await sbq(T('products').upsert(row, { onConflict: 'workspace_id,sku' }).select().single()));
+    }
+    case 'deleteProduct': await sbq(T('products').delete().eq('workspace_id', ws).eq('sku', d.sku)); return { deleted: d.sku };
+    case 'setStock': return fromRow(await sbq(T('products').update({ stock: parseInt(d.stock, 10) || 0 }).eq('workspace_id', ws).eq('sku', d.sku).select().single()));
+    case 'importProducts': case 'importOrders': case 'importAds': {
+      if (!AUTH.v9) throw new Error('Run the database update 09_commerce.sql first.');
+      const tb = { importProducts: 'products', importOrders: 'orders', importAds: 'ad_spend' }[action], keys = new Set();
+      (d.rows || []).forEach(x => Object.keys(x).forEach(k => keys.add(k)));
+      const rows = (d.rows || []).map(x => { const r = toRow(tb, Object.fromEntries([...keys].map(k => [k, x[k] === undefined ? '' : x[k]]))); r.workspace_id = ws; if (tb === 'orders') { delete r.order_id; r.lead_id = null; if (!r.ext_id) r.ext_id = null; } return r; });
+      if (tb === 'products') return { count: (await sbq(T('products').upsert(rows, { onConflict: 'workspace_id,sku' }).select('sku'))).length };
+      if (tb === 'ad_spend') return { count: (await sbq(T('ad_spend').upsert(rows, { onConflict: 'workspace_id,day,platform,campaign' }).select('id'))).length };
+      const withId = rows.filter(r => r.ext_id), noId = rows.filter(r => !r.ext_id); let n = 0;
+      if (withId.length) n += (await sbq(T('orders').upsert(withId, { onConflict: 'workspace_id,channel,ext_id' }).select('order_id'))).length;
+      if (noId.length) n += (await sbq(T('orders').insert(noId).select('order_id'))).length;
+      return { count: n };
+    }
+    case 'saveAdSpend': {
+      if (!AUTH.v9) throw new Error('Run the database update 09_commerce.sql first.');
+      const row = toRow('ad_spend', d); row.workspace_id = ws;
+      const r = d.id ? await sbq(T('ad_spend').update(row).eq('workspace_id', ws).eq('id', d.id).select().single()) : await sbq(T('ad_spend').insert(row).select().single());
+      return Object.assign(fromRow(r), { id: r.id });
+    }
+    case 'deleteAdSpend': await sbq(T('ad_spend').delete().eq('workspace_id', ws).eq('id', d.id)); return { deleted: d.id };
     case 'deleteTask': await sbq(T('tasks').delete().eq('workspace_id', ws).eq('task_id', d.id)); return { deleted: d.id };
     case 'refreshCampaigns': { if (!AUTH.v7) return []; await sbq(cl.rpc('refresh_campaign_stats', { p_ws: ws })); return (await sbq(T('campaign_stats').select('*').eq('workspace_id', ws))).map(fromRow); }
     case 'addActivity': {
@@ -6496,6 +6632,8 @@ function go(name) {
   if (name === 'analytics') renderAnalytics(true);
   if (name === 'admin') renderAdmin(true);
   if (name === 'orders') renderOrders(true);
+  if (name === 'commerce') renderCommerce(true);
+  $$('[data-cm]').forEach(b => b.classList.toggle('active', name === 'commerce' && b.dataset.cm === CM.tab));
   if (name === 'tasks') renderTasks(true);
   if (name === 'calls') renderCalls(true);
   if (name === 'performance') renderPerformance(true);
@@ -6507,43 +6645,537 @@ function go(name) {
 window.addEventListener('hashchange', () => go(location.hash.slice(1)));
 
 /* ================= orders ================= */
-const ORD_ST = ['Cart', 'New', 'Confirmed', 'Paid', 'COD', 'Shipped', 'Delivered', 'Cancelled'], ORD = { st: '', q: '' };
-const ordCls = s => ({ Delivered: 'ok', Paid: 'ok', Cancelled: 'bad', Cart: 'draft', New: 'wait', COD: 'wait' }[s] || '');
+const ORD_ST = ['Cart', 'New', 'Processing', 'Confirmed', 'Paid', 'COD', 'Shipped', 'Delivered', 'Cancelled', 'Refunded', 'RTO', 'Returned', 'Exchange'], ORD = { st: '', q: '', ch: '' };
+const ordCls = s => ({ Delivered: 'ok', Paid: 'ok', Cancelled: 'bad', Refunded: 'bad', RTO: 'bad', Returned: 'bad', Cart: 'draft', New: 'wait', COD: 'wait', Processing: 'wait' }[s] || '');
 function renderOrders(anim) {
   const box = $('#ordersBody'); if (!box) return;
   if (!(demo || (cloud && AUTH.v8))) { box.innerHTML = `<div class="tp-empty glass"><b>Orders need the 08 database update</b><p class="muted">Run <code>08_platform_flows.sql</code> in Supabase → SQL Editor, then refresh.</p></div>`; return; }
-  const all = S.orders || [], q = ORD.q.toLowerCase(), list = all.filter(o => (!ORD.st || o.status === ORD.st) && (!q || [o.orderId, o.items, leadName(o.leadId), o.payment].some(v => String(v || '').toLowerCase().includes(q))));
-  const open = all.filter(o => !['Delivered', 'Cancelled', 'Cart'].includes(o.status)), val = a => a.reduce((s2, o) => s2 + (+o.amount || 0), 0);
+  const all = S.orders || [], q = ORD.q.toLowerCase(), chs = [...new Set(all.map(o => o.channel || 'WhatsApp'))];
+  const inCh = all.filter(o => !ORD.ch || (o.channel || 'WhatsApp') === ORD.ch);
+  const list = inCh.filter(o => (!ORD.st || o.status === ORD.st) && (!q || [o.orderId, o.extId, o.items, o.productName, o.sku, o.customerName, leadName(o.leadId), o.payment].some(v => String(v || '').toLowerCase().includes(q)))).sort((a, b) => cmDate(b).localeCompare(cmDate(a)) || String(b.orderId).localeCompare(String(a.orderId), undefined, { numeric: true }));
+  const open = inCh.filter(o => !['Delivered', 'Cancelled', 'Cart', 'Refunded', 'RTO', 'Returned'].includes(o.status)), val = a => a.reduce((s2, o) => s2 + (+o.amount || 0), 0);
   const tile = (n, l, c) => `<div class="n8l-k glass"><b style="${c ? 'color:' + c : ''}">${n}</b><small class="muted">${l}</small></div>`;
-  box.innerHTML = `<div class="adm-ks">${tile(open.length, 'Open orders')}${tile(inrShort(val(open)), 'Open value', 'var(--blue-2)')}${tile(all.filter(o => o.status === 'COD').length, 'Cash on delivery')}${tile(all.filter(o => o.status === 'Delivered').length, 'Delivered', 'var(--green)')}${tile(all.filter(o => o.status === 'Cancelled').length, 'Cancelled', 'var(--coral)')}</div>
-    <div class="toolbar glass" style="margin-top:14px"><div class="tp-chips">${[''].concat(ORD_ST).map(x => `<button class="chip ${ORD.st === x ? 'on' : ''}" data-ordst="${x}">${x || 'All'} <span class="n">${x ? all.filter(o => o.status === x).length : all.length}</span></button>`).join('')}</div><div class="grow"></div><input class="input sm" id="ordQ" placeholder="Search orders" value="${esc(ORD.q)}" style="max-width:220px"></div>
-    <div class="table-wrap glass" style="margin-top:14px"><table class="tbl"><thead><tr><th>Order</th><th>Customer</th><th>Items</th><th class="num">Amount</th><th>Status</th><th>Payment</th><th>Source</th><th>Created</th></tr></thead><tbody>
-    ${list.map(o => `<tr data-ordedit="${esc(o.orderId)}"><td><b>${esc(o.orderId)}</b></td><td>${o.leadId ? `<a data-open="${esc(o.leadId)}">${esc(leadName(o.leadId) || o.leadId)}</a>` : '-'}</td><td>${esc(o.items || '-')}</td><td class="num">${o.amount ? inr(o.amount) : '-'}</td><td><span class="tp-st ${ordCls(o.status)}"><i></i>${esc(o.status)}</span></td><td>${esc(o.payment || '-')}</td><td class="muted">${esc(o.source || 'Team')}</td><td class="muted">${esc(fmtWhen(o.createdAt))}</td></tr>`).join('') || '<tr><td colspan="8" class="empty">No orders yet. Add an “Order Now” button with the <b>Create order</b> action to a template, or press New order.</td></tr>'}</tbody></table></div>`;
+  box.innerHTML = `<div class="adm-ks">${tile(open.length, 'Open orders')}${tile(inrShort(val(open)), 'Open value', 'var(--blue-2)')}${tile(inCh.filter(o => o.status === 'COD' || /cod/i.test(o.payment || '')).length, 'Cash on delivery')}${tile(inCh.filter(o => o.status === 'Delivered').length, 'Delivered', 'var(--green)')}${tile(inCh.filter(o => CM_DEAD.includes(o.status) && o.status !== 'Cart').length, 'Cancelled / returned', 'var(--coral)')}</div>
+    ${chs.length > 1 ? `<div class="tp-chips" style="margin-top:14px">${[''].concat(chs).map(c => `<button class="chip ${ORD.ch === c ? 'on' : ''}" data-ordch="${esc(c)}">${c ? esc(c) : 'All channels'} <span class="n">${c ? all.filter(o => (o.channel || 'WhatsApp') === c).length : all.length}</span></button>`).join('')}</div>` : ''}
+    <div class="toolbar glass" style="margin-top:14px"><div class="tp-chips">${[''].concat(ORD_ST).filter(x => !x || inCh.some(o => o.status === x) || ['New', 'Delivered'].includes(x)).map(x => `<button class="chip ${ORD.st === x ? 'on' : ''}" data-ordst="${x}">${x || 'All'} <span class="n">${x ? inCh.filter(o => o.status === x).length : inCh.length}</span></button>`).join('')}</div><div class="grow"></div><input class="input sm" id="ordQ" placeholder="Search orders" value="${esc(ORD.q)}" style="max-width:220px"></div>
+    <div class="table-wrap glass" style="margin-top:14px"><table class="tbl"><thead><tr><th>Date</th><th>Order</th><th>Channel</th><th>Customer</th><th>Items</th><th class="num">Amount</th><th>Status</th><th>Payment</th><th>Source</th></tr></thead><tbody>
+    ${list.slice(0, 500).map(o => `<tr data-ordedit="${esc(o.orderId)}"><td class="muted">${esc(fmtDate(cmDate(o)))}</td><td><b>${esc(o.extId || o.orderId)}</b>${o.extId ? `<br><small class="muted">${esc(o.orderId)}</small>` : ''}</td><td>${cmChTag(o.channel || 'WhatsApp')}</td><td>${o.leadId ? `<a data-open="${esc(o.leadId)}">${esc(leadName(o.leadId) || o.leadId)}</a>` : esc(o.customerName || '-')}</td><td>${esc(o.items || o.productName || '-')}</td><td class="num">${o.amount !== '' && o.amount != null ? inr(o.amount) : '-'}</td><td><span class="tp-st ${ordCls(o.status)}"><i></i>${esc(o.status)}</span></td><td>${esc(o.payment || '-')}</td><td class="muted">${esc(o.source || 'Team')}</td></tr>`).join('') || '<tr><td colspan="9" class="empty">No orders yet. Add an “Order Now” button with the <b>Create order</b> action to a template, import your Amazon / website orders in Commerce, or press New order.</td></tr>'}</tbody></table>${list.length > 500 ? `<p class="muted" style="padding:10px 14px;font-size:12.5px">Showing the latest 500 of ${list.length} — use search or filters.</p>` : ''}</div>`;
   stagger(box, anim);
 }
 function openOrder(o, leadId) {
-  const x = o || { leadId: leadId || '', items: '', amount: '', status: 'New', payment: '', trackingUrl: '', notes: '' }, ln = x.leadId && S.leads.find(l => l.leadId === x.leadId);
-  $('#stageBox').innerHTML = `<div class="m-head"><h2>${o ? 'Order ' + esc(o.orderId) : 'New order'}</h2><button class="ibtn" data-close>${I.x}</button></div>
-    <div class="form" style="grid-template-columns:1fr 1fr"><div class="field full"><label>Customer (lead)</label><input class="input" id="odLead" list="dlLeadsO" value="${ln ? esc(ln.name + ' · ' + (ln.phone ? '+' + ln.phone : ln.leadId)) : ''}" placeholder="Type a name"><datalist id="dlLeadsO">${S.leads.slice(0, 800).map(l => `<option value="${esc(l.name + ' · ' + (l.phone ? '+' + l.phone : l.leadId))}">`).join('')}</datalist></div>
-      <div class="field full"><label>Items</label><textarea class="input" id="odItems" rows="2" placeholder="20 × Cafe chair (walnut)">${esc(x.items || '')}</textarea></div>
-      <div class="field"><label>Amount (₹)</label><input class="input" id="odAmt" type="number" min="0" value="${esc(x.amount || '')}"></div>
+  const x = o || { leadId: leadId || '', items: '', amount: '', status: 'New', payment: '', trackingUrl: '', notes: '', channel: leadId ? 'WhatsApp' : (CM.ch && activeView() === 'commerce' ? CM.ch : CM.tab === 'amazon' && activeView() === 'commerce' ? 'Amazon' : CM.tab === 'website' && activeView() === 'commerce' ? 'Website' : 'Direct'), orderDate: todayStr(), qty: 1 }, ln = x.leadId && S.leads.find(l => l.leadId === x.leadId);
+  const v9 = demo || AUTH.v9, ro = document.body.classList.contains('ro'), num = (id, lab, val) => `<div class="field"><label>${lab}</label><input class="input" id="${id}" type="number" min="0" step="0.01" value="${esc(val == null ? '' : val)}"></div>`;
+  $('#stageBox').innerHTML = `<div class="m-head"><h2>${o ? 'Order ' + esc(o.extId || o.orderId) : 'New order'}</h2><button class="ibtn" data-close>${I.x}</button></div>
+    <div class="form" style="grid-template-columns:1fr 1fr">
+      ${v9 ? `<div class="field"><label>Channel</label><select class="input" id="odCh">${CM_CH.map(c => `<option ${c === (x.channel || 'WhatsApp') ? 'selected' : ''}>${c}</option>`).join('')}</select></div><div class="field"><label>Order date</label><input class="input" id="odDate" type="date" value="${esc(cmDate(x) || todayStr())}"></div>
+      <div class="field"><label>Order ID on the channel <span class="muted">(Amazon / website)</span></label><input class="input" id="odExt" maxlength="80" value="${esc(x.extId || '')}"></div>` : ''}
+      <div class="field ${v9 ? '' : 'full'}"><label>Customer (lead)</label><input class="input" id="odLead" list="dlLeadsO" value="${ln ? esc(ln.name + ' · ' + (ln.phone ? '+' + ln.phone : ln.leadId)) : ''}" placeholder="Type a name — optional"><datalist id="dlLeadsO">${S.leads.slice(0, 800).map(l => `<option value="${esc(l.name + ' · ' + (l.phone ? '+' + l.phone : l.leadId))}">`).join('')}</datalist></div>
+      ${v9 ? `<div class="field"><label>Product (SKU)</label><input class="input" id="odSku" list="dlSkus" maxlength="80" value="${esc(x.sku || '')}" placeholder="Pick or type"><datalist id="dlSkus">${(S.products || []).map(p => `<option value="${esc(p.sku)}">${esc(p.name)}</option>`).join('')}</datalist></div><div class="field"><label>Qty</label><input class="input" id="odQty" type="number" min="0" step="1" value="${esc(x.qty === '' || x.qty == null ? 1 : x.qty)}"></div>` : ''}
+      <div class="field full"><label>Items <span class="muted">— filled from the product if empty</span></label><textarea class="input" id="odItems" rows="2" placeholder="20 × Cafe chair (walnut)">${esc(x.items || '')}</textarea></div>
+      <div class="field"><label>Amount / revenue (₹) <span class="muted">— empty = qty × price</span></label><input class="input" id="odAmt" type="number" min="0" step="0.01" value="${esc(x.amount == null ? '' : x.amount)}"></div>
       <div class="field"><label>Status</label><select class="input" id="odSt">${ORD_ST.map(s2 => `<option ${s2 === x.status ? 'selected' : ''}>${s2}</option>`).join('')}</select></div>
-      <div class="field"><label>Payment</label><select class="input" id="odPay">${['', 'COD', 'link', 'UPI', 'Bank transfer', 'Cash'].map(p2 => `<option value="${p2}" ${p2 === x.payment ? 'selected' : ''}>${p2 || '—'}</option>`).join('')}</select></div>
+      <div class="field"><label>Payment</label><input class="input" id="odPay" list="dlPay" maxlength="40" value="${esc(x.payment || '')}"><datalist id="dlPay">${['COD', 'Prepaid', 'Paid', 'Pending', 'link', 'UPI', 'Bank transfer', 'Cash'].map(p2 => `<option value="${p2}">`).join('')}</datalist></div>
       <div class="field"><label>Tracking link</label><input class="input" id="odTrack" value="${esc(x.trackingUrl || '')}" placeholder="https://…"></div>
+      ${v9 ? `<div class="field"><label>Customer name <span class="muted">(if not a lead)</span></label><input class="input" id="odCust" maxlength="120" value="${esc(x.customerName || '')}"></div><div class="field"><label>Customer state</label><input class="input" id="odState" list="dlStates" maxlength="60" value="${esc(x.customerState || '')}"><datalist id="dlStates">${(typeof IN_STATES !== 'undefined' ? IN_STATES : []).map(s2 => `<option value="${esc(s2)}">`).join('')}</datalist></div>
+      <div class="field"><label>Customer city</label><input class="input" id="odCity" maxlength="60" value="${esc(x.customerCity || '')}"></div><div class="field"><label>Courier</label><input class="input" id="odCour" maxlength="60" value="${esc(x.courier || '')}"></div>
+      <details class="field full cm-costs" ${o && CM_COSTS.some(([k]) => cmN(x[k])) ? 'open' : ''}><summary>Costs → net profit <span class="muted" id="odProfit"></span></summary><div class="form" style="grid-template-columns:1fr 1fr;margin-top:8px">
+        ${num('odPc', 'Product cost (total) <span class="muted">— empty = qty × product cost</span>', x.productCost)}${num('odFee', 'Amazon / marketplace / gateway fee', x.marketplaceFee)}${num('odShip', 'Shipping', x.shippingFee)}${num('odPack', 'Packaging', x.packagingCost)}${num('odRto', 'RTO / return charges', x.rtoCharges)}${num('odAds', 'Ad spend for this order', x.adSpend)}${num('odOther', 'Other cost', x.otherCost)}
+        <div class="field"><label>Return reason</label><input class="input" id="odRet" maxlength="300" value="${esc(x.returnReason || '')}"></div></div></details>` : ''}
       <div class="field full"><label>Notes</label><input class="input" id="odNotes" value="${esc(x.notes || '')}"></div></div>
-    <div class="m-foot">${o ? '<button class="btn danger" id="odDel">Delete</button>' : ''}<div class="grow"></div><button class="btn" data-close>Cancel</button><button class="btn primary" id="odSave">${o ? 'Save' : 'Create order'}</button></div>`;
-  $('#odSave').onclick = async () => {
+    <div class="m-foot">${o && !ro ? '<button class="btn danger" id="odDel">Delete</button>' : ''}<div class="grow"></div><button class="btn" data-close>${ro ? 'Close' : 'Cancel'}</button>${ro ? '' : `<button class="btn primary" id="odSave">${o ? 'Save' : 'Create order'}</button>`}</div>`;
+  const val = id => { const e = $('#' + id); return e ? e.value.trim() : undefined; };
+  const calc = () => { if (!v9 || !$('#odProfit')) return; const p = cmProd(val('odSku')), q = +val('odQty') || 1, amt = val('odAmt') !== '' ? +val('odAmt') : p && p.price !== '' ? cmN(p.price) * q : 0, pc = val('odPc') !== '' ? +val('odPc') : p && p.cost !== '' ? cmN(p.cost) * q : 0, st = val('odSt');
+    const pr = (CM_DEAD.includes(st) ? 0 : amt - pc) - ['odFee', 'odShip', 'odPack', 'odRto', 'odAds', 'odOther'].reduce((a, id) => a + (+val(id) || 0), 0); $('#odProfit').textContent = `· ${inr(pr)}`; };
+  $('#stageBox').querySelectorAll('input,select').forEach(e => e.addEventListener('input', calc)); calc();
+  if (!ro) $('#odSave').onclick = async () => {
     const v = $('#odLead').value.trim(), lead = v ? S.leads.find(l => v === l.name + ' · ' + (l.phone ? '+' + l.phone : l.leadId)) || S.leads.find(l => l.name.toLowerCase() === v.toLowerCase()) : null;
     if (v && !lead) return toast('Pick the customer from the list (or leave it empty)', true);
-    const d = { leadId: lead ? lead.leadId : '', items: $('#odItems').value.trim(), amount: $('#odAmt').value, status: $('#odSt').value, payment: $('#odPay').value, trackingUrl: $('#odTrack').value.trim(), notes: $('#odNotes').value.trim() };
+    const tr = $('#odTrack').value.trim(); if (tr && !/^https?:\/\//i.test(tr)) return toast('Tracking link must start with https://', true);
+    const d = { leadId: lead ? lead.leadId : '', items: $('#odItems').value.trim(), amount: $('#odAmt').value, status: $('#odSt').value, payment: $('#odPay').value.trim(), trackingUrl: tr, notes: $('#odNotes').value.trim() };
+    if (v9) Object.assign(d, { channel: val('odCh'), orderDate: val('odDate') || todayStr(), extId: val('odExt'), sku: val('odSku'), qty: val('odQty') === '' ? 1 : val('odQty'), customerName: val('odCust'), customerState: val('odState'), customerCity: val('odCity'), courier: val('odCour'), productCost: val('odPc'), marketplaceFee: val('odFee'), shippingFee: val('odShip'), packagingCost: val('odPack'), rtoCharges: val('odRto'), adSpend: val('odAds'), otherCost: val('odOther'), returnReason: val('odRet') });
+    if (v9 && d.extId && (S.orders || []).some(q => q !== o && q.extId === d.extId && (q.channel || 'WhatsApp') === d.channel)) return toast(`Another ${d.channel} order already has ID ${d.extId}`, true);
     if (o) Object.assign(d, { orderId: o.orderId, logMsg: o.status !== d.status ? `${o.orderId} → ${d.status}` : '' }); else d.source = 'Team';
     try { await api('saveOrder', d); hideModal('#stageModal'); toast(o ? '✓ Order saved' : '✓ Order created'); await refreshData(); } catch (e) { toast(e.message, true); }
   };
-  if (o) $('#odDel').onclick = async () => { if (!confirm('Delete this order?')) return; try { await api('deleteOrder', { id: o.orderId }); hideModal('#stageModal'); toast('Order deleted'); await refreshData(); } catch (e) { toast(e.message, true); } };
+  if (o && !ro) $('#odDel').onclick = async () => { if (!confirm('Delete this order?')) return; try { await api('deleteOrder', { id: o.orderId }); hideModal('#stageModal'); toast('Order deleted'); await refreshData(); } catch (e) { toast(e.message, true); } };
   showModal('#stageModal');
 }
-document.addEventListener('click', e => { const t = e.target; if (t.closest('[data-open]')) return; const st = t.closest('[data-ordst]'); if (st) { ORD.st = st.dataset.ordst; return renderOrders(); } const ed = t.closest('[data-ordedit]'); if (ed) return openOrder((S.orders || []).find(o => o.orderId === ed.dataset.ordedit)); const nw = t.closest('[data-ordnew]'); if (nw) return openOrder(null, nw.dataset.ordnew || ''); });
+document.addEventListener('click', e => { const t = e.target; if (t.closest('[data-open]')) return; const st = t.closest('[data-ordst]'); if (st) { ORD.st = st.dataset.ordst; return renderOrders(); } const oc = t.closest('[data-ordch]'); if (oc) { ORD.ch = oc.dataset.ordch; ORD.st = ''; return renderOrders(); } const ed = t.closest('[data-ordedit]'); if (ed) return openOrder((S.orders || []).find(o => o.orderId === ed.dataset.ordedit)); const nw = t.closest('[data-ordnew]'); if (nw) return openOrder(null, nw.dataset.ordnew || ''); });
 document.addEventListener('input', e => { if (e.target.id === 'ordQ') { ORD.q = e.target.value; const pos = e.target.selectionStart; renderOrders(); const q = $('#ordQ'); if (q) { q.focus(); q.setSelectionRange(pos, pos); } } });
+
+/* ================= Commerce: store overview, products, inventory, Amazon, Website, analytics, reports, ad spend, channels ================= */
+const CM_TABS = [['overview', 'Overview'], ['products', 'Products'], ['inventory', 'Inventory'], ['amazon', 'Amazon'], ['website', 'Website'], ['analytics', 'Analytics'], ['reports', 'Reports'], ['ads', 'Ad spend'], ['channels', 'Channels']];
+const CM_CH = ['Amazon', 'Website', 'WhatsApp', 'Direct', 'Flipkart', 'Meesho', 'Other'];
+const CM_CHC = { Amazon: '#F59E0B', Website: 'var(--blue-2)', WhatsApp: 'var(--wa)', Direct: 'var(--green)', Flipkart: '#A78BFA', Meesho: 'var(--coral)', Other: 'var(--faint)' };
+const CM_DEAD = ['Cart', 'Cancelled', 'Refunded', 'RTO', 'Returned'], CM_RET = ['RTO', 'Returned', 'Refunded'];
+const CM_COSTS = [['productCost', 'Product cost'], ['marketplaceFee', 'Marketplace / gateway fees'], ['shippingFee', 'Shipping'], ['packagingCost', 'Packaging'], ['rtoCharges', 'RTO / return charges'], ['adSpend', 'Ad spend on order'], ['otherCost', 'Other costs']];
+const CM = Object.assign({ tab: 'overview', range: 30, ch: '', state: '', st: '', pq: '', cat: '', inv: 'all', an: 'sales', grain: 'day', oq: '', aq: '' }, { tab: store.get('nv.cmTab') || 'overview' });
+const cmN = v => { const n = Number(String(v == null ? '' : v).replace(/[^\d.-]/g, '')); return isFinite(n) ? n : 0; };
+const cmOk = () => demo || (cloud && AUTH.v9);
+const cmDate = o => dOnly(o.orderDate || o.createdAt || '');
+const cmRev = o => CM_DEAD.includes(o.status) ? 0 : cmN(o.amount);
+const cmCost = o => CM_COSTS.reduce((s2, [k]) => s2 + (k === 'productCost' && CM_DEAD.includes(o.status) ? 0 : cmN(o[k])), 0);
+const cmProfit = o => cmRev(o) - cmCost(o);
+const cmUnits = o => CM_DEAD.includes(o.status) ? 0 : (cmN(o.qty) || (/^\s*(\d+)\s*[×x]/i.exec(o.items || '') || [0, o.items ? 1 : 0])[1] * 1);
+const cmFrom = () => CM.range ? (() => { const d = new Date(); d.setDate(d.getDate() - CM.range + 1); return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); })() : '';
+const cmOrders = (extra, noCh) => { const from = cmFrom(); return (S.orders || []).filter(o => o.status !== 'Cart' && (!from || cmDate(o) >= from) && (noCh || !CM.ch || (o.channel || 'WhatsApp') === CM.ch) && (!CM.state || o.customerState === CM.state) && (!CM.st || o.status === CM.st) && (!extra || extra(o))); };
+const cmSum = (a, f) => a.reduce((s2, x) => s2 + f(x), 0);
+const cmPct = (a, b) => b ? Math.round(a / b * 1000) / 10 : 0;
+const cmStock = p => { const st = cmN(p.stock), r = p.reorderLevel === '' || p.reorderLevel == null ? 5 : cmN(p.reorderLevel); return st <= 0 ? ['out', 'Out of stock', 'var(--coral)'] : st <= r ? ['low', 'Low stock', '#D97706'] : ['ok', 'In stock', 'var(--green)']; };
+const cmProd = sku => (S.products || []).find(p => p.sku === sku);
+const cmAds = () => { const from = cmFrom(); return (S.adSpend || []).filter(a => !from || dOnly(a.day) >= from); };
+function cmBySku(list) {
+  const m = new Map(); list.forEach(o => { const k = o.sku || o.productName || o.items || '—'; const r = m.get(k) || { key: k, sku: o.sku || '', name: (cmProd(o.sku) || {}).name || o.productName || o.items || o.sku || '—', units: 0, rev: 0, profit: 0, orders: 0, ret: 0 };
+    r.units += cmUnits(o); r.rev += cmRev(o); r.profit += cmProfit(o); r.orders++; if (CM_RET.includes(o.status)) r.ret++; m.set(k, r); });
+  return [...m.values()].sort((a, b) => b.rev - a.rev);
+}
+function cmSeries(list, grain) {
+  const from = cmFrom() || (list.map(cmDate).filter(Boolean).sort()[0] || todayStr()), keyOf = d => grain === 'month' ? d.slice(0, 7) : grain === 'week' ? (() => { const x = new Date(d + 'T00:00'); x.setDate(x.getDate() - ((x.getDay() + 6) % 7)); return x.getFullYear() + '-' + pad(x.getMonth() + 1) + '-' + pad(x.getDate()); })() : d;
+  const buckets = new Map(); for (let d = new Date(from + 'T00:00'), end = new Date(todayStr() + 'T00:00'); d <= end; d.setDate(d.getDate() + 1)) { const k = keyOf(d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate())); if (!buckets.has(k)) buckets.set(k, { k, rev: 0, profit: 0, orders: 0 }); }
+  list.forEach(o => { const b = buckets.get(keyOf(cmDate(o))); if (b) { b.rev += cmRev(o); b.profit += cmProfit(o); b.orders++; } });
+  return [...buckets.values()];
+}
+const cmLabel = (k, grain) => grain === 'month' ? MONTHS[+k.slice(5, 7) - 1] + ' ' + k.slice(2, 4) : fmtDate(k).replace(/ \d{4}$/, '');
+function cmTrend(series, grain) {
+  if (!series.length || !series.some(p => p.rev || p.profit)) return '<div class="cm-empty">No orders in this period</div>';
+  const W = 1000, H = 240, max = Math.max(1, ...series.map(p => Math.max(p.rev, p.profit))), min = Math.min(0, ...series.map(p => p.profit)), n = series.length;
+  const x = i => n === 1 ? W / 2 : i * W / (n - 1), y = v => 6 + (H - 12) * (1 - (v - min) / (max - min || 1)), yp = v => (y(v) / H * 100).toFixed(2);
+  const line = k => series.map((p, i) => `${i ? 'L' : 'M'}${x(i).toFixed(1)} ${y(p[k]).toFixed(1)}`).join(' '), base = y(Math.max(0, min)).toFixed(1);
+  const fr = [0, .25, .5, .75, 1].map(f => min + (max - min) * f);
+  const ticks = [0, Math.floor((n - 1) / 2), n - 1].filter((v, i, a) => a.indexOf(v) === i).map(i => `<span>${esc(cmLabel(series[i].k, grain))}</span>`).join('');
+  return `<div class="cm-tr"><div class="cm-yl">${fr.map(v => `<span style="top:${yp(v)}%">${esc(inrShort(v).replace('₹', ''))}</span>`).join('')}</div>
+    <div class="cm-plot"><svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" role="img" aria-label="Revenue and profit trend">${fr.map(v => `<line x1="0" x2="${W}" y1="${y(v)}" y2="${y(v)}" class="cm-gl" vector-effect="non-scaling-stroke"/>`).join('')}
+      <path d="${line('rev')} L${x(n - 1)} ${base} L${x(0)} ${base} Z" class="cm-area"/><path d="${line('rev')}" class="cm-l1" vector-effect="non-scaling-stroke"/><path d="${line('profit')}" class="cm-l2" vector-effect="non-scaling-stroke"/></svg>
+      <div class="cm-hov">${series.map(p => `<i data-tip="${esc(cmLabel(p.k, grain))} — revenue ${esc(inr(p.rev))} · profit ${esc(inr(p.profit))} · ${p.orders} orders"></i>`).join('')}</div></div></div>
+    <div class="cm-xl">${ticks}</div><div class="cm-leg"><span><i style="background:var(--blue-2)"></i>Revenue</span><span><i style="background:var(--green)"></i>Net profit</span></div>`;
+}
+function cmDonut(parts, center, sub) {
+  const tot = cmSum(parts, p => p.value); if (!tot) return '<div class="cm-empty">No data in this period</div>';
+  const R = 52, C = 2 * Math.PI * R; let off = 0;
+  const arcs = parts.filter(p => p.value > 0).map(p => { const len = p.value / tot * C, s = `<circle r="${R}" cx="70" cy="70" fill="none" stroke="${p.color}" stroke-width="18" stroke-dasharray="${len.toFixed(2)} ${(C - len).toFixed(2)}" stroke-dashoffset="${(-off).toFixed(2)}"><title>${esc(p.label)}: ${esc(p.fmt ? p.fmt(p.value) : p.value)}</title></circle>`; off += len; return s; }).join('');
+  return `<div class="cm-donut"><svg viewBox="0 0 140 140" width="140" height="140"><g transform="rotate(-90 70 70)">${arcs}</g><text x="70" y="68" text-anchor="middle" class="cm-dc">${esc(center)}</text><text x="70" y="86" text-anchor="middle" class="cm-ax">${esc(sub || '')}</text></svg>
+    <div class="cm-dl">${parts.map(p => `<div><i style="background:${p.color}"></i><span>${esc(p.label)}</span><b>${esc(p.fmt ? p.fmt(p.value) : p.value)}</b><small>${cmPct(p.value, tot)}%</small></div>`).join('')}</div></div>`;
+}
+function cmBars(rows, fmt, color) {
+  if (!rows.length) return '<div class="cm-empty">No data in this period</div>';
+  const max = Math.max(1, ...rows.map(r => Math.abs(r.value)));
+  return `<div class="cm-bars">${rows.map(r => `<div class="cm-br" ${r.attr || ''}><span class="cm-bl" title="${esc(r.label)}">${esc(r.label)}</span><div class="cm-bt"><i style="width:${Math.max(1.5, Math.abs(r.value) / max * 100).toFixed(1)}%;background:${r.value < 0 ? 'var(--coral)' : r.color || color || 'var(--blue-2)'}"></i></div><b>${esc(fmt(r.value))}</b>${r.sub ? `<small>${esc(r.sub)}</small>` : ''}</div>`).join('')}</div>`;
+}
+function cmCols(rows, fmt) {
+  if (!rows.length) return '<div class="cm-empty">No data</div>';
+  const max = Math.max(1, ...rows.map(r => r.value));
+  return `<div class="wchart">${rows.map((r, i) => `<div class="wcol" data-tip="${esc(r.label)}: ${esc(fmt(r.value))}"><span class="v">${esc(fmt(r.value))}</span><div class="wbar" style="height:${Math.max(2, r.value / max * 100).toFixed(1)}%;--i:${i}"></div><span class="m">${esc(r.label)}</span></div>`).join('')}</div>`;
+}
+const cmK = (label, value, sub, tone) => `<div class="cm-k glass"><span>${esc(label)}</span><b ${tone ? `style="color:${tone}"` : ''}>${value}</b>${sub ? `<small>${sub}</small>` : ''}</div>`;
+const cmStBadge = s2 => `<span class="tp-st ${ordCls(s2)}"><i></i>${esc(s2)}</span>`;
+const cmChTag = c => `<span class="cm-ch" style="--c:${CM_CHC[c] || 'var(--faint)'}">${esc(c || 'WhatsApp')}</span>`;
+function cmStates() { return [...new Set((S.orders || []).map(o => o.customerState).filter(Boolean))].sort(); }
+function cmFilterBar(opts = {}) {
+  const st = cmStates();
+  return `<div class="toolbar glass cm-fb">
+    <select class="input sm" data-cmf="range">${[[7, 'Last 7 days'], [30, 'Last 30 days'], [90, 'Last 90 days'], [180, 'Last 6 months'], [365, 'Last 12 months'], [0, 'All time']].map(([v, l]) => `<option value="${v}" ${CM.range === v ? 'selected' : ''}>${l}</option>`).join('')}</select>
+    ${opts.noCh ? '' : `<select class="input sm" data-cmf="ch"><option value="">All channels</option>${CM_CH.map(c => `<option ${CM.ch === c ? 'selected' : ''}>${c}</option>`).join('')}</select>`}
+    <select class="input sm" data-cmf="state"><option value="">All states</option>${st.map(x => `<option ${CM.state === x ? 'selected' : ''}>${esc(x)}</option>`).join('')}</select>
+    <select class="input sm" data-cmf="st"><option value="">All statuses</option>${ORD_ST.filter(x => x !== 'Cart').map(x => `<option ${CM.st === x ? 'selected' : ''}>${x}</option>`).join('')}</select>
+    ${CM.ch || CM.state || CM.st ? '<button class="btn sm" data-cmclear>Clear filters</button>' : ''}<div class="grow"></div>${opts.right || ''}</div>`;
+}
+function cmAlerts() {
+  const out = [], P = S.products || [];
+  P.filter(p => p.active !== false && p.active !== 'false').forEach(p => { const [k] = cmStock(p); if (k === 'out') out.push(['bad', `${p.name || p.sku} is out of stock`, 'Reorder now — every day out of stock is lost sales.', p.sku]); else if (k === 'low') out.push(['warn', `${p.name || p.sku}: only ${cmN(p.stock)} left`, `Below the reorder level (${p.reorderLevel === '' ? 5 : cmN(p.reorderLevel)}).`, p.sku]); });
+  const o = cmOrders(null, true), ret = o.filter(x => CM_RET.includes(x.status)).length;
+  if (o.length >= 10 && ret / o.length > 0.1) out.unshift(['bad', `High return / RTO rate: ${cmPct(ret, o.length)}%`, `${ret} of ${o.length} orders came back. Confirm COD orders on WhatsApp before shipping.`]);
+  const spend = cmSum(cmAds(), a => cmN(a.spend)), rev = cmSum(o, cmRev);
+  if (spend && rev / spend < 2) out.push(['warn', `Ads return only ${(rev / spend).toFixed(1)}× (ROAS)`, 'Pause weak campaigns or improve the offer — aim for 3× or more.']);
+  return out;
+}
+
+function renderCommerce(anim) {
+  const v = $('#v-commerce'); if (!v || !v.classList.contains('active')) return;
+  $$('[data-cm]').forEach(b => b.classList.toggle('active', b.dataset.cm === CM.tab));
+  $('#cmTabs').innerHTML = CM_TABS.map(([k, n]) => `<button class="tab ${CM.tab === k ? 'active' : ''}" data-cmtab="${k}">${n}</button>`).join('');
+  const box = $('#cmBody');
+  if (!cmOk()) { box.innerHTML = `<div class="tp-empty glass"><b>Commerce needs the 09 database update</b><p class="muted">Run <code>08_platform_flows.sql</code> and <code>09_commerce.sql</code> in Supabase → SQL Editor, then refresh.</p></div>`; return; }
+  const f = { overview: cmOverview, products: cmProducts, inventory: cmInventory, amazon: () => cmChannel('Amazon'), website: () => cmChannel('Website'), analytics: cmAnalytics, reports: cmReports, ads: cmAdsTab, channels: cmChannels }[CM.tab] || cmOverview;
+  box.innerHTML = f(); stagger(box, anim);
+  box.querySelectorAll('.cm-ks').forEach(k => { const n = k.children.length; k.style.setProperty('--c', n === 6 ? 3 : n === 8 ? 4 : Math.min(n, 5)); });
+}
+function cmStart() {
+  return `<div class="cm-start glass"><div><b>Set up your store in 2 minutes</b><p class="muted">Bring your products, Amazon and website orders and ad spend into Nodevers — then every chart here fills in by itself.</p></div>
+    <div class="cm-steps"><button class="cm-step" data-cmimport data-cmw><span>1</span><b>Import your sheet</b><small>Excel / CSV or a Google Sheet link — products, Amazon orders, website orders, ad spend</small></button>
+    <button class="cm-step" data-cmprod="" data-cmw><span>2</span><b>Add a product</b><small>SKU, price, cost and stock</small></button>
+    <button class="cm-step" data-cmtab="channels"><span>3</span><b>Connect channels</b><small>Amazon, Shopify, WooCommerce — coming soon</small></button></div></div>`;
+}
+function cmOverview() {
+  const o = cmOrders(), rev = cmSum(o, cmRev), profit = cmSum(o, cmProfit), live = o.filter(x => !CM_DEAD.includes(x.status)), units = cmSum(o, cmUnits), ret = o.filter(x => CM_RET.includes(x.status)).length;
+  const ads = cmSum(cmAds(), a => cmN(a.spend)), P = S.products || [], invVal = cmSum(P, p => Math.max(0, cmN(p.stock)) * cmN(p.cost)), low = P.filter(p => cmStock(p)[0] !== 'ok').length;
+  const byCh = CM_CH.map(c => ({ label: c, value: cmSum(o.filter(x => (x.channel || 'WhatsApp') === c), cmRev), color: CM_CHC[c], fmt: inrShort })).filter(p => p.value);
+  const st = {}; o.forEach(x => { st[x.status] = (st[x.status] || 0) + 1; });
+  const sts = Object.entries(st).sort((a, b) => b[1] - a[1]).map(([k, n]) => ({ label: k, value: n, color: CM_RET.includes(k) || k === 'Cancelled' ? 'var(--coral)' : k === 'Delivered' ? 'var(--green)' : 'var(--blue-2)', sub: cmPct(n, o.length) + '%' }));
+  const states = {}; o.forEach(x => { if (x.customerState) states[x.customerState] = (states[x.customerState] || 0) + cmRev(x); });
+  const al = cmAlerts(), icon = { good: '▲', warn: '!', bad: '●' }, nada = !(S.orders || []).some(x => x.channel && x.channel !== 'WhatsApp') && !P.length;
+  return `${nada ? cmStart() : ''}${cmFilterBar({ right: '<button class="btn sm" data-cmimport data-cmw>⇪ Import</button><button class="btn sm primary" data-ordnew="" data-cmw>+ Order</button>' })}
+    <div class="cm-ks">
+      ${cmK('Total revenue', inrShort(rev), byCh.slice(0, 3).map(p => `${esc(p.label)} <b>${inrShort(p.value)}</b>`).join(' · ') || '—')}
+      ${cmK('Net profit', inrShort(profit), `Margin <b>${cmPct(profit, rev)}%</b>`, profit < 0 ? 'var(--coral)' : 'var(--green)')}
+      ${cmK('Orders', o.length, `${live.length} active · ${o.length - live.length} cancelled/returned`)}
+      ${cmK('Units sold', units, `Avg order <b>${inr(live.length ? rev / live.length : 0)}</b>`)}
+      ${cmK('Ad spend', inrShort(ads), ads ? `ROAS <b>${(rev / ads).toFixed(1)}×</b> · after ads <b>${inrShort(profit - ads)}</b>` : 'Add in Ad spend tab')}
+      ${cmK('Return / RTO rate', cmPct(ret, o.length) + '%', `${ret} orders came back`, cmPct(ret, o.length) > 10 ? 'var(--coral)' : '')}
+      ${cmK('Inventory value', inrShort(invVal), `${P.length} products · at cost`)}
+      ${cmK('Stock alerts', low, low ? 'Low or out of stock' : 'All good', low ? '#D97706' : 'var(--green)')}
+    </div>
+    <div class="rgrid">
+      <div class="rcard glass span2"><div class="cm-ch-h"><div><h3>Revenue & profit</h3><p class="sub muted">${CM.range ? 'Last ' + CM.range + ' days' : 'All time'}${CM.ch ? ' · ' + esc(CM.ch) : ''}</p></div><div class="cm-seg">${[['day', 'Daily'], ['week', 'Weekly'], ['month', 'Monthly']].map(([k, n]) => `<button class="${CM.grain === k ? 'on' : ''}" data-cmgrain="${k}">${n}</button>`).join('')}</div></div>${cmTrend(cmSeries(o, CM.grain), CM.grain)}</div>
+      <div class="rcard glass"><h3>Sales by channel</h3><p class="sub muted">Revenue split</p>${cmDonut(byCh, inrShort(rev), 'revenue')}</div>
+      <div class="rcard glass"><h3>Order status</h3><p class="sub muted">${o.length} orders</p>${cmBars(sts, v => String(v))}</div>
+      <div class="rcard glass"><h3>Top products</h3><p class="sub muted">By revenue</p>${cmBars(cmBySku(o).slice(0, 6).map(r => ({ label: r.name, value: r.rev, sub: r.units + ' units', attr: r.sku ? `data-cmprod="${esc(r.sku)}"` : '' })), inrShort, 'var(--green)')}</div>
+      <div class="rcard glass"><h3>Top states</h3><p class="sub muted">Revenue by customer state</p>${cmBars(Object.entries(states).sort((a, b) => b[1] - a[1]).slice(0, 6).map(([k, vv]) => ({ label: k, value: vv })), inrShort, '#A78BFA')}</div>
+      <div class="rcard glass span2"><h3>Alerts</h3><p class="sub muted">What needs attention</p><div class="insights">${al.slice(0, 6).map(([k, h, tx, sku]) => `<div class="ins ${k}"><span class="ii">${icon[k]}</span><div><b>${esc(h)}</b><p>${esc(tx)}</p></div>${sku ? `<button class="btn sm" data-cmreorder="${esc(sku)}" data-cmw>Reorder task</button>` : ''}</div>`).join('') || '<p class="muted">Nothing urgent — stock, returns and ads look fine.</p>'}</div></div>
+    </div>`;
+}
+function cmProducts() {
+  const P = S.products || [], cats = [...new Set(P.map(p => p.category).filter(Boolean))].sort(), q = CM.pq.toLowerCase();
+  const sold = new Map(cmBySku(cmOrders(null, true)).map(r => [r.sku, r]));
+  const list = P.filter(p => (!CM.cat || p.category === CM.cat) && (!q || [p.sku, p.name, p.category].some(x => String(x || '').toLowerCase().includes(q))));
+  return `<div class="toolbar glass cm-fb"><input class="input sm" id="cmPq" placeholder="Search name, SKU, category" value="${esc(CM.pq)}" style="max-width:260px">
+      <select class="input sm" data-cmf="cat"><option value="">All categories</option>${cats.map(c => `<option ${CM.cat === c ? 'selected' : ''}>${esc(c)}</option>`).join('')}</select>
+      <select class="input sm" data-cmf="range">${[[30, 'Sales: last 30 days'], [90, 'Sales: last 90 days'], [365, 'Sales: last 12 months'], [0, 'Sales: all time']].map(([v, l]) => `<option value="${v}" ${CM.range === v ? 'selected' : ''}>${l}</option>`).join('')}</select>
+      <div class="grow"></div><button class="btn sm" data-cmimport="products" data-cmw>⇪ Import products</button><button class="btn sm primary" data-cmprod="" data-cmw>+ Add product</button></div>
+    ${P.length ? `<div class="table-wrap glass" style="margin-top:14px"><table class="tbl cm-tbl"><thead><tr><th>Product</th><th>Category</th><th class="num">Price</th><th class="num">Cost</th><th class="num">Margin</th><th>Stock</th><th class="num">Sold</th><th class="num">Revenue</th><th class="num">Profit</th></tr></thead><tbody>
+      ${list.map(p => { const s2 = sold.get(p.sku) || { units: 0, rev: 0, profit: 0 }, [, lbl, c] = cmStock(p), m = cmN(p.price) ? cmPct(cmN(p.price) - cmN(p.cost), cmN(p.price)) : 0;
+        return `<tr data-cmprod="${esc(p.sku)}"><td><div class="cm-pn">${p.imageUrl ? `<span class="cm-pi" style="background-image:url('${esc(safeUrl(p.imageUrl))}')"></span>` : `<span class="cm-pi ph">${esc((p.name || p.sku).slice(0, 1).toUpperCase())}</span>`}<div><b>${esc(p.name || p.sku)}</b><small>${esc(p.sku)}${p.active === false || p.active === 'false' ? ' · hidden' : ''}</small></div></div></td><td>${esc(p.category || '-')}</td><td class="num">${p.price !== '' ? inr(p.price) : '-'}</td><td class="num">${p.cost !== '' ? inr(p.cost) : '-'}</td><td class="num">${p.price !== '' && p.cost !== '' ? m + '%' : '-'}</td><td><span class="cm-sb" style="--c:${c}">${cmN(p.stock)} · ${lbl}</span></td><td class="num">${s2.units}</td><td class="num">${inr(s2.rev)}</td><td class="num" style="color:${s2.profit < 0 ? 'var(--coral)' : ''}">${inr(s2.profit)}</td></tr>`; }).join('') || '<tr><td colspan="9" class="muted" style="text-align:center;padding:20px">No product matches</td></tr>'}
+      </tbody></table></div>` : `<div class="tp-empty glass" style="margin-top:14px"><b>No products yet</b><p class="muted">Add your first product or import your product sheet (SKU, name, price, cost, stock).</p><div style="display:flex;gap:8px;justify-content:center;margin-top:10px"><button class="btn" data-cmimport="products" data-cmw>⇪ Import products</button><button class="btn primary" data-cmprod="" data-cmw>+ Add product</button></div></div>`}`;
+}
+function cmInventory() {
+  const P = S.products || [], o30 = (S.orders || []).filter(o => cmDate(o) >= (() => { const d = new Date(); d.setDate(d.getDate() - 29); return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); })());
+  const sold30 = new Map(cmBySku(o30).map(r => [r.sku, r.units])), cnt = k => P.filter(p => cmStock(p)[0] === k).length;
+  const list = P.filter(p => CM.inv === 'all' || cmStock(p)[0] === CM.inv).sort((a, b) => cmN(a.stock) - cmN(b.stock));
+  return `<div class="cm-ks">${cmK('Products', P.length, `${cmSum(P, p => Math.max(0, cmN(p.stock)))} units in stock`)}${cmK('Stock value (cost)', inrShort(cmSum(P, p => Math.max(0, cmN(p.stock)) * cmN(p.cost))), 'What your stock cost you')}${cmK('Stock value (selling)', inrShort(cmSum(P, p => Math.max(0, cmN(p.stock)) * cmN(p.price))), 'If everything sells at price')}${cmK('Low stock', cnt('low'), 'At or below reorder level', cnt('low') ? '#D97706' : '')}${cmK('Out of stock', cnt('out'), 'Can not be sold now', cnt('out') ? 'var(--coral)' : '')}</div>
+    <div class="toolbar glass cm-fb" style="margin-top:14px"><div class="tp-chips">${[['all', 'All', P.length], ['low', 'Low stock', cnt('low')], ['out', 'Out of stock', cnt('out')], ['ok', 'In stock', cnt('ok')]].map(([k, n, c]) => `<button class="chip ${CM.inv === k ? 'on' : ''}" data-cminv="${k}">${n} <span class="n">${c}</span></button>`).join('')}</div><div class="grow"></div><button class="btn sm" data-cmimport="products" data-cmw>⇪ Update stock from sheet</button></div>
+    <div class="table-wrap glass" style="margin-top:14px"><table class="tbl cm-tbl"><thead><tr><th>Product</th><th>Status</th><th class="num">In stock</th><th class="num">Reorder at</th><th class="num">Sold (30 days)</th><th class="num">Days left</th><th class="num">Value (cost)</th><th>Update stock</th><th></th></tr></thead><tbody>
+    ${list.map(p => { const [k, lbl, c] = cmStock(p), s30 = sold30.get(p.sku) || 0, days = s30 ? Math.floor(cmN(p.stock) / (s30 / 30)) : null;
+      return `<tr><td><a data-cmprod="${esc(p.sku)}"><b>${esc(p.name || p.sku)}</b></a><br><small class="muted">${esc(p.sku)}</small></td><td><span class="cm-sb" style="--c:${c}">${lbl}</span></td><td class="num"><b>${cmN(p.stock)}</b></td><td class="num">${p.reorderLevel === '' ? 5 : cmN(p.reorderLevel)}</td><td class="num">${s30}</td><td class="num" style="color:${days !== null && days < 15 ? 'var(--coral)' : ''}">${days === null ? '—' : days + ' d'}</td><td class="num">${inr(Math.max(0, cmN(p.stock)) * cmN(p.cost))}</td>
+        <td><div class="cm-adj" data-cmw><input class="input sm" type="number" value="${cmN(p.stock)}" data-cmstock="${esc(p.sku)}" aria-label="Stock for ${esc(p.name || p.sku)}"><button class="btn sm" data-cmstocksave="${esc(p.sku)}">Save</button></div></td><td>${k !== 'ok' ? `<button class="btn sm" data-cmreorder="${esc(p.sku)}" data-cmw>Reorder task</button>` : ''}</td></tr>`; }).join('') || `<tr><td colspan="9" class="muted" style="text-align:center;padding:20px">${P.length ? 'Nothing here' : 'Add or import products first'}</td></tr>`}
+    </tbody></table></div>`;
+}
+function cmOrderTable(list, cols) {
+  const q = CM.oq.toLowerCase(), L = list.filter(o => !q || [o.orderId, o.extId, o.productName, o.items, o.sku, o.customerName, o.customerState, leadName(o.leadId)].some(x => String(x || '').toLowerCase().includes(q)));
+  return `<div class="table-wrap glass"><div class="cm-th"><b>Orders</b><span class="muted">${L.length} shown${L.length > 300 ? ' · latest 300' : ''} · click a row to edit</span><div class="grow"></div><input class="input sm" id="cmOq" placeholder="Search order, product, customer" value="${esc(CM.oq)}" style="max-width:240px"></div>
+    <table class="tbl cm-tbl"><thead><tr><th>Date</th><th>Order</th>${cols.ch ? '<th>Channel</th>' : ''}<th>Product</th><th class="num">Qty</th><th class="num">Revenue</th><th class="num">Fees</th><th class="num">Net profit</th><th>Status</th><th>Customer</th></tr></thead><tbody>
+    ${L.slice().sort((a, b) => cmDate(b).localeCompare(cmDate(a))).slice(0, 300).map(o => { const pr = cmProfit(o); return `<tr data-ordedit="${esc(o.orderId)}"><td>${esc(fmtDate(cmDate(o)))}</td><td><b>${esc(o.extId || o.orderId)}</b>${o.extId ? `<br><small class="muted">${esc(o.orderId)}</small>` : ''}</td>${cols.ch ? `<td>${cmChTag(o.channel)}</td>` : ''}<td>${esc(o.productName || o.items || o.sku || '-')}</td><td class="num">${cmN(o.qty) || 1}</td><td class="num">${inr(cmRev(o))}</td><td class="num">${inr(cmN(o.marketplaceFee))}</td><td class="num" style="color:${pr < 0 ? 'var(--coral)' : 'var(--green)'}">${inr(pr)}</td><td>${cmStBadge(o.status)}</td><td>${o.leadId ? `<a data-open="${esc(o.leadId)}">${esc(leadName(o.leadId) || o.leadId)}</a>` : esc(o.customerName || '-')}${o.customerState ? `<br><small class="muted">${esc(o.customerState)}</small>` : ''}</td></tr>`; }).join('') || '<tr><td colspan="10" class="muted" style="text-align:center;padding:20px">No orders in this period</td></tr>'}
+    </tbody></table></div>`;
+}
+function cmMoney(o, rev) {
+  const parts = CM_COSTS.map(([k, l]) => ({ label: l, value: cmSum(o, x => k === 'productCost' && CM_DEAD.includes(x.status) ? 0 : cmN(x[k])) })).filter(p => p.value);
+  const profit = rev - cmSum(parts, p => p.value), cols = ['#94A3B8', '#F59E0B', 'var(--blue-2)', '#A78BFA', 'var(--coral)', '#EC4899', 'var(--faint)'];
+  if (!rev && !parts.length) return '<div class="cm-empty">No orders in this period</div>';
+  const all = parts.map((p, i) => Object.assign(p, { color: cols[i % cols.length] })).concat(profit > 0 ? [{ label: 'Net profit', value: profit, color: 'var(--green)' }] : []), tot = Math.max(rev, cmSum(all, p => p.value));
+  return `<div class="cm-stack">${all.map(p => `<i style="width:${(p.value / tot * 100).toFixed(2)}%;background:${p.color}" title="${esc(p.label)}: ${inr(p.value)}"></i>`).join('')}</div>
+    <div class="cm-dl cm-dl2">${all.map(p => `<div><i style="background:${p.color}"></i><span>${esc(p.label)}</span><b>${inr(p.value)}</b><small>${cmPct(p.value, rev)}%</small></div>`).join('')}${profit <= 0 ? `<div><i style="background:var(--coral)"></i><span>Loss</span><b style="color:var(--coral)">${inr(profit)}</b><small></small></div>` : ''}</div>`;
+}
+function cmChannel(ch) {
+  const o = cmOrders(x => (x.channel || 'WhatsApp') === ch, true), rev = cmSum(o, cmRev), profit = cmSum(o, cmProfit), live = o.filter(x => !CM_DEAD.includes(x.status)), ret = o.filter(x => CM_RET.includes(x.status)).length;
+  const fees = cmSum(o, x => cmN(x.marketplaceFee)), ship = cmSum(o, x => cmN(x.shippingFee)), fee = ch === 'Amazon' ? 'Amazon fees' : 'Payment / platform fees';
+  const reasons = {}; o.filter(x => x.returnReason).forEach(x => { reasons[x.returnReason] = (reasons[x.returnReason] || 0) + 1; });
+  const couriers = {}; o.filter(x => x.courier).forEach(x => { couriers[x.courier] = (couriers[x.courier] || 0) + 1; });
+  return `<div class="cm-conn glass"><span class="cm-ci" style="--c:${CM_CHC[ch]}">${ch === 'Amazon' ? 'a' : '🌐'}</span><div><b>${ch === 'Amazon' ? 'Amazon Seller Central' : 'Your website store'}</b><small class="muted">${ch === 'Amazon' ? 'Today: import your Amazon order report (Excel / CSV). Automatic sync with Amazon SP-API is coming soon.' : 'Today: import website orders (Excel / CSV / Google Sheet). Automatic sync with Shopify / WooCommerce is coming soon.'}</small></div><div class="grow"></div><button class="btn sm" data-cmtab="channels">Connect (soon)</button><button class="btn sm primary" data-cmimport="orders" data-cmch="${ch}" data-cmw>⇪ Import ${ch} orders</button></div>
+    ${cmFilterBar({ noCh: true })}
+    <div class="cm-ks">${cmK(ch + ' revenue', inrShort(rev), `${live.length} orders · avg <b>${inr(live.length ? rev / live.length : 0)}</b>`)}${cmK('Net profit', inrShort(profit), `Margin <b>${cmPct(profit, rev)}%</b>`, profit < 0 ? 'var(--coral)' : 'var(--green)')}${cmK('Units sold', cmSum(o, cmUnits), `${o.length} orders in total`)}${cmK(fee, inrShort(fees), `${cmPct(fees, rev)}% of revenue`)}${cmK('Shipping', inrShort(ship), `${inr(live.length ? ship / live.length : 0)} per order`)}${cmK('Returns / RTO', cmPct(ret, o.length) + '%', `${ret} orders came back`, cmPct(ret, o.length) > 10 ? 'var(--coral)' : '')}</div>
+    <div class="rgrid">
+      <div class="rcard glass span2"><div class="cm-ch-h"><div><h3>${ch} revenue & profit</h3><p class="sub muted">${CM.range ? 'Last ' + CM.range + ' days' : 'All time'}</p></div><div class="cm-seg">${[['day', 'Daily'], ['week', 'Weekly'], ['month', 'Monthly']].map(([k, n]) => `<button class="${CM.grain === k ? 'on' : ''}" data-cmgrain="${k}">${n}</button>`).join('')}</div></div>${cmTrend(cmSeries(o, CM.grain), CM.grain)}</div>
+      <div class="rcard glass span2"><h3>Where every ₹ of ${ch} revenue goes</h3><p class="sub muted">Product cost, ${fee.toLowerCase()}, shipping, packaging, returns — and what you keep</p>${cmMoney(o, rev)}</div>
+      <div class="rcard glass"><h3>Top ${ch} products</h3><p class="sub muted">By revenue</p>${cmBars(cmBySku(o).slice(0, 6).map(r => ({ label: r.name, value: r.rev, sub: r.units + ' units' })), inrShort, CM_CHC[ch])}</div>
+      <div class="rcard glass"><h3>Returns & delivery</h3><p class="sub muted">Return reasons and couriers</p>${Object.keys(reasons).length ? cmBars(Object.entries(reasons).sort((a, b) => b[1] - a[1]).slice(0, 5).map(([k, vv]) => ({ label: k, value: vv })), v2 => String(v2), 'var(--coral)') : '<p class="muted" style="font-size:13px">No return reasons recorded.</p>'}${Object.keys(couriers).length ? '<div style="height:12px"></div>' + cmBars(Object.entries(couriers).sort((a, b) => b[1] - a[1]).slice(0, 4).map(([k, vv]) => ({ label: k, value: vv })), v2 => v2 + ' orders', '#94A3B8') : ''}</div>
+    </div>
+    <div style="margin-top:14px">${cmOrderTable(o, {})}</div>`;
+}
+function cmAnalytics() {
+  const o = cmOrders(), sub = CM.an, tabs = [['sales', 'Sales'], ['profit', 'Profit'], ['products', 'Products'], ['states', 'State-wise'], ['customers', 'Customers']];
+  let body = '';
+  if (sub === 'sales') {
+    const months = cmSeries(o, 'month').slice(-12), wd = [0, 0, 0, 0, 0, 0, 0], wn = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']; o.forEach(x => { const d = cmDate(x); if (d) wd[(new Date(d + 'T00:00').getDay() + 6) % 7] += cmRev(x); });
+    const chs = CM_CH.filter(c => o.some(x => (x.channel || 'WhatsApp') === c));
+    body = `<div class="rgrid"><div class="rcard glass span2"><h3>Revenue per month</h3><p class="sub muted">All filters applied</p>${cmCols(months.map(m => ({ label: cmLabel(m.k, 'month'), value: m.rev })), inrShort)}</div>
+      <div class="rcard glass"><h3>Best days of the week</h3><p class="sub muted">Revenue by weekday</p>${cmBars(wn.map((n, i) => ({ label: n, value: wd[i] })), inrShort)}</div>
+      <div class="rcard glass"><h3>Channels</h3><p class="sub muted">Orders, revenue and average order</p><div class="tblwrap"><table class="tbl"><thead><tr><th>Channel</th><th class="num">Orders</th><th class="num">Revenue</th><th class="num">Avg order</th><th class="num">Profit</th></tr></thead><tbody>${chs.map(c => { const L = o.filter(x => (x.channel || 'WhatsApp') === c), live = L.filter(x => !CM_DEAD.includes(x.status)), r = cmSum(L, cmRev); return `<tr style="cursor:default"><td>${cmChTag(c)}</td><td class="num">${L.length}</td><td class="num">${inr(r)}</td><td class="num">${inr(live.length ? r / live.length : 0)}</td><td class="num">${inr(cmSum(L, cmProfit))}</td></tr>`; }).join('') || '<tr><td colspan="5" class="muted">No orders</td></tr>'}</tbody></table></div></div></div>`;
+  } else if (sub === 'profit') {
+    const rev = cmSum(o, cmRev), ads = cmSum(cmAds(), a => cmN(a.spend)), profit = cmSum(o, cmProfit), byP = cmBySku(o).filter(r => r.orders);
+    body = `<div class="cm-ks">${cmK('Revenue', inrShort(rev), '')}${cmK('Net profit (orders)', inrShort(profit), `Margin <b>${cmPct(profit, rev)}%</b>`, profit < 0 ? 'var(--coral)' : 'var(--green)')}${cmK('Ad spend', inrShort(ads), 'From the Ad spend tab')}${cmK('Profit after ads', inrShort(profit - ads), `Margin <b>${cmPct(profit - ads, rev)}%</b>`, profit - ads < 0 ? 'var(--coral)' : 'var(--green)')}</div>
+      <div class="rgrid"><div class="rcard glass span2"><h3>Where the money goes</h3><p class="sub muted">Every cost against revenue</p>${cmMoney(o, rev)}</div>
+      <div class="rcard glass"><h3>Most profitable products</h3><p class="sub muted">Net profit</p>${cmBars(byP.slice().sort((a, b) => b.profit - a.profit).slice(0, 6).map(r => ({ label: r.name, value: r.profit, sub: cmPct(r.profit, r.rev) + '% margin' })), inrShort, 'var(--green)')}</div>
+      <div class="rcard glass"><h3>Least profitable products</h3><p class="sub muted">Check price, fees or returns</p>${cmBars(byP.filter(r => r.rev > 0).sort((a, b) => a.profit - b.profit).slice(0, 6).map(r => ({ label: r.name, value: r.profit, sub: cmPct(r.profit, r.rev) + '% margin' })), inrShort, '#D97706')}</div></div>`;
+  } else if (sub === 'products') {
+    const rows = cmBySku(o), tot = cmSum(rows, r => r.rev);
+    body = `<div class="table-wrap glass"><table class="tbl cm-tbl"><thead><tr><th>Product</th><th class="num">Orders</th><th class="num">Units</th><th class="num">Revenue</th><th class="num">Share</th><th class="num">Net profit</th><th class="num">Margin</th><th class="num">Returns</th></tr></thead><tbody>${rows.map(r => `<tr ${r.sku ? `data-cmprod="${esc(r.sku)}"` : 'style="cursor:default"'}><td><b>${esc(r.name)}</b>${r.sku ? `<br><small class="muted">${esc(r.sku)}</small>` : ''}</td><td class="num">${r.orders}</td><td class="num">${r.units}</td><td class="num">${inr(r.rev)}</td><td class="num">${cmPct(r.rev, tot)}%</td><td class="num" style="color:${r.profit < 0 ? 'var(--coral)' : ''}">${inr(r.profit)}</td><td class="num">${cmPct(r.profit, r.rev)}%</td><td class="num" style="color:${cmPct(r.ret, r.orders) > 10 ? 'var(--coral)' : ''}">${cmPct(r.ret, r.orders)}%</td></tr>`).join('') || '<tr><td colspan="8" class="muted" style="text-align:center;padding:20px">No orders in this period</td></tr>'}</tbody></table></div>`;
+  } else if (sub === 'states') {
+    const m = {}; o.forEach(x => { const k = x.customerState || 'Unknown'; const r = m[k] || (m[k] = { k, orders: 0, rev: 0, profit: 0, ret: 0, cod: 0 }); r.orders++; r.rev += cmRev(x); r.profit += cmProfit(x); if (CM_RET.includes(x.status)) r.ret++; if (/cod/i.test(x.payment || '') || x.status === 'COD') r.cod++; });
+    const rows = Object.values(m).sort((a, b) => b.rev - a.rev);
+    body = `<div class="rgrid"><div class="rcard glass"><h3>Revenue by state</h3><p class="sub muted">Top 10</p>${cmBars(rows.slice(0, 10).map(r => ({ label: r.k, value: r.rev, sub: r.orders + ' orders' })), inrShort, '#A78BFA')}</div>
+      <div class="rcard glass"><h3>Return / RTO rate by state</h3><p class="sub muted">States with 3+ orders</p>${cmBars(rows.filter(r => r.orders >= 3).sort((a, b) => b.ret / b.orders - a.ret / a.orders).slice(0, 10).map(r => ({ label: r.k, value: cmPct(r.ret, r.orders), sub: r.ret + ' of ' + r.orders })), v2 => v2 + '%', 'var(--coral)')}</div>
+      <div class="rcard glass span2"><div class="tblwrap"><table class="tbl"><thead><tr><th>State</th><th class="num">Orders</th><th class="num">Revenue</th><th class="num">Net profit</th><th class="num">Returns</th><th class="num">COD</th></tr></thead><tbody>${rows.map(r => `<tr data-cmstate="${esc(r.k === 'Unknown' ? '' : r.k)}"><td><b>${esc(r.k)}</b></td><td class="num">${r.orders}</td><td class="num">${inr(r.rev)}</td><td class="num">${inr(r.profit)}</td><td class="num">${cmPct(r.ret, r.orders)}%</td><td class="num">${r.cod}</td></tr>`).join('') || '<tr><td colspan="6" class="muted">No orders</td></tr>'}</tbody></table></div></div></div>`;
+  } else {
+    const m = {}; o.forEach(x => { const nm = x.leadId ? leadName(x.leadId) || x.leadId : x.customerName; if (!nm) return; const k = x.leadId || nm.toLowerCase(); const r = m[k] || (m[k] = { nm, leadId: x.leadId || '', orders: 0, rev: 0, last: '', state: x.customerState || '', city: x.customerCity || '', ch: x.channel || 'WhatsApp' }); r.orders++; r.rev += cmRev(x); if (cmDate(x) > r.last) r.last = cmDate(x); });
+    const rows = Object.values(m).sort((a, b) => b.rev - a.rev), rep = rows.filter(r => r.orders > 1).length;
+    body = `<div class="cm-ks">${cmK('Customers', rows.length, 'With a name on the order')}${cmK('Repeat customers', rep, cmPct(rep, rows.length) + '% bought again')}${cmK('Avg revenue / customer', inr(rows.length ? cmSum(rows, r => r.rev) / rows.length : 0), '')}</div>
+      <div class="table-wrap glass" style="margin-top:14px"><table class="tbl cm-tbl"><thead><tr><th>Customer</th><th>Channel</th><th>State</th><th class="num">Orders</th><th class="num">Revenue</th><th>Last order</th><th></th></tr></thead><tbody>${rows.slice(0, 300).map(r => `<tr style="cursor:default"><td>${r.leadId ? `<a data-open="${esc(r.leadId)}"><b>${esc(r.nm)}</b></a>` : `<b>${esc(r.nm)}</b>`}</td><td>${cmChTag(r.ch)}</td><td>${esc(r.state || '-')}</td><td class="num">${r.orders}</td><td class="num">${inr(r.rev)}</td><td>${esc(fmtDate(r.last))}</td><td>${r.leadId ? '<span class="muted" style="font-size:12px">In CRM</span>' : `<button class="btn sm" data-cmlead="${esc(r.nm)}" data-cmstate2="${esc(r.state)}" data-cmcity="${esc(r.city)}" data-cmch2="${esc(r.ch)}" data-cmw>+ Add to CRM</button>`}</td></tr>`).join('') || '<tr><td colspan="7" class="muted" style="text-align:center;padding:20px">No customer names on orders in this period</td></tr>'}</tbody></table></div>`;
+  }
+  return `${cmFilterBar()}<div class="tabs cm-sub">${tabs.map(([k, n]) => `<button class="tab ${sub === k ? 'active' : ''}" data-cman="${k}">${n}</button>`).join('')}</div>${body}`;
+}
+function cmReportRows(grain) {
+  const o = cmOrders(), ads = cmAds(), m = new Map(), key = d => grain === 'month' ? d.slice(0, 7) : d;
+  o.forEach(x => { const k = key(cmDate(x)); if (!k) return; const r = m.get(k) || { k, orders: 0, units: 0, rev: 0, cost: 0, profit: 0, ads: 0, ret: 0 }; r.orders++; r.units += cmUnits(x); r.rev += cmRev(x); r.cost += cmCost(x); r.profit += cmProfit(x); if (CM_RET.includes(x.status)) r.ret++; m.set(k, r); });
+  ads.forEach(a => { const k = key(dOnly(a.day)); const r = m.get(k) || { k, orders: 0, units: 0, rev: 0, cost: 0, profit: 0, ads: 0, ret: 0 }; r.ads += cmN(a.spend); m.set(k, r); });
+  return [...m.values()].sort((a, b) => b.k.localeCompare(a.k));
+}
+function cmReports() {
+  const g = CM.grain === 'month' ? 'month' : 'day', rows = cmReportRows(g), T = k => cmSum(rows, r => r[k]);
+  return `${cmFilterBar({ right: `<div class="cm-seg"><button class="${g === 'day' ? 'on' : ''}" data-cmgrain="day">Daily</button><button class="${g === 'month' ? 'on' : ''}" data-cmgrain="month">Monthly</button></div><button class="btn sm" data-cmcsv>⇩ Download CSV</button>` })}
+    <div class="table-wrap glass"><table class="tbl cm-tbl"><thead><tr><th>${g === 'month' ? 'Month' : 'Date'}</th><th class="num">Orders</th><th class="num">Units</th><th class="num">Revenue</th><th class="num">Costs</th><th class="num">Net profit</th><th class="num">Ad spend</th><th class="num">After ads</th><th class="num">Returns</th></tr></thead><tbody>
+    ${rows.map(r => `<tr style="cursor:default"><td><b>${esc(g === 'month' ? cmLabel(r.k, 'month') : fmtDate(r.k))}</b></td><td class="num">${r.orders}</td><td class="num">${r.units}</td><td class="num">${inr(r.rev)}</td><td class="num">${inr(r.cost)}</td><td class="num" style="color:${r.profit < 0 ? 'var(--coral)' : ''}">${inr(r.profit)}</td><td class="num">${inr(r.ads)}</td><td class="num" style="color:${r.profit - r.ads < 0 ? 'var(--coral)' : 'var(--green)'}">${inr(r.profit - r.ads)}</td><td class="num">${r.ret}</td></tr>`).join('') || '<tr><td colspan="9" class="muted" style="text-align:center;padding:20px">No orders in this period</td></tr>'}
+    ${rows.length ? `<tr class="cm-tot"><td>Total</td><td class="num">${T('orders')}</td><td class="num">${T('units')}</td><td class="num">${inr(T('rev'))}</td><td class="num">${inr(T('cost'))}</td><td class="num">${inr(T('profit'))}</td><td class="num">${inr(T('ads'))}</td><td class="num">${inr(T('profit') - T('ads'))}</td><td class="num">${T('ret')}</td></tr>` : ''}</tbody></table></div>`;
+}
+function cmCsv() {
+  const g = CM.grain === 'month' ? 'month' : 'day', rows = cmReportRows(g), head = [g === 'month' ? 'Month' : 'Date', 'Orders', 'Units', 'Revenue', 'Costs', 'Net profit', 'Ad spend', 'Profit after ads', 'Returns'];
+  const csv = [head].concat(rows.map(r => [r.k, r.orders, r.units, Math.round(r.rev), Math.round(r.cost), Math.round(r.profit), Math.round(r.ads), Math.round(r.profit - r.ads), r.ret])).map(r => r.map(v => /[",]/.test(String(v)) ? `"${String(v).replace(/"/g, '""')}"` : v).join(',')).join('\r\n');
+  const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob(['﻿' + csv], { type: 'text/csv' })); a.download = `store-report-${g === 'month' ? 'monthly' : 'daily'}-${todayStr()}.csv`; a.click();
+}
+function cmAdsTab() {
+  const A = cmAds().slice().sort((a, b) => dOnly(b.day).localeCompare(dOnly(a.day))), o = cmOrders(), spend = cmSum(A, a => cmN(a.spend)), rev = cmSum(o, cmRev), pur = cmSum(A, a => cmN(a.purchases)), clicks = cmSum(A, a => cmN(a.clicks)), imp = cmSum(A, a => cmN(a.impressions)), profit = cmSum(o, cmProfit);
+  const byC = {}; A.forEach(a => { const k = (a.platform || 'Meta') + ' · ' + (a.campaign || '—'); const r = byC[k] || (byC[k] = { k, spend: 0, pur: 0, rev: 0 }); r.spend += cmN(a.spend); r.pur += cmN(a.purchases); r.rev += cmN(a.revenue); });
+  const q = CM.aq.toLowerCase(), L = A.filter(a => !q || [a.campaign, a.platform].some(x => String(x || '').toLowerCase().includes(q)));
+  return `<div class="toolbar glass cm-fb"><select class="input sm" data-cmf="range">${[[7, 'Last 7 days'], [30, 'Last 30 days'], [90, 'Last 90 days'], [365, 'Last 12 months'], [0, 'All time']].map(([v, l]) => `<option value="${v}" ${CM.range === v ? 'selected' : ''}>${l}</option>`).join('')}</select><input class="input sm" id="cmAq" placeholder="Search campaign" value="${esc(CM.aq)}" style="max-width:220px"><a class="bc-link" href="#ads" data-go="ads">Meta Ads section →</a><div class="grow"></div><button class="btn sm" data-cmimport="ads" data-cmw>⇪ Import ad spend</button><button class="btn sm primary" data-cmad="" data-cmw>+ Add spend</button></div>
+    <div class="cm-ks">${cmK('Ad spend', inrShort(spend), `${A.length} rows`)}${cmK('Store revenue', inrShort(rev), 'All channels, same period')}${cmK('ROAS', spend ? (rev / spend).toFixed(1) + '×' : '—', 'Revenue ÷ ad spend', spend && rev / spend < 2 ? 'var(--coral)' : 'var(--green)')}${cmK('Profit after ads', inrShort(profit - spend), `Margin <b>${cmPct(profit - spend, rev)}%</b>`, profit - spend < 0 ? 'var(--coral)' : 'var(--green)')}${cmK('Cost per purchase', pur ? inr(spend / pur) : '—', `${pur} purchases · ${clicks ? 'CPC ' + inr(spend / clicks) : 'no clicks data'}${imp ? ' · CTR ' + cmPct(clicks, imp) + '%' : ''}`)}</div>
+    <div class="rgrid"><div class="rcard glass span2"><h3>Spend by campaign</h3><p class="sub muted">Platform-reported purchases and revenue next to it</p>${cmBars(Object.values(byC).sort((a, b) => b.spend - a.spend).slice(0, 8).map(r => ({ label: r.k, value: r.spend, sub: r.pur ? `${r.pur} purchases${r.rev ? ' · ROAS ' + (r.rev / r.spend).toFixed(1) + '×' : ''}` : '' })), inrShort, '#EC4899')}</div></div>
+    <div class="table-wrap glass" style="margin-top:14px"><table class="tbl cm-tbl"><thead><tr><th>Date</th><th>Platform</th><th>Campaign</th><th class="num">Impressions</th><th class="num">Clicks</th><th class="num">Spend</th><th class="num">Purchases</th><th class="num">Revenue</th></tr></thead><tbody>
+    ${L.slice(0, 300).map(a => `<tr data-cmad="${esc(a.id)}"><td>${esc(fmtDate(a.day))}</td><td>${esc(a.platform || 'Meta')}</td><td>${esc(a.campaign || '-')}</td><td class="num">${a.impressions !== '' ? cmN(a.impressions).toLocaleString('en-IN') : '-'}</td><td class="num">${a.clicks !== '' ? cmN(a.clicks).toLocaleString('en-IN') : '-'}</td><td class="num"><b>${inr(a.spend)}</b></td><td class="num">${a.purchases !== '' ? cmN(a.purchases) : '-'}</td><td class="num">${a.revenue !== '' ? inr(a.revenue) : '-'}</td></tr>`).join('') || '<tr><td colspan="8" class="muted" style="text-align:center;padding:20px">No ad spend in this period — add it by hand or import your Meta Ads export.</td></tr>'}
+    </tbody></table></div>`;
+}
+const CM_CONNECT = [
+  ['amazon', 'Amazon Seller Central', 'a', '#F59E0B', 'Orders, Amazon fees, FBA / self-ship status, returns, settlement and inventory — synced every hour.', ['Amazon seller account (India marketplace)', 'One-click “Authorize Nodevers” in Seller Central (SP-API)', 'Pick which marketplaces to sync']],
+  ['shopify', 'Shopify', 'S', '#22C55E', 'Orders, customers, products and stock — live through a Shopify app.', ['Shopify store address (yourstore.myshopify.com)', 'Approve the Nodevers app in Shopify admin']],
+  ['woocommerce', 'WooCommerce', 'W', '#A78BFA', 'Orders, products and stock from your WordPress store.', ['Your website address', 'WooCommerce → Settings → Advanced → REST API → read-only key']],
+  ['flipkart', 'Flipkart Seller Hub', 'F', '#3B82F6', 'Orders, Flipkart commission, returns and payouts.', ['Flipkart seller account', 'API access from Seller Hub']],
+  ['meesho', 'Meesho Supplier', 'M', '#EC4899', 'Orders, returns and payouts from Meesho.', ['Meesho supplier account', 'Order export or partner API']],
+  ['custom', 'Custom website (API / webhook)', '{ }', '#64748B', 'Any website can push orders to Nodevers with a simple webhook — great for custom-coded stores.', ['Your developer sends each new order to your Nodevers webhook link', 'Secret key per workspace']],
+];
+function cmChannels() {
+  return `<div class="cm-chan-head glass"><div><b>Sales channels</b><p class="muted">Each client connects their own stores. Until a channel is live, import its reports with <b>⇪ Import</b> — the same dashboards fill in.</p></div><button class="btn primary" data-cmimport data-cmw>⇪ Import now (Excel / Google Sheet)</button></div>
+    <div class="cm-chan">${CM_CONNECT.map(([k, n, ic, c, d, need]) => `<div class="cm-cc glass"><div class="cm-cc-h"><span class="cm-ci" style="--c:${c}">${esc(ic)}</span><div><b>${esc(n)}</b><span class="cm-soon">Coming soon</span></div></div><p>${esc(d)}</p><div class="cm-need"><small>What you will need</small>${need.map(x => `<span>• ${esc(x)}</span>`).join('')}</div><div class="cm-cc-f"><button class="btn sm" disabled title="Available after the marketplace approves Nodevers">Connect</button><button class="btn sm" data-cmimport="orders" data-cmch="${k === 'amazon' ? 'Amazon' : k === 'flipkart' ? 'Flipkart' : k === 'meesho' ? 'Meesho' : 'Website'}" data-cmw>Import file instead</button></div></div>`).join('')}</div>`;
+}
+
+/* ---------- product / ad spend editors ---------- */
+function openProduct(sku) {
+  const p = sku ? cmProd(sku) : null, x = p || { sku: '', name: '', category: '', price: '', cost: '', stock: 0, reorderLevel: 5, imageUrl: '', amazonAsin: '', websiteUrl: '', notes: '', active: true }, cats = [...new Set((S.products || []).map(q => q.category).filter(Boolean))];
+  const canW = !document.body.classList.contains('ro') && !document.body.classList.contains('np-commerce');
+  $('#stageBox').innerHTML = `<div class="m-head"><h2>${p ? esc(p.name || p.sku) : 'New product'}</h2><button class="ibtn" data-close>${I.x}</button></div>
+    <div class="form" style="grid-template-columns:1fr 1fr"><div class="field"><label>SKU *</label><input class="input" id="cpSku" maxlength="80" value="${esc(x.sku)}" placeholder="CH-WAL-01"></div><div class="field"><label>Category</label><input class="input" id="cpCat" list="cpCats" maxlength="80" value="${esc(x.category)}"><datalist id="cpCats">${cats.map(c => `<option value="${esc(c)}">`).join('')}</datalist></div>
+      <div class="field full"><label>Product name</label><input class="input" id="cpName" maxlength="200" value="${esc(x.name)}" placeholder="Cafe chair (walnut)"></div>
+      <div class="field"><label>Selling price (₹)</label><input class="input" id="cpPrice" type="number" min="0" step="0.01" value="${esc(x.price)}"></div><div class="field"><label>Cost per unit (₹)</label><input class="input" id="cpCost" type="number" min="0" step="0.01" value="${esc(x.cost)}"></div>
+      <div class="field"><label>In stock</label><input class="input" id="cpStock" type="number" step="1" value="${esc(x.stock)}"></div><div class="field"><label>Reorder when stock is at</label><input class="input" id="cpRe" type="number" min="0" step="1" value="${esc(x.reorderLevel === '' ? 5 : x.reorderLevel)}"></div>
+      <div class="field full"><label>Image link <span class="muted">(optional)</span></label><input class="input" id="cpImg" maxlength="500" value="${esc(x.imageUrl)}" placeholder="https://…/photo.jpg"></div>
+      <div class="field"><label>Amazon ASIN <span class="muted">(optional)</span></label><input class="input" id="cpAsin" maxlength="40" value="${esc(x.amazonAsin)}"></div><div class="field"><label>Website link <span class="muted">(optional)</span></label><input class="input" id="cpUrl" maxlength="500" value="${esc(x.websiteUrl)}" placeholder="https://…"></div>
+      <div class="field full"><label>Notes</label><input class="input" id="cpNotes" maxlength="2000" value="${esc(x.notes)}"></div>
+      <label class="field full" style="flex-direction:row;align-items:center;gap:8px"><input type="checkbox" id="cpAct" ${x.active === false || x.active === 'false' ? '' : 'checked'}> Active (shown in stock alerts)</label>
+      <p class="help full" id="cpMargin"></p></div>
+    <div class="m-foot">${p && canW ? '<button class="btn danger" id="cpDel">Delete</button>' : ''}<div class="grow"></div><button class="btn" data-close>${canW ? 'Cancel' : 'Close'}</button>${canW ? `<button class="btn primary" id="cpSave">${p ? 'Save' : 'Add product'}</button>` : ''}</div>`;
+  const mg = () => { const pr = +$('#cpPrice').value, c = +$('#cpCost').value; $('#cpMargin').textContent = pr && $('#cpCost').value !== '' ? `Margin per unit: ${inr(pr - c)} (${cmPct(pr - c, pr)}%) before fees and shipping.` : ''; };
+  ['#cpPrice', '#cpCost'].forEach(s2 => $(s2).addEventListener('input', mg)); mg();
+  if (canW) $('#cpSave').onclick = async () => {
+    const d = { sku: $('#cpSku').value.trim(), name: $('#cpName').value.trim(), category: $('#cpCat').value.trim(), price: $('#cpPrice').value, cost: $('#cpCost').value, stock: $('#cpStock').value, reorderLevel: $('#cpRe').value, imageUrl: $('#cpImg').value.trim(), amazonAsin: $('#cpAsin').value.trim(), websiteUrl: $('#cpUrl').value.trim(), notes: $('#cpNotes').value.trim(), active: $('#cpAct').checked, oldSku: p ? p.sku : '' };
+    if (!d.sku) return toast('SKU is required — any short code for this product', true);
+    if (d.imageUrl && !/^https:\/\//i.test(d.imageUrl)) return toast('Image link must start with https://', true);
+    if (d.sku !== (p ? p.sku : '') && cmProd(d.sku)) return toast('Another product already uses this SKU', true);
+    try { await api('saveProduct', d); hideModal('#stageModal'); toast(p ? '✓ Product saved' : '✓ Product added'); await refreshData(); } catch (e) { toast(e.message, true); }
+  };
+  if (p && canW) $('#cpDel').onclick = async () => { if (!confirm(`Delete ${p.name || p.sku}? Orders keep their history.`)) return; try { await api('deleteProduct', { sku: p.sku }); hideModal('#stageModal'); toast('Product deleted'); await refreshData(); } catch (e) { toast(e.message, true); } };
+  showModal('#stageModal');
+}
+function openAdSpend(id) {
+  const a = id ? (S.adSpend || []).find(x => String(x.id) === String(id)) : null, x = a || { day: todayStr(), platform: 'Meta', campaign: '', impressions: '', clicks: '', spend: '', purchases: '', revenue: '' };
+  const canW = !document.body.classList.contains('ro') && !document.body.classList.contains('np-commerce');
+  $('#stageBox').innerHTML = `<div class="m-head"><h2>${a ? 'Ad spend' : 'Add ad spend'}</h2><button class="ibtn" data-close>${I.x}</button></div>
+    <div class="form" style="grid-template-columns:1fr 1fr"><div class="field"><label>Date</label><input class="input" id="caDay" type="date" value="${esc(dOnly(x.day))}"></div><div class="field"><label>Platform</label><select class="input" id="caPl">${['Meta', 'Google', 'Amazon Ads', 'Flipkart Ads', 'Other'].map(p2 => `<option ${p2 === x.platform ? 'selected' : ''}>${p2}</option>`).join('')}</select></div>
+      <div class="field full"><label>Campaign</label><input class="input" id="caCamp" maxlength="200" value="${esc(x.campaign)}" placeholder="Diwali sale — Advantage+"></div>
+      <div class="field"><label>Spend (₹) *</label><input class="input" id="caSpend" type="number" min="0" step="0.01" value="${esc(x.spend)}"></div><div class="field"><label>Purchases</label><input class="input" id="caPur" type="number" min="0" value="${esc(x.purchases)}"></div>
+      <div class="field"><label>Impressions</label><input class="input" id="caImp" type="number" min="0" value="${esc(x.impressions)}"></div><div class="field"><label>Clicks</label><input class="input" id="caClk" type="number" min="0" value="${esc(x.clicks)}"></div>
+      <div class="field full"><label>Revenue the platform reports <span class="muted">(optional)</span></label><input class="input" id="caRev" type="number" min="0" step="0.01" value="${esc(x.revenue)}"></div></div>
+    <div class="m-foot">${a && canW ? '<button class="btn danger" id="caDel">Delete</button>' : ''}<div class="grow"></div><button class="btn" data-close>${canW ? 'Cancel' : 'Close'}</button>${canW ? '<button class="btn primary" id="caSave">Save</button>' : ''}</div>`;
+  if (canW) $('#caSave').onclick = async () => {
+    const d = { id: a ? a.id : '', day: $('#caDay').value, platform: $('#caPl').value, campaign: $('#caCamp').value.trim(), spend: $('#caSpend').value, purchases: $('#caPur').value, impressions: $('#caImp').value, clicks: $('#caClk').value, revenue: $('#caRev').value };
+    if (!d.day || $('#caSpend').value === '') return toast('Date and spend are required', true);
+    try { await api('saveAdSpend', d); hideModal('#stageModal'); toast('✓ Saved'); await refreshData(); } catch (e) { toast(/duplicate|unique/i.test(e.message) ? 'This date, platform and campaign is already added — open that row to edit it' : e.message, true); }
+  };
+  if (a && canW) $('#caDel').onclick = async () => { if (!confirm('Delete this row?')) return; try { await api('deleteAdSpend', { id: a.id }); hideModal('#stageModal'); toast('Deleted'); await refreshData(); } catch (e) { toast(e.message, true); } };
+  showModal('#stageModal');
+}
+async function cmReorderTask(sku) {
+  const p = cmProd(sku); if (!p) return;
+  const due = new Date(Date.now() + 864e5); const dueAt = `${due.getFullYear()}-${pad(due.getMonth() + 1)}-${pad(due.getDate())} 11:00`;
+  try { await api('saveTask', { title: `Reorder ${p.name || p.sku} (${cmN(p.stock)} left)`, notes: `SKU ${p.sku} · reorder level ${p.reorderLevel === '' ? 5 : cmN(p.reorderLevel)}`, dueAt, priority: cmN(p.stock) <= 0 ? 'High' : 'Medium', assignedTo: me(), status: 'Open', source: 'stock', leadId: '' }); toast('✓ Reorder task created — see Tasks'); await refreshData(); }
+  catch (e) { toast(e.message, true); }
+}
+
+/* ---------- import: Excel workbook (all tabs), CSV or Google Sheet → products, orders, ad spend ---------- */
+const CMI_FIELDS = {
+  products: [['sku', 'SKU *'], ['name', 'Product name'], ['category', 'Category'], ['price', 'Selling price'], ['cost', 'Cost per unit'], ['stock', 'Current stock'], ['reorderLevel', 'Reorder level'], ['imageUrl', 'Image link'], ['amazonAsin', 'Amazon ASIN'], ['websiteUrl', 'Website link'], ['notes', 'Notes']],
+  orders: [['extId', 'Order ID'], ['orderDate', 'Order date'], ['channel', 'Channel'], ['sku', 'SKU'], ['productName', 'Product name'], ['qty', 'Qty'], ['unitPrice', 'Selling price (per unit)'], ['amount', 'Revenue / order total'], ['productCost', 'Product cost (total)'], ['unitCost', 'Cost per unit'], ['marketplaceFee', 'Amazon / marketplace fee'], ['shippingFee', 'Shipping'], ['packagingCost', 'Packaging'], ['rtoCharges', 'RTO / return charges'], ['adSpend', 'Ad spend'], ['otherCost', 'Other cost'], ['status', 'Order status'], ['payment', 'Payment status'], ['customerName', 'Customer name'], ['customerState', 'Customer state'], ['customerCity', 'Customer city'], ['courier', 'Courier'], ['returnReason', 'Return reason'], ['trackingUrl', 'Tracking link'], ['notes', 'Notes']],
+  ads: [['day', 'Date'], ['platform', 'Platform'], ['campaign', 'Campaign'], ['impressions', 'Impressions'], ['clicks', 'Clicks'], ['spend', 'Amount spent *'], ['purchases', 'Purchases'], ['revenue', 'Revenue (reported)']],
+};
+const CMI_GUESS = {
+  products: { sku: 'sku', skucode: 'sku', productcode: 'sku', itemcode: 'sku', productname: 'name', product: 'name', name: 'name', title: 'name', item: 'name', category: 'category', type: 'category', sellingprice: 'price', price: 'price', mrp: 'price', saleprice: 'price', costprice: 'cost', cost: 'cost', unitcost: 'cost', perunitcost: 'cost', productcost: 'cost', purchaseprice: 'cost', currentstock: 'stock', stock: 'stock', quantity: 'stock', qty: 'stock', inventory: 'stock', available: 'stock', reorderlevel: 'reorderLevel', reorderalert: 'reorderLevel', reorderpoint: 'reorderLevel', minstock: 'reorderLevel', image: 'imageUrl', imageurl: 'imageUrl', imagelink: 'imageUrl', asin: 'amazonAsin', amazonasin: 'amazonAsin', url: 'websiteUrl', link: 'websiteUrl', producturl: 'websiteUrl', notes: 'notes' },
+  orders: { orderid: 'extId', orderno: 'extId', ordernumber: 'extId', amazonorderid: 'extId', id: 'extId', orderdate: 'orderDate', date: 'orderDate', purchasedate: 'orderDate', channel: 'channel', saleschannel: 'channel', platform: 'channel', sku: 'sku', productname: 'productName', product: 'productName', item: 'productName', title: 'productName', qty: 'qty', quantity: 'qty', units: 'qty', sellingprice: 'unitPrice', price: 'unitPrice', unitprice: 'unitPrice', revenue: 'amount', total: 'amount', ordertotal: 'amount', amount: 'amount', sales: 'amount', totalproductcost: 'productCost', productcost: 'productCost', perunitcost: 'unitCost', unitcost: 'unitCost', costprice: 'unitCost', amazonfee: 'marketplaceFee', amazonfees: 'marketplaceFee', marketplacefee: 'marketplaceFee', commission: 'marketplaceFee', fees: 'marketplaceFee', referralfee: 'marketplaceFee', gatewayfee: 'marketplaceFee', shippingfee: 'shippingFee', shipping: 'shippingFee', shippingcost: 'shippingFee', deliverycharges: 'shippingFee', packagingcost: 'packagingCost', packaging: 'packagingCost', rtocharges: 'rtoCharges', rtocharge: 'rtoCharges', returncharges: 'rtoCharges', adspend: 'adSpend', othercost: 'otherCost', orderstatus: 'status', status: 'status', paymentstatus: 'payment', payment: 'payment', paymentmode: 'payment', paymentmethod: 'payment', customername: 'customerName', customer: 'customerName', buyername: 'customerName', name: 'customerName', customerstate: 'customerState', state: 'customerState', shipstate: 'customerState', customercity: 'customerCity', city: 'customerCity', shipcity: 'customerCity', courierpartner: 'courier', courier: 'courier', carrier: 'courier', returnreason: 'returnReason', reason: 'returnReason', trackingurl: 'trackingUrl', trackinglink: 'trackingUrl', tracking: 'trackingUrl', notes: 'notes' },
+  ads: { date: 'day', day: 'day', reportingstarts: 'day', platform: 'platform', campaign: 'campaign', campaignname: 'campaign', adsetname: 'campaign', impressions: 'impressions', clicks: 'clicks', linkclicks: 'clicks', clicksall: 'clicks', amountspent: 'spend', amountspentinr: 'spend', spend: 'spend', cost: 'spend', adspend: 'spend', purchases: 'purchases', results: 'purchases', conversions: 'purchases', purchasesconversionvalue: 'revenue', revenue: 'revenue', conversionvalue: 'revenue', purchasevalue: 'revenue' },
+};
+const CMI = { sheets: [], src: '' };
+const cmiKey = h => String(h || '').toLowerCase().replace(/[^a-z]/g, '');
+function cmiDetect(name, head) {
+  const k = head.map(cmiKey), has = x => k.includes(x), nm = String(name || '').toLowerCase();
+  if (has('campaign') || has('campaignname') || has('amountspent') || (has('impressions') && !has('sku'))) return { type: 'ads' };
+  const orderish = has('orderid') || has('orderdate') || has('amazonorderid') || has('ordernumber');
+  if (orderish) return { type: 'orders', channel: /amazon/.test(nm) || has('amazonfee') || has('amazonorderid') ? 'Amazon' : /flipkart/.test(nm) ? 'Flipkart' : /meesho/.test(nm) ? 'Meesho' : /whatsapp/.test(nm) ? 'WhatsApp' : has('channel') ? '' : 'Website' };
+  if (has('sku') && (has('sellingprice') || has('price') || has('currentstock') || has('stock') || has('mrp') || has('productname'))) return { type: 'products' };
+  if (/dashboard|summary|readme|instructions/.test(nm)) return { type: '' };
+  return { type: '' };
+}
+function cmiMap(type, head) { const used = new Set(), g = CMI_GUESS[type] || {}; return head.map(h => { const f = g[cmiKey(h)] || ''; if (!f || used.has(f)) return ''; used.add(f); return f; }); }
+function cmiSheet(name, rows) {
+  rows = rows.filter(r => r.some(c => String(c).trim()));
+  const hi = Math.max(0, rows.findIndex(r => r.filter(c => String(c).trim()).length >= 2));
+  const head = (rows[hi] || []).map(h => String(h).trim()), body = rows.slice(hi + 1), det = cmiDetect(name, head);
+  return { name, head, rows: body, type: det.type, channel: det.channel || 'Website', map: cmiMap(det.type, head), open: false };
+}
+async function cmiFromFile(file) {
+  if (/\.(xlsx|xlsm|xls|ods)$/i.test(file.name)) { await loadScriptOnce(XLSX_SRC); return cmiFromWorkbook(window.XLSX.read(await file.arrayBuffer(), { type: 'array', cellDates: true })); }
+  return [cmiSheet(file.name.replace(/\.[^.]+$/, ''), parseCSV((await file.text()).replace(/^﻿/, '')))];
+}
+function cmiFromWorkbook(wb) { return wb.SheetNames.map(n => cmiSheet(n, window.XLSX.utils.sheet_to_json(wb.Sheets[n], { header: 1, raw: false, dateNF: 'yyyy-mm-dd', defval: '' }).map(r => r.map(c => String(c ?? ''))))).filter(s2 => s2.head.length); }
+const cmiNum = v => { const s2 = String(v == null ? '' : v).replace(/[₹,\s]|rs\.?|inr/gi, ''); if (s2 === '' || s2 === '-') return ''; const n = Number(s2.replace(/[^\d.-]/g, '')); return isFinite(n) && /\d/.test(s2) ? n : ''; };
+const CMI_ST = [[/deliver|complete|fulfil/i, 'Delivered'], [/rto|return.?to.?origin|undeliver/i, 'RTO'], [/refund/i, 'Refunded'], [/return/i, 'Returned'], [/exchang/i, 'Exchange'], [/cancel/i, 'Cancelled'], [/ship|transit|dispatch|out for/i, 'Shipped'], [/process|pending|unshipped|placed|packed/i, 'Processing'], [/confirm/i, 'Confirmed'], [/cod/i, 'COD'], [/paid/i, 'Paid'], [/new/i, 'New']];
+function cmiRows(sh) {
+  const out = [], bad = []; const val = (r, f) => { const i = sh.map.indexOf(f); return i < 0 ? '' : String(r[i] == null ? '' : r[i]).trim(); };
+  sh.rows.forEach((r, ri) => {
+    if (sh.type === 'products') { const sku = val(r, 'sku'); if (!sku) return bad.push(ri); const d = { sku: sku.slice(0, 80) }; ['name', 'category', 'imageUrl', 'amazonAsin', 'websiteUrl', 'notes'].forEach(f => { if (sh.map.includes(f)) d[f] = val(r, f); }); ['price', 'cost'].forEach(f => { if (sh.map.includes(f)) d[f] = cmiNum(val(r, f)); }); ['stock', 'reorderLevel'].forEach(f => { if (sh.map.includes(f)) { const n = cmiNum(val(r, f)); d[f] = n === '' ? (f === 'stock' ? 0 : 5) : Math.round(n); } }); if (d.imageUrl && !/^https:\/\//i.test(d.imageUrl)) d.imageUrl = ''; out.push(d); }
+    else if (sh.type === 'orders') {
+      const d = { channel: sh.channel || CM_CH.find(c => c.toLowerCase() === val(r, 'channel').toLowerCase()) || (val(r, 'channel') ? 'Other' : 'Website') };
+      if (!sh.channel && /amazon/i.test(val(r, 'channel'))) d.channel = 'Amazon';
+      d.extId = val(r, 'extId').slice(0, 80); d.orderDate = normDate(val(r, 'orderDate')) || todayStr(); d.sku = val(r, 'sku').slice(0, 80); d.productName = val(r, 'productName').slice(0, 200);
+      const q = cmiNum(val(r, 'qty')); d.qty = q === '' ? 1 : Math.max(0, Math.round(q));
+      ['unitPrice', 'amount', 'productCost', 'marketplaceFee', 'shippingFee', 'packagingCost', 'rtoCharges', 'adSpend', 'otherCost'].forEach(f => { if (sh.map.includes(f)) d[f] = cmiNum(val(r, f)); });
+      if (sh.map.includes('unitCost') && (d.productCost === '' || d.productCost == null)) { const uc = cmiNum(val(r, 'unitCost')); if (uc !== '') d.productCost = uc * d.qty; }
+      const st = val(r, 'status'), pay = val(r, 'payment'); d.status = (CMI_ST.find(([re]) => re.test(st)) || [0, st ? 'Processing' : 'Delivered'])[1]; d.payment = pay.slice(0, 40);
+      ['customerName', 'customerState', 'customerCity', 'courier', 'returnReason', 'trackingUrl', 'notes'].forEach(f => { if (sh.map.includes(f)) d[f] = val(r, f); });
+      if (d.trackingUrl && !/^https?:\/\//i.test(d.trackingUrl)) d.trackingUrl = '';
+      if (!d.extId && !d.sku && !d.productName && (d.amount === '' || d.amount === undefined)) return bad.push(ri);
+      d.source = 'Import · ' + sh.name.slice(0, 60); out.push(d);
+    } else if (sh.type === 'ads') {
+      const sp = cmiNum(val(r, 'spend')); if (sp === '') return bad.push(ri);
+      const d = { day: normDate(val(r, 'day')) || CMI.adDay || todayStr(), platform: (val(r, 'platform') || 'Meta').slice(0, 40), campaign: val(r, 'campaign').slice(0, 200), spend: sp };
+      ['impressions', 'clicks', 'purchases', 'revenue'].forEach(f => { if (sh.map.includes(f)) d[f] = cmiNum(val(r, f)); });
+      out.push(d);
+    }
+  });
+  if (sh.type === 'orders') { const seen = new Map(); out.forEach(d => { if (!d.extId) return; const k = d.channel + '|' + d.extId; seen.set(k, (seen.get(k) || 0) + 1); }); const n = new Map(); out.forEach(d => { if (!d.extId) return; const k = d.channel + '|' + d.extId; if (seen.get(k) > 1) { const i = (n.get(k) || 0) + 1; n.set(k, i); d.extId = (d.extId + '-' + i).slice(0, 80); } }); }   // one row per item: keep each line
+  if (sh.type === 'ads') { const m = new Map(); out.forEach(d => { const k = d.day + '|' + d.platform + '|' + d.campaign; const x = m.get(k); if (x) { x.spend += d.spend; ['impressions', 'clicks', 'purchases', 'revenue'].forEach(f => { if (d[f] !== '' && d[f] != null) x[f] = (cmN(x[f]) || 0) + d[f]; }); } else m.set(k, d); }); return { rows: [...m.values()], bad: bad.length }; }
+  return { rows: out, bad: bad.length };
+}
+function openCmImport(kind, ch) {
+  CMI.sheets = []; CMI.kind = kind || ''; CMI.ch = ch || '';
+  $('#leadBox').innerHTML = `<div class="m-head"><h2>Import store data</h2><button class="ibtn" data-close>${I.x}</button></div>
+    <p class="help" style="margin-bottom:12px">Products, Amazon / website / other orders and ad spend. One Excel file with many tabs works too — every tab is checked and matched by its column names. Importing the same file again <b>updates</b> rows (same SKU, same order ID) instead of making duplicates.</p>
+    <div class="cmi-src"><label class="cmi-drop glass"><input type="file" id="cmiFile" accept=".xlsx,.xls,.xlsm,.ods,.csv,text/csv" hidden><b>⇪ Choose Excel / CSV file</b><small class="muted">.xlsx with several tabs is fine</small></label>
+      <div class="cmi-g glass"><b>…or a Google Sheet link</b><small class="muted">Share → “Anyone with the link” (Viewer) first</small><div style="display:flex;gap:6px;margin-top:6px"><input class="input sm" id="cmiUrl" placeholder="https://docs.google.com/spreadsheets/d/…"><button class="btn sm" id="cmiFetch" ${cloud ? '' : 'disabled title="Works after you sign in"'}>Load</button></div></div></div>
+    <div id="cmiBody"></div>
+    <div class="imp-prog" id="cmiProg" hidden><div class="imp-bar"><i id="cmiBar"></i></div><span id="cmiTxt"></span></div>
+    <div class="m-foot"><button class="btn" data-cmisample>Download sample file</button><div class="grow"></div><button class="btn" data-close>Cancel</button><button class="btn primary" id="cmiGo" disabled>Import</button></div>`;
+  $('#cmiFile').onchange = async e => { const f = e.target.files[0]; if (!f) return; try { cmiLoaded(await cmiFromFile(f), f.name); } catch (er) { toast('Could not read this file: ' + er.message, true); } };
+  $('#cmiFetch').onclick = async () => { const u = $('#cmiUrl').value.trim(); if (!/docs\.google\.com\/spreadsheets\/d\//.test(u)) return toast('Paste the Google Sheet link (docs.google.com/spreadsheets/d/…)', true);
+    const b = $('#cmiFetch'); b.disabled = true; b.textContent = 'Loading…';
+    try { const r = await fnCall('commerce', { action: 'sheet', url: u }); await loadScriptOnce(XLSX_SRC); const bin = atob(r.file), buf = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) buf[i] = bin.charCodeAt(i); cmiLoaded(cmiFromWorkbook(window.XLSX.read(buf, { type: 'array', cellDates: true })), 'Google Sheet'); }
+    catch (er) { toast(/not set up yet/.test(er.message) ? 'Google Sheet import needs the “commerce” server function — or download the Sheet as Excel and choose the file.' : er.message, true); }
+    b.disabled = false; b.textContent = 'Load'; };
+  $('#cmiGo').onclick = runCmImport;
+  showModal('#leadModal');
+}
+function cmiLoaded(sheets, src) {
+  CMI.sheets = sheets; CMI.src = src;
+  if (CMI.kind && sheets.length === 1 && !sheets[0].type) { sheets[0].type = CMI.kind; sheets[0].map = cmiMap(CMI.kind, sheets[0].head); }
+  if (CMI.ch) sheets.forEach(s2 => { if (s2.type === 'orders') s2.channel = CMI.ch; });
+  if (!sheets.length) return toast('No tabs with data found', true);
+  drawCmImport();
+}
+function drawCmImport() {
+  const tl = { products: 'Products', orders: 'Orders', ads: 'Ad spend' };
+  $('#cmiBody').innerHTML = `<div class="cmi-h"><b>${esc(CMI.src)}</b> · ${CMI.sheets.length} tab${CMI.sheets.length > 1 ? 's' : ''} — check what each tab is</div>${CMI.sheets.map((s2, i) => {
+    const pl = s2.type ? cmiRows(s2) : null, req = s2.type === 'products' ? s2.map.includes('sku') : s2.type === 'ads' ? s2.map.includes('spend') : s2.type === 'orders' ? s2.map.some(f => ['extId', 'sku', 'productName', 'amount'].includes(f)) : true, mapped = s2.map.map((f, j) => f ? `${esc(s2.head[j])} → ${esc((CMI_FIELDS[s2.type].find(x => x[0] === f) || [0, f])[1].replace(' *', ''))}` : '').filter(Boolean);
+    return `<div class="cmi-s glass ${s2.type ? '' : 'off'}"><div class="cmi-sh"><b title="${esc(s2.name)}">${esc(s2.name)}</b><small class="muted">${s2.rows.length} rows</small><div class="grow"></div>
+      <select class="input sm" data-cmitype="${i}"><option value="">Skip this tab</option>${Object.entries(tl).map(([k, n]) => `<option value="${k}" ${s2.type === k ? 'selected' : ''}>${n}</option>`).join('')}</select>
+      ${s2.type === 'orders' ? `<select class="input sm" data-cmich="${i}"><option value="">Channel from a column</option>${CM_CH.map(c => `<option ${s2.channel === c ? 'selected' : ''}>${c}</option>`).join('')}</select>` : ''}</div>
+      ${s2.type ? `<div class="cmi-sum">${req ? `<span class="ok">${pl.rows.length} ${tl[s2.type].toLowerCase()} ready</span>` : `<span class="imp-bad">${s2.type === 'products' ? 'Choose the SKU column' : s2.type === 'ads' ? 'Choose the Amount spent column' : 'Choose at least Order ID, SKU, Product or Revenue'}</span>`}${pl.bad ? ` · <span class="muted">${pl.bad} rows skipped (missing ${s2.type === 'products' ? 'SKU' : s2.type === 'ads' ? 'spend' : 'order details'})</span>` : ''} · <a class="bc-link" data-cmiopen="${i}">${s2.open ? 'Hide columns' : 'Edit columns'}</a></div>
+      <div class="cmi-m">${mapped.length ? mapped.map(x => `<span>${x}</span>`).join('') : '<span class="muted">No columns matched yet</span>'}</div>
+      ${s2.open ? `<div class="imp-map">${s2.head.map((h, j) => `<div class="imp-col"><div class="imp-h" title="${esc(h)}">${esc(h || 'Column ' + (j + 1))}</div><select class="input sm" data-cmicol="${i}|${j}"><option value="">— Skip —</option>${CMI_FIELDS[s2.type].map(([k, n]) => `<option value="${k}" ${s2.map[j] === k ? 'selected' : ''}>${n}</option>`).join('')}</select><div class="imp-s">${s2.rows.slice(0, 2).map(r => `<span>${esc(String(r[j] || '').slice(0, 30)) || '<i class="muted">empty</i>'}</span>`).join('')}</div></div>`).join('')}</div>` : ''}` : '<div class="cmi-sum muted">Skipped — pick Products, Orders or Ad spend to import it.</div>'}</div>`; }).join('')}
+    ${CMI.sheets.some(s2 => s2.type === 'ads' && !s2.map.includes('day')) ? `<label class="imp-batch"><span>Date for ad spend rows without a date</span><input class="input sm" type="date" id="cmiAdDay" value="${esc(CMI.adDay || todayStr())}"></label>` : ''}`;
+  const ready = CMI.sheets.filter(s2 => s2.type).map(s2 => cmiRows(s2).rows.length).reduce((a, b) => a + b, 0);
+  $('#cmiGo').disabled = !ready; $('#cmiGo').textContent = ready ? `Import ${ready} rows` : 'Import';
+}
+async function runCmImport() {
+  const btn = $('#cmiGo'), jobs = CMI.sheets.filter(s2 => s2.type).map(s2 => ({ s2, rows: cmiRows(s2).rows })).filter(j => j.rows.length);
+  jobs.sort((a, b) => ['products', 'orders', 'ads'].indexOf(a.s2.type) - ['products', 'orders', 'ads'].indexOf(b.s2.type));   // products first so orders pick up names and costs
+  const total = jobs.reduce((a, j) => a + j.rows.length, 0); let done = 0; const res = { products: 0, orders: 0, ads: 0 }, max = cloud ? 20000 : 2000;
+  if (total > max) return toast(`Too many rows at once (${total}) — import up to ${max} rows per file`, true);
+  btn.disabled = true; $('#cmiProg').hidden = false;
+  const prog = () => { $('#cmiBar').style.width = Math.round(done / total * 100) + '%'; $('#cmiTxt').textContent = `${done} / ${total}`; };
+  try {
+    for (const j of jobs) { const act = { products: 'importProducts', orders: 'importOrders', ads: 'importAds' }[j.s2.type];
+      for (let i = 0; i < j.rows.length; i += 500) { const part = j.rows.slice(i, i + 500); res[j.s2.type] += (await api(act, { rows: part })).count; done += part.length; prog(); } }
+    hideModal('#leadModal'); toast(`✓ Imported ${[res.products && res.products + ' products', res.orders && res.orders + ' orders', res.ads && res.ads + ' ad spend rows'].filter(Boolean).join(' · ')}`);
+    await refreshData(); if (activeView() !== 'commerce') go('commerce');
+  } catch (e) { toast('Import stopped: ' + e.message, true); btn.disabled = false; await refreshData(); }
+}
+async function cmSample() {
+  const day = k => { const d = new Date(); d.setDate(d.getDate() - k); return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); };
+  const tabs = {
+    Products: [['SKU', 'Product Name', 'Category', 'Selling Price', 'Per Unit Cost', 'Current Stock', 'Reorder Level'], ['RING-GLD-01', 'Gold plated ring', 'Rings', 799, 260, 40, 10], ['EAR-PRL-02', 'Pearl earrings', 'Earrings', 1199, 420, 6, 8]],
+    Amazon: [['Order ID', 'Order Date', 'SKU', 'Qty', 'Selling Price', 'Amazon Fee', 'Shipping Fee', 'Order Status', 'Customer State', 'Courier Partner', 'Return Reason'], ['402-1234567-0001', day(3), 'RING-GLD-01', 1, 799, 140, 70, 'Delivered', 'Maharashtra', 'Amazon Shipping', ''], ['402-1234567-0002', day(1), 'EAR-PRL-02', 2, 1199, 380, 90, 'RTO', 'Delhi', 'Delhivery', 'Customer not available']],
+    'Website Orders': [['Order ID', 'Order Date', 'SKU', 'Qty', 'Selling Price', 'Shipping Fee', 'Packaging Cost', 'Payment Status', 'Order Status', 'Customer Name', 'Customer State'], ['W1001', day(2), 'RING-GLD-01', 1, 799, 60, 25, 'Paid', 'Delivered', 'Riya Shah', 'Gujarat']],
+    'Meta ads': [['Date', 'Campaign', 'Impressions', 'Clicks', 'Amount Spent', 'Purchases', 'Revenue'], [day(1), 'Festive rings — Advantage+', 12400, 310, 950, 3, 2400]],
+  };
+  try { await loadScriptOnce(XLSX_SRC); const wb = window.XLSX.utils.book_new(); Object.entries(tabs).forEach(([n, rows]) => { const ws = window.XLSX.utils.aoa_to_sheet(rows); ws['!cols'] = rows[0].map(() => ({ wch: 18 })); window.XLSX.utils.book_append_sheet(wb, ws, n); }); window.XLSX.writeFile(wb, 'nodevers-store-sample.xlsx'); }
+  catch (e) { toast('Could not build the sample file: ' + e.message, true); }
+}
+
+/* ---------- events ---------- */
+document.addEventListener('click', e => { const b = e.target.closest('[data-cm]'); if (b) { CM.tab = b.dataset.cm; store.set('nv.cmTab', CM.tab); } }, true);
+(function () {
+  const v = $('#v-commerce'); if (!v) return;
+  v.addEventListener('click', e => {
+    const t = e.target;
+    const tb = t.closest('[data-cmtab]'); if (tb) { CM.tab = tb.dataset.cmtab; store.set('nv.cmTab', CM.tab); return renderCommerce(true); }
+    const an = t.closest('[data-cman]'); if (an) { CM.an = an.dataset.cman; return renderCommerce(true); }
+    const gr = t.closest('[data-cmgrain]'); if (gr) { CM.grain = gr.dataset.cmgrain; return renderCommerce(); }
+    const iv = t.closest('[data-cminv]'); if (iv) { CM.inv = iv.dataset.cminv; return renderCommerce(); }
+    if (t.closest('[data-cmclear]')) { CM.ch = CM.state = CM.st = ''; return renderCommerce(); }
+    const imp = t.closest('[data-cmimport]'); if (imp) return openCmImport(imp.dataset.cmimport, imp.dataset.cmch);
+    const pr = t.closest('[data-cmprod]'); if (pr) return openProduct(pr.dataset.cmprod);
+    const ad = t.closest('[data-cmad]'); if (ad) return openAdSpend(ad.dataset.cmad);
+    const ro = t.closest('[data-cmreorder]'); if (ro) return cmReorderTask(ro.dataset.cmreorder);
+    const ss = t.closest('[data-cmstocksave]'); if (ss) { const sku = ss.dataset.cmstocksave, inp = v.querySelector(`[data-cmstock="${CSS.escape(sku)}"]`); ss.disabled = true; return api('setStock', { sku, stock: inp.value }).then(async () => { toast('✓ Stock updated'); await refreshData(); }, er => { toast(er.message, true); ss.disabled = false; }); }
+    const stt = t.closest('[data-cmstate]'); if (stt) { CM.state = stt.dataset.cmstate; return renderCommerce(); }
+    if (t.closest('[data-cmcsv]')) return cmCsv();
+    const ld = t.closest('[data-cmlead]'); if (ld) { ld.disabled = true; return api('addLead', { name: ld.dataset.cmlead, state: ld.dataset.cmstate2, city: ld.dataset.cmcity, source: ld.dataset.cmch2 || 'Store', stage: stages()[0], by: me() }).then(async () => { toast('✓ Added to CRM leads'); await refreshData(); }, er => { toast(er.message, true); ld.disabled = false; }); }
+  });
+  v.addEventListener('change', e => { const f = e.target.closest('[data-cmf]'); if (!f) return; const k = f.dataset.cmf; CM[k] = k === 'range' ? +f.value : f.value; renderCommerce(); });
+  v.addEventListener('input', e => { const id = e.target.id, map = { cmPq: 'pq', cmOq: 'oq', cmAq: 'aq' }; if (!map[id]) return; CM[map[id]] = e.target.value; clearTimeout(CM.tm); CM.tm = setTimeout(() => { const pos = e.target.selectionStart; renderCommerce(); const n = $('#' + id); if (n) { n.focus(); try { n.setSelectionRange(pos, pos); } catch (er) { } } }, 250); });
+  v.addEventListener('keydown', e => { if (e.key === 'Enter' && e.target.matches('[data-cmstock]')) { const b = e.target.parentElement.querySelector('[data-cmstocksave]'); if (b) b.click(); } });
+  const lb = $('#leadBox');
+  lb.addEventListener('change', e => {
+    if (!$('#cmiBody') || !lb.contains($('#cmiBody'))) return;
+    const ty = e.target.closest('[data-cmitype]'); if (ty) { const s2 = CMI.sheets[+ty.dataset.cmitype]; s2.type = ty.value; s2.map = cmiMap(ty.value, s2.head); if (ty.value === 'orders' && !s2.channel) s2.channel = 'Website'; return drawCmImport(); }
+    const ch = e.target.closest('[data-cmich]'); if (ch) { CMI.sheets[+ch.dataset.cmich].channel = ch.value; return drawCmImport(); }
+    const co = e.target.closest('[data-cmicol]'); if (co) { const [i, j] = co.dataset.cmicol.split('|').map(Number), s2 = CMI.sheets[i]; if (co.value) s2.map = s2.map.map((k, jj) => jj !== j && k === co.value ? '' : k); s2.map[j] = co.value; return drawCmImport(); }
+    if (e.target.id === 'cmiAdDay') { CMI.adDay = e.target.value; drawCmImport(); }
+  });
+  lb.addEventListener('click', e => { const o = e.target.closest('[data-cmiopen]'); if (o) { const s2 = CMI.sheets[+o.dataset.cmiopen]; s2.open = !s2.open; drawCmImport(); } if (e.target.closest('[data-cmisample]')) cmSample(); });
+})();
 
 /* ================= platform admin console ================= */
 const ADM = { rows: null, q: '', at: 0 };
@@ -6828,6 +7460,11 @@ const HELP_GUIDE = [
   ['connect', 'Connect WhatsApp', 'connect whatsapp number meta business token phone number id waba webhook setup', 'Owner/Admin: **Inbox → Connect WhatsApp**. You need from Meta (business.facebook.com): **Phone number ID**, **WhatsApp Business Account ID** and a **permanent system-user token**. Paste them only into that form (never into chat). **Manage** lets you update or disconnect. Ask your Nodevers provider if you need help with the Meta app and webhook.'],
   ['templates', 'WhatsApp templates', 'template templates create approve meta pending rejected sync draft submit', '**Templates**: **⟳ Sync from WhatsApp** brings your approved templates. **New template**: name (lowercase_with_underscores), category (Marketing / Utility), language, use case, header, body with {{1}} variables, footer, buttons → **Submit to Meta for approval** (minutes to 24 h). Drafts show **Edit & submit to Meta**. **Library** sets use case, best segment, tags and notes so your team picks the right one.'],
   ['builder', 'Template builder: content, buttons, actions, flows', 'builder button buttons action flow next template image video pdf catalog payment order cart call website map multi step', 'In **Templates → New template** choose a **Content type** (Text, Image, Video, PDF, Location, Payment link; Catalog / Product card need a Meta catalog — contact cards are not allowed in templates). Add up to 10 **buttons** (max 1 Call, max 2 link buttons, keep reply buttons together). For each reply button pick **actions** — e.g. **Send next template**, Reply with text, Add tag, Change stage, Assign team member, Create task, Send payment link, Create / update / cancel / track order, Trigger workflow, Run AI agent. Chaining templates with **Send next template** builds a multi-step flow.\n\nFor an already-approved template use **Buttons & actions** on its card — no new Meta review needed. **⇢ Flow map** shows every template as a card and a wire from each button to the template it sends next.'],
+  ['store', 'Store (Commerce): overview, Amazon, Website', 'store commerce ecommerce amazon website flipkart meesho revenue profit margin rto return fees overview channel sales dashboard', '**Commerce → Store Overview** shows revenue, net profit and margin, orders, units, ad spend (ROAS and profit after ads), return / RTO rate, inventory value and stock alerts — with filters for period, channel, state and status. **Amazon** and **Website** tabs show the same for one channel plus fees, shipping, “where every ₹ goes”, top products, return reasons and the order list. Net profit = revenue − product cost − marketplace fees − shipping − packaging − RTO charges − ad spend (cancelled / returned orders earn nothing).'],
+  ['products', 'Products and inventory', 'product products sku stock inventory reorder low stock out of stock price cost margin category', '**Commerce → Products**: add a product with **SKU**, name, category, selling price, cost per unit, stock and reorder level — margin is shown live. **Inventory** lists stock status (In stock / Low / Out), units sold in 30 days and **days left**; type a new number and press **Save** to update stock, or **Reorder task** to create a task in Tasks. Orders with a SKU pick up the product name, price and cost automatically.'],
+  ['storeimport', 'Import store data (Excel / Google Sheet)', 'import excel sheet google sheet upload amazon report website orders products ad spend meta ads tabs workbook', 'Press **⇪ Import Excel / Sheet** in Commerce. Choose an .xlsx / .csv file, or paste a Google Sheet link (first set Share → “Anyone with the link” → Viewer) and press **Load**. Every tab is detected by its column names — Products, Orders (pick the channel: Amazon, Website…) or Ad spend; use **Edit columns** to fix any match, then **Import**. Importing the same file again updates rows with the same SKU / order ID instead of duplicating. **Download sample file** shows the expected columns.'],
+  ['channels', 'Connect Amazon, Shopify, WooCommerce', 'connect amazon seller central shopify woocommerce flipkart meesho api sync channel integration', '**Commerce → Channels** lists Amazon Seller Central, Shopify, WooCommerce, Flipkart, Meesho and custom websites. Automatic sync is **coming soon** (marketplaces must approve Nodevers first). Until then use **Import file instead** — your dashboards work the same way with imported reports.'],
+  ['adspend', 'Ad spend, ROAS and profit after ads', 'ad spend ads roas meta google campaign profit after ads cost per purchase', '**Commerce → Ad spend**: add daily spend per platform and campaign (or import your Meta Ads export). Nodevers shows ROAS (store revenue ÷ ad spend), cost per purchase and **profit after ads** for the same period.'],
   ['orders', 'Orders from WhatsApp buttons', 'order orders cart cod cash on delivery paid shipped track tracking invoice reorder', '**CRM → Orders** lists every order. Orders are created automatically when a customer taps a button with **Create order** (Order Now, Add to Cart, Reorder), and updated by **Update order** (Cash on Delivery, Paid…) or **Cancel order**. Your team can also add or edit an order (items, amount, status, tracking link) from Orders or from the lead panel. Track Order buttons reply with the latest status and tracking link.'],
   ['broadcast', 'Broadcast (bulk WhatsApp / email)', 'broadcast bulk campaign send many mass marketing segment audience', '**Broadcast** is a 4-step flow: **1 Audience** (filters, saved segments, import a file, or retarget a past campaign) → **2 Template / Email** (fill the variables) → **3 Test** (send to yourself) → **4 Send**. WhatsApp broadcasts need an approved template and a payment method in WhatsApp Manager; new numbers can reach about 250 new people a day. People who reply STOP are skipped automatically.'],
   ['email', 'Email campaigns', 'email brevo sender smtp mail newsletter unsubscribe', '**Broadcast → Email**. Owner/Admin connects a sender once (free Brevo account, verified sender email, API key pasted only in the form). Write **Subject** + **Message** with {{first_name}}, {{name}}, {{business}}, {{city}}; **Test** to yourself, then **Send**. Every email has an Unsubscribe link.'],
