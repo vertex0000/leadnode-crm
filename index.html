@@ -637,7 +637,7 @@ body.cl-tenant [data-go="scripts"],body.cl-tenant [data-stab="conn"],body.cl-ten
 .plat-bar{display:flex;align-items:center;gap:10px;padding:8px 14px;border-radius:12px;margin-bottom:12px;background:color-mix(in srgb,#A78BFA 14%,transparent);border:1px solid color-mix(in srgb,#A78BFA 40%,transparent);font-size:13px;font-weight:600}
 .adm-ks{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}@media (max-width:900px){.adm-ks{grid-template-columns:repeat(2,1fr)}}
 .adm-ok{color:var(--green);font-weight:700}.adm-no{color:var(--muted)}
-body.np-add [data-add],body.np-add .addcard,body.np-import #csvImportBtn,body.np-import #pImport,body.np-import [data-bcimport],body.np-import .bc-imp,body.np-export #csvExport,body.np-delete #panel [data-delete],body.np-edit #panel [data-edit],body.np-broadcast [data-go="broadcast"],body.np-automation [data-go="automation"],body.np-automation [data-go="scripts"],body.np-automation [data-go="n8n"],body.np-analytics [data-go="analytics"],body.np-analytics [data-go="reports"],body.np-analytics [data-go="performance"],body.np-calls [data-calllog],body.np-tasks [data-go="tasks"],body.np-whatsapp #inbox .ib-comp,body.np-email [data-bctab="email"]{display:none!important}body.np-edit #panel .stagebar{pointer-events:none}
+body.np-add [data-add],body.np-add .addcard,body.np-import #csvImportBtn,body.np-import #pImport,body.np-import [data-bcimport],body.np-import .bc-imp,body.np-export #csvExport,body.np-delete #panel [data-delete],body.np-edit #panel [data-edit],body.np-broadcast [data-go="broadcast"],body.np-automation [data-go="automation"],body.np-automation [data-go="scripts"],body.np-automation [data-go="n8n"],body.np-analytics [data-go="analytics"],body.np-analytics [data-go="reports"],body.np-analytics [data-go="performance"],body.np-analytics [data-go="insights"],body.np-analytics [data-go="insales"],body.np-analytics [data-go="inmarketing"],body.np-calls [data-calllog],body.np-tasks [data-go="tasks"],body.np-whatsapp #inbox .ib-comp,body.np-email [data-bctab="email"]{display:none!important}body.np-edit #panel .stagebar{pointer-events:none}
 body.ro [data-add],body.ro .addcard,body.ro #addMember,body.ro [data-lginvite],body.ro #pImport,body.ro #scrNew,body.ro [data-go="industry"],body.ro [data-go="scripts"],body.ro [data-go="automation"],body.ro [data-go="broadcast"],body.ro [data-stab="conn"],body.ro [data-stab="wl"],body.ro #acctImport,body.ro #acctWs,body.ro #panel .notebox,body.ro #panel [data-delete],body.ro #panel [data-edit],body.ro #panel [data-focus-note],body.ro #panel .p-foot,body.ro #panel .aisum-act button{display:none!important}body.ro #panel .stagebar{pointer-events:none}
 .lg-card{padding:18px;border-radius:16px;margin-top:18px}.lg-h{display:flex;gap:12px;align-items:flex-start;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap}.lg-h h3{margin:0 0 4px}.lg-h p{margin:0;font-size:13px}
 .lg-p{display:flex;gap:10px;align-items:center}.lg-p>div:last-child{display:flex;flex-direction:column}.lg-p small{font-size:12px}.input.sm{padding:6px 8px;font-size:12.5px;height:auto;width:auto}
@@ -823,6 +823,102 @@ body.no-sales [data-go="tasks"],body.no-sales [data-go="calls"],body.no-orders [
 .srcTag{font-style:normal;font-size:10px;font-weight:700;padding:1px 5px;border-radius:4px;margin-left:4px;vertical-align:1px}
 .srcTag.real{background:var(--green-soft);color:var(--green)}.srcTag.sample{background:var(--line);color:var(--muted)}
 .rcard.span2{grid-column:1/-1}
+
+/* ---------- navigation families, home, insights, connections, dropdown, palette ---------- */
+.sb-home{margin-bottom:4px}.home-li .grow,.cf-foot .grow,.cm-th .grow,.np-h .grow,.cm-conn .grow,.fam-strip .grow{flex:1;min-width:0}
+.fam-strip{margin:-6px 0 16px}.fam-tabs{display:flex;gap:4px;padding:4px;border-radius:12px;background:var(--glass-2,var(--card));border:1px solid var(--line);width:max-content;max-width:100%;overflow-x:auto;scrollbar-width:none}.fam-tabs::-webkit-scrollbar{display:none}
+.fam-t{border:0;background:transparent;color:var(--muted);font-weight:600;font-size:13.5px;padding:7px 14px;border-radius:9px;white-space:nowrap;transition:background .2s,color .2s}.fam-t:hover{color:var(--text)}.fam-t.active{background:var(--blue-soft);color:var(--blue-2);box-shadow:inset 0 0 0 1px var(--stroke)}
+#v-pipeline>.fam-strip{margin:6px 0 10px}
+.fam-ins>.head{display:none!important}.fam-ins #anTabs,.fam-ins #anRange{display:none!important}
+.fam-shared{margin:0 0 18px}.fam-head{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:14px}.fam-head h1{margin:2px 0 4px}.fam-head .sub{margin:0}.fam-r{display:flex;gap:8px;align-items:center}
+.ins-ks{display:grid;grid-template-columns:repeat(var(--n,8),minmax(0,1fr));gap:12px;margin-bottom:14px}
+@media (max-width:1500px){.ins-ks{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.ins-k{position:relative;padding:14px 14px 0;border-radius:14px;display:flex;flex-direction:column;gap:6px;min-width:0;overflow:hidden;transition:transform .2s,border-color .2s}.ins-k[data-go]{cursor:pointer}.ins-k[data-go]:hover{transform:translateY(-2px);border-color:color-mix(in srgb,var(--c) 45%,transparent)}
+.ins-kh{display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:700;color:var(--muted)}.ins-ki{width:28px;height:28px;border-radius:8px;display:grid;place-items:center;background:color-mix(in srgb,var(--c) 16%,transparent);color:var(--c);flex:none}.ins-ki .i{width:15px;height:15px}
+.ins-kv{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}.ins-kv b{font-size:24px;font-weight:800;letter-spacing:-.02em}.ins-k small{font-size:11.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ins-d{font-size:12px;font-weight:700;color:var(--muted)}.ins-d.up{color:var(--green)}.ins-d.down{color:var(--coral)}
+.ins-sp{display:block;width:calc(100% + 28px);height:34px;margin:2px -14px 0}
+.ins-g{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.ins-g .ins-wide{grid-column:span 2}
+@media (max-width:1100px){.ins-g{grid-template-columns:1fr 1fr}.ins-g .ins-wide{grid-column:1/-1}}
+@media (max-width:640px){.ins-ks{grid-template-columns:1fr 1fr;gap:8px}.ins-kv b{font-size:19px}.ins-g{grid-template-columns:1fr}.fam-head{align-items:stretch}.fam-r{width:100%}.fam-r .nvdd,.fam-r select{flex:1}}
+.ins-big{display:flex;gap:28px;flex-wrap:wrap;margin:6px 0 4px}.ins-big b{font-size:22px;font-weight:800;display:block}.ins-big span{font-size:12.5px;color:var(--muted)}.ins-big i{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px}
+.ins-sec{margin:22px 0 10px}.ins-sec h3{margin:0}
+/* home */
+.home-hi{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;margin:4px 0 16px}.home-hi h1{margin:0 0 4px;font-size:26px}.home-hi p{margin:0}
+.home-setup{display:flex;align-items:center;gap:18px;padding:16px 18px;border-radius:16px;margin-bottom:14px;flex-wrap:wrap}
+.home-ring{position:relative;width:62px;height:62px;flex:none}.home-ring svg{width:62px;height:62px;transform:rotate(-90deg)}.home-ring circle{fill:none;stroke:var(--line);stroke-width:4.5}.home-ring circle.on{stroke:var(--blue-2);stroke-linecap:round;transition:stroke-dasharray .8s cubic-bezier(.2,.8,.2,1)}.home-ring b{position:absolute;inset:0;display:grid;place-items:center;font-size:14px}
+.home-st{display:flex;flex-direction:column;min-width:170px}.home-st span{font-weight:800;font-size:17px}.home-st small{font-size:12.5px}
+.home-steps{display:flex;gap:4px;flex:1;justify-content:center;flex-wrap:wrap}
+.home-step{display:flex;flex-direction:column;align-items:center;gap:3px;border:0;background:transparent;padding:6px 8px;border-radius:10px;color:var(--text);min-width:76px}.home-step:hover{background:var(--line)}.home-step small{font-size:11px;color:var(--muted)}.home-step b{font-size:12.5px}
+.home-sd{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:800;border:2px solid #F59E0B;color:#fff}.home-step.ok .home-sd{background:var(--green);border-color:var(--green)}
+.home-cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:14px}
+.home-c{padding:16px;border-radius:16px;display:flex;flex-direction:column;gap:6px;align-items:flex-start;transition:transform .2s}.home-c:hover{transform:translateY(-2px)}
+.home-ch{display:flex;align-items:center;gap:10px;font-weight:700;font-size:13.5px}.home-ci{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;background:color-mix(in srgb,var(--c) 18%,transparent);color:var(--c)}
+.home-cn{display:flex;align-items:baseline;gap:8px}.home-cn b{font-size:30px;font-weight:800}.home-c p{margin:0 0 6px;font-size:12.5px;color:var(--muted)}
+.home-2{display:grid;grid-template-columns:1.2fr 1fr;gap:14px}.home-n{font-size:11.5px;font-weight:700;padding:2px 8px;border-radius:20px;background:var(--line);margin-left:6px;vertical-align:2px}
+.home-todo,.home-list{display:flex;flex-direction:column;gap:2px;margin-top:10px}
+.home-t{display:flex;gap:10px;align-items:center;padding:9px 6px;border-radius:10px;cursor:pointer}.home-t:hover,.home-li:hover{background:var(--line)}.home-t input{width:17px;height:17px;accent-color:var(--green)}.home-t>div{flex:1;min-width:0}.home-t b,.home-li b{display:block;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.home-t small,.home-li small{font-size:11.5px}
+.home-pr{font-size:11px;font-weight:700;padding:2px 8px;border-radius:20px;background:var(--line)}.home-pr.high{background:var(--coral-soft);color:var(--coral)}.home-pr.medium{background:var(--yellow-soft);color:#B7861A}
+.home-li{display:flex;gap:10px;align-items:center;padding:8px 6px;border-radius:10px;cursor:pointer}.home-li .grow{min-width:0}
+.home-chats{margin-top:14px}.home-av{display:flex;gap:10px;overflow-x:auto;padding:8px 0 2px}.home-chat{display:flex;flex-direction:column;align-items:center;gap:4px;border:0;background:transparent;color:var(--text);min-width:86px;padding:8px;border-radius:12px}.home-chat:hover{background:var(--line)}.home-chat small{font-size:11px;color:var(--muted);max-width:90px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media (max-width:1100px){.home-cards{grid-template-columns:1fr 1fr}.home-2{grid-template-columns:1fr}}
+@media (max-width:640px){.home-li .tp-st{display:none}.home-li small{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}.home-cards{gap:8px}.home-c{padding:12px}.home-cn b{font-size:24px}.home-steps{justify-content:flex-start}.home-step{min-width:64px}.home-setup .btn{width:100%}}
+/* accordion */
+.acc-list{display:flex;flex-direction:column;gap:10px}
+.acc{border-radius:14px;border:1px solid var(--line);background:var(--glass-2,var(--card));transition:border-color .25s,box-shadow .25s}.acc.open{border-color:color-mix(in srgb,var(--blue-2) 55%,transparent);box-shadow:0 0 0 3px color-mix(in srgb,var(--blue-2) 12%,transparent),0 10px 30px rgba(0,0,0,.18)}
+.acc-h{display:flex;align-items:center;gap:12px;width:100%;padding:14px 16px;border:0;background:transparent;color:var(--text);text-align:left;border-radius:14px}
+.acc-dot{width:9px;height:9px;border-radius:50%;flex:none;box-shadow:0 0 0 3px color-mix(in srgb,currentColor 0%,transparent)}
+.acc-ic{width:40px;height:40px;border-radius:11px;display:grid;place-items:center;flex:none;background:color-mix(in srgb,var(--c) 18%,transparent);color:var(--c)}.acc-ic .i{width:20px;height:20px}.acc-txt{font-size:13px;font-weight:800}
+.acc-t{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}.acc-t b{font-size:14.5px}.acc-t small{font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.acc-bd{font-size:11px;font-weight:800;color:#8B5CF6;background:color-mix(in srgb,#A78BFA 18%,transparent);padding:2px 8px;border-radius:20px}
+.acc-chev{transition:transform .3s cubic-bezier(.2,.8,.2,1);color:var(--muted)}.acc.open .acc-chev{transform:rotate(90deg);color:var(--blue-2)}
+.acc-b{display:grid;grid-template-rows:0fr;transition:grid-template-rows .3s cubic-bezier(.2,.8,.2,1)}.acc.open .acc-b{grid-template-rows:1fr}.acc-in{overflow:hidden;min-height:0}
+.acc-pad{padding:0 16px 16px;opacity:0;transform:translateY(-4px);transition:opacity .25s,transform .25s}.acc.open .acc-pad{opacity:1;transform:none}
+.conn-g{margin-bottom:20px}.conn-gt{font-size:11.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin:0 2px 8px}
+.conn-q{min-width:240px}
+.cf-grid{grid-template-columns:1fr 1fr}.cf-in{position:relative;display:flex;align-items:center}.cf-in .input{flex:1}.cf-eye{position:absolute;right:6px;border:0;background:transparent;opacity:.6;font-size:13px}
+.cf-foot{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:12px;padding-top:12px;border-top:1px solid var(--line)}.cf-safe{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted)}.cf-safe .i{width:14px;height:14px}
+.cf-msg{font-size:12.5px;margin-top:8px}.cf-msg.bad{color:var(--coral)}.cf-msg.ok{color:var(--green)}.cf-warn{color:#D97706;font-size:12px}
+.cf-how{margin-top:10px;font-size:13px}.cf-how summary{cursor:pointer;font-weight:700;color:var(--blue-2)}.cf-how ol{margin:8px 0 0;padding-left:18px;color:var(--muted)}.cf-how li{margin-bottom:4px}
+.cf-map{margin-top:12px;padding:12px;border-radius:12px;background:var(--line)}.cf-mg{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 14px;margin-top:8px}.cf-mg label{display:grid;grid-template-columns:150px 1fr;align-items:center;gap:8px;font-size:12.5px}
+.al-list{display:flex;gap:6px;flex-wrap:wrap;align-items:center}.al-list .input{width:auto;flex:1;min-width:150px}.al-chip{display:inline-flex;align-items:center;gap:4px;font-size:12.5px;padding:4px 6px 4px 10px;border-radius:20px;background:var(--blue-soft);color:var(--blue-2);font-weight:600}.al-chip button{border:0;background:transparent;color:inherit;font-size:15px;line-height:1;padding:0 4px}
+.al-rules{display:flex;flex-direction:column;margin-top:12px}.al-r{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0;border-top:1px solid var(--line);flex-wrap:wrap}.al-r b{display:block;font-size:13.5px}.al-r small{font-size:12px}.al-min{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);margin-top:4px}.al-min .input{width:90px}
+.al-seg{display:flex;gap:3px;background:var(--line);padding:3px;border-radius:10px}.al-seg button{border:0;background:transparent;color:var(--muted);font-weight:600;font-size:12.5px;padding:6px 11px;border-radius:8px;transition:background .2s,color .2s}.al-seg button.on{background:var(--glass-3);color:var(--text);box-shadow:0 1px 3px rgba(0,0,0,.15)}
+.set-acc{width:min(640px,100%)!important}.set-acc .stab-in .m-foot{margin-top:12px}
+.mod-types{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:14px}.mod-type{display:flex;flex-direction:column;gap:4px;text-align:left;padding:12px;border-radius:12px;border:1px solid var(--line-2);background:transparent;color:var(--text)}.mod-type small{color:var(--muted);font-size:12px}.mod-type.on{border-color:var(--blue-2);background:var(--blue-soft)}
+.mod-list{display:flex;flex-direction:column}.mod-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 2px;border-top:1px solid var(--line);cursor:pointer}.mod-row b{display:block;font-size:13.5px}.mod-row small{font-size:12px}
+.sw{position:relative;width:40px;height:23px;flex:none}.sw input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}.sw i{position:absolute;inset:0;border-radius:20px;background:var(--line-2);transition:background .2s}.sw i::after{content:'';position:absolute;top:3px;left:3px;width:17px;height:17px;border-radius:50%;background:#fff;transition:transform .2s cubic-bezier(.2,.8,.2,1)}.sw input:checked+i{background:var(--green)}.sw input:checked+i::after{transform:translateX(17px)}.sw input:focus-visible+i{outline:2px solid var(--blue-2);outline-offset:2px}
+@media (max-width:640px){.cf-grid,.cf-mg{grid-template-columns:1fr}.cf-mg label{grid-template-columns:1fr}.mod-types{grid-template-columns:1fr}.conn-q{min-width:0;width:100%}}
+body.mod-off-store [data-cm],body.mod-off-store .mod-store,body.mod-off-store [data-go="orders"],body.mod-off-store [data-go="insales"],body.mod-off-ads [data-go="ads"],body.mod-off-ads .mod-ads,body.mod-off-ads [data-go="inmarketing"],body.mod-off-campaigns [data-go="broadcast"],body.mod-off-campaigns [data-go="templates"],body.mod-off-automation [data-go="automation"],body.mod-off-automation [data-go="n8n"],body.mod-off-automation [data-go="scripts"],body.mod-off-pipeline [data-go="pipeline"],body.mod-off-pipeline [data-go="calls"]{display:none!important}
+/* premium dropdown */
+.nvdd{position:relative;display:inline-flex;vertical-align:middle;min-width:0}.nvdd>select.nvdd-native{position:absolute;inset:0;width:100%;height:100%;opacity:0;pointer-events:none}
+.nvdd-b{display:flex;align-items:center;gap:8px;width:100%;min-height:38px;padding:0 10px 0 12px;border-radius:var(--r-ctl,10px);border:1px solid var(--line-2);background:var(--input-bg,var(--glass-3));color:var(--text);font:inherit;font-size:14px;text-align:left;cursor:pointer;transition:border-color .2s,box-shadow .2s}
+.nvdd-b.sm{min-height:32px;font-size:13px;padding:0 8px 0 10px}.nvdd-b:hover{border-color:color-mix(in srgb,var(--blue-2) 45%,var(--line-2))}.nvdd-b:focus-visible,.nvdd-b.open{outline:0;border-color:var(--blue-2);box-shadow:0 0 0 3px color-mix(in srgb,var(--blue-2) 18%,transparent)}.nvdd-b:disabled{opacity:.55;cursor:default}
+.nvdd-v{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.nvdd-c{width:15px;height:15px;color:var(--muted);transition:transform .25s}.nvdd-b.open .nvdd-c{transform:rotate(180deg)}
+.nvdd-pop{position:fixed;z-index:400;max-width:min(360px,calc(100vw - 16px));border-radius:12px;padding:5px;box-shadow:0 18px 50px rgba(0,0,0,.35);border:1px solid var(--line-2);background:var(--glass-3);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);opacity:0;transform:translateY(-6px) scale(.98);transform-origin:top;transition:opacity .16s,transform .18s cubic-bezier(.2,.8,.2,1)}.nvdd-pop.up{transform-origin:bottom;transform:translateY(6px) scale(.98)}.nvdd-pop.show{opacity:1;transform:none}
+.nvdd-s{padding:4px 4px 6px}.nvdd-l{max-height:300px;overflow:auto}.nvdd-o{display:flex;align-items:center;gap:8px;width:100%;border:0;background:transparent;color:var(--text);text-align:left;padding:8px 10px;border-radius:8px;font-size:13.5px}.nvdd-o span{flex:1}.nvdd-o .i{width:15px;height:15px;color:var(--blue-2)}
+.nvdd-o:hover,.nvdd-o.kb{background:var(--line)}.nvdd-o.on{color:var(--blue-2);font-weight:700;background:var(--blue-soft)}.nvdd-o:disabled{opacity:.45}.nvdd-e{padding:10px;font-size:13px;color:var(--muted)}
+/* command palette */
+.cmdk{position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.45);backdrop-filter:blur(3px);display:flex;justify-content:center;align-items:flex-start;padding:12vh 12px 12px;opacity:0;pointer-events:none;transition:opacity .18s}.cmdk.show{opacity:1;pointer-events:auto}
+.cmdk-box{width:min(620px,100%);border-radius:16px;overflow:hidden;border:1px solid var(--line-2);box-shadow:0 30px 80px rgba(0,0,0,.45);transform:translateY(-8px) scale(.98);transition:transform .22s cubic-bezier(.2,.8,.2,1);background:var(--glass-3)}.cmdk.show .cmdk-box{transform:none}
+.cmdk-in{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--line)}.cmdk-in input{flex:1;border:0;background:transparent;color:var(--text);font:inherit;font-size:16px;outline:0}
+kbd{font-family:inherit;font-size:11px;font-weight:700;padding:2px 6px;border-radius:5px;border:1px solid var(--line-2);color:var(--muted);background:var(--line)}
+.cmdk-l{max-height:min(52vh,440px);overflow:auto;padding:6px}.cmdk-g{font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding:8px 10px 4px}
+.cmdk-i{display:flex;align-items:center;gap:10px;width:100%;border:0;background:transparent;color:var(--text);text-align:left;padding:9px 10px;border-radius:9px}.cmdk-i span{font-weight:600;font-size:14px}.cmdk-i small{flex:1;font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.cmdk-i kbd{opacity:0}.cmdk-i.on{background:var(--blue-soft)}.cmdk-i.on kbd{opacity:1}.cmdk-i:hover{background:var(--line)}
+.cmdk-e{padding:22px;text-align:center;color:var(--muted);font-size:13px}.cmdk-f{display:flex;gap:16px;padding:10px 16px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}.cmdk-f kbd{margin-right:3px}
+/* notifications */
+.notif-pop{position:fixed;z-index:300;width:min(360px,calc(100vw - 16px));border-radius:14px;padding:6px;border:1px solid var(--line-2);box-shadow:0 20px 60px rgba(0,0,0,.4);background:var(--glass-3);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);opacity:0;transform:translateY(-6px);pointer-events:none;transition:opacity .18s,transform .2s}.notif-pop.show{opacity:1;transform:none;pointer-events:auto}
+.np-h{display:flex;align-items:center;justify-content:space-between;padding:8px 10px}.np-i{display:flex;gap:10px;align-items:flex-start;width:100%;border:0;background:transparent;color:var(--text);text-align:left;padding:10px;border-radius:10px}.np-i:hover{background:var(--line)}.np-i b{display:block;font-size:13px}.np-i small{font-size:12px;color:var(--muted)}.np-i.fresh b::after{content:'';display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--blue-2);margin-left:6px;vertical-align:1px}
+.np-ic{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;flex:none;font-size:14px;background:var(--line)}.np-ic.bad{background:var(--coral-soft)}.np-ic.warn{background:var(--yellow-soft)}.np-ic.good{background:var(--green-soft)}.np-e{padding:22px;text-align:center;color:var(--muted);font-size:13px}
+/* mobile bottom bar */
+.mbar{display:none}
+@media (max-width:820px){.mbar{position:fixed;left:10px;right:10px;bottom:10px;z-index:60;display:grid;grid-template-columns:repeat(5,1fr);padding:6px;border-radius:18px;border:1px solid var(--line-2);box-shadow:0 10px 40px rgba(0,0,0,.35);background:var(--glass-3);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);padding-bottom:max(6px,env(safe-area-inset-bottom))}
+  .mbar button{display:flex;flex-direction:column;align-items:center;gap:2px;border:0;background:transparent;color:var(--muted);font-size:10.5px;font-weight:700;padding:6px 0;border-radius:12px}.mbar button.active{color:var(--blue-2);background:var(--blue-soft)}.mbar .i{width:20px;height:20px}
+  .main{padding-bottom:96px!important}.top .nav{display:none}#helpFab{bottom:86px!important}}
+.more-sheet{position:fixed;inset:0;z-index:450;background:rgba(0,0,0,.45);opacity:0;pointer-events:none;transition:opacity .2s}.more-sheet.show{opacity:1;pointer-events:auto}
+.more-box{position:absolute;left:0;right:0;bottom:0;max-height:80vh;overflow:auto;border-radius:20px 20px 0 0;padding:10px 14px 24px;transform:translateY(30px);transition:transform .25s cubic-bezier(.2,.8,.2,1);background:var(--glass-3);display:flex;flex-direction:column;gap:2px}.more-sheet.show .more-box{transform:none}
+.more-box .lbl{opacity:1!important}.more-box .sgrp{opacity:1!important;margin-top:8px}.more-grab{width:40px;height:4px;border-radius:4px;background:var(--line-2);margin:0 auto 8px}
+@media (prefers-reduced-motion:reduce){.acc-b,.acc-pad,.acc-chev,.nvdd-pop,.cmdk,.cmdk-box,.notif-pop,.more-box,.home-ring circle.on,.ins-k,.home-c{transition:none!important}}
 /* ---------- commerce ---------- */
 .cm-tabs{margin:-4px 0 14px;overflow-x:auto;flex-wrap:nowrap;scrollbar-width:none}.cm-tabs::-webkit-scrollbar{display:none}.cm-tabs .tab{white-space:nowrap}
 .cm-fb{gap:8px}.cm-fb select.input{width:auto;max-width:190px}
@@ -1152,36 +1248,24 @@ body.ro [data-cmw],body.np-commerce [data-cmw]{display:none!important}
     <div class="side-brand"><div class="logo brand-logo"><svg class="i" viewBox="0 0 24 24" style="width:22px;height:22px"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="12" r="2.5"/><circle cx="6" cy="18" r="2.5"/><path d="M8.3 7.2 15.7 11M8.3 16.8 15.7 13"/></svg></div><span class="lbl brandTxt">Nodevers</span></div>
     <div class="sgrp plat-only">Platform</div>
     <button class="sbtn plat-only" data-go="admin"><svg class="i" viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 4.5 3.4 8.3 8 9 4.6-.7 8-4.5 8-9V6Z"/><path d="m9 12 2 2 4-4"/></svg><span class="lbl">Admin Console</span></button>
+    <button class="sbtn sb-home" data-go="home"><svg class="i" viewBox="0 0 24 24"><path d="m3 11 9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg><span class="lbl">Home</span></button>
     <div class="sgrp">CRM</div>
-    <button class="sbtn" data-go="dashboard"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg><span class="lbl">Dashboard</span></button>
-    <button class="sbtn" data-go="pipeline"><svg class="i" viewBox="0 0 24 24"><circle cx="5" cy="6" r="2"/><circle cx="19" cy="6" r="2"/><circle cx="12" cy="18" r="2"/><path d="M7 6h10M6 8l5 8.3M18 8l-5 8.3"/></svg><span class="lbl">Pipeline</span></button>
-    <button class="sbtn" data-go="leads"><svg class="i" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13"/><circle cx="3.5" cy="6" r="1"/><circle cx="3.5" cy="12" r="1"/><circle cx="3.5" cy="18" r="1"/></svg><span class="lbl">Leads</span></button>
-    <button class="sbtn" data-go="tasks"><svg class="i" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg><span class="lbl">Tasks</span><span class="nbadge" id="tasksBadge" hidden></span></button>
-    <button class="sbtn" data-go="calls"><svg class="i" viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg><span class="lbl">Calls</span></button>
-    <button class="sbtn" data-go="industry"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M17.5 14v7M14 17.5h7"/></svg><span class="lbl">Industry Kits</span></button>
-    <div class="sgrp">Commerce</div>
-    <button class="sbtn" data-go="commerce" data-cm="overview"><svg class="i" viewBox="0 0 24 24"><path d="M4 9h16l-1.2-4.2A1 1 0 0 0 17.8 4H6.2a1 1 0 0 0-1 .8Z"/><path d="M5 9v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9M9 20v-6h6v6"/></svg><span class="lbl">Store Overview</span></button>
-    <button class="sbtn" data-go="commerce" data-cm="products"><svg class="i" viewBox="0 0 24 24"><path d="m12 3 8 4.5v9L12 21l-8-4.5v-9Z"/><path d="m4 7.5 8 4.5 8-4.5M12 12v9"/></svg><span class="lbl">Products</span></button>
-    <button class="sbtn" data-go="commerce" data-cm="inventory"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="5" rx="1"/><path d="M5 9v10h14V9M10 13h4"/></svg><span class="lbl">Inventory</span></button>
-    <button class="sbtn" data-go="commerce" data-cm="amazon"><svg class="i" viewBox="0 0 24 24"><path d="M4 15c4.5 3 11.5 3 16 0"/><path d="m17 13 3 2-1 3.5"/><path d="M8 11.5c0-2 1.5-3 4-3s4 1 4 3"/></svg><span class="lbl">Amazon</span></button>
-    <button class="sbtn" data-go="commerce" data-cm="website"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3"/></svg><span class="lbl">Website</span></button>
+    <button class="sbtn" data-gofam="leads"><svg class="i" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4.5a3.5 3.5 0 0 1 0 7M18 14a6 6 0 0 1 3.5 6"/></svg><span class="lbl">Leads</span></button>
+    <button class="sbtn" data-gofam="tasks"><svg class="i" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg><span class="lbl">Tasks & Calls</span><span class="nbadge" id="tasksBadge" hidden></span></button>
     <button class="sbtn" data-go="orders"><svg class="i" viewBox="0 0 24 24"><path d="M6 7h12l-1 13H7Z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg><span class="lbl">Orders</span></button>
-    <button class="sbtn" data-go="commerce" data-cm="analytics"><svg class="i" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg><span class="lbl">Store Analytics</span></button>
-    <button class="sbtn" data-go="commerce" data-cm="channels"><svg class="i" viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg><span class="lbl">Channels</span></button>
+    <div class="sgrp mod-store">Store</div>
+    <button class="sbtn" data-go="commerce" data-cm="overview"><svg class="i" viewBox="0 0 24 24"><path d="M4 9h16l-1.2-4.2A1 1 0 0 0 17.8 4H6.2a1 1 0 0 0-1 .8Z"/><path d="M5 9v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9M9 20v-6h6v6"/></svg><span class="lbl">Store</span></button>
+    <button class="sbtn" data-go="commerce" data-cm="products"><svg class="i" viewBox="0 0 24 24"><path d="m12 3 8 4.5v9L12 21l-8-4.5v-9Z"/><path d="m4 7.5 8 4.5 8-4.5M12 12v9"/></svg><span class="lbl">Products & Stock</span></button>
     <div class="sgrp">Messaging</div>
     <button class="sbtn" data-go="whatsapp"><svg class="i" viewBox="0 0 24 24"><path d="M3.5 20.5 5 16a8.5 8.5 0 1 1 3.2 3.2Z"/><path d="M9 9.5c0 3 2.5 5.5 5.5 5.5l1.2-1.4-1.9-1-1 .8a4 4 0 0 1-2.2-2.2l.8-1-1-1.9Z"/></svg><span class="lbl">Inbox</span></button>
-    <button class="sbtn" data-go="broadcast"><svg class="i" viewBox="0 0 24 24"><path d="m3 11 18-8-8 18-2-8Z"/></svg><span class="lbl">Broadcast</span></button>
-    <button class="sbtn" data-go="templates"><svg class="i" viewBox="0 0 24 24"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9Z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></svg><span class="lbl">Templates</span></button>
-    <button class="sbtn" data-go="automation"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="4" width="6" height="5" rx="1.2"/><rect x="15" y="4" width="6" height="5" rx="1.2"/><rect x="9" y="15" width="6" height="5" rx="1.2"/><path d="M9 6.5h6M6 9v3a3 3 0 0 0 3 3M18 9v3a3 3 0 0 1-3 3"/></svg><span class="lbl">Automation</span></button>
-    <button class="sbtn" data-go="scripts"><svg class="i" viewBox="0 0 24 24"><path d="m8 7-5 5 5 5M16 7l5 5-5 5M13.5 4l-3 16"/></svg><span class="lbl">Scripts & Presets</span></button>
-    <div class="sgrp">Integrations</div>
-    <button class="sbtn" data-go="n8n"><svg class="i" viewBox="0 0 24 24"><circle cx="5" cy="12" r="2.2"/><circle cx="19" cy="6" r="2.2"/><circle cx="19" cy="18" r="2.2"/><path d="M7.2 12h4.3M11.5 12c2.5 0 2.5-6 5.3-6M11.5 12c2.5 0 2.5 6 5.3 6"/></svg><span class="lbl">n8n Services</span></button>
-    <div class="sgrp">Marketing</div>
-    <button class="sbtn" data-go="ads"><svg class="i" viewBox="0 0 24 24"><path d="M3 11v2a1 1 0 0 0 1 1h2l5 4V6L6 10H4a1 1 0 0 0-1 1Z"/><path d="M15 8.5a4.5 4.5 0 0 1 0 7M18 5.5a8.5 8.5 0 0 1 0 13"/></svg><span class="lbl">Meta Ads</span></button>
+    <button class="sbtn" data-gofam="campaigns"><svg class="i" viewBox="0 0 24 24"><path d="m3 11 18-8-8 18-2-8Z"/></svg><span class="lbl">Campaigns</span></button>
+    <button class="sbtn" data-gofam="automation"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="4" width="6" height="5" rx="1.2"/><rect x="15" y="4" width="6" height="5" rx="1.2"/><rect x="9" y="15" width="6" height="5" rx="1.2"/><path d="M6 9v2a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V9M12 13v2"/></svg><span class="lbl">Automation</span></button>
+    <div class="sgrp mod-ads">Marketing</div>
+    <button class="sbtn" data-go="ads"><svg class="i" viewBox="0 0 24 24"><path d="M3 11v2a1 1 0 0 0 1 1h2l5 4V6L6 10H4a1 1 0 0 0-1 1Z"/><path d="M15 8.5a4.5 4.5 0 0 1 0 7M18 5.5a8.5 8.5 0 0 1 0 13"/></svg><span class="lbl">Ads Manager</span></button>
     <div class="sgrp">Insights</div>
-    <button class="sbtn" data-go="analytics"><svg class="i" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="m7 15 4-5 3 3 5-6"/></svg><span class="lbl">Analytics</span></button>
-    <button class="sbtn" data-go="performance"><svg class="i" viewBox="0 0 24 24"><circle cx="8" cy="8" r="3"/><path d="M2.5 19a5.5 5.5 0 0 1 11 0"/><path d="M15 19v-5M18 19V9M21 19v-8"/></svg><span class="lbl">Team Performance</span></button>
-    <button class="sbtn" data-go="reports"><svg class="i" viewBox="0 0 24 24"><path d="M3 3v18h18"/><rect x="7" y="12" width="3" height="6" rx=".8"/><rect x="12" y="8" width="3" height="10" rx=".8"/><rect x="17" y="5" width="3" height="13" rx=".8"/></svg><span class="lbl">Reports</span></button>
+    <button class="sbtn" data-gofam="insights"><svg class="i" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="m7 15 4-5 3 3 5-6"/></svg><span class="lbl">Insights</span></button>
+    <div class="sgrp">Setup</div>
+    <button class="sbtn" data-go="connections"><svg class="i" viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg><span class="lbl">Connections</span></button>
     <button class="sbtn" data-go="team"><svg class="i" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4.5a3.5 3.5 0 0 1 0 7M18 14a6 6 0 0 1 3.5 6"/></svg><span class="lbl">Team</span></button>
     <div class="spacer" style="flex:1;min-height:12px"></div>
     <div class="powered lbl">Powered by <b>Nodevers</b></div>
@@ -1191,26 +1275,16 @@ body.ro [data-cmw],body.np-commerce [data-cmw]{display:none!important}
 
   <main class="main">
     <header class="top glass">
-      <div class="brand" id="brandBox" data-go="dashboard"><span id="brandName">Nodevers</span></div>
+      <div class="brand" id="brandBox" data-go="home"><span id="brandName">Nodevers</span></div>
       <nav class="nav" id="nav">
-        <a href="#dashboard" data-go="dashboard">Dashboard</a>
-        <a href="#pipeline" data-go="pipeline">Pipeline</a>
-        <a href="#leads" data-go="leads">Leads</a>
-        <a href="#industry" data-go="industry" class="mob">Kits</a>
-        <a href="#commerce" data-go="commerce">Store</a>
+        <a href="#home" data-go="home">Home</a>
+        <a href="#leads" data-gofam="leads" data-navfam="leads">Leads</a>
+        <a href="#commerce" data-go="commerce" class="mod-store">Store</a>
         <a href="#whatsapp" data-go="whatsapp">Inbox<span class="nav-badge" id="waBadge" hidden></span></a>
-        <a href="#broadcast" data-go="broadcast" class="mob">Broadcast</a>
-        <a href="#automation" data-go="automation" class="mob">Automation</a>
-        <a href="#ads" data-go="ads">Ads</a>
-        <a href="#n8n" data-go="n8n" class="mob">n8n</a>
-        <a href="#analytics" data-go="analytics">Analytics</a>
-        <a href="#reports" data-go="reports" class="mob">Reports</a>
-        <a href="#team" data-go="team" class="mob">Team</a>
-        <a href="#templates" data-go="templates" class="mob">Templates</a>
-        <a href="#scripts" data-go="scripts" class="mob">Scripts</a>
+        <a href="#insights" data-gofam="insights">Insights</a>
       </nav>
       <div class="grow"></div>
-      <label class="search"><svg class="i" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="gsearch" type="search" name="q-gsearch" autocomplete="off" readonly data-noautofill placeholder="Search leads, business, city…"></label>
+      <label class="search"><svg class="i" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="gsearch" type="search" name="q-gsearch" autocomplete="off" readonly data-noautofill placeholder="Search anything… Ctrl+K city…"></label>
       <button class="ibtn" id="refreshBtn" title="Refresh data"><svg class="i" viewBox="0 0 24 24"><path d="M20 11a8 8 0 0 0-14.6-4.5L4 8M4 4v4h4M4 13a8 8 0 0 0 14.6 4.5L20 16M20 20v-4h-4"/></svg></button>
       <button class="ibtn" id="bellBtn" title="Follow-ups due"><svg class="i" viewBox="0 0 24 24"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10.3 21a1.9 1.9 0 0 0 3.4 0"/></svg><span class="dot-badge" id="bellDot" hidden></span></button>
       <button class="ibtn mobonly" id="mThemeBtn" title="Dark / Light"><svg class="i" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 1 1 9.5 4 6.5 6.5 0 0 0 20 14.5Z"/></svg></button>
@@ -1244,6 +1318,21 @@ body.ro [data-cmw],body.np-commerce [data-cmw]{display:none!important}
         <button class="btn primary" data-add><svg class="i" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Add Lead</button>
       </div>
       <div class="grid" id="lgrid"></div>
+    </section>
+
+    <!-- HOME -->
+    <section class="view" id="v-home"><div id="homeBody"></div></section>
+
+    <!-- INSIGHTS HUB -->
+    <section class="view" id="v-insights"><div id="insBody"></div></section>
+    <section class="view" id="v-insales"><div id="insalesBody"></div></section>
+    <section class="view" id="v-inmarketing"><div id="inmBody"></div></section>
+
+    <!-- CONNECTIONS -->
+    <section class="view" id="v-connections">
+      <div class="head"><div><div class="eyebrow">Setup</div><h1>Connections</h1><p class="sub">Everything your workspace is connected to — messaging, store channels, alerts and ads.</p></div>
+        <div class="head-actions"><label class="search conn-q"><svg class="i" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="connQ" type="search" autocomplete="off" placeholder="Search settings…"></label></div></div>
+      <div id="connBody"></div>
     </section>
 
     <!-- PIPELINE -->
@@ -1359,6 +1448,7 @@ body.ro [data-cmw],body.np-commerce [data-cmw]{display:none!important}
       <div class="head"><div><div class="eyebrow">Insights</div><h1>Reports</h1><p class="sub">The full picture of your leads and deals.</p></div></div>
       <div class="rstats" id="rstats"></div>
       <div class="rgrid" id="rgrid"></div>
+      <div id="repStore"></div>
     </section>
 
     <!-- TEMPLATES -->
@@ -1395,7 +1485,7 @@ body.ro [data-cmw],body.np-commerce [data-cmw]{display:none!important}
 
     <!-- PERFORMANCE MARKETING · META ADS -->
     <section class="view" id="v-ads">
-      <div class="head"><div><div class="eyebrow">Performance Marketing</div><h1>Meta Ads</h1><p class="sub">Facebook & Instagram campaigns, connected to your pipeline.</p></div>
+      <div class="head"><div><div class="eyebrow">Marketing</div><h1>Ads Manager</h1><p class="sub">Meta, Google and marketplace ads — campaigns, lead forms, spend and ROAS against your real sales.</p></div>
         <div class="adhead-r"><span class="badge" id="adsMode">Sample data</span><select class="input" id="adsRange" style="width:auto"><option value="7">Last 7 days</option><option value="14">Last 14 days</option><option value="30">Last 30 days</option></select></div></div>
       <div class="banner" style="background:var(--blue-soft);border-color:var(--stroke)"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg><div class="grow">Showing <b>sample ad data</b>. CRM numbers (leads, won deals, ROAS) are real. Live Meta numbers start once your ad account is connected.</div><button class="btn sm" data-adtab="connect">Connect</button></div>
       <div class="subnav" id="adsTabs"></div>
@@ -1467,6 +1557,7 @@ body.ro [data-cmw],body.np-commerce [data-cmw]{display:none!important}
 <aside class="panel" id="panel"></aside>
 
 <!-- LEAD MODAL -->
+<div id="famProbe" hidden aria-hidden="true"></div>
 <div class="modal" id="leadModal"><div class="box" id="leadBox"></div></div>
 
 <!-- SETTINGS MODAL -->
@@ -1852,7 +1943,7 @@ function finishLoad(anim) {
   taskReminders(); { const b = $('#tasksBadge'), n = salesReady() ? (S.tasks || []).filter(t => t.status === 'Open' && taskState(t) === 'overdue' && (AUTH.role !== 'member' || t.assignedTo === me())).length : 0; if (b) { b.hidden = !n; b.textContent = n; } }
 }
 /** Render only the screen you're looking at; the others re-render when you open them */
-const VIEW_RENDER = { commerce: a => renderCommerce(a), orders: a => renderOrders(a), admin: a => renderAdmin(a), tasks: a => renderTasks(a), calls: a => renderCalls(a), performance: a => renderPerformance(a), analytics: a => renderAnalytics(a), industry: a => renderIndustry(a), n8n: a => renderN8n(a), automation: () => autoCanvas().sync(), dashboard: a => renderDashboard(a), pipeline: a => renderPipeline(a), leads: a => renderLeads(a), team: a => { renderTeam(a); renderLogins(); }, broadcast: () => renderBroadcast(), whatsapp: () => renderInbox(), reports: a => renderReports(a), templates: () => renderTemplates(), scripts: () => renderScripts(true), ads: a => renderAds(a) };
+const VIEW_RENDER = { home: a => renderHome(a), insights: a => renderInsights(a), insales: a => renderInSales(a), inmarketing: a => renderInMarketing(a), connections: a => renderConnections(a), commerce: a => renderCommerce(a), orders: a => renderOrders(a), admin: a => renderAdmin(a), tasks: a => renderTasks(a), calls: a => renderCalls(a), performance: a => renderPerformance(a), analytics: a => renderAnalytics(a), industry: a => renderIndustry(a), n8n: a => renderN8n(a), automation: () => autoCanvas().sync(), dashboard: a => renderDashboard(a), pipeline: a => renderPipeline(a), leads: a => renderLeads(a), team: a => { renderTeam(a); renderLogins(); }, broadcast: () => renderBroadcast(), whatsapp: () => renderInbox(), reports: a => renderReports(a), templates: () => renderTemplates(), scripts: () => renderScripts(true), ads: a => renderAds(a) };
 const staleViews = new Set();
 const activeView = () => { const v = $('.view.active'); return v ? v.id.slice(2) : 'dashboard'; };
 function renderAll(anim) {
@@ -1860,7 +1951,7 @@ function renderAll(anim) {
   const cur = activeView();
   Object.keys(VIEW_RENDER).forEach(k => { if (k === cur) VIEW_RENDER[k](anim); else staleViews.add(k); });
   if (ui.openId) renderPanel(ui.openId);
-  $('#bellDot').hidden = !S.leads.some(isDue);
+  try { applyModules(); notifBadge(); } catch (e) { }
   try { const n = convos().reduce((s, c) => s + c.unread, 0), bd = $('#waBadge'); bd.hidden = !n; bd.textContent = n > 99 ? '99+' : n; } catch (e) { }
 }
 function fillSelects() {
@@ -2974,7 +3065,7 @@ async function applyRun() {
 
 /* ================= Performance Marketing · Meta Ads ================= */
 const ADS = { tab: 'overview', range: 30, camp: '', data: null };
-const ADS_TABS = [['overview', 'Overview'], ['canvas', 'Canvas'], ['campaigns', 'Campaigns'], ['adsets', 'Ad sets'], ['ads', 'Ads'], ['audiences', 'Audiences'], ['creatives', 'Creatives'], ['forms', 'Lead forms'], ['funnel', 'Funnel'], ['connect', 'Connect']];
+const ADS_TABS = [['overview', 'Overview'], ['spend', 'Spend & ROAS'], ['canvas', 'Canvas'], ['campaigns', 'Campaigns'], ['adsets', 'Ad sets'], ['ads', 'Ads'], ['audiences', 'Audiences'], ['creatives', 'Creatives'], ['forms', 'Lead forms'], ['funnel', 'Funnel'], ['connect', 'Connect']];
 const AD_SOURCES = ['Meta Ad', 'Instagram', 'Facebook'];
 const cmp = n => { n = Number(n) || 0; if (n >= 1e7) return (n / 1e7).toFixed(1) + ' Cr'; if (n >= 1e5) return (n / 1e5).toFixed(1) + 'L'; if (n >= 1e3) return (n / 1e3).toFixed(1) + 'K'; return String(Math.round(n)); };
 const pct = (a, b) => b ? (a / b * 100) : 0;
@@ -3073,7 +3164,7 @@ function renderAds(anim) {
   $('#adsRange').value = String(ADS.range);
   const isCv = ADS.tab === 'canvas'; $('#adsCanvas').hidden = !isCv; $('#adsBody').hidden = isCv;
   if (isCv) { adsCanvas().sync(); return; }
-  const body = $('#adsBody'), f = { overview: adsOverview, campaigns: adsCampaigns, adsets: adsAdsets, ads: adsAds, audiences: adsAudiences, creatives: adsCreatives, forms: adsForms, funnel: adsFunnel, connect: adsConnect }[ADS.tab] || adsOverview;
+  const body = $('#adsBody'), f = { spend: () => cmOk() ? cmAdsTab() : `<div class="tp-empty glass"><b>Spend & ROAS needs the 09 database update</b><p class="muted">Run <code>09_commerce.sql</code> in Supabase → SQL Editor, then refresh.</p></div>`, overview: adsOverview, campaigns: adsCampaigns, adsets: adsAdsets, ads: adsAds, audiences: adsAudiences, creatives: adsCreatives, forms: adsForms, funnel: adsFunnel, connect: adsConnect }[ADS.tab] || adsOverview;
   body.innerHTML = f();
   stagger(body, anim);
   if (ADS.tab === 'funnel') drawFunnelWires();
@@ -6610,8 +6701,11 @@ function hideModal(sel) { const ae = document.activeElement; if (ae && $(sel).co
 
 /* ================= routing ================= */
 const authInUrl = () => /access_token=|refresh_token=|error_description=|type=recovery|[?&]code=/.test(location.hash + location.search);
+const GO_ALIAS = { channels: 'connections', storeanalytics: 'insales', dash: 'home' };
 function go(name) {
-  if (!document.getElementById('v-' + name)) name = 'dashboard';
+  name = GO_ALIAS[name] || name;
+  if (!document.getElementById('v-' + name)) name = 'home';
+  if (FAM_OF[name] === 'insights') insSyncRanges();
   if (name !== 'pipeline' && typeof selWire !== 'undefined') { selWire = null; }
   $$('.view').forEach(v => v.classList.toggle('active', v.id === 'v-' + name));
   $$('[data-go]').forEach(a => a.classList.toggle('active', a.dataset.go === name));
@@ -6633,7 +6727,13 @@ function go(name) {
   if (name === 'admin') renderAdmin(true);
   if (name === 'orders') renderOrders(true);
   if (name === 'commerce') renderCommerce(true);
-  $$('[data-cm]').forEach(b => b.classList.toggle('active', name === 'commerce' && b.dataset.cm === CM.tab));
+  if (name === 'home') renderHome(true);
+  if (name === 'insights') renderInsights(true);
+  if (name === 'insales') renderInSales(true);
+  if (name === 'inmarketing') renderInMarketing(true);
+  if (name === 'connections') renderConnections(true);
+  if (name === 'reports') renderReportsStore();
+  navAfterGo(name);
   if (name === 'tasks') renderTasks(true);
   if (name === 'calls') renderCalls(true);
   if (name === 'performance') renderPerformance(true);
@@ -6704,7 +6804,7 @@ document.addEventListener('click', e => { const t = e.target; if (t.closest('[da
 document.addEventListener('input', e => { if (e.target.id === 'ordQ') { ORD.q = e.target.value; const pos = e.target.selectionStart; renderOrders(); const q = $('#ordQ'); if (q) { q.focus(); q.setSelectionRange(pos, pos); } } });
 
 /* ================= Commerce: store overview, products, inventory, Amazon, Website, analytics, reports, ad spend, channels ================= */
-const CM_TABS = [['overview', 'Overview'], ['products', 'Products'], ['inventory', 'Inventory'], ['amazon', 'Amazon'], ['website', 'Website'], ['analytics', 'Analytics'], ['reports', 'Reports'], ['ads', 'Ad spend'], ['channels', 'Channels']];
+const CM_TABS = [['overview', 'Overview'], ['amazon', 'Amazon'], ['website', 'Website'], ['products', 'Products'], ['inventory', 'Inventory']];
 const CM_CH = ['Amazon', 'Website', 'WhatsApp', 'Direct', 'Flipkart', 'Meesho', 'Other'];
 const CM_CHC = { Amazon: '#F59E0B', Website: 'var(--blue-2)', WhatsApp: 'var(--wa)', Direct: 'var(--green)', Flipkart: '#A78BFA', Meesho: 'var(--coral)', Other: 'var(--faint)' };
 const CM_DEAD = ['Cart', 'Cancelled', 'Refunded', 'RTO', 'Returned'], CM_RET = ['RTO', 'Returned', 'Refunded'];
@@ -6773,7 +6873,7 @@ function cmStates() { return [...new Set((S.orders || []).map(o => o.customerSta
 function cmFilterBar(opts = {}) {
   const st = cmStates();
   return `<div class="toolbar glass cm-fb">
-    <select class="input sm" data-cmf="range">${[[7, 'Last 7 days'], [30, 'Last 30 days'], [90, 'Last 90 days'], [180, 'Last 6 months'], [365, 'Last 12 months'], [0, 'All time']].map(([v, l]) => `<option value="${v}" ${CM.range === v ? 'selected' : ''}>${l}</option>`).join('')}</select>
+    <select class="input sm" data-cmf="range" ${CM.inIns ? 'hidden' : ''}>${[[7, 'Last 7 days'], [30, 'Last 30 days'], [90, 'Last 90 days'], [180, 'Last 6 months'], [365, 'Last 12 months'], [0, 'All time']].map(([v, l]) => `<option value="${v}" ${CM.range === v ? 'selected' : ''}>${l}</option>`).join('')}</select>
     ${opts.noCh ? '' : `<select class="input sm" data-cmf="ch"><option value="">All channels</option>${CM_CH.map(c => `<option ${CM.ch === c ? 'selected' : ''}>${c}</option>`).join('')}</select>`}
     <select class="input sm" data-cmf="state"><option value="">All states</option>${st.map(x => `<option ${CM.state === x ? 'selected' : ''}>${esc(x)}</option>`).join('')}</select>
     <select class="input sm" data-cmf="st"><option value="">All statuses</option>${ORD_ST.filter(x => x !== 'Cart').map(x => `<option ${CM.st === x ? 'selected' : ''}>${x}</option>`).join('')}</select>
@@ -6793,6 +6893,7 @@ function renderCommerce(anim) {
   const v = $('#v-commerce'); if (!v || !v.classList.contains('active')) return;
   $$('[data-cm]').forEach(b => b.classList.toggle('active', b.dataset.cm === CM.tab));
   $('#cmTabs').innerHTML = CM_TABS.map(([k, n]) => `<button class="tab ${CM.tab === k ? 'active' : ''}" data-cmtab="${k}">${n}</button>`).join('');
+  if (!CM_TABS.some(x => x[0] === CM.tab)) { const old = CM.tab; CM.tab = 'overview'; if (old === 'analytics' || old === 'reports') return go('insales'); if (old === 'ads') { ADS.tab = 'spend'; return go('ads'); } if (old === 'channels') return go('connections'); }
   const box = $('#cmBody');
   if (!cmOk()) { box.innerHTML = `<div class="tp-empty glass"><b>Commerce needs the 09 database update</b><p class="muted">Run <code>08_platform_flows.sql</code> and <code>09_commerce.sql</code> in Supabase → SQL Editor, then refresh.</p></div>`; return; }
   const f = { overview: cmOverview, products: cmProducts, inventory: cmInventory, amazon: () => cmChannel('Amazon'), website: () => cmChannel('Website'), analytics: cmAnalytics, reports: cmReports, ads: cmAdsTab, channels: cmChannels }[CM.tab] || cmOverview;
@@ -6803,7 +6904,7 @@ function cmStart() {
   return `<div class="cm-start glass"><div><b>Set up your store in 2 minutes</b><p class="muted">Bring your products, Amazon and website orders and ad spend into Nodevers — then every chart here fills in by itself.</p></div>
     <div class="cm-steps"><button class="cm-step" data-cmimport data-cmw><span>1</span><b>Import your sheet</b><small>Excel / CSV or a Google Sheet link — products, Amazon orders, website orders, ad spend</small></button>
     <button class="cm-step" data-cmprod="" data-cmw><span>2</span><b>Add a product</b><small>SKU, price, cost and stock</small></button>
-    <button class="cm-step" data-cmtab="channels"><span>3</span><b>Connect channels</b><small>Amazon, Shopify, WooCommerce — coming soon</small></button></div></div>`;
+    <button class="cm-step" data-go="connections"><span>3</span><b>Connect your website</b><small>Shopify, WooCommerce or any website API</small></button></div></div>`;
 }
 function cmOverview() {
   const o = cmOrders(), rev = cmSum(o, cmRev), profit = cmSum(o, cmProfit), live = o.filter(x => !CM_DEAD.includes(x.status)), units = cmSum(o, cmUnits), ret = o.filter(x => CM_RET.includes(x.status)).length;
@@ -6819,7 +6920,7 @@ function cmOverview() {
       ${cmK('Net profit', inrShort(profit), `Margin <b>${cmPct(profit, rev)}%</b>`, profit < 0 ? 'var(--coral)' : 'var(--green)')}
       ${cmK('Orders', o.length, `${live.length} active · ${o.length - live.length} cancelled/returned`)}
       ${cmK('Units sold', units, `Avg order <b>${inr(live.length ? rev / live.length : 0)}</b>`)}
-      ${cmK('Ad spend', inrShort(ads), ads ? `ROAS <b>${(rev / ads).toFixed(1)}×</b> · after ads <b>${inrShort(profit - ads)}</b>` : 'Add in Ad spend tab')}
+      ${cmK('Ad spend', inrShort(ads), ads ? `ROAS <b>${(rev / ads).toFixed(1)}×</b> · after ads <b>${inrShort(profit - ads)}</b>` : 'Add in Ads Manager')}
       ${cmK('Return / RTO rate', cmPct(ret, o.length) + '%', `${ret} orders came back`, cmPct(ret, o.length) > 10 ? 'var(--coral)' : '')}
       ${cmK('Inventory value', inrShort(invVal), `${P.length} products · at cost`)}
       ${cmK('Stock alerts', low, low ? 'Low or out of stock' : 'All good', low ? '#D97706' : 'var(--green)')}
@@ -6878,7 +6979,7 @@ function cmChannel(ch) {
   const fees = cmSum(o, x => cmN(x.marketplaceFee)), ship = cmSum(o, x => cmN(x.shippingFee)), fee = ch === 'Amazon' ? 'Amazon fees' : 'Payment / platform fees';
   const reasons = {}; o.filter(x => x.returnReason).forEach(x => { reasons[x.returnReason] = (reasons[x.returnReason] || 0) + 1; });
   const couriers = {}; o.filter(x => x.courier).forEach(x => { couriers[x.courier] = (couriers[x.courier] || 0) + 1; });
-  return `<div class="cm-conn glass"><span class="cm-ci" style="--c:${CM_CHC[ch]}">${ch === 'Amazon' ? 'a' : '🌐'}</span><div><b>${ch === 'Amazon' ? 'Amazon Seller Central' : 'Your website store'}</b><small class="muted">${ch === 'Amazon' ? 'Today: import your Amazon order report (Excel / CSV). Automatic sync with Amazon SP-API is coming soon.' : 'Today: import website orders (Excel / CSV / Google Sheet). Automatic sync with Shopify / WooCommerce is coming soon.'}</small></div><div class="grow"></div><button class="btn sm" data-cmtab="channels">Connect (soon)</button><button class="btn sm primary" data-cmimport="orders" data-cmch="${ch}" data-cmw>⇪ Import ${ch} orders</button></div>
+  return `<div class="cm-conn glass"><span class="cm-ci" style="--c:${CM_CHC[ch]}">${ch === 'Amazon' ? 'a' : '🌐'}</span><div><b>${ch === 'Amazon' ? 'Amazon Seller Central' : 'Your website store'}</b><small class="muted">${ch === 'Amazon' ? 'Today: import your Amazon order report (Excel / CSV). Automatic sync with Amazon SP-API is coming soon.' : 'Today: import website orders (Excel / CSV / Google Sheet). Automatic sync with Shopify / WooCommerce is coming soon.'}</small></div><div class="grow"></div><button class="btn sm" data-go="connections">${ch === 'Amazon' ? 'Connect (soon)' : 'Connect website'}</button><button class="btn sm primary" data-cmimport="orders" data-cmch="${ch}" data-cmw>⇪ Import ${ch} orders</button></div>
     ${cmFilterBar({ noCh: true })}
     <div class="cm-ks">${cmK(ch + ' revenue', inrShort(rev), `${live.length} orders · avg <b>${inr(live.length ? rev / live.length : 0)}</b>`)}${cmK('Net profit', inrShort(profit), `Margin <b>${cmPct(profit, rev)}%</b>`, profit < 0 ? 'var(--coral)' : 'var(--green)')}${cmK('Units sold', cmSum(o, cmUnits), `${o.length} orders in total`)}${cmK(fee, inrShort(fees), `${cmPct(fees, rev)}% of revenue`)}${cmK('Shipping', inrShort(ship), `${inr(live.length ? ship / live.length : 0)} per order`)}${cmK('Returns / RTO', cmPct(ret, o.length) + '%', `${ret} orders came back`, cmPct(ret, o.length) > 10 ? 'var(--coral)' : '')}</div>
     <div class="rgrid">
@@ -6943,7 +7044,7 @@ function cmAdsTab() {
   const A = cmAds().slice().sort((a, b) => dOnly(b.day).localeCompare(dOnly(a.day))), o = cmOrders(), spend = cmSum(A, a => cmN(a.spend)), rev = cmSum(o, cmRev), pur = cmSum(A, a => cmN(a.purchases)), clicks = cmSum(A, a => cmN(a.clicks)), imp = cmSum(A, a => cmN(a.impressions)), profit = cmSum(o, cmProfit);
   const byC = {}; A.forEach(a => { const k = (a.platform || 'Meta') + ' · ' + (a.campaign || '—'); const r = byC[k] || (byC[k] = { k, spend: 0, pur: 0, rev: 0 }); r.spend += cmN(a.spend); r.pur += cmN(a.purchases); r.rev += cmN(a.revenue); });
   const q = CM.aq.toLowerCase(), L = A.filter(a => !q || [a.campaign, a.platform].some(x => String(x || '').toLowerCase().includes(q)));
-  return `<div class="toolbar glass cm-fb"><select class="input sm" data-cmf="range">${[[7, 'Last 7 days'], [30, 'Last 30 days'], [90, 'Last 90 days'], [365, 'Last 12 months'], [0, 'All time']].map(([v, l]) => `<option value="${v}" ${CM.range === v ? 'selected' : ''}>${l}</option>`).join('')}</select><input class="input sm" id="cmAq" placeholder="Search campaign" value="${esc(CM.aq)}" style="max-width:220px"><a class="bc-link" href="#ads" data-go="ads">Meta Ads section →</a><div class="grow"></div><button class="btn sm" data-cmimport="ads" data-cmw>⇪ Import ad spend</button><button class="btn sm primary" data-cmad="" data-cmw>+ Add spend</button></div>
+  return `<div class="toolbar glass cm-fb"><select class="input sm" data-cmf="range">${[[7, 'Last 7 days'], [30, 'Last 30 days'], [90, 'Last 90 days'], [365, 'Last 12 months'], [0, 'All time']].map(([v, l]) => `<option value="${v}" ${CM.range === v ? 'selected' : ''}>${l}</option>`).join('')}</select><input class="input sm" id="cmAq" placeholder="Search campaign" value="${esc(CM.aq)}" style="max-width:220px"><a class="bc-link" data-goads="overview">Campaigns →</a><div class="grow"></div><button class="btn sm" data-cmimport="ads" data-cmw>⇪ Import ad spend</button><button class="btn sm primary" data-cmad="" data-cmw>+ Add spend</button></div>
     <div class="cm-ks">${cmK('Ad spend', inrShort(spend), `${A.length} rows`)}${cmK('Store revenue', inrShort(rev), 'All channels, same period')}${cmK('ROAS', spend ? (rev / spend).toFixed(1) + '×' : '—', 'Revenue ÷ ad spend', spend && rev / spend < 2 ? 'var(--coral)' : 'var(--green)')}${cmK('Profit after ads', inrShort(profit - spend), `Margin <b>${cmPct(profit - spend, rev)}%</b>`, profit - spend < 0 ? 'var(--coral)' : 'var(--green)')}${cmK('Cost per purchase', pur ? inr(spend / pur) : '—', `${pur} purchases · ${clicks ? 'CPC ' + inr(spend / clicks) : 'no clicks data'}${imp ? ' · CTR ' + cmPct(clicks, imp) + '%' : ''}`)}</div>
     <div class="rgrid"><div class="rcard glass span2"><h3>Spend by campaign</h3><p class="sub muted">Platform-reported purchases and revenue next to it</p>${cmBars(Object.values(byC).sort((a, b) => b.spend - a.spend).slice(0, 8).map(r => ({ label: r.k, value: r.spend, sub: r.pur ? `${r.pur} purchases${r.rev ? ' · ROAS ' + (r.rev / r.spend).toFixed(1) + '×' : ''}` : '' })), inrShort, '#EC4899')}</div></div>
     <div class="table-wrap glass" style="margin-top:14px"><table class="tbl cm-tbl"><thead><tr><th>Date</th><th>Platform</th><th>Campaign</th><th class="num">Impressions</th><th class="num">Clicks</th><th class="num">Spend</th><th class="num">Purchases</th><th class="num">Revenue</th></tr></thead><tbody>
@@ -7145,27 +7246,30 @@ async function cmSample() {
 
 /* ---------- events ---------- */
 document.addEventListener('click', e => { const b = e.target.closest('[data-cm]'); if (b) { CM.tab = b.dataset.cm; store.set('nv.cmTab', CM.tab); } }, true);
-(function () {
-  const v = $('#v-commerce'); if (!v) return;
+function cmBind(v, rerender) {
+  if (!v || v._cmBound) return; v._cmBound = true;
   v.addEventListener('click', e => {
     const t = e.target;
-    const tb = t.closest('[data-cmtab]'); if (tb) { CM.tab = tb.dataset.cmtab; store.set('nv.cmTab', CM.tab); return renderCommerce(true); }
-    const an = t.closest('[data-cman]'); if (an) { CM.an = an.dataset.cman; return renderCommerce(true); }
-    const gr = t.closest('[data-cmgrain]'); if (gr) { CM.grain = gr.dataset.cmgrain; return renderCommerce(); }
-    const iv = t.closest('[data-cminv]'); if (iv) { CM.inv = iv.dataset.cminv; return renderCommerce(); }
-    if (t.closest('[data-cmclear]')) { CM.ch = CM.state = CM.st = ''; return renderCommerce(); }
+    const tb = t.closest('[data-cmtab]'); if (tb) { CM.tab = tb.dataset.cmtab; store.set('nv.cmTab', CM.tab); if (v.id !== 'v-commerce') return go('commerce'); return renderCommerce(true); }
+    const an = t.closest('[data-cman]'); if (an) { CM.an = an.dataset.cman; return rerender(true); }
+    const gr = t.closest('[data-cmgrain]'); if (gr) { CM.grain = gr.dataset.cmgrain; return rerender(); }
+    const iv = t.closest('[data-cminv]'); if (iv) { CM.inv = iv.dataset.cminv; return rerender(); }
+    if (t.closest('[data-cmclear]')) { CM.ch = CM.state = CM.st = ''; return rerender(); }
     const imp = t.closest('[data-cmimport]'); if (imp) return openCmImport(imp.dataset.cmimport, imp.dataset.cmch);
     const pr = t.closest('[data-cmprod]'); if (pr) return openProduct(pr.dataset.cmprod);
     const ad = t.closest('[data-cmad]'); if (ad) return openAdSpend(ad.dataset.cmad);
     const ro = t.closest('[data-cmreorder]'); if (ro) return cmReorderTask(ro.dataset.cmreorder);
     const ss = t.closest('[data-cmstocksave]'); if (ss) { const sku = ss.dataset.cmstocksave, inp = v.querySelector(`[data-cmstock="${CSS.escape(sku)}"]`); ss.disabled = true; return api('setStock', { sku, stock: inp.value }).then(async () => { toast('✓ Stock updated'); await refreshData(); }, er => { toast(er.message, true); ss.disabled = false; }); }
-    const stt = t.closest('[data-cmstate]'); if (stt) { CM.state = stt.dataset.cmstate; return renderCommerce(); }
+    const stt = t.closest('[data-cmstate]'); if (stt) { CM.state = stt.dataset.cmstate; return rerender(); }
     if (t.closest('[data-cmcsv]')) return cmCsv();
     const ld = t.closest('[data-cmlead]'); if (ld) { ld.disabled = true; return api('addLead', { name: ld.dataset.cmlead, state: ld.dataset.cmstate2, city: ld.dataset.cmcity, source: ld.dataset.cmch2 || 'Store', stage: stages()[0], by: me() }).then(async () => { toast('✓ Added to CRM leads'); await refreshData(); }, er => { toast(er.message, true); ld.disabled = false; }); }
   });
-  v.addEventListener('change', e => { const f = e.target.closest('[data-cmf]'); if (!f) return; const k = f.dataset.cmf; CM[k] = k === 'range' ? +f.value : f.value; renderCommerce(); });
-  v.addEventListener('input', e => { const id = e.target.id, map = { cmPq: 'pq', cmOq: 'oq', cmAq: 'aq' }; if (!map[id]) return; CM[map[id]] = e.target.value; clearTimeout(CM.tm); CM.tm = setTimeout(() => { const pos = e.target.selectionStart; renderCommerce(); const n = $('#' + id); if (n) { n.focus(); try { n.setSelectionRange(pos, pos); } catch (er) { } } }, 250); });
+  v.addEventListener('change', e => { const f = e.target.closest('[data-cmf]'); if (!f) return; const k = f.dataset.cmf; CM[k] = k === 'range' ? +f.value : f.value; rerender(); });
+  v.addEventListener('input', e => { const id = e.target.id, map = { cmPq: 'pq', cmOq: 'oq', cmAq: 'aq' }; if (!map[id]) return; CM[map[id]] = e.target.value; clearTimeout(CM.tm); CM.tm = setTimeout(() => { const pos = e.target.selectionStart; rerender(); const n = $('#' + id); if (n) { n.focus(); try { n.setSelectionRange(pos, pos); } catch (er) { } } }, 250); });
   v.addEventListener('keydown', e => { if (e.key === 'Enter' && e.target.matches('[data-cmstock]')) { const b = e.target.parentElement.querySelector('[data-cmstocksave]'); if (b) b.click(); } });
+}
+(function () {
+  cmBind($('#v-commerce'), a => renderCommerce(a)); cmBind($('#v-insales'), a => renderInSales(a)); cmBind($('#v-ads'), a => renderAds(a)); cmBind($('#v-reports'), () => renderReportsStore());
   const lb = $('#leadBox');
   lb.addEventListener('change', e => {
     if (!$('#cmiBody') || !lb.contains($('#cmiBody'))) return;
@@ -7176,6 +7280,617 @@ document.addEventListener('click', e => { const b = e.target.closest('[data-cm]'
   });
   lb.addEventListener('click', e => { const o = e.target.closest('[data-cmiopen]'); if (o) { const s2 = CMI.sheets[+o.dataset.cmiopen]; s2.open = !s2.open; drawCmImport(); } if (e.target.closest('[data-cmisample]')) cmSample(); });
 })();
+
+/* ================= navigation: page families, Home, Insights hub ================= */
+const FAMS = {
+  leads: { views: [['leads', 'List'], ['dashboard', 'Cards'], ['pipeline', 'Pipeline']] },
+  tasks: { views: [['tasks', 'Tasks'], ['calls', 'Calls']] },
+  campaigns: { views: [['broadcast', 'Broadcast'], ['templates', 'Templates']] },
+  automation: { views: [['automation', 'Flows'], ['n8n', 'n8n Services'], ['scripts', 'Scripts & Presets']] },
+  insights: { views: [['insights', 'Overview'], ['insales', 'Sales & Store'], ['analytics', 'Pipeline'], ['inmarketing', 'Marketing'], ['performance', 'Team'], ['reports', 'Reports']], shared: true },
+};
+const FAM_OF = {}; Object.entries(FAMS).forEach(([k, f]) => f.views.forEach(([v]) => { FAM_OF[v] = k; }));
+const FAM_LAST = store.get('nv.famLast') || {};
+const STORE_GRP = { overview: 'overview', amazon: 'overview', website: 'overview', products: 'products', inventory: 'products' };
+const INS = { range: +(store.get('nv.insRange') || 30), grain: 'day' };
+function famAllowed(v) {
+  const p = $('#famProbe'); let b = p.querySelector(`[data-go="${v}"]`);
+  if (!b) { b = document.createElement('button'); b.dataset.go = v; p.appendChild(b); }
+  return getComputedStyle(b).display !== 'none';
+}
+function famGo(k) { const f = FAMS[k], ok = f.views.map(x => x[0]).filter(famAllowed), last = FAM_LAST[k]; go(ok.includes(last) ? last : ok[0] || f.views[0][0]); }
+function famSync() { $$('[data-gofam]').forEach(b => { b.hidden = !FAMS[b.dataset.gofam].views.some(([v]) => famAllowed(v)); }); }
+function famInit() {
+  Object.entries(FAMS).forEach(([k, f]) => f.views.forEach(([v]) => {
+    const el = $('#v-' + v); if (!el || el.querySelector(':scope > .fam-strip')) return;
+    const strip = document.createElement('div'); strip.className = 'fam-strip' + (f.shared ? ' fam-shared' : '');
+    strip.innerHTML = (f.shared ? `<div class="fam-head"><div><div class="eyebrow">Insights</div><h1>Insights</h1><p class="sub">Sales, marketing and team performance in one place.</p></div>
+      <div class="fam-r"><select class="input" data-insrange aria-label="Period">${[[7, 'Last 7 days'], [30, 'Last 30 days'], [90, 'Last 90 days'], [365, 'Last 12 months']].map(([d, l]) => `<option value="${d}">${l}</option>`).join('')}</select><button class="btn primary" data-insexport><svg class="i" viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M4 15v4a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4"/></svg>Export</button></div></div>` : '')
+      + `<div class="fam-tabs" role="tablist">${f.views.map(([x, l]) => `<button class="fam-t" role="tab" data-go="${x}">${esc(l)}</button>`).join('')}</div>`;
+    if (f.shared) { el.classList.add('fam-ins'); el.prepend(strip); }
+    else { const h = el.querySelector(':scope > .head, :scope > .pipe-head'); if (h) h.after(strip); else el.prepend(strip); }
+  }));
+}
+/** called from go(): highlight the right sidebar entry, remember the tab, keep insights periods in sync */
+function navAfterGo(name) {
+  const fam = FAM_OF[name];
+  $$('[data-gofam]').forEach(b => b.classList.toggle('active', fam === b.dataset.gofam));
+  $$('[data-cm]').forEach(b => b.classList.toggle('active', name === 'commerce' && STORE_GRP[CM.tab] === b.dataset.cm));
+  $$('.mbar [data-mb]').forEach(b => b.classList.toggle('active', b.dataset.mb === name || b.dataset.mb === fam || (b.dataset.mb === 'commerce' && name === 'commerce')));
+  if (fam) { FAM_LAST[fam] = name; store.set('nv.famLast', FAM_LAST); }
+  $$('[data-insrange]').forEach(s2 => { s2.value = String(INS.range); });
+}
+function insSyncRanges() { AN.tab = 'pipeline'; AN.pRange = INS.range; SALES.perfP = INS.range; CM.range = INS.range; }
+
+/* ---------- helpers for the insights hub ---------- */
+const ymd = d => d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
+function insPeriod(r = INS.range) {
+  const t = new Date(); t.setHours(12, 0, 0, 0);
+  const from = new Date(t); from.setDate(t.getDate() - r + 1); const pfrom = new Date(from); pfrom.setDate(from.getDate() - r); const pto = new Date(from); pto.setDate(from.getDate() - 1);
+  const days = []; for (let d = new Date(from); d <= t; d.setDate(d.getDate() + 1)) days.push(ymd(d));
+  return { from: ymd(from), to: ymd(t), pfrom: ymd(pfrom), pto: ymd(pto), days };
+}
+const inRange = (d, a, b) => !!d && d >= a && d <= b;
+function insSpark(vals, color) {
+  const n = vals.length; if (n < 2 || !vals.some(v => v)) return `<svg class="ins-sp" viewBox="0 0 100 28" preserveAspectRatio="none"><line x1="0" y1="26" x2="100" y2="26" stroke="${color}" stroke-opacity=".35" vector-effect="non-scaling-stroke"/></svg>`;
+  const mx = Math.max(...vals), mn = Math.min(0, ...vals), y = v => 26 - (v - mn) / (mx - mn || 1) * 23, pts = vals.map((v, i) => `${(i / (n - 1) * 100).toFixed(2)} ${y(v).toFixed(2)}`);
+  return `<svg class="ins-sp" viewBox="0 0 100 28" preserveAspectRatio="none" aria-hidden="true"><path d="M${pts.join(' L')} L100 28 L0 28 Z" fill="${color}" fill-opacity=".14"/><path d="M${pts.join(' L')}" fill="none" stroke="${color}" stroke-width="1.8" vector-effect="non-scaling-stroke" stroke-linejoin="round"/></svg>`;
+}
+/** bucket a daily series into ≤ 30 points so long periods stay readable */
+function insBucket(days, f) { const per = Math.max(1, Math.ceil(days.length / 30)), out = []; for (let i = 0; i < days.length; i += per) out.push(days.slice(i, i + per).reduce((a, d) => a + f(d), 0)); return out; }
+function insDelta(cur, prev, opt = {}) {
+  if (opt.pp) { const d = Math.round((cur - prev) * 10) / 10; if (!prev && !cur) return ''; const good = opt.lowGood ? d <= 0 : d >= 0; return `<span class="ins-d ${d === 0 ? '' : good ? 'up' : 'down'}">${d > 0 ? '↑' : d < 0 ? '↓' : '·'} ${Math.abs(d)} pts</span>`; }
+  if (!prev) return cur ? '<span class="ins-d up">new</span>' : '';
+  const p = Math.round((cur - prev) / Math.abs(prev) * 100), good = opt.lowGood ? p <= 0 : p >= 0;
+  return `<span class="ins-d ${p === 0 ? '' : good ? 'up' : 'down'}">${p > 0 ? '↑' : p < 0 ? '↓' : '·'} ${Math.abs(p)}%</span>`;
+}
+const INS_IC = {
+  rev: '<svg class="i" viewBox="0 0 24 24"><path d="M6 4h12M6 9h12M13 20 6 13h3a4.5 4.5 0 0 0 0-9"/></svg>', profit: '<svg class="i" viewBox="0 0 24 24"><path d="m3 17 6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg>',
+  orders: '<svg class="i" viewBox="0 0 24 24"><path d="M6 7h12l-1 13H7Z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>', leads: '<svg class="i" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4.5a3.5 3.5 0 0 1 0 7M18 14a6 6 0 0 1 3.5 6"/></svg>',
+  won: '<svg class="i" viewBox="0 0 24 24"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0Z"/><path d="M17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/></svg>', ads: '<svg class="i" viewBox="0 0 24 24"><path d="M3 11v2a1 1 0 0 0 1 1h2l5 4V6L6 10H4a1 1 0 0 0-1 1Z"/><path d="M15 8.5a4.5 4.5 0 0 1 0 7M18 5.5a8.5 8.5 0 0 1 0 13"/></svg>',
+  wa: '<svg class="i" viewBox="0 0 24 24"><path d="M3.5 20.5 5 16a8.5 8.5 0 1 1 3.2 3.2Z"/><path d="M9 9.5c0 3 2.5 5.5 5.5 5.5l1.2-1.4-1.9-1-1 .8a4 4 0 0 1-2.2-2.2l.8-1-1-1.9Z"/></svg>', ret: '<svg class="i" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7L3 8M3 3v5h5"/></svg>',
+  calls: '<svg class="i" viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>', mail: '<svg class="i" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>',
+};
+function insKpi(k, i) {
+  return `<div class="ins-k glass" style="--c:${k.color};--i:${i}" ${k.go ? `data-go="${k.go}" role="link" tabindex="0"` : ''}><div class="ins-kh"><span class="ins-ki">${k.ic}</span><span>${esc(k.label)}</span></div>
+    <div class="ins-kv"><b>${k.value}</b>${k.delta || ''}</div><small>${k.sub || ''}</small>${insSpark(k.spark || [], k.color)}</div>`;
+}
+const wonDate = l => { const a = (S.activities || []).filter(x => x.leadId === l.leadId && x.type === 'Stage Changed' && /→\s*Won$/.test(x.details || '')).map(x => dOnly(x.dateTime)).sort().pop(); return a || dOnly(l.lastContact || l.createdOn); };
+function insData() {
+  const P = insPeriod(), O = (S.orders || []).filter(o => o.status !== 'Cart'), L = S.leads || [];
+  const ordIn = (a, b) => O.filter(o => inRange(cmDate(o), a, b)), cur = ordIn(P.from, P.to), prev = ordIn(P.pfrom, P.pto);
+  const won = L.filter(l => l.stage === 'Won'), wonIn = (a, b) => won.filter(l => inRange(wonDate(l), a, b));
+  const ads = (a, b) => (S.adSpend || []).filter(x => inRange(dOnly(x.day), a, b)).reduce((s2, x) => s2 + cmN(x.spend), 0) + O.filter(o => inRange(cmDate(o), a, b)).reduce((s2, o) => s2 + cmN(o.adSpend), 0);
+  const out = (a, b) => (S.messages || []).filter(m => m.direction === 'out' && inRange(dOnly(m.time), a, b));
+  const replyRate = (a, b) => { const sent = new Set(out(a, b).map(m => m.leadId).filter(Boolean)); if (!sent.size) return 0; const rep = new Set((S.messages || []).filter(m => m.direction === 'in' && inRange(dOnly(m.time), a, b) && sent.has(m.leadId)).map(m => m.leadId)); return rep.size / sent.size * 100; };
+  const retRate = list => list.length ? list.filter(o => CM_RET.includes(o.status)).length / list.length * 100 : 0;
+  const calls = (a, b) => (S.calls || []).filter(c => inRange(dOnly(c.calledAt), a, b));
+  return { P, O, L, cur, prev, won, wonIn, ads, out, replyRate, retRate, calls, store: O.some(o => o.channel && o.channel !== 'WhatsApp') || (S.products || []).length > 0 };
+}
+function insKpis(d) {
+  const { P, cur, prev } = d, day = f => insBucket(P.days, f), ordDay = dd => cur.filter(o => cmDate(o) === dd);
+  const rev = cmSum(cur, cmRev), prevRev = cmSum(prev, cmRev), pr = cmSum(cur, cmProfit), prevPr = cmSum(prev, cmProfit), adsC = d.ads(P.from, P.to), adsP = d.ads(P.pfrom, P.pto);
+  const nl = d.L.filter(l => inRange(dOnly(l.createdOn), P.from, P.to)), nlP = d.L.filter(l => inRange(dOnly(l.createdOn), P.pfrom, P.pto));
+  const wc = d.wonIn(P.from, P.to), wp = d.wonIn(P.pfrom, P.pto), rr = d.replyRate(P.from, P.to), rrP = d.replyRate(P.pfrom, P.pto), ret = d.retRate(cur), retP = d.retRate(prev), cl = d.calls(P.from, P.to), clP = d.calls(P.pfrom, P.pto);
+  const K = [];
+  if (d.store) K.push(
+    { label: 'Revenue', ic: INS_IC.rev, color: 'var(--blue-2)', value: inrShort(rev), delta: insDelta(rev, prevRev), sub: 'vs previous ' + INS.range + ' days', spark: day(dd => cmSum(ordDay(dd), cmRev)), go: 'insales' },
+    { label: 'Net profit', ic: INS_IC.profit, color: 'var(--green)', value: inrShort(pr), delta: insDelta(pr, prevPr), sub: `${cmPct(pr, rev)}% margin`, spark: day(dd => cmSum(ordDay(dd), cmProfit)), go: 'insales' },
+    { label: 'Orders', ic: INS_IC.orders, color: '#64748B', value: cur.length, delta: insDelta(cur.length, prev.length), sub: `${cmSum(cur, cmUnits)} units`, spark: day(dd => ordDay(dd).length), go: 'orders' });
+  K.push({ label: 'New leads', ic: INS_IC.leads, color: '#A78BFA', value: nl.length, delta: insDelta(nl.length, nlP.length), sub: 'vs previous ' + INS.range + ' days', spark: day(dd => d.L.filter(l => dOnly(l.createdOn) === dd).length), go: 'leads' });
+  if (!d.store || wc.length) K.push({ label: 'Deals won', ic: INS_IC.won, color: '#F59E0B', value: wc.length, delta: insDelta(wc.length, wp.length), sub: inrShort(cmSum(wc, l => cmN(l.budget))) + ' value', spark: day(dd => d.won.filter(l => wonDate(l) === dd).length), go: 'analytics' });
+  K.push({ label: 'Ad spend', ic: INS_IC.ads, color: '#F59E0B', value: inrShort(adsC), delta: insDelta(adsC, adsP, { lowGood: true }), sub: adsC && rev ? `ROAS ${(rev / adsC).toFixed(1)}×` : 'Add in Ads Manager', spark: day(dd => (S.adSpend || []).filter(x => dOnly(x.day) === dd).reduce((s2, x) => s2 + cmN(x.spend), 0)), go: 'inmarketing' });
+  K.push({ label: 'WhatsApp reply rate', ic: INS_IC.wa, color: 'var(--wa)', value: Math.round(rr) + '%', delta: insDelta(rr, rrP, { pp: true }), sub: `${d.out(P.from, P.to).length} messages sent`, spark: day(dd => (S.messages || []).filter(m => m.direction === 'in' && dOnly(m.time) === dd).length), go: 'inmarketing' });
+  if (d.store) K.push({ label: 'Return rate', ic: INS_IC.ret, color: 'var(--coral)', value: (Math.round(ret * 10) / 10) + '%', delta: insDelta(ret, retP, { pp: true, lowGood: true }), sub: `${cur.filter(o => CM_RET.includes(o.status)).length} orders came back`, spark: day(dd => ordDay(dd).filter(o => CM_RET.includes(o.status)).length), go: 'insales' });
+  K.push({ label: 'Team calls', ic: INS_IC.calls, color: '#38BDF8', value: cl.length, delta: insDelta(cl.length, clP.length), sub: `${cl.filter(c => /interest|answer|callback/i.test(c.outcome || '')).length} connected`, spark: day(dd => (S.calls || []).filter(c => dOnly(c.calledAt) === dd).length), go: 'performance' });
+  return K.slice(0, 8);
+}
+function renderInsights(anim) {
+  const box = $('#insBody'); if (!box || !$('#v-insights').classList.contains('active')) return;
+  insSyncRanges(); const d = insData(), K = insKpis(d), { P, cur } = d;
+  const rev = cmSum(cur, cmRev), byCh = CM_CH.map(c => ({ label: c, value: cur.filter(o => (o.channel || 'WhatsApp') === c && !CM_DEAD.includes(o.status)).length, color: CM_CHC[c] })).filter(p => p.value);
+  const nl = d.L.filter(l => inRange(dOnly(l.createdOn), P.from, P.to)), worked = nl.filter(l => l.stage !== stages()[0]), wonN = nl.filter(l => l.stage === 'Won');
+  const srcs = {}; nl.forEach(l => { const s2 = l.source || 'Other'; srcs[s2] = (srcs[s2] || 0) + 1; });
+  const ins = cmAlerts().map(([k, h, tx]) => [k, h, tx]); const stale = d.L.filter(l => !isClosed(l) && daysBetween(l.lastContact || l.createdOn, todayStr()) >= 3).length;
+  if (stale) ins.push(['bad', `${stale} lead${stale > 1 ? 's' : ''} going cold`, 'No contact for 3+ days. A quick WhatsApp today can save them.']);
+  const cr = typeof campaignRows === 'function' ? campaignRows().filter(r => r.wa && r.sent >= 5 && r.readR != null && r.readR < 0.4) : []; if (cr.length) ins.push(['warn', `${cr.length} broadcast${cr.length > 1 ? 's' : ''} with low reads`, 'Retarget non-readers from Campaigns → History.']);
+  const icon = { good: '▲', warn: '!', bad: '●' };
+  box.innerHTML = `<div class="ins-ks" style="--n:${K.length}">${K.map(insKpi).join('')}</div>
+    <div class="ins-g">
+      ${d.store ? `<div class="rcard glass ins-wide"><div class="cm-ch-h"><div><h3>Revenue & profit</h3><p class="sub muted">${esc(fmtDate(P.from))} – ${esc(fmtDate(P.to))}</p></div><div class="cm-seg">${[['day', 'Daily'], ['week', 'Weekly'], ['month', 'Monthly']].map(([k, n]) => `<button class="${INS.grain === k ? 'on' : ''}" data-insgrain="${k}">${n}</button>`).join('')}</div></div>
+        <div class="ins-big"><div><b>${inr(rev)}</b><span><i style="background:var(--blue-2)"></i>Revenue</span></div><div><b>${inr(cmSum(cur, cmProfit))}</b><span><i style="background:var(--green)"></i>Net profit (${cmPct(cmSum(cur, cmProfit), rev)}%)</span></div></div>${cmTrend(cmSeries(cur, INS.grain), INS.grain)}</div>
+      <div class="rcard glass"><h3>Sales by channel</h3><p class="sub muted">Orders in this period</p>${cmDonut(byCh, String(cmSum(byCh, p => p.value)), 'orders')}</div>` : `<div class="rcard glass ins-wide"><h3>New leads per day</h3><p class="sub muted">${esc(fmtDate(P.from))} – ${esc(fmtDate(P.to))}</p>${cmCols(insBucketLabels(P.days, dd => d.L.filter(l => dOnly(l.createdOn) === dd).length), v => String(v))}</div>
+      <div class="rcard glass"><h3>Leads by source</h3><p class="sub muted">This period</p>${cmDonut(Object.entries(srcs).sort((a, b) => b[1] - a[1]).slice(0, 6).map(([k, v], i) => ({ label: k, value: v, color: ['var(--blue-2)', '#A78BFA', 'var(--green)', '#F59E0B', 'var(--coral)', '#38BDF8'][i] })), String(nl.length), 'leads')}</div>`}
+      <div class="rcard glass"><h3>Lead funnel</h3><p class="sub muted">Leads created in this period</p><div class="anfun">${[['New leads', nl.length], ['Worked on', worked.length], ['Won', wonN.length]].map(([l, v], i, a) => `<div class="anf"><div class="anf-bar" style="width:${a[0][1] ? Math.max(4, v / a[0][1] * 100) : 4}%"></div><span>${l}</span><b>${v}</b></div>`).join('')}</div>
+        <p class="help" style="margin-top:10px">Lead → won: <b>${cmPct(wonN.length, nl.length)}%</b></p></div>
+      ${d.store ? `<div class="rcard glass"><h3>Top products</h3><p class="sub muted">By revenue</p>${cmBars(cmBySku(cur).slice(0, 5).map(r => ({ label: r.name, value: r.rev, sub: r.units + ' units' })), inrShort, 'var(--green)')}</div>` : `<div class="rcard glass"><h3>Leads by source</h3><p class="sub muted">Top sources</p>${cmBars(Object.entries(srcs).sort((a, b) => b[1] - a[1]).slice(0, 6).map(([k, v]) => ({ label: k, value: v })), v => String(v), '#A78BFA')}</div>`}
+      <div class="rcard glass"><h3>AI insights</h3><p class="sub muted">What to do next</p><div class="insights">${ins.slice(0, 4).map(([k, h, tx]) => `<div class="ins ${k}"><span class="ii">${icon[k]}</span><div><b>${esc(h)}</b><p>${esc(tx)}</p></div></div>`).join('') || '<p class="muted">Everything looks healthy for this period.</p>'}</div></div>
+    </div>`;
+  stagger(box, anim);
+}
+function insBucketLabels(days, f) { const per = Math.max(1, Math.ceil(days.length / 30)), out = []; for (let i = 0; i < days.length; i += per) out.push({ label: fmtDate(days[i]).replace(/ \d{4}$/, ''), value: days.slice(i, i + per).reduce((a, dd) => a + f(dd), 0) }); return out; }
+function renderInSales(anim) {
+  const box = $('#insalesBody'); if (!box || !$('#v-insales').classList.contains('active')) return;
+  insSyncRanges();
+  if (!cmOk()) { box.innerHTML = `<div class="tp-empty glass"><b>Store analytics need the 09 database update</b><p class="muted">Run <code>09_commerce.sql</code> in Supabase → SQL Editor, then refresh.</p></div>`; return; }
+  CM.inIns = true; box.innerHTML = cmAnalytics(); CM.inIns = false; stagger(box, anim);
+}
+function renderInMarketing(anim) {
+  const box = $('#inmBody'); if (!box || !$('#v-inmarketing').classList.contains('active')) return;
+  insSyncRanges(); const d = insData(), { P } = d, spend = d.ads(P.from, P.to), spendP = d.ads(P.pfrom, P.pto), rev = cmSum(d.cur, cmRev);
+  const adLeads = d.L.filter(l => AD_SOURCES.includes(l.source) && inRange(dOnly(l.createdOn), P.from, P.to)), out = d.out(P.from, P.to), bc = out.filter(m => m.broadcastId), mails = (S.activities || []).filter(a => a.type === 'Email Sent' && inRange(dOnly(a.dateTime), P.from, P.to));
+  const rd = bc.filter(m => m.status === 'read').length, rr = d.replyRate(P.from, P.to);
+  const byC = {}; (S.adSpend || []).filter(a => inRange(dOnly(a.day), P.from, P.to)).forEach(a => { const k = (a.platform || 'Meta') + ' · ' + (a.campaign || '—'); const r = byC[k] || (byC[k] = { k, spend: 0, pur: 0 }); r.spend += cmN(a.spend); r.pur += cmN(a.purchases); });
+  const srcs = {}; d.L.filter(l => inRange(dOnly(l.createdOn), P.from, P.to)).forEach(l => { const s2 = l.source || 'Other'; srcs[s2] = (srcs[s2] || 0) + 1; });
+  const K = [
+    { label: 'Ad spend', ic: INS_IC.ads, color: '#F59E0B', value: inrShort(spend), delta: insDelta(spend, spendP, { lowGood: true }), sub: 'Ads Manager + orders', spark: insBucket(P.days, dd => (S.adSpend || []).filter(x => dOnly(x.day) === dd).reduce((s2, x) => s2 + cmN(x.spend), 0)), go: 'ads' },
+    { label: 'ROAS', ic: INS_IC.profit, color: 'var(--green)', value: spend ? (rev / spend).toFixed(1) + '×' : '—', sub: 'Store revenue ÷ ad spend' },
+    { label: 'Leads from ads', ic: INS_IC.leads, color: '#A78BFA', value: adLeads.length, sub: adLeads.length && spend ? `${inr(spend / adLeads.length)} per lead` : 'Meta / Instagram / Facebook', spark: insBucket(P.days, dd => adLeads.filter(l => dOnly(l.createdOn) === dd).length) },
+    { label: 'Broadcast messages', ic: INS_IC.wa, color: 'var(--wa)', value: bc.length, sub: bc.length ? `${cmPct(rd, bc.length)}% read · ${Math.round(rr)}% reply rate` : 'Campaigns → Broadcast', spark: insBucket(P.days, dd => bc.filter(m => dOnly(m.time) === dd).length), go: 'broadcast' },
+    { label: 'Emails sent', ic: INS_IC.mail, color: 'var(--blue-2)', value: mails.length, sub: 'From campaigns and the CRM', spark: insBucket(P.days, dd => mails.filter(a => dOnly(a.dateTime) === dd).length) },
+  ];
+  const cmpHtml = typeof campaignCompareHTML === 'function' ? campaignCompareHTML() : '';
+  box.innerHTML = `<div class="ins-ks" style="--n:${K.length}">${K.map(insKpi).join('')}</div>
+    <div class="ins-g">
+      <div class="rcard glass ins-wide"><div class="cm-ch-h"><div><h3>Spend by campaign</h3><p class="sub muted">From Ads Manager → Spend & ROAS</p></div><button class="btn sm" data-goads="spend">Open Ads Manager →</button></div>${Object.keys(byC).length ? cmBars(Object.values(byC).sort((a, b) => b.spend - a.spend).slice(0, 8).map(r => ({ label: r.k, value: r.spend, sub: r.pur ? r.pur + ' purchases' : '' })), inrShort, '#EC4899') : '<div class="cm-empty">No ad spend in this period. Add it in Ads Manager → Spend & ROAS.</div>'}</div>
+      <div class="rcard glass"><h3>Leads by source</h3><p class="sub muted">Where new leads came from</p>${cmBars(Object.entries(srcs).sort((a, b) => b[1] - a[1]).slice(0, 7).map(([k, v]) => ({ label: k, value: v, color: AD_SOURCES.includes(k) ? '#F59E0B' : '#A78BFA' })), v => String(v))}</div>
+    </div>
+    ${cmpHtml ? `<div style="margin-top:14px">${cmpHtml}</div>` : '<div class="tp-empty glass" style="margin-top:14px"><b>No broadcast campaigns yet</b><p class="muted">Send one from Campaigns → Broadcast — its delivered, read and reply rates show up here.</p></div>'}`;
+  stagger(box, anim);
+}
+function renderReportsStore() {
+  const box = $('#repStore'); if (!box) return;
+  insSyncRanges();
+  if (!cmOk() || !(S.orders || []).some(o => o.channel && o.channel !== 'WhatsApp')) { box.innerHTML = ''; return; }
+  CM.inIns = true; box.innerHTML = `<div class="ins-sec"><h3>Store — daily / monthly</h3></div>${cmReports()}`; CM.inIns = false;
+}
+function insExport() {
+  const P = insPeriod(), rows = [['Date', 'New leads', 'Deals won', 'Orders', 'Revenue', 'Net profit', 'Ad spend', 'WhatsApp sent', 'WhatsApp received', 'Calls']];
+  P.days.forEach(dd => { const o = (S.orders || []).filter(x => x.status !== 'Cart' && cmDate(x) === dd);
+    rows.push([dd, S.leads.filter(l => dOnly(l.createdOn) === dd).length, S.leads.filter(l => l.stage === 'Won' && wonDate(l) === dd).length, o.length, Math.round(cmSum(o, cmRev)), Math.round(cmSum(o, cmProfit)), Math.round((S.adSpend || []).filter(a => dOnly(a.day) === dd).reduce((s2, a) => s2 + cmN(a.spend), 0)),
+      (S.messages || []).filter(m => m.direction === 'out' && dOnly(m.time) === dd).length, (S.messages || []).filter(m => m.direction === 'in' && dOnly(m.time) === dd).length, (S.calls || []).filter(c => dOnly(c.calledAt) === dd).length]); });
+  const csv = rows.map(r => r.join(',')).join('\r\n'), a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob(['﻿' + csv], { type: 'text/csv' })); a.download = `nodevers-insights-${P.from}-to-${P.to}.csv`; a.click(); toast('✓ Report downloaded');
+}
+
+/* ---------- Home: what to do today ---------- */
+const HOME_IC = {
+  wa: ['var(--wa)', INS_IC.wa], products: ['var(--blue-2)', '<svg class="i" viewBox="0 0 24 24"><path d="m12 3 8 4.5v9L12 21l-8-4.5v-9Z"/><path d="m4 7.5 8 4.5 8-4.5M12 12v9"/></svg>'], email: ['#38BDF8', INS_IC.mail],
+  leads: ['#A78BFA', INS_IC.leads], team: ['#F59E0B', '<svg class="i" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M17 11l2 2 4-4"/></svg>'],
+  alerts: ['var(--coral)', '<svg class="i" viewBox="0 0 24 24"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10.3 21a1.9 1.9 0 0 0 3.4 0"/></svg>'], brand: ['#EC4899', '<svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01"/></svg>'],
+};
+function homeChecklist() {
+  const s = S.settings || {}, wa = typeof WA !== 'undefined' && WA.status && WA.status.connected, em = typeof BC !== 'undefined' && BC.email && BC.email.connected;
+  const st = typeof ALERTS !== 'undefined' ? ALERTS.cfg : null, stOn = st && ((st.emails || []).length || (st.phones || []).length);
+  const items = [
+    ['wa', 'WhatsApp', demo || wa, demo ? 'Demo' : wa ? 'Connected' : 'Connect', 'connections'],
+    ['leads', 'Leads', S.leads.length > 0, S.leads.length ? S.leads.length + ' added' : 'Add or import', 'leads'],
+    ['products', 'Products', (S.products || []).length > 0, (S.products || []).length ? (S.products || []).length + ' added' : 'Add or import', 'commerce:products'],
+    ['email', 'Email', demo || em, demo ? 'Demo' : em ? 'Connected' : 'Connect', 'connections'],
+    ['team', 'Team', (S.team || []).length > 1 || (AUTH.members || []).length > 1, (S.team || []).length > 1 ? 'Added' : 'Invite', 'team'],
+    ['alerts', 'Alerts', !!stOn, stOn ? 'On' : 'Set up', 'connections'],
+    ['brand', 'Branding', !!(s.brandName && s.brandName !== 'Nodevers') || !!s.logoUrl, s.logoUrl || (s.brandName && s.brandName !== 'Nodevers') ? 'Done' : 'Add logo', 'settings'],
+  ];
+  return items;
+}
+function renderHome(anim) {
+  const box = $('#homeBody'); if (!box || !$('#v-home').classList.contains('active')) return;
+  if (cloud && CONN.homeWs !== AUTH.ws) { CONN.homeWs = AUTH.ws; Promise.all([WA.status ? 0 : waLoadStatus(), BC.email ? 0 : sbq(AUTH.client.rpc('email_status', { p_ws: AUTH.ws })).then(r => { BC.email = r || { connected: false }; }, () => { BC.email = { connected: false }; })]).then(() => { if (activeView() === 'home') renderHome(); }); }
+  const items = homeChecklist(), done = items.filter(x => x[2]).length, pctDone = Math.round(done / items.length * 100), now = new Date(), today = todayStr();
+  const tasks = (S.tasks || []).filter(t => t.status !== 'Done'), overdue = tasks.filter(t => t.dueAt && dOnly(t.dueAt) < today), dueToday = tasks.filter(t => dOnly(t.dueAt) === today);
+  const hot = S.leads.filter(l => !isClosed(l) && (l.tag === 'Hot' || (l.followUpDate && l.followUpDate <= today)));
+  const ord = (S.orders || []).filter(o => o.status !== 'Cart'), ordT = ord.filter(o => cmDate(o) === today), ordY = ord.filter(o => cmDate(o) === ymd(new Date(Date.now() - 864e5)));
+  const low = (S.products || []).filter(p => p.active !== false && p.active !== 'false' && cmStock(p)[0] !== 'ok');
+  const unread = typeof convos === 'function' ? convos().filter(c => c.unread).slice(0, 6) : [];
+  const hr = now.getHours(), greet = hr < 12 ? 'Good morning' : hr < 17 ? 'Good afternoon' : 'Good evening', who = (typeof me === 'function' && me()) || brand().userName || '';
+  const card = (ic, color, title, n, sub, go, btn, extra) => `<div class="home-c glass" style="--c:${color}"><div class="home-ch"><span class="home-ci">${ic}</span><span>${esc(title)}</span></div><div class="home-cn"><b>${n}</b>${extra || ''}</div><p>${sub}</p><button class="btn sm" ${go}>${esc(btn)} →</button></div>`;
+  const todo = overdue.concat(dueToday).sort((a, b) => String(a.dueAt).localeCompare(String(b.dueAt))).slice(0, 6);
+  box.innerHTML = `<div class="home-hi"><div><h1>${greet}${who ? ', ' + esc(String(who).split(' ')[0]) : ''} 👋</h1><p class="muted">${now.toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'long' })} — here is what needs you today.</p></div></div>
+    ${done < items.length ? `<div class="home-setup glass"><div class="home-ring" style="--p:${pctDone}"><svg viewBox="0 0 44 44"><circle cx="22" cy="22" r="19"/><circle cx="22" cy="22" r="19" class="on" stroke-dasharray="${(pctDone / 100 * 119.4).toFixed(1)} 119.4"/></svg><b>${done}/${items.length}</b></div>
+      <div class="home-st"><b>Set up your business</b><span>${done} of ${items.length} done</span><small class="muted">Finish setup to unlock every feature.</small></div>
+      <div class="home-steps">${items.map(([k, n, ok, sub, to]) => `<button class="home-step ${ok ? 'ok' : ''}" data-homego="${to}" title="${esc(n)} — ${esc(sub)}"><span class="home-sd">${ok ? '✓' : ''}</span><b>${esc(n)}</b><small>${esc(sub)}</small></button>`).join('')}</div>
+      <button class="btn primary" data-homego="${(items.find(x => !x[2]) || [])[4] || 'connections'}">Complete setup →</button></div>` : ''}
+    <div class="home-cards">
+      ${card('<svg class="i" viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3h6v1M9 11l2 2 4-4M9 17h6"/></svg>', 'var(--coral)', 'Overdue tasks', overdue.length, overdue.length ? `${dueToday.length} more due today` : dueToday.length ? `${dueToday.length} due today` : 'Nothing overdue 🎉', 'data-go="tasks"', 'View tasks')}
+      ${card(INS_IC.leads, '#F97316', 'Hot leads', hot.length, 'Hot or follow-up due — reply first', 'data-go="leads"', 'View leads')}
+      ${(S.products || []).length || ord.some(o => o.channel && o.channel !== 'WhatsApp') || ord.length ? card(INS_IC.orders, 'var(--green)', 'New orders', ordT.length, `${inr(cmSum(ordT, cmRev))} revenue today`, 'data-go="orders"', 'View orders', ordY.length ? insDelta(ordT.length, ordY.length) : '') : card(INS_IC.wa, 'var(--wa)', 'Unread chats', unread.length, 'Customers waiting for a reply', 'data-go="whatsapp"', 'Open inbox')}
+      ${(S.products || []).length ? card('<svg class="i" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="5" rx="1"/><path d="M5 9v10h14V9M10 13h4"/></svg>', '#D97706', 'Low stock', low.length, low.length ? 'Products low or out of stock' : 'Stock is healthy', 'data-homego="commerce:inventory"', 'View products') : card(INS_IC.calls, '#38BDF8', 'Calls today', (S.calls || []).filter(c => dOnly(c.calledAt) === today).length, 'Logged by your team', 'data-go="calls"', 'Log a call')}
+    </div>
+    <div class="home-2">
+      <div class="rcard glass"><div class="cm-ch-h"><h3>Do this now <span class="home-n">${todo.length} tasks</span></h3><a class="bc-link" data-go="tasks">View all →</a></div>
+        ${todo.length ? `<div class="home-todo">${todo.map(t => `<label class="home-t"><input type="checkbox" data-hometask="${esc(t.taskId)}"><div><b>${esc(t.title)}</b><small class="muted">${t.leadId ? esc(leadName(t.leadId) || '') + ' · ' : ''}${dOnly(t.dueAt) < today ? '<span style="color:var(--coral)">Overdue</span>' : 'Today'} · ${esc((t.dueAt || '').slice(11, 16))}</small></div><span class="home-pr ${String(t.priority || '').toLowerCase()}">${esc(t.priority || '')}</span></label>`).join('')}</div>` : `<div class="cm-empty">No tasks due — ${hot.length ? `reply to your ${hot.length} hot leads` : 'add leads or import a sheet'}.</div>`}</div>
+      <div class="rcard glass"><div class="cm-ch-h"><h3>${ord.length ? 'Recent orders' : 'Newest leads'}</h3><a class="bc-link" data-go="${ord.length ? 'orders' : 'leads'}">View all →</a></div>
+        ${ord.length ? `<div class="home-list">${ord.slice().sort((a, b) => cmDate(b).localeCompare(cmDate(a)) || String(b.orderId).localeCompare(String(a.orderId), undefined, { numeric: true })).slice(0, 6).map(o => `<div class="home-li" data-ordedit="${esc(o.orderId)}">${cmChTag(o.channel || 'WhatsApp')}<div class="grow"><b>${esc(o.productName || o.items || o.orderId)}</b><small class="muted">${esc(o.extId || o.orderId)} · ${esc(fmtDate(cmDate(o)))}</small></div><b>${inr(cmRev(o) || o.amount)}</b>${cmStBadge(o.status)}</div>`).join('')}</div>`
+        : `<div class="home-list">${S.leads.slice().sort((a, b) => String(b.createdOn).localeCompare(String(a.createdOn))).slice(0, 6).map(l => `<div class="home-li" data-open="${esc(l.leadId)}">${avatar(l.name)}<div class="grow"><b>${esc(l.name)}</b><small class="muted">${esc(l.source || '')} · ${esc(fmtDate(l.createdOn))}</small></div><span class="pill stage">${esc(l.stage)}</span></div>`).join('') || '<div class="cm-empty">No leads yet</div>'}</div>`}</div>
+    </div>
+    ${unread.length ? `<div class="rcard glass home-chats"><div class="cm-ch-h"><h3>Unread WhatsApp chats</h3><a class="bc-link" data-go="whatsapp">Open inbox →</a></div><div class="home-av">${unread.map(c => `<button class="home-chat" data-homechat="${esc(c.key)}">${avatar(c.name || '')}<b>${esc(String(c.name || '').split(' ')[0])}</b><small>${esc(String((c.last && c.last.text) || '').slice(0, 28))}</small></button>`).join('')}</div></div>` : ''}`;
+  stagger(box, anim);
+}
+document.addEventListener('click', e => {
+  const t = e.target;
+  const fg = t.closest('[data-gofam]'); if (fg) { e.preventDefault(); return famGo(fg.dataset.gofam); }
+  const hg = t.closest('[data-homego]'); if (hg) { const [v, tab] = hg.dataset.homego.split(':'); if (v === 'settings') return typeof openSettings === 'function' ? openSettings() : $('#sideSettings').click(); if (tab) { CM.tab = tab; store.set('nv.cmTab', tab); } return go(v); }
+  const ga = t.closest('[data-goads]'); if (ga) { ADS.tab = ga.dataset.goads; return go('ads'); }
+  if (t.closest('[data-insexport]')) return insExport();
+  const ig = t.closest('[data-insgrain]'); if (ig) { INS.grain = ig.dataset.insgrain; return renderInsights(); }
+  const hc = t.closest('[data-homechat]'); if (hc) { WA.open = hc.dataset.homechat; return go('whatsapp'); }
+});
+document.addEventListener('change', async e => {
+  const r = e.target.closest('[data-insrange]'); if (r) { INS.range = +r.value; store.set('nv.insRange', INS.range); insSyncRanges(); const v = activeView(); (VIEW_RENDER[v] || (() => { }))(true); if (v === 'reports') renderReportsStore(); navAfterGo(v); return; }
+  const ht = e.target.closest('[data-hometask]'); if (ht && ht.checked) { const tk = (S.tasks || []).find(x => x.taskId === ht.dataset.hometask); if (!tk) return; try { await api('saveTask', Object.assign({}, tk, { status: 'Done', doneAt: sbLocal(new Date().toISOString()) || todayStr(), doneBy: me() })); toast('✓ Task done'); await refreshData(); } catch (er) { toast(er.message, true); ht.checked = false; } }
+});
+document.addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && e.target.matches('.ins-k[data-go]')) { e.preventDefault(); go(e.target.dataset.go); } });
+
+/* ================= accordion (settings & connections) ================= */
+const ACC_DOT = { ok: 'var(--green)', bad: 'var(--coral)', off: 'var(--faint)', wait: '#F59E0B', soon: '#A78BFA' };
+function accItem(id, o) {
+  return `<div class="acc ${o.open ? 'open' : ''}" data-acc="${esc(id)}" ${o.attrs || ''} data-acctext="${esc((o.title + ' ' + (o.keywords || '') + ' ' + (o.status || '')).toLowerCase())}">
+    <button type="button" class="acc-h" aria-expanded="${o.open ? 'true' : 'false'}"><span class="acc-dot" style="background:${ACC_DOT[o.dot] || o.dot || 'var(--faint)'}"></span><span class="acc-ic" style="--c:${o.color || 'var(--blue-2)'}">${o.icon}</span>
+      <span class="acc-t"><b>${esc(o.title)}</b><small style="color:${o.dot === 'ok' ? 'var(--green)' : o.dot === 'bad' ? 'var(--coral)' : o.dot === 'wait' ? '#D97706' : 'var(--muted)'}">${o.status || ''}</small></span>${o.badge ? `<span class="acc-bd">${o.badge}</span>` : ''}<svg class="i acc-chev" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></svg></button>
+    <div class="acc-b"><div class="acc-in"><div class="acc-pad">${o.body || ''}</div></div></div></div>`;
+}
+/** one open at a time inside a container; remembers which one */
+function accToggle(item, key) {
+  const box = item.parentElement, open = !item.classList.contains('open');
+  box.querySelectorAll(':scope > .acc.open').forEach(x => { if (x !== item) { x.classList.remove('open'); x.querySelector('.acc-h').setAttribute('aria-expanded', 'false'); } });
+  item.classList.toggle('open', open); item.querySelector('.acc-h').setAttribute('aria-expanded', String(open));
+  if (key) store.set(key, open ? item.dataset.acc : '');
+  if (open) setTimeout(() => { const r = item.getBoundingClientRect(); if (r.top < 70 || r.top > innerHeight - 120) item.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, 260);
+  return open;
+}
+
+/* ================= premium dropdown: enhances every <select class="input"> on desktop (keeps the real select for values & events) ================= */
+const NVDD = { pop: null, sel: null, i: -1, coarse: matchMedia('(pointer: coarse)').matches };
+function nvddLabel(sel) { const o = sel.options[sel.selectedIndex]; return o ? o.textContent : ''; }
+function nvddSync(sel) { const b = sel._nvdd; if (!b) return; const v = b.querySelector('.nvdd-v'), t = nvddLabel(sel) || '\u00a0'; if (v.textContent !== t) v.textContent = t; if (b.disabled !== sel.disabled) b.disabled = sel.disabled; const sm = sel.classList.contains('sm'); if (b.classList.contains('sm') !== sm) b.classList.toggle('sm', sm); }
+function nvddEnhance(root) {
+  if (NVDD.coarse) return;
+  (root || document).querySelectorAll('select.input:not([multiple]):not([size]):not([data-native]):not([hidden])').forEach(sel => {
+    if (sel._nvdd || sel.closest('.nvdd')) { if (sel._nvdd) nvddSync(sel); return; }
+    const wrap = document.createElement('span'); wrap.className = 'nvdd'; const st = sel.getAttribute('style') || ''; if (st) wrap.setAttribute('style', st);
+    if (sel.id) wrap.dataset.for = sel.id;
+    sel.parentNode.insertBefore(wrap, sel); wrap.appendChild(sel);
+    const b = document.createElement('button'); b.type = 'button'; b.className = 'nvdd-b ' + sel.className.replace(/\binput\b/, ''); b.setAttribute('aria-haspopup', 'listbox');
+    if (sel.getAttribute('aria-label') || sel.title) b.setAttribute('aria-label', sel.getAttribute('aria-label') || sel.title);
+    b.innerHTML = '<span class="nvdd-v"></span><svg class="i nvdd-c" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>';
+    wrap.appendChild(b); sel._nvdd = b; sel.classList.add('nvdd-native'); sel.tabIndex = -1; nvddSync(sel);
+  });
+}
+function nvddClose() { if (NVDD.pop) { const p = NVDD.pop; p.classList.remove('show'); setTimeout(() => p.remove(), 160); if (NVDD.sel && NVDD.sel._nvdd) { NVDD.sel._nvdd.classList.remove('open'); NVDD.sel._nvdd.setAttribute('aria-expanded', 'false'); } } NVDD.pop = null; NVDD.sel = null; }
+function nvddOpen(sel) {
+  nvddClose(); const b = sel._nvdd, r = b.getBoundingClientRect(), opts = [...sel.options], many = opts.length > 8;
+  const p = document.createElement('div'); p.className = 'nvdd-pop glass'; p.setAttribute('role', 'listbox');
+  p.innerHTML = (many ? '<div class="nvdd-s"><input class="input sm" placeholder="Search…" aria-label="Search options"></div>' : '') + '<div class="nvdd-l"></div>';
+  const draw = q => { p.querySelector('.nvdd-l').innerHTML = opts.map((o, i) => (!q || o.textContent.toLowerCase().includes(q)) ? `<button type="button" class="nvdd-o ${i === sel.selectedIndex ? 'on' : ''}" data-i="${i}" ${o.disabled ? 'disabled' : ''} role="option" aria-selected="${i === sel.selectedIndex}"><span>${esc(o.textContent) || '&nbsp;'}</span>${i === sel.selectedIndex ? '<svg class="i" viewBox="0 0 24 24"><path d="m5 12 5 5 9-10"/></svg>' : ''}</button>` : '').join('') || '<div class="nvdd-e">No match</div>'; };
+  draw(''); document.body.appendChild(p);
+  const w = Math.max(r.width, 180), below = innerHeight - r.bottom, h = Math.min(320, p.scrollHeight);
+  p.style.minWidth = w + 'px'; p.style.left = Math.min(r.left, innerWidth - w - 8) + 'px';
+  if (below < h + 12 && r.top > below) { p.style.bottom = (innerHeight - r.top + 6) + 'px'; p.classList.add('up'); } else p.style.top = (r.bottom + 6) + 'px';
+  NVDD.pop = p; NVDD.sel = sel; NVDD.i = sel.selectedIndex; b.classList.add('open'); b.setAttribute('aria-expanded', 'true');
+  requestAnimationFrame(() => { p.classList.add('show'); const on = p.querySelector('.nvdd-o.on'); if (on) on.scrollIntoView({ block: 'nearest' }); });
+  const s = p.querySelector('.nvdd-s input'); if (s) { s.focus(); s.addEventListener('input', () => draw(s.value.trim().toLowerCase())); }
+  p.addEventListener('click', e => { const o = e.target.closest('.nvdd-o'); if (!o || o.disabled) return; nvddPick(sel, +o.dataset.i); });
+}
+function nvddPick(sel, i) {
+  const changed = sel.selectedIndex !== i; sel.selectedIndex = i; nvddSync(sel); const b = sel._nvdd; nvddClose(); if (b) b.focus();
+  if (changed) { sel.dispatchEvent(new Event('input', { bubbles: true })); sel.dispatchEvent(new Event('change', { bubbles: true })); }
+}
+(function nvddInstall() {
+  // programmatic .value / .selectedIndex changes keep the button label in sync
+  ['value', 'selectedIndex'].forEach(k => { const d = Object.getOwnPropertyDescriptor(HTMLSelectElement.prototype, k); if (!d || !d.set) return;
+    Object.defineProperty(HTMLSelectElement.prototype, k, { configurable: true, enumerable: d.enumerable, get() { return d.get.call(this); }, set(v) { d.set.call(this, v); if (this._nvdd) nvddSync(this); } }); });
+  document.addEventListener('click', e => {
+    const b = e.target.closest('.nvdd-b'); if (b) { const sel = b.parentElement.querySelector('select'); if (NVDD.sel === sel) return nvddClose(); return nvddOpen(sel); }
+    if (NVDD.pop && !e.target.closest('.nvdd-pop')) nvddClose();
+  });
+  document.addEventListener('change', e => { if (e.target._nvdd) nvddSync(e.target); }, true);
+  document.addEventListener('keydown', e => {
+    if (NVDD.pop) {
+      const items = [...NVDD.pop.querySelectorAll('.nvdd-o:not([disabled])')]; let cur = items.findIndex(x => x.classList.contains('kb'));
+      if (e.key === 'Escape') { e.preventDefault(); const b = NVDD.sel._nvdd; nvddClose(); b.focus(); return; }
+      if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); if (cur < 0) cur = Math.max(0, items.findIndex(x => x.classList.contains('on'))); else cur = Math.max(0, Math.min(items.length - 1, cur + (e.key === 'ArrowDown' ? 1 : -1))); items.forEach(x => x.classList.remove('kb')); if (items[cur]) { items[cur].classList.add('kb'); items[cur].scrollIntoView({ block: 'nearest' }); } return; }
+      if (e.key === 'Enter') { e.preventDefault(); const x = items[cur] || items.find(y => y.classList.contains('on')) || items[0]; if (x) nvddPick(NVDD.sel, +x.dataset.i); return; }
+      if (e.key === 'Tab') nvddClose();
+      return;
+    }
+    if (e.target.classList && e.target.classList.contains('nvdd-b') && (e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); nvddOpen(e.target.parentElement.querySelector('select')); }
+  });
+  addEventListener('resize', nvddClose); document.addEventListener('scroll', e => { if (NVDD.pop && !NVDD.pop.contains(e.target)) nvddClose(); }, true);
+  let t = 0; const run = () => { t = 0; nvddEnhance(); };
+  new MutationObserver(muts => { if (NVDD.coarse) return; let need = false; for (const m of muts) { if (m.target.closest && m.target.closest('.nvdd-b,.nvdd-pop')) continue; const sel = m.target.closest && m.target.closest('select'); if (sel && sel._nvdd) { nvddSync(sel); continue; } need = true; } if (need && !t) t = requestAnimationFrame(run); }).observe(document.body, { childList: true, subtree: true });
+  run();
+})();
+
+/* ================= Connections: everything this workspace is connected to ================= */
+const CONN = { list: null, loading: false, q: '', ws: '', open: store.get('nv.connOpen') || '', draft: {} };
+const CONN_IC = {
+  wa: '<svg viewBox="0 0 24 24" class="i"><path d="M3.5 20.5 5 16a8.5 8.5 0 1 1 3.2 3.2Z"/><path d="M9 9.5c0 3 2.5 5.5 5.5 5.5l1.2-1.4-1.9-1-1 .8a4 4 0 0 1-2.2-2.2l.8-1-1-1.9Z"/></svg>',
+  mail: '<svg viewBox="0 0 24 24" class="i"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>',
+  shopify: '<svg viewBox="0 0 24 24" class="i"><path d="M6 7h12l-1.2 13H7.2Z"/><path d="M9 9V6a3 3 0 0 1 6 0v3"/></svg>',
+  woo: '<b class="acc-txt">Woo</b>', code: '<b class="acc-txt">{ }</b>', amazon: '<b class="acc-txt">a</b>', flipkart: '<b class="acc-txt">F</b>', meesho: '<b class="acc-txt">M</b>',
+  sheet: '<svg viewBox="0 0 24 24" class="i"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M4 9h16M4 15h16M10 3v18"/></svg>',
+  bell: '<svg viewBox="0 0 24 24" class="i"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10.3 21a1.9 1.9 0 0 0 3.4 0"/></svg>',
+  n8n: '<svg viewBox="0 0 24 24" class="i"><circle cx="5" cy="12" r="2.2"/><circle cx="19" cy="6" r="2.2"/><circle cx="19" cy="18" r="2.2"/><path d="M7.2 12h4.3M11.5 12c2 0 2-6 5.3-6M11.5 12c2 0 2 6 5.3 6"/></svg>',
+  meta: '<svg viewBox="0 0 24 24" class="i"><path d="M3 11v2a1 1 0 0 0 1 1h2l5 4V6L6 10H4a1 1 0 0 0-1 1Z"/><path d="M15 8.5a4.5 4.5 0 0 1 0 7M18 5.5a8.5 8.5 0 0 1 0 13"/></svg>',
+  lock: '<svg viewBox="0 0 24 24" class="i"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>',
+};
+const SYNC_OPTS = [[15, 'Every 15 minutes'], [60, 'Every hour'], [360, 'Every 6 hours'], [1440, 'Once a day'], [0, 'Only when I press Sync now']];
+const ago = t => { if (!t) return ''; const m = Math.round((Date.now() - new Date(t).getTime()) / 6e4); return m < 1 ? 'just now' : m < 60 ? m + ' min ago' : m < 1440 ? Math.round(m / 60) + ' h ago' : Math.round(m / 1440) + ' d ago'; };
+async function connLoad(force) {
+  if (CONN.ws !== AUTH.ws) Object.assign(CONN, { list: null, ws: AUTH.ws });
+  if (CONN.loading || (CONN.list && !force)) return;
+  if (demo) { CONN.list = store.get('nv.demoConn') || { shopify: { connected: true, demo: true, config: { store_url: 'demo-store.myshopify.com', sync_minutes: 15 }, last_sync_at: new Date(Date.now() - 6e5).toISOString(), last_status: 'ok', last_count: 12 } }; return; }
+  if (!cloud) { CONN.list = {}; return; }
+  CONN.loading = true;
+  try { CONN.list = (await fnCall('store-sync', { action: 'list' })).connections || {}; CONN.err = ''; }
+  catch (e) { CONN.list = {}; CONN.err = e.message; }
+  CONN.loading = false;
+}
+function connStatus(c) {
+  if (!c || !c.connected) return ['off', 'Not connected'];
+  if (c.last_status === 'error') return ['bad', `Sync failed · ${esc(c.last_error || 'check the key')}`];
+  return ['ok', `Connected · ${esc(c.config && (c.config.store_url || c.config.site_url || c.config.orders_url || '').replace(/^https?:\/\//, '').slice(0, 40))}${c.last_sync_at ? ` · synced ${ago(c.last_sync_at)}${c.last_count != null ? ` (${c.last_count} updates)` : ''}` : ''}`];
+}
+const connField = (id, label, val, opt = {}) => `<div class="field ${opt.full ? 'full' : ''}"><label>${label}</label><div class="cf-in">${opt.ic || ''}<input class="input" id="${id}" ${opt.type ? `type="${opt.type}"` : ''} value="${esc(val || '')}" placeholder="${esc(opt.ph || '')}" autocomplete="off" data-lpignore="true" data-1p-ignore spellcheck="false">${opt.type === 'password' ? `<button type="button" class="cf-eye" data-cfeye="${id}" title="Show / hide">👁</button>` : ''}</div>${opt.help ? `<small class="muted">${opt.help}</small>` : ''}</div>`;
+const cfSyncSel = (id, v) => `<div class="field"><label>Sync every</label><select class="input" id="${id}">${SYNC_OPTS.map(([m, l]) => `<option value="${m}" ${+v === m ? 'selected' : ''}>${l}</option>`).join('')}</select></div>`;
+function connStoreBody(k, c) {
+  const cf = (c && c.config) || {}, on = c && c.connected, foot = `<div class="cf-foot"><span class="cf-safe">${CONN_IC.lock} Your key is stored on the server and never shown again.</span><div class="grow"></div>${on ? `<button class="btn sm danger" data-connx="${k}">Disconnect</button><button class="btn sm" data-connsync="${k}">⟳ Sync now</button>` : ''}<button class="btn sm" data-conntest="${k}">Test connection</button><button class="btn sm primary" data-connsave="${k}">${on ? 'Save changes' : 'Connect'}</button></div><div class="cf-msg" id="cfMsg-${k}"></div>`;
+  if (k === 'shopify') return `<div class="form cf-grid">${connField('cfShopUrl', 'Store link', cf.store_url, { ph: 'yourstore.myshopify.com' })}${connField('cfShopTok', 'Admin API access token', '', { type: 'password', ph: on ? '•••••••• saved — paste only to change' : 'shpat_…' })}${cfSyncSel('cfShopSync', cf.sync_minutes ?? 15)}</div>
+    <details class="cf-how"><summary>Where do I get the token?</summary><ol><li>Shopify admin → <b>Settings → Apps and sales channels → Develop apps</b> → Create an app (name it “Nodevers”).</li><li><b>Configure Admin API scopes</b>: tick <code>read_orders</code>, <code>read_products</code>, <code>read_inventory</code> → Save.</li><li><b>Install app</b> → <b>Reveal token once</b> → copy it here.</li></ol></details>${foot}`;
+  if (k === 'woocommerce') return `<div class="form cf-grid">${connField('cfWooUrl', 'Website link', cf.site_url, { ph: 'https://yourshop.com' })}${connField('cfWooKey', 'Consumer key', '', { type: 'password', ph: on ? '•••••••• saved' : 'ck_…' })}${connField('cfWooSec', 'Consumer secret', '', { type: 'password', ph: on ? '•••••••• saved' : 'cs_…' })}${cfSyncSel('cfWooSync', cf.sync_minutes ?? 15)}</div>
+    <details class="cf-how"><summary>Where do I get the keys?</summary><ol><li>WordPress admin → <b>WooCommerce → Settings → Advanced → REST API</b> → Add key.</li><li>Description “Nodevers”, Permissions <b>Read</b> → Generate API key.</li><li>Copy the Consumer key and Consumer secret here. Your site must use https.</li></ol></details>${foot}`;
+  const m = cf.map || {}, pm = cf.pmap || {}, keys = CONN.draft.customKeys || cf.keys || [], pkeys = CONN.draft.customPKeys || cf.pkeys || [];
+  const mapSel = (pfx, f, cur, list) => `<select class="input sm" data-cfmap="${pfx}|${f}"><option value="">—</option>${list.map(x => `<option ${x === cur ? 'selected' : ''}>${esc(x)}</option>`).join('')}</select>`;
+  const OF = [['extId', 'Order ID *'], ['orderDate', 'Order date'], ['sku', 'SKU'], ['productName', 'Product name'], ['qty', 'Qty'], ['amount', 'Order total / revenue'], ['unitPrice', 'Price per unit'], ['status', 'Status'], ['payment', 'Payment'], ['customerName', 'Customer name'], ['customerState', 'Customer state'], ['customerCity', 'Customer city'], ['shippingFee', 'Shipping'], ['marketplaceFee', 'Fees'], ['courier', 'Courier'], ['trackingUrl', 'Tracking link']];
+  const PF = [['sku', 'SKU *'], ['name', 'Product name'], ['price', 'Price'], ['cost', 'Cost'], ['stock', 'Stock'], ['category', 'Category']];
+  return `<p class="help" style="margin-top:0">For a website built on any platform or your own code. Your developer creates an API that returns your orders (and products) as JSON, and gives you its link and key. Paste them here, press <b>Test connection</b>, then match the fields once.</p>
+    <div class="form cf-grid">${connField('cfCusUrl', 'Orders API link', cf.orders_url, { ph: 'https://yourshop.com/api/orders' })}${connField('cfCusPUrl', 'Products API link <span class="muted">(optional)</span>', cf.products_url, { ph: 'https://yourshop.com/api/products' })}
+      <div class="field"><label>How the key is sent</label><select class="input" id="cfCusAuth">${[['bearer', 'Authorization: Bearer <key>'], ['header', 'Custom header (e.g. x-api-key)'], ['query', 'In the link (?key=…)'], ['none', 'No key']].map(([v, l]) => `<option value="${v}" ${(cf.auth || 'bearer') === v ? 'selected' : ''}>${l}</option>`).join('')}</select></div>
+      ${connField('cfCusName', 'Header / parameter name', cf.auth_name || 'x-api-key', { ph: 'x-api-key' })}${connField('cfCusKey', 'API key', '', { type: 'password', ph: on ? '•••••••• saved — paste only to change' : 'your key' })}${cfSyncSel('cfCusSync', cf.sync_minutes ?? 60)}</div>
+    ${keys.length ? `<div class="cf-map"><b>Match order fields</b> <small class="muted">— left: Nodevers, right: the field in your API</small><div class="cf-mg">${OF.map(([f, l]) => `<label><span>${l}</span>${mapSel('o', f, m[f], keys)}</label>`).join('')}</div></div>` : '<p class="help">Press <b>Test connection</b> — Nodevers reads one order and lets you match its fields.</p>'}
+    ${pkeys.length ? `<div class="cf-map"><b>Match product fields</b><div class="cf-mg">${PF.map(([f, l]) => `<label><span>${l}</span>${mapSel('p', f, pm[f], pkeys)}</label>`).join('')}</div></div>` : ''}${foot}`;
+}
+function alertsCfg() { let c = null; try { c = JSON.parse((S.settings || {}).storeAlertsJson || 'null'); } catch (e) { } return Object.assign({ emails: [], phones: [], rules: {} }, c || {}); }
+const ALERT_RULES = [['new_order', 'New order', 'Every new order (website, Amazon, WhatsApp…)', 'both'], ['cancel', 'Cancelled / RTO / returned', 'When an order is cancelled or comes back', 'both'], ['low_stock', 'Low stock', 'When a product reaches its reorder level', 'email'], ['out_stock', 'Out of stock', 'When stock hits 0', 'both'], ['daily', 'Daily summary', 'Every evening at 8 PM — sales, profit, top product', 'email']];
+const ALERTS = { get cfg() { return alertsCfg(); } };
+function alertsBody() {
+  const c = alertsCfg(), wa = demo || (WA.status && WA.status.connected), em = demo || (BC.email && BC.email.connected);
+  const chip = (list, kind) => list.map((x, i) => `<span class="al-chip">${esc(x)}<button type="button" data-aldel="${kind}|${i}" aria-label="Remove">×</button></span>`).join('');
+  return `<div class="form cf-grid"><div class="field"><label>Email addresses</label><div class="al-list">${chip(c.emails, 'emails')}<input class="input sm" id="alEmail" placeholder="you@business.com" type="email"><button type="button" class="btn sm" data-aladd="emails">Add</button></div>${em ? '' : '<small class="cf-warn">Connect Email (above) to send email alerts.</small>'}</div>
+      <div class="field"><label>WhatsApp numbers</label><div class="al-list">${chip(c.phones, 'phones')}<input class="input sm" id="alPhone" placeholder="+91 98…"><button type="button" class="btn sm" data-aladd="phones">Add</button></div>${wa ? '<small class="muted">Sent from your connected WhatsApp number with an approved alert template.</small>' : '<small class="cf-warn">Connect WhatsApp (above) to send WhatsApp alerts.</small>'}</div></div>
+    <div class="al-rules">${ALERT_RULES.map(([k, n, d, def]) => { const r = c.rules[k] || { ch: def }; return `<div class="al-r"><div><b>${n}</b><small class="muted">${d}</small>${k === 'new_order' ? `<label class="al-min">only above ₹<input class="input sm" type="number" min="0" data-almin value="${esc(r.min || '')}" placeholder="0"></label>` : ''}</div>
+      <div class="al-seg" role="radiogroup" aria-label="${n}">${[['email', 'Email'], ['whatsapp', 'WhatsApp'], ['both', 'Both'], ['off', 'Off']].map(([v, l]) => `<button type="button" class="${(r.ch || def) === v ? 'on' : ''}" data-alch="${k}|${v}" role="radio" aria-checked="${(r.ch || def) === v}">${l}</button>`).join('')}</div></div>`; }).join('')}</div>
+    <div class="cf-foot"><span class="cf-safe">One alert per product per day — no spam. Old orders from imports never alert.</span><div class="grow"></div>${wa && !demo ? '<button class="btn sm" data-altpl>Create WhatsApp alert template</button>' : ''}<button class="btn sm" data-altest>Send test alert</button><button class="btn sm primary" data-alsave>Save alerts</button></div><div class="cf-msg" id="cfMsg-alerts"></div>`;
+}
+function renderConnections(anim) {
+  const box = $('#connBody'); if (!box || !$('#v-connections').classList.contains('active')) return;
+  if (!CONN.list) { if (!CONN.loading) connLoad().then(() => { if (CONN.list && activeView() === 'connections') renderConnections(); }); box.innerHTML = '<div class="cm-empty">Loading connections…</div>'; }
+  if (CONN.tryWs !== AUTH.ws) { CONN.tryWs = AUTH.ws; CONN.waTry = CONN.emTry = false; }
+  if (!WA.status && !CONN.waTry) { CONN.waTry = true; waLoadStatus().then(() => { if (activeView() === 'connections') renderConnections(); }); }
+  if (!BC.email && !CONN.emTry) { CONN.emTry = true; BC.email = demo ? { connected: true, demo: true, from_email: 'hello@yourbusiness.com' } : !cloud ? { connected: false } : null; if (cloud && !BC.email) sbq(AUTH.client.rpc('email_status', { p_ws: AUTH.ws })).then(r => { BC.email = r || { connected: false }; if (activeView() === 'connections') renderConnections(); }, () => { BC.email = { connected: false }; }); }
+  if (!CONN.list) return;
+  const L = CONN.list || {}, wa = WA.status || {}, em = BC.email || {}, al = alertsCfg(), alOn = al.emails.length || al.phones.length, open = CONN.open, n8 = N8L.st;
+  const grp = (title, items) => `<div class="conn-g"><div class="conn-gt">${title}</div><div class="acc-list" data-acckey="nv.connOpen">${items.join('')}</div></div>`;
+  const soon = (k, n, ic, c, d) => accItem(k, { title: n, icon: ic, color: c, dot: 'soon', status: 'Coming soon — needs the marketplace’s approval', badge: 'Soon', open: open === k, keywords: 'marketplace', body: `<p class="help" style="margin-top:0">${d}</p><div class="cf-foot"><span class="cf-safe">Until then, import its order report — the dashboards work the same.</span><div class="grow"></div><button class="btn sm primary" data-cmimport="orders" data-cmch="${n.split(' ')[0]}">⇪ Import ${n.split(' ')[0]} orders</button></div>` });
+  const [sd, ss] = connStatus(L.shopify), [wd, wsx] = connStatus(L.woocommerce), [cd, cs] = connStatus(L.custom);
+  box.innerHTML = `${CONN.err ? `<div class="banner" style="margin-bottom:12px"><div class="grow">Store connections need the <b>store-sync</b> function and the 10 database update. (${esc(CONN.err)})</div></div>` : ''}
+  ${grp('Messaging', [
+    accItem('wa', { title: 'WhatsApp', icon: CONN_IC.wa, color: 'var(--wa)', open: open === 'wa', keywords: 'meta business number token inbox', dot: wa.connected ? 'ok' : wa.error ? 'bad' : 'off', status: wa.connected ? `Connected · ${esc(wa.verified_name || '')} ${esc(wa.display_phone || '')}` : 'Not connected',
+      body: `<p class="help" style="margin-top:0">Chats, broadcasts, template flows and WhatsApp alerts use this number.</p><div class="cf-foot"><div class="grow"></div><button class="btn sm primary" data-connopen="wa">${wa.connected ? 'Manage WhatsApp' : 'Connect WhatsApp'}</button></div>` }),
+    accItem('email', { title: 'Email (Brevo)', icon: CONN_IC.mail, color: '#38BDF8', open: open === 'email', keywords: 'brevo smtp sender', dot: em.connected ? 'ok' : 'off', status: em.connected ? `Connected · ${esc(em.from_email || '')} · 300/day free` : 'Not connected',
+      body: `<p class="help" style="margin-top:0">Email campaigns, follow-ups and email alerts are sent from this sender.</p><div class="cf-foot"><div class="grow"></div><button class="btn sm primary" data-connopen="email">${em.connected ? 'Manage email' : 'Connect email'}</button></div>` }),
+  ])}
+  ${grp('Store channels', [
+    accItem('shopify', { title: 'Shopify', icon: CONN_IC.shopify, color: '#22C55E', open: open === 'shopify', keywords: 'store website orders products sync', dot: sd, status: ss, body: connStoreBody('shopify', L.shopify) }),
+    accItem('woocommerce', { title: 'WooCommerce (WordPress)', icon: CONN_IC.woo, color: '#A78BFA', open: open === 'woocommerce', keywords: 'wordpress woo website orders sync', dot: wd, status: wsx, body: connStoreBody('woocommerce', L.woocommerce) }),
+    accItem('custom', { title: 'Custom website (API)', icon: CONN_IC.code, color: '#64748B', open: open === 'custom', keywords: 'api custom website wix webflow magento opencart json developer', dot: cd, status: cs, body: connStoreBody('custom', L.custom) }),
+    accItem('sheet', { title: 'Excel / Google Sheet import', icon: CONN_IC.sheet, color: '#16A34A', open: open === 'sheet', keywords: 'excel csv google sheet import upload', dot: (S.products || []).length ? 'ok' : 'off', status: (S.products || []).length ? `${(S.products || []).length} products · ${(S.orders || []).filter(o => /^Import/.test(o.source || '')).length} imported orders` : 'Any sheet — products, orders, ad spend',
+      body: `<p class="help" style="margin-top:0">Upload an Excel file (all tabs) or paste a Google Sheet link. Re-importing updates rows instead of duplicating.</p><div class="cf-foot"><div class="grow"></div><button class="btn sm primary" data-cmimport>⇪ Import Excel / Google Sheet</button></div>` }),
+    soon('amazon', 'Amazon Seller Central', CONN_IC.amazon, '#F59E0B', 'Orders, Amazon fees, FBA / self-ship status, returns and inventory — synced automatically once Amazon approves Nodevers (SP-API).'),
+    soon('flipkart', 'Flipkart Seller Hub', CONN_IC.flipkart, '#3B82F6', 'Orders, commission, returns and payouts from Flipkart.'),
+    soon('meesho', 'Meesho Supplier', CONN_IC.meesho, '#EC4899', 'Orders, returns and payouts from Meesho.'),
+  ])}
+  ${grp('Notifications', [
+    accItem('alerts', { title: 'Store alerts', icon: CONN_IC.bell, color: 'var(--coral)', open: open === 'alerts', keywords: 'alert notification email whatsapp order stock low summary', dot: alOn ? 'ok' : 'bad', status: alOn ? `On · ${al.emails.length} email${al.emails.length === 1 ? '' : 's'} · ${al.phones.length} WhatsApp` : 'Add a number or email', body: alertsBody() }),
+  ])}
+  ${grp('Automation & ads', [
+    accItem('n8n', { title: 'n8n', icon: CONN_IC.n8n, color: '#EA4B71', open: open === 'n8n', keywords: 'n8n automation workflows docker', dot: n8 && n8.connected ? 'ok' : 'off', status: n8 && n8.connected ? `Connected · ${esc(String(n8.base_url || n8.url || '').replace(/^https?:\/\//, '').slice(0, 40))}` : 'Not connected',
+      body: `<p class="help" style="margin-top:0">Run your n8n workflows from Nodevers and fill in their keys, links and settings.</p><div class="cf-foot"><div class="grow"></div><button class="btn sm primary" data-connopen="n8n">${n8 && n8.connected ? 'Open n8n services' : 'Connect n8n'}</button></div>` }),
+    accItem('meta', { title: 'Meta Ads', icon: CONN_IC.meta, color: '#3B82F6', open: open === 'meta', keywords: 'facebook instagram ads meta campaign', dot: 'off', status: 'Sample data until your ad account is connected',
+      body: `<p class="help" style="margin-top:0">Campaign results, lead forms and spend. Add spend by hand or import it in Ads Manager → Spend & ROAS meanwhile.</p><div class="cf-foot"><div class="grow"></div><button class="btn sm" data-goads="spend">Spend & ROAS</button><button class="btn sm primary" data-goads="connect">Open Ads Manager</button></div>` }),
+  ])}`;
+  if (CONN.q) connFilter();
+  stagger(box, anim);
+}
+function connFilter() { const q = CONN.q.toLowerCase(); $$('#connBody .acc').forEach(a => { a.hidden = !!q && !a.dataset.acctext.includes(q); }); $$('#connBody .conn-g').forEach(g => { g.hidden = ![...g.querySelectorAll('.acc')].some(a => !a.hidden); }); }
+function connRead(k) {
+  const v = id => ($('#' + id) || {}).value || '';
+  if (k === 'shopify') return { config: { store_url: v('cfShopUrl').trim().replace(/^https?:\/\//, '').replace(/\/.*$/, ''), sync_minutes: +v('cfShopSync') }, secret: v('cfShopTok').trim() ? { token: v('cfShopTok').trim() } : null };
+  if (k === 'woocommerce') return { config: { site_url: v('cfWooUrl').trim().replace(/\/+$/, ''), sync_minutes: +v('cfWooSync') }, secret: v('cfWooKey').trim() || v('cfWooSec').trim() ? { key: v('cfWooKey').trim(), secret: v('cfWooSec').trim() } : null };
+  const cur = ((CONN.list || {}).custom || {}).config || {}, map = Object.assign({}, cur.map || {}, CONN.draft.map || {}), pmap = Object.assign({}, cur.pmap || {}, CONN.draft.pmap || {});
+  return { config: { orders_url: v('cfCusUrl').trim(), products_url: v('cfCusPUrl').trim(), auth: v('cfCusAuth') || 'bearer', auth_name: v('cfCusName').trim(), sync_minutes: +v('cfCusSync'), map, pmap, keys: CONN.draft.customKeys || cur.keys || [], pkeys: CONN.draft.customPKeys || cur.pkeys || [], list_path: CONN.draft.listPath ?? cur.list_path ?? '', plist_path: CONN.draft.plistPath ?? cur.plist_path ?? '' }, secret: v('cfCusKey').trim() ? { key: v('cfCusKey').trim() } : null };
+}
+function connMsg(k, html, bad) { const m = $('#cfMsg-' + k); if (m) { m.innerHTML = html; m.className = 'cf-msg ' + (bad ? 'bad' : 'ok'); } }
+const CF_GUESS = { extId: ['order_id', 'orderid', 'order_no', 'order_number', 'number', 'id', 'name'], orderDate: ['created_at', 'order_date', 'date', 'created', 'createdat', 'date_created', 'placed_at'], sku: ['sku', 'items.0.sku', 'line_items.0.sku', 'items.0.code', 'product_sku', 'code'], productName: ['product_name', 'product', 'items.0.name', 'items.0.title', 'line_items.0.name', 'title', 'name'], qty: ['qty', 'quantity', 'items.0.quantity', 'items.0.qty', 'line_items.0.quantity'], amount: ['total', 'amount', 'grand_total', 'total_price', 'order_total'], unitPrice: ['price', 'unit_price', 'items.0.price'], status: ['status', 'order_status', 'fulfillment_status', 'state'], payment: ['payment', 'payment_method', 'payment_status'], customerName: ['customer.name', 'customer_name', 'shipping.name', 'billing.first_name', 'name'], customerState: ['customer.state', 'shipping.state', 'billing.state', 'address.state', 'customer_state', 'state'], customerCity: ['city', 'customer.city', 'shipping.city', 'billing.city', 'address.city'], shippingFee: ['shipping', 'shipping_fee', 'shipping_total'], marketplaceFee: ['fee', 'fees'], courier: ['courier'], trackingUrl: ['tracking_url', 'tracking'] };
+const CF_PGUESS = { sku: ['sku', 'code'], name: ['name', 'title', 'product_name'], price: ['price', 'selling_price', 'mrp'], cost: ['cost', 'cost_price'], stock: ['stock', 'quantity', 'stock_quantity', 'inventory', 'qty'], category: ['category', 'type', 'categories.0.name'] };
+function cfGuess(keys, G, cur) { const out = Object.assign({}, cur || {}), used = new Set(Object.values(out)); Object.entries(G).forEach(([f, cands]) => { if (out[f] && keys.includes(out[f])) return; const hit = cands.find(c => keys.includes(c) && !used.has(c)) || keys.find(k => !used.has(k) && k.toLowerCase().replace(/[^a-z]/g, '') === f.toLowerCase()); if (hit) { out[f] = hit; used.add(hit); } }); return out; }
+async function connAct(kind, k, btn) {
+  if (demo) {
+    if (kind === 'save' || kind === 'test') { const d = connRead(k); if (k === 'shopify' && !d.config.store_url) return connMsg(k, 'Add your store link', true); CONN.list[k] = { connected: true, demo: true, config: d.config, last_sync_at: new Date().toISOString(), last_status: 'ok', last_count: 0 }; store.set('nv.demoConn', CONN.list); toast(kind === 'test' ? 'Demo: connection looks fine' : '✓ Connected (demo)'); return renderConnections(); }
+    if (kind === 'x') { delete CONN.list[k]; store.set('nv.demoConn', CONN.list); return renderConnections(); }
+    if (kind === 'sync') { CONN.list[k].last_sync_at = new Date().toISOString(); toast('Demo: synced'); return renderConnections(); }
+  }
+  if (!cloud) return toast('Sign in to connect your store', true);
+  const d = connRead(k); btn.disabled = true; const label = btn.textContent; btn.textContent = kind === 'test' ? 'Testing…' : kind === 'sync' ? 'Syncing…' : kind === 'x' ? 'Removing…' : 'Saving…';
+  try {
+    if (kind === 'x') { if (!confirm('Disconnect this store? Orders already imported stay.')) { btn.disabled = false; btn.textContent = label; return; } await fnCall('store-sync', { action: 'delete', platform: k }); toast('Disconnected'); await connLoad(true); return renderConnections(); }
+    if (kind === 'sync') { const r = await fnCall('store-sync', { action: 'sync', platform: k }); toast(`✓ Synced — ${r.orders || 0} orders, ${r.products || 0} products updated`); await connLoad(true); renderConnections(); return refreshData(); }
+    const r = await fnCall('store-sync', { action: kind, platform: k, config: d.config, secret: d.secret });
+    if (k === 'custom' && r.keys && r.orders === undefined) {
+      CONN.draft.customKeys = r.keys; CONN.draft.listPath = r.list_path || ''; CONN.draft.map = cfGuess(r.keys, CF_GUESS, d.config.map);
+      if (r.pkeys) { CONN.draft.customPKeys = r.pkeys; CONN.draft.plistPath = r.plist_path || ''; CONN.draft.pmap = cfGuess(r.pkeys, CF_PGUESS, d.config.pmap); }
+      const L = CONN.list || (CONN.list = {}); L.custom = Object.assign({}, L.custom || {}, { config: Object.assign({}, (L.custom || {}).config || {}, connRead('custom').config) });
+      renderConnections(); connMsg(k, '✓ ' + esc(r.message || 'Connected')); btn.disabled = false; btn.textContent = label; return;
+    }
+    if (kind === 'test') connMsg(k, `✓ ${esc(r.message || 'Connected')}${r.sample ? ` — sample: <code>${esc(r.sample)}</code>` : ''}`);
+    else { toast(r.warning ? `Saved, but the first sync failed: ${r.warning}` : `✓ ${k === 'shopify' ? 'Shopify' : k === 'woocommerce' ? 'WooCommerce' : 'Website'} connected — ${r.orders || 0} orders, ${r.products || 0} products synced`, !!r.warning); CONN.draft = {}; await connLoad(true); renderConnections(); refreshData(); }
+  } catch (e) { connMsg(k, esc(e.message), true); }
+  btn.disabled = false; btn.textContent = label;
+}
+async function alertsSave(c, silent) {
+  const val = JSON.stringify(c);
+  if (demo) { S.settings = Object.assign({}, S.settings, { storeAlertsJson: val }); store.set('nv.demoAlerts', val); }
+  else S.settings = Object.assign({}, S.settings, await api('saveSettings', { storeAlertsJson: val }));
+  if (!silent) toast('✓ Alerts saved');
+}
+function alertsReadUI() {
+  const c = alertsCfg(); $$('#connBody [data-alch].on').forEach(b => { const [k, v] = b.dataset.alch.split('|'); c.rules[k] = Object.assign({}, c.rules[k], { ch: v }); });
+  const mn = $('#connBody [data-almin]'); if (mn) c.rules.new_order = Object.assign({}, c.rules.new_order, { min: +mn.value || 0 }); return c;
+}
+(function () {
+  const v = $('#v-connections'); if (!v) return;
+  v.addEventListener('click', async e => {
+    const t = e.target;
+    const h = t.closest('.acc-h'); if (h && v.contains(h)) { const it = h.closest('.acc'); CONN.open = accToggle(it, 'nv.connOpen') ? it.dataset.acc : ''; if (CONN.open === 'n8n' && !N8L.loaded && cloud) n8LiveLoad().then(() => { if (activeView() === 'connections') renderConnections(); }); return; }
+    const eye = t.closest('[data-cfeye]'); if (eye) { const i = $('#' + eye.dataset.cfeye); i.type = i.type === 'password' ? 'text' : 'password'; return; }
+    const o = t.closest('[data-connopen]'); if (o) { const k = o.dataset.connopen; if (k === 'wa') { WA.manage = true; return go('whatsapp'); } if (k === 'email') { BC.tab = 'email'; BC.emailManage = true; return go('broadcast'); } if (k === 'n8n') { N8L.tab = N8L.st && N8L.st.connected ? 'workflows' : 'connect'; return go('n8n'); } }
+    const imp = t.closest('[data-cmimport]'); if (imp) return openCmImport(imp.dataset.cmimport, imp.dataset.cmch);
+    for (const [attr, kind] of [['connsave', 'save'], ['conntest', 'test'], ['connsync', 'sync'], ['connx', 'x']]) { const b = t.closest(`[data-${attr}]`); if (b) return connAct(kind, b.dataset[attr], b); }
+    const ch = t.closest('[data-alch]'); if (ch) { const [k] = ch.dataset.alch.split('|'); ch.parentElement.querySelectorAll('button').forEach(x => { x.classList.toggle('on', x === ch); x.setAttribute('aria-checked', String(x === ch)); }); return; }
+    const add = t.closest('[data-aladd]'); if (add) { const kind = add.dataset.aladd, inp = $(kind === 'emails' ? '#alEmail' : '#alPhone'), raw = inp.value.trim(), c = alertsReadUI();
+      if (kind === 'emails' && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(raw)) return toast('Enter a valid email', true);
+      const val = kind === 'phones' ? (raw.replace(/\D/g, '').length === 10 ? '91' : '') + raw.replace(/\D/g, '') : raw.toLowerCase();
+      if (kind === 'phones' && !/^\d{11,15}$/.test(val)) return toast('Enter the WhatsApp number with country code', true);
+      if (c[kind].includes(val)) return toast('Already added', true); if (c[kind].length >= 5) return toast('Up to 5 per list', true);
+      c[kind].push(val); try { await alertsSave(c, true); renderConnections(); toast('✓ Added'); } catch (er) { toast(er.message, true); } return; }
+    const del = t.closest('[data-aldel]'); if (del) { const [kind, i] = del.dataset.aldel.split('|'), c = alertsReadUI(); c[kind].splice(+i, 1); try { await alertsSave(c, true); renderConnections(); } catch (er) { toast(er.message, true); } return; }
+    if (t.closest('[data-alsave]')) { try { await alertsSave(alertsReadUI()); renderConnections(); } catch (er) { toast(er.message, true); } return; }
+    const ts = t.closest('[data-altest]'); if (ts) { const c = alertsReadUI(); if (!c.emails.length && !c.phones.length) return toast('Add an email or WhatsApp number first', true); if (demo) return toast('Demo: a test alert would be sent to ' + c.emails.concat(c.phones.map(p => '+' + p)).join(', '));
+      ts.disabled = true; try { await alertsSave(c, true); const r = await fnCall('alerts', { action: 'test' }); connMsg('alerts', '✓ ' + esc(r.message || 'Test alert sent')); } catch (er) { connMsg('alerts', esc(er.message), true); } ts.disabled = false; return; }
+    const tp = t.closest('[data-altpl]'); if (tp) { tp.disabled = true; try { await fnCall('wa-templates', { action: 'create', name: 'nodevers_alert', category: 'UTILITY', language: 'en', content: 'text', body: 'Alert for {{1}}: {{2}}. Open Nodevers for details.', footer: 'Sent by Nodevers', buttons: [], examples: ['Moutix', 'New order O123 for Rs 1,499 on your website'] }); connMsg('alerts', '✓ Template “nodevers_alert” sent to Meta — usually approved within minutes.'); } catch (er) { connMsg('alerts', esc(er.message), true); } tp.disabled = false; return; }
+  });
+  v.addEventListener('input', e => { if (e.target.id === 'connQ') { CONN.q = e.target.value; connFilter(); } });
+  v.addEventListener('change', e => { const m = e.target.closest('[data-cfmap]'); if (m) { const [pfx, f] = m.dataset.cfmap.split('|'), key = pfx === 'o' ? 'map' : 'pmap'; CONN.draft[key] = Object.assign({}, CONN.draft[key] || (((CONN.list || {}).custom || {}).config || {})[key] || {}, { [f]: m.value }); } });
+})();
+
+/* ================= Settings modal as an accordion ================= */
+function settingsAccordion() {
+  const box = $('#setModal .box'); if (!box || box.querySelector('.acc-list')) return;
+  const seg = box.querySelector(':scope > .seg'), info = { brand: ['Branding', '#EC4899', '<svg class="i" viewBox="0 0 24 24"><circle cx="13.5" cy="6.5" r="1.5"/><circle cx="17.5" cy="10.5" r="1.5"/><circle cx="8.5" cy="7.5" r="1.5"/><circle cx="6.5" cy="12.5" r="1.5"/><path d="M12 2a10 10 0 1 0 0 20c1.1 0 1.7-.9 1.4-1.8-.3-.9.3-1.8 1.3-1.8H17a5 5 0 0 0 5-5C22 6.6 17.5 2 12 2Z"/></svg>', 'Logo, website name, your photo'], conn: ['Google Sheet (old)', '#16A34A', CONN_IC.sheet, 'The old Apps Script connection'], acct: ['Account & workspace', 'var(--blue-2)', '<svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>', 'Password, workspace name, switch workspace, logins'], wl: ['White label', '#A78BFA', '<svg class="i" viewBox="0 0 24 24"><path d="M3 7h18M3 12h18M3 17h12"/></svg>', 'Your colours, login page and domain'] };
+  const list = document.createElement('div'); list.className = 'acc-list'; list.dataset.acckey = 'nv.setOpen';
+  ['brand', 'acct', 'wl', 'conn'].forEach(k => { const st = $('#stab-' + k); if (!st) return; const [t, c, ic, sub] = info[k];
+    const tmp = document.createElement('div'); tmp.innerHTML = accItem('s-' + k, { title: t, icon: ic, color: c, dot: 'off', status: sub, attrs: `data-stab="${k}"` }); const item = tmp.firstElementChild;
+    item.querySelector('.acc-pad').appendChild(st); st.hidden = false; st.classList.add('stab-in'); list.appendChild(item); });
+  const extra = document.createElement('div'); extra.innerHTML = accItem('s-more', { title: 'Connections, modules & setup', icon: CONN_IC.n8n, color: '#F59E0B', dot: 'off', status: 'WhatsApp, email, stores, alerts, Industry Kits', body: `<div class="cf-foot" style="margin:0"><button class="btn sm" data-setgo="industry">Industry Kits</button><button class="btn sm" data-setgo="modules">Modules</button><div class="grow"></div><button class="btn sm primary" data-setgo="connections">Open Connections</button></div>` });
+  list.appendChild(extra.firstElementChild);
+  if (seg) seg.replaceWith(list); else box.appendChild(list);
+  box.classList.remove('narrow'); box.classList.add('set-acc');
+  list.addEventListener('click', e => { const h = e.target.closest('.acc-h'); if (h) accToggle(h.closest('.acc'), 'nv.setOpen'); const g = e.target.closest('[data-setgo]'); if (g) { hideModal('#setModal'); if (g.dataset.setgo === 'modules') return openModules(); go(g.dataset.setgo); } });
+}
+function settingsStatus() {
+  const b = brand(), set = (k, txt, dot) => { const it = $(`#setModal .acc[data-acc="s-${k}"]`); if (!it) return; it.querySelector('.acc-t small').innerHTML = txt; it.querySelector('.acc-dot').style.background = ACC_DOT[dot]; };
+  set('brand', `${esc(b.brandName)}${b.logoUrl ? ' · logo added' : ' · no logo yet'}`, b.logoUrl ? 'ok' : 'off');
+  set('acct', cloud ? `Signed in · ${esc(((AUTH.session || {}).user || {}).email || '')}${AUTH.wsName ? ' · ' + esc(AUTH.wsName) : ''}` : demo ? 'Demo — create a free account to save your data' : 'Not signed in', cloud ? 'ok' : 'off');
+  set('wl', (S.settings || {}).wlAccent ? 'Custom colours' : 'Default Nodevers look', (S.settings || {}).wlAccent ? 'ok' : 'off');
+  set('conn', settings.url ? 'Connected (old Sheet mode)' : 'Not used — your data is in the cloud', settings.url ? 'ok' : 'off');
+}
+
+/* ================= modules: show only what this business uses ================= */
+const MODULES = [['store', 'Store', 'Products, stock, Amazon / website orders, store analytics', ['commerce', 'insales']], ['campaigns', 'Campaigns', 'WhatsApp / email broadcasts and templates', ['broadcast', 'templates']], ['automation', 'Automation & n8n', 'Flows, n8n services, scripts', ['automation', 'n8n', 'scripts']], ['ads', 'Ads Manager', 'Meta / Google ads, spend and ROAS', ['ads', 'inmarketing']], ['pipeline', 'Pipeline & calls', 'Pipeline canvas, calls log', ['pipeline', 'calls']]];
+const BIZ_TYPES = [['store', 'Online store', 'I sell products — website, Amazon, WhatsApp orders', { store: true, campaigns: true, automation: true, ads: true, pipeline: false }], ['services', 'Services / leads', 'I get enquiries and close deals — salon, real estate, agency, B2B', { store: false, campaigns: true, automation: true, ads: true, pipeline: true }], ['both', 'Both', 'I sell products and also handle leads / B2B deals', { store: true, campaigns: true, automation: true, ads: true, pipeline: true }]];
+function modulesCfg() { let c = null; try { c = JSON.parse((S.settings || {}).modulesJson || (demo && store.get('nv.demoModules')) || 'null'); } catch (e) { } return Object.assign({ store: true, campaigns: true, automation: true, ads: true, pipeline: true, type: '' }, c || {}); }
+function applyModules() { const m = modulesCfg(); MODULES.forEach(([k]) => document.body.classList.toggle('mod-off-' + k, m[k] === false)); if (typeof famSync === 'function') famSync(); }
+function openModules() {
+  const m = modulesCfg(), can = demo || (cloud && canAdmin());
+  $('#stageBox').innerHTML = `<div class="m-head"><h2>Modules</h2><button class="ibtn" data-close>${I.x}</button></div>
+    <p class="help" style="margin-top:0">Pick what kind of business this is — Nodevers shows only the sections you need. You can switch any section back on later. Nothing is deleted.</p>
+    <div class="mod-types">${BIZ_TYPES.map(([k, n, d]) => `<button type="button" class="mod-type ${m.type === k ? 'on' : ''}" data-modtype="${k}" ${can ? '' : 'disabled'}><b>${n}</b><small>${d}</small></button>`).join('')}</div>
+    <div class="mod-list">${MODULES.map(([k, n, d]) => `<label class="mod-row"><div><b>${n}</b><small class="muted">${d}</small></div><span class="sw"><input type="checkbox" data-mod="${k}" ${m[k] !== false ? 'checked' : ''} ${can ? '' : 'disabled'}><i></i></span></label>`).join('')}</div>
+    <div class="m-foot"><div class="grow"></div><button class="btn" data-close>${can ? 'Cancel' : 'Close'}</button>${can ? '<button class="btn primary" id="modSave">Save</button>' : ''}</div>`;
+  const box = $('#stageBox');
+  box.querySelectorAll('[data-modtype]').forEach(b => b.onclick = () => { const p = BIZ_TYPES.find(x => x[0] === b.dataset.modtype)[3]; box.querySelectorAll('[data-modtype]').forEach(x => x.classList.toggle('on', x === b)); box.querySelectorAll('[data-mod]').forEach(i => { i.checked = p[i.dataset.mod] !== false; }); });
+  if (can) $('#modSave').onclick = async () => {
+    const c = { type: (box.querySelector('.mod-type.on') || {}).dataset ? box.querySelector('.mod-type.on').dataset.modtype : m.type }; box.querySelectorAll('[data-mod]').forEach(i => { c[i.dataset.mod] = i.checked; });
+    try { if (demo) { store.set('nv.demoModules', JSON.stringify(c)); S.settings = Object.assign({}, S.settings, { modulesJson: JSON.stringify(c) }); } else S.settings = Object.assign({}, S.settings, await api('saveSettings', { modulesJson: JSON.stringify(c) }));
+      applyModules(); hideModal('#stageModal'); toast('✓ Modules saved'); const v = activeView(); if (document.body.classList.contains('mod-off-' + (MODULES.find(x => x[3].includes(v)) || [''])[0])) go('home'); else (VIEW_RENDER[v] || (() => { }))(true); } catch (e) { toast(e.message, true); } };
+  showModal('#stageModal');
+}
+
+/* ================= Ctrl + K: search anything ================= */
+const PAL = { open: false, i: 0, items: [] };
+const PAL_PAGES = [['home', 'Home', 'today tasks setup'], ['leads', 'Leads', 'list contacts customers'], ['pipeline', 'Pipeline', 'stages canvas deals'], ['tasks', 'Tasks', 'follow ups reminders'], ['calls', 'Calls', 'call log'], ['orders', 'Orders', 'amazon website whatsapp cod'], ['commerce:overview', 'Store overview', 'sales revenue profit'], ['commerce:products', 'Products', 'sku price cost'], ['commerce:inventory', 'Inventory', 'stock low reorder'], ['commerce:amazon', 'Amazon', 'fees'], ['commerce:website', 'Website sales', 'shopify woocommerce'], ['whatsapp', 'Inbox', 'whatsapp chats'], ['broadcast', 'Broadcast', 'bulk whatsapp email campaign'], ['templates', 'Templates', 'whatsapp template buttons flow'], ['automation', 'Automation', 'flows ai'], ['n8n', 'n8n Services', 'workflows'], ['ads', 'Ads Manager', 'meta facebook instagram spend roas'], ['insights', 'Insights', 'analytics dashboard kpi'], ['insales', 'Sales & Store analytics', 'profit products states customers'], ['analytics', 'Pipeline analytics', 'conversion bottleneck'], ['inmarketing', 'Marketing analytics', 'ads campaigns roas'], ['performance', 'Team performance', 'calls messages per person'], ['reports', 'Reports', 'daily monthly export'], ['connections', 'Connections', 'whatsapp email shopify woocommerce api alerts n8n'], ['team', 'Team', 'members invite access'], ['industry', 'Industry Kits', 'setup templates']];
+const PAL_ACTS = [['Add lead', 'new lead contact', () => openLeadModal(null, '')], ['Import leads (Excel / CSV)', 'upload sheet', () => $('#csvFile').click()], ['New order', 'create order', () => openOrder(null, '')], ['Add product', 'new product sku', () => { go('commerce'); openProduct(''); }], ['Import store data', 'excel google sheet amazon orders', () => openCmImport()], ['New task', 'task reminder', () => typeof openTask === 'function' && openTask(null)], ['Log a call', 'call', () => typeof openCallLog === 'function' && openCallLog()], ['New WhatsApp template', 'template', () => { go('templates'); openTplEditor(null); }], ['Store alerts', 'notifications email whatsapp', () => { CONN.open = 'alerts'; store.set('nv.connOpen', 'alerts'); go('connections'); }], ['Settings', 'branding password workspace', () => openSettings()], ['Modules', 'business type sections', () => openModules()], ['Dark / light theme', 'theme', () => $('#themeBtn').click()]];
+function cmdkItems(q) {
+  q = q.trim().toLowerCase(); const hit = s => !q || s.toLowerCase().includes(q), out = [];
+  PAL_PAGES.forEach(([v, n, kw]) => { const [view] = v.split(':'); if (!document.getElementById('v-' + view) || !famAllowedPal(view)) return; if (hit(n + ' ' + kw)) out.push({ g: 'Pages', t: n, run: () => { const [vv, tab] = v.split(':'); if (tab) { CM.tab = tab; store.set('nv.cmTab', tab); } go(vv); } }); });
+  PAL_ACTS.forEach(([n, kw, f]) => { if (hit(n + ' ' + kw)) out.push({ g: 'Actions', t: n, run: f }); });
+  if (q.length >= 2) {
+    S.leads.filter(l => [l.name, l.phone, l.email, l.businessName, l.city].some(x => String(x || '').toLowerCase().includes(q))).slice(0, 6).forEach(l => out.push({ g: 'Leads', t: l.name, s: [l.businessName, l.phone ? '+' + l.phone : '', l.stage].filter(Boolean).join(' · '), run: () => openPanel(l.leadId) }));
+    (S.orders || []).filter(o => [o.orderId, o.extId, o.productName, o.customerName].some(x => String(x || '').toLowerCase().includes(q))).slice(0, 5).forEach(o => out.push({ g: 'Orders', t: o.extId || o.orderId, s: [o.productName || o.items, o.channel, o.status].filter(Boolean).join(' · '), run: () => openOrder(o) }));
+    (S.products || []).filter(p => [p.sku, p.name, p.category].some(x => String(x || '').toLowerCase().includes(q))).slice(0, 5).forEach(p => out.push({ g: 'Products', t: p.name || p.sku, s: p.sku + ' · ' + cmN(p.stock) + ' in stock', run: () => openProduct(p.sku) }));
+  }
+  return out.slice(0, 40);
+}
+function famAllowedPal(v) { try { return famAllowed(v); } catch (e) { return true; } }
+function cmdkDraw() {
+  const box = $('#cmdkList'); let g = '';
+  box.innerHTML = PAL.items.map((x, i) => `${x.g !== g ? `<div class="cmdk-g">${esc(g = x.g)}</div>` : ''}<button type="button" class="cmdk-i ${i === PAL.i ? 'on' : ''}" data-cmdki="${i}"><span>${esc(x.t)}</span>${x.s ? `<small>${esc(x.s)}</small>` : ''}<kbd>↵</kbd></button>`).join('') || '<div class="cmdk-e">Nothing found — try a lead name, order ID, SKU or a page.</div>';
+  const on = box.querySelector('.cmdk-i.on'); if (on) on.scrollIntoView({ block: 'nearest' });
+}
+function cmdkOpen(q = '') {
+  if (!$('#cmdk')) { const d = document.createElement('div'); d.id = 'cmdk'; d.className = 'cmdk'; d.innerHTML = `<div class="cmdk-box glass" role="dialog" aria-label="Search"><div class="cmdk-in"><svg class="i" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="cmdkQ" placeholder="Search leads, orders, products, pages, actions…" autocomplete="off" spellcheck="false" data-native><kbd>Esc</kbd></div><div class="cmdk-l" id="cmdkList"></div><div class="cmdk-f"><span><kbd>↑</kbd><kbd>↓</kbd> move</span><span><kbd>↵</kbd> open</span><span><kbd>Ctrl</kbd>+<kbd>K</kbd> anywhere</span></div></div>`;
+    document.body.appendChild(d); d.addEventListener('click', e => { if (e.target === d) cmdkClose(); const b = e.target.closest('[data-cmdki]'); if (b) cmdkRun(+b.dataset.cmdki); });
+    $('#cmdkQ').addEventListener('input', e => { PAL.items = cmdkItems(e.target.value); PAL.i = 0; cmdkDraw(); }); }
+  PAL.open = true; $('#cmdk').classList.add('show'); $('#cmdkQ').value = q; PAL.items = cmdkItems(q); PAL.i = 0; cmdkDraw(); setTimeout(() => $('#cmdkQ').focus(), 30);
+}
+function cmdkClose() { PAL.open = false; const p = $('#cmdk'); if (p) p.classList.remove('show'); }
+function cmdkRun(i) { const x = PAL.items[i]; if (!x) return; cmdkClose(); try { x.run(); } catch (e) { toast(e.message, true); } }
+document.addEventListener('keydown', e => {
+  if ((e.ctrlKey || e.metaKey) && (e.key === 'k' || e.key === 'K')) { e.preventDefault(); return PAL.open ? cmdkClose() : cmdkOpen(); }
+  if (!PAL.open) { if (e.key === '/' && !/input|textarea|select/i.test((e.target.tagName || '')) && !e.target.isContentEditable && !$('.modal.show')) { e.preventDefault(); cmdkOpen(); } return; }
+  if (e.key === 'Escape') { e.preventDefault(); cmdkClose(); }
+  else if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); PAL.i = Math.max(0, Math.min(PAL.items.length - 1, PAL.i + (e.key === 'ArrowDown' ? 1 : -1))); cmdkDraw(); }
+  else if (e.key === 'Enter') { e.preventDefault(); cmdkRun(PAL.i); }
+});
+
+/* ================= 🔔 notification center ================= */
+function notifItems() {
+  const today = todayStr(), out = [], seen = store.get('nv.notifSeen') || '';
+  const od = (S.tasks || []).filter(t => t.status !== 'Done' && t.dueAt && dOnly(t.dueAt) < today); if (od.length) out.push({ k: 'bad', ic: '⏰', t: `${od.length} overdue task${od.length > 1 ? 's' : ''}`, s: od.slice(0, 2).map(t => t.title).join(' · '), go: 'tasks', at: today });
+  const fu = S.leads.filter(l => !isClosed(l) && l.followUpDate && l.followUpDate <= today); if (fu.length) out.push({ k: 'warn', ic: '📞', t: `${fu.length} follow-up${fu.length > 1 ? 's' : ''} due`, s: fu.slice(0, 3).map(l => l.name).join(', '), act: () => { ui.tab = 'due'; go('dashboard'); renderDashboard(); }, at: today });
+  const un = typeof convos === 'function' ? convos().filter(c => c.unread) : []; if (un.length) out.push({ k: 'good', ic: '💬', t: `${un.length} unread WhatsApp chat${un.length > 1 ? 's' : ''}`, s: un.slice(0, 3).map(c => c.name).join(', '), go: 'whatsapp', at: dOnly(un[0].last && un[0].last.time) });
+  const ot = (S.orders || []).filter(o => o.status !== 'Cart' && cmDate(o) === today); if (ot.length) out.push({ k: 'good', ic: '🛒', t: `${ot.length} new order${ot.length > 1 ? 's' : ''} today`, s: inr(cmSum(ot, cmRev)) + ' revenue', go: 'orders', at: today });
+  const rt = (S.orders || []).filter(o => CM_RET.includes(o.status) && cmDate(o) >= ymd(new Date(Date.now() - 2 * 864e5))); if (rt.length) out.push({ k: 'bad', ic: '↩', t: `${rt.length} return${rt.length > 1 ? 's' : ''} / RTO in 2 days`, s: rt.slice(0, 2).map(o => o.productName || o.orderId).join(' · '), go: 'orders', at: today });
+  const low = (S.products || []).filter(p => p.active !== false && p.active !== 'false' && cmStock(p)[0] !== 'ok'); if (low.length) out.push({ k: 'warn', ic: '📦', t: `${low.length} product${low.length > 1 ? 's' : ''} low or out of stock`, s: low.slice(0, 3).map(p => p.name || p.sku).join(', '), act: () => { CM.tab = 'inventory'; go('commerce'); }, at: today });
+  const fl = (S.messages || []).filter(m => m.direction === 'out' && m.status === 'failed' && dOnly(m.time) >= ymd(new Date(Date.now() - 864e5))); if (fl.length) out.push({ k: 'bad', ic: '!', t: `${fl.length} WhatsApp message${fl.length > 1 ? 's' : ''} failed`, s: 'Open the chat to see why', go: 'whatsapp', at: today });
+  return out.map(x => Object.assign(x, { fresh: !seen || x.at > seen || (x.at === today && seen < today) }));
+}
+function notifBadge() { const n = notifItems().filter(x => x.fresh).length, d = $('#bellDot'); if (d) d.hidden = !n; const c = $('#bellCount'); if (c) { c.textContent = n > 9 ? '9+' : n; c.hidden = !n; } }
+function notifOpen() {
+  let p = $('#notifPop'); if (p && p.classList.contains('show')) { p.classList.remove('show'); return; }
+  if (!p) { p = document.createElement('div'); p.id = 'notifPop'; p.className = 'notif-pop glass'; document.body.appendChild(p);
+    p.addEventListener('click', e => { const b = e.target.closest('[data-ni]'); if (b) { const x = NOTIF[+b.dataset.ni]; p.classList.remove('show'); if (x.act) x.act(); else go(x.go); } if (e.target.closest('[data-nseen]')) { store.set('nv.notifSeen', todayStr() + 'T' + new Date().toTimeString().slice(0, 5)); notifBadge(); notifOpen(); notifOpen(); } }); }
+  NOTIF = notifItems(); const r = $('#bellBtn').getBoundingClientRect();
+  p.style.top = (r.bottom + 8) + 'px'; p.style.right = Math.max(8, innerWidth - r.right) + 'px';
+  p.innerHTML = `<div class="np-h"><b>Notifications</b><button class="btn sm ghost" data-nseen>Mark all as seen</button></div>${NOTIF.map((x, i) => `<button class="np-i ${x.fresh ? 'fresh' : ''}" data-ni="${i}"><span class="np-ic ${x.k}">${x.ic}</span><div><b>${esc(x.t)}</b><small>${esc(x.s || '')}</small></div></button>`).join('') || '<div class="np-e">All caught up 🎉</div>'}`;
+  requestAnimationFrame(() => p.classList.add('show'));
+}
+let NOTIF = [];
+document.addEventListener('click', e => { const p = $('#notifPop'); if (p && p.classList.contains('show') && !e.target.closest('#notifPop,#bellBtn')) p.classList.remove('show'); });
+
+/* ================= mobile bottom bar ================= */
+function mobileBar() {
+  if ($('#mbar')) return;
+  const ic = (p) => `<svg class="i" viewBox="0 0 24 24">${p}</svg>`, items = [['home', 'Home', ic('<path d="m3 11 9-8 9 8"/><path d="M5 10v10h14V10"/>')], ['whatsapp', 'Inbox', ic('<path d="M3.5 20.5 5 16a8.5 8.5 0 1 1 3.2 3.2Z"/>')], ['leads', 'Leads', ic('<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4.5a3.5 3.5 0 0 1 0 7"/>')], ['commerce', 'Store', ic('<path d="M4 9h16l-1.2-4.2A1 1 0 0 0 17.8 4H6.2a1 1 0 0 0-1 .8Z"/><path d="M5 9v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9"/>')], ['more', 'More', ic('<circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/>')]];
+  const nav = document.createElement('nav'); nav.id = 'mbar'; nav.className = 'mbar glass'; nav.setAttribute('aria-label', 'Main');
+  nav.innerHTML = items.map(([k, n, svg]) => `<button type="button" data-mb="${k}">${svg}<span>${n}</span></button>`).join(''); document.body.appendChild(nav);
+  nav.addEventListener('click', e => { const b = e.target.closest('[data-mb]'); if (!b) return; const k = b.dataset.mb; if (k === 'more') return moreSheet(); if (k === 'leads') return famGo('leads'); if (k === 'commerce') { CM.tab = 'overview'; } go(k); });
+}
+function moreSheet() {
+  let s = $('#moreSheet'); if (!s) { s = document.createElement('div'); s.id = 'moreSheet'; s.className = 'more-sheet'; document.body.appendChild(s); s.addEventListener('click', e => { if (e.target === s || e.target.closest('[data-go],[data-gofam],[data-cm],#sideSettings2')) s.classList.remove('show'); if (e.target.closest('#sideSettings2')) openSettings(); }); }
+  const side = $('#side').cloneNode(true); side.querySelectorAll('[id]').forEach(x => { x.id = x.id === 'sideSettings' ? 'sideSettings2' : ''; }); side.querySelectorAll('.side-brand,.spacer,.powered,#themeBtn').forEach(x => x.remove());
+  s.innerHTML = `<div class="more-box glass"><div class="more-grab"></div>${side.innerHTML}</div>`; requestAnimationFrame(() => s.classList.add('show'));
+}
 
 /* ================= platform admin console ================= */
 const ADM = { rows: null, q: '', at: 0 };
@@ -7445,6 +8160,12 @@ document.addEventListener('change', e => {
 
 /* ================= Nodevers Guide — in-app helper (round button, bottom-right) ================= */
 const HELP_GUIDE = [
+  ['home', 'Home: what to do today', 'home today start dashboard setup checklist overdue hot leads new orders low stock', '**Home** is your daily start: the **Set up your business** checklist (click any step to finish it), cards for **Overdue tasks**, **Hot leads**, **New orders** and **Low stock**, a **Do this now** list (tick a task to finish it), recent orders and unread WhatsApp chats.'],
+  ['alerts', 'Store alerts on email / WhatsApp', 'alert alerts notification email whatsapp new order stock low out of stock summary daily rto cancelled', '**Setup → Connections → Store alerts**: add up to 5 emails and 5 WhatsApp numbers, then for each alert choose **Email / WhatsApp / Both / Off** — New order (optionally only above ₹ amount), Cancelled / RTO / returned, Low stock, Out of stock and the Daily summary (8 PM). Press **Save alerts**, then **Send test alert**. Email alerts need Email (Brevo) connected; WhatsApp alerts need WhatsApp connected and the **nodevers_alert** template approved (press **Create WhatsApp alert template** once). One alert per product per day — imported history never alerts.'],
+  ['connections', 'Connections page', 'connections setup whatsapp email shopify woocommerce n8n meta status connected', '**Setup → Connections** lists everything your workspace is connected to — WhatsApp, Email, Shopify, WooCommerce, custom website API, Excel / Google Sheet import, Store alerts, n8n and Meta Ads. A green dot = connected, red = needs attention, grey = not connected. Click a row to open it; use the search box to find a setting.'],
+  ['modules', 'Modules: show only what you use', 'modules business type store services hide sections simple', '**Settings → Connections, modules & setup → Modules** (or Ctrl+K → Modules): pick **Online store**, **Services / leads** or **Both** and switch sections like Store, Campaigns, Automation, Ads Manager or Pipeline on or off. Nothing is deleted — switch them back any time.'],
+  ['search', 'Search anything (Ctrl + K)', 'search find ctrl k shortcut command palette quick open', 'Press **Ctrl + K** (or click the search box at the top, or press /) and type a lead name, phone, order ID, SKU or a page / action like “import” or “alerts”. Use ↑ ↓ and Enter.'],
+  ['notifications', 'Notifications (🔔)', 'notification bell alerts overdue follow up unread orders stock failed', 'The **🔔** at the top shows overdue tasks, follow-ups due, unread chats, today’s orders, returns, low stock and failed WhatsApp messages. Click one to open it; **Mark all as seen** clears the blue dots.'],
   ['start', 'What Nodevers is', 'nodevers overview start basics what is workspace demo', 'Nodevers is your sales desk: leads, pipeline, WhatsApp inbox, broadcasts (WhatsApp + email), calls, tasks, automation and reports in one place. Each business is one **workspace**; only people you invite can see it. The **Demo** link shows sample data; your real data appears after you sign in.'],
   ['login', 'Sign in, password, workspace', 'login sign in password forgot reset workspace rename switch account', 'Sign in with email + password or **Continue with Google**. Forgot it? Press **Forgot?** on the login page. Signed in: **Settings (⚙ or your profile photo) → Accounts** to **Change password**, **Rename** the workspace or **Switch workspace** (if you belong to more than one).'],
   ['add', 'Add, edit, delete a lead', 'add lead new lead edit delete remove lost form create', '1. Press **Add Lead** (Dashboard, Leads or Pipeline). 2. Fill **Full name** and a **WhatsApp number** or **Email** (at least one); add business, city, district, state, source, budget, follow-up date, stage, tag, **Assign to**. 3. **Save Lead**. To edit: open the lead → **Edit**. To remove: open the lead → **Mark as Lost** (keeps history) or the trash icon at the top (cannot be undone).'],
@@ -7460,18 +8181,18 @@ const HELP_GUIDE = [
   ['connect', 'Connect WhatsApp', 'connect whatsapp number meta business token phone number id waba webhook setup', 'Owner/Admin: **Inbox → Connect WhatsApp**. You need from Meta (business.facebook.com): **Phone number ID**, **WhatsApp Business Account ID** and a **permanent system-user token**. Paste them only into that form (never into chat). **Manage** lets you update or disconnect. Ask your Nodevers provider if you need help with the Meta app and webhook.'],
   ['templates', 'WhatsApp templates', 'template templates create approve meta pending rejected sync draft submit', '**Templates**: **⟳ Sync from WhatsApp** brings your approved templates. **New template**: name (lowercase_with_underscores), category (Marketing / Utility), language, use case, header, body with {{1}} variables, footer, buttons → **Submit to Meta for approval** (minutes to 24 h). Drafts show **Edit & submit to Meta**. **Library** sets use case, best segment, tags and notes so your team picks the right one.'],
   ['builder', 'Template builder: content, buttons, actions, flows', 'builder button buttons action flow next template image video pdf catalog payment order cart call website map multi step', 'In **Templates → New template** choose a **Content type** (Text, Image, Video, PDF, Location, Payment link; Catalog / Product card need a Meta catalog — contact cards are not allowed in templates). Add up to 10 **buttons** (max 1 Call, max 2 link buttons, keep reply buttons together). For each reply button pick **actions** — e.g. **Send next template**, Reply with text, Add tag, Change stage, Assign team member, Create task, Send payment link, Create / update / cancel / track order, Trigger workflow, Run AI agent. Chaining templates with **Send next template** builds a multi-step flow.\n\nFor an already-approved template use **Buttons & actions** on its card — no new Meta review needed. **⇢ Flow map** shows every template as a card and a wire from each button to the template it sends next.'],
-  ['store', 'Store (Commerce): overview, Amazon, Website', 'store commerce ecommerce amazon website flipkart meesho revenue profit margin rto return fees overview channel sales dashboard', '**Commerce → Store Overview** shows revenue, net profit and margin, orders, units, ad spend (ROAS and profit after ads), return / RTO rate, inventory value and stock alerts — with filters for period, channel, state and status. **Amazon** and **Website** tabs show the same for one channel plus fees, shipping, “where every ₹ goes”, top products, return reasons and the order list. Net profit = revenue − product cost − marketplace fees − shipping − packaging − RTO charges − ad spend (cancelled / returned orders earn nothing).'],
+  ['store', 'Store: overview, Amazon, Website', 'store commerce ecommerce amazon website flipkart meesho revenue profit margin rto return fees overview channel sales dashboard', '**Store** (sidebar) shows revenue, net profit and margin, orders, units, ad spend (ROAS, profit after ads), return / RTO rate, inventory value and stock alerts — filter by period, channel, state and status. The **Amazon** and **Website** tabs show the same for one channel plus fees, shipping, “where every ₹ goes”, top products and return reasons. Detailed analytics are in **Insights → Sales & Store**. Net profit = revenue − product cost − fees − shipping − packaging − RTO − ad spend.'],
   ['products', 'Products and inventory', 'product products sku stock inventory reorder low stock out of stock price cost margin category', '**Commerce → Products**: add a product with **SKU**, name, category, selling price, cost per unit, stock and reorder level — margin is shown live. **Inventory** lists stock status (In stock / Low / Out), units sold in 30 days and **days left**; type a new number and press **Save** to update stock, or **Reorder task** to create a task in Tasks. Orders with a SKU pick up the product name, price and cost automatically.'],
   ['storeimport', 'Import store data (Excel / Google Sheet)', 'import excel sheet google sheet upload amazon report website orders products ad spend meta ads tabs workbook', 'Press **⇪ Import Excel / Sheet** in Commerce. Choose an .xlsx / .csv file, or paste a Google Sheet link (first set Share → “Anyone with the link” → Viewer) and press **Load**. Every tab is detected by its column names — Products, Orders (pick the channel: Amazon, Website…) or Ad spend; use **Edit columns** to fix any match, then **Import**. Importing the same file again updates rows with the same SKU / order ID instead of duplicating. **Download sample file** shows the expected columns.'],
-  ['channels', 'Connect Amazon, Shopify, WooCommerce', 'connect amazon seller central shopify woocommerce flipkart meesho api sync channel integration', '**Commerce → Channels** lists Amazon Seller Central, Shopify, WooCommerce, Flipkart, Meesho and custom websites. Automatic sync is **coming soon** (marketplaces must approve Nodevers first). Until then use **Import file instead** — your dashboards work the same way with imported reports.'],
-  ['adspend', 'Ad spend, ROAS and profit after ads', 'ad spend ads roas meta google campaign profit after ads cost per purchase', '**Commerce → Ad spend**: add daily spend per platform and campaign (or import your Meta Ads export). Nodevers shows ROAS (store revenue ÷ ad spend), cost per purchase and **profit after ads** for the same period.'],
+  ['channels', 'Connect your website (Shopify, WooCommerce, any website)', 'connect website shopify woocommerce wordpress api key token custom developer sync amazon flipkart meesho channel integration', 'Go to **Setup → Connections → Store channels**. **Shopify**: paste your store link (yourstore.myshopify.com) and an **Admin API access token** (Shopify admin → Settings → Apps and sales channels → Develop apps → create “Nodevers” → scopes read_orders, read_products, read_inventory → Install → reveal token). **WooCommerce**: website link + **Consumer key** and **Consumer secret** (WooCommerce → Settings → Advanced → REST API → Read). **Custom website**: paste the orders API link (and products link) and the key from your developer → **Test connection** → match the fields → **Connect**. Orders, products and stock then sync automatically (every 15 min by default) — or press **⟳ Sync now**. Your key stays on the server. Amazon, Flipkart and Meesho are coming soon — import their reports meanwhile.'],
+  ['adspend', 'Ad spend, ROAS and profit after ads', 'ad spend ads roas meta google campaign profit after ads cost per purchase ads manager', '**Marketing → Ads Manager → Spend & ROAS**: add daily spend per platform and campaign (or import your Meta Ads export). Nodevers shows ROAS (store revenue ÷ ad spend), cost per purchase and **profit after ads**. **Insights → Marketing** shows the same next to your broadcast results.'],
   ['orders', 'Orders from WhatsApp buttons', 'order orders cart cod cash on delivery paid shipped track tracking invoice reorder', '**CRM → Orders** lists every order. Orders are created automatically when a customer taps a button with **Create order** (Order Now, Add to Cart, Reorder), and updated by **Update order** (Cash on Delivery, Paid…) or **Cancel order**. Your team can also add or edit an order (items, amount, status, tracking link) from Orders or from the lead panel. Track Order buttons reply with the latest status and tracking link.'],
   ['broadcast', 'Broadcast (bulk WhatsApp / email)', 'broadcast bulk campaign send many mass marketing segment audience', '**Broadcast** is a 4-step flow: **1 Audience** (filters, saved segments, import a file, or retarget a past campaign) → **2 Template / Email** (fill the variables) → **3 Test** (send to yourself) → **4 Send**. WhatsApp broadcasts need an approved template and a payment method in WhatsApp Manager; new numbers can reach about 250 new people a day. People who reply STOP are skipped automatically.'],
   ['email', 'Email campaigns', 'email brevo sender smtp mail newsletter unsubscribe', '**Broadcast → Email**. Owner/Admin connects a sender once (free Brevo account, verified sender email, API key pasted only in the form). Write **Subject** + **Message** with {{first_name}}, {{name}}, {{business}}, {{city}}; **Test** to yourself, then **Send**. Every email has an Unsubscribe link.'],
   ['history', 'Campaign results and comparison', 'history results compare campaign read replied best time low performing retarget', '**Broadcast → History**: **Compare campaigns** shows sent, delivered, read %, replied % and failed for every run, plus your best time, best day and best content. Low runs get **⚠ Follow up** — it retargets people who did not read, with your follow-up template.'],
   ['team', 'Team, logins and access', 'team invite member admin client role access permission area territory region state district', '**Team → Logins & access → Invite**: choose Member, Admin or Client (view only) and send the link (valid 7 days, one use). Owner/Admin press **Access** next to a person to set their **Team**, which leads they see (**All leads**, **Only their area** — states, districts or cities — or **Only assigned to them**) and switches like Add, Edit, Delete, Import, Export, WhatsApp, Email, Broadcast, Calls, Tasks, Analytics, Automation.'],
-  ['performance', 'Team Performance (for owners)', 'performance team report analytics who called messages emails responses rejected state boss', '**Team Performance**: pick period, team, person or state. You see WhatsApp sent, emails, calls, responses (replies + connected calls), rejected/lost, a daily chart, tables by team and by person, and responses by state. Click a row to filter.'],
-  ['analytics', 'Analytics and pipeline analytics', 'analytics pipeline conversion win rate value bottleneck stage report revenue source', '**Analytics → Overview**: revenue, leads, conversion, WhatsApp chats, ads. **Analytics → Pipeline analytics**: filter by date, team member, source, state; see total, won, lost, win rate, pipeline value, average time to win, the **Bottleneck** stage and stage-by-stage numbers.'],
+  ['performance', 'Team performance (Insights → Team)', 'performance team report analytics who called messages emails responses rejected state boss', '**Insights → Team**: pick team, person or state. You see WhatsApp sent, emails, calls, responses (rate), rejected/lost, and tables by team, person and state. Click a row to filter.'],
+  ['analytics', 'Insights (all analytics in one place)', 'insights analytics dashboard kpi pipeline conversion win rate bottleneck report revenue profit marketing team export', '**Insights** has one date filter for every tab: **Overview** (revenue, profit, orders, leads, deals won, ad spend, WhatsApp reply rate, returns, calls — each with a trend line and % vs the previous period), **Sales & Store** (store analytics), **Pipeline** (conversion and bottlenecks), **Marketing** (ads + campaigns), **Team** (who did what) and **Reports** (daily / monthly tables). **Export** downloads the period as a CSV.'],
   ['automation', 'Automation canvas', 'automation workflow flow canvas node trigger build with ai design', '**Automation**: build flows with nodes (triggers, CRM, WhatsApp, logic, AI, n8n). Type an idea in **Build with AI** and press **Generate**, then **Build on canvas**. Note: flows here are designs for now; workflows that really run live in **n8n Services**.'],
   ['n8n', 'n8n Services (your workflows)', 'n8n workflow connect api key ngrok docker run now credentials red node', '**n8n Services → Connect n8n**: paste your n8n address (https) and API key. **Workflows**: switch them on/off, see last runs. **Set up** opens a workflow as nodes — red steps need your key, link or setting; click one, fill it, save (it goes straight into your n8n). **▶ Run now** starts it (first press **+ Add Run button**; the workflow must be ON). n8n on your own PC needs Docker + ngrok running.'],
   ['kits', 'Industry Kits', 'industry kit template setup furniture real estate salon gym restaurant', '**Industry Kits**: pick your business type → preview stages, lead sources, automations and WhatsApp templates → choose what to apply.'],
@@ -7485,7 +8206,7 @@ function helpSearch(q, n = 3) {
   return HELP_GUIDE.map(([id, title, kw, text]) => { const hay = (title + ' ' + kw).toLowerCase(), body = text.toLowerCase(); let sc = id === page ? 1 : 0; words.forEach(w => { if (hay.includes(w)) sc += 3; else if (body.includes(w)) sc += 1; }); return { id, title, text, sc }; }).filter(x => x.sc > 0).sort((a, b) => b.sc - a.sc).slice(0, n);
 }
 const helpMd = t => esc(t).replace(/\*\*([^*]+)\*\*/g, '<b>$1</b>').replace(/(^|\s)(\d{1,2})\.\s(?=\S)/gm, (m, sp, n) => (sp && sp !== '\n' ? '<br>' : sp) + '<span class="hp-n">' + n + '</span> ').replace(/\n/g, '<br>');
-const HELP_CHIPS = { dashboard: ['How do I add a lead?', 'Import leads from Excel', 'Show my overdue tasks'], leads: ['Import leads from Excel', 'Export leads', 'Delete a lead'], whatsapp: ['Why did my message fail?', 'How does ✨ AI work?', '24-hour rule kya hai?'], broadcast: ['Bulk WhatsApp kaise bheju?', 'Send an email campaign', 'Compare campaigns'], templates: ['Create a template', 'Add buttons and actions', 'Why is my template pending?'], team: ['Invite a team member', 'Limit someone to Maharashtra', 'What can a Client see?'], tasks: ['How do auto-tasks work?', 'Create a task'], calls: ['Log a call', 'Where do I see call results?'], n8n: ['Connect my n8n', 'Fix red nodes', 'Run a workflow now'] };
+const HELP_CHIPS = { home: ['What is on Home?', 'Finish my setup', 'Search anything (Ctrl + K)'], connections: ['Connect my Shopify store', 'Set up store alerts', 'Connect my website API'], insights: ['What do the Insights tabs show?', 'Export a report', 'Ad spend and ROAS'], commerce: ['Import my store sheet', 'Connect my website', 'Low stock alerts'], dashboard: ['How do I add a lead?', 'Import leads from Excel', 'Show my overdue tasks'], leads: ['Import leads from Excel', 'Export leads', 'Delete a lead'], whatsapp: ['Why did my message fail?', 'How does ✨ AI work?', '24-hour rule kya hai?'], broadcast: ['Bulk WhatsApp kaise bheju?', 'Send an email campaign', 'Compare campaigns'], templates: ['Create a template', 'Add buttons and actions', 'Why is my template pending?'], team: ['Invite a team member', 'Limit someone to Maharashtra', 'What can a Client see?'], tasks: ['How do auto-tasks work?', 'Create a task'], calls: ['Log a call', 'Where do I see call results?'], n8n: ['Connect my n8n', 'Fix red nodes', 'Run a workflow now'] };
 function helpRender() {
   let p = $('#helpPanel');
   if (!p) { p = document.createElement('div'); p.id = 'helpPanel'; p.className = 'hp glass'; document.body.appendChild(p); }
@@ -7579,7 +8300,8 @@ $('#gsearch').oninput = e => { ui.q = e.target.value; $('#dsearch').value = ui.q
 $('#dstage').onchange = e => { ui.stage = e.target.value; renderDashboard(); };
 $('#pfilter').onchange = e => { ui.pfilter = e.target.value; renderPipeline(); };
 $('#refreshBtn').onclick = () => { load(true).then(() => toast('Data refreshed')); };
-$('#bellBtn').onclick = () => { ui.tab = 'due'; go('dashboard'); renderDashboard(); };
+$('#bellBtn').onclick = () => notifOpen(); $('#bellBtn').title = 'Notifications';
+$('#gsearch').addEventListener('focus', e => { e.target.blur(); cmdkOpen(e.target.value); });
 $('#sideSettings').onclick = () => openSettings(); $('#bannerSettings').onclick = () => sbConf().url ? showAuth('up') : openSettings('conn'); $('#meBtn').onclick = () => openSettings('brand');
 function setTheme(t) { document.documentElement.dataset.theme = t; store.set('leadnode.theme', t); }
 $('#themeBtn').onclick = $('#mThemeBtn').onclick = () => setTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark');
@@ -7588,7 +8310,8 @@ setTheme(store.get('leadnode.theme') || 'light');
 
 /* ================= start ================= */
 (function grabInvite() { const m = location.hash.match(/^#invite=([a-f0-9]{20,80})$/i); if (m) { store.set('leadnode.invite', { t: m[1], at: Date.now() }); history.replaceState(null, '', location.pathname + '#dashboard'); } })();
-go(location.hash.slice(1) || 'dashboard');
+famInit(); settingsAccordion(); mobileBar(); applyModules();
+go(location.hash.slice(1) || 'home');
 authInit().then(ok => { if (ok) load(); });
 </script>
 </body>
