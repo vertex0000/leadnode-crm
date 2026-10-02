@@ -632,6 +632,11 @@ textarea.input.code{min-height:320px}
 input:-webkit-autofill,input:-webkit-autofill:hover,input:-webkit-autofill:focus{-webkit-text-fill-color:var(--text);caret-color:var(--text);transition:background-color 99999s ease-out 0s}
 .nav-badge{display:inline-block;min-width:16px;padding:0 5px;margin-left:5px;border-radius:9px;background:var(--wa,#25A55F);color:#fff;font-size:10.5px;font-weight:800;line-height:16px;text-align:center;vertical-align:1px}.nav-badge[hidden]{display:none}
 .ro-banner{display:none}body.ro .ro-banner{display:flex}
+body:not(.is-platform) .plat-only{display:none!important}
+body.cl-tenant [data-go="scripts"],body.cl-tenant [data-stab="conn"],body.cl-tenant #acctImport,body.cl-tenant #stab-acct>.form,body.cl-tenant #sbClear,body.cl-tenant #sbPreview,body.cl-tenant #sbSave,body.cl-tenant #n8Role,body.cl-tenant #n8RoleHelp{display:none!important}
+.plat-bar{display:flex;align-items:center;gap:10px;padding:8px 14px;border-radius:12px;margin-bottom:12px;background:color-mix(in srgb,#A78BFA 14%,transparent);border:1px solid color-mix(in srgb,#A78BFA 40%,transparent);font-size:13px;font-weight:600}
+.adm-ks{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}@media (max-width:900px){.adm-ks{grid-template-columns:repeat(2,1fr)}}
+.adm-ok{color:var(--green);font-weight:700}.adm-no{color:var(--muted)}
 body.np-add [data-add],body.np-add .addcard,body.np-import #csvImportBtn,body.np-import #pImport,body.np-import [data-bcimport],body.np-import .bc-imp,body.np-export #csvExport,body.np-delete #panel [data-delete],body.np-edit #panel [data-edit],body.np-broadcast [data-go="broadcast"],body.np-automation [data-go="automation"],body.np-automation [data-go="scripts"],body.np-automation [data-go="n8n"],body.np-analytics [data-go="analytics"],body.np-analytics [data-go="reports"],body.np-analytics [data-go="performance"],body.np-calls [data-calllog],body.np-tasks [data-go="tasks"],body.np-whatsapp #inbox .ib-comp,body.np-email [data-bctab="email"]{display:none!important}body.np-edit #panel .stagebar{pointer-events:none}
 body.ro [data-add],body.ro .addcard,body.ro #addMember,body.ro [data-lginvite],body.ro #pImport,body.ro #scrNew,body.ro [data-go="industry"],body.ro [data-go="scripts"],body.ro [data-go="automation"],body.ro [data-go="broadcast"],body.ro [data-stab="conn"],body.ro [data-stab="wl"],body.ro #acctImport,body.ro #acctWs,body.ro #panel .notebox,body.ro #panel [data-delete],body.ro #panel [data-edit],body.ro #panel [data-focus-note],body.ro #panel .p-foot,body.ro #panel .aisum-act button{display:none!important}body.ro #panel .stagebar{pointer-events:none}
 .lg-card{padding:18px;border-radius:16px;margin-top:18px}.lg-h{display:flex;gap:12px;align-items:flex-start;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap}.lg-h h3{margin:0 0 4px}.lg-h p{margin:0;font-size:13px}
@@ -1073,6 +1078,8 @@ body.no-sales [data-go="tasks"],body.no-sales [data-go="calls"]{display:none!imp
 <div class="app">
   <aside class="side" id="side">
     <div class="side-brand"><div class="logo brand-logo"><svg class="i" viewBox="0 0 24 24" style="width:22px;height:22px"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="12" r="2.5"/><circle cx="6" cy="18" r="2.5"/><path d="M8.3 7.2 15.7 11M8.3 16.8 15.7 13"/></svg></div><span class="lbl brandTxt">Nodevers</span></div>
+    <div class="sgrp plat-only">Platform</div>
+    <button class="sbtn plat-only" data-go="admin"><svg class="i" viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 4.5 3.4 8.3 8 9 4.6-.7 8-4.5 8-9V6Z"/><path d="m9 12 2 2 4-4"/></svg><span class="lbl">Admin Console</span></button>
     <div class="sgrp">CRM</div>
     <button class="sbtn" data-go="dashboard"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg><span class="lbl">Dashboard</span></button>
     <button class="sbtn" data-go="pipeline"><svg class="i" viewBox="0 0 24 24"><circle cx="5" cy="6" r="2"/><circle cx="19" cy="6" r="2"/><circle cx="12" cy="18" r="2"/><path d="M7 6h10M6 8l5 8.3M18 8l-5 8.3"/></svg><span class="lbl">Pipeline</span></button>
@@ -1080,7 +1087,7 @@ body.no-sales [data-go="tasks"],body.no-sales [data-go="calls"]{display:none!imp
     <button class="sbtn" data-go="tasks"><svg class="i" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg><span class="lbl">Tasks</span><span class="nbadge" id="tasksBadge" hidden></span></button>
     <button class="sbtn" data-go="calls"><svg class="i" viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg><span class="lbl">Calls</span></button>
     <button class="sbtn" data-go="industry"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M17.5 14v7M14 17.5h7"/></svg><span class="lbl">Industry Kits</span></button>
-    <div class="sgrp">WhatsApp</div>
+    <div class="sgrp">Messaging</div>
     <button class="sbtn" data-go="whatsapp"><svg class="i" viewBox="0 0 24 24"><path d="M3.5 20.5 5 16a8.5 8.5 0 1 1 3.2 3.2Z"/><path d="M9 9.5c0 3 2.5 5.5 5.5 5.5l1.2-1.4-1.9-1-1 .8a4 4 0 0 1-2.2-2.2l.8-1-1-1.9Z"/></svg><span class="lbl">Inbox</span></button>
     <button class="sbtn" data-go="broadcast"><svg class="i" viewBox="0 0 24 24"><path d="m3 11 18-8-8 18-2-8Z"/></svg><span class="lbl">Broadcast</span></button>
     <button class="sbtn" data-go="templates"><svg class="i" viewBox="0 0 24 24"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9Z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></svg><span class="lbl">Templates</span></button>
@@ -1109,7 +1116,7 @@ body.no-sales [data-go="tasks"],body.no-sales [data-go="calls"]{display:none!imp
         <a href="#pipeline" data-go="pipeline">Pipeline</a>
         <a href="#leads" data-go="leads">Leads</a>
         <a href="#industry" data-go="industry" class="mob">Kits</a>
-        <a href="#whatsapp" data-go="whatsapp">WhatsApp<span class="nav-badge" id="waBadge" hidden></span></a>
+        <a href="#whatsapp" data-go="whatsapp">Inbox<span class="nav-badge" id="waBadge" hidden></span></a>
         <a href="#broadcast" data-go="broadcast" class="mob">Broadcast</a>
         <a href="#automation" data-go="automation" class="mob">Automation</a>
         <a href="#ads" data-go="ads">Ads</a>
@@ -1213,6 +1220,13 @@ body.no-sales [data-go="tasks"],body.no-sales [data-go="calls"]{display:none!imp
       <div class="table-wrap glass"><table class="tbl" id="ltable"></table></div>
     </section>
 
+    <!-- ADMIN CONSOLE (platform owner only) -->
+    <section class="view" id="v-admin">
+      <div class="head"><div><div class="eyebrow">Platform</div><h1>Admin Console</h1><p class="sub">Every client business on Nodevers — usage, connections and one-click view of their data.</p></div>
+        <div class="head-actions"><button class="btn" id="admRefresh">⟳ Refresh</button></div></div>
+      <div id="adminBody"></div>
+    </section>
+
     <!-- TASKS -->
     <section class="view" id="v-tasks">
       <div class="head"><div><div class="eyebrow">Sales</div><h1>Tasks</h1><p class="sub">Follow-ups for your team — created automatically when a lead reaches Interested, Quotation or Negotiation.</p></div>
@@ -1252,7 +1266,7 @@ body.no-sales [data-go="tasks"],body.no-sales [data-go="calls"]{display:none!imp
 
     <!-- TEMPLATES -->
     <section class="view" id="v-templates">
-      <div class="head"><div><div class="eyebrow">WhatsApp</div><h1>Templates</h1><p class="sub">Approved messages you can send anytime — campaigns, offers, reminders.</p></div>
+      <div class="head"><div><div class="eyebrow">Messaging</div><h1>Templates</h1><p class="sub">Approved messages you can send anytime — campaigns, offers, reminders.</p></div>
         <div class="head-actions"><button class="btn" id="tpSync">⟳ Sync from WhatsApp</button><button class="btn primary" id="tpNew"><svg class="i" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>New template</button></div></div>
       <div class="tp-bar" id="tplBar"></div>
       <div class="tpgrid" id="tplgrid"></div>
@@ -1329,17 +1343,17 @@ body.no-sales [data-go="tasks"],body.no-sales [data-go="calls"]{display:none!imp
 
     <!-- COMING SOON -->
     <section class="view" id="v-whatsapp">
-      <div class="head"><div><div class="eyebrow">WhatsApp</div><h1>Inbox</h1><p class="sub">Every WhatsApp chat with your leads, in one place.</p></div></div>
+      <div class="head"><div><div class="eyebrow">Messaging</div><h1>Inbox</h1><p class="sub">Every WhatsApp chat with your leads, in one place.</p></div></div>
       <div id="waConn"></div>
       <div class="inbox glass" id="inbox"><div class="ib-list"><div class="ib-top"><b>Chats</b><div class="ib-f"><button class="on" data-ibf="all">All</button><button data-ibf="unread">Unread</button></div></div><div class="ib-search"><input class="input" id="ibQ" type="search" name="q-inbox" autocomplete="off" placeholder="Search chats or start one with a lead"></div><div class="ib-scroll" id="ibList"></div></div><div class="ib-thread" id="ibThread"></div></div>
     </section>
     <section class="view" id="v-broadcast">
-      <div class="head"><div><div class="eyebrow">WhatsApp & Email</div><h1>Broadcast</h1><p class="sub">Send a WhatsApp template or an email to many leads at once — each one personalised.</p></div></div>
+      <div class="head"><div><div class="eyebrow">Messaging</div><h1>Broadcast</h1><p class="sub">Send a WhatsApp template or an email to many leads at once — each one personalised.</p></div></div>
       <div class="tabs" id="bcTabs"><button class="tab active" data-bctab="whatsapp">WhatsApp</button><button class="tab" data-bctab="email">Email</button><button class="tab" data-bctab="history">History</button></div>
       <div id="bcBodyWrap"></div>
     </section>
     <section class="view" id="v-automation">
-      <div class="head"><div><div class="eyebrow">WhatsApp</div><h1>Automation</h1><p class="sub">n8n-style flows: triggers, WhatsApp, CRM, AI, Meta and n8n webhook nodes on one canvas.</p></div></div>
+      <div class="head"><div><div class="eyebrow">Messaging</div><h1>Automation</h1><p class="sub">n8n-style flows: triggers, WhatsApp, CRM, AI, Meta and n8n webhook nodes on one canvas.</p></div></div>
       <div class="gen glass">
         <div class="gen-top"><span class="gen-ai">✦</span><div><b>Build with AI</b><small class="muted">Describe what should happen — in English or Hinglish. No n8n, webhooks or APIs needed.</small></div><span class="badge">Preview</span></div>
         <div class="gen-row"><textarea class="input" id="genIn" rows="2" placeholder="e.g. When a Facebook lead arrives, send a WhatsApp message and create a task"></textarea><button class="btn primary" id="genGo">✦ Generate</button></div>
@@ -1669,12 +1683,12 @@ function finishLoad(anim) {
   if (demo) S.settings = store.get('leadnode.branding') || {};
   mergeSavedLists();
   applyBranding();
-  applyAccess();
+  applyAccess(); platformBar();
   renderAll(anim);
   taskReminders(); { const b = $('#tasksBadge'), n = salesReady() ? (S.tasks || []).filter(t => t.status === 'Open' && taskState(t) === 'overdue' && (AUTH.role !== 'member' || t.assignedTo === me())).length : 0; if (b) { b.hidden = !n; b.textContent = n; } }
 }
 /** Render only the screen you're looking at; the others re-render when you open them */
-const VIEW_RENDER = { tasks: a => renderTasks(a), calls: a => renderCalls(a), performance: a => renderPerformance(a), analytics: a => renderAnalytics(a), industry: a => renderIndustry(a), n8n: a => renderN8n(a), automation: () => autoCanvas().sync(), dashboard: a => renderDashboard(a), pipeline: a => renderPipeline(a), leads: a => renderLeads(a), team: a => { renderTeam(a); renderLogins(); }, broadcast: () => renderBroadcast(), whatsapp: () => renderInbox(), reports: a => renderReports(a), templates: () => renderTemplates(), scripts: () => renderScripts(true), ads: a => renderAds(a) };
+const VIEW_RENDER = { admin: a => renderAdmin(a), tasks: a => renderTasks(a), calls: a => renderCalls(a), performance: a => renderPerformance(a), analytics: a => renderAnalytics(a), industry: a => renderIndustry(a), n8n: a => renderN8n(a), automation: () => autoCanvas().sync(), dashboard: a => renderDashboard(a), pipeline: a => renderPipeline(a), leads: a => renderLeads(a), team: a => { renderTeam(a); renderLogins(); }, broadcast: () => renderBroadcast(), whatsapp: () => renderInbox(), reports: a => renderReports(a), templates: () => renderTemplates(), scripts: () => renderScripts(true), ads: a => renderAds(a) };
 const staleViews = new Set();
 const activeView = () => { const v = $('.view.active'); return v ? v.id.slice(2) : 'dashboard'; };
 function renderAll(anim) {
@@ -4740,7 +4754,7 @@ const areaValues = k => [...new Set((S.leads || []).map(l => String(l[k] || '').
 const PERMS = [['add', 'Add leads'], ['edit', 'Edit leads & move stages'], ['delete', 'Delete leads'], ['import', 'Import Excel / CSV'], ['export', 'Export leads'], ['whatsapp', 'WhatsApp chats'], ['email', 'Send emails'], ['broadcast', 'Bulk broadcasts'], ['calls', 'Log calls'], ['tasks', 'Tasks'], ['analytics', 'See team analytics'], ['automation', 'Automation & n8n']];
 const SCOPES = { all: ['All leads', 'Sees every lead in the business'], area: ['Only their area', 'Leads whose State, District or City is in their areas — plus leads assigned to them'], own: ['Only assigned to them', 'Just the leads where “Assign to” is this person'] };
 const can = k => !cloud || /^(owner|admin)$/.test(AUTH.role || '') || (AUTH.role === 'member' && !(AUTH.access && AUTH.access.perms && AUTH.access.perms[k] === false));
-function applyAccess() { PERMS.forEach(([k]) => document.body.classList.toggle('np-' + k, !can(k))); document.body.classList.toggle('no-sales', !(demo || (cloud && AUTH.v7))); }
+function applyAccess() { document.body.classList.toggle('is-platform', !!(cloud && AUTH.platform)); document.body.classList.toggle('cl-tenant', !!(cloud && !AUTH.platform)); PERMS.forEach(([k]) => document.body.classList.toggle('np-' + k, !can(k))); document.body.classList.toggle('no-sales', !(demo || (cloud && AUTH.v7))); }
 async function moveStage(id, stage) {
   const l = S.leads.find(x => x.leadId === id); if (!l || l.stage === stage) return;
   flashId = id; setTimeout(() => { flashId = null; }, 1500);
@@ -5020,7 +5034,7 @@ async function sbUpsert(table, rows, conflict) {
 }
 async function sbApi(action, d = {}) {
   const cl = AUTH.client, ws = AUTH.ws, T = n => cl.from(n);
-  if (AUTH.role === 'client' && !['ping', 'getAll'].includes(action)) throw new Error('View-only access — ask the workspace owner for edit rights.');
+  if ((AUTH.role === 'client' || AUTH.role === 'platform') && !['ping', 'getAll', 'refreshCampaigns'].includes(action)) throw new Error('View-only access — ask the workspace owner for edit rights.');
   switch (action) {
     case 'ping': return 'pong';
     case 'getAll': {
@@ -5137,12 +5151,13 @@ async function cloudStart() {
   const { data, error } = await cl.rpc('ensure_workspace', { p_business: meta.business_name || '', p_name: meta.full_name || meta.name || '' });
   if (error) throw new Error(/ensure_workspace|schema cache|does not exist/i.test(error.message) ? 'The database is not set up yet — run the Nodevers SQL in Supabase first.' : error.message);
   let pick = { workspace_id: data.workspace_id, role: data.role, name: data.name };
+  try { const pa = await cl.rpc('is_platform_admin'); AUTH.platform = !pa.error && pa.data === true; } catch (e) { AUTH.platform = false; }
   try { AUTH.wsList = (await cl.rpc('my_workspaces')).data || []; } catch (e) { AUTH.wsList = []; }
   const pref = store.get('leadnode.ws'), w = AUTH.wsList.find(x => x.workspace_id === pref); if (w) pick = w;
   AUTH.ws = pick.workspace_id; AUTH.role = pick.role; AUTH.wsName = pick.name;
-  cloud = true; demo = false; WA.status = null; document.body.classList.toggle('ro', AUTH.role === 'client'); liveStart();
+  cloud = true; demo = false; WA.status = null; document.body.classList.toggle('ro', AUTH.role === 'client' || AUTH.role === 'platform'); liveStart();
 }
-function cloudStop() { liveStop(); cloud = false; AUTH.ws = null; AUTH.role = null; AUTH.wsList = []; WA.status = null; document.body.classList.remove('ro'); demo = !(settings.url && settings.key); }
+function cloudStop() { liveStop(); cloud = false; AUTH.ws = null; AUTH.role = null; AUTH.platform = false; AUTH.wsList = []; WA.status = null; document.body.classList.remove('ro'); demo = !(settings.url && settings.key); }
 /** One-time move: Google Sheet → cloud (keeps your IDs like L001) */
 async function importSheet() {
   if (!cloud) return toast('Sign in first', true);
@@ -5175,7 +5190,7 @@ async function importSheet() {
 
 /* ================= invites, roles, workspaces ================= */
 const ROLE_INFO = { owner: 'Owner — everything, billing, cannot be removed', admin: 'Admin — everything incl. inviting people and WhatsApp setup', member: 'Member — works on leads, chats and automations', client: 'Client — view only (dashboard, pipeline, reports)' };
-const ROLE_LABEL = { owner: 'Owner', admin: 'Admin', member: 'Member', client: 'Client (view only)' };
+const ROLE_LABEL = { owner: 'Owner', admin: 'Admin', member: 'Member', client: 'Client (view only)', platform: 'Platform view (read-only)' };
 const pendingInvite = () => { const v = store.get('leadnode.invite'); return v && v.t && Date.now() - v.at < 7 * 864e5 ? v.t : null; };
 const canAdmin = () => cloud && /^(owner|admin)$/.test(AUTH.role || '');
 const inviteLink = t => `${location.origin}${location.pathname}#invite=${t}`;
@@ -5183,7 +5198,7 @@ function copyText(v) { (navigator.clipboard ? navigator.clipboard.writeText(v) :
 async function switchWorkspace(id) {
   const w = (AUTH.wsList || []).find(x => x.workspace_id === id); if (!w) return;
   liveStop(); store.set('leadnode.ws', id); store.del('leadnode.cache');
-  AUTH.ws = w.workspace_id; AUTH.role = w.role; AUTH.wsName = w.name; document.body.classList.toggle('ro', AUTH.role === 'client');
+  AUTH.ws = w.workspace_id; AUTH.role = w.role; AUTH.wsName = w.name; document.body.classList.toggle('ro', AUTH.role === 'client' || AUTH.role === 'platform');
   view.fitted = false; layout = null; WA.status = null; hideModal('#setModal'); toast(`Switched to ${w.name}`); liveStart(); load();
 }
 async function renderLogins() {
@@ -6219,6 +6234,7 @@ function go(name) {
   if (name === 'n8n') renderN8n(true);
   if (name === 'industry') renderIndustry(true);
   if (name === 'analytics') renderAnalytics(true);
+  if (name === 'admin') renderAdmin(true);
   if (name === 'tasks') renderTasks(true);
   if (name === 'calls') renderCalls(true);
   if (name === 'performance') renderPerformance(true);
@@ -6228,6 +6244,38 @@ function go(name) {
   window.scrollTo(0, 0);
 }
 window.addEventListener('hashchange', () => go(location.hash.slice(1)));
+
+/* ================= platform admin console ================= */
+const ADM = { rows: null, q: '', at: 0 };
+async function renderAdmin(anim) {
+  const box = $('#adminBody'); if (!box) return;
+  if (!(cloud && AUTH.platform)) { box.innerHTML = `<div class="tp-empty glass"><b>Platform admins only</b><p class="muted">Sign in with the Nodevers owner account to see every client.</p></div>`; return; }
+  if (!ADM.rows || Date.now() - ADM.at > 120000) {
+    box.innerHTML = '<div class="rcard glass"><div class="loader"><div class="spin"></div>Loading clients…</div></div>';
+    try { ADM.rows = await sbq(AUTH.client.rpc('admin_overview')); ADM.at = Date.now(); } catch (e) { box.innerHTML = `<div class="tp-empty glass"><b>Could not load clients</b><p class="muted">${esc(/admin_overview|function/i.test(e.message) ? 'Run the database update 08_platform_flows.sql first.' : e.message)}</p></div>`; return; }
+  }
+  const q = ADM.q.toLowerCase(), all = ADM.rows || [], rows = all.filter(r => !q || [r.name, r.owner_email, r.wa_phone].some(v => String(v || '').toLowerCase().includes(q)));
+  const sum = k => all.reduce((s, r) => s + (+r[k] || 0), 0), active = all.filter(r => r.last_active && Date.now() - new Date(r.last_active).getTime() < 7 * 864e5).length;
+  const tile = (n, l, c) => `<div class="n8l-k glass"><b style="${c ? 'color:' + c : ''}">${n}</b><small class="muted">${l}</small></div>`;
+  const yes = (v, t) => v ? `<span class="adm-ok">✓ ${esc(t || '')}</span>` : '<span class="adm-no">—</span>';
+  box.innerHTML = `<div class="adm-ks">${tile(all.length, 'Client workspaces')}${tile(active, 'Active in the last 7 days', 'var(--green)')}${tile(sum('leads'), 'Leads on the platform', 'var(--blue-2)')}${tile(sum('messages_30d'), 'WhatsApp messages · 30 days', 'var(--green)')}${tile(all.filter(r => r.wa_phone).length, 'WhatsApp connected')}</div>
+    <div class="rcard glass" style="margin-top:14px"><div class="n8l-h"><h3>Clients</h3><input class="input sm" id="admQ" placeholder="Search business, email, number" value="${esc(ADM.q)}"></div>
+    <div class="tblwrap"><table class="tbl"><thead><tr><th>Business</th><th>Owner</th><th class="num">People</th><th class="num">Leads</th><th class="num">New 30d</th><th class="num">Won</th><th class="num">Msgs 30d</th><th class="num">Calls 30d</th><th>WhatsApp</th><th>Email</th><th>n8n</th><th>Last active</th><th></th></tr></thead><tbody>
+    ${rows.map(r => `<tr style="cursor:default"><td><div class="who">${avatar(r.name, 'sm')}<div><b>${esc(r.name)}</b><small class="muted" style="display:block">${esc(r.plan || 'free')} · since ${esc(fmtDate(String(r.created_at).slice(0, 10)))}</small></div></div></td><td class="muted">${esc(r.owner_email || '-')}</td><td class="num">${r.members}</td><td class="num">${r.leads}</td><td class="num">${r.leads_30d}</td><td class="num" style="color:var(--green)">${r.won}</td><td class="num">${r.messages_30d}</td><td class="num">${r.calls_30d}</td><td>${yes(r.wa_phone, r.wa_phone)}</td><td>${yes(r.email_from, '')}</td><td>${yes(r.n8n, '')}</td><td class="muted">${r.last_active ? esc(fmtWhen(r.last_active)) : '-'}</td>
+      <td class="num">${r.workspace_id === AUTH.ws ? '<span class="pill stage">Open now</span>' : `<button class="btn sm primary" data-admopen="${esc(r.workspace_id)}">View data</button>`}</td></tr>`).join('') || '<tr><td colspan="13" class="empty">No clients match.</td></tr>'}</tbody></table></div>
+    <p class="help" style="margin-top:8px">“View data” opens that client's workspace in read-only Platform view (you can look, not change). Use Settings → Accounts → Switch workspace, or this button, to go back to your own workspace.</p></div>`;
+  stagger(box, anim);
+}
+function platformBar() {
+  const old = $('#platBar'); if (old) old.remove();
+  if (!(cloud && AUTH.role === 'platform')) return;
+  const own = (AUTH.wsList || []).find(w => w.role !== 'platform');
+  const b = document.createElement('div'); b.id = 'platBar'; b.className = 'plat-bar';
+  b.innerHTML = `🛡 Platform view of <b>${esc(AUTH.wsName || '')}</b> — read-only<span class="grow"></span><button class="btn sm" data-go="admin">Admin Console</button>${own ? `<button class="btn sm" data-admopen="${esc(own.workspace_id)}">Back to ${esc(own.name)}</button>` : ''}`;
+  const main = $('.view.active') && $('.view.active').parentElement; if (main) main.insertBefore(b, main.firstChild);
+}
+document.addEventListener('click', e => { const o = e.target.closest('[data-admopen]'); if (o) { AUTH.wsList = AUTH.wsList || []; if (!AUTH.wsList.some(w => w.workspace_id === o.dataset.admopen) && ADM.rows) { const r = ADM.rows.find(x => x.workspace_id === o.dataset.admopen); if (r) AUTH.wsList.push({ workspace_id: r.workspace_id, name: r.name, role: 'platform' }); } switchWorkspace(o.dataset.admopen); } if (e.target.closest('#admRefresh')) { ADM.at = 0; renderAdmin(); } });
+document.addEventListener('input', e => { if (e.target.id === 'admQ') { ADM.q = e.target.value; const pos = e.target.selectionStart; renderAdmin(); const q = $('#admQ'); if (q) { q.focus(); q.setSelectionRange(pos, pos); } } });
 
 /* ================= sales execution: calls, tasks, timeline, team performance ================= */
 const salesReady = () => demo || (cloud && AUTH.v7);
