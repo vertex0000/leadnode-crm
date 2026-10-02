@@ -1,14 +1,12 @@
 // Nodevers — ai-write: Gemini (free tier) helps write WhatsApp replies in the Inbox.
 // Deploy: Supabase → Edge Functions → Deploy a new function → Via Editor → name "ai-write" → paste → Deploy → turn OFF "Enforce JWT verification".
 // Secret needed (Edge Functions → Secrets): GEMINI_API_KEY = your key from Google AI Studio (aistudio.google.com → Get API key). Optional: GEMINI_MODEL.
-// Optional: ANTHROPIC_API_KEY (from console.anthropic.com → API keys) — then Claude answers first and Gemini is the backup. Optional: CLAUDE_MODEL.
+// The AI can be changed in Admin Console → Settings → AI (Groq, OpenRouter, Mistral, OpenAI, Claude, DeepSeek, any OpenAI-compatible) — needs 14_ai_providers.sql. Gemini stays the free backup.
 import { createClient } from 'npm:@supabase/supabase-js@2';
 
 const firstKey = (json?: string) => { try { return Object.values(JSON.parse(json ?? '{}'))[0] as string | undefined; } catch { return undefined; } };
 const SERVICE = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') || firstKey(Deno.env.get('SUPABASE_SECRET_KEYS')) || '';
 const db = createClient(Deno.env.get('SUPABASE_URL')!, SERVICE, { auth: { persistSession: false } });
-const GEMINI = Deno.env.get('GEMINI_URL') ?? 'https://generativelanguage.googleapis.com/v1beta';
-const MODELS = [...new Set([Deno.env.get('GEMINI_MODEL'), 'gemini-3.5-flash-lite', 'gemini-3.5-flash', 'gemini-flash-lite-latest', 'gemini-flash-latest', 'gemini-2.5-flash'].filter(Boolean) as string[])];
 const cors = { 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type', 'Access-Control-Allow-Methods': 'POST, OPTIONS' };
 const json = (o: unknown, status = 200) => new Response(JSON.stringify(o), { status, headers: { ...cors, 'Content-Type': 'application/json' } });
 const cut = (s: unknown, n: number) => String(s ?? '').slice(0, n);
@@ -23,38 +21,66 @@ const TASK: Record<string, string> = {
   hinglish: 'Rewrite the draft in Hinglish (Hindi in Roman letters mixed with English), casual and natural.',
 };
 
-const CLAUDE = Deno.env.get('ANTHROPIC_URL') ?? 'https://api.anthropic.com/v1';
-const CLAUDE_MODEL = Deno.env.get('CLAUDE_MODEL') ?? 'claude-haiku-4-5-20251001';
-/** Claude (when ANTHROPIC_API_KEY is set) — returns null if it can not answer, then Gemini is used */
-async function askClaude(system: string, user: string, temperature: number, maxTokens = 2048) {
-  const ck = Deno.env.get('ANTHROPIC_API_KEY'); if (!ck) return null;
-  const r = await fetch(`${CLAUDE}/messages`, { method: 'POST', headers: { 'x-api-key': ck, 'anthropic-version': '2023-06-01', 'content-type': 'application/json' }, body: JSON.stringify({ model: CLAUDE_MODEL, max_tokens: maxTokens, temperature, system, messages: [{ role: 'user', content: user }] }) }).catch(() => null);
-  const j: any = r ? await r.json().catch(() => ({})) : {}; const t = (j?.content ?? []).map((c: any) => c.text ?? '').join('').trim();
-  return r?.ok && t ? t : null;
-}
-async function ask(key: string, system: string, user: string, temperature: number, strip = true) {
-  const c = await askClaude(system, user, temperature); if (c) return json({ ok: true, text: strip ? c.replace(/^["“]|["”]$/g, '') : c, model: CLAUDE_MODEL });
-  if (!key) return json({ error: 'AI could not answer right now — try again in a minute.' }, 400);
-  let last = '';
-  for (const model of MODELS) {
-    const r = await fetch(`${GEMINI}/models/${model}:generateContent`, {
-      method: 'POST', headers: { 'Content-Type': 'application/json', 'x-goog-api-key': key },
-      body: JSON.stringify({ systemInstruction: { parts: [{ text: system }] }, contents: [{ role: 'user', parts: [{ text: user }] }], generationConfig: { temperature, maxOutputTokens: 4096 } }),
-    });
-    const j = await r.json().catch(() => ({}));
-    if (r.ok) {
-      let text = (j?.candidates?.[0]?.content?.parts ?? []).filter((p: any) => !p.thought).map((p: any) => p.text ?? '').join('').trim();
-      if (strip) text = text.replace(/^["“]|["”]$/g, '');
-      if (text) return json({ ok: true, text, model });
-      last = 'AI returned an empty answer — try again.';
-      continue;
+/* ---------- AI for the whole website: picked in Admin Console → Settings → AI (free Google Gemini by default) ---------- */
+const GEMINI_URL = Deno.env.get('GEMINI_URL') ?? 'https://generativelanguage.googleapis.com/v1beta';
+const GEMINI_MODELS = [...new Set([Deno.env.get('GEMINI_MODEL'), 'gemini-3.5-flash-lite', 'gemini-3.5-flash', 'gemini-flash-lite-latest', 'gemini-flash-latest', 'gemini-2.5-flash'].filter(Boolean) as string[])];
+const AI_TEST_BASE = Deno.env.get('AI_TEST_BASE') ?? '';          // local tests only
+const AI_DEF: Record<string, { kind: 'gemini' | 'openai' | 'anthropic'; url: string; model: string; name: string }> = {
+  gemini: { kind: 'gemini', url: GEMINI_URL, model: '', name: 'Google Gemini' },
+  groq: { kind: 'openai', url: 'https://api.groq.com/openai/v1', model: 'llama-3.3-70b-versatile', name: 'Groq' },
+  openrouter: { kind: 'openai', url: 'https://openrouter.ai/api/v1', model: 'meta-llama/llama-3.3-70b-instruct:free', name: 'OpenRouter' },
+  mistral: { kind: 'openai', url: 'https://api.mistral.ai/v1', model: 'mistral-small-latest', name: 'Mistral' },
+  openai: { kind: 'openai', url: 'https://api.openai.com/v1', model: 'gpt-4o-mini', name: 'OpenAI' },
+  deepseek: { kind: 'openai', url: 'https://api.deepseek.com', model: 'deepseek-chat', name: 'DeepSeek' },
+  anthropic: { kind: 'anthropic', url: 'https://api.anthropic.com/v1', model: 'claude-haiku-4-5-20251001', name: 'Claude' },
+  custom: { kind: 'openai', url: '', model: '', name: 'Custom (OpenAI-compatible)' },
+};
+type AiOut = { ok: true; text: string; model: string; provider: string } | { ok: false; error: string; provider: string };
+async function aiRow(prov: string) { const { data } = await db.from('ai_keys').select('*').eq('provider', prov).maybeSingle(); return data as any; }
+async function aiCallOne(prov: string, row: any, system: string, user: string, temperature: number, maxTokens: number): Promise<AiOut> {
+  const d = AI_DEF[prov] ?? AI_DEF.gemini, key = String(row?.api_key || (prov === 'gemini' ? Deno.env.get('GEMINI_API_KEY') ?? '' : '')).trim();
+  if (!key) return { ok: false, error: `${d.name}: no API key saved`, provider: prov };
+  const model = String(row?.model || d.model || '').trim(), base = (AI_TEST_BASE && d.kind !== 'gemini' ? AI_TEST_BASE : String(row?.base_url || d.url)).replace(/\/+$/, '');
+  const go = (url: string, init: RequestInit) => fetch(url, { ...init, signal: AbortSignal.timeout(45000) }).catch(() => null);
+  if (d.kind === 'gemini') {
+    let last = '';
+    for (const m of model ? [model] : GEMINI_MODELS) {
+      const r = await go(`${base}/models/${m}:generateContent`, { method: 'POST', headers: { 'Content-Type': 'application/json', 'x-goog-api-key': key }, body: JSON.stringify({ systemInstruction: { parts: [{ text: system }] }, contents: [{ role: 'user', parts: [{ text: user }] }], generationConfig: { temperature, maxOutputTokens: maxTokens } }) });
+      const j: any = r ? await r.json().catch(() => ({})) : {};
+      const t = (j?.candidates?.[0]?.content?.parts ?? []).filter((x: any) => !x.thought).map((x: any) => x.text ?? '').join('').trim();
+      if (r?.ok && t) return { ok: true, text: t, model: m, provider: prov };
+      last = r ? (j?.error?.message ?? String(r.status)) : 'no answer';
+      if (r && (r.status === 400 && /API key/i.test(last) || r.status === 403)) return { ok: false, error: 'Gemini did not accept the API key', provider: prov };
+      if (r && r.status !== 404 && r.status !== 429 && r.status !== 503 && !/no longer available|not found|not supported|deprecated/i.test(last)) break;
     }
-    last = j?.error?.message ?? String(r.status);
-    if (r.status === 400 && /API key/i.test(last)) return json({ error: 'The Gemini API key is not valid — check the GEMINI_API_KEY secret.' }, 400);
-    if (r.status === 403) return json({ error: 'Gemini refused the key (403) — make sure the key is from Google AI Studio and the API is enabled.' }, 400);
-    if (r.status !== 404 && r.status !== 429 && r.status !== 503 && !/no longer available|not found|not supported|deprecated/i.test(last)) break;     // try the next model only for missing/retired/busy models
+    return { ok: false, error: /quota|exhausted|429/i.test(last) ? 'Free Gemini limit reached for now — try again in a minute' : 'Gemini: ' + last, provider: prov };
   }
-  return json({ error: /quota|exhausted|429/i.test(last) ? 'Free AI limit reached for now — try again in a minute.' : 'AI: ' + last }, 400);
+  if (!base || !model) return { ok: false, error: `${d.name}: add the ${!base ? 'base URL' : 'model name'}`, provider: prov };
+  if (d.kind === 'anthropic') {
+    const r = await go(`${base}/messages`, { method: 'POST', headers: { 'x-api-key': key, 'anthropic-version': '2023-06-01', 'content-type': 'application/json' }, body: JSON.stringify({ model, max_tokens: maxTokens, temperature, system, messages: [{ role: 'user', content: user }] }) });
+    const j: any = r ? await r.json().catch(() => ({})) : {}; const t = (j?.content ?? []).map((c: any) => c.text ?? '').join('').trim();
+    return r?.ok && t ? { ok: true, text: t, model, provider: prov } : { ok: false, error: `Claude: ${j?.error?.message ?? (r ? r.status : 'no answer')}`, provider: prov };
+  }
+  const r = await go(`${base}/chat/completions`, { method: 'POST', headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json', ...(prov === 'openrouter' ? { 'HTTP-Referer': 'https://nodevers.app', 'X-Title': 'Nodevers' } : {}) },
+    body: JSON.stringify({ model, temperature, max_tokens: maxTokens, messages: [{ role: 'system', content: system }, { role: 'user', content: user }] }) });
+  const j: any = r ? await r.json().catch(() => ({})) : {}; const t = String(j?.choices?.[0]?.message?.content ?? '').trim();
+  return r?.ok && t ? { ok: true, text: t, model, provider: prov } : { ok: false, error: `${d.name}: ${j?.error?.message ?? j?.message ?? (r ? r.status : 'no answer')}`, provider: prov };
+}
+/** Ask the AI chosen by the platform admin; if it fails, fall back to free Gemini */
+async function aiAsk(system: string, user: string, temperature = 0.4, maxTokens = 2048, force?: string): Promise<AiOut> {
+  let prov = force;
+  if (!prov) { const { data } = await db.from('platform_settings').select('value').eq('key', 'aiProvider').maybeSingle(); prov = AI_DEF[data?.value ?? ''] ? data!.value : 'gemini'; }
+  const first = await aiCallOne(prov!, await aiRow(prov!).catch(() => null), system, user, temperature, maxTokens);
+  if (first.ok || force || prov === 'gemini') return first;
+  const backup = await aiCallOne('gemini', await aiRow('gemini').catch(() => null), system, user, temperature, maxTokens);
+  return backup.ok ? backup : first;
+}
+
+async function ask(_key: string, system: string, user: string, temperature: number, strip = true) {
+  const r = await aiAsk(system, user, temperature, 4096);
+  if (!r.ok) return json({ error: /limit/i.test(r.error) ? r.error : 'AI: ' + r.error }, 400);
+  const text = strip ? r.text.replace(/^["“]|["”]$/g, '') : r.text;
+  return json({ ok: true, text, model: r.model, provider: r.provider });
 }
 
 Deno.serve(async (req) => {
@@ -65,8 +91,14 @@ Deno.serve(async (req) => {
     const jwt = (req.headers.get('Authorization') ?? '').replace(/^Bearer\s+/i, '');
     const { data: u } = await db.auth.getUser(jwt);
     if (!u?.user) return json({ error: 'Please sign in again.' }, 401);
-    const key = Deno.env.get('GEMINI_API_KEY') ?? '';
-    if (!key && !Deno.env.get('ANTHROPIC_API_KEY')) return json({ error: 'AI is not switched on yet — add the GEMINI_API_KEY (or ANTHROPIC_API_KEY) secret in Supabase → Edge Functions → Secrets.' }, 400);
+    const key = '';
+    // ---- Admin Console → Settings → AI: test a provider (platform super admin / admin only) ----
+    if (b.mode === 'aitest') {
+      const { data: pa } = await db.from('platform_admins').select('role').eq('email', String(u.user.email ?? '').toLowerCase()).maybeSingle();
+      if (!pa || !['super', 'admin'].includes(pa.role)) return json({ error: 'Only the platform team can test AI keys.' }, 403);
+      const r = await aiAsk('You are a connection test. Reply with exactly the word OK.', 'Say OK', 0, 20, String(b.provider || 'gemini'));
+      return r.ok ? json({ ok: true, text: r.text.slice(0, 80), model: r.model, provider: r.provider }) : json({ error: r.error }, 400);
+    }
 
     // ---- Nodevers Guide: answers "how do I…" questions about the website (any signed-in user) ----
     if (b.mode === 'help') {

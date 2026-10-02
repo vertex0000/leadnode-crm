@@ -2,7 +2,7 @@
 //   run  (called by the database when new events arrive) · cron (every 2 minutes: waits, wait-for-reply timeouts, schedules)
 //   Both need the header x-cron-secret. Messages go out through wa-send / email ("system" calls), so the same rules apply:
 //   STOP / unsubscribed are skipped, view-only workspaces send nothing, everything is logged on the lead's timeline.
-// Optional secrets: GEMINI_API_KEY (AI nodes) or ANTHROPIC_API_KEY (Claude for AI nodes, used first when set).
+// AI nodes use the AI picked in Admin Console → Settings → AI (free Google Gemini by default, secret GEMINI_API_KEY).
 // Deploy: Supabase → Edge Functions → Deploy a new function → Via Editor → name "automation" → paste → Deploy → turn OFF "Enforce JWT verification".
 import { createClient } from 'npm:@supabase/supabase-js@2';
 
@@ -11,10 +11,6 @@ const SERVICE = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') || firstKey(Deno.env.g
 const SB_URL = Deno.env.get('SUPABASE_URL')!;
 const db = createClient(SB_URL, SERVICE, { auth: { persistSession: false } });
 const GRAPH = Deno.env.get('WA_GRAPH_URL') ?? 'https://graph.facebook.com/v21.0';
-const GEMINI = Deno.env.get('GEMINI_URL') ?? 'https://generativelanguage.googleapis.com/v1beta';
-const GEMINI_MODELS = [...new Set([Deno.env.get('GEMINI_MODEL'), 'gemini-3.5-flash-lite', 'gemini-flash-lite-latest', 'gemini-2.5-flash'].filter(Boolean) as string[])];
-const CLAUDE = Deno.env.get('ANTHROPIC_URL') ?? 'https://api.anthropic.com/v1';
-const CLAUDE_MODEL = Deno.env.get('CLAUDE_MODEL') ?? 'claude-haiku-4-5-20251001';
 const ALLOW_HTTP = Deno.env.get('AUTO_ALLOW_HTTP') === '1';
 const MAX_STEPS = 40;
 const cors = { 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-cron-secret', 'Access-Control-Allow-Methods': 'POST, OPTIONS' };
@@ -47,20 +43,62 @@ function safeUrl(raw: string): URL {
   if (!ALLOW_HTTP && (h === 'localhost' || h.endsWith('.local') || h.endsWith('.internal') || /^(127\.|10\.|0\.|169\.254\.|192\.168\.|172\.(1[6-9]|2\d|3[01])\.)/.test(h) || /^\[/.test(h))) throw new Error('private addresses are not allowed');
   return u;
 }
-async function ai(system: string, user: string) {
-  const ck = Deno.env.get('ANTHROPIC_API_KEY');
-  if (ck) {
-    const r = await fetch(`${CLAUDE}/messages`, { method: 'POST', headers: { 'x-api-key': ck, 'anthropic-version': '2023-06-01', 'content-type': 'application/json' }, body: JSON.stringify({ model: CLAUDE_MODEL, max_tokens: 600, system, messages: [{ role: 'user', content: user }] }) }).catch(() => null);
-    const j: any = r ? await r.json().catch(() => ({})) : {}; const t = (j?.content ?? []).map((c: any) => c.text ?? '').join('').trim(); if (r?.ok && t) return t;
+/* ---------- AI for the whole website: picked in Admin Console → Settings → AI (free Google Gemini by default) ---------- */
+const GEMINI_URL = Deno.env.get('GEMINI_URL') ?? 'https://generativelanguage.googleapis.com/v1beta';
+const GEMINI_MODELS = [...new Set([Deno.env.get('GEMINI_MODEL'), 'gemini-3.5-flash-lite', 'gemini-3.5-flash', 'gemini-flash-lite-latest', 'gemini-flash-latest', 'gemini-2.5-flash'].filter(Boolean) as string[])];
+const AI_TEST_BASE = Deno.env.get('AI_TEST_BASE') ?? '';          // local tests only
+const AI_DEF: Record<string, { kind: 'gemini' | 'openai' | 'anthropic'; url: string; model: string; name: string }> = {
+  gemini: { kind: 'gemini', url: GEMINI_URL, model: '', name: 'Google Gemini' },
+  groq: { kind: 'openai', url: 'https://api.groq.com/openai/v1', model: 'llama-3.3-70b-versatile', name: 'Groq' },
+  openrouter: { kind: 'openai', url: 'https://openrouter.ai/api/v1', model: 'meta-llama/llama-3.3-70b-instruct:free', name: 'OpenRouter' },
+  mistral: { kind: 'openai', url: 'https://api.mistral.ai/v1', model: 'mistral-small-latest', name: 'Mistral' },
+  openai: { kind: 'openai', url: 'https://api.openai.com/v1', model: 'gpt-4o-mini', name: 'OpenAI' },
+  deepseek: { kind: 'openai', url: 'https://api.deepseek.com', model: 'deepseek-chat', name: 'DeepSeek' },
+  anthropic: { kind: 'anthropic', url: 'https://api.anthropic.com/v1', model: 'claude-haiku-4-5-20251001', name: 'Claude' },
+  custom: { kind: 'openai', url: '', model: '', name: 'Custom (OpenAI-compatible)' },
+};
+type AiOut = { ok: true; text: string; model: string; provider: string } | { ok: false; error: string; provider: string };
+async function aiRow(prov: string) { const { data } = await db.from('ai_keys').select('*').eq('provider', prov).maybeSingle(); return data as any; }
+async function aiCallOne(prov: string, row: any, system: string, user: string, temperature: number, maxTokens: number): Promise<AiOut> {
+  const d = AI_DEF[prov] ?? AI_DEF.gemini, key = String(row?.api_key || (prov === 'gemini' ? Deno.env.get('GEMINI_API_KEY') ?? '' : '')).trim();
+  if (!key) return { ok: false, error: `${d.name}: no API key saved`, provider: prov };
+  const model = String(row?.model || d.model || '').trim(), base = (AI_TEST_BASE && d.kind !== 'gemini' ? AI_TEST_BASE : String(row?.base_url || d.url)).replace(/\/+$/, '');
+  const go = (url: string, init: RequestInit) => fetch(url, { ...init, signal: AbortSignal.timeout(45000) }).catch(() => null);
+  if (d.kind === 'gemini') {
+    let last = '';
+    for (const m of model ? [model] : GEMINI_MODELS) {
+      const r = await go(`${base}/models/${m}:generateContent`, { method: 'POST', headers: { 'Content-Type': 'application/json', 'x-goog-api-key': key }, body: JSON.stringify({ systemInstruction: { parts: [{ text: system }] }, contents: [{ role: 'user', parts: [{ text: user }] }], generationConfig: { temperature, maxOutputTokens: maxTokens } }) });
+      const j: any = r ? await r.json().catch(() => ({})) : {};
+      const t = (j?.candidates?.[0]?.content?.parts ?? []).filter((x: any) => !x.thought).map((x: any) => x.text ?? '').join('').trim();
+      if (r?.ok && t) return { ok: true, text: t, model: m, provider: prov };
+      last = r ? (j?.error?.message ?? String(r.status)) : 'no answer';
+      if (r && (r.status === 400 && /API key/i.test(last) || r.status === 403)) return { ok: false, error: 'Gemini did not accept the API key', provider: prov };
+      if (r && r.status !== 404 && r.status !== 429 && r.status !== 503 && !/no longer available|not found|not supported|deprecated/i.test(last)) break;
+    }
+    return { ok: false, error: /quota|exhausted|429/i.test(last) ? 'Free Gemini limit reached for now — try again in a minute' : 'Gemini: ' + last, provider: prov };
   }
-  const gk = Deno.env.get('GEMINI_API_KEY'); if (!gk) throw new Error('AI is not switched on (GEMINI_API_KEY or ANTHROPIC_API_KEY secret)');
-  for (const model of GEMINI_MODELS) {
-    const r = await fetch(`${GEMINI}/models/${model}:generateContent`, { method: 'POST', headers: { 'Content-Type': 'application/json', 'x-goog-api-key': gk }, body: JSON.stringify({ systemInstruction: { parts: [{ text: system }] }, contents: [{ role: 'user', parts: [{ text: user }] }], generationConfig: { temperature: 0.4, maxOutputTokens: 800 } }) }).catch(() => null);
-    const j: any = r ? await r.json().catch(() => ({})) : {}; const t = (j?.candidates?.[0]?.content?.parts ?? []).filter((x: any) => !x.thought).map((x: any) => x.text ?? '').join('').trim();
-    if (r?.ok && t) return t;
+  if (!base || !model) return { ok: false, error: `${d.name}: add the ${!base ? 'base URL' : 'model name'}`, provider: prov };
+  if (d.kind === 'anthropic') {
+    const r = await go(`${base}/messages`, { method: 'POST', headers: { 'x-api-key': key, 'anthropic-version': '2023-06-01', 'content-type': 'application/json' }, body: JSON.stringify({ model, max_tokens: maxTokens, temperature, system, messages: [{ role: 'user', content: user }] }) });
+    const j: any = r ? await r.json().catch(() => ({})) : {}; const t = (j?.content ?? []).map((c: any) => c.text ?? '').join('').trim();
+    return r?.ok && t ? { ok: true, text: t, model, provider: prov } : { ok: false, error: `Claude: ${j?.error?.message ?? (r ? r.status : 'no answer')}`, provider: prov };
   }
-  throw new Error('AI did not answer');
+  const r = await go(`${base}/chat/completions`, { method: 'POST', headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json', ...(prov === 'openrouter' ? { 'HTTP-Referer': 'https://nodevers.app', 'X-Title': 'Nodevers' } : {}) },
+    body: JSON.stringify({ model, temperature, max_tokens: maxTokens, messages: [{ role: 'system', content: system }, { role: 'user', content: user }] }) });
+  const j: any = r ? await r.json().catch(() => ({})) : {}; const t = String(j?.choices?.[0]?.message?.content ?? '').trim();
+  return r?.ok && t ? { ok: true, text: t, model, provider: prov } : { ok: false, error: `${d.name}: ${j?.error?.message ?? j?.message ?? (r ? r.status : 'no answer')}`, provider: prov };
 }
+/** Ask the AI chosen by the platform admin; if it fails, fall back to free Gemini */
+async function aiAsk(system: string, user: string, temperature = 0.4, maxTokens = 2048, force?: string): Promise<AiOut> {
+  let prov = force;
+  if (!prov) { const { data } = await db.from('platform_settings').select('value').eq('key', 'aiProvider').maybeSingle(); prov = AI_DEF[data?.value ?? ''] ? data!.value : 'gemini'; }
+  const first = await aiCallOne(prov!, await aiRow(prov!).catch(() => null), system, user, temperature, maxTokens);
+  if (first.ok || force || prov === 'gemini') return first;
+  const backup = await aiCallOne('gemini', await aiRow('gemini').catch(() => null), system, user, temperature, maxTokens);
+  return backup.ok ? backup : first;
+}
+
+async function ai(system: string, user: string) { const r = await aiAsk(system, user, 0.4, 800); if (!r.ok) throw new Error(r.error); return r.text; }
 const fill = (s: string, l: any) => String(s ?? '').replace(/\{\{\s*(first_name|name|business|city|phone|stage|source)\s*\}\}/g, (_m, k) => !l ? '' : k === 'first_name' ? (String(l.name ?? '').split(' ')[0] || 'there') : k === 'business' ? String(l.business_name ?? '') : String(l[k] ?? ''));
 
 async function loadFlow(ws: string): Promise<Flow | null> {

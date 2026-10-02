@@ -714,6 +714,9 @@ body.brand-ro #brandRowSite,body.brand-ro #setModal .acc[data-acc="s-wl"]{displa
 .pr-adm{margin-top:10px;display:flex;justify-content:flex-end}.pr .pr-adm .btn{background:rgba(255,255,255,.1);color:#fff;border-color:rgba(255,255,255,.2)}
 .pr-note{text-align:center;margin:18px 0 0;font-size:12.5px;color:rgba(245,241,236,.55)}
 .pr .hero-edit{color:#111}
+.ai-provs{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:8px;margin:6px 0 10px}.ai-p{display:grid;grid-template-columns:auto 1fr;column-gap:10px;align-items:center;text-align:left;padding:10px;border-radius:12px;border:1px solid var(--line);background:var(--glass);color:var(--text);cursor:pointer}
+.ai-p.on{border-color:var(--blue-2);box-shadow:inset 0 0 0 1px var(--blue-2);background:var(--blue-soft)}.ai-p b{font-size:13.5px;display:flex;align-items:center;flex-wrap:wrap;gap:2px}.ai-p small{grid-column:2;color:var(--muted);font-size:11.5px}.ai-use{white-space:nowrap;font-style:normal;font-size:10.5px;font-weight:800;color:#fff;background:var(--green);border-radius:20px;padding:1px 7px;margin-left:4px}
+.ai-tag{font-weight:700}.ai-tag.free{color:var(--green)}
 .hp-fab[hidden]{display:none}
 @media (min-width:821px){.main{padding-bottom:90px}}
 .hp-tabs{display:flex;gap:4px;padding:8px 12px 0}.hp-tabs button{flex:1;border:0;background:transparent;color:var(--muted);font-weight:700;font-size:13px;padding:8px;border-radius:10px}.hp-tabs button.on{background:var(--blue-soft);color:var(--blue-2)}
@@ -3958,7 +3961,7 @@ function autoCheck(f) {
     if (n.type === 'lead.notify' && !p.email && !p.phone) out.push(['bad', n.id, `${nm}: add a team email or WhatsApp number.`]);
     if ((n.type === 'n8n.send' || n.type === 'n8n.http') && !/^https:\/\/.+/.test(p.url || '')) out.push(['bad', n.id, `${nm}: add the https webhook link.`]);
     if (n.type.startsWith('meta.') || n.type === 'n8n.in' || n.type.startsWith('custom.')) out.push(['warn', n.id, `${nm}: not live yet — this step is skipped.`]);
-    if (n.type.startsWith('ai.')) out.push(['info', n.id, `${nm}: needs AI switched on by your Nodevers provider (Gemini or Claude key).`]);
+    if (n.type.startsWith('ai.')) out.push(['info', n.id, `${nm}: uses the website’s AI (free Gemini unless your provider picked another).`]);
   });
   return out;
 }
@@ -8313,6 +8316,7 @@ async function admLoad(force) {
     if (force || !ADM2.plans) { ADM2.plans = await sbq(AUTH.client.from('plans').select('*').order('sort')); PLAT.plans = ADM2.plans; }
     if (ADM2.tab === 'payments' && (force || !ADM2.pays)) ADM2.pays = await rpc('admin_payments');
     if (ADM2.tab === 'team' && (force || !ADM2.team)) ADM2.team = await rpc('admin_team');
+    if (ADM2.tab === 'brand' && (force || !ADM2.ai)) { try { ADM2.ai = await rpc('admin_ai_status'); ADM2.aiErr = ''; } catch (e) { ADM2.ai = []; ADM2.aiErr = /admin_ai_status|function|does not exist/i.test(e.message) ? 'Run the database update 14_ai_providers.sql first.' : e.message; } }
     if (ADM2.tab === 'audit') ADM2.audit = await rpc('admin_audit', { p_limit: 300 });
     ADM2.err = '';
   } catch (e) { ADM2.err = /admin_overview2|plans|function|does not exist/i.test(e.message) ? 'Run the database update 11_platform_billing.sql first.' : e.message; }
@@ -8459,6 +8463,7 @@ function admBrand() {
         <div class="field"><label>Plan for new sign-ups</label><select class="input" id="psPlan">${(ADM2.plans || []).filter(p => p.active).map(p => `<option value="${esc(p.id)}" ${p.id === s.defaultPlan ? 'selected' : ''}>${esc(p.name)}</option>`).join('')}</select></div>
         ${f('psGrace', 'Grace days after a paid plan ends', s.graceDays || 3, 'type="number" min="0" max="30"')}</div>
         <p class="help">New businesses start on this plan as a free trial. When a trial ends — or a paid period ends plus the grace days — their workspace becomes view-only until you record a payment.</p>` })}
+    ${accItem('b-ai', { title: 'AI for the whole website', icon: '<svg class="i" viewBox="0 0 24 24"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/><circle cx="12" cy="12" r="3"/></svg>', color: '#8B5CF6', dot: 'ok', status: `In use: ${esc((AI_PROVIDERS.find(x => x[0] === (s.aiProvider || 'gemini')) || AI_PROVIDERS[0])[1])}${(s.aiProvider || 'gemini') === 'gemini' ? ' (free)' : ''} · Inbox AI, Guide, Automation AI steps`, open: open === 'b-ai', body: admAiBody() })}
     ${accItem('b-support', { title: 'Support contact & renew link', icon: '<svg class="i" viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3.5-7.1L21 4v5h-5"/></svg>', color: '#10B981', dot: s.supportPhone || s.supportEmail ? 'ok' : 'wait', status: s.supportPhone || s.supportEmail ? [s.supportPhone ? '+' + s.supportPhone : '', s.supportEmail].filter(Boolean).join(' · ') : 'Not set — clients can not contact you to renew', open: open === 'b-support',
       body: `<div class="form" style="grid-template-columns:repeat(3,1fr)">${f('psPhone', 'Support WhatsApp (with country code)', s.supportPhone, 'placeholder="91 98…"')}${f('psMail', 'Support email', s.supportEmail)}${f('psLink', 'Renew / payment link (optional)', s.renewLink, 'placeholder="https://rzp.io/…"')}</div>
         <p class="help">Used by the pricing buttons, the expiry banner and Settings → Plan & billing.</p>` })}
@@ -8466,6 +8471,46 @@ function admBrand() {
     <div class="cf-foot"><span class="cf-safe">These settings are public (the login page reads them) — never put passwords or API keys here.</span><div class="grow"></div><button class="btn primary" id="psSave">Save settings</button></div>`;
 }
 
+
+/* Admin Console → Settings → AI: pick which AI the whole website uses (free Gemini by default) */
+const AI_PROVIDERS = [
+  ['gemini', 'Google Gemini', 'Free', '#4285F4', 'Free tier from Google AI Studio — Nodevers default', 'auto (gemini flash-lite)', ['Go to <b>aistudio.google.com</b> → sign in with your Google account.', 'Click <b>Get API key</b> → <b>Create API key</b> → pick or create a Google Cloud project.', 'Copy the key (starts with <code>AIza</code>).', 'Paste it here → <b>Save</b> → <b>Test</b>. (Optional — if empty, the free key saved on the server as GEMINI_API_KEY is used.)']],
+  ['groq', 'Groq', 'Free', '#F55036', 'Very fast answers, free tier (Llama, Qwen and more)', 'llama-3.3-70b-versatile', ['Go to <b>console.groq.com</b> → sign up (Google login works).', 'Left menu <b>API Keys</b> → <b>Create API Key</b> → name it “Nodevers” → copy it (starts with <code>gsk_</code>).', 'Optional: <b>Models</b> page shows other model names you can type in “Model”.', 'Paste the key here → <b>Save</b> → <b>Test</b> → <b>Use for the whole website</b>.']],
+  ['openrouter', 'OpenRouter', 'Free models', '#6467F2', 'One key, hundreds of models — choose one ending in “:free”', 'meta-llama/llama-3.3-70b-instruct:free', ['Go to <b>openrouter.ai</b> → <b>Sign in</b>.', 'Top-right menu → <b>Keys</b> → <b>Create Key</b> → copy it (starts with <code>sk-or-</code>).', '<b>Models</b> page → filter <b>Free</b> → copy the model id (ends with <code>:free</code>) into “Model”.', 'Paste the key here → <b>Save</b> → <b>Test</b>.']],
+  ['mistral', 'Mistral', 'Free tier', '#FA520F', 'European AI with a free “Experiment” plan', 'mistral-small-latest', ['Go to <b>console.mistral.ai</b> → sign up.', 'Choose the <b>Experiment</b> (free) plan and verify your phone number.', '<b>API Keys</b> → <b>Create new key</b> → copy it.', 'Paste it here → <b>Save</b> → <b>Test</b>.']],
+  ['openai', 'OpenAI (ChatGPT)', 'Paid', '#10A37F', 'Pay per use — needs credit in your OpenAI account', 'gpt-4o-mini', ['Go to <b>platform.openai.com</b> → sign up (the ChatGPT Plus plan is not the API).', '<b>Settings → Billing</b> → add credit.', '<b>API keys</b> → <b>Create new secret key</b> → copy it (starts with <code>sk-</code>).', 'Paste it here → <b>Save</b> → <b>Test</b>.']],
+  ['anthropic', 'Claude', 'Paid', '#D97757', 'Pay per use — the Claude Pro chat plan does not include API use', 'claude-haiku-4-5-20251001', ['Go to <b>console.anthropic.com</b> → sign up.', '<b>Settings → Billing</b> → add credit.', '<b>API Keys</b> → <b>Create Key</b> → copy it (starts with <code>sk-ant-</code>).', 'Paste it here → <b>Save</b> → <b>Test</b>.']],
+  ['deepseek', 'DeepSeek', 'Low cost', '#4D6BFE', 'Paid but very cheap', 'deepseek-chat', ['Go to <b>platform.deepseek.com</b> → sign up.', '<b>Top up</b> a small amount.', '<b>API keys</b> → <b>Create new API key</b> → copy it.', 'Paste it here → <b>Save</b> → <b>Test</b>.']],
+  ['custom', 'Custom', 'Any', '#64748B', 'Any OpenAI-compatible service (Together, Fireworks, your own server…)', 'model id', ['Get the service’s <b>base URL</b> (e.g. <code>https://api.together.xyz/v1</code>), an <b>API key</b> and a <b>model id</b>.', 'Fill all three here → <b>Save</b> → <b>Test</b>.']],
+];
+function admAiBody() {
+  if (ADM2.aiErr) return `<p class="cf-warn" style="margin:0">${esc(ADM2.aiErr)}</p>`;
+  const st = Object.fromEntries((ADM2.ai || []).map(r => [r.provider, r])), use = PLAT.s.aiProvider || 'gemini', sel = ADM2.aiSel || use, P = AI_PROVIDERS.find(x => x[0] === sel) || AI_PROVIDERS[0], r = st[sel] || {};
+  const keyState = k => st[k] && st[k].has_key ? '✓ key saved' : k === 'gemini' ? '✓ free server key' : 'no key';
+  return `<p class="help" style="margin-top:0">Used by the Inbox ✨ AI, the 🎓 Guide answers and the AI steps in Automation. If the chosen AI fails, Nodevers falls back to the free Gemini. Keys stay on the server — nobody can see them again.</p>
+    <div class="ai-provs">${AI_PROVIDERS.map(([k, n, tag, c]) => `<button type="button" class="ai-p ${k === sel ? 'on' : ''}" data-aisel="${k}"><span class="em-pl" style="--c:${c}">${esc(n[0])}</span><b>${esc(n)}${k === use ? ' <i class="ai-use">In use</i>' : ''}</b><small><span class="ai-tag ${/free/i.test(tag) ? 'free' : ''}">${esc(tag)}</span> · ${keyState(k)}</small></button>`).join('')}</div>
+    <div class="em-best">💡 ${esc(P[4])}</div>
+    <div class="form" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr))">
+      <div class="field"><label>${esc(P[1])} API key</label><input class="input" id="aiKey" type="password" autocomplete="new-password" placeholder="${r.has_key ? `•••••••• saved ${esc(r.hint || '')} — paste only to change` : sel === 'gemini' ? 'Optional — the free server key is used when empty' : 'Paste the API key'}"></div>
+      <div class="field"><label>Model <span class="muted">(empty = default)</span></label><input class="input" id="aiModel" value="${esc(r.model || '')}" placeholder="${esc(P[5])}"></div>
+      ${sel === 'custom' ? `<div class="field"><label>Base URL</label><input class="input" id="aiBase" value="${esc(r.base_url || '')}" placeholder="https://api.example.com/v1"></div>` : ''}</div>
+    <details class="cf-how em-how"><summary>How to get the ${esc(P[1])} key — full steps</summary><ol>${P[6].map(x => `<li>${x}</li>`).join('')}</ol></details>
+    <div id="aiMsg" class="help"></div>
+    <div class="cf-foot">${r.has_key ? '<button class="btn sm danger" data-aiclear>Remove key</button>' : ''}<div class="grow"></div><button class="btn sm" data-aisave>Save</button><button class="btn sm" data-aitest>Test</button>${sel === use ? '<span class="adm-ok">✓ In use for the whole website</span>' : '<button class="btn sm primary" data-aiuse>Use for the whole website</button>'}</div>`;
+}
+async function admAiAct(kind) {
+  const sel = ADM2.aiSel || PLAT.s.aiProvider || 'gemini', v = id => (($('#' + id) || {}).value || '').trim(), msg = (t, bad) => { const m = $('#aiMsg'); if (m) { m.innerHTML = t; m.className = bad ? 'cf-warn' : 'help'; } };
+  const rerender = () => { const it = $('#v-admin .acc[data-acc="b-ai"] .acc-pad'); if (it) it.innerHTML = admAiBody(); };
+  try {
+    if (kind === 'save' || kind === 'clear') { if (sel === 'custom' && kind === 'save' && !/^https:\/\//.test(v('aiBase'))) return msg('The base URL must start with https://', true);
+      await sbq(AUTH.client.rpc('admin_ai_save', { p_provider: sel, p_key: kind === 'clear' ? null : v('aiKey') || null, p_model: v('aiModel'), p_base: sel === 'custom' ? v('aiBase') : '', p_clear: kind === 'clear' }));
+      ADM2.ai = await sbq(AUTH.client.rpc('admin_ai_status')); rerender(); toast(kind === 'clear' ? 'Key removed' : '✓ Saved'); return; }
+    if (kind === 'test') { if (v('aiKey') || v('aiModel')) { await sbq(AUTH.client.rpc('admin_ai_save', { p_provider: sel, p_key: v('aiKey') || null, p_model: v('aiModel'), p_base: sel === 'custom' ? v('aiBase') : '', p_clear: false })); ADM2.ai = await sbq(AUTH.client.rpc('admin_ai_status')); rerender(); }
+      msg('Testing…'); const r = await fnCall('ai-write', { mode: 'aitest', provider: sel }); msg(`✓ Works — ${esc((AI_PROVIDERS.find(x => x[0] === r.provider) || [0, r.provider])[1])} · model <code>${esc(r.model || '')}</code> answered “${esc(r.text)}”`); return; }
+    if (kind === 'use') { const st = (ADM2.ai || []).find(x => x.provider === sel); if (sel !== 'gemini' && !(st && st.has_key) && !confirm('No key is saved for this AI yet — the website will keep using free Gemini until you add one. Continue?')) return;
+      await sbq(AUTH.client.rpc('admin_setting_save', { p_key: 'aiProvider', p_value: sel })); PLAT.s.aiProvider = sel; renderAdmin(); toast(`✓ ${(AI_PROVIDERS.find(x => x[0] === sel) || [0, sel])[1]} is now used for the whole website`); }
+  } catch (e) { msg(esc(e.message), true); toast(e.message, true); }
+}
 function admAudit() {
   const A = ADM2.audit || [];
   return `<div class="rcard glass"><h3>Audit log</h3><p class="sub muted">Every change made by the platform team.</p><div class="tblwrap"><table class="tbl"><thead><tr><th>When</th><th>Who</th><th>What</th><th>Client / item</th><th>Details</th></tr></thead><tbody>
@@ -8487,6 +8532,8 @@ function admAudit() {
     if (t.id === 'tmAdd') { const em = $('#tmEmail').value.trim(); if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)) return toast('Enter a valid email', true);
       try { await sbq(AUTH.client.rpc('admin_team_save', { p_email: em, p_role: $('#tmRole').value })); toast('✓ Added — they get access when they sign in with ' + em); ADM2.team = null; renderAdmin(); } catch (er) { toast(er.message, true); } return; }
     const td = t.closest('[data-tmdel]'); if (td) { if (!confirm(`Remove ${td.dataset.tmdel} from the platform team?`)) return; try { await sbq(AUTH.client.rpc('admin_team_remove', { p_email: td.dataset.tmdel })); toast('Removed'); ADM2.team = null; renderAdmin(); } catch (er) { toast(er.message, true); } return; }
+    const ais = t.closest('[data-aisel]'); if (ais) { ADM2.aiSel = ais.dataset.aisel; const it = $('#v-admin .acc[data-acc="b-ai"] .acc-pad'); if (it) it.innerHTML = admAiBody(); return; }
+    if (t.closest('[data-aisave]')) return admAiAct('save'); if (t.closest('[data-aitest]')) return admAiAct('test'); if (t.closest('[data-aiuse]')) return admAiAct('use'); if (t.closest('[data-aiclear]')) { if (confirm('Remove the saved key for this AI?')) admAiAct('clear'); return; }
     if (t.id === 'psSave') { const pairs = [['trialDays', String(Math.max(0, Math.min(90, +$('#psTrial').value || 0)))], ['defaultPlan', $('#psPlan').value || ''], ['graceDays', String(Math.max(0, Math.min(30, +$('#psGrace').value || 0)))], ['supportPhone', $('#psPhone').value.replace(/\D/g, '')], ['supportEmail', $('#psMail').value.trim()], ['renewLink', /^https:\/\//.test($('#psLink').value.trim()) ? $('#psLink').value.trim() : '']];
       try { for (const [k, val] of pairs) await sbq(AUTH.client.rpc('admin_setting_save', { p_key: k, p_value: val })); pairs.forEach(([k, val]) => { PLAT.s[k] = val; }); toast('✓ Saved'); } catch (er) { toast(er.message, true); } return; }
   });
