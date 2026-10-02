@@ -180,7 +180,7 @@ Deno.serve(async (req) => {
       const { data: sec } = await db.from('app_config').select('value').eq('key', 'cron_secret').maybeSingle();
       if (!sec?.value || req.headers.get('x-cron-secret') !== sec.value) return json({ error: 'Forbidden' }, 403);
       const { data: rows } = await db.from('store_connections').select('*').limit(200);
-      const locked = new Set<string>(); for (const w of [...new Set((rows ?? []).map((r: any) => r.workspace_id))]) { const { data: s } = await db.rpc('ws_state', { ws: w }); if (s === 'locked') locked.add(w as string); }
+      const locked = new Set<string>(); for (const w of [...new Set((rows ?? []).map((r: any) => r.workspace_id))]) { const { data: s } = await db.rpc('ws_state', { ws: w }); if (s === 'locked') locked.add(w as string); else { const { data: on } = await db.rpc('ws_feature', { ws: w, k: 'store' }); if (on === false) locked.add(w as string); } }
       const due = (rows ?? []).filter((r: any) => { if (locked.has(r.workspace_id)) return false; const mins = Number(r.config?.sync_minutes ?? 15); if (!mins) return false; return !r.last_sync_at || Date.now() - new Date(r.last_sync_at).getTime() >= (mins - 2) * 6e4; });
       const out: any[] = []; for (const r of due.slice(0, 25)) { try { out.push({ ws: r.workspace_id, platform: r.platform, ...(await syncOne(r)) }); } catch (e) { out.push({ ws: r.workspace_id, platform: r.platform, error: (e as Error).message }); } }
       return json({ ok: true, synced: out.length, out });
@@ -192,6 +192,7 @@ Deno.serve(async (req) => {
     const ws = String(b.workspace_id ?? '');
     const { data: m } = await db.from('workspace_members').select('role').eq('workspace_id', ws).eq('user_id', u.user.id).maybeSingle();
     if (!m) return json({ error: 'Not a member of this workspace.' }, 403);
+    { const { data: on } = await db.rpc('ws_feature', { ws, k: 'store' }); if (on === false) return json({ error: 'The Store is not part of your plan. Upgrade in Settings → Plan & billing.' }, 402); }
     rememberUrl().catch(() => null);
     if (b.action === 'list') { const { data } = await db.from('store_connections').select('*').eq('workspace_id', ws); return json({ ok: true, connections: Object.fromEntries((data ?? []).map((r: any) => [r.platform, publicRow(r)])) }); }
     if (!['owner', 'admin'].includes(m.role)) return json({ error: 'Only the owner or an admin can change store connections.' }, 403);

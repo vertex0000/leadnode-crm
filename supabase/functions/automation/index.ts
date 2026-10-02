@@ -102,6 +102,7 @@ async function ai(system: string, user: string) { const r = await aiAsk(system, 
 const fill = (s: string, l: any) => String(s ?? '').replace(/\{\{\s*(first_name|name|business|city|phone|stage|source)\s*\}\}/g, (_m, k) => !l ? '' : k === 'first_name' ? (String(l.name ?? '').split(' ')[0] || 'there') : k === 'business' ? String(l.business_name ?? '') : String(l[k] ?? ''));
 
 async function loadFlow(ws: string): Promise<Flow | null> {
+  const { data: on } = await db.rpc('ws_feature', { ws, k: 'automation' }); if (on === false) return null;   // section switched off in Admin Console
   const { data } = await db.from('flows').select('flow_json').eq('workspace_id', ws).eq('flow_id', 'AUTOMATION').maybeSingle();
   try { const f = JSON.parse(data?.flow_json ?? 'null'); if (f && f.live && Array.isArray(f.nodes)) { f.links = Array.isArray(f.links) ? f.links : []; return f; } } catch { /* ignore */ }
   return null;
@@ -269,6 +270,7 @@ async function processSchedules() {
   const hm = istHM(), day = istDate(), wd = istDay(), dom = day.slice(8); let n = 0;
   for (const r of rows ?? []) {
     let f: Flow; try { f = JSON.parse(r.flow_json); } catch { continue; } if (!f.live) continue; f.links = f.links ?? [];
+    { const { data: on } = await db.rpc('ws_feature', { ws: r.workspace_id, k: 'automation' }); if (on === false) continue; }
     for (const t of f.nodes.filter((x) => x.type === 'trg.schedule')) {
       const p = t.p ?? {}, time = /^\d{1,2}:\d{2}$/.test(p.time || '') ? String(p.time).padStart(5, '0') : '09:00', every = p.every || 'Day';
       if (hm < time || (every === 'Week' && wd !== 'Mon') || (every === 'Month' && dom !== '01')) continue;

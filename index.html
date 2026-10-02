@@ -1063,7 +1063,17 @@ body.no-sales [data-go="tasks"],body.no-sales [data-go="calls"],body.no-orders [
 .mod-list{display:flex;flex-direction:column}.mod-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 2px;border-top:1px solid var(--line);cursor:pointer}.mod-row b{display:block;font-size:13.5px}.mod-row small{font-size:12px}
 .sw{position:relative;width:40px;height:23px;flex:none}.sw input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}.sw i{position:absolute;inset:0;border-radius:20px;background:var(--line-2);transition:background .2s}.sw i::after{content:'';position:absolute;top:3px;left:3px;width:17px;height:17px;border-radius:50%;background:#fff;transition:transform .2s cubic-bezier(.2,.8,.2,1)}.sw input:checked+i{background:var(--green)}.sw input:checked+i::after{transform:translateX(17px)}.sw input:focus-visible+i{outline:2px solid var(--blue-2);outline-offset:2px}
 @media (max-width:640px){.cf-grid,.cf-mg{grid-template-columns:1fr}.cf-mg label{grid-template-columns:1fr}.mod-types{grid-template-columns:1fr}.conn-q{min-width:0;width:100%}}
-body.mod-off-store [data-cm],body.mod-off-store .mod-store,body.mod-off-store [data-go="orders"],body.mod-off-store [data-go="insales"],body.mod-off-ads [data-go="ads"],body.mod-off-ads .mod-ads,body.mod-off-ads [data-go="inmarketing"],body.mod-off-campaigns [data-go="broadcast"],body.mod-off-campaigns [data-go="templates"],body.mod-off-automation [data-go="automation"],body.mod-off-automation [data-go="n8n"],body.mod-off-automation [data-go="scripts"],body.mod-off-pipeline [data-go="pipeline"],body.mod-off-pipeline [data-go="calls"]{display:none!important}
+/* sections the plan does not include: 🔒 in the menu + an upgrade screen (hide rules for Modules are built from FEATURES) */
+.locked-i{display:none}.locked>.locked-i{display:inline-grid;place-items:center;margin-left:auto;width:20px;height:20px;border-radius:6px;background:color-mix(in srgb,#F59E0B 16%,transparent);color:#D97706;flex:none}.locked-i svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2.2}
+.sbtn>.locked-i{position:absolute;top:3px;right:3px;width:16px;height:16px;margin:0}.sbtn>.locked-i svg{width:10px;height:10px}.sbtn.locked,.fam-t.locked,#nav a.locked,.mbar .locked{opacity:.72}.fam-t.locked>.locked-i,#nav a.locked>.locked-i{display:inline-grid;margin-left:6px;vertical-align:-4px;width:18px;height:18px}.mbar .locked>.locked-i{position:absolute;top:2px;right:10px;width:16px;height:16px}.mbar [data-mb]{position:relative}
+.lk{max-width:620px;margin:40px auto;text-align:center;padding:34px 26px;border-radius:22px}.lk-i{width:64px;height:64px;margin:0 auto 14px;border-radius:18px;display:grid;place-items:center;background:color-mix(in srgb,#F59E0B 15%,transparent);color:#D97706}.lk-i svg{width:30px;height:30px;stroke:currentColor;fill:none;stroke-width:2}
+.lk h2{margin:0 0 6px;font-size:22px}.lk p{margin:0 auto 6px;color:var(--muted);max-width:480px}.lk-plans{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:16px 0 4px}.lk-plans span{padding:6px 12px;border-radius:999px;border:1px solid var(--line-2);font-weight:600;font-size:13px}.lk-plans span.cur{border-color:var(--blue-2);color:var(--blue-2)}
+.lk-b{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:18px}.lk-safe{margin-top:14px;font-size:12.5px;color:var(--muted)}
+.mod-row.is-lock{cursor:default;opacity:.75}.mod-lk{font-size:12px;font-weight:700;color:#D97706;white-space:nowrap}
+.fs-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 18px}.fs-list .mod-row{padding:9px 2px}.fs-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 2px;border-top:1px solid var(--line)}.fs-row b{display:block;font-size:13.5px}.fs-row small{font-size:12px;color:var(--muted)}.fs-row select,.fs-row .nvdd{flex:none;width:200px}.fs-list.one{grid-template-columns:1fr}
+.fs-def{font-size:11.5px;font-weight:700;padding:2px 8px;border-radius:999px}.fs-def.on{background:color-mix(in srgb,var(--green) 14%,transparent);color:var(--green)}.fs-def.off{background:color-mix(in srgb,var(--coral) 14%,transparent);color:var(--coral)}
+.fs-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.fs-chips span{font-size:12px;font-weight:600;padding:4px 10px;border-radius:999px;background:var(--glass-2);border:1px solid var(--line)}.fs-chips span.off{color:var(--muted);text-decoration:line-through}
+@media (max-width:640px){.fs-list{grid-template-columns:1fr}.fs-row{flex-wrap:wrap}.fs-row select,.fs-row .nvdd{width:100%}}
 /* premium dropdown */
 .nvdd{position:relative;display:inline-flex;vertical-align:middle;min-width:0}.nvdd>select.nvdd-native{position:absolute;inset:0;width:100%;height:100%;opacity:0;pointer-events:none}
 .nvdd-b{display:flex;align-items:center;gap:8px;width:100%;min-height:38px;padding:0 10px 0 12px;border-radius:var(--r-ctl,10px);border:1px solid var(--line-2);background:var(--input-bg,var(--glass-3));color:var(--text);font:inherit;font-size:14px;text-align:left;cursor:pointer;transition:border-color .2s,box-shadow .2s}
@@ -1436,7 +1446,7 @@ body.ro [data-cmw],body.np-commerce [data-cmw]{display:none!important}
     <button class="sbtn" data-gofam="automation"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="4" width="6" height="5" rx="1.2"/><rect x="15" y="4" width="6" height="5" rx="1.2"/><rect x="9" y="15" width="6" height="5" rx="1.2"/><path d="M6 9v2a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V9M12 13v2"/></svg><span class="lbl">Automation</span></button>
     <div class="sgrp mod-ads">Marketing</div>
     <button class="sbtn" data-go="ads"><svg class="i" viewBox="0 0 24 24"><path d="M3 11v2a1 1 0 0 0 1 1h2l5 4V6L6 10H4a1 1 0 0 0-1 1Z"/><path d="M15 8.5a4.5 4.5 0 0 1 0 7M18 5.5a8.5 8.5 0 0 1 0 13"/></svg><span class="lbl">Ads Manager</span></button>
-    <div class="sgrp">Insights</div>
+    <div class="sgrp mod-insights">Insights</div>
     <button class="sbtn" data-gofam="insights"><svg class="i" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="m7 15 4-5 3 3 5-6"/></svg><span class="lbl">Insights</span></button>
     <div class="sgrp">Setup</div>
     <button class="sbtn" data-go="connections"><svg class="i" viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg><span class="lbl">Connections</span></button>
@@ -1497,6 +1507,7 @@ body.ro [data-cmw],body.np-commerce [data-cmw]{display:none!important}
 
     <!-- HOME -->
     <section class="view" id="v-home"><div id="homeBody"></div></section>
+    <section class="view" id="v-locked"><div id="lockedBody"></div></section>
 
     <!-- INSIGHTS HUB -->
     <section class="view" id="v-insights"><div id="insBody"></div></section>
@@ -5743,7 +5754,7 @@ async function cloudStart() {
   AUTH.ws = pick.workspace_id; AUTH.role = pick.role; AUTH.wsName = pick.name;
   cloud = true; demo = false; WA.status = null; document.body.classList.toggle('ro', AUTH.role === 'client' || AUTH.role === 'platform'); liveStart();
 }
-function cloudStop() { liveStop(); cloud = false; AUTH.ws = null; AUTH.role = null; AUTH.platform = false; AUTH.platRole = null; SUB.me = null; AUTH.wsList = []; WA.status = null; document.body.classList.remove('ro'); demo = !(settings.url && settings.key); }
+function cloudStop() { liveStop(); cloud = false; AUTH.ws = null; AUTH.role = null; AUTH.platform = false; AUTH.platRole = null; SUB.me = null; FEAT.on = null; try { featSync(); } catch (e) { } AUTH.wsList = []; WA.status = null; document.body.classList.remove('ro'); demo = !(settings.url && settings.key); }
 /** One-time move: Google Sheet → cloud (keeps your IDs like L001) */
 async function importSheet() {
   if (!cloud) return toast('Sign in first', true);
@@ -5785,7 +5796,7 @@ async function switchWorkspace(id) {
   const w = (AUTH.wsList || []).find(x => x.workspace_id === id); if (!w) return;
   liveStop(); store.set('leadnode.ws', id); store.del('leadnode.cache');
   AUTH.ws = w.workspace_id; AUTH.role = w.role; AUTH.wsName = w.name; document.body.classList.toggle('ro', AUTH.role === 'client' || AUTH.role === 'platform');
-  SUB.me = null; view.fitted = false; layout = null; WA.status = null; hideModal('#setModal'); toast(`Switched to ${w.name}`); liveStart(); load();
+  SUB.me = null; FEAT.on = null; view.fitted = false; layout = null; WA.status = null; hideModal('#setModal'); toast(`Switched to ${w.name}`); liveStart(); load();
 }
 async function renderLogins() {
   const box = $('#logins'); if (!box) return;
@@ -7030,12 +7041,13 @@ const authInUrl = () => /access_token=|refresh_token=|error_description=|type=re
 const GO_ALIAS = { channels: 'connections', storeanalytics: 'insales', dash: 'home' };
 function go(name) {
   name = GO_ALIAS[name] || name;
-  if (!document.getElementById('v-' + name)) name = 'home';
+  if (!document.getElementById('v-' + name) || name === 'locked') name = name === 'locked' && LOCK.v ? LOCK.v : 'home';
+  const want = name; if (featLocked(name)) { LOCK.v = name; renderLocked(name); name = 'locked'; }   // section not in the plan → upgrade screen
   if (FAM_OF[name] === 'insights') insSyncRanges();
   if (name !== 'pipeline' && typeof selWire !== 'undefined') { selWire = null; }
   $$('.view').forEach(v => v.classList.toggle('active', v.id === 'v-' + name));
-  $$('[data-go]').forEach(a => a.classList.toggle('active', a.dataset.go === name));
-  if (location.hash !== '#' + name && !authInUrl()) history.replaceState(null, '', '#' + name);   // keep login/reset tokens until Supabase reads them
+  $$('[data-go]').forEach(a => a.classList.toggle('active', a.dataset.go === want));
+  if (location.hash !== '#' + want && !authInUrl()) history.replaceState(null, '', '#' + want);   // keep login/reset tokens until Supabase reads them
   const stale = staleViews.delete(name);
   if (name === 'pipeline') requestAnimationFrame(() => { sizeCanvas(); if (!view.fitted || stale) { renderPipeline(!view.fitted); } else applyView(); });
   if (name === 'dashboard' && S.leads.length) renderDashboard(true);
@@ -7059,7 +7071,7 @@ function go(name) {
   if (name === 'inmarketing') renderInMarketing(true);
   if (name === 'connections') renderConnections(true);
   if (name === 'reports') renderReportsStore();
-  navAfterGo(name);
+  navAfterGo(want);
   if (name === 'tasks') renderTasks(true);
   if (name === 'calls') renderCalls(true);
   if (name === 'performance') renderPerformance(true);
@@ -8203,24 +8215,71 @@ function settingsStatus() {
   set('conn', settings.url ? 'Connected (old Sheet mode)' : 'Not used — your data is in the cloud', settings.url ? 'ok' : 'off');
 }
 
-/* ================= modules: show only what this business uses ================= */
-const MODULES = [['store', 'Store', 'Products, stock, Amazon / website orders, store analytics', ['commerce', 'insales']], ['campaigns', 'Campaigns', 'WhatsApp / email broadcasts and templates', ['broadcast', 'templates']], ['automation', 'Automation & n8n', 'Flows, n8n services, scripts', ['automation', 'n8n', 'scripts']], ['ads', 'Ads Manager', 'Meta / Google ads, spend and ROAS', ['ads', 'inmarketing']], ['pipeline', 'Pipeline & calls', 'Pipeline canvas, calls log', ['pipeline', 'calls']]];
+/* ================= sections: what each client can use =================
+   1) plan defaults + 2) per-client override — both set in Admin Console, checked by the database (my_sections / ws_feature)
+   3) the client's owner can hide more for their team (Modules) — never switch on what the plan does not include */
+const FEATURES = [
+  ['pipeline', 'Pipeline', 'Pipeline canvas — stages as nodes', ['pipeline']],
+  ['tasks', 'Tasks & Calls', 'Tasks, auto follow-up tasks and the call log', ['tasks', 'calls']],
+  ['orders', 'Orders', 'Orders from WhatsApp buttons and the team', ['orders']],
+  ['store', 'Store', 'Store, Products & Stock, Amazon / website orders', ['commerce', 'insales']],
+  ['campaigns', 'Campaigns', 'WhatsApp / email broadcasts and templates', ['broadcast', 'templates']],
+  ['automation', 'Automation', 'Automation flows, n8n services, scripts', ['automation', 'n8n', 'scripts']],
+  ['ads', 'Ads Manager', 'Meta / Google ads, spend and ROAS', ['ads', 'inmarketing']],
+  ['insights', 'Insights', 'Analytics, team performance and reports', ['insights', 'insales', 'analytics', 'inmarketing', 'performance', 'reports']],
+];
+const MODULES = FEATURES;
+const CORE_SECTIONS = 'Home, Leads, Inbox, Connections, Team and Settings';
+const VIEW_FEATS = {}; FEATURES.forEach(([k, , , vs]) => vs.forEach(v => { (VIEW_FEATS[v] = VIEW_FEATS[v] || []).push(k); }));
+const FEAT = { on: null }, LOCK = { v: '' };
+const LOCK_IC = '<svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>';
+(function () {   // Modules (owner's choice) hide these; built from FEATURES so menus, tabs and buttons stay in sync
+  const st = document.createElement('style'); st.id = 'featCss';
+  st.textContent = FEATURES.map(([k, , , vs]) => [`.mod-${k}`, ...vs.map(v => `[data-go="${v}"]`), ...vs.map(v => `.mbar [data-mb="${v}"]`)].map(x => `body.mod-off-${k} ${x}`).join(',')).join(',') + ',body.mod-off-store [data-cm]{display:none!important}';
+  document.head.appendChild(st);
+})();
 const BIZ_TYPES = [['store', 'Online store', 'I sell products — website, Amazon, WhatsApp orders', { store: true, campaigns: true, automation: true, ads: true, pipeline: false }], ['services', 'Services / leads', 'I get enquiries and close deals — salon, real estate, agency, B2B', { store: false, campaigns: true, automation: true, ads: true, pipeline: true }], ['both', 'Both', 'I sell products and also handle leads / B2B deals', { store: true, campaigns: true, automation: true, ads: true, pipeline: true }]];
-function modulesCfg() { let c = null; try { c = JSON.parse((S.settings || {}).modulesJson || (demo && store.get('nv.demoModules')) || 'null'); } catch (e) { } return Object.assign({ store: true, campaigns: true, automation: true, ads: true, pipeline: true, type: '' }, c || {}); }
-function applyModules() { const m = modulesCfg(); MODULES.forEach(([k]) => document.body.classList.toggle('mod-off-' + k, m[k] === false)); if (typeof famSync === 'function') famSync(); }
+function modulesCfg() { let c = null; try { c = JSON.parse((S.settings || {}).modulesJson || (demo && store.get('nv.demoModules')) || 'null'); } catch (e) { } return Object.assign({ type: '' }, Object.fromEntries(FEATURES.map(([k]) => [k, true])), c || {}); }
+function applyModules() { const m = modulesCfg(); FEATURES.forEach(([k]) => document.body.classList.toggle('mod-off-' + k, m[k] === false)); if (typeof famSync === 'function') famSync(); featSync(); }
+/** is this section switched off by the plan / Admin Console? (null = not loaded / demo → everything on) */
+const featOff = k => !!(FEAT.on && FEAT.on[k] === false);
+const featLocked = v => (VIEW_FEATS[v] || []).some(featOff);
+function featSync() {
+  $$('.side [data-go], .side [data-gofam], #nav [data-go], #nav [data-gofam], .fam-tabs [data-go], .mbar [data-mb]').forEach(b => {
+    const k = b.dataset.gofam || b.dataset.mb, views = FAMS[k] ? FAMS[k].views.map(x => x[0]) : [b.dataset.go || b.dataset.mb], on = views.every(featLocked);
+    if (on && !b.querySelector(':scope > .locked-i')) b.insertAdjacentHTML('beforeend', `<span class="locked-i" title="Not in your plan">${LOCK_IC}</span>`);
+    b.classList.toggle('locked', on);
+  });
+}
+function featApply() {
+  featSync(); const v = activeView();
+  if (v === 'locked' && LOCK.v && !featLocked(LOCK.v)) go(LOCK.v); else if (v !== 'locked' && featLocked(v)) go(v); else if (v === 'locked' && LOCK.v) renderLocked(LOCK.v);
+}
+function renderLocked(v) {
+  const k = (VIEW_FEATS[v] || []).find(featOff) || (VIEW_FEATS[v] || [])[0], f = FEATURES.find(x => x[0] === k) || ['', 'This section', ''];
+  const cur = (SUB.me && SUB.me.plan_id) || '', plans = pricePlans().filter(p => !(p.sections && p.sections[k] === false)), sup = PLAT.s.supportPhone || '', boss = cloud && canAdmin();
+  const wa = sup ? `<a class="btn" href="https://wa.me/${esc(sup)}?text=${encodeURIComponent(`Hi, I want ${f[1]} in ${brand().brandName} for ${AUTH.wsName || 'my business'}`)}" target="_blank" rel="noopener">Ask on WhatsApp</a>` : '';
+  $('#lockedBody').innerHTML = `<div class="lk glass"><div class="lk-i">${LOCK_IC}</div><h2>${esc(f[1])} is not in your plan</h2><p>${esc(f[2])}.</p>
+    <p>${SUB.me && SUB.me.plan_name ? `You are on <b>${esc(SUB.me.plan_name)}</b>. ` : ''}${plans.length ? 'Upgrade to unlock it:' : 'Contact us to switch it on.'}</p>
+    ${plans.length ? `<div class="lk-plans">${plans.map(p => `<span class="${p.id === cur ? 'cur' : ''}">${esc(p.name)}</span>`).join('')}</div>` : ''}
+    <div class="lk-b">${boss ? '<button class="btn primary" data-lkplans>See plans</button>' : '<span class="muted">Ask the owner of this workspace to upgrade.</span>'}${boss ? wa : ''}<button class="btn" data-go="home">Go to Home</button></div>
+    <div class="lk-safe">Nothing is deleted — your data comes back as soon as the section is switched on.</div></div>`;
+  const b = $('#lockedBody [data-lkplans]'); if (b) b.onclick = () => { try { openPricing(); } catch (e) { } };
+}
 function openModules() {
   const m = modulesCfg(), can = demo || (cloud && canAdmin());
   $('#stageBox').innerHTML = `<div class="m-head"><h2>Modules</h2><button class="ibtn" data-close>${I.x}</button></div>
-    <p class="help" style="margin-top:0">Pick what kind of business this is — Nodevers shows only the sections you need. You can switch any section back on later. Nothing is deleted.</p>
+    <p class="help" style="margin-top:0">Pick what kind of business this is — ${esc(brand().brandName)} shows only the sections your team needs. You can switch any section back on later. Nothing is deleted. Always on: ${CORE_SECTIONS}.</p>
     <div class="mod-types">${BIZ_TYPES.map(([k, n, d]) => `<button type="button" class="mod-type ${m.type === k ? 'on' : ''}" data-modtype="${k}" ${can ? '' : 'disabled'}><b>${n}</b><small>${d}</small></button>`).join('')}</div>
-    <div class="mod-list">${MODULES.map(([k, n, d]) => `<label class="mod-row"><div><b>${n}</b><small class="muted">${d}</small></div><span class="sw"><input type="checkbox" data-mod="${k}" ${m[k] !== false ? 'checked' : ''} ${can ? '' : 'disabled'}><i></i></span></label>`).join('')}</div>
+    <div class="mod-list">${FEATURES.map(([k, n, d]) => featOff(k) ? `<div class="mod-row is-lock"><div><b>${n}</b><small class="muted">${d}</small></div><span class="mod-lk">🔒 Not in your plan</span></div>`
+      : `<label class="mod-row"><div><b>${n}</b><small class="muted">${d}</small></div><span class="sw"><input type="checkbox" data-mod="${k}" ${m[k] !== false ? 'checked' : ''} ${can ? '' : 'disabled'}><i></i></span></label>`).join('')}</div>
     <div class="m-foot"><div class="grow"></div><button class="btn" data-close>${can ? 'Cancel' : 'Close'}</button>${can ? '<button class="btn primary" id="modSave">Save</button>' : ''}</div>`;
   const box = $('#stageBox');
   box.querySelectorAll('[data-modtype]').forEach(b => b.onclick = () => { const p = BIZ_TYPES.find(x => x[0] === b.dataset.modtype)[3]; box.querySelectorAll('[data-modtype]').forEach(x => x.classList.toggle('on', x === b)); box.querySelectorAll('[data-mod]').forEach(i => { i.checked = p[i.dataset.mod] !== false; }); });
   if (can) $('#modSave').onclick = async () => {
-    const c = { type: (box.querySelector('.mod-type.on') || {}).dataset ? box.querySelector('.mod-type.on').dataset.modtype : m.type }; box.querySelectorAll('[data-mod]').forEach(i => { c[i.dataset.mod] = i.checked; });
+    const t = box.querySelector('.mod-type.on'), c = Object.assign({}, m, { type: t ? t.dataset.modtype : m.type }); box.querySelectorAll('[data-mod]').forEach(i => { c[i.dataset.mod] = i.checked; });
     try { if (demo) { store.set('nv.demoModules', JSON.stringify(c)); S.settings = Object.assign({}, S.settings, { modulesJson: JSON.stringify(c) }); } else S.settings = Object.assign({}, S.settings, await api('saveSettings', { modulesJson: JSON.stringify(c) }));
-      applyModules(); hideModal('#stageModal'); toast('✓ Modules saved'); const v = activeView(); if (document.body.classList.contains('mod-off-' + (MODULES.find(x => x[3].includes(v)) || [''])[0])) go('home'); else (VIEW_RENDER[v] || (() => { }))(true); } catch (e) { toast(e.message, true); } };
+      applyModules(); hideModal('#stageModal'); toast('✓ Modules saved'); const v = activeView(); if ((VIEW_FEATS[v] || []).some(k => c[k] === false)) go('home'); else (VIEW_RENDER[v] || (() => { }))(true); } catch (e) { toast(e.message, true); } };
   showModal('#stageModal');
 }
 
@@ -8363,6 +8422,8 @@ function openSubManager(ws) {
       <div class="field"><label>Custom price (₹) <span class="muted">— empty = plan price</span></label><input class="input" type="number" min="0" id="asPrice" value="${r.price != null && r.plan_id && plans.find(p => p.id === r.plan_id) && +plans.find(p => p.id === r.plan_id).price !== +r.price ? esc(r.price) : ''}"></div>
       <div class="field"><label>Billing email</label><input class="input" id="asMail" value="${esc(r.billing_email || r.owner_email || '')}"></div>
       <div class="field full"><label>Notes (only the platform team sees this)</label><input class="input" id="asNotes" maxlength="2000" value="${esc(r.notes || '')}"></div></div>
+    <div class="ah-sec" style="margin-top:14px">Sections for this client <span class="muted">— follow the plan, or switch one on / off just for them</span></div>
+    <div id="asSec"><div class="loader"><div class="spin"></div>Loading…</div></div>
     <div class="adm-quick"><span class="muted">Quick:</span><button class="btn sm" data-asq="trial7">+7 days trial</button><button class="btn sm" data-asq="trial14">+14 days trial</button><button class="btn sm" data-asq="pay">Record payment</button>${r.status === 'suspended' ? '<button class="btn sm" data-asq="resume">Reactivate</button>' : '<button class="btn sm danger" data-asq="suspend">Suspend</button>'}</div>
     <div id="asPay" hidden><div class="adm-pay glass"><b>Record a payment</b><div class="form" style="grid-template-columns:repeat(3,1fr);margin-top:8px"><div class="field"><label>Amount (₹)</label><input class="input" type="number" min="0" id="apAmt" value="${esc(r.price || '')}"></div>
       <div class="field"><label>Months it covers</label><select class="input" id="apMonths">${[1, 3, 6, 12, 0].map(m => `<option value="${m}">${m ? m + ' month' + (m > 1 ? 's' : '') : 'Does not extend'}</option>`).join('')}</select></div>
@@ -8371,7 +8432,20 @@ function openSubManager(ws) {
       <div class="cf-foot" style="margin-top:8px"><span class="cf-safe">The paid-until date moves forward and the client becomes Active.</span><div class="grow"></div><button class="btn sm primary" id="apSave">Save payment</button></div></div></div>
     <div class="m-foot"><div class="grow"></div><button class="btn" data-close>Cancel</button><button class="btn primary" id="asSave">Save</button></div>`;
   const sv = async (p, msg) => { try { await sbq(AUTH.client.rpc('admin_sub_save', { p_ws: ws, p })); toast(msg || '✓ Saved'); hideModal('#stageModal'); ADM2.rows = null; renderAdmin(); } catch (e) { toast(e.message, true); } };
-  $('#asSave').onclick = () => sv({ plan_id: $('#asPlan').value, status: $('#asSt').value, trial_ends_at: $('#asTrial').value ? $('#asTrial').value + 'T23:59:59+05:30' : '', current_period_end: $('#asEnd').value ? $('#asEnd').value + 'T23:59:59+05:30' : '', price: $('#asPrice').value, billing_email: $('#asMail').value.trim(), notes: $('#asNotes').value.trim() });
+  const SEC = { d: null }, secCan = admCan('super', 'admin');
+  const secDef = k => { const st = $('#asSt').value, pl = (ADM2.plans || []).find(x => x.id === $('#asPlan').value); return !(st !== 'free' && pl && (pl.sections || {})[k] === false); };
+  const secDraw = () => { const ov = SEC.d.override || {}, box = $('#asSec'); if (!box) return;
+    box.innerHTML = `<div class="fs-list one">${FEATURES.map(([k, n, d]) => { const v = ov[k] === true ? 'on' : ov[k] === false ? 'off' : '', def = secDef(k), eff = v ? v === 'on' : def;
+      return `<div class="fs-row"><div><b>${eff ? '' : '🔒 '}${n}</b><small>${d}</small></div><select class="input sm" data-assec="${k}" ${secCan ? '' : 'disabled'}><option value="" ${v ? '' : 'selected'}>Plan default — ${def ? 'On' : 'Off'}</option><option value="on" ${v === 'on' ? 'selected' : ''}>On for this client</option><option value="off" ${v === 'off' ? 'selected' : ''}>Off for this client</option></select></div>`; }).join('')}</div>
+      <p class="help" style="margin-top:6px">Always on: ${CORE_SECTIONS}. Switched-off sections show a 🔒 with an Upgrade button for the client — nothing is deleted.${secCan ? '' : ' Only a Super admin or an Admin can change sections.'}</p>`; };
+  const secNorm = o => JSON.stringify(Object.keys(o).sort().map(k => [k, o[k]]));
+  const secRead = () => { if (!SEC.d) return null; const o = {}; $$('#asSec [data-assec]').forEach(x => { if (x.value) o[x.dataset.assec] = x.value === 'on'; }); return o; };
+  sbq(AUTH.client.rpc('admin_ws_sections', { p_ws: ws })).then(d => { SEC.d = d || { override: {} }; SEC.d.override = SEC.d.override || {}; SEC.d.override0 = Object.assign({}, SEC.d.override); secDraw(); }, e => { const b = $('#asSec'); if (b) b.innerHTML = `<p class="cf-warn">${esc(/admin_ws_sections|function|schema cache/i.test(e.message) ? 'Run the database update 15_sections.sql to choose sections per client.' : e.message)}</p>`; });
+  ['#asPlan', '#asSt'].forEach(q => $(q).addEventListener('change', () => { if (SEC.d) { SEC.d.override = secRead(); secDraw(); } }));
+  $('#stageBox').addEventListener('change', e => { if (e.target.closest('[data-assec]') && SEC.d) { SEC.d.override = secRead(); secDraw(); } });
+  $('#asSave').onclick = async () => { const ov = secRead();
+    if (ov && secCan && secNorm(ov) !== secNorm(SEC.d.override0 || {})) { try { await sbq(AUTH.client.rpc('admin_ws_sections_save', { p_ws: ws, p: ov })); } catch (e) { return toast(e.message, true); } }
+    sv({ plan_id: $('#asPlan').value, status: $('#asSt').value, trial_ends_at: $('#asTrial').value ? $('#asTrial').value + 'T23:59:59+05:30' : '', current_period_end: $('#asEnd').value ? $('#asEnd').value + 'T23:59:59+05:30' : '', price: $('#asPrice').value, billing_email: $('#asMail').value.trim(), notes: $('#asNotes').value.trim() }); };
   $('#stageBox').querySelectorAll('[data-asq]').forEach(b => b.onclick = () => { const k = b.dataset.asq;
     if (k === 'pay') { $('#asPay').hidden = !$('#asPay').hidden; return; }
     if (k.startsWith('trial')) { const base = Math.max(Date.now(), r.trial_ends_at ? new Date(r.trial_ends_at).getTime() : 0), d = new Date(base + (+k.slice(5)) * 864e5); return sv({ status: 'trial', trial_ends_at: d.toISOString() }, `✓ Trial extended to ${fmtDate(isoLocal(d))}`); }
@@ -8382,6 +8456,8 @@ function openSubManager(ws) {
       toast(`✓ Payment saved${end ? ' — paid until ' + fmtDate(isoLocal(end)) : ''}`); hideModal('#stageModal'); ADM2.rows = null; ADM2.pays = null; renderAdmin(); } catch (e) { toast(e.message, true); } };
   showModal('#stageModal');
 }
+/** "All 8" or "6 of 8" with the switched-off names on hover */
+const secSum = sec => { const off = FEATURES.filter(([k]) => (sec || {})[k] === false); return off.length ? `<span title="Off: ${esc(off.map(x => x[1]).join(', '))}">${FEATURES.length - off.length} of ${FEATURES.length}</span>` : `<span class="adm-ok">All ${FEATURES.length}</span>`; };
 function admPlans() {
   const can = admCan('super', 'admin'), P = ADM2.plans || [], rows = ADM2.rows || [], lim = (l, k) => l && +l[k] ? (+l[k]).toLocaleString('en-IN') : '∞';
   const per = p => p.period === 'year' ? '/yr' : p.period === 'month' ? '/mo' : ' once';
@@ -8389,10 +8465,10 @@ function admPlans() {
       <div class="adm-ph2-b">${can ? '<button class="btn" data-admtab="home" data-admacc="h-price">Pricing section settings</button><button class="btn primary" data-admplan="">+ New plan</button>' : ''}</div></div>
     <div style="margin-top:14px">${pricingHTML({ admin: can })}</div>
     <div class="rcard glass" style="margin-top:14px"><div class="cm-ch-h"><h3>All plans</h3><span class="muted" style="font-size:12.5px">∞ = unlimited</span></div>
-    <div class="tblwrap"><table class="tbl"><thead><tr><th>Plan</th><th class="num">Price</th><th class="num">Yearly</th><th>Intro offer</th><th>Team</th><th>Leads</th><th>WhatsApp / mo</th><th>Stores</th><th class="num">Clients on it</th><th>Shown to new clients</th><th></th></tr></thead><tbody>
+    <div class="tblwrap"><table class="tbl"><thead><tr><th>Plan</th><th class="num">Price</th><th class="num">Yearly</th><th>Intro offer</th><th>Team</th><th>Leads</th><th>WhatsApp / mo</th><th>Stores</th><th>Sections</th><th class="num">Clients on it</th><th>Shown to new clients</th><th></th></tr></thead><tbody>
     ${P.map(p => `<tr style="cursor:default"><td><b>${esc(p.name)}</b>${p.badge ? ` <span class="pr-bd sm">${esc(p.badge)}</span>` : ''}<small class="muted" style="display:block">${esc(p.id)}</small></td><td class="num">${p.price_label ? esc(p.price_label) : inr(p.price) + per(p)}</td><td class="num">${+p.price_year ? inr(p.price_year) : '—'}</td><td>${p.offer_price !== null && p.offer_price !== undefined && +p.offer_months ? `${inr(p.offer_price)} × ${esc(p.offer_months)} mo` : '<span class="muted">—</span>'}</td>
-      <td>${lim(p.limits, 'members')}</td><td>${lim(p.limits, 'leads')}</td><td>${lim(p.limits, 'wa_messages')}</td><td>${lim(p.limits, 'store_connections')}</td><td class="num">${rows.filter(r => r.plan_id === p.id && r.status !== 'free').length}</td><td>${p.active ? '<span class="adm-ok">✓ Yes</span>' : '<span class="muted">Hidden</span>'}</td>
-      <td class="num">${can ? `<button class="btn sm" data-admplan="${esc(p.id)}">Edit</button>` : ''}</td></tr>`).join('') || '<tr><td colspan="11" class="empty">No plans yet — press “+ New plan”.</td></tr>'}</tbody></table></div></div>`;
+      <td>${lim(p.limits, 'members')}</td><td>${lim(p.limits, 'leads')}</td><td>${lim(p.limits, 'wa_messages')}</td><td>${lim(p.limits, 'store_connections')}</td><td>${secSum(p.sections)}</td><td class="num">${rows.filter(r => r.plan_id === p.id && r.status !== 'free').length}</td><td>${p.active ? '<span class="adm-ok">✓ Yes</span>' : '<span class="muted">Hidden</span>'}</td>
+      <td class="num">${can ? `<button class="btn sm" data-admplan="${esc(p.id)}">Edit</button>` : ''}</td></tr>`).join('') || '<tr><td colspan="12" class="empty">No plans yet — press “+ New plan”.</td></tr>'}</tbody></table></div></div>`;
 }
 function openPlanEditor(id) {
   if (!admCan('super', 'admin')) return;
@@ -8411,6 +8487,9 @@ function openPlanEditor(id) {
       <div class="ah-sec">Limits <span class="muted">— 0 = unlimited</span></div>
       <div class="form" style="grid-template-columns:repeat(4,1fr)"><div class="field"><label>Team members</label><input class="input" type="number" min="0" id="plMem" value="${esc(L.members || 0)}"></div><div class="field"><label>Leads</label><input class="input" type="number" min="0" id="plLeads" value="${esc(L.leads || 0)}"></div>
         <div class="field"><label>WhatsApp / month</label><input class="input" type="number" min="0" id="plWa" value="${esc(L.wa_messages || 0)}"></div><div class="field"><label>Stores</label><input class="input" type="number" min="0" id="plStores" value="${esc(L.store_connections || 0)}"></div></div>
+      <div class="ah-sec">Sections in this plan <span class="muted">— switched off = 🔒 locked for clients on this plan</span></div>
+      <div class="fs-list">${FEATURES.map(([k, n, d]) => `<label class="mod-row"><div><b>${n}</b><small class="muted">${d}</small></div><span class="sw"><input type="checkbox" data-plsec="${k}" ${(p.sections || {})[k] === false ? '' : 'checked'}><i></i></span></label>`).join('')}</div>
+      <p class="help" style="margin-top:4px">Always included: ${CORE_SECTIONS}. Change one client only in Clients → Manage → Sections.</p>
       <div class="ah-sec">Card</div>
       <div class="field"><label>Features <span class="muted">(one per line)</span></label><textarea class="input" id="plFeat" rows="4">${esc((p.features || []).join('\n'))}</textarea></div>
       <div class="form" style="grid-template-columns:1fr 1fr"><div class="field"><label>Badge <span class="muted">— optional</span></label><input class="input" id="plBadge" maxlength="30" value="${esc(p.badge || '')}" placeholder="Most popular"></div><div class="field"><label>Order on the page</label><input class="input" type="number" id="plSort" value="${esc(p.sort || 0)}"></div></div>
@@ -8424,7 +8503,10 @@ function openPlanEditor(id) {
   const prev = () => { $('#plPrev').innerHTML = pricingHTML({ plans: [Object.assign(draft(), { name: draft().name || 'Plan name', active: true })], mini: true }); };
   $('#stageBox').querySelector('.pl-ed-f').addEventListener('input', prev); $('#stageBox').querySelector('.pl-ed-f').addEventListener('change', prev); prev();
   $('#plSave').onclick = async () => { const d = draft(); if (!/^[a-z0-9_-]{2,40}$/.test(d.id)) return toast('Code: 2–40 lowercase letters, numbers, - or _', true); if (!d.name) return toast('Give the plan a name', true);
-    try { await sbq(AUTH.client.rpc('admin_plan_save', { p: d })); toast('✓ Plan saved — live for clients now'); hideModal('#stageModal'); ADM2.plans = null; platLoad(); renderAdmin(); } catch (e) { toast(e.message, true); } };
+    const secs = {}; $$('#stageBox [data-plsec]').forEach(i => { secs[i.dataset.plsec] = i.checked; });
+    try { await sbq(AUTH.client.rpc('admin_plan_save', { p: d }));
+      try { await sbq(AUTH.client.rpc('admin_plan_sections', { p_id: d.id, p: secs })); } catch (e2) { toast(/admin_plan_sections|function|schema cache/i.test(e2.message) ? 'Plan saved — run the database update 15_sections.sql to save its sections' : e2.message, true); }
+      toast('✓ Plan saved — live for clients now'); hideModal('#stageModal'); ADM2.plans = null; platLoad(); renderAdmin(); } catch (e) { toast(e.message, true); } };
   if (id) $('#plDel').onclick = async () => { if (!confirm('Delete this plan? If clients use it, it is only hidden.')) return; try { const r = await sbq(AUTH.client.rpc('admin_plan_delete', { p_id: id })); toast(r === 'hidden' ? 'Clients use this plan — it is hidden for new clients' : 'Plan deleted'); hideModal('#stageModal'); ADM2.plans = null; platLoad(); renderAdmin(); } catch (e) { toast(e.message, true); } };
   showModal('#stageModal');
 }
@@ -8544,9 +8626,11 @@ function admAudit() {
 /* ================= client side: my plan, expiry banner, view-only when expired ================= */
 const SUB = { me: null, ws: '' };
 async function subLoad() {
-  if (!cloud) { SUB.me = null; return; }
-  try { SUB.me = await sbq(AUTH.client.rpc('my_subscription', { p_ws: AUTH.ws })); SUB.ws = AUTH.ws; } catch (e) { SUB.me = null; }
-  subApply();
+  if (!cloud) { SUB.me = null; FEAT.on = null; featApply(); return; }
+  const ws = AUTH.ws, [me, on] = await Promise.all([sbq(AUTH.client.rpc('my_subscription', { p_ws: ws })).catch(() => null), sbq(AUTH.client.rpc('my_sections', { p_ws: ws })).catch(() => null)]);
+  if (ws !== AUTH.ws) return;
+  SUB.me = me; SUB.ws = ws; FEAT.on = on && typeof on === 'object' ? on : null;
+  subApply(); featApply();
 }
 function subApply() {
   const m = SUB.me, old = $('#subBanner'); if (old) old.remove();
@@ -8573,6 +8657,7 @@ function planBody() {
     ${d !== null && m.status !== 'free' ? `<p class="help">${m.status === 'trial' ? 'Trial' : 'Paid'} until <b>${esc(fmtDate(String(m.ends_at).slice(0, 10)))}</b> · ${d < 0 ? `ended ${Math.abs(d)} days ago` : d + ' days left'}</p>` : ''}
     ${m.status !== 'free' ? `<div class="pl-us">${row('members', 'Team members')}${row('leads', 'Leads')}${row('wa_messages', 'WhatsApp this month')}${row('store_connections', 'Store connections')}</div>` : ''}
     ${(m.features || []).length ? `<ul class="pl-f">${m.features.map(f => `<li>${esc(f)}</li>`).join('')}</ul>` : ''}
+    ${FEAT.on ? `<div class="pl-sec"><b style="font-size:13px">Sections in your plan</b><div class="fs-chips">${FEATURES.map(([k, n]) => `<span class="${featOff(k) ? 'off' : ''}" title="${featOff(k) ? 'Not in your plan' : 'Included'}">${featOff(k) ? '🔒 ' : '✓ '}${esc(n)}</span>`).join('')}</div><p class="help" style="margin:6px 0 0">Always included: ${CORE_SECTIONS}.</p></div>` : ''}
     ${(m.payments || []).length ? `<div class="pl-pay"><b>Payments</b>${m.payments.map(p => `<span>${esc(fmtDate(String(p.paid_at).slice(0, 10)))} · ${inr(p.amount)} · ${esc(p.method || '')}${p.period_end ? ' · until ' + esc(fmtDate(String(p.period_end).slice(0, 10))) : ''}</span>`).join('')}</div>` : ''}
     <div class="cf-foot"><span class="cf-safe">To change or renew your plan, contact us.</span><div class="grow"></div>${sup.supportEmail ? `<a class="btn sm" href="mailto:${esc(sup.supportEmail)}">Email</a>` : ''}${sup.supportPhone ? `<a class="btn sm" href="https://wa.me/${esc(sup.supportPhone)}" target="_blank" rel="noopener">WhatsApp</a>` : ''}${sup.renewLink ? `<a class="btn sm primary" href="${esc(sup.renewLink)}" target="_blank" rel="noopener">Renew / upgrade</a>` : ''}</div>`;
 }
@@ -9087,6 +9172,7 @@ const HELP_GUIDE = [
   ['capture', 'Website form and Facebook lead ads → leads', 'website form lead ads facebook instagram meta zapier make n8n google form capture link webhook', '**Connections → Lead capture link**: copy your private link. **Website**: copy the ready form code into WordPress / Wix / Shopify. **Facebook / Instagram Lead Ads**: in Zapier, Make or n8n use trigger "Facebook Lead Ads → New lead" and send it with a Webhook POST (JSON) to your link. New leads appear in Leads at once and get your auto welcome; repeated people are added to their existing lead. Press **Send a test lead** to check.'],
   ['pricing', 'Pricing plans on Home', 'pricing price plans monthly yearly upgrade choose plan get started cost', 'The **Pricing Plans** section on **Home** shows every plan with its price, limits and features. Switch **Monthly / Yearly** to see yearly prices. Press the button on a plan to start (new visitors create an account; clients are taken to WhatsApp / the renew link to upgrade). Your current plan is marked.'],
   ['plan', 'Plan, trial and billing', 'plan billing subscription trial expire expired renew payment upgrade limit days left invoice paused view only', '**Settings → Plan & billing** shows your plan, days left, usage (team, leads, WhatsApp this month, stores) and your payments. A banner appears 7 days before the end. When a trial or plan ends the workspace becomes **view-only** — nothing is deleted. Use **Renew** or **WhatsApp us** on the banner to renew; it opens again as soon as the payment is recorded.'],
+  ['locked', 'A section shows a 🔒 lock', 'lock locked padlock not in your plan upgrade section hidden missing ads automation store campaigns tasks orders pipeline insights modules', 'A **🔒** next to a menu item means that section is **not in your plan**. Opening it shows which plans include it, with **See plans** and **Ask on WhatsApp**. Nothing is deleted — your data comes back as soon as the section is switched on. **Settings → Plan & billing** lists the sections in your plan. Always included: Home, Leads, Inbox, Connections, Team and Settings. A section that is simply **missing** (no lock) was hidden by your owner in **Settings → Modules** — they can switch it back on.'],
   ['ro', 'View-only / missing buttons', 'view only cannot edit button missing permission hidden not allowed', 'If buttons are missing or you see "View-only access", your owner limited your access (role **Client**, an area limit or a switched-off action). Ask the owner to open **Team → Access** for you.'],
 ];
 /* ================= Nodevers Guide: setup playbooks (full step-by-step for every connection) ================= */

@@ -28,6 +28,7 @@ Deno.serve(async (req) => {
     const ws = String(b.workspace_id ?? '');
     const { data: m } = await db.from('workspace_members').select('role').eq('workspace_id', ws).eq('user_id', u.user.id).maybeSingle();
     if (!m || !['owner', 'admin', 'member'].includes(m.role)) return json({ error: 'Only team members of this workspace can import.' }, 403);
+    { const { data: on } = await db.rpc('ws_feature', { ws, k: 'store' }); if (on === false) return json({ error: 'The Store is not part of your plan. Upgrade in Settings → Plan & billing.' }, 402); }
 
     if (b.action === 'sheet') {
       const id = String(b.url ?? '').match(/\/spreadsheets\/d\/([a-zA-Z0-9_-]{20,100})/)?.[1] ?? (/^[a-zA-Z0-9_-]{20,100}$/.test(String(b.url ?? '')) ? String(b.url) : '');

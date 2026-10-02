@@ -124,6 +124,7 @@ Deno.serve(async (req) => {
     if (!m) return json({ error: 'You do not have permission here.' }, 403);
     const admin = m.role === 'owner' || m.role === 'admin';
     const act = String(b.action ?? '');
+    { const { data: on } = await db.rpc('ws_feature', { ws, k: 'automation' }); if (on === false) return json({ error: 'Automation & n8n are not part of your plan. Upgrade in Settings → Plan & billing.' }, 402); }
 
     if (act === 'connect') {
       if (!admin) return json({ error: 'Only the owner or an admin can connect n8n.' }, 403);

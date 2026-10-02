@@ -111,6 +111,7 @@ Deno.serve(async (req) => {
     // ---- Broadcast batch: { bulk: [{ lead_id, params, preview }], template, language, broadcast_id } ----
     if (Array.isArray(b.bulk)) {
       if (!perm('broadcast')) return json({ error: 'Your access does not include bulk broadcasts — ask the owner.' }, 403);
+      const { data: camp } = await db.rpc('ws_feature', { ws, k: 'campaigns' }); if (camp === false) return json({ error: 'Campaigns are not part of your plan. Upgrade in Settings → Plan & billing.' }, 402);
       if (!b.template) return json({ error: 'Pick an approved template' }, 400);
       const items = b.bulk.slice(0, 50), ids = items.map((x: any) => String(x.lead_id)), ok = await visible(ids);
       const trow = await tplRow(ws, String(b.template));

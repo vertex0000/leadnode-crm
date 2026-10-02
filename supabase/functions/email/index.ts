@@ -179,6 +179,7 @@ Deno.serve(async (req) => {
       const { data: ax } = await db.rpc('member_access', { p_ws: ws, p_uid: u.user.id });
       const perm = (k: string) => admin || !ax || ax?.perms?.[k] !== false;
       if (!perm('email') || (Array.isArray(b.lead_ids) && b.lead_ids.length > 1 && !perm('broadcast'))) return json({ error: 'Your access does not include sending these emails — ask the owner.' }, 403);
+      if (Array.isArray(b.lead_ids) && b.lead_ids.length > 1) { const { data: camp } = await db.rpc('ws_feature', { ws, k: 'campaigns' }); if (camp === false) return json({ error: 'Email campaigns are not part of your plan. Upgrade in Settings → Plan & billing.' }, 402); }
       let ids = (Array.isArray(b.lead_ids) ? b.lead_ids : []).slice(0, 50).map(String);
       if (!admin && ax && ax.scope !== 'all') { const { data: vis } = await db.rpc('visible_lead_ids', { p_ws: ws, p_uid: u.user.id, p_ids: ids }); const ok = new Set((vis ?? []).map((x: any) => typeof x === 'string' ? x : x.visible_lead_ids)); ids = ids.filter((i) => ok.has(i)); }
       if (ax?.name) b.by = ax.name;
