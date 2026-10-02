@@ -1006,7 +1006,7 @@ body.no-sales [data-go="tasks"],body.no-sales [data-go="calls"],body.no-orders [
 .fam-ins>.head{display:none!important}.fam-ins #anTabs,.fam-ins #anRange{display:none!important}
 .fam-shared{margin:0 0 18px}.fam-head{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:14px}.fam-head h1{margin:2px 0 4px}.fam-head .sub{margin:0}.fam-r{display:flex;gap:8px;align-items:center}
 .ins-ks{display:grid;grid-template-columns:repeat(var(--n,8),minmax(0,1fr));gap:12px;margin-bottom:14px}
-@media (max-width:1500px){.ins-ks{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media (max-width:1500px){.ins-ks{grid-template-columns:repeat(var(--c,4),minmax(0,1fr))}}
 .ins-k{position:relative;padding:14px 14px 0;border-radius:14px;display:flex;flex-direction:column;gap:6px;min-width:0;overflow:hidden;transition:transform .2s,border-color .2s}.ins-k[data-go]{cursor:pointer}.ins-k[data-go]:hover{transform:translateY(-2px);border-color:color-mix(in srgb,var(--c) 45%,transparent)}
 .ins-kh{display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:700;color:var(--muted)}.ins-ki{width:28px;height:28px;border-radius:8px;display:grid;place-items:center;background:color-mix(in srgb,var(--c) 16%,transparent);color:var(--c);flex:none}.ins-ki .i{width:15px;height:15px}
 .ins-kv{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}.ins-kv b{font-size:24px;font-weight:800;letter-spacing:-.02em}.ins-k small{font-size:11.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -1068,7 +1068,7 @@ body.no-sales [data-go="tasks"],body.no-sales [data-go="calls"],body.no-orders [
 .sbtn>.locked-i{position:absolute;top:3px;right:3px;width:16px;height:16px;margin:0}.sbtn>.locked-i svg{width:10px;height:10px}.sbtn.locked,.fam-t.locked,#nav a.locked,.mbar .locked{opacity:.72}.fam-t.locked>.locked-i,#nav a.locked>.locked-i{display:inline-grid;margin-left:6px;vertical-align:-4px;width:18px;height:18px}.mbar .locked>.locked-i{position:absolute;top:2px;right:10px;width:16px;height:16px}.mbar [data-mb]{position:relative}
 .lk{max-width:620px;margin:40px auto;text-align:center;padding:34px 26px;border-radius:22px}.lk-i{width:64px;height:64px;margin:0 auto 14px;border-radius:18px;display:grid;place-items:center;background:color-mix(in srgb,#F59E0B 15%,transparent);color:#D97706}.lk-i svg{width:30px;height:30px;stroke:currentColor;fill:none;stroke-width:2}
 .lk h2{margin:0 0 6px;font-size:22px}.lk p{margin:0 auto 6px;color:var(--muted);max-width:480px}.lk-plans{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:16px 0 4px}.lk-plans span{padding:6px 12px;border-radius:999px;border:1px solid var(--line-2);font-weight:600;font-size:13px}.lk-plans span.cur{border-color:var(--blue-2);color:var(--blue-2)}
-.lk-b{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:18px}.lk-safe{margin-top:14px;font-size:12.5px;color:var(--muted)}
+.lk-b{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:18px}.ut-btns .ah-b{grid-template-columns:auto minmax(0,1fr) minmax(0,1fr) minmax(0,1fr)}.ut-btns .ah-b .ah-bx{grid-column:auto}.ut-grid.two{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:18px;align-items:start}.ut-pv{position:sticky;top:10px}.ut-pv .ah-prev-h{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}.ut-prev .lk{margin:0;max-width:none;padding:24px 18px}.ut-prev .lk h2{font-size:18px}@media (max-width:980px){.ut-grid.two{grid-template-columns:1fr}.ut-pv{position:static}}.lk p.lk-staff{margin-top:14px;font-weight:600;color:var(--text)}.lk p:empty{display:none}.lk-safe{margin-top:14px;font-size:12.5px;color:var(--muted)}
 .mod-row.is-lock{cursor:default;opacity:.75}.mod-lk{font-size:12px;font-weight:700;color:#D97706;white-space:nowrap}
 .fs-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 18px}.fs-list .mod-row{padding:9px 2px}.fs-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 2px;border-top:1px solid var(--line)}.fs-row b{display:block;font-size:13.5px}.fs-row small{font-size:12px;color:var(--muted)}.fs-row select,.fs-row .nvdd{flex:none;width:200px}.fs-list.one{grid-template-columns:1fr}
 .fs-def{font-size:11.5px;font-weight:700;padding:2px 8px;border-radius:999px}.fs-def.on{background:color-mix(in srgb,var(--green) 14%,transparent);color:var(--green)}.fs-def.off{background:color-mix(in srgb,var(--coral) 14%,transparent);color:var(--coral)}
@@ -7050,7 +7050,7 @@ function go(name) {
   if (location.hash !== '#' + want && !authInUrl()) history.replaceState(null, '', '#' + want);   // keep login/reset tokens until Supabase reads them
   const stale = staleViews.delete(name);
   if (name === 'pipeline') requestAnimationFrame(() => { sizeCanvas(); if (!view.fitted || stale) { renderPipeline(!view.fitted); } else applyView(); });
-  if (name === 'dashboard' && S.leads.length) renderDashboard(true);
+  if (name === 'dashboard' && (S.leads.length || stale)) renderDashboard(true);
   if (name === 'reports') renderReports(true);
   if (name === 'leads') renderLeads(true);
   if (name === 'team') { renderTeam(true); renderLogins(); }
@@ -7202,7 +7202,8 @@ function cmBars(rows, fmt, color) {
 function cmCols(rows, fmt) {
   if (!rows.length) return '<div class="cm-empty">No data</div>';
   const max = Math.max(1, ...rows.map(r => r.value));
-  return `<div class="wchart">${rows.map((r, i) => `<div class="wcol" data-tip="${esc(r.label)}: ${esc(fmt(r.value))}"><span class="v">${esc(fmt(r.value))}</span><div class="wbar" style="height:${Math.max(2, r.value / max * 100).toFixed(1)}%;--i:${i}"></div><span class="m">${esc(r.label)}</span></div>`).join('')}</div>`;
+  const n = rows.length, step = Math.ceil(n / 10), lab = i => i % step === 0 || i === n - 1, val = r => n <= 16 || (r.value && r.value === max);   // long ranges: fewer labels so they never overlap
+  return `<div class="wchart">${rows.map((r, i) => `<div class="wcol" data-tip="${esc(r.label)}: ${esc(fmt(r.value))}"><span class="v">${val(r) ? esc(fmt(r.value)) : ''}</span><div class="wbar" style="height:${Math.max(2, r.value / max * 100).toFixed(1)}%;--i:${i}"></div><span class="m">${lab(i) ? esc(r.label) : ''}</span></div>`).join('')}</div>`;
 }
 const cmK = (label, value, sub, tone) => `<div class="cm-k glass"><span>${esc(label)}</span><b ${tone ? `style="color:${tone}"` : ''}>${value}</b>${sub ? `<small>${sub}</small>` : ''}</div>`;
 const cmStBadge = s2 => `<span class="tp-st ${ordCls(s2)}"><i></i>${esc(s2)}</span>`;
@@ -7733,7 +7734,7 @@ function renderInsights(anim) {
   if (stale) ins.push(['bad', `${stale} lead${stale > 1 ? 's' : ''} going cold`, 'No contact for 3+ days. A quick WhatsApp today can save them.']);
   const cr = typeof campaignRows === 'function' ? campaignRows().filter(r => r.wa && r.sent >= 5 && r.readR != null && r.readR < 0.4) : []; if (cr.length) ins.push(['warn', `${cr.length} broadcast${cr.length > 1 ? 's' : ''} with low reads`, 'Retarget non-readers from Campaigns → History.']);
   const icon = { good: '▲', warn: '!', bad: '●' };
-  box.innerHTML = `<div class="ins-ks" style="--n:${K.length}">${K.map(insKpi).join('')}</div>
+  box.innerHTML = `<div class="ins-ks" style="--n:${K.length};--c:${K.length <= 5 ? K.length : K.length === 6 ? 3 : 4}">${K.map(insKpi).join('')}</div>
     <div class="ins-g">
       ${d.store ? `<div class="rcard glass ins-wide"><div class="cm-ch-h"><div><h3>Revenue & profit</h3><p class="sub muted">${esc(fmtDate(P.from))} – ${esc(fmtDate(P.to))}</p></div><div class="cm-seg">${[['day', 'Daily'], ['week', 'Weekly'], ['month', 'Monthly']].map(([k, n]) => `<button class="${INS.grain === k ? 'on' : ''}" data-insgrain="${k}">${n}</button>`).join('')}</div></div>
         <div class="ins-big"><div><b>${inr(rev)}</b><span><i style="background:var(--blue-2)"></i>Revenue</span></div><div><b>${inr(cmSum(cur, cmProfit))}</b><span><i style="background:var(--green)"></i>Net profit (${cmPct(cmSum(cur, cmProfit), rev)}%)</span></div></div>${cmTrend(cmSeries(cur, INS.grain), INS.grain)}</div>
@@ -7741,7 +7742,7 @@ function renderInsights(anim) {
       <div class="rcard glass"><h3>Leads by source</h3><p class="sub muted">This period</p>${cmDonut(Object.entries(srcs).sort((a, b) => b[1] - a[1]).slice(0, 6).map(([k, v], i) => ({ label: k, value: v, color: ['var(--blue-2)', '#A78BFA', 'var(--green)', '#F59E0B', 'var(--coral)', '#38BDF8'][i] })), String(nl.length), 'leads')}</div>`}
       <div class="rcard glass"><h3>Lead funnel</h3><p class="sub muted">Leads created in this period</p><div class="anfun">${[['New leads', nl.length], ['Worked on', worked.length], ['Won', wonN.length]].map(([l, v], i, a) => `<div class="anf"><div class="anf-bar" style="width:${a[0][1] ? Math.max(4, v / a[0][1] * 100) : 4}%"></div><span>${l}</span><b>${v}</b></div>`).join('')}</div>
         <p class="help" style="margin-top:10px">Lead → won: <b>${cmPct(wonN.length, nl.length)}%</b></p></div>
-      ${d.store ? `<div class="rcard glass"><h3>Top products</h3><p class="sub muted">By revenue</p>${cmBars(cmBySku(cur).slice(0, 5).map(r => ({ label: r.name, value: r.rev, sub: r.units + ' units' })), inrShort, 'var(--green)')}</div>` : `<div class="rcard glass"><h3>Leads by source</h3><p class="sub muted">Top sources</p>${cmBars(Object.entries(srcs).sort((a, b) => b[1] - a[1]).slice(0, 6).map(([k, v]) => ({ label: k, value: v })), v => String(v), '#A78BFA')}</div>`}
+      ${d.store ? `<div class="rcard glass"><h3>Top products</h3><p class="sub muted">By revenue</p>${cmBars(cmBySku(cur).slice(0, 5).map(r => ({ label: r.name, value: r.rev, sub: r.units + ' units' })), inrShort, 'var(--green)')}</div>` : `<div class="rcard glass"><h3>Leads by stage</h3><p class="sub muted">Where your leads are now</p>${cmBars(stages().map(st => ({ label: st, value: S.leads.filter(l => l.stage === st).length })).filter(r => r.value), v => String(v), '#A78BFA')}</div>`}
       <div class="rcard glass"><h3>AI insights</h3><p class="sub muted">What to do next</p><div class="insights">${ins.slice(0, 4).map(([k, h, tx]) => `<div class="ins ${k}"><span class="ii">${icon[k]}</span><div><b>${esc(h)}</b><p>${esc(tx)}</p></div></div>`).join('') || '<p class="muted">Everything looks healthy for this period.</p>'}</div></div>
     </div>`;
   stagger(box, anim);
@@ -7768,7 +7769,7 @@ function renderInMarketing(anim) {
     { label: 'Emails sent', ic: INS_IC.mail, color: 'var(--blue-2)', value: mails.length, sub: 'From campaigns and the CRM', spark: insBucket(P.days, dd => mails.filter(a => dOnly(a.dateTime) === dd).length) },
   ];
   const cmpHtml = typeof campaignCompareHTML === 'function' ? campaignCompareHTML() : '';
-  box.innerHTML = `<div class="ins-ks" style="--n:${K.length}">${K.map(insKpi).join('')}</div>
+  box.innerHTML = `<div class="ins-ks" style="--n:${K.length};--c:${K.length <= 5 ? K.length : K.length === 6 ? 3 : 4}">${K.map(insKpi).join('')}</div>
     <div class="ins-g">
       <div class="rcard glass ins-wide"><div class="cm-ch-h"><div><h3>Spend by campaign</h3><p class="sub muted">From Ads Manager → Spend & ROAS</p></div><button class="btn sm" data-goads="spend">Open Ads Manager →</button></div>${Object.keys(byC).length ? cmBars(Object.values(byC).sort((a, b) => b.spend - a.spend).slice(0, 8).map(r => ({ label: r.k, value: r.spend, sub: r.pur ? r.pur + ' purchases' : '' })), inrShort, '#EC4899') : '<div class="cm-empty">No ad spend in this period. Add it in Ads Manager → Spend & ROAS.</div>'}</div>
       <div class="rcard glass"><h3>Leads by source</h3><p class="sub muted">Where new leads came from</p>${cmBars(Object.entries(srcs).sort((a, b) => b[1] - a[1]).slice(0, 7).map(([k, v]) => ({ label: k, value: v, color: AD_SOURCES.includes(k) ? '#F59E0B' : '#A78BFA' })), v => String(v))}</div>
@@ -8215,6 +8216,46 @@ function settingsStatus() {
   set('conn', settings.url ? 'Connected (old Sheet mode)' : 'Not used — your data is in the cloud', settings.url ? 'ok' : 'off');
 }
 
+/* ================= Messages & buttons: client-facing words the platform team can change (Admin Console → Messages & buttons) =================
+   Add a new editable message: put it in UI_TEXTS (key, label, default) and show it with uiH(key, vars) / uiT(key, vars). Buttons: UI_BTN_DEF + uiBtnsHTML(). */
+const UI_TEXTS = [
+  { id: 'lock', title: 'Locked section (not in the plan)', fill: '{section} {about} {plan} {brand}', btns: 'lockBtns', items: [
+    ['lockTitle', 'Title', '{section} is not in your plan'],
+    ['lockSub', 'Line under the title', '{about}.'],
+    ['lockPlan', 'Plan line — when other plans include it', 'You are on **{plan}**. Upgrade to unlock it:'],
+    ['lockNone', 'Plan line — when no plan includes it', 'Contact us to switch it on.'],
+    ['lockStaff', 'Shown to team members who can not upgrade', 'Ask the owner of this workspace to upgrade.'],
+    ['lockSafe', 'Small note at the bottom', 'Nothing is deleted — your data comes back as soon as the section is switched on.'],
+    ['lockMod', 'Label in Settings → Modules', '🔒 Not in your plan']] },
+  { id: 'sub', title: 'Plan ending & expired banner', fill: '{plan} {when} {brand}', items: [
+    ['subEnding', 'Paid plan — 7 days before the end', '**{plan} ends {when}.** Renew to keep everything running.'],
+    ['subTrialEnding', 'Trial — 7 days before the end', '**Free trial ends {when}.** Choose a plan to keep everything running.'],
+    ['subTrialOver', 'Trial has ended', '**Your free trial has ended.**'],
+    ['subExpired', 'Paid plan has ended', '**Your plan has expired.**'],
+    ['subPaused', 'Suspended by the platform team', '**Your workspace is paused.**'],
+    ['subSafe', 'Second line when view-only', 'Your data is safe — the workspace is view-only until you renew.'],
+    ['subContact', 'Settings → Plan & billing — bottom line', 'To change or renew your plan, contact us.']] },
+  { id: 'ro', title: 'View-only bar', fill: '{brand}', items: [['roBar', 'Message', '**View only:** you can see this workspace but not change it. Ask the owner for edit access.']] },
+  { id: 'trial', title: 'Free-trial box on the pricing cards', fill: '{days}', items: [['trialTitle', 'Title', '✓ Free trial'], ['trialLine', 'Line', '**{days} days** free — try everything'], ['trialSmall', 'Small line', 'No card needed']] },
+];
+const UI_BTN_DEF = { lockBtns: [{ on: true, label: 'See plans', action: 'pricing', value: '', show: 'owner', style: 'primary' }, { on: true, label: 'Ask on WhatsApp', action: 'whatsapp', value: 'Hi, I want {section} in {brand} for {business}', show: 'owner', style: 'light' }] };
+const UI_WHO = [['all', 'Everyone'], ['owner', 'Owner & admins'], ['staff', 'Team members & view-only']];
+const UI_DEF = {}; UI_TEXTS.forEach(g => g.items.forEach(([k, , d]) => { UI_DEF[k] = d; }));
+function uiCfg() { try { const c = JSON.parse((PLAT.s || {}).uiTextJson || '{}'); return c && typeof c === 'object' ? c : {}; } catch (e) { return {}; } }
+const uiRaw = (k, c) => { c = c || uiCfg(); return c[k] != null && String(c[k]).trim() !== '' ? String(c[k]) : UI_DEF[k] || ''; };
+/** plain text with {fill-ins} */
+const uiT = (k, vars, c) => uiRaw(k, c).replace(/\*\*/g, '').replace(/\{(\w+)\}/g, (m, v) => vars && vars[v] != null ? vars[v] : '');
+/** safe HTML: **bold** + {fill-ins} */
+const uiH = (k, vars, c) => esc(uiRaw(k, c)).replace(/\{(\w+)\}/g, (m, v) => vars && vars[v] != null ? esc(vars[v]) : '').replace(/\*\*([^*]+)\*\*/g, '<b>$1</b>');
+const uiBtns = (key, c) => { c = c || uiCfg(); return Array.isArray(c[key]) ? c[key] : UI_BTN_DEF[key] || []; };
+const UIB = { list: [] };
+/** buttons for this viewer; clicks run the same actions as the Home header buttons */
+function uiBtnsHTML(key, vars, c, as) {
+  const who = as || (cloud && canAdmin() ? 'owner' : 'staff'), L = uiBtns(key, c).filter(b => b.on !== false && b.label && (b.show === 'all' || b.show === who || (!cloud && b.show === 'owner')));
+  return L.map(b => { const i = UIB.list.push({ action: b.action, value: String(b.value || '').replace(/\{(\w+)\}/g, (m, v) => vars && vars[v] != null ? vars[v] : '') }) - 1; return `<button type="button" class="btn ${b.style === 'primary' ? 'primary' : b.style === 'outline' ? 'ghost' : ''}" data-uib="${i}">${esc(b.label)}</button>`; }).join('');
+}
+document.addEventListener('click', e => { const b = e.target.closest('[data-uib]'); if (!b || b.closest('.ut-prev')) return; const x = UIB.list[+b.dataset.uib]; if (x) heroAct(x); });
+
 /* ================= sections: what each client can use =================
    1) plan defaults + 2) per-client override — both set in Admin Console, checked by the database (my_sections / ws_feature)
    3) the client's owner can hide more for their team (Modules) — never switch on what the plan does not include */
@@ -8255,23 +8296,25 @@ function featApply() {
   featSync(); const v = activeView();
   if (v === 'locked' && LOCK.v && !featLocked(LOCK.v)) go(LOCK.v); else if (v !== 'locked' && featLocked(v)) go(v); else if (v === 'locked' && LOCK.v) renderLocked(LOCK.v);
 }
-function renderLocked(v) {
+function lockedHTML(v, c, as) {
   const k = (VIEW_FEATS[v] || []).find(featOff) || (VIEW_FEATS[v] || [])[0], f = FEATURES.find(x => x[0] === k) || ['', 'This section', ''];
-  const cur = (SUB.me && SUB.me.plan_id) || '', plans = pricePlans().filter(p => !(p.sections && p.sections[k] === false)), sup = PLAT.s.supportPhone || '', boss = cloud && canAdmin();
-  const wa = sup ? `<a class="btn" href="https://wa.me/${esc(sup)}?text=${encodeURIComponent(`Hi, I want ${f[1]} in ${brand().brandName} for ${AUTH.wsName || 'my business'}`)}" target="_blank" rel="noopener">Ask on WhatsApp</a>` : '';
-  $('#lockedBody').innerHTML = `<div class="lk glass"><div class="lk-i">${LOCK_IC}</div><h2>${esc(f[1])} is not in your plan</h2><p>${esc(f[2])}.</p>
-    <p>${SUB.me && SUB.me.plan_name ? `You are on <b>${esc(SUB.me.plan_name)}</b>. ` : ''}${plans.length ? 'Upgrade to unlock it:' : 'Contact us to switch it on.'}</p>
-    ${plans.length ? `<div class="lk-plans">${plans.map(p => `<span class="${p.id === cur ? 'cur' : ''}">${esc(p.name)}</span>`).join('')}</div>` : ''}
-    <div class="lk-b">${boss ? '<button class="btn primary" data-lkplans>See plans</button>' : '<span class="muted">Ask the owner of this workspace to upgrade.</span>'}${boss ? wa : ''}<button class="btn" data-go="home">Go to Home</button></div>
-    <div class="lk-safe">Nothing is deleted — your data comes back as soon as the section is switched on.</div></div>`;
-  const b = $('#lockedBody [data-lkplans]'); if (b) b.onclick = () => { try { openPricing(); } catch (e) { } };
+  const cur = (SUB.me && SUB.me.plan_id) || '', plans = pricePlans().filter(p => p.id !== cur && !(p.sections && p.sections[k] === false)), boss = as ? as === 'owner' : cloud && canAdmin();
+  const vars = { section: f[1], about: f[2], plan: (SUB.me && SUB.me.plan_name) || 'your plan', brand: brand().brandName, business: AUTH.wsName || 'my business' };
+  const btns = uiBtnsHTML('lockBtns', vars, c, as);
+  return `<div class="lk glass"><div class="lk-i">${LOCK_IC}</div><h2>${uiH('lockTitle', vars, c)}</h2><p>${uiH('lockSub', vars, c)}</p>
+    <p>${plans.length ? (SUB.me && SUB.me.plan_name ? uiH('lockPlan', vars, c) : '') : uiH('lockNone', vars, c)}</p>
+    ${plans.length ? `<div class="lk-plans">${plans.map(p => `<span>${esc(p.name)}</span>`).join('')}</div>` : ''}
+    ${boss ? '' : `<p class="lk-staff">${uiH('lockStaff', vars, c)}</p>`}
+    ${btns ? `<div class="lk-b">${btns}</div>` : ''}
+    <div class="lk-safe">${uiH('lockSafe', vars, c)}</div></div>`;
 }
+function renderLocked(v) { UIB.list = []; $('#lockedBody').innerHTML = lockedHTML(v); }
 function openModules() {
   const m = modulesCfg(), can = demo || (cloud && canAdmin());
   $('#stageBox').innerHTML = `<div class="m-head"><h2>Modules</h2><button class="ibtn" data-close>${I.x}</button></div>
     <p class="help" style="margin-top:0">Pick what kind of business this is — ${esc(brand().brandName)} shows only the sections your team needs. You can switch any section back on later. Nothing is deleted. Always on: ${CORE_SECTIONS}.</p>
     <div class="mod-types">${BIZ_TYPES.map(([k, n, d]) => `<button type="button" class="mod-type ${m.type === k ? 'on' : ''}" data-modtype="${k}" ${can ? '' : 'disabled'}><b>${n}</b><small>${d}</small></button>`).join('')}</div>
-    <div class="mod-list">${FEATURES.map(([k, n, d]) => featOff(k) ? `<div class="mod-row is-lock"><div><b>${n}</b><small class="muted">${d}</small></div><span class="mod-lk">🔒 Not in your plan</span></div>`
+    <div class="mod-list">${FEATURES.map(([k, n, d]) => featOff(k) ? `<div class="mod-row is-lock"><div><b>${n}</b><small class="muted">${d}</small></div><span class="mod-lk">${esc(uiT('lockMod'))}</span></div>`
       : `<label class="mod-row"><div><b>${n}</b><small class="muted">${d}</small></div><span class="sw"><input type="checkbox" data-mod="${k}" ${m[k] !== false ? 'checked' : ''} ${can ? '' : 'disabled'}><i></i></span></label>`).join('')}</div>
     <div class="m-foot"><div class="grow"></div><button class="btn" data-close>${can ? 'Cancel' : 'Close'}</button>${can ? '<button class="btn primary" id="modSave">Save</button>' : ''}</div>`;
   const box = $('#stageBox');
@@ -8362,7 +8405,7 @@ function moreSheet() {
 /* ================= platform admin console ================= */
 /* ================= platform owner: Admin Console v2 (clients, plans, payments, team, brand, audit) ================= */
 const ADM2 = { tab: store.get('nv.admTab') || 'clients', rows: null, at: 0, q: '', f: '', plans: null, pays: null, team: null, audit: null, err: '' };
-const ADM_TABS = [['clients', 'Clients', ['super', 'admin', 'support', 'finance']], ['plans', 'Plans & pricing', ['super', 'admin', 'finance']], ['payments', 'Payments', ['super', 'admin', 'finance']], ['home', 'Home page', ['super', 'admin']], ['team', 'Platform team', ['super', 'admin']], ['brand', 'Settings', ['super', 'admin']], ['audit', 'Audit log', ['super', 'admin']]];
+const ADM_TABS = [['clients', 'Clients', ['super', 'admin', 'support', 'finance']], ['plans', 'Plans & pricing', ['super', 'admin', 'finance']], ['payments', 'Payments', ['super', 'admin', 'finance']], ['home', 'Home page', ['super', 'admin']], ['team', 'Platform team', ['super', 'admin']], ['texts', 'Messages & buttons', ['super', 'admin']], ['brand', 'Settings', ['super', 'admin']], ['audit', 'Audit log', ['super', 'admin']]];
 const PLAT_ROLES = [['super', 'Super admin', 'Everything, including the platform team'], ['admin', 'Admin', 'Clients, plans, payments, brand'], ['support', 'Support', 'See clients and open their data (read-only)'], ['finance', 'Finance', 'Subscriptions and payments']];
 const SUB_ST = { trial: ['Trial', 'wait'], active: ['Active', 'ok'], past_due: ['Payment due', 'wait'], suspended: ['Suspended', 'bad'], cancelled: ['Cancelled', 'bad'], free: ['Free', ''] };
 const admCan = (...roles) => cloud && roles.includes(AUTH.platRole);
@@ -8388,7 +8431,8 @@ async function renderAdmin(anim) {
   box.innerHTML = '<div class="rcard glass"><div class="loader"><div class="spin"></div>Loading…</div></div>';
   await admLoad();
   if (ADM2.err) { box.innerHTML = `<div class="tp-empty glass"><b>Could not load</b><p class="muted">${esc(ADM2.err)}</p></div>`; return; }
-  box.innerHTML = ({ clients: admClients, plans: admPlans, payments: admPayments, home: admHome, team: admTeam, brand: admBrand, audit: admAudit }[ADM2.tab] || admClients)();
+  box.innerHTML = ({ clients: admClients, plans: admPlans, payments: admPayments, home: admHome, team: admTeam, texts: admTexts, brand: admBrand, audit: admAudit }[ADM2.tab] || admClients)();
+  if (ADM2.tab === 'texts') utPrev();
   stagger(box, anim);
 }
 function admClients() {
@@ -8531,6 +8575,55 @@ function admTeam() {
       <td>${t.has_account ? '<span class="adm-ok">✓ Signed up</span>' : '<span class="muted">Not signed up yet — ask them to create an account with this email</span>'}</td><td class="muted">${esc(t.added_by || '—')}</td><td class="muted">${esc(fmtDate(String(t.created_at).slice(0, 10)))}</td><td>${!lock ? `<button class="btn sm danger" data-tmdel="${esc(t.email)}">Remove</button>` : ''}</td></tr>`; }).join('')}</tbody></table></div>
     <p class="help">Tip: ask every team member to use a strong password. Two-step login (authenticator app) is the next security step.</p></div>`;
 }
+const UT = { c: null };
+const UT_IC = '<svg class="i" viewBox="0 0 24 24"><path d="M4 5h16v11H8l-4 4z"/><path d="M8 9h8M8 12h5"/></svg>';
+function admTexts() {
+  const c = UT.c || (UT.c = JSON.parse(JSON.stringify(uiCfg()))), open = store.get('nv.admAcc3') || 'ut-lock';
+  return `<div class="adm-ph2 glass"><div><b>Messages & buttons</b><p class="muted">The words and buttons clients see on these screens. Change them here — no code needed. Leave a box empty to use the default (shown in grey). Words in {curly brackets} are filled in automatically, **two stars** make text bold.</p></div></div>
+    <div class="acc-list ut-wrap" data-acckey="nv.admAcc3" style="margin-top:14px">${UI_TEXTS.map(g => { const n = g.items.filter(([k]) => String(c[k] || '').trim()).length + (g.btns && Array.isArray(c[g.btns]) ? 1 : 0);
+      return accItem('ut-' + g.id, { title: g.title, icon: UT_IC, color: '#0EA5E9', dot: n ? 'ok' : '', status: n ? `${n} changed` : 'Default words', open: open === 'ut-' + g.id,
+        body: `${g.fill ? `<p class="help" style="margin-top:0">Fill-ins: <code>${esc(g.fill)}</code></p>` : ''}<div class="ut-grid ${g.id === 'lock' ? 'two' : ''}"><div>
+          ${g.items.map(([k, l, d]) => `<div class="field"><label>${esc(l)}</label><input class="input" data-ut="${k}" maxlength="300" placeholder="${esc(d)}" value="${esc(c[k] || '')}"></div>`).join('')}
+          ${g.btns ? `<div class="ah-sec">Buttons</div><div class="ut-btns" data-utbtns="${g.btns}">${utBtnRows(g.btns)}</div><div class="cf-foot" style="border:0;padding:0;margin-top:8px"><button type="button" class="btn sm" data-utadd="${g.btns}">+ Add button</button><button type="button" class="btn sm" data-utbdef="${g.btns}">Default buttons</button></div>` : ''}</div>
+          ${g.id === 'lock' ? `<div class="ut-pv"><div class="ah-prev-h"><b>Live preview</b><select class="input sm" id="utAs" style="width:auto"><option value="owner">As owner / admin</option><option value="staff">As team member</option></select></div><div class="ut-prev" id="utPrev"></div></div>` : ''}</div>
+          <div class="cf-foot" style="border:0;padding:0;margin-top:10px"><div class="grow"></div><button type="button" class="btn sm" data-utreset="${g.id}">Reset this group to default</button></div>` }); }).join('')}</div>
+    <div class="cf-foot"><span class="cf-safe">Clients and the login page can read these words — never put passwords or API keys here.</span><div class="grow"></div><button class="btn primary" id="utSave">Save messages</button></div>`;
+}
+function utBtnRows(key) {
+  const B = (UT.c && Array.isArray(UT.c[key]) ? UT.c[key] : UI_BTN_DEF[key] || []), opt = (arr, v) => arr.map(([k, n]) => `<option value="${k}" ${k === v ? 'selected' : ''}>${esc(n)}</option>`).join('');
+  return B.map((b, i) => { const a = HERO_ACTIONS.find(x => x[0] === b.action) || HERO_ACTIONS[0];
+    const val = b.action === 'page' ? `<select class="input" data-k="value">${opt(HERO_PAGES, b.value || 'leads')}</select>` : a[2] ? `<input class="input" data-k="value" placeholder="${esc(a[2])}" value="${esc(b.value || '')}">` : '<span class="muted ah-nv">Nothing to fill</span>';
+    return `<div class="ah-b glass" data-i="${i}"><span class="sw" title="Show this button"><input type="checkbox" data-k="on" ${b.on !== false ? 'checked' : ''}><i></i></span>
+      <div class="field"><label>Button name</label><input class="input" data-k="label" maxlength="40" value="${esc(b.label || '')}"></div>
+      <div class="field"><label>When clicked</label><select class="input" data-k="action">${opt(HERO_ACTIONS.filter(x => x[0] !== 'signup' && x[0] !== 'demo').map(x => [x[0], x[1]]), b.action)}</select></div>
+      <div class="field"><label>Link / message</label>${val}</div>
+      <div class="field"><label>Who sees it</label><select class="input" data-k="show">${opt(UI_WHO, b.show || 'all')}</select></div>
+      <div class="field"><label>Style</label><select class="input" data-k="style">${opt([['primary', 'Main (dark)'], ['light', 'Light'], ['outline', 'Outline']], b.style || 'light')}</select></div>
+      <div class="ah-bx"><button type="button" class="ibtn" data-utmove="-1" title="Move up" ${i ? '' : 'disabled'}>↑</button><button type="button" class="ibtn" data-utdel title="Remove">${I.x}</button></div></div>`; }).join('') || '<p class="help">No buttons — press “+ Add button”.</p>';
+}
+function utRead() {
+  if (!UT.c) UT.c = JSON.parse(JSON.stringify(uiCfg()));
+  $$('#v-admin [data-ut]').forEach(x => { const v = x.value.trim(); if (v) UT.c[x.dataset.ut] = v; else delete UT.c[x.dataset.ut]; });
+  $$('#v-admin [data-utbtns]').forEach(box => { const rows = box.querySelectorAll('.ah-b'); if (!rows.length && !Array.isArray(UT.c[box.dataset.utbtns])) return;
+    UT.c[box.dataset.utbtns] = [...rows].map(r => { const g = k => r.querySelector(`[data-k="${k}"]`); return { on: g('on').checked, label: g('label').value.trim(), action: g('action').value, value: g('value') ? g('value').value.trim() : '', show: g('show').value, style: g('style').value }; }); });
+  return UT.c;
+}
+function utPrev() { const b = $('#utPrev'); if (b) { UIB.list = []; b.innerHTML = lockedHTML('ads', utRead(), ($('#utAs') || {}).value || 'owner'); } }
+(function () {
+  const v = $('#v-admin'); if (!v) return;
+  v.addEventListener('input', e => { if (e.target.closest('.ut-wrap')) { utRead(); utPrev(); } });
+  v.addEventListener('change', e => { if (!e.target.closest('.ut-wrap')) return; if (e.target.matches('[data-utbtns] [data-k="action"]')) { const box = e.target.closest('[data-utbtns]'); utRead(); UT.c[box.dataset.utbtns][+e.target.closest('.ah-b').dataset.i].value = ''; box.innerHTML = utBtnRows(box.dataset.utbtns); } else utRead(); utPrev(); });
+  v.addEventListener('click', async e => {
+    const t = e.target, box = k => $(`#v-admin [data-utbtns="${k}"]`);
+    const ad = t.closest('[data-utadd]'); if (ad) { const k = ad.dataset.utadd; utRead(); const B = UT.c[k] = Array.isArray(UT.c[k]) ? UT.c[k] : JSON.parse(JSON.stringify(UI_BTN_DEF[k] || [])); if (B.length >= 4) return toast('Up to 4 buttons', true); B.push({ on: true, label: 'New button', action: 'url', value: '', show: 'all', style: 'light' }); box(k).innerHTML = utBtnRows(k); utPrev(); return; }
+    const bd = t.closest('[data-utbdef]'); if (bd) { const k = bd.dataset.utbdef; utRead(); delete UT.c[k]; box(k).innerHTML = utBtnRows(k); utPrev(); return; }
+    const dl = t.closest('[data-utdel]'); if (dl) { const k = dl.closest('[data-utbtns]').dataset.utbtns; utRead(); UT.c[k].splice(+dl.closest('.ah-b').dataset.i, 1); box(k).innerHTML = utBtnRows(k); utPrev(); return; }
+    const mv = t.closest('[data-utmove]'); if (mv) { const k = mv.closest('[data-utbtns]').dataset.utbtns; utRead(); const B = UT.c[k], i = +mv.closest('.ah-b').dataset.i; [B[i - 1], B[i]] = [B[i], B[i - 1]]; box(k).innerHTML = utBtnRows(k); utPrev(); return; }
+    const rs = t.closest('[data-utreset]'); if (rs) { const g = UI_TEXTS.find(x => x.id === rs.dataset.utreset); utRead(); g.items.forEach(([k]) => { delete UT.c[k]; }); if (g.btns) delete UT.c[g.btns]; store.set('nv.admAcc3', 'ut-' + g.id); renderAdmin(); toast('Back to the default words — press Save to publish'); return; }
+    if (t.id === 'utSave') { const c = utRead(); for (const k of Object.keys(UI_BTN_DEF)) if (Array.isArray(c[k])) { if (c[k].some(b => b.on !== false && !b.label)) return toast('Give every button a name', true); if (c[k].some(b => b.on !== false && b.action === 'url' && !/^(https?:\/\/|#)/i.test(b.value || ''))) return toast('Links must start with https://', true); }
+      t.disabled = true; try { await platSave('uiTextJson', JSON.stringify(c)); subApply(); featApply(); toast('✓ Messages saved — clients see them now'); renderAdmin(); } catch (er) { toast(er.message, true); } t.disabled = false; }
+  });
+})();
 function admBrand() {
   const s = PLAT.s, b = brand(), open = store.get('nv.admAcc2') || 'b-brand', logo = safeUrl(b.logoUrl);
   const f = (id, label, val, extra) => `<div class="field"><label>${label}</label><input class="input" id="${id}" value="${esc(val || '')}" ${extra || ''}></div>`;
@@ -8637,11 +8730,13 @@ function subApply() {
   const locked = !!(m && m.state === 'locked' && AUTH.role !== 'platform');
   document.body.classList.toggle('ro', !!(cloud && (AUTH.role === 'client' || AUTH.role === 'platform' || locked)));
   document.body.classList.toggle('sub-locked', locked); try { pricingBtnSync(); } catch (e) { }
+  { const rb = $('#roBanner .grow'); if (rb) rb.innerHTML = uiH('roBar', { brand: brand().brandName }); }
   if (!m || AUTH.role === 'platform' || m.status === 'free') return;
   const d = m.days_left, sup = m.support || {}, renew = sup.renewLink ? `<a class="btn sm primary" href="${esc(sup.renewLink)}" target="_blank" rel="noopener">Renew now</a>` : '', wa = sup.supportPhone ? `<a class="btn sm" href="https://wa.me/${esc(sup.supportPhone)}?text=${encodeURIComponent('Hi, I want to renew my ' + brand().brandName + ' plan for ' + (AUTH.wsName || ''))}" target="_blank" rel="noopener">WhatsApp us</a>` : '';
   let msg = '';
-  if (locked) msg = `<b>${m.status === 'suspended' ? 'Your workspace is paused.' : m.status === 'trial' ? 'Your free trial has ended.' : 'Your plan has expired.'}</b> Your data is safe — the workspace is view-only until you renew.`;
-  else if (d !== null && d <= 7) msg = `<b>${m.status === 'trial' ? 'Free trial' : (m.plan_name || 'Your plan')} ends ${d <= 0 ? 'today' : d === 1 ? 'tomorrow' : 'in ' + d + ' days'}.</b> Renew to keep everything running.`;
+  const uv = { plan: m.plan_name || 'Your plan', when: d === null ? '' : d <= 0 ? 'today' : d === 1 ? 'tomorrow' : 'in ' + d + ' days', brand: brand().brandName };
+  if (locked) msg = `${uiH(m.status === 'suspended' ? 'subPaused' : m.status === 'trial' ? 'subTrialOver' : 'subExpired', uv)} ${uiH('subSafe', uv)}`;
+  else if (d !== null && d <= 7) msg = uiH(m.status === 'trial' ? 'subTrialEnding' : 'subEnding', uv);
   if (!msg) return;
   const b = document.createElement('div'); b.id = 'subBanner'; b.className = 'banner sub-banner ' + (locked ? 'bad' : 'warn');
   b.innerHTML = `<svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg><div class="grow">${msg}</div><button class="btn sm" data-planopen>See plan</button>${wa}${renew}`;
@@ -8659,7 +8754,7 @@ function planBody() {
     ${(m.features || []).length ? `<ul class="pl-f">${m.features.map(f => `<li>${esc(f)}</li>`).join('')}</ul>` : ''}
     ${FEAT.on ? `<div class="pl-sec"><b style="font-size:13px">Sections in your plan</b><div class="fs-chips">${FEATURES.map(([k, n]) => `<span class="${featOff(k) ? 'off' : ''}" title="${featOff(k) ? 'Not in your plan' : 'Included'}">${featOff(k) ? '🔒 ' : '✓ '}${esc(n)}</span>`).join('')}</div><p class="help" style="margin:6px 0 0">Always included: ${CORE_SECTIONS}.</p></div>` : ''}
     ${(m.payments || []).length ? `<div class="pl-pay"><b>Payments</b>${m.payments.map(p => `<span>${esc(fmtDate(String(p.paid_at).slice(0, 10)))} · ${inr(p.amount)} · ${esc(p.method || '')}${p.period_end ? ' · until ' + esc(fmtDate(String(p.period_end).slice(0, 10))) : ''}</span>`).join('')}</div>` : ''}
-    <div class="cf-foot"><span class="cf-safe">To change or renew your plan, contact us.</span><div class="grow"></div>${sup.supportEmail ? `<a class="btn sm" href="mailto:${esc(sup.supportEmail)}">Email</a>` : ''}${sup.supportPhone ? `<a class="btn sm" href="https://wa.me/${esc(sup.supportPhone)}" target="_blank" rel="noopener">WhatsApp</a>` : ''}${sup.renewLink ? `<a class="btn sm primary" href="${esc(sup.renewLink)}" target="_blank" rel="noopener">Renew / upgrade</a>` : ''}</div>`;
+    <div class="cf-foot"><span class="cf-safe">${uiH('subContact', { brand: brand().brandName })}</span><div class="grow"></div>${sup.supportEmail ? `<a class="btn sm" href="mailto:${esc(sup.supportEmail)}">Email</a>` : ''}${sup.supportPhone ? `<a class="btn sm" href="https://wa.me/${esc(sup.supportPhone)}" target="_blank" rel="noopener">WhatsApp</a>` : ''}${sup.renewLink ? `<a class="btn sm primary" href="${esc(sup.renewLink)}" target="_blank" rel="noopener">Renew / upgrade</a>` : ''}</div>`;
 }
 document.addEventListener('change', e => {
   if (e.target.id === 'hsGuide') { if (e.target.checked) store.del('nv.guideOff'); else store.set('nv.guideOff', 1); guideFabSync(); try { settingsStatus(); } catch (er) { } toast(e.target.checked ? 'Guide button is on' : 'Guide button hidden — turn it on again here any time'); }
@@ -8753,7 +8848,7 @@ function pricingHTML(opt) {
       ${p.description ? `<p class="pr-d">${esc(p.description)}</p>` : ''}
       <div class="pr-p">${pr.big}${pr.small ? `<small>${pr.small}</small>` : ''}</div>
       ${pr.save > 0 ? `<div class="pr-sv">≈ ${inr(pr.month)} / month · save ${pr.save}%</div>` : anySave && !opt.mini ? '<div class="pr-sv pr-ghost" aria-hidden="true">≈ ₹0 / month · save 0%</div>' : ''}
-      ${p.offer_price !== null && p.offer_price !== undefined && p.offer_price !== '' && +p.offer_months ? `<div class="pr-off"><span class="pr-off-t">🎁 ${esc(p.offer_label || 'Intro offer')}</span><div><b>${+p.offer_price ? inr(p.offer_price) : 'Free'}</b> for the first ${+p.offer_months === 1 ? 'month' : esc(p.offer_months) + ' months'}</div>${+p.price && !p.price_label ? `<small>then ${inr(p.price)}${p.period === 'year' ? ' / year' : p.period === 'one_time' ? ' one time' : ' / month'}</small>` : ''}</div>` : anyOff && !opt.mini ? `<div class="pr-off pr-trial"><span class="pr-off-t">✓ Free trial</span><div><b>${esc(+PLAT.s.trialDays || 14)} days</b> free — try everything</div><small>No card needed</small></div>` : ''}
+      ${p.offer_price !== null && p.offer_price !== undefined && p.offer_price !== '' && +p.offer_months ? `<div class="pr-off"><span class="pr-off-t">🎁 ${esc(p.offer_label || 'Intro offer')}</span><div><b>${+p.offer_price ? inr(p.offer_price) : 'Free'}</b> for the first ${+p.offer_months === 1 ? 'month' : esc(p.offer_months) + ' months'}</div>${+p.price && !p.price_label ? `<small>then ${inr(p.price)}${p.period === 'year' ? ' / year' : p.period === 'one_time' ? ' one time' : ' / month'}</small>` : ''}</div>` : anyOff && !opt.mini ? `<div class="pr-off pr-trial"><span class="pr-off-t">${uiH('trialTitle')}</span><div>${uiH('trialLine', { days: String(+PLAT.s.trialDays || 14) })}</div><small>${uiH('trialSmall')}</small></div>` : ''}
       <div class="pr-in">${esc(c.included || "What's included")}</div>
       <ul>${lim.concat(p.features || []).map(f => `<li><i>✓</i>${esc(f)}</li>`).join('')}</ul>
       ${opt.admin ? `<div class="pr-adm"><button class="btn sm" data-admplan="${esc(p.id)}">✎ Edit</button></div>` : `<button type="button" class="pr-b" data-prplan="${esc(p.id)}" ${cur && !trialCur ? 'disabled' : ''}>${esc(cta)}</button>`}</div>`; };
