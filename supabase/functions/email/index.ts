@@ -60,6 +60,24 @@ async function brevoSend(acc: any, to: { email: string; name: string }, subject:
   return r.ok ? { ok: true, id: out.messageId } : { ok: false, error: out.message || `Brevo error ${r.status}` };
 }
 
+/** Auto welcome email to one lead. Only the server can call this (header x-cron-secret). */
+async function systemSend(req: Request, b: any) {
+  const { data: sec } = await db.from('app_config').select('value').eq('key', 'cron_secret').maybeSingle();
+  if (!sec?.value || req.headers.get('x-cron-secret') !== sec.value) return json({ error: 'Forbidden' }, 403);
+  const ws = String(b.workspace_id ?? ''), leadId = String(b.lead_id ?? '');
+  const { data: wst } = await db.rpc('ws_state', { ws }); if (wst === 'locked') return json({ ok: false, error: 'workspace is view-only' });
+  const { data: acc } = await db.from('email_accounts').select('*').eq('workspace_id', ws).maybeSingle(); if (!acc) return json({ ok: false, error: 'Email not connected' });
+  const { data: l } = await db.from('leads').select('lead_id, name, email, business_name, city, email_opt_out').eq('workspace_id', ws).eq('lead_id', leadId).maybeSingle();
+  if (!l) return json({ ok: false, error: 'Lead not found' }); if (l.email_opt_out) return json({ ok: false, skipped: true, error: 'Unsubscribed' });
+  if (!okEmail(String(l.email ?? ''))) return json({ ok: false, skipped: true, error: 'No email' });
+  const subject = fill(String(b.subject || 'Thanks for your enquiry'), l).slice(0, 150), body = fill(String(b.body || ''), l);
+  if (!body.trim()) return json({ ok: false, error: 'Empty email' });
+  const fromLabel = acc.from_name || acc.from_email, t = await unsubToken(ws, l.lead_id), page = `${SITE}/unsubscribe.html?u=${encodeURIComponent(t)}`, oneClick = `${FN_URL}?u=${encodeURIComponent(t)}`;
+  const r = await brevoSend(acc, { email: l.email, name: l.name || '' }, subject, wrap(toHtml(body), fromLabel, page), page, oneClick);
+  if (r.ok) await db.from('activities').insert({ workspace_id: ws, lead_id: l.lead_id, type: 'Email Sent', details: 'Welcome: ' + subject, done_by: 'Auto welcome' });
+  return json(r.ok ? { ok: true } : { ok: false, error: r.error });
+}
+
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: cors });
   const url = new URL(req.url);
@@ -67,6 +85,7 @@ Deno.serve(async (req) => {
   if (url.searchParams.get('u')) { const r = await unsubscribe(url.searchParams.get('u')!); return json(r, r.ok ? 200 : 400); }
   try {
     const b = await req.json();
+    if (b.action === 'system') return await systemSend(req, b);     // auto welcome email, called by the "alerts" function
     if (b.action === 'unsub') { const r = await unsubscribe(String(b.u ?? '')); return json(r, r.ok ? 200 : 400); }
 
     const ws = String(b.workspace_id ?? '');

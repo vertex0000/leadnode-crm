@@ -58,9 +58,23 @@ async function deliver(ws: string, cfg: any, kind: string, subject: string, line
   if (ch === 'whatsapp' || ch === 'both') res.push(await sendWa(ws, cfg.phones, cfg.brand, lines.join(' · ')));
   return res.join(' | ');
 }
+/** Auto welcome for new leads (Connections → Auto welcome): WhatsApp template / auto-reply + email, sent through wa-send and email */
+async function welcomeOne(ws: string, r: any, secret: string) {
+  const { data: s } = await db.from('settings').select('value').eq('workspace_id', ws).eq('key', 'welcomeJson').maybeSingle();
+  let c: any = {}; try { c = JSON.parse(s?.value || '{}'); } catch { /* empty */ }
+  const { data: u } = await db.from('app_config').select('value').eq('key', 'functions_url').maybeSingle();
+  const base = (u?.value || `${SB_URL.replace(/\/+$/, '')}/functions/v1`).replace(/\/+$/, '');
+  const call = async (fn: string, body: any) => { const x = await fetch(`${base}/${fn}`, { method: 'POST', headers: { 'Content-Type': 'application/json', 'x-cron-secret': secret }, body: JSON.stringify({ action: 'system', workspace_id: ws, lead_id: r.ref, ...body }) }).catch(() => null);
+    const j: any = x ? await x.json().catch(() => ({})) : {}; return j.ok ? `${fn} ok` : j.skipped ? `${fn} skipped (${j.error})` : `${fn} failed: ${j.error ?? 'no answer'}`; };
+  const out: string[] = [], src = String(r.payload?.source ?? '');
+  if (src === 'WhatsApp') { if (c.reply?.on && String(c.reply.text ?? '').trim()) out.push(await call('wa-send', { text: c.reply.text })); }
+  else if (c.wa?.on && c.wa.template) out.push(await call('wa-send', { template: c.wa.template, language: c.wa.language || 'en', params: c.wa.params || [], preview: c.wa.preview || '' }));
+  if (c.email?.on && String(c.email.body ?? '').trim() && src !== 'WhatsApp') out.push(await call('email', { subject: c.email.subject, body: c.email.body }));
+  return out.join(' | ') || 'nothing to send';
+}
 const orderLine = (p: any) => `${p.ext_id || p.order_id} · ${p.items || 'order'} · ${inr(p.amount)} · ${p.channel || ''}${p.customer ? ' · ' + p.customer : ''}${p.state ? ', ' + p.state : ''}`;
 
-async function flush(onlyWs?: string) {
+async function flush(onlyWs?: string, secret = '') {
   let q = db.from('alert_queue').select('*').is('sent_at', null).neq('kind', 'daily').order('id').limit(500);
   if (onlyWs) q = q.eq('workspace_id', onlyWs);
   const { data: rows } = await q; if (!rows?.length) return { sent: 0 };
@@ -71,6 +85,7 @@ async function flush(onlyWs?: string) {
     const ids = list.map((r) => r.id); const { data: claimed } = await db.from('alert_queue').update({ sent_at: new Date().toISOString(), result: 'sending' }).in('id', ids).is('sent_at', null).select('id');
     const mine = new Set((claimed ?? []).map((r: any) => r.id)), L = list.filter((r) => mine.has(r.id)); if (!L.length) continue;
     const cfg = await cfgOf(ws), results = new Map<number, string>();
+    for (const r of L.filter((x) => x.kind === 'welcome')) { results.set(r.id, await welcomeOne(ws, r, secret)); sent++; }
     const min = Number(cfg.rules.new_order?.min || 0);
     const newO = L.filter((r) => r.kind === 'new_order'), bigO = newO.filter((r) => Number(r.payload?.amount || 0) >= min);
     newO.filter((r) => !bigO.includes(r)).forEach((r) => results.set(r.id, 'below minimum'));
@@ -120,7 +135,7 @@ Deno.serve(async (req) => {
     if (b.action === 'flush' || b.action === 'cron') {
       const { data: sec } = await db.from('app_config').select('value').eq('key', 'cron_secret').maybeSingle();
       if (!sec?.value || req.headers.get('x-cron-secret') !== sec.value) return json({ error: 'Forbidden' }, 403);
-      const f = await flush(); const d = b.action === 'cron' ? await daily() : [];
+      const f = await flush(undefined, sec.value); const d = b.action === 'cron' ? await daily() : [];
       return json({ ok: true, ...f, daily: d.length });
     }
     const jwt = (req.headers.get('Authorization') ?? '').replace(/^Bearer\s+/i, '');

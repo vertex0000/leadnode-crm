@@ -6,7 +6,7 @@ const GRAPH = Deno.env.get('WA_GRAPH_URL') ?? 'https://graph.facebook.com/v21.0'
 const firstKey = (json?: string) => { try { return Object.values(JSON.parse(json ?? '{}'))[0] as string | undefined; } catch { return undefined; } };
 const SERVICE = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') || firstKey(Deno.env.get('SUPABASE_SECRET_KEYS')) || '';
 const db = createClient(Deno.env.get('SUPABASE_URL')!, SERVICE, { auth: { persistSession: false } });
-const cors = { 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type', 'Access-Control-Allow-Methods': 'POST, OPTIONS' };
+const cors = { 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-cron-secret', 'Access-Control-Allow-Methods': 'POST, OPTIONS' };
 const json = (o: unknown, status = 200) => new Response(JSON.stringify(o), { status, headers: { ...cors, 'Content-Type': 'application/json' } });
 const today = () => new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Kolkata' }).format(new Date());   // YYYY-MM-DD
 const cleanPhone = (p: unknown) => { let d = String(p ?? '').replace(/\D/g, ''); if (d.length === 10) d = '91' + d; return d; };
@@ -63,10 +63,32 @@ async function logSent(ws: string, leadId: string | null, to: string, type: stri
   }
 }
 
+/** Auto welcome / auto-reply to one lead. Only the server can call this (header x-cron-secret). */
+async function systemSend(req: Request, b: any) {
+  const { data: sec } = await db.from('app_config').select('value').eq('key', 'cron_secret').maybeSingle();
+  if (!sec?.value || req.headers.get('x-cron-secret') !== sec.value) return json({ error: 'Forbidden' }, 403);
+  const ws = String(b.workspace_id ?? ''), leadId = String(b.lead_id ?? '');
+  const { data: wst } = await db.rpc('ws_state', { ws }); if (wst === 'locked') return json({ ok: false, error: 'workspace is view-only' });
+  const { data: acc } = await db.from('wa_accounts').select('*').eq('workspace_id', ws).maybeSingle(); if (!acc) return json({ ok: false, error: 'WhatsApp not connected' });
+  const { data: l } = await db.from('leads').select('lead_id, name, phone, business_name, city, wa_opt_out').eq('workspace_id', ws).eq('lead_id', leadId).maybeSingle();
+  if (!l) return json({ ok: false, error: 'Lead not found' }); if (l.wa_opt_out) return json({ ok: false, skipped: true, error: 'Opted out' });
+  const to = cleanPhone(l.phone); if (!/^\d{8,15}$/.test(to)) return json({ ok: false, skipped: true, error: 'No phone' });
+  const fill = (s: string) => String(s ?? '').replace(/\{\{\s*(first_name|name|business|city)\s*\}\}/g, (_m, k) => k === 'first_name' ? (String(l.name ?? '').split(' ')[0] || 'there') : k === 'business' ? String(l.business_name ?? '') : String((l as any)[k] ?? ''));
+  let r, type: string, text: string;
+  if (b.text) { text = fill(b.text).slice(0, 4000); type = 'text'; r = await graphSend(acc, { messaging_product: 'whatsapp', to, type: 'text', text: { body: text } }); }
+  else { if (!b.template) return json({ ok: false, error: 'No template' }); const params = (Array.isArray(b.params) ? b.params : []).map((x: unknown) => fill(String(x)) || '-'); const trow = await tplRow(ws, String(b.template));
+    r = await graphSend(acc, trow ? templatePayloadFor(to, { ...trow, language: String(b.language || trow.language || 'en') }, params) : templatePayload(to, String(b.template), String(b.language || 'en'), params));
+    type = 'template'; text = fill(String(b.preview || `Template: ${b.template}`)); }
+  if (!r.ok) return json({ ok: false, error: r.error });
+  await logSent(ws, leadId, to, type, text, r.id, 'Auto welcome', null, (type === 'text' ? 'Auto-reply: ' : 'Welcome: ') + text, 'Auto welcome');
+  return json({ ok: true, id: r.id });
+}
+
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: cors });
   try {
     const b = await req.json();
+    if (b.action === 'system') return await systemSend(req, b);     // auto welcome / auto-reply, called by the "alerts" function
     const ws = String(b.workspace_id ?? '');
     const jwt = (req.headers.get('Authorization') ?? '').replace(/^Bearer\s+/i, '');
     const { data: u } = await db.auth.getUser(jwt);

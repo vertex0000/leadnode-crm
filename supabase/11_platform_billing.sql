@@ -67,6 +67,10 @@ alter table public.plans add column if not exists price_year numeric check (pric
 alter table public.plans add column if not exists price_label text not null default '' check (length(price_label) <= 30);
 alter table public.plans add column if not exists badge text not null default '' check (length(badge) <= 30);
 alter table public.plans add column if not exists highlight boolean not null default false;
+-- intro offer shown on the card, e.g. "₹20 for the first 2 months"
+alter table public.plans add column if not exists offer_price numeric check (offer_price is null or offer_price >= 0);
+alter table public.plans add column if not exists offer_months integer check (offer_months is null or offer_months between 1 and 36);
+alter table public.plans add column if not exists offer_label text not null default '' check (length(offer_label) <= 60);
 alter table public.plans enable row level security;
 drop policy if exists plans_read on public.plans;
 create policy plans_read on public.plans for select to anon, authenticated using (true);      -- the pricing section is public (sign-up page, demo)
@@ -78,6 +82,7 @@ insert into public.plans (id, name, description, price, period, limits, features
   ('pro', 'Pro', 'For bigger teams and agencies', 4999, 'month', '{"members":20,"leads":100000,"wa_messages":25000,"store_connections":3}', '{"Everything in Growth","White label","Priority support"}', 3)
 on conflict (id) do nothing;
 update public.plans set price_year = price * 10 where price_year is null and period = 'month' and id in ('starter', 'growth', 'pro');   -- 2 months free on yearly
+update public.plans set offer_price = 20, offer_months = 2, offer_label = 'Intro offer' where id = 'pro' and offer_price is null and offer_label = '';
 update public.plans set highlight = true, badge = 'Most popular' where id = 'growth' and badge = '' and not exists (select 1 from public.plans where highlight);
 
 -- ---------- 4. One subscription per client workspace ----------
@@ -272,13 +277,14 @@ language plpgsql security definer set search_path = public as $$
 begin
   if not public.has_platform_role(array['super', 'admin']) then raise exception 'Not allowed for your platform role'; end if;
   if coalesce((p ->> 'highlight')::boolean, false) then update public.plans set highlight = false where id <> lower(p ->> 'id'); end if;     -- only one highlighted card
-  insert into public.plans (id, name, description, price, currency, period, limits, features, active, sort, price_year, price_label, badge, highlight, updated_at)
+  insert into public.plans (id, name, description, price, currency, period, limits, features, active, sort, price_year, price_label, badge, highlight, offer_price, offer_months, offer_label, updated_at)
   values (lower(p ->> 'id'), p ->> 'name', coalesce(p ->> 'description', ''), coalesce((p ->> 'price')::numeric, 0), coalesce(nullif(p ->> 'currency', ''), 'INR'), coalesce(nullif(p ->> 'period', ''), 'month'),
           coalesce(p -> 'limits', '{}'::jsonb), coalesce((select array_agg(x) from jsonb_array_elements_text(coalesce(p -> 'features', '[]'::jsonb)) x), '{}'), coalesce((p ->> 'active')::boolean, true), coalesce((p ->> 'sort')::int, 0),
-          nullif(nullif(p ->> 'price_year', ''), '0')::numeric, left(coalesce(p ->> 'price_label', ''), 30), left(coalesce(p ->> 'badge', ''), 30), coalesce((p ->> 'highlight')::boolean, false), now())
+          nullif(nullif(p ->> 'price_year', ''), '0')::numeric, left(coalesce(p ->> 'price_label', ''), 30), left(coalesce(p ->> 'badge', ''), 30), coalesce((p ->> 'highlight')::boolean, false),
+          nullif(p ->> 'offer_price', '')::numeric, nullif(nullif(p ->> 'offer_months', ''), '0')::int, left(coalesce(p ->> 'offer_label', ''), 60), now())
   on conflict (id) do update set name = excluded.name, description = excluded.description, price = excluded.price, currency = excluded.currency, period = excluded.period,
     limits = excluded.limits, features = excluded.features, active = excluded.active, sort = excluded.sort, price_year = excluded.price_year, price_label = excluded.price_label,
-    badge = excluded.badge, highlight = excluded.highlight, updated_at = now();
+    badge = excluded.badge, highlight = excluded.highlight, offer_price = excluded.offer_price, offer_months = excluded.offer_months, offer_label = excluded.offer_label, updated_at = now();
   perform public.paudit('plan.save', p ->> 'id', p);
 end $$;
 create or replace function public.admin_plan_delete(p_id text) returns text
