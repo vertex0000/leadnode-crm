@@ -769,18 +769,18 @@ body.brand-ro #brandRowSite,body.brand-ro #setModal .acc[data-acc="s-wl"]{displa
 .modal .box.pr-box{width:min(1180px,100%);padding:0;background:transparent;border:0;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none;border-radius:26px;position:relative}
 .pr-box .pr{margin:0}.pr-box .pr .hero-edit{right:auto;left:14px}.pr-x{position:absolute;top:14px;right:14px;z-index:5;background:var(--card)}
 .pr-pop{position:absolute;top:-13px;left:50%;transform:translateX(-50%);z-index:2;white-space:nowrap;font-size:12px;font-weight:700;padding:5px 14px;border-radius:20px;background:#17181C;color:#fff;box-shadow:0 8px 18px -8px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.18)}
-.pr .pr-c.hl{margin-top:4px}.pr-cards{padding-top:14px}
+.pr .pr-c.hl{margin-top:0}.pr-cards{padding-top:16px;align-items:stretch}.pr-c{min-height:600px}.pr-c .pr-b{margin-top:auto}.pr-c ul{margin-bottom:18px}.pr-d{min-height:2.9em}.pr-ghost{visibility:hidden}.pr-off.pr-trial{border-style:solid;border-color:color-mix(in srgb,currentColor 12%,transparent);background:color-mix(in srgb,currentColor 4%,transparent)}.pr-off.pr-trial .pr-off-t{color:#22C55E}.pr-c:hover{transform:translateY(-4px)}
 /* light (clean) pricing — default */
 .pr.light{--prb:#FCFCFD;--prc:#F4F5F7;--prh:#FFFFFF;--prt:#111318;--prm:#6B7280;--prl:#E6E8EC;color:var(--prt);background:linear-gradient(color-mix(in srgb,var(--prl) 70%,transparent) 1px,transparent 1px) 0 0/56px 56px,linear-gradient(90deg,color-mix(in srgb,var(--prl) 70%,transparent) 1px,transparent 1px) 0 0/56px 56px,var(--prb);box-shadow:0 0 0 1px var(--prl);padding:46px 28px 36px}
 .pr.light::before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(70% 60% at 50% 40%,transparent 0%,var(--prb) 85%)}
 .pr.light .pr-glow{display:none}.pr.light h2{font-weight:600;font-size:clamp(28px,3.2vw,42px);letter-spacing:-.03em}
 .pr.light .pr-h p{color:var(--prm);max-width:520px}.pr.light .pr-eb{background:var(--prc);border-color:var(--prl);color:var(--prm)}
 .pr.light .pr-tg{background:var(--prc);border-color:var(--prl)}.pr.light .pr-tg button{color:var(--prm)}.pr.light .pr-tg button.on{background:var(--prt);color:var(--prb)}.pr.light .pr-tg button.on span{color:color-mix(in srgb,var(--pa) 60%,#fff)}
-.pr.light .pr-cards{align-items:start;gap:18px}
-.pr.light .pr-c{background:color-mix(in srgb,var(--prt) 0%,var(--prc));border:1px solid var(--prl);backdrop-filter:none;box-shadow:none;gap:8px;padding:24px 22px 22px}
+.pr.light .pr-cards{align-items:stretch;gap:20px}
+.pr.light .pr-c{background:color-mix(in srgb,var(--prt) 0%,var(--prc));border:1px solid var(--prl);backdrop-filter:none;box-shadow:0 1px 0 rgba(255,255,255,.04) inset;gap:9px;padding:30px 26px 26px}
 .pr.light .pr-c:hover{transform:translateY(-3px);box-shadow:0 18px 40px -26px rgba(15,23,42,.35)}
-.pr.light .pr-c.hl{background:radial-gradient(60% 45% at 100% 0%,color-mix(in srgb,var(--pa) 30%,transparent) 0%,transparent 100%),var(--prh);border-color:var(--prl);box-shadow:0 26px 60px -24px rgba(15,23,42,.32),0 0 0 1px var(--prl);transform:translateY(-12px)}
-.pr.light .pr-c.hl:hover{transform:translateY(-15px)}.pr.light .pr-c.cur{box-shadow:0 0 0 2px #22C55E}
+.pr.light .pr-c.hl{background:radial-gradient(60% 45% at 100% 0%,color-mix(in srgb,var(--pa) 30%,transparent) 0%,transparent 100%),var(--prh);border-color:var(--prl);box-shadow:0 26px 60px -24px rgba(15,23,42,.32),0 0 0 1px color-mix(in srgb,var(--pa) 45%,var(--prl))}
+.pr.light .pr-c.hl:hover{transform:translateY(-4px)}.pr.light .pr-c.cur{box-shadow:0 0 0 2px #22C55E}
 .pr.light .pr-ct b{font-size:19px;font-weight:600}.pr.light .pr-d{color:var(--prm);font-size:13.5px}
 .pr.light .pr-p{font-size:34px;font-weight:600;margin-top:14px;padding-bottom:14px;border-bottom:1px solid var(--prl)}.pr.light .pr-p small{color:var(--prm);font-size:13px;font-weight:500}
 .pr.light .pr-sv{margin-top:2px}.pr.light .pr-in{border:0;padding-top:4px;margin-top:4px;font-weight:500;font-size:12.5px;color:var(--prm)}
@@ -793,7 +793,7 @@ body.brand-ro #brandRowSite,body.brand-ro #setModal .acc[data-acc="s-wl"]{displa
 .pr.light .pr-adm .btn{background:var(--prh);color:var(--prt);border-color:var(--prl)}.pr.light .hero-edit{color:var(--prt)}
 [data-theme="dark"] .pr.light{--prb:#0F1115;--prc:#161920;--prh:#1C2029;--prt:#F3F4F6;--prm:#9CA3AF;--prl:#272B35}
 [data-theme="dark"] .pr-pop{background:#fff;color:#111}
-@media (max-width:640px){.pr.light{padding:34px 0 24px}.pr.light .pr-c.hl{transform:none}.pr-cards{padding-top:18px}}
+@media (max-width:640px){.pr.light{padding:34px 0 24px}.pr.light .pr-c.hl{transform:none}.pr-cards{padding-top:18px}.pr-c{min-height:0}.pr-ghost{display:none}}
 
 @media (max-width:980px){.pr-cards{grid-template-columns:repeat(min(var(--n),2),minmax(0,1fr))}}
 @media (max-width:640px){.pr{padding:34px 0 24px;border-radius:20px}.pr-h{padding:0 14px}.pr-cards{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:12px;padding:6px 14px 10px;scrollbar-width:none;max-width:none}.pr-cards::-webkit-scrollbar{display:none}.pr-c{flex:0 0 84%;scroll-snap-align:center}.pr-c:hover{transform:none}.pr-glow{width:180%}.pr-note{padding:0 14px}}
@@ -8743,6 +8743,7 @@ function pricingHTML(opt) {
   opt = opt || {}; const c = Object.assign({}, pricingCfg(), opt.cfg || {}), plans = opt.plans || pricePlans(opt.admin), per = PR.per;
   const hasYear = plans.some(p => +p.price_year && !p.price_label), maxSave = Math.max(0, ...plans.filter(p => +p.price_year && p.period === 'month' && +p.price).map(p => Math.round((1 - p.price_year / (p.price * 12)) * 100)));
   const curId = cloud && SUB.me && SUB.me.status !== 'free' && SUB.me.state !== 'locked' ? SUB.me.plan_id : '';
+  const hasOff = p => p.offer_price !== null && p.offer_price !== undefined && p.offer_price !== '' && +p.offer_months, anyOff = plans.some(hasOff), anySave = plans.some(p => priceOf(p, hasYear ? per : 'm').save > 0);
   const card = p => { const pr = priceOf(p, hasYear ? per : 'm'), L = p.limits || {}, cur = p.id === curId;
     const lim = c.limits !== false ? [fmtLim(L.members, 'team member', 'team members'), fmtLim(L.leads, 'lead', 'leads'), `${+L.wa_messages ? (+L.wa_messages).toLocaleString('en-IN') : 'Unlimited'} WhatsApp messages / month`, fmtLim(L.store_connections, 'store connection', 'store connections')] : [];
     const trialCur = cur && SUB.me.status === 'trial', cta = trialCur ? 'Keep this plan after the trial' : cur ? 'Your current plan' : p.price_label ? c.ctaCustom : cloud ? c.ctaClient : c.ctaNew;
@@ -8751,8 +8752,8 @@ function pricingHTML(opt) {
       <div class="pr-ct"><b>${esc(p.name)}</b>${p.badge && !p.highlight ? `<span class="pr-bd">${esc(p.badge)}</span>` : ''}${p.active ? '' : '<span class="pr-hid">Hidden</span>'}</div>
       ${p.description ? `<p class="pr-d">${esc(p.description)}</p>` : ''}
       <div class="pr-p">${pr.big}${pr.small ? `<small>${pr.small}</small>` : ''}</div>
-      ${pr.save > 0 ? `<div class="pr-sv">≈ ${inr(pr.month)} / month · save ${pr.save}%</div>` : ''}
-      ${p.offer_price !== null && p.offer_price !== undefined && p.offer_price !== '' && +p.offer_months ? `<div class="pr-off"><span class="pr-off-t">🎁 ${esc(p.offer_label || 'Intro offer')}</span><div><b>${+p.offer_price ? inr(p.offer_price) : 'Free'}</b> for the first ${+p.offer_months === 1 ? 'month' : esc(p.offer_months) + ' months'}</div>${+p.price && !p.price_label ? `<small>then ${inr(p.price)}${p.period === 'year' ? ' / year' : p.period === 'one_time' ? ' one time' : ' / month'}</small>` : ''}</div>` : ''}
+      ${pr.save > 0 ? `<div class="pr-sv">≈ ${inr(pr.month)} / month · save ${pr.save}%</div>` : anySave && !opt.mini ? '<div class="pr-sv pr-ghost" aria-hidden="true">≈ ₹0 / month · save 0%</div>' : ''}
+      ${p.offer_price !== null && p.offer_price !== undefined && p.offer_price !== '' && +p.offer_months ? `<div class="pr-off"><span class="pr-off-t">🎁 ${esc(p.offer_label || 'Intro offer')}</span><div><b>${+p.offer_price ? inr(p.offer_price) : 'Free'}</b> for the first ${+p.offer_months === 1 ? 'month' : esc(p.offer_months) + ' months'}</div>${+p.price && !p.price_label ? `<small>then ${inr(p.price)}${p.period === 'year' ? ' / year' : p.period === 'one_time' ? ' one time' : ' / month'}</small>` : ''}</div>` : anyOff && !opt.mini ? `<div class="pr-off pr-trial"><span class="pr-off-t">✓ Free trial</span><div><b>${esc(+PLAT.s.trialDays || 14)} days</b> free — try everything</div><small>No card needed</small></div>` : ''}
       <div class="pr-in">${esc(c.included || "What's included")}</div>
       <ul>${lim.concat(p.features || []).map(f => `<li><i>✓</i>${esc(f)}</li>`).join('')}</ul>
       ${opt.admin ? `<div class="pr-adm"><button class="btn sm" data-admplan="${esc(p.id)}">✎ Edit</button></div>` : `<button type="button" class="pr-b" data-prplan="${esc(p.id)}" ${cur && !trialCur ? 'disabled' : ''}>${esc(cta)}</button>`}</div>`; };
