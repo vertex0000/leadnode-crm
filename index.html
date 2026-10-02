@@ -637,6 +637,23 @@ body.cl-tenant [data-go="scripts"],body.cl-tenant [data-stab="conn"],body.cl-ten
 .plat-bar{display:flex;align-items:center;gap:10px;padding:8px 14px;border-radius:12px;margin-bottom:12px;background:color-mix(in srgb,#A78BFA 14%,transparent);border:1px solid color-mix(in srgb,#A78BFA 40%,transparent);font-size:13px;font-weight:600}
 .adm-ks{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}@media (max-width:900px){.adm-ks{grid-template-columns:repeat(2,1fr)}}
 .adm-ok{color:var(--green);font-weight:700}.adm-no{color:var(--muted)}
+.adm-tabs{margin:-4px 0 16px;align-items:center}.adm-tabs:empty{display:none}.adm-role{margin-left:8px;padding:3px 10px;border-radius:20px;font-size:11.5px;font-weight:800;color:#7C5CD6;background:color-mix(in srgb,#A78BFA 16%,transparent);white-space:nowrap}
+.adm-ks2{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px}@media (max-width:1100px){.adm-ks2{grid-template-columns:repeat(3,1fr)}}@media (max-width:560px){.adm-ks2{grid-template-columns:repeat(2,1fr)}}
+.adm-k{display:flex;flex-direction:column;align-items:flex-start;gap:3px;padding:14px;border-radius:14px;text-align:left;font:inherit;color:inherit;min-width:0;transition:transform .2s,box-shadow .2s,border-color .2s}button.adm-k{cursor:pointer}button.adm-k:hover{transform:translateY(-2px)}.adm-k b{font-size:22px;font-weight:800;letter-spacing:-.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}.adm-k small{color:var(--muted);font-size:12px;font-weight:600}.adm-k.on{box-shadow:inset 0 0 0 2px var(--blue-2)}
+.adm-t td{vertical-align:middle;padding-left:10px;padding-right:10px}.adm-t th{padding-left:10px;padding-right:10px}.adm-t .who b{white-space:nowrap}.adm-ic{font-size:12px}.adm-t tbody tr{cursor:pointer}.adm-ic span{margin-right:4px}
+.adm-u{height:5px;border-radius:5px;background:var(--line);overflow:hidden;min-width:56px;margin:2px 0}.adm-u i{display:block;height:100%;border-radius:5px;transition:width .5s}
+.adm-quick{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:14px 0 4px}.adm-pay{padding:14px;border-radius:14px;margin-top:10px}
+.adm-plans{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}.adm-plan{padding:18px;border-radius:16px;display:flex;flex-direction:column;gap:8px}.adm-plan.off{opacity:.62}.adm-plan p{margin:0;font-size:13px}.adm-plan ul{margin:0;padding-left:18px;font-size:13px;display:flex;flex-direction:column;gap:3px;flex:1}.adm-plan .btn{align-self:flex-start}
+.adm-ph{display:flex;align-items:center;gap:8px}.adm-ph b{font-size:16px}.adm-ph .muted{margin-left:auto;font-size:11.5px;font-family:ui-monospace,monospace}.adm-pp{font-size:26px;font-weight:800;letter-spacing:-.02em}.adm-pp small{font-size:13px;color:var(--muted);font-weight:600}
+.adm-pl{display:flex;flex-wrap:wrap;gap:6px}.adm-pl span{font-size:12px;padding:3px 8px;border-radius:8px;background:var(--line);font-weight:600}
+.adm-add{display:grid;grid-template-columns:1fr 180px auto;gap:8px;margin:12px 0}@media (max-width:640px){.adm-add{grid-template-columns:1fr}}
+.adm-roles{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:12.5px;color:var(--muted)}.adm-roles b{color:var(--text)}.adm-det{max-width:320px;font-family:ui-monospace,monospace;font-size:11.5px;word-break:break-all}
+.pl-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}.pl-top>div:first-child{display:flex;align-items:center;gap:10px}.pl-name{font-size:18px}.pl-price{font-size:22px;font-weight:800}.pl-price small{font-size:12.5px;color:var(--muted);font-weight:600}
+.pl-us{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 18px;margin:12px 0}@media (max-width:560px){.pl-us{grid-template-columns:1fr}}.pl-u{display:grid;grid-template-columns:1fr auto;gap:2px 8px;font-size:13px}.pl-u .adm-u{grid-column:1/-1}
+.pl-f{margin:6px 0;padding-left:18px;font-size:13px;columns:2}@media (max-width:560px){.pl-f{columns:1}}.pl-pay{display:flex;flex-direction:column;gap:4px;font-size:12.5px;margin:10px 0;color:var(--muted)}.pl-pay b{color:var(--text)}
+.sub-banner.warn{background:var(--yellow-soft)}.sub-banner.bad{background:color-mix(in srgb,var(--coral) 12%,transparent);border-color:color-mix(in srgb,var(--coral) 45%,transparent)}.sub-banner{flex-wrap:wrap}.sub-banner .btn{white-space:nowrap}
+body.sub-locked #roBanner{display:none!important}
+body.brand-ro #brandRowSite,body.brand-ro #setModal .acc[data-acc="s-wl"]{display:none!important}
 body.np-add [data-add],body.np-add .addcard,body.np-import #csvImportBtn,body.np-import #pImport,body.np-import [data-bcimport],body.np-import .bc-imp,body.np-export #csvExport,body.np-delete #panel [data-delete],body.np-edit #panel [data-edit],body.np-broadcast [data-go="broadcast"],body.np-automation [data-go="automation"],body.np-automation [data-go="scripts"],body.np-automation [data-go="n8n"],body.np-analytics [data-go="analytics"],body.np-analytics [data-go="reports"],body.np-analytics [data-go="performance"],body.np-analytics [data-go="insights"],body.np-analytics [data-go="insales"],body.np-analytics [data-go="inmarketing"],body.np-calls [data-calllog],body.np-tasks [data-go="tasks"],body.np-whatsapp #inbox .ib-comp,body.np-email [data-bctab="email"]{display:none!important}body.np-edit #panel .stagebar{pointer-events:none}
 body.ro [data-add],body.ro .addcard,body.ro #addMember,body.ro [data-lginvite],body.ro #pImport,body.ro #scrNew,body.ro [data-go="industry"],body.ro [data-go="scripts"],body.ro [data-go="automation"],body.ro [data-go="broadcast"],body.ro [data-stab="conn"],body.ro [data-stab="wl"],body.ro #acctImport,body.ro #acctWs,body.ro #panel .notebox,body.ro #panel [data-delete],body.ro #panel [data-edit],body.ro #panel [data-focus-note],body.ro #panel .p-foot,body.ro #panel .aisum-act button{display:none!important}body.ro #panel .stagebar{pointer-events:none}
 .lg-card{padding:18px;border-radius:16px;margin-top:18px}.lg-h{display:flex;gap:12px;align-items:flex-start;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap}.lg-h h3{margin:0 0 4px}.lg-h p{margin:0;font-size:13px}
@@ -1393,8 +1410,9 @@ body.ro [data-cmw],body.np-commerce [data-cmw]{display:none!important}
 
     <!-- ADMIN CONSOLE (platform owner only) -->
     <section class="view" id="v-admin">
-      <div class="head"><div><div class="eyebrow">Platform</div><h1>Admin Console</h1><p class="sub">Every client business on Nodevers — usage, connections and one-click view of their data.</p></div>
+      <div class="head"><div><div class="eyebrow">Platform</div><h1>Admin Console</h1><p class="sub">Every client business — plans, time left, payments, usage and one-click view of their data.</p></div>
         <div class="head-actions"><button class="btn" id="admRefresh">⟳ Refresh</button></div></div>
+      <div class="fam-tabs adm-tabs" id="admTabs"></div>
       <div id="adminBody"></div>
     </section>
 
@@ -1565,7 +1583,7 @@ body.ro [data-cmw],body.np-commerce [data-cmw]{display:none!important}
   <div class="m-head"><h2>Settings</h2><button class="ibtn" data-close><svg class="i" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
   <div class="seg"><button class="segb" data-stab="brand">Branding</button><button class="segb" data-stab="conn">Connection</button><button class="segb" data-stab="acct">Accounts</button><button class="segb" data-stab="wl">White label</button></div>
   <div class="stab" id="stab-brand">
-    <div class="brand-row"><div id="upLogo"></div><div class="field"><label>Website name</label><input class="input" id="bName" maxlength="40" placeholder="Nodevers"></div></div>
+    <div class="brand-row" id="brandRowSite"><div id="upLogo"></div><div class="field"><label>Website name</label><input class="input" id="bName" maxlength="40" placeholder="Nodevers"></div></div>
     <div class="brand-row"><div id="upPhoto"></div><div class="field"><label>Your name (profile)</label><input class="input" id="pName" maxlength="40" placeholder="Shivam"></div></div>
     <p class="help" id="brandHelp">Pick a logo and photo from your gallery. They are saved to your Google Sheet (Settings tab) and Drive, so every device shows the same.</p>
     <div class="m-foot"><div class="grow"></div><button class="btn primary" id="bSave">Save</button></div>
@@ -1940,6 +1958,7 @@ function finishLoad(anim) {
   applyBranding();
   applyAccess(); platformBar();
   renderAll(anim);
+  if (cloud && SUB.ws !== AUTH.ws) subLoad(); else subApply();
   taskReminders(); { const b = $('#tasksBadge'), n = salesReady() ? (S.tasks || []).filter(t => t.status === 'Open' && taskState(t) === 'overdue' && (AUTH.role !== 'member' || t.assignedTo === me())).length : 0; if (b) { b.hidden = !n; b.textContent = n; } }
 }
 /** Render only the screen you're looking at; the others re-render when you open them */
@@ -4795,10 +4814,20 @@ function aiSummaryHTML(l) {
     <div class="aisum-act">${x.act.map(btn).join('')}</div><small class="muted">Smart rules for now · Gemini will also read the WhatsApp chat after go-live</small></div>`;
 }
 
+/* ================= platform-wide settings (brand, white label, trial, support) ================= */
+const PLAT = { s: {}, loaded: false };
+async function platLoad() {
+  const c = sbConf(); if (!c.url || !c.key) return;
+  try { const r = await fetch(c.url.replace(/\/$/, '') + '/rest/v1/platform_settings?select=key,value', { headers: { apikey: c.key } }); if (!r.ok) return; const rows = await r.json(); if (!Array.isArray(rows)) return;
+    PLAT.s = Object.fromEntries(rows.map(x => [x.key, x.value])); PLAT.loaded = true; applyBranding(); authBrand(); } catch (e) { }
+}
 /* ================= White label (agencies resell Nodevers as their own platform) ================= */
 const WL_KEYS = ['accentColor', 'buttonColor', 'loginHeadline', 'loginSub', 'hidePowered', 'subdomain', 'customDomain'];
 const WL_SWATCHES = ['#6F8FE8', '#4F7DF3', '#7B61FF', '#B08CEB', '#D77FC4', '#E8707E', '#F29A5C', '#E0A82E', '#2FA36B', '#3CB4A0', '#0EA5E9', '#111318'];
-const wl = () => { const s = S.settings || {}, o = {}; WL_KEYS.forEach(k => o[k] = s[k] != null ? String(s[k]) : ''); return o; };
+const wlSrc = () => cloud ? PLAT.s : demo || settings.url ? Object.assign({}, PLAT.s, S.settings) : PLAT.s;
+const wl = () => { const s = wlSrc() || {}, o = {}; WL_KEYS.forEach(k => o[k] = s[k] != null ? String(s[k]) : ''); return o; };
+/** live preview while editing white label */
+const wlSet = d => { if (cloud) Object.assign(PLAT.s, d); else S.settings = Object.assign({}, S.settings, d); applyWhiteLabel(); };
 const lum = hex => { const n = parseInt(hex.slice(1), 16), c = [n >> 16, n >> 8 & 255, n & 255].map(v => { v /= 255; return v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; }); return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]; };
 const okHex = v => /^#[0-9a-f]{6}$/i.test(v || '');
 function applyWhiteLabel() {
@@ -4845,22 +4874,24 @@ async function saveWL() {
   if (dom && !/^[a-z0-9-]+(\.[a-z0-9-]+)+$/.test(dom)) return toast('Enter a domain like crm.youragency.com', true);
   const acc = $('#wlAccent').value.toLowerCase(), btnc = $('#wlButton').value.toLowerCase();
   const data = { accentColor: acc === '#6f8fe8' && !wl().accentColor ? '' : acc, buttonColor: btnc === '#111318' && !wl().buttonColor ? '' : btnc, loginHeadline: $('#wlHead').value.trim().slice(0, 120), loginSub: $('#wlSub').value.trim().slice(0, 200), hidePowered: $('#wlHide').checked ? '1' : '', subdomain: sub, customDomain: dom };
-  S.settings = Object.assign({}, S.settings, data); applyWhiteLabel();
+  if (cloud && !canBrand()) return toast('Only the platform team can change this', true);
+  wlSet(data);
   try {
-    if (demo) store.set('leadnode.branding', Object.assign({}, store.get('leadnode.branding') || {}, data)); else await api('saveSettings', data);
+    if (cloud) { for (const [k, v] of Object.entries(data)) await sbq(AUTH.client.rpc('admin_setting_save', { p_key: k, p_value: v })); }
+    else if (demo) store.set('leadnode.branding', Object.assign({}, store.get('leadnode.branding') || {}, data)); else await api('saveSettings', data);
     toast('White label saved ✓');
   } catch (e) { toast('Could not save: ' + e.message, true); }
 }
 (function wlEvents() {
   $('#stab-wl').addEventListener('click', e => {
-    const sw = e.target.closest('[data-wlsw]'); if (sw) { $('#wlAccent').value = sw.dataset.wlsw; $$('#wlSw .sw').forEach(x => x.classList.toggle('on', x === sw)); S.settings = Object.assign({}, S.settings, { accentColor: sw.dataset.wlsw }); applyWhiteLabel(); return; }
+    const sw = e.target.closest('[data-wlsw]'); if (sw) { $('#wlAccent').value = sw.dataset.wlsw; $$('#wlSw .sw').forEach(x => x.classList.toggle('on', x === sw)); wlSet({ accentColor: sw.dataset.wlsw }); return; }
     if (e.target.id === 'wlCheck') { checkDns(); return; }
     if (e.target.id === 'wlSave') { saveWL(); return; }
-    if (e.target.id === 'wlReset') { $('#wlAccent').value = '#6F8FE8'; $('#wlButton').value = '#111318'; S.settings = Object.assign({}, S.settings, { accentColor: '', buttonColor: '' }); applyWhiteLabel(); toast('Colours reset — press Save to keep'); return; }
+    if (e.target.id === 'wlReset') { $('#wlAccent').value = '#6F8FE8'; $('#wlButton').value = '#111318'; wlSet({ accentColor: '', buttonColor: '' }); toast('Colours reset — press Save to keep'); return; }
     if (e.target.id === 'wlPreview') { showAuth('in', true); return; }
   });
-  $('#wlAccent').addEventListener('input', e => { S.settings = Object.assign({}, S.settings, { accentColor: e.target.value }); applyWhiteLabel(); });
-  $('#wlButton').addEventListener('input', e => { S.settings = Object.assign({}, S.settings, { buttonColor: e.target.value }); applyWhiteLabel(); });
+  $('#wlAccent').addEventListener('input', e => wlSet({ accentColor: e.target.value }));
+  $('#wlButton').addEventListener('input', e => wlSet({ buttonColor: e.target.value }));
   $('#wlDomain').addEventListener('input', () => drawDns());
 })();
 
@@ -4901,10 +4932,10 @@ async function authInit() {
   showAuth(pendingInvite() ? 'up' : 'in'); return false;
 }
 function authUser() { const u = AUTH.session && AUTH.session.user; return u ? { email: u.email, name: (u.user_metadata && (u.user_metadata.full_name || u.user_metadata.name)) || u.email } : null; }
+function authBrand() { const b = brand(); $$('#auth .brandTxt').forEach(e => e.textContent = b.brandName); $$('#auth .brand-logo').forEach(e => { const u = safeUrl(b.logoUrl); e.style.backgroundImage = u ? `url('${u}')` : ''; e.innerHTML = u ? '' : LOGO_DEFAULT; }); }
 function showAuth(mode, preview) {
   AUTH.mode = mode || 'in'; AUTH.preview = !!preview;
-  const b = brand(); $$('#auth .brandTxt').forEach(e => e.textContent = b.brandName);
-  $$('#auth .brand-logo').forEach(e => { const u = safeUrl(b.logoUrl); e.style.backgroundImage = u ? `url('${u}')` : ''; e.innerHTML = u ? '' : LOGO_DEFAULT; });
+  authBrand();
   $('#authExit').hidden = !preview; $('#auth').hidden = false; closePanel(); $$('.modal.show').forEach(m => hideModal('#' + m.id));
   drawAuth();
 }
@@ -5009,7 +5040,7 @@ const areaValues = k => [...new Set((S.leads || []).map(l => String(l[k] || '').
 const PERMS = [['add', 'Add leads'], ['edit', 'Edit leads & move stages'], ['delete', 'Delete leads'], ['import', 'Import Excel / CSV'], ['export', 'Export leads'], ['whatsapp', 'WhatsApp chats'], ['email', 'Send emails'], ['broadcast', 'Bulk broadcasts'], ['calls', 'Log calls'], ['tasks', 'Tasks'], ['analytics', 'See team analytics'], ['automation', 'Automation & n8n'], ['commerce', 'Store: products, stock & orders']];
 const SCOPES = { all: ['All leads', 'Sees every lead in the business'], area: ['Only their area', 'Leads whose State, District or City is in their areas — plus leads assigned to them'], own: ['Only assigned to them', 'Just the leads where “Assign to” is this person'] };
 const can = k => !cloud || /^(owner|admin)$/.test(AUTH.role || '') || (AUTH.role === 'member' && !(AUTH.access && AUTH.access.perms && AUTH.access.perms[k] === false));
-function applyAccess() { document.body.classList.toggle('is-platform', !!(cloud && AUTH.platform)); document.body.classList.toggle('cl-tenant', !!(cloud && !AUTH.platform)); PERMS.forEach(([k]) => document.body.classList.toggle('np-' + k, !can(k))); document.body.classList.toggle('no-sales', !(demo || (cloud && AUTH.v7))); document.body.classList.toggle('no-orders', !(demo || (cloud && AUTH.v8))); }
+function applyAccess() { document.body.classList.toggle('brand-ro', !canBrand()); document.body.classList.toggle('is-platform', !!(cloud && AUTH.platform)); document.body.classList.toggle('cl-tenant', !!(cloud && !AUTH.platform)); PERMS.forEach(([k]) => document.body.classList.toggle('np-' + k, !can(k))); document.body.classList.toggle('no-sales', !(demo || (cloud && AUTH.v7))); document.body.classList.toggle('no-orders', !(demo || (cloud && AUTH.v8))); }
 async function moveStage(id, stage) {
   const l = S.leads.find(x => x.leadId === id); if (!l || l.stage === stage) return;
   flashId = id; setTimeout(() => { flashId = null; }, 1500);
@@ -5457,12 +5488,14 @@ async function cloudStart() {
   if (error) throw new Error(/ensure_workspace|schema cache|does not exist/i.test(error.message) ? 'The database is not set up yet — run the Nodevers SQL in Supabase first.' : error.message);
   let pick = { workspace_id: data.workspace_id, role: data.role, name: data.name };
   try { const pa = await cl.rpc('is_platform_admin'); AUTH.platform = !pa.error && pa.data === true; } catch (e) { AUTH.platform = false; }
+  AUTH.platRole = null; if (AUTH.platform) { try { const pr = await cl.rpc('platform_role'); if (!pr.error && pr.data) AUTH.platRole = pr.data; } catch (e) { } }
+  await platLoad();
   try { AUTH.wsList = (await cl.rpc('my_workspaces')).data || []; } catch (e) { AUTH.wsList = []; }
   const pref = store.get('leadnode.ws'), w = AUTH.wsList.find(x => x.workspace_id === pref); if (w) pick = w;
   AUTH.ws = pick.workspace_id; AUTH.role = pick.role; AUTH.wsName = pick.name;
   cloud = true; demo = false; WA.status = null; document.body.classList.toggle('ro', AUTH.role === 'client' || AUTH.role === 'platform'); liveStart();
 }
-function cloudStop() { liveStop(); cloud = false; AUTH.ws = null; AUTH.role = null; AUTH.platform = false; AUTH.wsList = []; WA.status = null; document.body.classList.remove('ro'); demo = !(settings.url && settings.key); }
+function cloudStop() { liveStop(); cloud = false; AUTH.ws = null; AUTH.role = null; AUTH.platform = false; AUTH.platRole = null; SUB.me = null; AUTH.wsList = []; WA.status = null; document.body.classList.remove('ro'); demo = !(settings.url && settings.key); }
 /** One-time move: Google Sheet → cloud (keeps your IDs like L001) */
 async function importSheet() {
   if (!cloud) return toast('Sign in first', true);
@@ -5504,7 +5537,7 @@ async function switchWorkspace(id) {
   const w = (AUTH.wsList || []).find(x => x.workspace_id === id); if (!w) return;
   liveStop(); store.set('leadnode.ws', id); store.del('leadnode.cache');
   AUTH.ws = w.workspace_id; AUTH.role = w.role; AUTH.wsName = w.name; document.body.classList.toggle('ro', AUTH.role === 'client' || AUTH.role === 'platform');
-  view.fitted = false; layout = null; WA.status = null; hideModal('#setModal'); toast(`Switched to ${w.name}`); liveStart(); load();
+  SUB.me = null; view.fitted = false; layout = null; WA.status = null; hideModal('#setModal'); toast(`Switched to ${w.name}`); liveStart(); load();
 }
 async function renderLogins() {
   const box = $('#logins'); if (!box) return;
@@ -6486,7 +6519,15 @@ function readTplEditor() {
 
 /* ================= branding (logo, name, profile) ================= */
 const DEFAULT_BRAND = { brandName: 'Nodevers', logoUrl: '', userName: 'Shivam', userPhoto: '' };
-function brand() { const b = Object.assign({}, DEFAULT_BRAND), src = S.settings || {}; Object.keys(DEFAULT_BRAND).forEach(k => { if (src[k]) b[k] = String(src[k]); }); return b; }
+/** website name + logo belong to the platform (Admin Console) in the cloud; the profile (name, photo) belongs to the workspace */
+const platBrand = () => cloud || (!demo && !settings.url) || (demo && !(S.settings || {}).brandName);
+function brand() {
+  const b = Object.assign({}, DEFAULT_BRAND), src = S.settings || {}, ps = PLAT.s || {};
+  ['userName', 'userPhoto'].forEach(k => { if (src[k]) b[k] = String(src[k]); });
+  ['brandName', 'logoUrl'].forEach(k => { const v = platBrand() ? ps[k] : src[k]; if (v) b[k] = String(v); });
+  return b;
+}
+const canBrand = () => !cloud || (AUTH.platform && (!AUTH.platRole || ['super', 'admin'].includes(AUTH.platRole)));
 const LOGO_DEFAULT = '<svg class="i" viewBox="0 0 24 24" style="width:22px;height:22px"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="12" r="2.5"/><circle cx="6" cy="18" r="2.5"/><path d="M8.3 7.2 15.7 11M8.3 16.8 15.7 13"/></svg>';
 const memberPhoto = name => { const b = brand(); return name && name === b.userName ? b.userPhoto : ''; };
 function applyBranding() {
@@ -6500,26 +6541,32 @@ function applyBranding() {
 }
 
 /* ================= settings modal ================= */
-function setSTab(t) { $$('#setModal .segb').forEach(b => b.classList.toggle('active', b.dataset.stab === t)); $('#stab-brand').hidden = t !== 'brand'; $('#stab-conn').hidden = t !== 'conn'; $('#stab-acct').hidden = t !== 'acct'; $('#stab-wl').hidden = t !== 'wl'; if (t === 'acct') fillAcct(); if (t === 'wl') fillWL(); }
+function setSTab(t) {
+  if ($('#setModal .acc-list')) { ['brand', 'conn', 'acct', 'wl'].forEach(k => { const s = $('#stab-' + k); if (s) s.hidden = false; }); if (t === 'acct') fillAcct(); if (t === 'wl') fillWL(); if (t === 'plan') { const pb = $('#planBody'); if (pb) pb.innerHTML = planBody(); } return; }
+  $$('#setModal .segb').forEach(b => b.classList.toggle('active', b.dataset.stab === t)); $('#stab-brand').hidden = t !== 'brand'; $('#stab-conn').hidden = t !== 'conn'; $('#stab-acct').hidden = t !== 'acct'; $('#stab-wl').hidden = t !== 'wl'; if (t === 'acct') fillAcct(); if (t === 'wl') fillWL(); }
 function openSettings(tab) {
   const b = brand();
   upStore.brand = { logoUrl: b.logoUrl, userPhoto: b.userPhoto };
   $('#bName').value = b.brandName; $('#pName').value = b.userName;
   $('#upLogo').innerHTML = uploaderHTML('brand', 'logoUrl', 'logo', 400, 'square', 'Logo');
   $('#upPhoto').innerHTML = uploaderHTML('brand', 'userPhoto', 'profile', 400, 'round', 'Photo');
-  $('#brandHelp').textContent = demo ? 'Demo mode: saved in this browser only. Once your Sheet is connected it saves to Drive + Sheet.' : 'Pick a logo and photo from your gallery. They are saved to your Google Sheet (Settings tab) and Drive, so every device shows the same.';
+  $('#brandHelp').textContent = cloud ? (canBrand() ? 'Website name and logo apply to the whole platform — every client sees them. Your name and photo are your profile.' : 'Your name and photo show on your profile, notes and messages.') : demo ? 'Demo mode: saved in this browser only.' : 'Pick a logo and photo from your gallery. They are saved to your Google Sheet (Settings tab) and Drive, so every device shows the same.';
   $('#sUrl').value = settings.url || ''; $('#sKey').value = settings.key || ''; $('#sStatus').textContent = ''; $('#sStatus').className = 'status';
-  setSTab(tab || (demo ? 'conn' : 'brand'));
+  setSTab(tab || (demo ? 'conn' : 'brand')); fillAcct(); fillWL(); { const pb = $('#planBody'); if (pb) pb.innerHTML = planBody(); } try { settingsStatus(); } catch (e) { }
+  if (tab) { const it = $(`#setModal .acc[data-acc="s-${tab}"]`); if (it && !it.classList.contains('open') && getComputedStyle(it).display !== 'none') accToggle(it, 'nv.setOpen'); }
   showModal('#setModal');
+  if (cloud && tab === 'plan') subLoad().then(() => { const pb = $('#planBody'); if (pb) pb.innerHTML = planBody(); });
 }
 $('#bSave').onclick = async () => {
   if (upBusy) return toast('Photo is still uploading, wait 2 seconds…', true);
-  const data = { brandName: $('#bName').value.trim() || 'Nodevers', userName: $('#pName').value.trim() || 'Shivam', logoUrl: upStore.brand.logoUrl || '', userPhoto: upStore.brand.userPhoto || '' };
+  const site = { brandName: $('#bName').value.trim() || 'Nodevers', logoUrl: upStore.brand.logoUrl || '' }, prof = { userName: $('#pName').value.trim() || 'Shivam', userPhoto: upStore.brand.userPhoto || '' };
+  const data = cloud ? prof : Object.assign({}, site, prof);
   const btn = $('#bSave'); btn.disabled = true; btn.textContent = 'Saving…';
   try {
     if (demo) { store.set('leadnode.branding', Object.assign({}, store.get('leadnode.branding') || {}, data)); S.settings = Object.assign({}, S.settings, data); }
     else S.settings = Object.assign({}, S.settings, await api('saveSettings', data));
-    applyBranding(); renderAll(); hideModal('#setModal'); toast('Branding saved ✓');
+    if (cloud && canBrand() && (site.brandName !== (PLAT.s.brandName || 'Nodevers') || site.logoUrl !== (PLAT.s.logoUrl || ''))) { for (const [k, v] of Object.entries(site)) await sbq(AUTH.client.rpc('admin_setting_save', { p_key: k, p_value: v })); Object.assign(PLAT.s, site); }
+    applyBranding(); renderAll(); hideModal('#setModal'); toast(cloud && !canBrand() ? 'Profile saved ✓' : 'Saved ✓');
   } catch (e) { toast('Could not save: ' + e.message, true); }
   finally { btn.disabled = false; btn.textContent = 'Save'; }
 };
@@ -7469,7 +7516,7 @@ function homeChecklist() {
     ['email', 'Email', demo || em, demo ? 'Demo' : em ? 'Connected' : 'Connect', 'connections'],
     ['team', 'Team', (S.team || []).length > 1 || (AUTH.members || []).length > 1, (S.team || []).length > 1 ? 'Added' : 'Invite', 'team'],
     ['alerts', 'Alerts', !!stOn, stOn ? 'On' : 'Set up', 'connections'],
-    ['brand', 'Branding', !!(s.brandName && s.brandName !== 'Nodevers') || !!s.logoUrl, s.logoUrl || (s.brandName && s.brandName !== 'Nodevers') ? 'Done' : 'Add logo', 'settings'],
+    canBrand() ? ['brand', 'Branding', !!(brand().brandName !== 'Nodevers') || !!brand().logoUrl, brand().logoUrl || brand().brandName !== 'Nodevers' ? 'Done' : 'Add logo', 'settings'] : ['brand', 'Your profile', !!s.userPhoto, s.userPhoto ? 'Done' : 'Add photo', 'settings'],
   ];
   return items;
 }
@@ -7509,7 +7556,7 @@ function renderHome(anim) {
 document.addEventListener('click', e => {
   const t = e.target;
   const fg = t.closest('[data-gofam]'); if (fg) { e.preventDefault(); return famGo(fg.dataset.gofam); }
-  const hg = t.closest('[data-homego]'); if (hg) { const [v, tab] = hg.dataset.homego.split(':'); if (v === 'settings') return typeof openSettings === 'function' ? openSettings() : $('#sideSettings').click(); if (tab) { CM.tab = tab; store.set('nv.cmTab', tab); } return go(v); }
+  const hg = t.closest('[data-homego]'); if (hg) { const [v, tab] = hg.dataset.homego.split(':'); if (v === 'settings') return typeof openSettings === 'function' ? openSettings('brand') : $('#sideSettings').click(); if (tab) { CM.tab = tab; store.set('nv.cmTab', tab); } return go(v); }
   const ga = t.closest('[data-goads]'); if (ga) { ADS.tab = ga.dataset.goads; return go('ads'); }
   if (t.closest('[data-insexport]')) return insExport();
   const ig = t.closest('[data-insgrain]'); if (ig) { INS.grain = ig.dataset.insgrain; return renderInsights(); }
@@ -7778,20 +7825,24 @@ function settingsAccordion() {
   const box = $('#setModal .box'); if (!box || box.querySelector('.acc-list')) return;
   const seg = box.querySelector(':scope > .seg'), info = { brand: ['Branding', '#EC4899', '<svg class="i" viewBox="0 0 24 24"><circle cx="13.5" cy="6.5" r="1.5"/><circle cx="17.5" cy="10.5" r="1.5"/><circle cx="8.5" cy="7.5" r="1.5"/><circle cx="6.5" cy="12.5" r="1.5"/><path d="M12 2a10 10 0 1 0 0 20c1.1 0 1.7-.9 1.4-1.8-.3-.9.3-1.8 1.3-1.8H17a5 5 0 0 0 5-5C22 6.6 17.5 2 12 2Z"/></svg>', 'Logo, website name, your photo'], conn: ['Google Sheet (old)', '#16A34A', CONN_IC.sheet, 'The old Apps Script connection'], acct: ['Account & workspace', 'var(--blue-2)', '<svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>', 'Password, workspace name, switch workspace, logins'], wl: ['White label', '#A78BFA', '<svg class="i" viewBox="0 0 24 24"><path d="M3 7h18M3 12h18M3 17h12"/></svg>', 'Your colours, login page and domain'] };
   const list = document.createElement('div'); list.className = 'acc-list'; list.dataset.acckey = 'nv.setOpen';
-  ['brand', 'acct', 'wl', 'conn'].forEach(k => { const st = $('#stab-' + k); if (!st) return; const [t, c, ic, sub] = info[k];
-    const tmp = document.createElement('div'); tmp.innerHTML = accItem('s-' + k, { title: t, icon: ic, color: c, dot: 'off', status: sub, attrs: `data-stab="${k}"` }); const item = tmp.firstElementChild;
-    item.querySelector('.acc-pad').appendChild(st); st.hidden = false; st.classList.add('stab-in'); list.appendChild(item); });
+  info.plan = ['Plan & billing', '#10B981', '<svg class="i" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18M7 15h3"/></svg>', 'Your plan, days left, usage and payments'];
+  ['brand', 'plan', 'acct', 'wl', 'conn'].forEach(k => { const [t, c, ic, sub] = info[k];
+    const tmp = document.createElement('div'); tmp.innerHTML = accItem('s-' + k, { title: t, icon: ic, color: c, dot: 'off', status: sub, attrs: `data-stab="${k}"`, body: k === 'plan' ? '<div id="planBody"></div>' : '' }); const item = tmp.firstElementChild;
+    if (k !== 'plan') { const st = $('#stab-' + k); if (!st) return; item.querySelector('.acc-pad').appendChild(st); st.hidden = false; st.classList.add('stab-in'); }
+    list.appendChild(item); });
   const extra = document.createElement('div'); extra.innerHTML = accItem('s-more', { title: 'Connections, modules & setup', icon: CONN_IC.n8n, color: '#F59E0B', dot: 'off', status: 'WhatsApp, email, stores, alerts, Industry Kits', body: `<div class="cf-foot" style="margin:0"><button class="btn sm" data-setgo="industry">Industry Kits</button><button class="btn sm" data-setgo="modules">Modules</button><div class="grow"></div><button class="btn sm primary" data-setgo="connections">Open Connections</button></div>` });
   list.appendChild(extra.firstElementChild);
   if (seg) seg.replaceWith(list); else box.appendChild(list);
   box.classList.remove('narrow'); box.classList.add('set-acc');
-  list.addEventListener('click', e => { const h = e.target.closest('.acc-h'); if (h) accToggle(h.closest('.acc'), 'nv.setOpen'); const g = e.target.closest('[data-setgo]'); if (g) { hideModal('#setModal'); if (g.dataset.setgo === 'modules') return openModules(); go(g.dataset.setgo); } });
+  list.addEventListener('click', e => { const h = e.target.closest('.acc-h'); if (h && accToggle(h.closest('.acc'), 'nv.setOpen')) setSTab(h.closest('.acc').dataset.stab); const g = e.target.closest('[data-setgo]'); if (g) { hideModal('#setModal'); if (g.dataset.setgo === 'modules') return openModules(); go(g.dataset.setgo); } });
 }
 function settingsStatus() {
   const b = brand(), set = (k, txt, dot) => { const it = $(`#setModal .acc[data-acc="s-${k}"]`); if (!it) return; it.querySelector('.acc-t small').innerHTML = txt; it.querySelector('.acc-dot').style.background = ACC_DOT[dot]; };
-  set('brand', `${esc(b.brandName)}${b.logoUrl ? ' · logo added' : ' · no logo yet'}`, b.logoUrl ? 'ok' : 'off');
+  const bi = $('#setModal .acc[data-acc="s-brand"] .acc-t b'); if (bi) bi.textContent = canBrand() ? 'Branding & profile' : 'Your profile';
+  if (canBrand()) set('brand', `${esc(b.brandName)}${b.logoUrl ? ' · logo added' : ' · no logo yet'} · ${esc(b.userName)}`, b.logoUrl ? 'ok' : 'off'); else set('brand', `${esc(b.userName)}${b.userPhoto ? ' · photo added' : ' · add your photo'}`, b.userPhoto ? 'ok' : 'off');
+  const m = SUB.me; set('plan', !cloud ? 'Sign in to see your plan' : !m ? 'Loading…' : m.state === 'locked' ? 'Expired — workspace is view-only' : m.status === 'free' ? 'Free' : `${esc(m.plan_name || (SUB_ST[m.status] || [m.status])[0])}${m.days_left !== null && m.days_left !== undefined ? ' · ' + (m.days_left < 0 ? 'ended' : m.days_left + ' days left') : ''}`, !m ? 'off' : m.state === 'locked' ? 'bad' : m.days_left !== null && m.days_left <= 7 && m.status !== 'free' ? 'wait' : 'ok');
   set('acct', cloud ? `Signed in · ${esc(((AUTH.session || {}).user || {}).email || '')}${AUTH.wsName ? ' · ' + esc(AUTH.wsName) : ''}` : demo ? 'Demo — create a free account to save your data' : 'Not signed in', cloud ? 'ok' : 'off');
-  set('wl', (S.settings || {}).wlAccent ? 'Custom colours' : 'Default Nodevers look', (S.settings || {}).wlAccent ? 'ok' : 'off');
+  set('wl', wl().accentColor ? 'Custom colours' + (cloud ? ' · whole platform' : '') : 'Default look' + (cloud ? ' · whole platform' : ''), wl().accentColor ? 'ok' : 'off');
   set('conn', settings.url ? 'Connected (old Sheet mode)' : 'Not used — your data is in the cloud', settings.url ? 'ok' : 'off');
 }
 
@@ -7893,26 +7944,203 @@ function moreSheet() {
 }
 
 /* ================= platform admin console ================= */
-const ADM = { rows: null, q: '', at: 0 };
+/* ================= platform owner: Admin Console v2 (clients, plans, payments, team, brand, audit) ================= */
+const ADM2 = { tab: store.get('nv.admTab') || 'clients', rows: null, at: 0, q: '', f: '', plans: null, pays: null, team: null, audit: null, err: '' };
+const ADM_TABS = [['clients', 'Clients', ['super', 'admin', 'support', 'finance']], ['plans', 'Plans', ['super', 'admin', 'finance']], ['payments', 'Payments', ['super', 'admin', 'finance']], ['team', 'Platform team', ['super', 'admin']], ['brand', 'Brand & settings', ['super', 'admin']], ['audit', 'Audit log', ['super', 'admin']]];
+const PLAT_ROLES = [['super', 'Super admin', 'Everything, including the platform team'], ['admin', 'Admin', 'Clients, plans, payments, brand'], ['support', 'Support', 'See clients and open their data (read-only)'], ['finance', 'Finance', 'Subscriptions and payments']];
+const SUB_ST = { trial: ['Trial', 'wait'], active: ['Active', 'ok'], past_due: ['Payment due', 'wait'], suspended: ['Suspended', 'bad'], cancelled: ['Cancelled', 'bad'], free: ['Free', ''] };
+const admCan = (...roles) => cloud && roles.includes(AUTH.platRole);
+const dLeft = t => t ? Math.ceil((new Date(t).getTime() - Date.now()) / 864e5) : null;
+const monthly = r => !r.price || ['free', 'suspended', 'cancelled', 'trial'].includes(r.status) ? 0 : r.period === 'year' ? r.price / 12 : r.period === 'one_time' ? 0 : +r.price;
+async function admLoad(force) {
+  const rpc = (n, a) => sbq(AUTH.client.rpc(n, a || {}));
+  try {
+    if (ADM2.tab === 'clients' && (force || !ADM2.rows || Date.now() - ADM2.at > 120000)) { ADM2.rows = await rpc('admin_overview2'); ADM2.at = Date.now(); }
+    if ((ADM2.tab === 'plans' || ADM2.tab === 'clients' || ADM2.tab === 'payments') && (force || !ADM2.plans)) ADM2.plans = await sbq(AUTH.client.from('plans').select('*').order('sort'));
+    if (ADM2.tab === 'payments' && (force || !ADM2.pays)) ADM2.pays = await rpc('admin_payments');
+    if (ADM2.tab === 'team' && (force || !ADM2.team)) ADM2.team = await rpc('admin_team');
+    if (ADM2.tab === 'audit') ADM2.audit = await rpc('admin_audit', { p_limit: 300 });
+    ADM2.err = '';
+  } catch (e) { ADM2.err = /admin_overview2|plans|function|does not exist/i.test(e.message) ? 'Run the database update 11_platform_billing.sql first.' : e.message; }
+}
 async function renderAdmin(anim) {
   const box = $('#adminBody'); if (!box) return;
-  if (!(cloud && AUTH.platform)) { box.innerHTML = `<div class="tp-empty glass"><b>Platform admins only</b><p class="muted">Sign in with the Nodevers owner account to see every client.</p></div>`; return; }
-  if (!ADM.rows || Date.now() - ADM.at > 120000) {
-    box.innerHTML = '<div class="rcard glass"><div class="loader"><div class="spin"></div>Loading clients…</div></div>';
-    try { ADM.rows = await sbq(AUTH.client.rpc('admin_overview')); ADM.at = Date.now(); } catch (e) { box.innerHTML = `<div class="tp-empty glass"><b>Could not load clients</b><p class="muted">${esc(/admin_overview|function/i.test(e.message) ? 'Run the database update 08_platform_flows.sql first.' : e.message)}</p></div>`; return; }
-  }
-  const q = ADM.q.toLowerCase(), all = ADM.rows || [], rows = all.filter(r => !q || [r.name, r.owner_email, r.wa_phone].some(v => String(v || '').toLowerCase().includes(q)));
-  const sum = k => all.reduce((s, r) => s + (+r[k] || 0), 0), active = all.filter(r => r.last_active && Date.now() - new Date(r.last_active).getTime() < 7 * 864e5).length;
-  const tile = (n, l, c) => `<div class="n8l-k glass"><b style="${c ? 'color:' + c : ''}">${n}</b><small class="muted">${l}</small></div>`;
-  const yes = (v, t) => v ? `<span class="adm-ok">✓ ${esc(t || '')}</span>` : '<span class="adm-no">—</span>';
-  box.innerHTML = `<div class="adm-ks">${tile(all.length, 'Client workspaces')}${tile(active, 'Active in the last 7 days', 'var(--green)')}${tile(sum('leads'), 'Leads on the platform', 'var(--blue-2)')}${tile(sum('messages_30d'), 'WhatsApp messages · 30 days', 'var(--green)')}${tile(all.filter(r => r.wa_phone).length, 'WhatsApp connected')}</div>
-    <div class="rcard glass" style="margin-top:14px"><div class="n8l-h"><h3>Clients</h3><input class="input sm" id="admQ" placeholder="Search business, email, number" value="${esc(ADM.q)}"></div>
-    <div class="tblwrap"><table class="tbl"><thead><tr><th>Business</th><th>Owner</th><th class="num">People</th><th class="num">Leads</th><th class="num">New 30d</th><th class="num">Won</th><th class="num">Msgs 30d</th><th class="num">Calls 30d</th><th>WhatsApp</th><th>Email</th><th>n8n</th><th>Last active</th><th></th></tr></thead><tbody>
-    ${rows.map(r => `<tr style="cursor:default"><td><div class="who">${avatar(r.name, 'sm')}<div><b>${esc(r.name)}</b><small class="muted" style="display:block">${esc(r.plan || 'free')} · since ${esc(fmtDate(String(r.created_at).slice(0, 10)))}</small></div></div></td><td class="muted">${esc(r.owner_email || '-')}</td><td class="num">${r.members}</td><td class="num">${r.leads}</td><td class="num">${r.leads_30d}</td><td class="num" style="color:var(--green)">${r.won}</td><td class="num">${r.messages_30d}</td><td class="num">${r.calls_30d}</td><td>${yes(r.wa_phone, r.wa_phone)}</td><td>${yes(r.email_from, '')}</td><td>${yes(r.n8n, '')}</td><td class="muted">${r.last_active ? esc(fmtWhen(r.last_active)) : '-'}</td>
-      <td class="num">${r.workspace_id === AUTH.ws ? '<span class="pill stage">Open now</span>' : `<button class="btn sm primary" data-admopen="${esc(r.workspace_id)}">View data</button>`}</td></tr>`).join('') || '<tr><td colspan="13" class="empty">No clients match.</td></tr>'}</tbody></table></div>
-    <p class="help" style="margin-top:8px">“View data” opens that client's workspace in read-only Platform view (you can look, not change). Use Settings → Accounts → Switch workspace, or this button, to go back to your own workspace.</p></div>`;
+  if (!(cloud && AUTH.platform)) { box.innerHTML = `<div class="tp-empty glass"><b>Platform team only</b><p class="muted">Sign in with a platform team account to manage every client.</p></div>`; return; }
+  const tabs = ADM_TABS.filter(t => !AUTH.platRole || t[2].includes(AUTH.platRole)); if (!tabs.some(t => t[0] === ADM2.tab)) ADM2.tab = tabs[0][0];
+  $('#admTabs').innerHTML = tabs.map(([k, n]) => `<button class="fam-t ${ADM2.tab === k ? 'active' : ''}" data-admtab="${k}">${n}</button>`).join('') + `<span class="adm-role">${esc((PLAT_ROLES.find(r => r[0] === AUTH.platRole) || [0, 'Platform'])[1])}</span>`;
+  box.innerHTML = '<div class="rcard glass"><div class="loader"><div class="spin"></div>Loading…</div></div>';
+  await admLoad();
+  if (ADM2.err) { box.innerHTML = `<div class="tp-empty glass"><b>Could not load</b><p class="muted">${esc(ADM2.err)}</p></div>`; return; }
+  box.innerHTML = ({ clients: admClients, plans: admPlans, payments: admPayments, team: admTeam, brand: admBrand, audit: admAudit }[ADM2.tab] || admClients)();
   stagger(box, anim);
 }
+function admClients() {
+  const all = ADM2.rows || [], q = ADM2.q.toLowerCase(), f = ADM2.f;
+  const exp7 = all.filter(r => r.status !== 'free' && r.state === 'ok' && dLeft(r.ends_at) !== null && dLeft(r.ends_at) <= 7), locked = all.filter(r => r.state === 'locked'), mrr = all.reduce((a, r) => a + monthly(r), 0);
+  const rows = all.filter(r => (!q || [r.name, r.owner_email, r.wa_phone, r.plan_name].some(v => String(v || '').toLowerCase().includes(q))) && (!f || (f === 'expiring' ? exp7.includes(r) : f === 'locked' ? r.state === 'locked' : r.status === f)));
+  const tile = (n, l, c, k) => `<button class="adm-k glass ${f === k ? 'on' : ''}" ${k !== undefined ? `data-admf="${k}"` : ''}><b style="${c ? 'color:' + c : ''}">${n}</b><small>${l}</small></button>`;
+  const st = r => { const [l, c] = SUB_ST[r.status] || [r.status, '']; return `<span class="tp-st ${r.state === 'locked' ? 'bad' : c}"><i></i>${r.state === 'locked' && r.status !== 'suspended' && r.status !== 'cancelled' ? 'Expired' : l}</span>`; };
+  const left = r => { const d = dLeft(r.ends_at); if (r.status === 'free' || d === null) return '<span class="muted">—</span>'; return `<b style="color:${d < 0 ? 'var(--coral)' : d <= 7 ? '#D97706' : 'var(--green)'}">${d < 0 ? Math.abs(d) + ' d ago' : d + ' days'}</b>`; };
+  const bar = (n, lim) => lim ? `<div class="adm-u"><i style="width:${Math.min(100, n / lim * 100)}%;background:${n >= lim ? 'var(--coral)' : 'var(--blue-2)'}"></i></div><small>${(+n).toLocaleString('en-IN')} / ${(+lim).toLocaleString('en-IN')}</small>` : `<small>${(+n || 0).toLocaleString('en-IN')}</small>`;
+  const lim = r => ((ADM2.plans || []).find(p => p.id === r.plan_id) || {}).limits || {};
+  return `<div class="adm-ks2">${tile(all.length, 'Clients', '', '')}${tile(all.filter(r => r.status === 'active' && r.state === 'ok').length, 'Paying & active', 'var(--green)', 'active')}${tile(all.filter(r => r.status === 'trial' && r.state === 'ok').length, 'On trial', '#D97706', 'trial')}${tile(exp7.length, 'Ending in 7 days', '#D97706', 'expiring')}${tile(locked.length, 'Expired / suspended', 'var(--coral)', 'locked')}${tile(inr(mrr), 'Monthly revenue (MRR)', 'var(--blue-2)')}</div>
+    <div class="rcard glass" style="margin-top:14px"><div class="cm-ch-h"><h3>Clients</h3><div style="display:flex;gap:8px;flex-wrap:wrap"><input class="input sm" id="admQ" placeholder="Search business, email, plan, number" value="${esc(ADM2.q)}" style="min-width:240px"><button class="btn sm" data-admreload>⟳ Refresh</button></div></div>
+    <div class="tblwrap"><table class="tbl adm-t"><thead><tr><th>Business</th><th>Plan</th><th>Status</th><th>Time left</th><th class="num">Price</th><th>Team</th><th>Leads</th><th class="num" title="WhatsApp messages this month">WA / mo</th><th>Last active</th><th></th></tr></thead><tbody>
+    ${rows.map(r => `<tr data-admsub="${esc(r.workspace_id)}"><td><div class="who">${avatar(r.name, 'sm')}<div><b>${esc(r.name)}</b> <span class="adm-ic">${r.wa_phone ? '<span title="WhatsApp connected">💬</span>' : ''}${r.email_on ? '<span title="Email connected">✉</span>' : ''}${r.stores ? `<span title="${r.stores} store(s) connected">🛒</span>` : ''}</span><small class="muted" style="display:block">${esc(r.owner_email || '')}</small></div></div></td><td>${esc(r.plan_name || (r.status === 'free' ? 'Free' : '—'))}</td><td>${st(r)}</td><td>${left(r)}</td><td class="num">${r.price != null && r.status !== 'free' ? inr(r.price) + (r.period === 'year' ? '/yr' : r.period === 'month' ? '/mo' : '') : '—'}</td>
+      <td>${bar(r.members, lim(r).members)}</td><td>${bar(r.leads, lim(r).leads)}</td><td class="num">${(+r.wa_month || 0).toLocaleString('en-IN')}</td><td class="muted" style="white-space:nowrap">${esc(r.last_active ? fmtDate(String(r.last_active).slice(0, 10)) : '—')}</td>
+      <td class="num" style="white-space:nowrap">${admCan('super', 'admin', 'finance') ? `<button class="btn sm" data-admsub="${esc(r.workspace_id)}">Manage</button> ` : ''}${r.workspace_id === AUTH.ws ? '<span class="pill stage">Yours</span>' : `<button class="btn sm primary" data-admopen="${esc(r.workspace_id)}">View</button>`}</td></tr>`).join('') || '<tr><td colspan="10" class="empty">No clients match.</td></tr>'}</tbody></table></div>
+    <p class="help" style="margin-top:8px">“View” opens the client's workspace read-only. When a trial ends — or a paid period ends plus ${esc(PLAT.s.graceDays || '3')} grace days — the client's workspace becomes view-only (nothing is deleted) until you record a payment or extend it.</p></div>`;
+}
+const isoLocal = t => { if (!t) return ''; const d = new Date(t); return isNaN(d) ? '' : `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`; };
+function openSubManager(ws) {
+  const r = (ADM2.rows || []).find(x => x.workspace_id === ws); if (!r) return;
+  const plans = ADM2.plans || [];
+  $('#stageBox').innerHTML = `<div class="m-head"><h2>${esc(r.name)}</h2><button class="ibtn" data-close>${I.x}</button></div>
+    <p class="help" style="margin-top:0">${esc(r.owner_email || '')} · client since ${esc(fmtDate(String(r.created_at).slice(0, 10)))} · paid in total <b>${inr(r.paid_total)}</b>${r.last_payment ? ' · last payment ' + esc(fmtDate(String(r.last_payment).slice(0, 10))) : ''}</p>
+    <div class="form" style="grid-template-columns:1fr 1fr">
+      <div class="field"><label>Plan</label><select class="input" id="asPlan"><option value="">— No plan —</option>${plans.map(p => `<option value="${esc(p.id)}" ${p.id === r.plan_id ? 'selected' : ''}>${esc(p.name)} · ${inr(p.price)}/${p.period === 'year' ? 'yr' : p.period === 'month' ? 'mo' : 'once'}${p.active ? '' : ' (hidden)'}</option>`).join('')}</select></div>
+      <div class="field"><label>Status</label><select class="input" id="asSt">${Object.entries(SUB_ST).map(([k, [l]]) => `<option value="${k}" ${k === r.status ? 'selected' : ''}>${l}</option>`).join('')}</select></div>
+      <div class="field"><label>Trial ends</label><input class="input" type="date" id="asTrial" value="${isoLocal(r.trial_ends_at)}"></div>
+      <div class="field"><label>Paid until</label><input class="input" type="date" id="asEnd" value="${isoLocal(r.current_period_end)}"></div>
+      <div class="field"><label>Custom price (₹) <span class="muted">— empty = plan price</span></label><input class="input" type="number" min="0" id="asPrice" value="${r.price != null && r.plan_id && plans.find(p => p.id === r.plan_id) && +plans.find(p => p.id === r.plan_id).price !== +r.price ? esc(r.price) : ''}"></div>
+      <div class="field"><label>Billing email</label><input class="input" id="asMail" value="${esc(r.billing_email || r.owner_email || '')}"></div>
+      <div class="field full"><label>Notes (only the platform team sees this)</label><input class="input" id="asNotes" maxlength="2000" value="${esc(r.notes || '')}"></div></div>
+    <div class="adm-quick"><span class="muted">Quick:</span><button class="btn sm" data-asq="trial7">+7 days trial</button><button class="btn sm" data-asq="trial14">+14 days trial</button><button class="btn sm" data-asq="pay">Record payment</button>${r.status === 'suspended' ? '<button class="btn sm" data-asq="resume">Reactivate</button>' : '<button class="btn sm danger" data-asq="suspend">Suspend</button>'}</div>
+    <div id="asPay" hidden><div class="adm-pay glass"><b>Record a payment</b><div class="form" style="grid-template-columns:repeat(3,1fr);margin-top:8px"><div class="field"><label>Amount (₹)</label><input class="input" type="number" min="0" id="apAmt" value="${esc(r.price || '')}"></div>
+      <div class="field"><label>Months it covers</label><select class="input" id="apMonths">${[1, 3, 6, 12, 0].map(m => `<option value="${m}">${m ? m + ' month' + (m > 1 ? 's' : '') : 'Does not extend'}</option>`).join('')}</select></div>
+      <div class="field"><label>Method</label><select class="input" id="apMethod">${['UPI', 'Bank transfer', 'Cash', 'Card', 'Razorpay', 'Other'].map(m => `<option>${m}</option>`).join('')}</select></div>
+      <div class="field"><label>Reference / UTR</label><input class="input" id="apRef" maxlength="120"></div><div class="field"><label>Paid on</label><input class="input" type="date" id="apDate" value="${todayStr()}"></div><div class="field"><label>Note</label><input class="input" id="apNote" maxlength="500"></div></div>
+      <div class="cf-foot" style="margin-top:8px"><span class="cf-safe">The paid-until date moves forward and the client becomes Active.</span><div class="grow"></div><button class="btn sm primary" id="apSave">Save payment</button></div></div></div>
+    <div class="m-foot"><div class="grow"></div><button class="btn" data-close>Cancel</button><button class="btn primary" id="asSave">Save</button></div>`;
+  const sv = async (p, msg) => { try { await sbq(AUTH.client.rpc('admin_sub_save', { p_ws: ws, p })); toast(msg || '✓ Saved'); hideModal('#stageModal'); ADM2.rows = null; renderAdmin(); } catch (e) { toast(e.message, true); } };
+  $('#asSave').onclick = () => sv({ plan_id: $('#asPlan').value, status: $('#asSt').value, trial_ends_at: $('#asTrial').value ? $('#asTrial').value + 'T23:59:59+05:30' : '', current_period_end: $('#asEnd').value ? $('#asEnd').value + 'T23:59:59+05:30' : '', price: $('#asPrice').value, billing_email: $('#asMail').value.trim(), notes: $('#asNotes').value.trim() });
+  $('#stageBox').querySelectorAll('[data-asq]').forEach(b => b.onclick = () => { const k = b.dataset.asq;
+    if (k === 'pay') { $('#asPay').hidden = !$('#asPay').hidden; return; }
+    if (k.startsWith('trial')) { const base = Math.max(Date.now(), r.trial_ends_at ? new Date(r.trial_ends_at).getTime() : 0), d = new Date(base + (+k.slice(5)) * 864e5); return sv({ status: 'trial', trial_ends_at: d.toISOString() }, `✓ Trial extended to ${fmtDate(isoLocal(d))}`); }
+    if (k === 'suspend') { if (!confirm(`Suspend ${r.name}? Their workspace becomes view-only. Nothing is deleted.`)) return; return sv({ status: 'suspended' }, 'Suspended'); }
+    if (k === 'resume') return sv({ status: r.current_period_end && dLeft(r.current_period_end) > 0 ? 'active' : 'trial', trial_ends_at: r.current_period_end && dLeft(r.current_period_end) > 0 ? r.trial_ends_at || '' : new Date(Date.now() + 7 * 864e5).toISOString() }, 'Reactivated'); });
+  $('#apSave').onclick = async () => { const amt = $('#apAmt').value; if (amt === '' || +amt < 0) return toast('Enter the amount', true);
+    try { const end = await sbq(AUTH.client.rpc('admin_payment_add', { p_ws: ws, p: { amount: amt, months: +$('#apMonths').value, method: $('#apMethod').value, reference: $('#apRef').value.trim(), paid_at: $('#apDate').value + 'T12:00:00+05:30', notes: $('#apNote').value.trim() } }));
+      toast(`✓ Payment saved${end ? ' — paid until ' + fmtDate(isoLocal(end)) : ''}`); hideModal('#stageModal'); ADM2.rows = null; ADM2.pays = null; renderAdmin(); } catch (e) { toast(e.message, true); } };
+  showModal('#stageModal');
+}
+function admPlans() {
+  const P = ADM2.plans || [], can = admCan('super', 'admin'), lim = (l, k) => l && +l[k] ? (+l[k]).toLocaleString('en-IN') : '∞';
+  return `<div class="cm-ch-h" style="margin-bottom:12px"><p class="help" style="margin:0">Plans clients can be on. Change prices, limits and features any time — existing clients keep their custom price if you set one.</p>${can ? '<button class="btn primary" data-admplan="">+ New plan</button>' : ''}</div>
+    <div class="adm-plans">${P.map(p => `<div class="adm-plan glass ${p.active ? '' : 'off'}"><div class="adm-ph"><b>${esc(p.name)}</b>${p.active ? '' : '<span class="acc-bd">Hidden</span>'}<span class="muted">${esc(p.id)}</span></div>
+      <div class="adm-pp">${inr(p.price)}<small>/${p.period === 'year' ? 'year' : p.period === 'month' ? 'month' : 'once'}</small></div><p class="muted">${esc(p.description || '')}</p>
+      <div class="adm-pl"><span>👥 ${lim(p.limits, 'members')} team</span><span>📇 ${lim(p.limits, 'leads')} leads</span><span>💬 ${lim(p.limits, 'wa_messages')} WhatsApp / month</span><span>🛒 ${lim(p.limits, 'store_connections')} ${+(p.limits || {}).store_connections === 1 ? 'store' : 'stores'}</span></div>
+      <ul>${(p.features || []).map(f => `<li>${esc(f)}</li>`).join('')}</ul>${can ? `<button class="btn sm" data-admplan="${esc(p.id)}">Edit</button>` : ''}</div>`).join('') || '<div class="tp-empty glass"><b>No plans yet</b></div>'}</div>`;
+}
+function openPlanEditor(id) {
+  const p = id ? (ADM2.plans || []).find(x => x.id === id) : { id: '', name: '', description: '', price: '', period: 'month', limits: {}, features: [], active: true, sort: (ADM2.plans || []).length + 1 }, L = p.limits || {};
+  $('#stageBox').innerHTML = `<div class="m-head"><h2>${id ? 'Edit plan' : 'New plan'}</h2><button class="ibtn" data-close>${I.x}</button></div>
+    <div class="form" style="grid-template-columns:1fr 1fr"><div class="field"><label>Name</label><input class="input" id="plName" maxlength="60" value="${esc(p.name)}" placeholder="Growth"></div><div class="field"><label>Code <span class="muted">(can not change later)</span></label><input class="input" id="plId" maxlength="40" value="${esc(p.id)}" ${id ? 'disabled' : ''} placeholder="growth"></div>
+      <div class="field"><label>Price (₹)</label><input class="input" type="number" min="0" id="plPrice" value="${esc(p.price)}"></div><div class="field"><label>Billed</label><select class="input" id="plPeriod">${[['month', 'Every month'], ['year', 'Every year'], ['one_time', 'One time']].map(([v, l]) => `<option value="${v}" ${p.period === v ? 'selected' : ''}>${l}</option>`).join('')}</select></div>
+      <div class="field full"><label>Short description</label><input class="input" id="plDesc" maxlength="500" value="${esc(p.description)}"></div>
+      <div class="field"><label>Team members <span class="muted">(0 = unlimited)</span></label><input class="input" type="number" min="0" id="plMem" value="${esc(L.members || 0)}"></div><div class="field"><label>Leads</label><input class="input" type="number" min="0" id="plLeads" value="${esc(L.leads || 0)}"></div>
+      <div class="field"><label>WhatsApp messages / month</label><input class="input" type="number" min="0" id="plWa" value="${esc(L.wa_messages || 0)}"></div><div class="field"><label>Store connections</label><input class="input" type="number" min="0" id="plStores" value="${esc(L.store_connections || 0)}"></div>
+      <div class="field full"><label>Features shown to clients <span class="muted">(one per line)</span></label><textarea class="input" id="plFeat" rows="4">${esc((p.features || []).join('\n'))}</textarea></div>
+      <div class="field"><label>Order</label><input class="input" type="number" id="plSort" value="${esc(p.sort || 0)}"></div><label class="field" style="flex-direction:row;align-items:center;gap:8px"><input type="checkbox" id="plActive" ${p.active ? 'checked' : ''}> Visible for new clients</label></div>
+    <div class="m-foot">${id ? '<button class="btn danger" id="plDel">Delete</button>' : ''}<div class="grow"></div><button class="btn" data-close>Cancel</button><button class="btn primary" id="plSave">Save plan</button></div>`;
+  $('#plSave').onclick = async () => { const code = (id || $('#plId').value.trim().toLowerCase()); if (!/^[a-z0-9_-]{2,40}$/.test(code)) return toast('Code: 2–40 lowercase letters, numbers, - or _', true); if (!$('#plName').value.trim()) return toast('Give the plan a name', true);
+    const n = id2 => Math.max(0, parseInt($('#' + id2).value, 10) || 0);
+    try { await sbq(AUTH.client.rpc('admin_plan_save', { p: { id: code, name: $('#plName').value.trim(), description: $('#plDesc').value.trim(), price: +$('#plPrice').value || 0, period: $('#plPeriod').value, limits: { members: n('plMem'), leads: n('plLeads'), wa_messages: n('plWa'), store_connections: n('plStores') }, features: $('#plFeat').value.split('\n').map(x => x.trim()).filter(Boolean).slice(0, 20), active: $('#plActive').checked, sort: +$('#plSort').value || 0 } }));
+      toast('✓ Plan saved'); hideModal('#stageModal'); ADM2.plans = null; renderAdmin(); } catch (e) { toast(e.message, true); } };
+  if (id) $('#plDel').onclick = async () => { if (!confirm('Delete this plan? If clients use it, it is only hidden.')) return; try { const r = await sbq(AUTH.client.rpc('admin_plan_delete', { p_id: id })); toast(r === 'hidden' ? 'Clients use this plan — it is hidden for new clients' : 'Plan deleted'); hideModal('#stageModal'); ADM2.plans = null; renderAdmin(); } catch (e) { toast(e.message, true); } };
+  showModal('#stageModal');
+}
+function admPayments() {
+  const P = ADM2.pays || [], m30 = P.filter(p => Date.now() - new Date(p.paid_at).getTime() < 30 * 864e5), sum = a => a.reduce((s2, p) => s2 + (+p.amount || 0), 0);
+  return `<div class="adm-ks2">${`<div class="adm-k glass"><b style="color:var(--green)">${inr(sum(m30))}</b><small>Received · last 30 days</small></div><div class="adm-k glass"><b>${m30.length}</b><small>Payments · last 30 days</small></div><div class="adm-k glass"><b style="color:var(--blue-2)">${inr(sum(P))}</b><small>Received in total</small></div>`}</div>
+    <div class="rcard glass" style="margin-top:14px"><div class="cm-ch-h"><h3>Payments</h3><span class="muted" style="font-size:12.5px">Record a payment from Clients → Manage</span></div>
+    <div class="tblwrap"><table class="tbl"><thead><tr><th>Date</th><th>Client</th><th class="num">Amount</th><th>Method</th><th>Reference</th><th>Covers</th><th>Paid until</th><th>Recorded by</th></tr></thead><tbody>
+    ${P.map(p => `<tr style="cursor:default"><td>${esc(fmtDate(String(p.paid_at).slice(0, 10)))}</td><td><b>${esc(p.workspace_name)}</b></td><td class="num"><b>${inr(p.amount)}</b></td><td>${esc(p.method || '-')}</td><td class="muted">${esc(p.reference || '-')}</td><td>${p.months ? p.months + ' mo' : '—'}</td><td>${p.period_end ? esc(fmtDate(String(p.period_end).slice(0, 10))) : '—'}</td><td class="muted">${esc(p.recorded_by || '')}</td></tr>`).join('') || '<tr><td colspan="8" class="empty">No payments yet.</td></tr>'}</tbody></table></div></div>`;
+}
+function admTeam() {
+  const T = ADM2.team || [], sup = admCan('super');
+  return `<div class="rcard glass"><div class="cm-ch-h"><div><h3>Platform team</h3><p class="sub muted">People who run Nodevers with you. They sign in with their own email + password — no shared keys. Every action is logged.</p></div></div>
+    ${sup ? `<div class="adm-add"><input class="input" id="tmEmail" type="email" placeholder="teammate@email.com"><select class="input" id="tmRole">${PLAT_ROLES.filter(r => r[0] !== 'super').concat(PLAT_ROLES.filter(r => r[0] === 'super')).map(([k, n]) => `<option value="${k}">${n}</option>`).join('')}</select><button class="btn primary" id="tmAdd">Add to team</button></div>` : '<p class="help">Only a super admin can add or remove team members.</p>'}
+    <div class="adm-roles">${PLAT_ROLES.map(([k, n, d]) => `<span><b>${n}</b> — ${d}</span>`).join('')}</div>
+    <div class="tblwrap" style="margin-top:10px"><table class="tbl"><thead><tr><th>Email</th><th>Role</th><th>Account</th><th>Added by</th><th>Since</th><th></th></tr></thead><tbody>
+    ${T.map(t => `<tr style="cursor:default"><td><b>${esc(t.email)}</b></td><td>${sup ? `<select class="input sm" data-tmrole="${esc(t.email)}">${PLAT_ROLES.map(([k, n]) => `<option value="${k}" ${k === t.role ? 'selected' : ''}>${n}</option>`).join('')}</select>` : esc((PLAT_ROLES.find(r => r[0] === t.role) || [0, t.role])[1])}</td>
+      <td>${t.has_account ? '<span class="adm-ok">✓ Signed up</span>' : '<span class="muted">Not signed up yet — ask them to create an account with this email</span>'}</td><td class="muted">${esc(t.added_by || '—')}</td><td class="muted">${esc(fmtDate(String(t.created_at).slice(0, 10)))}</td><td>${sup ? `<button class="btn sm danger" data-tmdel="${esc(t.email)}">Remove</button>` : ''}</td></tr>`).join('')}</tbody></table></div>
+    <p class="help">Tip: ask every team member to use a strong password. Two-step login (authenticator app) is the next security step.</p></div>`;
+}
+function admBrand() {
+  const s = PLAT.s;
+  return `<div class="rcard glass"><h3>Platform brand</h3><p class="sub muted">Website name, logo and colours every client sees. Clients can not change these.</p>
+    <div class="cf-foot" style="border:0;margin-top:0;padding-top:0"><div class="grow"></div><button class="btn primary" data-admbrand>Edit name, logo & white label</button></div></div>
+    <div class="rcard glass" style="margin-top:14px"><h3>Plans & trials</h3><p class="sub muted">How new sign-ups start and what happens when time runs out.</p>
+    <div class="form" style="grid-template-columns:repeat(3,1fr)"><div class="field"><label>Free trial (days)</label><input class="input" type="number" min="0" max="90" id="psTrial" value="${esc(s.trialDays || 14)}"></div>
+      <div class="field"><label>Plan for new sign-ups</label><select class="input" id="psPlan">${(ADM2.plans || []).filter(p => p.active).map(p => `<option value="${esc(p.id)}" ${p.id === s.defaultPlan ? 'selected' : ''}>${esc(p.name)}</option>`).join('')}</select></div>
+      <div class="field"><label>Grace days after expiry</label><input class="input" type="number" min="0" max="30" id="psGrace" value="${esc(s.graceDays || 3)}"></div>
+      <div class="field"><label>Support WhatsApp (with country code)</label><input class="input" id="psPhone" value="${esc(s.supportPhone || '')}" placeholder="91 98…"></div><div class="field"><label>Support email</label><input class="input" id="psMail" value="${esc(s.supportEmail || '')}"></div><div class="field"><label>Renew / payment link (optional)</label><input class="input" id="psLink" value="${esc(s.renewLink || '')}" placeholder="https://rzp.io/…"></div></div>
+    <div class="cf-foot"><span class="cf-safe">Clients see the support contact and renew link in Settings → Plan & billing and on the expiry banner.</span><div class="grow"></div><button class="btn primary" id="psSave">Save</button></div></div>`;
+}
+function admAudit() {
+  const A = ADM2.audit || [];
+  return `<div class="rcard glass"><h3>Audit log</h3><p class="sub muted">Every change made by the platform team.</p><div class="tblwrap"><table class="tbl"><thead><tr><th>When</th><th>Who</th><th>What</th><th>Client / item</th><th>Details</th></tr></thead><tbody>
+    ${A.map(a => { const ws = (ADM2.rows || []).find(r => r.workspace_id === a.target); return `<tr style="cursor:default"><td class="muted">${esc(fmtWhen(a.at))}</td><td>${esc(a.actor)}</td><td><b>${esc(a.action)}</b></td><td>${esc(ws ? ws.name : a.target)}</td><td class="muted adm-det">${esc(JSON.stringify(a.details || {}).slice(0, 140))}</td></tr>`; }).join('') || '<tr><td colspan="5" class="empty">Nothing yet.</td></tr>'}</tbody></table></div></div>`;
+}
+(function () {
+  const v = $('#v-admin'); if (!v) return;
+  v.addEventListener('click', async e => {
+    const t = e.target;
+    const tb = t.closest('[data-admtab]'); if (tb) { ADM2.tab = tb.dataset.admtab; store.set('nv.admTab', ADM2.tab); return renderAdmin(true); }
+    const fl = t.closest('[data-admf]'); if (fl) { ADM2.f = ADM2.f === fl.dataset.admf ? '' : fl.dataset.admf; return renderAdmin(); }
+    if (t.closest('[data-admreload]') || t.closest('#admRefresh')) { ADM2.rows = ADM2.plans = ADM2.pays = ADM2.team = null; return renderAdmin(); }
+    if (t.closest('[data-admopen]')) return;
+    const sb = t.closest('[data-admsub]'); if (sb && admCan('super', 'admin', 'finance')) return openSubManager(sb.dataset.admsub);
+    const pl = t.closest('[data-admplan]'); if (pl) return openPlanEditor(pl.dataset.admplan);
+    if (t.closest('[data-admbrand]')) { openSettings('brand'); return; }
+    if (t.id === 'tmAdd') { const em = $('#tmEmail').value.trim(); if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)) return toast('Enter a valid email', true);
+      try { await sbq(AUTH.client.rpc('admin_team_save', { p_email: em, p_role: $('#tmRole').value })); toast('✓ Added — they get access when they sign in with ' + em); ADM2.team = null; renderAdmin(); } catch (er) { toast(er.message, true); } return; }
+    const td = t.closest('[data-tmdel]'); if (td) { if (!confirm(`Remove ${td.dataset.tmdel} from the platform team?`)) return; try { await sbq(AUTH.client.rpc('admin_team_remove', { p_email: td.dataset.tmdel })); toast('Removed'); ADM2.team = null; renderAdmin(); } catch (er) { toast(er.message, true); } return; }
+    if (t.id === 'psSave') { const pairs = [['trialDays', String(Math.max(0, Math.min(90, +$('#psTrial').value || 0)))], ['defaultPlan', $('#psPlan').value || ''], ['graceDays', String(Math.max(0, Math.min(30, +$('#psGrace').value || 0)))], ['supportPhone', $('#psPhone').value.replace(/\D/g, '')], ['supportEmail', $('#psMail').value.trim()], ['renewLink', /^https:\/\//.test($('#psLink').value.trim()) ? $('#psLink').value.trim() : '']];
+      try { for (const [k, val] of pairs) await sbq(AUTH.client.rpc('admin_setting_save', { p_key: k, p_value: val })); pairs.forEach(([k, val]) => { PLAT.s[k] = val; }); toast('✓ Saved'); } catch (er) { toast(er.message, true); } return; }
+  });
+  v.addEventListener('change', async e => { const r = e.target.closest('[data-tmrole]'); if (!r) return; try { await sbq(AUTH.client.rpc('admin_team_save', { p_email: r.dataset.tmrole, p_role: r.value })); toast('✓ Role updated'); ADM2.team = null; } catch (er) { toast(er.message, true); renderAdmin(); } });
+  v.addEventListener('input', e => { if (e.target.id === 'admQ') { ADM2.q = e.target.value; clearTimeout(ADM2.tm); ADM2.tm = setTimeout(() => { const pos = e.target.selectionStart; renderAdmin(); const q = $('#admQ'); if (q) { q.focus(); q.setSelectionRange(pos, pos); } }, 200); } });
+})();
+
+/* ================= client side: my plan, expiry banner, view-only when expired ================= */
+const SUB = { me: null, ws: '' };
+async function subLoad() {
+  if (!cloud) { SUB.me = null; return; }
+  try { SUB.me = await sbq(AUTH.client.rpc('my_subscription', { p_ws: AUTH.ws })); SUB.ws = AUTH.ws; } catch (e) { SUB.me = null; }
+  subApply();
+}
+function subApply() {
+  const m = SUB.me, old = $('#subBanner'); if (old) old.remove();
+  const locked = !!(m && m.state === 'locked' && AUTH.role !== 'platform');
+  document.body.classList.toggle('ro', !!(cloud && (AUTH.role === 'client' || AUTH.role === 'platform' || locked)));
+  document.body.classList.toggle('sub-locked', locked);
+  if (!m || AUTH.role === 'platform' || m.status === 'free') return;
+  const d = m.days_left, sup = m.support || {}, renew = sup.renewLink ? `<a class="btn sm primary" href="${esc(sup.renewLink)}" target="_blank" rel="noopener">Renew now</a>` : '', wa = sup.supportPhone ? `<a class="btn sm" href="https://wa.me/${esc(sup.supportPhone)}?text=${encodeURIComponent('Hi, I want to renew my ' + brand().brandName + ' plan for ' + (AUTH.wsName || ''))}" target="_blank" rel="noopener">WhatsApp us</a>` : '';
+  let msg = '';
+  if (locked) msg = `<b>${m.status === 'suspended' ? 'Your workspace is paused.' : m.status === 'trial' ? 'Your free trial has ended.' : 'Your plan has expired.'}</b> Your data is safe — the workspace is view-only until you renew.`;
+  else if (d !== null && d <= 7) msg = `<b>${m.status === 'trial' ? 'Free trial' : (m.plan_name || 'Your plan')} ends ${d <= 0 ? 'today' : d === 1 ? 'tomorrow' : 'in ' + d + ' days'}.</b> Renew to keep everything running.`;
+  if (!msg) return;
+  const b = document.createElement('div'); b.id = 'subBanner'; b.className = 'banner sub-banner ' + (locked ? 'bad' : 'warn');
+  b.innerHTML = `<svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg><div class="grow">${msg}</div><button class="btn sm" data-planopen>See plan</button>${wa}${renew}`;
+  const top = $('header.top'); if (top) top.after(b);
+}
+function planBody() {
+  const m = SUB.me; if (!cloud) return '<p class="help" style="margin:0">Plans apply once you sign in to your cloud workspace.</p>';
+  if (!m) return '<p class="help" style="margin:0">Plan details appear after the 11 database update.</p>';
+  const L = m.limits || {}, U = m.usage || {}, sup = m.support || {}, row = (k, n) => { const lim = +L[k] || 0, u = +U[k] || 0; return `<div class="pl-u"><span>${n}</span><b>${u.toLocaleString('en-IN')}${lim ? ' / ' + lim.toLocaleString('en-IN') : ''}</b><div class="adm-u"><i style="width:${lim ? Math.min(100, u / lim * 100) : 4}%;background:${lim && u >= lim ? 'var(--coral)' : 'var(--blue-2)'}"></i></div></div>`; };
+  const [sl] = SUB_ST[m.status] || [m.status], d = m.days_left;
+  return `<div class="pl-top"><div><b class="pl-name">${esc(m.plan_name || 'No plan')}</b><span class="tp-st ${m.state === 'locked' ? 'bad' : (SUB_ST[m.status] || [0, ''])[1]}"><i></i>${m.state === 'locked' ? 'Expired' : sl}</span></div>
+      <div class="pl-price">${m.price != null && m.status !== 'free' ? inr(m.price) + `<small>/${m.period === 'year' ? 'year' : m.period === 'month' ? 'month' : 'once'}</small>` : ''}</div></div>
+    ${d !== null && m.status !== 'free' ? `<p class="help">${m.status === 'trial' ? 'Trial' : 'Paid'} until <b>${esc(fmtDate(String(m.ends_at).slice(0, 10)))}</b> · ${d < 0 ? `ended ${Math.abs(d)} days ago` : d + ' days left'}</p>` : ''}
+    ${m.status !== 'free' ? `<div class="pl-us">${row('members', 'Team members')}${row('leads', 'Leads')}${row('wa_messages', 'WhatsApp this month')}${row('store_connections', 'Store connections')}</div>` : ''}
+    ${(m.features || []).length ? `<ul class="pl-f">${m.features.map(f => `<li>${esc(f)}</li>`).join('')}</ul>` : ''}
+    ${(m.payments || []).length ? `<div class="pl-pay"><b>Payments</b>${m.payments.map(p => `<span>${esc(fmtDate(String(p.paid_at).slice(0, 10)))} · ${inr(p.amount)} · ${esc(p.method || '')}${p.period_end ? ' · until ' + esc(fmtDate(String(p.period_end).slice(0, 10))) : ''}</span>`).join('')}</div>` : ''}
+    <div class="cf-foot"><span class="cf-safe">To change or renew your plan, contact us.</span><div class="grow"></div>${sup.supportEmail ? `<a class="btn sm" href="mailto:${esc(sup.supportEmail)}">Email</a>` : ''}${sup.supportPhone ? `<a class="btn sm" href="https://wa.me/${esc(sup.supportPhone)}" target="_blank" rel="noopener">WhatsApp</a>` : ''}${sup.renewLink ? `<a class="btn sm primary" href="${esc(sup.renewLink)}" target="_blank" rel="noopener">Renew / upgrade</a>` : ''}</div>`;
+}
+document.addEventListener('click', e => { if (e.target.closest('[data-planopen]')) { store.set('nv.setOpen', 's-plan'); openSettings('plan'); } });
+
 function platformBar() {
   const old = $('#platBar'); if (old) old.remove();
   if (!(cloud && AUTH.role === 'platform')) return;
@@ -7921,8 +8149,7 @@ function platformBar() {
   b.innerHTML = `🛡 Platform view of <b>${esc(AUTH.wsName || '')}</b> — read-only<span class="grow"></span><button class="btn sm" data-go="admin">Admin Console</button>${own ? `<button class="btn sm" data-admopen="${esc(own.workspace_id)}">Back to ${esc(own.name)}</button>` : ''}`;
   const main = $('.view.active') && $('.view.active').parentElement; if (main) main.insertBefore(b, main.firstChild);
 }
-document.addEventListener('click', e => { const o = e.target.closest('[data-admopen]'); if (o) { AUTH.wsList = AUTH.wsList || []; if (!AUTH.wsList.some(w => w.workspace_id === o.dataset.admopen) && ADM.rows) { const r = ADM.rows.find(x => x.workspace_id === o.dataset.admopen); if (r) AUTH.wsList.push({ workspace_id: r.workspace_id, name: r.name, role: 'platform' }); } switchWorkspace(o.dataset.admopen); } if (e.target.closest('#admRefresh')) { ADM.at = 0; renderAdmin(); } });
-document.addEventListener('input', e => { if (e.target.id === 'admQ') { ADM.q = e.target.value; const pos = e.target.selectionStart; renderAdmin(); const q = $('#admQ'); if (q) { q.focus(); q.setSelectionRange(pos, pos); } } });
+document.addEventListener('click', e => { const o = e.target.closest('[data-admopen]'); if (o) { AUTH.wsList = AUTH.wsList || []; if (!AUTH.wsList.some(w => w.workspace_id === o.dataset.admopen) && ADM2.rows) { const r = ADM2.rows.find(x => x.workspace_id === o.dataset.admopen); if (r) AUTH.wsList.push({ workspace_id: r.workspace_id, name: r.name, role: 'platform' }); } switchWorkspace(o.dataset.admopen); } });
 
 /* ================= sales execution: calls, tasks, timeline, team performance ================= */
 const salesReady = () => demo || (cloud && AUTH.v7);
@@ -8196,7 +8423,8 @@ const HELP_GUIDE = [
   ['automation', 'Automation canvas', 'automation workflow flow canvas node trigger build with ai design', '**Automation**: build flows with nodes (triggers, CRM, WhatsApp, logic, AI, n8n). Type an idea in **Build with AI** and press **Generate**, then **Build on canvas**. Note: flows here are designs for now; workflows that really run live in **n8n Services**.'],
   ['n8n', 'n8n Services (your workflows)', 'n8n workflow connect api key ngrok docker run now credentials red node', '**n8n Services → Connect n8n**: paste your n8n address (https) and API key. **Workflows**: switch them on/off, see last runs. **Set up** opens a workflow as nodes — red steps need your key, link or setting; click one, fill it, save (it goes straight into your n8n). **▶ Run now** starts it (first press **+ Add Run button**; the workflow must be ON). n8n on your own PC needs Docker + ngrok running.'],
   ['kits', 'Industry Kits', 'industry kit template setup furniture real estate salon gym restaurant', '**Industry Kits**: pick your business type → preview stages, lead sources, automations and WhatsApp templates → choose what to apply.'],
-  ['settings', 'Branding and white label', 'settings brand logo name colour white label domain', '**Settings → Branding**: website name, logo, your name and photo. **White label**: colours, login text, hide "Powered by", sub-domain or your own domain (with DNS check).'],
+  ['settings', 'Your profile, logo and website name', 'settings profile photo name brand logo website name colour white label domain', '**Settings → Your profile**: your name and photo. The website name, logo and colours are set by the platform team for everyone, so they are not in your settings.'],
+  ['plan', 'Plan, trial and billing', 'plan billing subscription trial expire expired renew payment upgrade limit days left invoice paused view only', '**Settings → Plan & billing** shows your plan, days left, usage (team, leads, WhatsApp this month, stores) and your payments. A banner appears 7 days before the end. When a trial or plan ends the workspace becomes **view-only** — nothing is deleted. Use **Renew** or **WhatsApp us** on the banner to renew; it opens again as soon as the payment is recorded.'],
   ['ro', 'View-only / missing buttons', 'view only cannot edit button missing permission hidden not allowed', 'If buttons are missing or you see "View-only access", your owner limited your access (role **Client**, an area limit or a switched-off action). Ask the owner to open **Team → Access** for you.'],
 ];
 const HELP = { open: false, msgs: [], busy: false };
@@ -8268,7 +8496,7 @@ document.addEventListener('click', e => {
   if (t.closest('[data-focus-note]')) { $('#ntext').focus(); return; }
   const upx = t.closest('[data-upclear]'); if (upx) { e.stopPropagation(); const u = upx.closest('.uploader'); upStore[u.dataset.scope][u.dataset.up] = ''; refreshUploader(u); return; }
   const up = t.closest('.uploader'); if (up) { if (up.classList.contains('busy')) return; pendingUp = { scope: up.dataset.scope, key: up.dataset.up }; $('#fileIn').value = ''; $('#fileIn').click(); return; }
-  const stab = t.closest('[data-stab]'); if (stab) { setSTab(stab.dataset.stab); return; }
+  const stab = t.closest('.segb[data-stab]'); if (stab) { setSTab(stab.dataset.stab); return; }
   const th = t.closest('th[data-sort]'); if (th) { const k = th.dataset.sort; ui.sort = { k, d: ui.sort.k === k ? -ui.sort.d : 1 }; renderLeads(); return; }
   const mem = t.closest('[data-mem]'); if (mem) { openMemberModal(S.team.find(m => String(m.memberId) === mem.dataset.mem)); return; }
   const mtog = t.closest('[data-memtoggle]'); if (mtog) { toggleMember(mtog.dataset.memtoggle); return; }
@@ -8311,6 +8539,7 @@ setTheme(store.get('leadnode.theme') || 'light');
 /* ================= start ================= */
 (function grabInvite() { const m = location.hash.match(/^#invite=([a-f0-9]{20,80})$/i); if (m) { store.set('leadnode.invite', { t: m[1], at: Date.now() }); history.replaceState(null, '', location.pathname + '#dashboard'); } })();
 famInit(); settingsAccordion(); mobileBar(); applyModules();
+if (sbConf().url) platLoad();
 go(location.hash.slice(1) || 'home');
 authInit().then(ok => { if (ok) load(); });
 </script>

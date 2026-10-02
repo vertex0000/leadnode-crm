@@ -73,6 +73,7 @@ Deno.serve(async (req) => {
     if (!u?.user) return json({ error: 'Please sign in again.' }, 401);
     const { data: m } = await db.from('workspace_members').select('role').eq('workspace_id', ws).eq('user_id', u.user.id).maybeSingle();
     if (!m || m.role === 'client') return json({ error: 'You do not have permission to send messages here.' }, 403);
+    const { data: wst } = await db.rpc('ws_state', { ws }); if (wst === 'locked') return json({ error: 'Your plan has ended — this workspace is view-only. Renew it in Settings → Plan & billing.' }, 402);
 
     // Team access (07 update): switches set by the owner + which leads this person may reach
     const { data: ax } = await db.rpc('member_access', { p_ws: ws, p_uid: u.user.id });

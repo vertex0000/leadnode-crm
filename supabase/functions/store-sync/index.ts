@@ -180,7 +180,8 @@ Deno.serve(async (req) => {
       const { data: sec } = await db.from('app_config').select('value').eq('key', 'cron_secret').maybeSingle();
       if (!sec?.value || req.headers.get('x-cron-secret') !== sec.value) return json({ error: 'Forbidden' }, 403);
       const { data: rows } = await db.from('store_connections').select('*').limit(200);
-      const due = (rows ?? []).filter((r: any) => { const mins = Number(r.config?.sync_minutes ?? 15); if (!mins) return false; return !r.last_sync_at || Date.now() - new Date(r.last_sync_at).getTime() >= (mins - 2) * 6e4; });
+      const locked = new Set<string>(); for (const w of [...new Set((rows ?? []).map((r: any) => r.workspace_id))]) { const { data: s } = await db.rpc('ws_state', { ws: w }); if (s === 'locked') locked.add(w as string); }
+      const due = (rows ?? []).filter((r: any) => { if (locked.has(r.workspace_id)) return false; const mins = Number(r.config?.sync_minutes ?? 15); if (!mins) return false; return !r.last_sync_at || Date.now() - new Date(r.last_sync_at).getTime() >= (mins - 2) * 6e4; });
       const out: any[] = []; for (const r of due.slice(0, 25)) { try { out.push({ ws: r.workspace_id, platform: r.platform, ...(await syncOne(r)) }); } catch (e) { out.push({ ws: r.workspace_id, platform: r.platform, error: (e as Error).message }); } }
       return json({ ok: true, synced: out.length, out });
     }
@@ -197,7 +198,7 @@ Deno.serve(async (req) => {
     const platform = String(b.platform ?? ''); if (!ADAPT[platform]) return json({ error: 'Unknown platform.' }, 400);
     const { data: cur } = await db.from('store_connections').select('*').eq('workspace_id', ws).eq('platform', platform).maybeSingle();
     if (b.action === 'delete') { await db.from('store_connections').delete().eq('workspace_id', ws).eq('platform', platform); return json({ ok: true }); }
-    if (b.action === 'sync') { if (!cur) return json({ error: 'Connect it first.' }, 400); return json({ ok: true, ...(await syncOne(cur)) }); }
+    if (b.action === 'sync') { if (!cur) return json({ error: 'Connect it first.' }, 400); const { data: wst } = await db.rpc('ws_state', { ws }); if (wst === 'locked') return json({ error: 'Your plan has ended — this workspace is view-only. Renew it in Settings → Plan & billing.' }, 402);  return json({ ok: true, ...(await syncOne(cur)) }); }
     const cfgIn = (b.config && typeof b.config === 'object') ? b.config : {};
     const config: any = { sync_minutes: [0, 15, 60, 360, 1440].includes(Number(cfgIn.sync_minutes)) ? Number(cfgIn.sync_minutes) : 15 };
     if (platform === 'shopify') config.store_url = cut(String(cfgIn.store_url ?? '').toLowerCase().replace(/^https?:\/\//, '').replace(/\/.*$/, ''), 120);

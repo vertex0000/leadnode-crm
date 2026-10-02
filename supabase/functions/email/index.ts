@@ -76,6 +76,7 @@ Deno.serve(async (req) => {
     const { data: m } = await db.from('workspace_members').select('role').eq('workspace_id', ws).eq('user_id', u.user.id).maybeSingle();
     if (!m || m.role === 'client') return json({ error: 'You do not have permission here.' }, 403);
     const admin = m.role === 'owner' || m.role === 'admin';
+    if (b.action === 'send' || b.action === 'test') { const { data: wst } = await db.rpc('ws_state', { ws }); if (wst === 'locked') return json({ error: 'Your plan has ended — this workspace is view-only. Renew it in Settings → Plan & billing.' }, 402); }
 
     if (b.action === 'connect') {
       if (!admin) return json({ error: 'Only the owner or an admin can connect email.' }, 403);
