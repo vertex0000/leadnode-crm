@@ -711,7 +711,7 @@ body.ro [data-add],body.ro .addcard,body.ro #addMember,body.ro [data-lginvite],b
 .tp-meta{display:flex;gap:6px;flex-wrap:wrap}.tp-meta span{font-size:11.5px;font-weight:600;padding:2px 8px;border-radius:6px;border:1px solid var(--line);color:var(--muted)}
 .tp-phone,.wa-chat{background:radial-gradient(120% 90% at 0% 0%,color-mix(in srgb,var(--blue-2) 18%,transparent),transparent 60%),radial-gradient(110% 90% at 100% 100%,color-mix(in srgb,#A78BFA 16%,transparent),transparent 62%),linear-gradient(160deg,color-mix(in srgb,#fff 4%,var(--glass-3)),var(--glass-3))}
 .tp-phone{border-radius:12px;padding:12px;display:flex;flex-direction:column;min-height:120px;border:1px solid var(--line)}
-.tp-act{display:flex;gap:6px;align-items:center;margin-top:auto}.tp-act .ibtn{margin-left:auto}
+.tp-act{display:flex;gap:6px;align-items:center;margin-top:auto;flex-wrap:wrap}.tp-act .ibtn{margin-left:auto}
 .tp-empty{grid-column:1/-1;padding:28px;border-radius:16px;text-align:center;display:flex;flex-direction:column;gap:8px;align-items:center}
 .tpe{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:16px}.tpe-p{position:sticky;top:0;align-self:start}.te-btns{display:flex;flex-direction:column;gap:6px}.te-b{display:flex;gap:6px;align-items:center;flex-wrap:wrap}.te-b .input{flex:1;min-width:110px}
 @media (max-width:820px){.tpe{grid-template-columns:1fr}.tp-q{margin-left:0;width:100%}}
@@ -766,7 +766,7 @@ body.n8l-noscroll{overflow:hidden}
 .acc-areas{display:flex;flex-wrap:wrap;gap:6px;min-height:30px;align-items:center}.acc-perms{display:grid;grid-template-columns:1fr 1fr;gap:6px 18px}.acc-p{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:6px 0;border-bottom:1px solid var(--line);font-size:13px;font-weight:600}
 @media (max-width:640px){.acc-opts,.acc-perms{grid-template-columns:1fr}}
 .nbadge{margin-left:auto;min-width:18px;height:18px;padding:0 5px;border-radius:9px;background:var(--coral);color:#fff;font-size:11px;font-weight:800;display:inline-grid;place-items:center}
-body.no-sales [data-go="tasks"],body.no-sales [data-go="calls"]{display:none!important}
+body.no-sales [data-go="tasks"],body.no-sales [data-go="calls"],body.no-orders [data-go="orders"]{display:none!important}
 .cl-outs{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}.cl-o{display:flex;gap:8px;align-items:center;border:1px solid var(--line);background:var(--glass-3);color:var(--text);border-radius:12px;padding:9px 11px;font-weight:700;font-size:13px;cursor:pointer;text-align:left}.cl-o span{width:22px;height:22px;border-radius:7px;display:grid;place-items:center;background:var(--line);font-size:12px}.cl-o.pos span{background:var(--green-soft);color:var(--green)}.cl-o.neg span{background:color-mix(in srgb,var(--coral) 16%,transparent);color:var(--coral)}.cl-o.on{border-color:var(--blue-2);box-shadow:0 0 0 3px var(--blue-soft)}
 .cl-row.pos .n8l-i{background:var(--green-soft);color:var(--green)}.cl-row.neg .n8l-i{background:color-mix(in srgb,var(--coral) 16%,transparent);color:var(--coral)}.n8l-r a,.tk-r a{cursor:pointer;color:inherit;text-decoration:underline;text-decoration-color:var(--line-2)}
 .cl-bar{display:grid;grid-template-columns:130px 1fr 28px;gap:8px;align-items:center;font-size:12.5px;margin:7px 0}.cl-bar .bar{background:var(--blue-2)}.cl-bar.pos .bar{background:var(--green)}.cl-bar.neg .bar{background:var(--coral)}.cl-bar b{text-align:right}
@@ -800,6 +800,24 @@ body.no-sales [data-go="tasks"],body.no-sales [data-go="calls"]{display:none!imp
 .hp-typing{display:flex;gap:4px}.hp-typing i{width:7px;height:7px;border-radius:50%;background:var(--muted);animation:hpDot 1s infinite}.hp-typing i:nth-child(2){animation-delay:.15s}.hp-typing i:nth-child(3){animation-delay:.3s}@keyframes hpDot{50%{opacity:.25;transform:translateY(-3px)}}
 .hp-c{display:flex;gap:6px;overflow-x:auto;padding:0 12px 8px}.hp-c .chip{white-space:nowrap;font-size:12px}.hp-f{display:flex;gap:8px;padding:10px 12px 12px;border-top:1px solid var(--line)}.hp-f .input{flex:1}
 @media (max-width:640px){.hp-fab{right:14px;bottom:14px;width:50px;height:50px}.hp{right:8px;bottom:74px}}
+.tb-cts{display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:6px}.tb-ct{display:flex;gap:6px;align-items:center;justify-content:flex-start;border:1px solid var(--line);background:var(--glass-3);color:var(--text);border-radius:10px;padding:7px 9px;font-size:12.5px;font-weight:700;cursor:pointer}.tb-ct span{width:20px;text-align:center}.tb-ct.on{border-color:var(--blue-2);box-shadow:0 0 0 3px var(--blue-soft)}.tb-ct.dis{opacity:.55}
+.tb-btns{display:flex;flex-direction:column;gap:8px}.tb-b{border:1px solid var(--line);border-radius:12px;padding:10px;display:flex;flex-direction:column;gap:8px;background:var(--glass-3)}.tb-b.qr{border-left:3px solid var(--blue-2)}
+.tb-bh{display:flex;gap:8px;align-items:center}.tb-bh b{font-size:13px;white-space:nowrap}.tb-bh select{flex:1;min-width:0}.tb-bi{width:20px;height:20px;border-radius:6px;display:grid;place-items:center;background:var(--blue-soft);color:var(--blue-2);font-size:11px;font-weight:800;flex:none}
+.tb-bf{display:flex;gap:6px;flex-wrap:wrap}.tb-bf .input{flex:1;min-width:140px}.tb-acts{display:flex;flex-direction:column;gap:6px;padding-left:10px;border-left:2px dashed var(--line-2)}
+.tb-act{display:flex;gap:8px;align-items:flex-start;padding:7px 8px;border-radius:10px;background:var(--glass-2,var(--card));border:1px solid var(--line)}.tb-act b{font-size:12.5px;display:block;margin-bottom:4px}.tb-af{display:flex;gap:6px;flex-wrap:wrap}.tb-af .input{flex:1;min-width:120px}.tb-an{width:18px;height:18px;border-radius:50%;display:grid;place-items:center;background:var(--line);font-size:10.5px;font-weight:800;flex:none;margin-top:1px}
+.tb-add{max-width:260px}.tb-act>.grow{flex:1;min-width:0}.tb-pm{height:120px;border-radius:10px;background:var(--line) center/cover;margin:-2px -2px 6px}.tb-pm.ph{display:grid;place-items:center;font-size:13px;font-weight:700;color:var(--muted);height:90px}
+.tb-flow{margin-top:12px;display:flex;flex-direction:column;gap:6px}.tb-fr{display:flex;flex-direction:column;gap:2px;padding:7px 9px;border:1px solid var(--line);border-radius:10px;font-size:12.5px}.tb-fb{font-weight:700}.tb-fa{color:var(--muted)}.tb-fa b{color:var(--blue-2)}
+.tb-map{height:min(640px,calc(100vh - 210px));border:1px solid var(--line);border-radius:12px}
+.modal .box:has(.tpe),.modal .box:has(.tb-map){width:min(1080px,100%)}
+.tfc{position:absolute;background:var(--glass-3);border:1px solid var(--line-2);border-radius:14px;box-shadow:0 8px 24px rgba(0,0,0,.18);overflow:hidden;cursor:pointer;user-select:none;transition:border-color .2s,transform .2s}
+.tfc:hover{border-color:var(--blue-2)}
+.tfc-h{display:flex;gap:10px;align-items:center;height:52px;padding:0 12px;border-bottom:1px solid var(--line);background:linear-gradient(90deg,var(--blue-soft),transparent)}
+.tfc-h b{font-size:13px;display:block;max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.tfc-h small{font-size:11px;color:var(--muted)}.tfc-h em{color:var(--green);font-style:normal;font-weight:700}
+.tfc-ic{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;background:var(--line);font-size:14px;flex:none}
+.tfc-b{height:40px;padding:6px 12px;font-size:11.5px;line-height:1.4;color:var(--muted);overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.tfc-r{height:46px;margin:0 8px;padding:5px 8px;border-top:1px dashed var(--line);display:flex;flex-direction:column;justify-content:center;position:relative}
+.tfc-r span{font-size:12.5px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.tfc-r small{font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.tfc-r small b{color:var(--blue-2)}
+.tfc-r.go::after{content:'';position:absolute;right:-9px;top:50%;width:9px;height:9px;margin-top:-5px;border-radius:50%;background:var(--green);box-shadow:0 0 0 3px rgba(34,197,94,.25)}#leadModal .tb-tpe{grid-template-columns:minmax(0,1.3fr) minmax(0,1fr)}
 .imp-batch{display:flex;flex-direction:column;gap:6px;margin:12px 0 4px;font-size:13px;font-weight:600}.imp-batch small{font-weight:500;color:var(--muted)}.imp-batch .input{max-width:320px}
 .imp-done{display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px;padding:18px 8px}.imp-ok{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;font-size:22px;font-weight:800;color:#fff;background:linear-gradient(135deg,var(--blue-2),#A78BFA)}
 .srcTag{font-style:normal;font-size:10px;font-weight:700;padding:1px 5px;border-radius:4px;margin-left:4px;vertical-align:1px}
@@ -1094,6 +1112,7 @@ body.no-sales [data-go="tasks"],body.no-sales [data-go="calls"]{display:none!imp
     <button class="sbtn" data-go="pipeline"><svg class="i" viewBox="0 0 24 24"><circle cx="5" cy="6" r="2"/><circle cx="19" cy="6" r="2"/><circle cx="12" cy="18" r="2"/><path d="M7 6h10M6 8l5 8.3M18 8l-5 8.3"/></svg><span class="lbl">Pipeline</span></button>
     <button class="sbtn" data-go="leads"><svg class="i" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13"/><circle cx="3.5" cy="6" r="1"/><circle cx="3.5" cy="12" r="1"/><circle cx="3.5" cy="18" r="1"/></svg><span class="lbl">Leads</span></button>
     <button class="sbtn" data-go="tasks"><svg class="i" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg><span class="lbl">Tasks</span><span class="nbadge" id="tasksBadge" hidden></span></button>
+    <button class="sbtn" data-go="orders"><svg class="i" viewBox="0 0 24 24"><path d="M6 7h12l-1 13H7Z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg><span class="lbl">Orders</span></button>
     <button class="sbtn" data-go="calls"><svg class="i" viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg><span class="lbl">Calls</span></button>
     <button class="sbtn" data-go="industry"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M17.5 14v7M14 17.5h7"/></svg><span class="lbl">Industry Kits</span></button>
     <div class="sgrp">Messaging</div>
@@ -1243,6 +1262,13 @@ body.no-sales [data-go="tasks"],body.no-sales [data-go="calls"]{display:none!imp
       <div id="tasksBody"></div>
     </section>
 
+    <!-- ORDERS -->
+    <section class="view" id="v-orders">
+      <div class="head"><div><div class="eyebrow">Sales</div><h1>Orders</h1><p class="sub">Orders placed from WhatsApp buttons (Order Now, Add to Cart, Cash on Delivery…) or added by your team.</p></div>
+        <div class="head-actions"><button class="btn primary" data-ordnew=""><svg class="i" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>New order</button></div></div>
+      <div id="ordersBody"></div>
+    </section>
+
     <!-- CALLS -->
     <section class="view" id="v-calls">
       <div class="head"><div><div class="eyebrow">Sales</div><h1>Calls</h1><p class="sub">Every call your team makes — who called, what happened, and what's next.</p></div>
@@ -1276,7 +1302,7 @@ body.no-sales [data-go="tasks"],body.no-sales [data-go="calls"]{display:none!imp
     <!-- TEMPLATES -->
     <section class="view" id="v-templates">
       <div class="head"><div><div class="eyebrow">Messaging</div><h1>Templates</h1><p class="sub">Approved messages you can send anytime — campaigns, offers, reminders.</p></div>
-        <div class="head-actions"><button class="btn" id="tpSync">⟳ Sync from WhatsApp</button><button class="btn primary" id="tpNew"><svg class="i" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>New template</button></div></div>
+        <div class="head-actions"><button class="btn" id="tpFlow">⇢ Flow map</button><button class="btn" id="tpSync">⟳ Sync from WhatsApp</button><button class="btn primary" id="tpNew"><svg class="i" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>New template</button></div></div>
       <div class="tp-bar" id="tplBar"></div>
       <div class="tpgrid" id="tplgrid"></div>
     </section>
@@ -1576,7 +1602,7 @@ function demoData() {
   leads.push(Object.assign(L('L009', 'Hardik Shah', '919800000009', 'Café Mocha', 'Cafe', 'Ahmedabad', 'Meta Ad', 220000, 'Contacted', 'Warm', ago(-1), ago(1), 'Wants catalogue for 15 chairs', ago(4)), { state: 'Gujarat', district: 'Ahmedabad', assignedTo: 'Amit Rao', email: '' }));
   const who = ['Riya Patil', 'Amit Rao', 'Shivam']; acts.forEach((a, i) => { if (a.type !== 'Lead Added') a.doneBy = (leads.find(l => l.leadId === a.leadId) || {}).assignedTo || who[i % 3]; });
   for (let i = 0; i < 26; i++) { const l = leads[i % leads.length]; acts.push(A(l.leadId, i % 12, i % 3 ? 'WhatsApp Sent' : 'Email Sent', i % 3 ? 'Follow-up message' : 'Catalogue email')); acts[acts.length - 1].doneBy = l.assignedTo; }
-  return { messages: demoMessages(), broadcasts: [], leads, activities: acts, calls: demoCalls(), tasks: demoTasks(), team: [{ memberId: 'T001', name: 'Shivam', role: 'Admin', active: true, team: 'Head office' }, { memberId: 'T002', name: 'Riya Patil', role: 'Sales', active: true, team: 'Mumbai Team' }, { memberId: 'T003', name: 'Amit Rao', role: 'Sales', active: true, team: 'Pune Team' }], lists: DEFAULT_LISTS, templates: [], flows: store.get('leadnode.demoFlows') || [] };
+  return { messages: demoMessages(), broadcasts: [], leads, activities: acts, calls: demoCalls(), tasks: demoTasks(), orders: [{ orderId: 'O001', leadId: 'L006', items: '20 × Cafe chair (walnut)', amount: 120000, status: 'Delivered', payment: 'UPI', trackingUrl: '', source: 'Team', createdAt: new Date(Date.now() - 6 * 864e5).toISOString() }, { orderId: 'O002', leadId: 'L005', items: '30 × Cafe chair', amount: 180000, status: 'COD', payment: 'COD', trackingUrl: 'https://track.example/abc', source: 'WhatsApp · order_menu', createdAt: new Date(Date.now() - 864e5).toISOString() }, { orderId: 'O003', leadId: 'L009', items: 'Order Now', amount: '', status: 'New', payment: '', trackingUrl: '', source: 'WhatsApp · order_menu', createdAt: new Date(Date.now() - 36e5).toISOString() }], team: [{ memberId: 'T001', name: 'Shivam', role: 'Admin', active: true, team: 'Head office' }, { memberId: 'T002', name: 'Riya Patil', role: 'Sales', active: true, team: 'Mumbai Team' }, { memberId: 'T003', name: 'Amit Rao', role: 'Sales', active: true, team: 'Pune Team' }], lists: DEFAULT_LISTS, templates: demoTemplates(), flows: store.get('leadnode.demoFlows') || [] };
 }
 function demoAutoTask(l, old) {
   S.tasks = S.tasks || []; S.tasks.filter(t => t.leadId === l.leadId && t.source === 'auto' && t.status === 'Open' && t.stage === old).forEach(t => { t.status = 'Closed'; t.doneBy = 'Moved to ' + l.stage; });
@@ -1586,6 +1612,30 @@ function demoAutoTask(l, old) {
 function demoCalls() {
   const t = Date.now(), O = ['Interested', 'Answered', 'No answer', 'Callback', 'Not interested', 'Answered', 'Busy / switched off', 'Interested', 'Wrong number', 'Answered', 'No answer', 'Callback'], L = ['L001', 'L002', 'L003', 'L004', 'L005', 'L007', 'L008', 'L009'], W = { L001: 'Riya Patil', L002: 'Riya Patil', L003: 'Amit Rao', L004: 'Riya Patil', L005: 'Amit Rao', L007: 'Amit Rao', L008: 'Riya Patil', L009: 'Amit Rao' };
   return O.map((o, i) => { const lid = L[i % L.length]; return { callId: 'C' + String(i + 1).padStart(3, '0'), leadId: lid, member: W[lid], phone: '9198000000' + lid.slice(-2), direction: 'out', outcome: o, durationSec: /No answer|Busy|Wrong/.test(o) ? 0 : 60 + i * 40, notes: o === 'Interested' ? 'Wants price list' : '', calledAt: new Date(t - i * 0.8 * 864e5).toISOString() }; });
+}
+function demoTemplates() {
+  const B = (kind, label, meta, actions, extra) => Object.assign({ kind, label, meta, url: '', phone: '', actions: actions || [] }, extra || {});
+  const T = (name, cat, use, header, body, footer, flow) => { flow.buttons = flow.buttons.map((b, i) => Object.assign({ index: i }, b));
+    return { templateName: name, category: cat, language: 'en', header, body, footer, metaStatus: 'Approved', quality: 'GREEN', useCase: use, flow,
+      buttons: flow.buttons.map(b => (b.meta === 'URL' ? '🔗 ' : b.meta === 'PHONE_NUMBER' ? '📞 ' : '') + b.label).join(' | ') }; };
+  return [
+    T('welcome_menu', 'Marketing', 'Welcome', '', 'Hi {{1}}, welcome to Nodevers Furniture 👋 What would you like to do today?', 'Reply STOP to unsubscribe', { content: 'text', buttons: [
+      B('view_product', 'See Diwali offers', 'QUICK_REPLY', [{ type: 'send_template', template: 'diwali_offer' }]),
+      B('order_now', 'Order Now', 'QUICK_REPLY', [{ type: 'create_order', status: 'New' }, { type: 'send_template', template: 'order_confirm' }]),
+      B('talk_agent', 'Talk to Agent', 'QUICK_REPLY', [{ type: 'create_task', title: '{{name}} wants to talk to an agent', days: 0, priority: 'High' }, { type: 'send_text', text: 'Connecting you to our team 🙂' }])] }),
+    T('diwali_offer', 'Marketing', 'Offer / promotion', '[image]', 'Hi {{1}}, our Diwali sale is live — {{2}} off on all cafe chairs till Sunday 🎉', '', { content: 'image', mediaUrl: '', buttons: [
+      B('order_now', 'Order Now', 'QUICK_REPLY', [{ type: 'create_order', status: 'New' }, { type: 'add_tag', tag: 'Hot' }, { type: 'send_template', template: 'order_confirm' }]),
+      B('book_demo', 'Book Demo', 'QUICK_REPLY', [{ type: 'change_stage', stage: 'Interested' }, { type: 'create_task', title: 'Book a demo with {{name}}', days: 0, priority: 'High' }]),
+      B('website', 'Visit Website', 'URL', [], { url: 'https://nodevers.example/shop' })] }),
+    T('order_confirm', 'Utility', 'Order / payment update', '', 'Thanks {{1}}! Your order {{2}} is received. How would you like to pay?', '', { content: 'text', buttons: [
+      B('pay_now', 'Pay Now', 'QUICK_REPLY', [{ type: 'send_payment_link', url: 'https://rzp.io/l/nodevers-demo' }, { type: 'update_order', status: 'Confirmed' }]),
+      B('cod', 'Cash on Delivery', 'QUICK_REPLY', [{ type: 'update_order', status: 'COD', text: 'Done ✅ Order {{order_id}} is Cash on Delivery.' }, { type: 'send_template', template: 'order_update' }]),
+      B('cancel_order', 'Cancel Order', 'QUICK_REPLY', [{ type: 'cancel_order' }])] }),
+    T('order_update', 'Utility', 'Order / payment update', '', 'Hi {{1}}, your order {{2}} is now {{3}}. Thank you for shopping with us!', '', { content: 'text', buttons: [
+      B('track_order', 'Track Order', 'QUICK_REPLY', [{ type: 'track_order' }]),
+      B('reorder', 'Reorder', 'QUICK_REPLY', [{ type: 'create_order', status: 'New', text: 'Reorder placed ✅ — order {{order_id}}.' }]),
+      B('rate_us', 'Rate Us', 'QUICK_REPLY', [{ type: 'add_tag', tag: 'Happy' }, { type: 'send_text', text: 'Thank you {{first_name}} 🙏' }])] }),
+  ];
 }
 function demoTasks() {
   const t = Date.now(), K = (id, lid, title, dh, pr, who, src, st) => ({ taskId: id, leadId: lid, title, dueAt: new Date(t + dh * 36e5).toISOString(), priority: pr, assignedTo: who, status: st || 'Open', source: src, stage: '', remind: true, createdAt: new Date(t - 864e5).toISOString() });
@@ -1612,6 +1662,9 @@ function demoApi(action, d) {
     case 'saveTask': { S.tasks = S.tasks || []; if (d.taskId) { const t = S.tasks.find(x => x.taskId === d.taskId); if (!t) throw new Error('Task not found'); Object.assign(t, d); return t; } const t = Object.assign({ status: 'Open', createdAt: new Date().toISOString() }, d, { taskId: nextId(S.tasks, 'taskId', 'K') }); S.tasks.push(t); return t; }
     case 'deleteTask': S.tasks = (S.tasks || []).filter(t => t.taskId !== d.id); return { deleted: d.id };
     case 'refreshCampaigns': return [];
+    case 'saveTplFlow': { const t = (S.templates || []).find(x => x.templateName === d.templateName); if (!t) throw new Error('Template not found'); t.flow = d.flow; return t; }
+    case 'saveOrder': { S.orders = S.orders || []; if (d.orderId) { const o = S.orders.find(x => x.orderId === d.orderId); Object.assign(o, d, { updatedAt: new Date().toISOString() }); if (o.leadId && d.logMsg) log(o.leadId, 'Order', d.logMsg, me()); return o; } const o = Object.assign({ status: 'New', createdAt: new Date().toISOString() }, d, { orderId: nextId(S.orders, 'orderId', 'O') }); S.orders.unshift(o); if (o.leadId) log(o.leadId, 'Order', `${o.orderId} created · ${o.status}`, me()); return o; }
+    case 'deleteOrder': S.orders = (S.orders || []).filter(o => o.orderId !== d.id); return { deleted: d.id };
     case 'saveTplInfo': { const t = (S.templates || []).find(x => x.templateName === d.templateName); if (!t) throw new Error('Template not found'); Object.assign(t, { useCase: d.useCase, segment: d.segment, tags: d.tags, notes: d.notes }); return t; }
     case 'updateTeamMember': { const m = S.team.find(x => x.memberId === d.id); if (!m) throw new Error('Member not found'); Object.assign(m, d); delete m.id; return m; }
   }
@@ -1663,7 +1716,7 @@ function ring(pct, label, val, color) {
 
 /* ================= load ================= */
 function applyData(d) {
-  S = Object.assign({ leads: [], activities: [], team: [], templates: [], flows: [], messages: [], calls: [], tasks: [], campaignStats: [] }, d);
+  S = Object.assign({ leads: [], activities: [], team: [], templates: [], flows: [], messages: [], calls: [], tasks: [], campaignStats: [], orders: [] }, d);
   S.lists = Object.assign({}, DEFAULT_LISTS, d.lists || {});
   stageSig = (d.lists && d.lists.stages || []).join('|');
   S.leads.forEach(l => { l.leadId = String(l.leadId); l.phone = String(l.phone || ''); });
@@ -1697,7 +1750,7 @@ function finishLoad(anim) {
   taskReminders(); { const b = $('#tasksBadge'), n = salesReady() ? (S.tasks || []).filter(t => t.status === 'Open' && taskState(t) === 'overdue' && (AUTH.role !== 'member' || t.assignedTo === me())).length : 0; if (b) { b.hidden = !n; b.textContent = n; } }
 }
 /** Render only the screen you're looking at; the others re-render when you open them */
-const VIEW_RENDER = { admin: a => renderAdmin(a), tasks: a => renderTasks(a), calls: a => renderCalls(a), performance: a => renderPerformance(a), analytics: a => renderAnalytics(a), industry: a => renderIndustry(a), n8n: a => renderN8n(a), automation: () => autoCanvas().sync(), dashboard: a => renderDashboard(a), pipeline: a => renderPipeline(a), leads: a => renderLeads(a), team: a => { renderTeam(a); renderLogins(); }, broadcast: () => renderBroadcast(), whatsapp: () => renderInbox(), reports: a => renderReports(a), templates: () => renderTemplates(), scripts: () => renderScripts(true), ads: a => renderAds(a) };
+const VIEW_RENDER = { orders: a => renderOrders(a), admin: a => renderAdmin(a), tasks: a => renderTasks(a), calls: a => renderCalls(a), performance: a => renderPerformance(a), analytics: a => renderAnalytics(a), industry: a => renderIndustry(a), n8n: a => renderN8n(a), automation: () => autoCanvas().sync(), dashboard: a => renderDashboard(a), pipeline: a => renderPipeline(a), leads: a => renderLeads(a), team: a => { renderTeam(a); renderLogins(); }, broadcast: () => renderBroadcast(), whatsapp: () => renderInbox(), reports: a => renderReports(a), templates: () => renderTemplates(), scripts: () => renderScripts(true), ads: a => renderAds(a) };
 const staleViews = new Set();
 const activeView = () => { const v = $('.view.active'); return v ? v.id.slice(2) : 'dashboard'; };
 function renderAll(anim) {
@@ -4763,7 +4816,7 @@ const areaValues = k => [...new Set((S.leads || []).map(l => String(l[k] || '').
 const PERMS = [['add', 'Add leads'], ['edit', 'Edit leads & move stages'], ['delete', 'Delete leads'], ['import', 'Import Excel / CSV'], ['export', 'Export leads'], ['whatsapp', 'WhatsApp chats'], ['email', 'Send emails'], ['broadcast', 'Bulk broadcasts'], ['calls', 'Log calls'], ['tasks', 'Tasks'], ['analytics', 'See team analytics'], ['automation', 'Automation & n8n']];
 const SCOPES = { all: ['All leads', 'Sees every lead in the business'], area: ['Only their area', 'Leads whose State, District or City is in their areas — plus leads assigned to them'], own: ['Only assigned to them', 'Just the leads where “Assign to” is this person'] };
 const can = k => !cloud || /^(owner|admin)$/.test(AUTH.role || '') || (AUTH.role === 'member' && !(AUTH.access && AUTH.access.perms && AUTH.access.perms[k] === false));
-function applyAccess() { document.body.classList.toggle('is-platform', !!(cloud && AUTH.platform)); document.body.classList.toggle('cl-tenant', !!(cloud && !AUTH.platform)); PERMS.forEach(([k]) => document.body.classList.toggle('np-' + k, !can(k))); document.body.classList.toggle('no-sales', !(demo || (cloud && AUTH.v7))); }
+function applyAccess() { document.body.classList.toggle('is-platform', !!(cloud && AUTH.platform)); document.body.classList.toggle('cl-tenant', !!(cloud && !AUTH.platform)); PERMS.forEach(([k]) => document.body.classList.toggle('np-' + k, !can(k))); document.body.classList.toggle('no-sales', !(demo || (cloud && AUTH.v7))); document.body.classList.toggle('no-orders', !(demo || (cloud && AUTH.v8))); }
 async function moveStage(id, stage) {
   const l = S.leads.find(x => x.leadId === id); if (!l || l.stage === stage) return;
   flashId = id; setTimeout(() => { flashId = null; }, 1500);
@@ -4840,6 +4893,7 @@ function renderPanel(id) {
         <div class="row" style="justify-content:flex-end"><button class="btn primary sm" id="nsave">Add to Journey</button></div></div>
       ${salesReady() ? `<div><div class="sec-t" style="margin-bottom:8px;display:flex;align-items:center">Tasks <span class="grow"></span><button class="btn sm" data-tknew="${esc(l.leadId)}">+ Task</button><button class="btn sm" data-calllog="${esc(l.leadId)}" style="margin-left:6px">${I.phone}Log call</button></div>
         <div class="tk-list mini">${(S.tasks || []).filter(t => t.leadId === l.leadId && t.status === 'Open').map(taskRow).join('') || '<p class="muted" style="margin:0">No open tasks.</p>'}</div></div>` : ''}
+      ${(demo || (cloud && AUTH.v8)) && ((S.orders || []).some(o => o.leadId === l.leadId) || can('edit')) ? `<div><div class="sec-t" style="margin-bottom:8px;display:flex;align-items:center">Orders <span class="grow"></span><button class="btn sm" data-ordnew="${esc(l.leadId)}">+ Order</button></div>${(S.orders || []).filter(o => o.leadId === l.leadId).map(o => `<div class="tk-r" data-ordedit="${esc(o.orderId)}" style="cursor:pointer;border:1px solid var(--line);border-radius:12px;margin-bottom:6px"><div class="grow"><b>${esc(o.orderId)} · ${esc(o.items || 'Order')}</b><small class="muted">${o.amount ? inr(o.amount) + ' · ' : ''}${esc(fmtWhen(o.createdAt))}</small></div><span class="tp-st ${ordCls(o.status)}"><i></i>${esc(o.status)}</span></div>`).join('') || '<p class="muted" style="margin:0">No orders.</p>'}</div>` : ''}
       <div><div class="sec-t" style="margin-bottom:8px">Timeline <span class="muted" style="font-weight:500;font-size:12px">${tl.length} events</span></div>
         <div class="tl-f">${[['', 'All'], ['wa', 'WhatsApp'], ['em', 'Email'], ['cl', 'Calls'], ['tk', 'Tasks'], ['st', 'Stages'], ['nt', 'Notes']].map(([k, n]) => `<button class="chip ${SALES.tlFilter === k ? 'on' : ''}" data-tlf="${k}">${n}${k ? ` <small>${tl.filter(x => x.kind === k).length}</small>` : ''}</button>`).join('')}</div>
         <div class="journey tl">${tl.filter(x => !SALES.tlFilter || x.kind === SALES.tlFilter).map((a, i) => `<div class="jn tl-${a.kind} ${a.inb ? 'inb' : ''} ${a.open ? 'next' : ''}" style="--i:${i}"><b>${esc(a.title)}</b>${a.text ? `<p>${esc(a.text)}</p>` : ''}<time>${esc(a.t ? fmtWhen(new Date(a.t).toISOString()) : '')}${a.by ? ' · ' + esc(a.by) : ''}</time></div>`).join('') || '<p class="muted">No activity yet.</p>'}
@@ -4984,7 +5038,8 @@ $('#fileIn').addEventListener('change', async e => {
 const SB_COLS = {
   leads: ['lead_id', 'created_on', 'name', 'phone', 'email', 'email_opt_out', 'wa_opt_out', 'business_name', 'business_type', 'city', 'state', 'district', 'source', 'budget', 'stage', 'tag', 'assigned_to', 'follow_up_date', 'last_contact', 'notes', 'business_photo', 'client_photo'],
   activities: ['activity_id', 'lead_id', 'date_time', 'type', 'details', 'done_by'],
-  templates: ['template_name', 'category', 'language', 'header', 'body', 'footer', 'buttons', 'meta_status', 'meta_id', 'quality', 'reject_reason', 'use_case', 'segment', 'tags', 'notes'],
+  templates: ['template_name', 'category', 'language', 'header', 'body', 'footer', 'buttons', 'meta_status', 'meta_id', 'quality', 'reject_reason', 'use_case', 'segment', 'tags', 'notes', 'flow'],
+  orders: ['order_id', 'lead_id', 'items', 'amount', 'status', 'payment', 'tracking_url', 'notes', 'source'],
   broadcasts: ['broadcast_id', 'name', 'channel', 'template', 'subject', 'body', 'audience_filter', 'contacts', 'sent', 'failed', 'delivered', 'read', 'replies', 'scheduled_for', 'sent_at', 'status'],
   flows: ['flow_id', 'flow_name', 'trigger', 'status', 'flow_json', 'updated_on'],
   team: ['member_id', 'name', 'role', 'phone', 'email', 'active'],
@@ -5019,6 +5074,8 @@ function toRow(table, obj) {
     else if (SB_INT.includes(col)) v = Math.max(0, parseInt(v, 10) || 0);
     else if (col === 'active' || col === 'email_opt_out' || col === 'wa_opt_out') v = v === true || v === 1 || /^(true|1|yes)$/i.test(String(v));
     else if (col === 'flow_json') v = typeof v === 'string' ? v : JSON.stringify(v || {});
+    else if (col === 'flow') v = v && typeof v === 'object' ? v : {};
+    else if (col === 'amount') { const n = Number(String(v == null ? '' : v).replace(/[^\d.]/g, '')); v = v === '' || v == null || isNaN(n) ? null : n; }
     else v = v == null ? '' : String(v);
     row[col] = v;
   });
@@ -5048,13 +5105,14 @@ async function sbApi(action, d = {}) {
     case 'ping': return 'pong';
     case 'getAll': {
       const acc = await cl.rpc('my_access', { p_ws: ws }); AUTH.access = acc.error ? null : acc.data; AUTH.v7 = !acc.error;
-      const [leads, activities, team, templates, broadcasts, flows, settings, messages, calls, tasks, cstats] = await Promise.all([
+      const [leads, activities, team, templates, broadcasts, flows, settings, messages, calls, tasks, cstats, orders] = await Promise.all([
         sbAll('leads', 'created_at'), sbAll('activities', 'date_time'), sbAll('team', 'member_id'), sbAll('templates', 'template_name'),
         sbAll('broadcasts', 'broadcast_id'), sbAll('flows', 'flow_id'), sbSettings(),
         sbq(T('messages').select('*').eq('workspace_id', ws).order('time', { ascending: false }).limit(1500)),
-        AUTH.v7 ? sbAll('calls', 'called_at') : [], AUTH.v7 ? sbAll('tasks', 'due_at') : [], AUTH.v7 ? sbq(T('campaign_stats').select('*').eq('workspace_id', ws)).catch(() => []) : []]);
+        AUTH.v7 ? sbAll('calls', 'called_at') : [], AUTH.v7 ? sbAll('tasks', 'due_at') : [], AUTH.v7 ? sbq(T('campaign_stats').select('*').eq('workspace_id', ws)).catch(() => []) : [],
+        sbq(T('orders').select('*').eq('workspace_id', ws).order('created_at', { ascending: false }).limit(2000)).then(r => { AUTH.v8 = true; return r; }, () => { AUTH.v8 = false; return []; })]);
       let stages = null; try { stages = JSON.parse(settings.stagesJson || 'null'); } catch (e) { }
-      return { calls: calls.map(fromRow), tasks: tasks.map(fromRow), campaignStats: cstats.map(fromRow), leads: leads.map(fromRow), activities: activities.map(fromRow), team: team.map(fromRow), templates: templates.map(fromRow), broadcasts: broadcasts.map(fromRow), flows: flows.map(fromRow), messages: messages.reverse().map(fromRow), lists: Array.isArray(stages) && stages.length ? { stages } : {}, settings };
+      return { orders: orders.map(fromRow), calls: calls.map(fromRow), tasks: tasks.map(fromRow), campaignStats: cstats.map(fromRow), leads: leads.map(fromRow), activities: activities.map(fromRow), team: team.map(fromRow), templates: templates.map(fromRow), broadcasts: broadcasts.map(fromRow), flows: flows.map(fromRow), messages: messages.reverse().map(fromRow), lists: Array.isArray(stages) && stages.length ? { stages } : {}, settings };
     }
     case 'addLead': {
       if (!String(d.name || '').trim()) throw new Error('Name is required');
@@ -5107,6 +5165,17 @@ async function sbApi(action, d = {}) {
       if (!AUTH.v7) throw new Error('Run the database update 07_teams_tasks_calls.sql first.');
       return fromRow(await sbq(T('templates').update({ use_case: String(d.useCase || '').slice(0, 40), segment: String(d.segment || '').slice(0, 80), tags: String(d.tags || '').slice(0, 200), notes: String(d.notes || '').slice(0, 1000) }).eq('workspace_id', ws).eq('template_name', d.templateName).select().single()));
     }
+    case 'saveTplFlow': {
+      if (!AUTH.v8) throw new Error('Run the database update 08_platform_flows.sql first.');
+      return fromRow(await sbq(T('templates').update({ flow: d.flow || {} }).eq('workspace_id', ws).eq('template_name', d.templateName).select().single()));
+    }
+    case 'saveOrder': {
+      if (!AUTH.v8) throw new Error('Run the database update 08_platform_flows.sql first.');
+      const row = toRow('orders', d); row.workspace_id = ws; if (!row.lead_id) row.lead_id = null;
+      if (!row.order_id) { delete row.order_id; const o = fromRow(await sbq(T('orders').insert(row).select().single())); if (o.leadId) await sbLog(o.leadId, 'Order', `${o.orderId} created · ${o.status}${o.amount ? ' · ₹' + o.amount : ''}`, me()); return o; }
+      const o = fromRow(await sbq(T('orders').update(row).eq('workspace_id', ws).eq('order_id', d.orderId).select().single())); if (o.leadId && d.logMsg) await sbLog(o.leadId, 'Order', d.logMsg, me()); return o;
+    }
+    case 'deleteOrder': await sbq(T('orders').delete().eq('workspace_id', ws).eq('order_id', d.id)); return { deleted: d.id };
     case 'deleteTask': await sbq(T('tasks').delete().eq('workspace_id', ws).eq('task_id', d.id)); return { deleted: d.id };
     case 'refreshCampaigns': { if (!AUTH.v7) return []; await sbq(cl.rpc('refresh_campaign_stats', { p_ws: ws })); return (await sbq(T('campaign_stats').select('*').eq('workspace_id', ws))).map(fromRow); }
     case 'addActivity': {
@@ -5122,7 +5191,7 @@ async function sbApi(action, d = {}) {
     case 'saveTemplate': {
       const row = toRow('templates', d); row.workspace_id = ws; row.template_name = String(row.template_name || '').toLowerCase().replace(/[^a-z0-9_]+/g, '_').slice(0, 512);
       if (!row.template_name) throw new Error('Template name is required');
-      ['footer', 'meta_id', 'quality', 'reject_reason', 'use_case', 'segment', 'tags', 'notes'].forEach(k => { if (!row[k]) delete row[k]; });          // works before database updates 04 / 07
+      ['footer', 'meta_id', 'quality', 'reject_reason', 'use_case', 'segment', 'tags', 'notes'].forEach(k => { if (!row[k]) delete row[k]; }); if (!AUTH.v8) delete row.flow;          // works before database updates 04 / 07
       return fromRow(await sbq(T('templates').upsert(row, { onConflict: 'workspace_id,template_name' }).select().single()));
     }
     case 'addTeamMember': { const row = toRow('team', Object.assign({ active: true }, d)); delete row.member_id; row.workspace_id = ws; return fromRow(await sbq(T('team').insert(row).select().single())); }
@@ -5894,8 +5963,159 @@ function tplCard(t, i) {
     <div class="tp-meta">${t.useCase ? `<span class="tp-uc-c">${esc(t.useCase)}</span>` : ''}${t.segment ? `<span class="tp-uc-c seg">★ ${esc(t.segment)}</span>` : ''}<span>${esc(t.category || 'Marketing')}</span><span>${esc(t.language || 'en')}</span>${tplVars(t) ? `<span>${tplVars(t)} variable${tplVars(t) > 1 ? 's' : ''}</span>` : ''}${t.quality ? `<span>Quality: ${esc(t.quality)}</span>` : ''}</div>
     <div class="tp-phone"><div class="bub in tpl">${t.header ? `<b class="hd">${esc(t.header)}</b>` : ''}<span>${tplBody(t.body)}</span>${t.footer ? `<em class="ft">${esc(t.footer)}</em>` : ''}</div>${btns.map(b => `<div class="wa-qb">${esc(b)}</div>`).join('')}</div>
     ${t.rejectReason ? `<p class="bc-warn">Rejected: ${esc(t.rejectReason)}</p>` : ''}
-    <div class="tp-act">${TPL_STATUS[st] ? `<button class="btn sm primary" data-tpuse="${esc(t.templateName)}" ${st === 'Approved' ? '' : 'title="Works only after Meta approves it"'}>Use in broadcast</button>` : `<button class="btn sm primary" data-tpedit="${esc(t.templateName)}">Edit &amp; submit to Meta</button>`}<button class="btn sm" data-tplib="${esc(t.templateName)}" title="Use case, segment, tags">Library</button><button class="btn sm" data-tpdup="${esc(t.templateName)}">Duplicate</button><button class="ibtn" data-tpdel="${esc(t.templateName)}" title="Delete">${I.trash}</button></div></div>`;
+    <div class="tp-act">${TPL_STATUS[st] ? `<button class="btn sm primary" data-tpuse="${esc(t.templateName)}" ${st === 'Approved' ? '' : 'title="Works only after Meta approves it"'}>Use in broadcast</button>` : `<button class="btn sm primary" data-tpedit="${esc(t.templateName)}">Edit &amp; submit to Meta</button>`}<button class="btn sm" data-tpact="${esc(t.templateName)}" title="What each button does">Buttons & actions</button><button class="btn sm" data-tplib="${esc(t.templateName)}" title="Use case, segment, tags">Library</button><button class="btn sm" data-tpdup="${esc(t.templateName)}">Duplicate</button><button class="ibtn" data-tpdel="${esc(t.templateName)}" title="Delete">${I.trash}</button></div></div>`;
 }
+/* ---------- advanced template builder: content types, buttons, actions, flows ---------- */
+const TB_CONTENT = [['text', 'Text', '✎'], ['image', 'Image', '🖼'], ['video', 'Video', '▶'], ['pdf', 'PDF', '📄'], ['location', 'Location', '📍'], ['catalog', 'Catalog', '🛍'], ['product', 'Product card', '🏷'], ['payment', 'Payment link', '₹'], ['contact', 'Contact card', '👤']];
+// kind → [label, allowed WhatsApp button types (first = default), default actions]
+const TB_BTN = {
+  call_now: ['Call Now', ['PHONE_NUMBER']], whatsapp_now: ['WhatsApp Now', ['URL']], website: ['Visit Website', ['URL']], view_product: ['View Product', ['URL', 'QUICK_REPLY']],
+  order_now: ['Order Now', ['QUICK_REPLY'], [{ type: 'create_order', status: 'New', text: 'Thank you! Your order {{order_id}} is placed — our team will confirm shortly.' }, { type: 'create_task', title: 'Confirm order from {{name}}', days: 0, priority: 'High' }]],
+  add_cart: ['Add to Cart', ['QUICK_REPLY'], [{ type: 'create_order', status: 'Cart', text: 'Added to your cart 🛒' }]],
+  pay_now: ['Pay Now', ['URL', 'QUICK_REPLY'], [{ type: 'send_payment_link', url: 'https://' }]],
+  cod: ['Cash on Delivery', ['QUICK_REPLY'], [{ type: 'update_order', status: 'COD', text: 'Done ✅ Order {{order_id}} is Cash on Delivery.' }]],
+  view_order: ['View Order', ['QUICK_REPLY', 'URL'], [{ type: 'track_order' }]], track_order: ['Track Order', ['QUICK_REPLY', 'URL'], [{ type: 'track_order' }]],
+  cancel_order: ['Cancel Order', ['QUICK_REPLY'], [{ type: 'cancel_order' }]], download_catalog: ['Download Catalog', ['URL', 'CATALOG', 'QUICK_REPLY']],
+  book_demo: ['Book Demo', ['QUICK_REPLY', 'URL'], [{ type: 'change_stage', stage: 'Interested' }, { type: 'create_task', title: 'Book a demo with {{name}}', days: 0, priority: 'High' }, { type: 'send_text', text: 'Great! Our team will call you to fix a time.' }]],
+  contact_support: ['Contact Support', ['QUICK_REPLY'], [{ type: 'create_task', title: 'Support request from {{name}}', days: 0, priority: 'High' }, { type: 'send_text', text: 'Thanks — our support team will reply here shortly.' }]],
+  talk_agent: ['Talk to Agent', ['QUICK_REPLY'], [{ type: 'create_task', title: '{{name}} wants to talk to an agent', days: 0, priority: 'High' }, { type: 'send_text', text: 'Connecting you to our team 🙂' }]],
+  rate_us: ['Rate Us', ['URL', 'QUICK_REPLY']], reorder: ['Reorder', ['QUICK_REPLY'], [{ type: 'create_order', status: 'New', text: 'Reorder placed ✅ — order {{order_id}}.' }]],
+  refer_friend: ['Refer Friend', ['URL']], thank_you: ['Thank You', ['QUICK_REPLY'], [{ type: 'add_tag', tag: 'Happy' }]], custom: ['Custom Button', ['QUICK_REPLY', 'URL', 'PHONE_NUMBER']],
+};
+const TB_META = { QUICK_REPLY: 'Reply button (runs actions)', URL: 'Opens a link', PHONE_NUMBER: 'Calls a number', CATALOG: 'Opens your Meta catalog' };
+// action type → [label, fields [key, label, kind]]
+const TB_ACT = {
+  send_template: ['Send next template', [['template', 'Template', 'tpl'], ['params', 'Values for {{1}}, {{2}}… comma separated (optional) — e.g. {{first_name}}, {{order_id}}', 'text']]], send_text: ['Reply with text', [['text', 'Message', 'area']]],
+  open_link: ['Send a link', [['url', 'Link', 'url'], ['text', 'Message', 'text']]], open_form: ['Send a form link', [['url', 'Form link', 'url'], ['text', 'Message', 'text']]], open_product: ['Send a product link', [['url', 'Product link', 'url'], ['text', 'Message', 'text']]],
+  send_email: ['Send email', [['subject', 'Subject', 'text'], ['body', 'Email text', 'area']]], send_payment_link: ['Send payment link', [['url', 'Payment link', 'url'], ['text', 'Message (optional)', 'text']]],
+  create_order: ['Create order', [['items', 'Items', 'text'], ['amount', 'Amount ₹', 'num'], ['status', 'Status', 'ostatus'], ['text', 'Reply (optional)', 'text']]],
+  update_order: ['Update order', [['status', 'New status', 'ostatus'], ['text', 'Reply (optional)', 'text']]], cancel_order: ['Cancel order', [['text', 'Reply (optional)', 'text']]],
+  track_order: ['Track order (reply status)', [['text', 'Reply (optional)', 'text']]], generate_invoice: ['Send invoice summary', []],
+  assign_member: ['Assign team member', [['member', 'Member', 'member']]], add_tag: ['Add tag', [['tag', 'Tag', 'tag']]], change_stage: ['Change pipeline stage', [['stage', 'Stage', 'stage']]],
+  create_task: ['Create task', [['title', 'Task', 'text'], ['days', 'Due in days', 'num'], ['priority', 'Priority', 'prio']]],
+  trigger_workflow: ['Trigger workflow (n8n webhook)', [['url', 'Webhook URL (https)', 'url']]], run_ai_agent: ['Run AI agent (Gemini reply)', [['prompt', 'Instructions for the AI', 'area']]], custom_api: ['Custom API request (POST)', [['url', 'URL (https)', 'url']]],
+};
+const tbActNew = type => { const a = { type }; ((TB_ACT[type] || [0, []])[1]).forEach(([k, , kind]) => { if (kind === 'tag') a[k] = ((S.lists && S.lists.tags) || ['Hot'])[0]; else if (kind === 'stage') a[k] = stages()[0]; else if (kind === 'prio') a[k] = 'High'; else if (kind === 'ostatus') a[k] = 'New'; }); return a; };
+const tbNew = kind => { const k = TB_BTN[kind] || TB_BTN.custom; return { kind, text: kind === 'custom' ? '' : k[0], type: k[1][0], url: k[1][0] === 'URL' ? 'https://' : '', phone: '', actions: JSON.parse(JSON.stringify(k[2] || [])) }; };
+function tbLimits(btns) {
+  const c = t => btns.filter(b => b.type === t).length, err = [];
+  if (btns.length > 10) err.push('Max 10 buttons.'); if (c('URL') > 2) err.push('Max 2 link buttons (website, pay, track…).'); if (c('PHONE_NUMBER') > 1) err.push('Only 1 Call button.');
+  if (c('CATALOG') && btns.length > 1) err.push('A Catalog button must be the only button.');
+  const qr = btns.map(b => b.type === 'QUICK_REPLY'); if (qr.filter((x, i) => i && x !== qr[i - 1]).length > 1) err.push('WhatsApp groups buttons: keep all reply buttons together and all link / call buttons together (use ↑ to reorder).');
+  btns.forEach((b, i) => { if (b.type !== 'CATALOG' && !String(b.text || '').trim()) err.push(`Button ${i + 1} needs text.`); if (b.type === 'URL' && !/^https:\/\/\S+\.\S+/.test(b.url || '')) err.push(`Button ${i + 1} needs a full https link.`); if (b.type === 'PHONE_NUMBER' && String(b.phone || '').replace(/\D/g, '').length < 10) err.push(`Button ${i + 1} needs a phone number with country code.`); });
+  return err;
+}
+const tbFlowOf = e => ({ content: e.content || 'text', mediaUrl: e.mediaUrl || '', fileName: e.fileName || '', productId: e.productId || '', location: e.content === 'location' ? e.location : undefined, buttons: e.buttons.map((b, i) => ({ index: i, kind: b.kind || 'custom', label: b.text, meta: b.type, url: b.url || '', phone: b.phone || '', actions: b.type === 'QUICK_REPLY' ? (b.actions || []) : [] })) });
+const tbFromTemplate = t => {
+  const f = t.flow && typeof t.flow === 'object' ? t.flow : {}, hd = String(t.header || '');
+  const content = f.content || (/^\[image\]/i.test(hd) ? 'image' : /^\[video\]/i.test(hd) ? 'video' : /^\[document\]/i.test(hd) ? 'pdf' : /^\[location\]/i.test(hd) ? 'location' : 'text');
+  const parsed = String(t.buttons || '').split('|').map(x => x.trim()).filter(Boolean).map(x => /^🔗/.test(x) ? { type: 'URL', text: x.replace(/^🔗\s*/, ''), url: 'https://' } : /^📞/.test(x) ? { type: 'PHONE_NUMBER', text: x.replace(/^📞\s*/, ''), phone: '' } : { type: 'QUICK_REPLY', text: x });
+  const buttons = Array.isArray(f.buttons) && f.buttons.length ? f.buttons.map(b => ({ kind: b.kind || 'custom', text: b.label || '', type: b.meta || 'QUICK_REPLY', url: b.url || '', phone: b.phone || '', actions: JSON.parse(JSON.stringify(b.actions || [])) })) : parsed.map(b => Object.assign({ kind: 'custom', actions: [] }, b));
+  return { content, mediaUrl: f.mediaUrl || '', fileName: f.fileName || '', productId: f.productId || '', location: f.location || { lat: '', lng: '', name: '', address: '' }, buttons };
+};
+function tbActionRow(bi, ai, a) {
+  const def = TB_ACT[a.type] || ['Unknown', []], tpls = (S.templates || []).filter(x => x.templateName && x.templateName !== (TPL.edit || {}).name);
+  const fld = ([k, lab, kind]) => {
+    const v = a[k] == null ? '' : a[k], at = `data-tbaf="${bi}|${ai}|${k}"`;
+    if (kind === 'tpl') return `<select class="input sm" ${at}><option value="">Choose template…</option>${tpls.map(x => `<option ${x.templateName === v ? 'selected' : ''}>${esc(x.templateName)}</option>`).join('')}</select>`;
+    if (kind === 'stage') return `<select class="input sm" ${at}>${stages().map(x => `<option ${x === v ? 'selected' : ''}>${esc(x)}</option>`).join('')}</select>`;
+    if (kind === 'member') return `<select class="input sm" ${at}><option value="">Lead owner</option>${teamNames().map(x => `<option ${x === v ? 'selected' : ''}>${esc(x)}</option>`).join('')}</select>`;
+    if (kind === 'tag') return `<select class="input sm" ${at}>${(S.lists.tags || ['Hot', 'Warm', 'Cold']).concat(['Happy', 'Cart']).filter((x, i, arr) => arr.indexOf(x) === i).map(x => `<option ${x === v ? 'selected' : ''}>${esc(x)}</option>`).join('')}</select>`;
+    if (kind === 'prio') return `<select class="input sm" ${at}>${PRIO.map(x => `<option ${x === (v || 'High') ? 'selected' : ''}>${x}</option>`).join('')}</select>`;
+    if (kind === 'ostatus') return `<select class="input sm" ${at}>${['New', 'Cart', 'Confirmed', 'Paid', 'COD', 'Shipped', 'Delivered'].map(x => `<option ${x === (v || 'New') ? 'selected' : ''}>${x}</option>`).join('')}</select>`;
+    if (kind === 'area') return `<textarea class="input sm" rows="2" ${at} placeholder="${esc(lab)} — {{first_name}}, {{order_id}}, {{amount}}, {{tracking_url}} work">${esc(v)}</textarea>`;
+    return `<input class="input sm" ${at} ${kind === 'num' ? 'type="number" min="0"' : ''} value="${esc(v)}" placeholder="${esc(lab)}">`;
+  };
+  return `<div class="tb-act"><span class="tb-an">${ai + 1}</span><div class="grow"><b>${esc(def[0])}</b><div class="tb-af">${def[1].map(fld).join('')}</div></div><button type="button" class="ibtn" data-tbadel="${bi}|${ai}" title="Remove action">${I.x}</button></div>`;
+}
+function tbButtonsHTML(e) {
+  const err = tbLimits(e.buttons);
+  return `<div class="tb-btns">${e.buttons.map((b, i) => { const k = TB_BTN[b.kind] || TB_BTN.custom, types = k[1]; return `<div class="tb-b ${b.type === 'QUICK_REPLY' ? 'qr' : ''}">
+    <div class="tb-bh"><span class="tb-bi">${i + 1}</span><b>${esc(k[0])}</b><select class="input sm" data-tbtype="${i}" ${types.length < 2 ? 'disabled' : ''}>${types.map(t => `<option value="${t}" ${t === b.type ? 'selected' : ''}>${TB_META[t]}</option>`).join('')}</select><button type="button" class="ibtn" data-tbup="${i}" title="Move up" ${i ? '' : 'disabled'}>↑</button><button type="button" class="ibtn" data-tbdel="${i}" title="Remove">${I.x}</button></div>
+    <div class="tb-bf">${b.type !== 'CATALOG' ? `<input class="input sm" data-tbtx="${i}" maxlength="25" value="${esc(b.text)}" placeholder="Button text (25)">` : '<span class="muted" style="font-size:12px">Shows “View catalog” — needs a Meta Commerce catalog linked to your WhatsApp.</span>'}${b.type === 'URL' ? `<input class="input sm" data-tburl="${i}" value="${esc(b.url || '')}" placeholder="https://…">` : ''}${b.type === 'PHONE_NUMBER' ? `<input class="input sm" data-tbph="${i}" value="${esc(b.phone || '')}" placeholder="+91 98…">` : ''}</div>
+    ${b.type === 'QUICK_REPLY' ? `<div class="tb-acts">${(b.actions || []).map((a, ai) => tbActionRow(i, ai, a)).join('') || '<p class="muted" style="font-size:12px;margin:2px 0">No actions yet — when tapped, the reply just lands in your Inbox.</p>'}
+      <select class="input sm tb-add" data-tbaddact="${i}"><option value="">+ Add action when tapped…</option>${Object.entries(TB_ACT).map(([k2, v]) => `<option value="${k2}">${esc(v[0])}</option>`).join('')}</select></div>` : ''}</div>`; }).join('')}
+    ${e.buttons.length < 10 ? `<select class="input sm tb-add" data-tbaddbtn><option value="">+ Add button…</option>${Object.entries(TB_BTN).map(([k, v]) => `<option value="${k}">${esc(v[0])}</option>`).join('')}</select>` : ''}
+    ${err.length ? `<div class="bc-warn">${err.map(esc).join('<br>')}</div>` : `<small class="muted">${e.buttons.length}/10 buttons · ${e.buttons.filter(b => b.type === 'URL').length}/2 links · ${e.buttons.filter(b => b.type === 'PHONE_NUMBER').length}/1 call</small>`}</div>`;
+}
+function tbContentHTML(e) {
+  const c = e.content || 'text';
+  return `<div class="tb-cts">${TB_CONTENT.map(([k, n, ic]) => `<button type="button" class="tb-ct ${c === k ? 'on' : ''} ${k === 'contact' ? 'dis' : ''}" data-tbct="${k}"><span>${ic}</span>${n}</button>`).join('')}</div>
+    ${['image', 'video', 'pdf'].includes(c) ? `<div class="form" style="grid-template-columns:1fr ${c === 'pdf' ? '1fr' : ''};margin-top:8px"><div class="field"><label>${c === 'pdf' ? 'PDF' : c === 'video' ? 'Video (MP4 ≤16 MB)' : 'Image (JPG/PNG ≤5 MB)'} — public https link</label><input class="input" id="tbMedia" value="${esc(e.mediaUrl || '')}" placeholder="https://…/file.${c === 'pdf' ? 'pdf' : c === 'video' ? 'mp4' : 'jpg'}"></div>${c === 'pdf' ? `<div class="field"><label>File name customers see</label><input class="input" id="tbFile" value="${esc(e.fileName || '')}" placeholder="Catalogue-2026.pdf"></div>` : ''}</div><p class="help">Used as Meta's sample for approval and in every message. Tip: upload to Google Drive / your website and paste a direct link.</p>` : ''}
+    ${c === 'location' ? `<div class="form" style="grid-template-columns:1fr 1fr;margin-top:8px"><div class="field"><label>Latitude</label><input class="input" id="tbLat" value="${esc(e.location.lat || '')}" placeholder="19.0760"></div><div class="field"><label>Longitude</label><input class="input" id="tbLng" value="${esc(e.location.lng || '')}" placeholder="72.8777"></div><div class="field"><label>Place name</label><input class="input" id="tbLname" value="${esc(e.location.name || '')}" placeholder="Our showroom"></div><div class="field"><label>Address</label><input class="input" id="tbLaddr" value="${esc(e.location.address || '')}" placeholder="Shop 4, Andheri West, Mumbai"></div></div>` : ''}
+    ${c === 'catalog' || c === 'product' ? `<div class="field" style="margin-top:8px"><label>${c === 'product' ? 'Product' : 'Thumbnail product'} ID from your Meta catalog (Content ID / SKU)</label><input class="input" id="tbProd" value="${esc(e.productId || '')}" placeholder="SKU-CHAIR-01"></div><p class="help">Needs a Meta Commerce catalog connected to this WhatsApp number (WhatsApp Manager → Catalog). The template gets one “View catalog” button.</p>` : ''}
+    ${c === 'payment' ? '<p class="help" style="margin-top:8px">A <b>Pay Now</b> link button is added. Paste your Razorpay / UPI / Stripe payment link in it.</p>' : ''}
+    ${c === 'contact' ? '<p class="bc-warn" style="margin-top:8px">WhatsApp does not allow contact cards inside templates. You can send a contact card in a normal chat (within 24 hours of the customer\'s message).</p>' : ''}`;
+}
+function tbPreview(e) {
+  const c = e.content || 'text', media = c === 'image' && e.mediaUrl ? `<div class="tb-pm" style="background-image:url('${esc(safeUrl(e.mediaUrl))}')"></div>` : ['image', 'video', 'pdf', 'location', 'catalog', 'product'].includes(c) ? `<div class="tb-pm ph">${(TB_CONTENT.find(x => x[0] === c) || [0, 0, ''])[2]} ${c === 'pdf' ? esc(e.fileName || 'Document.pdf') : c === 'location' ? esc(e.location.name || 'Location') : c === 'catalog' || c === 'product' ? 'Catalog' : esc(c)}</div>` : '';
+  return `<div class="bub in tpl">${media}${c === 'text' && e.header ? `<b class="hd">${esc(e.header)}</b>` : ''}<span>${tplBody(e.body.replace(/\{\{(\d+)\}\}/g, (m, k) => e.examples[k - 1] ? e.examples[k - 1] : m))}</span>${e.footer ? `<em class="ft">${esc(e.footer)}</em>` : ''}<small>${nowStr().slice(11)}</small></div>${e.buttons.map(b => `<div class="wa-qb">${b.type === 'URL' ? '🔗 ' : b.type === 'PHONE_NUMBER' ? '📞 ' : b.type === 'CATALOG' ? '🛍 ' : '↩ '}${esc(b.type === 'CATALOG' ? 'View catalog' : b.text || '…')}</div>`).join('')}`;
+}
+function tbFlowSummary(e) {
+  const qr = e.buttons.filter(b => b.type === 'QUICK_REPLY');
+  if (!qr.length) return '';
+  return `<div class="tb-flow"><div class="bc-rh">What happens when tapped</div>${qr.map(b => `<div class="tb-fr"><span class="tb-fb">↩ ${esc(b.text || '…')}</span><span class="tb-fa">${(b.actions || []).map(a => a.type === 'send_template' ? `<b>→ ${esc(a.template || '?')}</b>` : esc((TB_ACT[a.type] || [a.type])[0])).join(' · ') || '<span class="muted">lands in Inbox</span>'}</span></div>`).join('')}</div>`;
+}
+/* buttons & actions for an existing (e.g. Meta-approved) template — no new Meta review needed */
+function openTplActions(name) {
+  const t = (S.templates || []).find(x => x.templateName === name); if (!t) return;
+  TPL.edit = Object.assign({ name, header: t.header && !/^\[/.test(t.header) ? t.header : '', body: t.body || '', footer: t.footer || '', examples: [], actionsOnly: true }, tbFromTemplate(t));
+  drawTplActions(); showModal('#leadModal');
+}
+function drawTplActions() {
+  const e = TPL.edit, media = ['image', 'video', 'pdf'].includes(e.content);
+  $('#leadBox').innerHTML = `<div class="m-head"><h2>Buttons & actions · ${esc(e.name)}</h2><button class="ibtn" data-close>${I.x}</button></div>
+    <p class="help" style="margin-bottom:10px">Decide what Nodevers does when a customer taps each reply button — send the next template, tag, move stage, create an order or task… Button texts come from WhatsApp; changing them needs a new template.</p>
+    <div class="tpe tb-tpe"><div class="tpe-f">${media ? `<div class="field"><label>${e.content === 'pdf' ? 'PDF' : e.content} link sent with every message (required)</label><input class="input" id="tbMedia" value="${esc(e.mediaUrl || '')}" placeholder="https://…"></div>` : ''}
+      <div class="tb-btns">${e.buttons.map((b, i) => `<div class="tb-b ${b.type === 'QUICK_REPLY' ? 'qr' : ''}"><div class="tb-bh"><span class="tb-bi">${i + 1}</span><b>${esc(b.text || 'Button')}</b><span class="muted" style="font-size:12px">${TB_META[b.type] || ''}</span></div>
+        ${b.type === 'QUICK_REPLY' ? `<div class="tb-acts">${(b.actions || []).map((a, ai) => tbActionRow(i, ai, a)).join('')}<select class="input sm tb-add" data-tbaddact="${i}"><option value="">+ Add action when tapped…</option>${Object.entries(TB_ACT).map(([k2, v]) => `<option value="${k2}">${esc(v[0])}</option>`).join('')}</select></div>` : ''}</div>`).join('') || '<p class="muted">This template has no buttons.</p>'}</div></div>
+      <div class="tpe-p"><div class="bc-rh">Preview</div><div class="wa-phone"><div class="wa-chat">${tbPreview(e)}</div></div>${tbFlowSummary(e)}</div></div>
+    <div class="m-foot"><button class="btn" data-close>Cancel</button><div class="grow"></div><button class="btn primary" data-tbsaveflow>Save actions</button></div>`;
+}
+function tbMapHTML(T) {
+  const byName = new Map(T.map(t => [t.templateName, t])), btns = t => (t.flow || {}).buttons || [];
+  const nexts = t => btns(t).map(b => (b.actions || []).filter(a => a.type === 'send_template' && byName.has(a.template)).map(a => a.template));
+  const targeted = new Set(T.flatMap(t => nexts(t).flat()));
+  const inFlow = T.filter(t => btns(t).some(b => (b.actions || []).length) || targeted.has(t.templateName));
+  if (!inFlow.length) return '';
+  // depth by BFS from the entry templates (not opened by any button); loops fall back to the first template
+  const depth = new Map(), order = [], q = inFlow.filter(t => !targeted.has(t.templateName));
+  if (!q.length) q.push(inFlow[0]);
+  q.forEach(t => depth.set(t.templateName, 0));
+  for (let i = 0; i < q.length; i++) { const t = q[i]; order.push(t); nexts(t).flat().forEach(n => { if (!depth.has(n)) { depth.set(n, depth.get(t.templateName) + 1); q.push(byName.get(n)); } }); }
+  inFlow.forEach(t => { if (!depth.has(t.templateName)) { depth.set(t.templateName, 0); order.push(t); } });
+  for (let r = 0; r < inFlow.length; r++) { let ch = false; order.forEach(t => nexts(t).flat().forEach(n => { const dn = depth.get(t.templateName) + 1; if (dn > depth.get(n) && dn < inFlow.length) { depth.set(n, dn); ch = true; } })); if (!ch) break; }   // a flow reads left → right
+  const CW = 290, GX = 84, HH = 52, BH = 40, RH = 46, GY = 34, P = {}, colY = {};
+  const hOf = t => HH + BH + Math.max(1, btns(t).length) * RH + 10;
+  order.forEach(t => { const d = depth.get(t.templateName), y = colY[d] || 0; P[t.templateName] = { x: 30 + d * (CW + GX), y: 30 + y, h: hOf(t) }; colY[d] = y + hOf(t) + GY; });
+  const W = Math.max(...Object.values(P).map(p => p.x)) + CW + 60, H = Math.max(...Object.values(P).map(p => p.y + p.h)) + 50;
+  let wires = '';
+  order.forEach(t => nexts(t).forEach((ns, i) => ns.forEach(n => { const a = P[t.templateName], b = P[n];
+    const A = { x: a.x + CW, y: a.y + HH + BH + i * RH + RH / 2 }, B = { x: b.x, y: b.y + HH / 2 };
+    const d = B.x > A.x ? wirePath(A, B) : `M${A.x} ${A.y} C ${A.x + 90} ${A.y}, ${A.x + 90} ${Math.min(A.y, B.y) - 60}, ${(A.x + B.x) / 2} ${Math.min(A.y, B.y) - 60} S ${B.x - 90} ${B.y}, ${B.x} ${B.y}`;
+    wires += `<g class="wire lit"><path class="ln" d="${d}"/><circle class="flow" r="3"><animateMotion dur="1.6s" repeatCount="indefinite" path="${d}"/></circle></g>`; })));
+  const ic = c => (TB_CONTENT.find(x => x[0] === c) || TB_CONTENT[0])[2];
+  const cards = order.map((t, k) => { const f = t.flow || {}, p = P[t.templateName], st = t.metaStatus || 'Draft';
+    return `<div class="tfc" data-tfc="${esc(t.templateName)}" style="left:${p.x}px;top:${p.y}px;width:${CW}px;--i:${k}" title="Click to edit buttons & actions">
+      <div class="tfc-h"><span class="tfc-ic">${ic(f.content || 'text')}</span><div><b>${esc(t.templateName)}</b><small>${esc(t.category || '')} · ${esc(st)}${depth.get(t.templateName) === 0 && !targeted.has(t.templateName) ? ' · <em>start</em>' : ''}</small></div></div>
+      <div class="tfc-b">${esc(String(t.body || '').slice(0, 120))}</div>
+      ${btns(t).length ? btns(t).map(b => { const acts = (b.actions || []).filter(a => a.type !== 'send_template').map(a => (TB_ACT[a.type] || [a.type])[0]), nx = (b.actions || []).find(a => a.type === 'send_template' && a.template);
+        return `<div class="tfc-r ${b.meta === 'QUICK_REPLY' ? 'qr' : ''} ${nx ? 'go' : ''}"><span>${b.meta === 'URL' ? '🔗' : b.meta === 'PHONE_NUMBER' ? '📞' : b.meta === 'CATALOG' ? '🛍' : '↩'} ${esc(b.label || 'Button')}</span><small>${esc(acts.join(' · ') || (b.meta === 'QUICK_REPLY' ? (nx ? '' : 'Lands in Inbox') : TB_META[b.meta] || ''))}${nx ? `${acts.length ? ' · ' : ''}<b>→ ${esc(nx.template)}</b>` : ''}</small></div>`; }).join('') : '<div class="tfc-r"><small>No buttons</small></div>'}
+    </div>`; }).join('');
+  return `<div class="n8w" style="width:${W}px;height:${H}px"><svg class="n8svg" width="${W}" height="${H}">${wires}</svg>${cards}</div>`;
+}
+function openFlowMap() {
+  const T = (S.templates || []).filter(t => t.templateName), html = tbMapHTML(T);
+  $('#leadBox').innerHTML = `<div class="m-head"><h2>Template flows</h2><button class="ibtn" data-close>${I.x}</button></div>
+    <p class="help" style="margin-bottom:10px">Each card is a template; each row is a button. A glowing wire means that button sends the next template — that is your multi-step flow. Drag to move, scroll to zoom, click a card to edit its buttons & actions.</p>
+    ${html ? '<div class="n8canvas tb-map" id="tbMap"></div>' : '<div class="tp-empty glass"><b>No flows yet</b><p class="muted">Open a template → <b>Buttons & actions</b> → add “Send next template” to a reply button.</p></div>'}`;
+  showModal('#leadModal');
+  if (!html) return;
+  const host = $('#tbMap'); n8Viewer(host, html, { minK: 0.3 });
+  let down = null; host.addEventListener('pointerdown', ev => { down = { x: ev.clientX, y: ev.clientY, c: ev.target.closest('[data-tfc]') }; }, true);
+  host.addEventListener('pointerup', ev => { if (down && down.c && Math.hypot(ev.clientX - down.x, ev.clientY - down.y) < 6) { const n = down.c.dataset.tfc; down = null; openTplActions(n); } });
+}
+
 const USE_CASES = ['Welcome', 'Follow-up', 'Offer / promotion', 'Reminder', 'Quotation / price', 'Order / payment update', 'Re-engage', 'Thank you / review', 'Other'];
 function openTplLib(name) {
   const t = (S.templates || []).find(x => x.templateName === name); if (!t) return;
@@ -5923,7 +6143,7 @@ function renderTemplates() {
 }
 function openTplEditor(base) {
   const t = Object.assign({ templateName: '', category: 'Marketing', language: 'en', header: '', body: 'Hi {{1}}, ', footer: '', buttons: '' }, base || {});
-  TPL.edit = { useCase: t.useCase || '', name: t.templateName, category: /utility/i.test(t.category) ? 'UTILITY' : 'MARKETING', language: t.language || 'en', header: t.header && !/^\[/.test(t.header) ? t.header : '', body: t.body, footer: t.footer || '', buttons: String(t.buttons || '').split('|').map(x => x.trim()).filter(Boolean).map(x => /^🔗/.test(x) ? { type: 'URL', text: x.replace(/^🔗\s*/, ''), url: 'https://' } : /^📞/.test(x) ? { type: 'PHONE_NUMBER', text: x.replace(/^📞\s*/, ''), phone: '' } : { type: 'QUICK_REPLY', text: x }), examples: [] };
+  TPL.edit = Object.assign({ useCase: t.useCase || '', name: t.templateName, category: /utility/i.test(t.category) ? 'UTILITY' : 'MARKETING', language: t.language || 'en', header: t.header && !/^\[/.test(t.header) ? t.header : '', body: t.body, footer: t.footer || '', examples: [] }, tbFromTemplate(t));
   drawTplEditor(); showModal('#leadModal');
 }
 function drawTplEditor() {
@@ -5935,18 +6155,21 @@ function drawTplEditor() {
       <div class="field"><label>Category</label><select class="input" id="teCat"><option value="MARKETING" ${e.category === 'MARKETING' ? 'selected' : ''}>Marketing — offers, news</option><option value="UTILITY" ${e.category === 'UTILITY' ? 'selected' : ''}>Utility — orders, reminders</option></select></div>
       <div class="field"><label>Language</label><select class="input" id="teLang">${LANGS.map(([k, n2]) => `<option value="${k}" ${e.language === k ? 'selected' : ''}>${n2}</option>`).join('')}</select></div>
       <div class="field full"><label>Use case <span class="muted">— helps your team pick the right template in Broadcast</span></label><select class="input" id="teUse"><option value="">—</option>${USE_CASES.map(u => `<option ${u === e.useCase ? 'selected' : ''}>${esc(u)}</option>`).join('')}</select></div>
-      <div class="field full"><label>Header <span class="muted">(optional, 60 characters)</span></label><input class="input" id="teHead" maxlength="60" value="${esc(e.header)}" placeholder="🎉 Diwali Sale"></div>
+      <div class="field full"><label>Content <span class="muted">— what the message starts with</span></label>${tbContentHTML(e)}</div>
+      ${(e.content || 'text') === 'text' ? `<div class="field full"><label>Header <span class="muted">(optional, 60 characters)</span></label><input class="input" id="teHead" maxlength="60" value="${esc(e.header)}" placeholder="🎉 Diwali Sale"></div>` : ''}
       <div class="field full"><label>Body <span class="muted">— *bold*, _italic_, {{1}} for each personal value</span><button class="btn sm" type="button" data-teaddvar style="float:right">+ Variable</button></label><textarea class="input" id="teBody" rows="6" maxlength="1024">${esc(e.body)}</textarea></div>
       ${n ? `<div class="field full"><label>Sample values <span class="muted">(Meta needs examples to approve)</span></label><div class="bc-vars">${Array.from({ length: n }, (_, i) => `<div class="bc-var"><span class="pill stage">{{${i + 1}}}</span><input class="input sm" data-teex="${i}" value="${esc(e.examples[i] || '')}" placeholder="${['Aarav', 'Diwali Sale', '20%', 'Mumbai'][i] || 'sample'}"></div>`).join('')}</div></div>` : ''}
       <div class="field full"><label>Footer <span class="muted">(optional)</span></label><input class="input" id="teFoot" maxlength="60" value="${esc(e.footer)}" placeholder="Reply STOP to unsubscribe"></div>
-      <div class="field full"><label>Buttons <span class="muted">(optional, up to 3)</span></label><div class="te-btns">${e.buttons.map((b, i) => `<div class="te-b"><select class="input sm" data-tebt="${i}"><option value="QUICK_REPLY" ${b.type === 'QUICK_REPLY' ? 'selected' : ''}>Quick reply</option><option value="URL" ${b.type === 'URL' ? 'selected' : ''}>Website</option><option value="PHONE_NUMBER" ${b.type === 'PHONE_NUMBER' ? 'selected' : ''}>Call</option></select><input class="input sm" data-tebx="${i}" maxlength="25" value="${esc(b.text)}" placeholder="Button text">${b.type === 'URL' ? `<input class="input sm" data-tebu="${i}" value="${esc(b.url || '')}" placeholder="https://…">` : b.type === 'PHONE_NUMBER' ? `<input class="input sm" data-tebp="${i}" value="${esc(b.phone || '')}" placeholder="+91…">` : ''}<button class="ibtn" type="button" data-tebdel="${i}">${I.x}</button></div>`).join('')}${e.buttons.length < 3 ? '<button class="btn sm" type="button" data-teaddbtn>+ Add button</button>' : ''}</div></div></div></div>
-      <div class="tpe-p"><div class="bc-rh">Preview</div><div class="wa-phone"><div class="wa-top">${avatar(brand().brandName)}<div><b>${esc(brand().brandName)}</b><small>Business account</small></div></div><div class="wa-chat"><div class="bub in tpl">${e.header ? `<b class="hd">${esc(e.header)}</b>` : ''}<span>${tplBody(e.body.replace(/\{\{(\d+)\}\}/g, (m, k) => e.examples[k - 1] ? e.examples[k - 1] : m))}</span>${e.footer ? `<em class="ft">${esc(e.footer)}</em>` : ''}<small>${nowStr().slice(11)}</small></div>${e.buttons.filter(b => b.text).map(b => `<div class="wa-qb">${b.type === 'URL' ? '🔗 ' : b.type === 'PHONE_NUMBER' ? '📞 ' : ''}${esc(b.text)}</div>`).join('')}</div></div>
+      <div class="field full"><label>Buttons <span class="muted">— up to 10; reply buttons can run actions and open the next template</span></label>${tbButtonsHTML(e)}</div></div></div>
+      <div class="tpe-p"><div class="bc-rh">Preview</div><div class="wa-phone"><div class="wa-top">${avatar(brand().brandName)}<div><b>${esc(brand().brandName)}</b><small>Business account</small></div></div><div class="wa-chat">${tbPreview(e)}</div></div>${tbFlowSummary(e)}
       <ul class="bc-rules" style="margin-top:12px"><li>Meta usually reviews in minutes, sometimes up to 24 hours.</li><li>Marketing templates need a clear offer; don't start or end the body with a variable.</li></ul></div></div>
     <div class="m-foot"><button class="btn" data-close>Cancel</button><div class="grow"></div><button class="btn" data-tesave>Save as draft</button><button class="btn primary" data-tesubmit ${canMeta ? '' : `disabled title="${demo ? 'Demo mode' : 'Connect WhatsApp first'}"`}>Submit to Meta for approval</button></div>`;
 }
+function tbRedraw(fn) { if (!TPL.edit || !$('#leadModal').classList.contains('show') || !$('#leadBox .tpe, #leadBox .tb-btns')) return; const a = document.activeElement, sel = a && (a.id ? '#' + a.id : ['teex', 'tebx', 'tebu', 'tebp', 'tbtx', 'tburl', 'tbph', 'tbaf'].map(k => a.dataset && a.dataset[k] != null ? `[data-${k}="${a.dataset[k]}"]` : '').join('')), p = a && a.selectionStart; fn(); const n = sel && $('#leadBox ' + sel); if (n) { n.focus(); try { n.setSelectionRange(p, p); } catch (er) { } } }
+function tbReadContent(e) { const v = id => $(id) ? $(id).value.trim() : null; if (v('#tbMedia') != null) e.mediaUrl = v('#tbMedia'); if (v('#tbFile') != null) e.fileName = v('#tbFile'); if (v('#tbProd') != null) e.productId = v('#tbProd'); if (v('#tbLat') != null) e.location = { lat: v('#tbLat'), lng: v('#tbLng'), name: v('#tbLname'), address: v('#tbLaddr') }; }
 function readTplEditor() {
   const e = TPL.edit; e.name = $('#teName').value.toLowerCase().replace(/[^a-z0-9_]+/g, '_').replace(/^_+/, '').slice(0, 512); e.category = $('#teCat').value; e.language = $('#teLang').value;
-  e.header = $('#teHead').value; e.body = $('#teBody').value; e.footer = $('#teFoot').value; e.useCase = $('#teUse') ? $('#teUse').value : e.useCase; return e;
+  e.header = $('#teHead') ? $('#teHead').value : ''; e.body = $('#teBody').value; e.footer = $('#teFoot').value; e.useCase = $('#teUse') ? $('#teUse').value : e.useCase; tbReadContent(e); return e;
 }
 (function tplEvents() {
   const v = $('#v-templates');
@@ -5955,6 +6178,8 @@ function readTplEditor() {
     const sc = t.closest('[data-tpst]'); if (sc) { TPL.status = sc.dataset.tpst; return renderTemplates(); }
     const uc = t.closest('[data-tpuc]'); if (uc) { TPL.uc = uc.dataset.tpuc; return renderTemplates(); }
     const lb = t.closest('[data-tplib]'); if (lb) return openTplLib(lb.dataset.tplib);
+    const ta = t.closest('[data-tpact]'); if (ta) return openTplActions(ta.dataset.tpact);
+    if (t.closest('#tpFlow')) return openFlowMap();
     if (t.closest('[data-tpnew]') || t.id === 'tpNew') return openTplEditor(null);
     const us = t.closest('[data-tpuse]'); if (us) { BC.tab = 'whatsapp'; BC.tpl = us.dataset.tpuse; BC.vars = []; BC.node = 'msg'; go('broadcast'); return; }
     const ed = t.closest('[data-tpedit]'); if (ed) { const x = (S.templates || []).find(y => y.templateName === ed.dataset.tpedit); if (x) openTplEditor(Object.assign({}, x)); return; }
@@ -5981,12 +6206,33 @@ function readTplEditor() {
     const bx = t.closest('[data-tebx]'); if (bx) e.buttons[+bx.dataset.tebx].text = t.value;
     const bu = t.closest('[data-tebu]'); if (bu) e.buttons[+bu.dataset.tebu].url = t.value;
     const bp = t.closest('[data-tebp]'); if (bp) e.buttons[+bp.dataset.tebp].phone = t.value;
-    readTplEditor(); clearTimeout(TPL.tm); TPL.tm = setTimeout(() => { const a = document.activeElement, sel = a && (a.id ? '#' + a.id : ['teex', 'tebx', 'tebu', 'tebp'].map(k => a.dataset[k] != null ? `[data-${k}="${a.dataset[k]}"]` : '').join('')), p = a && a.selectionStart; drawTplEditor(); const n = sel && $('#leadBox ' + sel); if (n) { n.focus(); try { n.setSelectionRange(p, p); } catch (er) { } } }, 300);
+    const tx = t.closest('[data-tbtx]'); if (tx) e.buttons[+tx.dataset.tbtx].text = t.value;
+    const tu = t.closest('[data-tburl]'); if (tu) e.buttons[+tu.dataset.tburl].url = t.value;
+    const tp = t.closest('[data-tbph]'); if (tp) e.buttons[+tp.dataset.tbph].phone = t.value;
+    const af = t.closest('[data-tbaf]'); if (af) { const [bi, ai, k] = af.dataset.tbaf.split('|'); e.buttons[+bi].actions[+ai][k] = t.value; }
+    if (e.actionsOnly) { tbReadContent(e); clearTimeout(TPL.tm); TPL.tm = setTimeout(() => tbRedraw(drawTplActions), 400); return; }
+    readTplEditor(); clearTimeout(TPL.tm); TPL.tm = setTimeout(() => tbRedraw(drawTplEditor), 300);
   });
-  box.addEventListener('change', ev => { if (!TPL.edit || !box.querySelector('.tpe')) return; const bt = ev.target.closest('[data-tebt]'); if (bt) { TPL.edit.buttons[+bt.dataset.tebt].type = ev.target.value; readTplEditor(); drawTplEditor(); } else if (/^te(Cat|Lang)$/.test(ev.target.id)) readTplEditor(); });
+  box.addEventListener('change', ev => {
+    if (TPL.edit && box.querySelector('.tpe')) { const e = TPL.edit, t = ev.target, redraw = () => { if (!e.actionsOnly) readTplEditor(); else tbReadContent(e); (e.actionsOnly ? drawTplActions : drawTplEditor)(); };
+      const ty = t.closest('[data-tbtype]'); if (ty) { const b = e.buttons[+ty.dataset.tbtype]; b.type = t.value; if (t.value === 'URL' && !b.url) b.url = 'https://'; return redraw(); }
+      if (t.matches('[data-tbaddbtn]')) { if (t.value) e.buttons.push(tbNew(t.value)); return redraw(); }
+      const aa = t.closest('[data-tbaddact]'); if (aa) { if (t.value) (e.buttons[+aa.dataset.tbaddact].actions = e.buttons[+aa.dataset.tbaddact].actions || []).push(tbActNew(t.value)); return redraw(); }
+      const af = t.closest('select[data-tbaf]'); if (af) { const [bi, ai, k] = af.dataset.tbaf.split('|'); e.buttons[+bi].actions[+ai][k] = t.value; return redraw(); } }
+    if (!TPL.edit || !box.querySelector('.tpe')) return; const bt = ev.target.closest('[data-tebt]'); if (bt) { TPL.edit.buttons[+bt.dataset.tebt].type = ev.target.value; readTplEditor(); drawTplEditor(); } else if (/^te(Cat|Lang)$/.test(ev.target.id)) readTplEditor(); });
   box.addEventListener('click', async ev => {
     if (!TPL.edit || !box.querySelector('.tpe')) return; const t = ev.target, e = TPL.edit;
     if (t.closest('[data-teaddvar]')) { readTplEditor(); const n = (e.body.match(/\{\{\d+\}\}/g) || []).length; e.body = e.body.replace(/\s*$/, '') + ` {{${n + 1}}}`; return drawTplEditor(); }
+    const redraw = () => { if (!e.actionsOnly) readTplEditor(); else tbReadContent(e); (e.actionsOnly ? drawTplActions : drawTplEditor)(); };
+    const ct = t.closest('[data-tbct]'); if (ct) { readTplEditor(); const k = ct.dataset.tbct; if (k === 'contact') { e.content = 'contact'; return drawTplEditor(); } e.content = k;
+      if (k === 'catalog' || k === 'product') e.buttons = [{ kind: 'download_catalog', text: 'View catalog', type: 'CATALOG', actions: [] }];
+      else { e.buttons = e.buttons.filter(b => b.type !== 'CATALOG'); if (k === 'payment' && !e.buttons.some(b => b.kind === 'pay_now')) e.buttons.unshift(Object.assign(tbNew('pay_now'), { type: 'URL', actions: [] })); }
+      return drawTplEditor(); }
+    const bdl = t.closest('[data-tbdel]'); if (bdl) { e.buttons.splice(+bdl.dataset.tbdel, 1); return redraw(); }
+    const bup = t.closest('[data-tbup]'); if (bup) { const i2 = +bup.dataset.tbup; if (i2) { const x = e.buttons.splice(i2, 1)[0]; e.buttons.splice(i2 - 1, 0, x); } return redraw(); }
+    const adl = t.closest('[data-tbadel]'); if (adl) { const [bi, ai] = adl.dataset.tbadel.split('|'); e.buttons[+bi].actions.splice(+ai, 1); return redraw(); }
+    if (t.closest('[data-tbsaveflow]')) { tbReadContent(e); const errs = e.buttons.flatMap((b, i) => (b.actions || []).filter(a => a.type === 'send_template' && !a.template).map(() => `Button ${i + 1}: choose the next template`)); if (errs.length) return toast(errs[0], true); const sb = t.closest('[data-tbsaveflow]'); sb.disabled = true;
+      try { await api('saveTplFlow', { templateName: e.name, flow: tbFlowOf(e) }); hideModal('#leadModal'); TPL.edit = null; toast('✓ Button actions saved'); if (demo) renderTemplates(); else load(true); } catch (er) { toast(er.message, true); sb.disabled = false; } return; }
     if (t.closest('[data-teaddbtn]')) { readTplEditor(); e.buttons.push({ type: 'QUICK_REPLY', text: '' }); return drawTplEditor(); }
     const bd = t.closest('[data-tebdel]'); if (bd) { readTplEditor(); e.buttons.splice(+bd.dataset.tebdel, 1); return drawTplEditor(); }
     const submit = t.closest('[data-tesubmit]'), save = t.closest('[data-tesave]'); if (!submit && !save) return;
@@ -5994,10 +6240,15 @@ function readTplEditor() {
     if (!e.name) return toast('Give the template a name', true);
     if (!e.body.trim()) return toast('Write the message body', true);
     if (/^\s*\{\{|\}\}\s*$/.test(e.body.trim())) return toast("Meta rejects a body that starts or ends with a variable — add a few words around it", true);
-    const row = { templateName: e.name, category: e.category === 'UTILITY' ? 'Utility' : 'Marketing', language: e.language, header: e.header, body: e.body, footer: e.footer, buttons: e.buttons.filter(b => b.text).map(b => (b.type === 'URL' ? '🔗 ' : b.type === 'PHONE_NUMBER' ? '📞 ' : '') + b.text).join(' | '), metaStatus: 'Draft' };
+    if (e.content === 'contact') return toast('WhatsApp templates cannot carry a contact card — pick another content type', true);
+    { const le = tbLimits(e.buttons); if (le.length) return toast(le[0], true); }
+    { const nt = e.buttons.findIndex(b => b.type === 'QUICK_REPLY' && (b.actions || []).some(a => a.type === 'send_template' && !a.template)); if (nt >= 0) return toast(`Button ${nt + 1}: choose the next template (or remove that action)`, true); }
+    if (submit && ['image', 'video', 'pdf'].includes(e.content) && !/^https:\/\//.test(e.mediaUrl || '')) return toast('Add a public https link to the sample ' + (e.content === 'pdf' ? 'PDF' : e.content), true);
+    if (e.content === 'location' && !(e.location && e.location.lat && e.location.lng)) return toast('Add latitude and longitude for the location', true);
+    const row = { templateName: e.name, category: e.category === 'UTILITY' ? 'Utility' : 'Marketing', language: e.language, header: e.header, body: e.body, footer: e.footer, buttons: e.buttons.filter(b => b.text || b.type === 'CATALOG').map(b => (b.type === 'URL' ? '🔗 ' : b.type === 'PHONE_NUMBER' ? '📞 ' : b.type === 'CATALOG' ? '🛍 ' : '') + (b.text || 'View catalog')).join(' | '), metaStatus: 'Draft', header: ['image', 'video', 'pdf', 'location'].includes(e.content) ? `[${e.content === 'pdf' ? 'document' : e.content}]` : e.header, flow: tbFlowOf(e) };
     const b = submit || save; b.disabled = true;
     try {
-      if (submit) { const r = await fnCall('wa-templates', { action: 'create', name: e.name, category: e.category, language: e.language, header: e.header, body: e.body, footer: e.footer, buttons: e.buttons, examples: e.examples }); toast(`✓ Sent to Meta — status: ${r.status}`); }
+      if (submit) { const r = await fnCall('wa-templates', { action: 'create', name: e.name, category: e.category, language: e.language, header: e.content === 'text' ? e.header : '', content: e.content === 'payment' ? 'text' : e.content === 'product' ? 'catalog' : e.content, media_url: e.mediaUrl || '', body: e.body, footer: e.footer, buttons: e.buttons.map(b => ({ type: b.type, text: b.text, url: b.url, phone: b.phone })), examples: e.examples, flow: tbFlowOf(e) }); toast(`✓ Sent to Meta — status: ${r.status}`); if (AUTH.v8) await api('saveTplFlow', { templateName: e.name, flow: tbFlowOf(e) }).catch(() => { }); }
       else if (demo) { S.templates = (S.templates || []).filter(x => x.templateName !== row.templateName).concat(row); toast('Draft saved'); }
       else { await api('saveTemplate', cloud ? row : Object.assign({}, row, { footer: undefined })); toast('Draft saved'); }
       if (e.useCase && (demo || AUTH.v7)) { const old = (S.templates || []).find(x => x.templateName === e.name) || {}; await api('saveTplInfo', { templateName: e.name, useCase: e.useCase, segment: old.segment || '', tags: old.tags || '', notes: old.notes || '' }).catch(() => { }); }
@@ -6244,6 +6495,7 @@ function go(name) {
   if (name === 'industry') renderIndustry(true);
   if (name === 'analytics') renderAnalytics(true);
   if (name === 'admin') renderAdmin(true);
+  if (name === 'orders') renderOrders(true);
   if (name === 'tasks') renderTasks(true);
   if (name === 'calls') renderCalls(true);
   if (name === 'performance') renderPerformance(true);
@@ -6253,6 +6505,45 @@ function go(name) {
   window.scrollTo(0, 0);
 }
 window.addEventListener('hashchange', () => go(location.hash.slice(1)));
+
+/* ================= orders ================= */
+const ORD_ST = ['Cart', 'New', 'Confirmed', 'Paid', 'COD', 'Shipped', 'Delivered', 'Cancelled'], ORD = { st: '', q: '' };
+const ordCls = s => ({ Delivered: 'ok', Paid: 'ok', Cancelled: 'bad', Cart: 'draft', New: 'wait', COD: 'wait' }[s] || '');
+function renderOrders(anim) {
+  const box = $('#ordersBody'); if (!box) return;
+  if (!(demo || (cloud && AUTH.v8))) { box.innerHTML = `<div class="tp-empty glass"><b>Orders need the 08 database update</b><p class="muted">Run <code>08_platform_flows.sql</code> in Supabase → SQL Editor, then refresh.</p></div>`; return; }
+  const all = S.orders || [], q = ORD.q.toLowerCase(), list = all.filter(o => (!ORD.st || o.status === ORD.st) && (!q || [o.orderId, o.items, leadName(o.leadId), o.payment].some(v => String(v || '').toLowerCase().includes(q))));
+  const open = all.filter(o => !['Delivered', 'Cancelled', 'Cart'].includes(o.status)), val = a => a.reduce((s2, o) => s2 + (+o.amount || 0), 0);
+  const tile = (n, l, c) => `<div class="n8l-k glass"><b style="${c ? 'color:' + c : ''}">${n}</b><small class="muted">${l}</small></div>`;
+  box.innerHTML = `<div class="adm-ks">${tile(open.length, 'Open orders')}${tile(inrShort(val(open)), 'Open value', 'var(--blue-2)')}${tile(all.filter(o => o.status === 'COD').length, 'Cash on delivery')}${tile(all.filter(o => o.status === 'Delivered').length, 'Delivered', 'var(--green)')}${tile(all.filter(o => o.status === 'Cancelled').length, 'Cancelled', 'var(--coral)')}</div>
+    <div class="toolbar glass" style="margin-top:14px"><div class="tp-chips">${[''].concat(ORD_ST).map(x => `<button class="chip ${ORD.st === x ? 'on' : ''}" data-ordst="${x}">${x || 'All'} <span class="n">${x ? all.filter(o => o.status === x).length : all.length}</span></button>`).join('')}</div><div class="grow"></div><input class="input sm" id="ordQ" placeholder="Search orders" value="${esc(ORD.q)}" style="max-width:220px"></div>
+    <div class="table-wrap glass" style="margin-top:14px"><table class="tbl"><thead><tr><th>Order</th><th>Customer</th><th>Items</th><th class="num">Amount</th><th>Status</th><th>Payment</th><th>Source</th><th>Created</th></tr></thead><tbody>
+    ${list.map(o => `<tr data-ordedit="${esc(o.orderId)}"><td><b>${esc(o.orderId)}</b></td><td>${o.leadId ? `<a data-open="${esc(o.leadId)}">${esc(leadName(o.leadId) || o.leadId)}</a>` : '-'}</td><td>${esc(o.items || '-')}</td><td class="num">${o.amount ? inr(o.amount) : '-'}</td><td><span class="tp-st ${ordCls(o.status)}"><i></i>${esc(o.status)}</span></td><td>${esc(o.payment || '-')}</td><td class="muted">${esc(o.source || 'Team')}</td><td class="muted">${esc(fmtWhen(o.createdAt))}</td></tr>`).join('') || '<tr><td colspan="8" class="empty">No orders yet. Add an “Order Now” button with the <b>Create order</b> action to a template, or press New order.</td></tr>'}</tbody></table></div>`;
+  stagger(box, anim);
+}
+function openOrder(o, leadId) {
+  const x = o || { leadId: leadId || '', items: '', amount: '', status: 'New', payment: '', trackingUrl: '', notes: '' }, ln = x.leadId && S.leads.find(l => l.leadId === x.leadId);
+  $('#stageBox').innerHTML = `<div class="m-head"><h2>${o ? 'Order ' + esc(o.orderId) : 'New order'}</h2><button class="ibtn" data-close>${I.x}</button></div>
+    <div class="form" style="grid-template-columns:1fr 1fr"><div class="field full"><label>Customer (lead)</label><input class="input" id="odLead" list="dlLeadsO" value="${ln ? esc(ln.name + ' · ' + (ln.phone ? '+' + ln.phone : ln.leadId)) : ''}" placeholder="Type a name"><datalist id="dlLeadsO">${S.leads.slice(0, 800).map(l => `<option value="${esc(l.name + ' · ' + (l.phone ? '+' + l.phone : l.leadId))}">`).join('')}</datalist></div>
+      <div class="field full"><label>Items</label><textarea class="input" id="odItems" rows="2" placeholder="20 × Cafe chair (walnut)">${esc(x.items || '')}</textarea></div>
+      <div class="field"><label>Amount (₹)</label><input class="input" id="odAmt" type="number" min="0" value="${esc(x.amount || '')}"></div>
+      <div class="field"><label>Status</label><select class="input" id="odSt">${ORD_ST.map(s2 => `<option ${s2 === x.status ? 'selected' : ''}>${s2}</option>`).join('')}</select></div>
+      <div class="field"><label>Payment</label><select class="input" id="odPay">${['', 'COD', 'link', 'UPI', 'Bank transfer', 'Cash'].map(p2 => `<option value="${p2}" ${p2 === x.payment ? 'selected' : ''}>${p2 || '—'}</option>`).join('')}</select></div>
+      <div class="field"><label>Tracking link</label><input class="input" id="odTrack" value="${esc(x.trackingUrl || '')}" placeholder="https://…"></div>
+      <div class="field full"><label>Notes</label><input class="input" id="odNotes" value="${esc(x.notes || '')}"></div></div>
+    <div class="m-foot">${o ? '<button class="btn danger" id="odDel">Delete</button>' : ''}<div class="grow"></div><button class="btn" data-close>Cancel</button><button class="btn primary" id="odSave">${o ? 'Save' : 'Create order'}</button></div>`;
+  $('#odSave').onclick = async () => {
+    const v = $('#odLead').value.trim(), lead = v ? S.leads.find(l => v === l.name + ' · ' + (l.phone ? '+' + l.phone : l.leadId)) || S.leads.find(l => l.name.toLowerCase() === v.toLowerCase()) : null;
+    if (v && !lead) return toast('Pick the customer from the list (or leave it empty)', true);
+    const d = { leadId: lead ? lead.leadId : '', items: $('#odItems').value.trim(), amount: $('#odAmt').value, status: $('#odSt').value, payment: $('#odPay').value, trackingUrl: $('#odTrack').value.trim(), notes: $('#odNotes').value.trim() };
+    if (o) Object.assign(d, { orderId: o.orderId, logMsg: o.status !== d.status ? `${o.orderId} → ${d.status}` : '' }); else d.source = 'Team';
+    try { await api('saveOrder', d); hideModal('#stageModal'); toast(o ? '✓ Order saved' : '✓ Order created'); await refreshData(); } catch (e) { toast(e.message, true); }
+  };
+  if (o) $('#odDel').onclick = async () => { if (!confirm('Delete this order?')) return; try { await api('deleteOrder', { id: o.orderId }); hideModal('#stageModal'); toast('Order deleted'); await refreshData(); } catch (e) { toast(e.message, true); } };
+  showModal('#stageModal');
+}
+document.addEventListener('click', e => { const t = e.target; if (t.closest('[data-open]')) return; const st = t.closest('[data-ordst]'); if (st) { ORD.st = st.dataset.ordst; return renderOrders(); } const ed = t.closest('[data-ordedit]'); if (ed) return openOrder((S.orders || []).find(o => o.orderId === ed.dataset.ordedit)); const nw = t.closest('[data-ordnew]'); if (nw) return openOrder(null, nw.dataset.ordnew || ''); });
+document.addEventListener('input', e => { if (e.target.id === 'ordQ') { ORD.q = e.target.value; const pos = e.target.selectionStart; renderOrders(); const q = $('#ordQ'); if (q) { q.focus(); q.setSelectionRange(pos, pos); } } });
 
 /* ================= platform admin console ================= */
 const ADM = { rows: null, q: '', at: 0 };
@@ -6490,7 +6781,7 @@ async function renderPerformance(anim) {
 }
 
 /* ---------- unified lead timeline ---------- */
-const TL_KIND = a => /WhatsApp/.test(a.type) ? 'wa' : /Email/.test(a.type) ? 'em' : a.type === 'Call' ? 'cl' : /Stage|Lead Added/.test(a.type) ? 'st' : /Task/.test(a.type) ? 'tk' : 'nt';
+const TL_KIND = a => /WhatsApp|Button/.test(a.type) ? 'wa' : a.type === 'Order' ? 'tk' : /Email/.test(a.type) ? 'em' : a.type === 'Call' ? 'cl' : /Stage|Lead Added/.test(a.type) ? 'st' : /Task/.test(a.type) ? 'tk' : 'nt';
 function leadTimeline(id) {
   const items = actsOf(id).map(a => ({ t: tsOf(a.dateTime), kind: TL_KIND(a), title: a.type, text: a.details, by: a.doneBy }));
   (S.messages || []).filter(m => m.leadId === id && m.direction === 'in').forEach(m => items.push({ t: tsOf(m.time), kind: 'wa', title: 'WhatsApp received', text: m.text, by: 'Customer', inb: true }));
@@ -6536,7 +6827,8 @@ const HELP_GUIDE = [
   ['failed', 'Message failed / not delivered', 'failed not delivered error red late payment 131042 131049 stuck', 'A red **!** with a reason under the message tells you why WhatsApp did not deliver it. Most common: **payment method missing** (add a card in WhatsApp Manager → Payment methods; needed for templates/broadcasts), the number is not on WhatsApp, more than 24 h since the customer wrote, or Meta limited marketing messages to that person.'],
   ['connect', 'Connect WhatsApp', 'connect whatsapp number meta business token phone number id waba webhook setup', 'Owner/Admin: **Inbox → Connect WhatsApp**. You need from Meta (business.facebook.com): **Phone number ID**, **WhatsApp Business Account ID** and a **permanent system-user token**. Paste them only into that form (never into chat). **Manage** lets you update or disconnect. Ask your Nodevers provider if you need help with the Meta app and webhook.'],
   ['templates', 'WhatsApp templates', 'template templates create approve meta pending rejected sync draft submit', '**Templates**: **⟳ Sync from WhatsApp** brings your approved templates. **New template**: name (lowercase_with_underscores), category (Marketing / Utility), language, use case, header, body with {{1}} variables, footer, buttons → **Submit to Meta for approval** (minutes to 24 h). Drafts show **Edit & submit to Meta**. **Library** sets use case, best segment, tags and notes so your team picks the right one.'],
-  ['builder', 'Template builder: content, buttons, actions, flows', 'builder button buttons action flow next template image video pdf catalog payment order cart call website', 'In the template editor choose a **Content type** (Text, Image, Video, PDF, Location; Catalog / Product card need a Meta catalog). Add up to 10 **buttons** (Call Now 1, website-type links 2, the rest are quick replies). For each quick-reply button pick **actions** — e.g. **Send next template**, Add tag, Change stage, Assign team member, Create task, Send payment link, Create / cancel / track order, Trigger workflow. Chaining templates this way builds a multi-step flow; the **Flow** preview shows where every button goes.'],
+  ['builder', 'Template builder: content, buttons, actions, flows', 'builder button buttons action flow next template image video pdf catalog payment order cart call website map multi step', 'In **Templates → New template** choose a **Content type** (Text, Image, Video, PDF, Location, Payment link; Catalog / Product card need a Meta catalog — contact cards are not allowed in templates). Add up to 10 **buttons** (max 1 Call, max 2 link buttons, keep reply buttons together). For each reply button pick **actions** — e.g. **Send next template**, Reply with text, Add tag, Change stage, Assign team member, Create task, Send payment link, Create / update / cancel / track order, Trigger workflow, Run AI agent. Chaining templates with **Send next template** builds a multi-step flow.\n\nFor an already-approved template use **Buttons & actions** on its card — no new Meta review needed. **⇢ Flow map** shows every template as a card and a wire from each button to the template it sends next.'],
+  ['orders', 'Orders from WhatsApp buttons', 'order orders cart cod cash on delivery paid shipped track tracking invoice reorder', '**CRM → Orders** lists every order. Orders are created automatically when a customer taps a button with **Create order** (Order Now, Add to Cart, Reorder), and updated by **Update order** (Cash on Delivery, Paid…) or **Cancel order**. Your team can also add or edit an order (items, amount, status, tracking link) from Orders or from the lead panel. Track Order buttons reply with the latest status and tracking link.'],
   ['broadcast', 'Broadcast (bulk WhatsApp / email)', 'broadcast bulk campaign send many mass marketing segment audience', '**Broadcast** is a 4-step flow: **1 Audience** (filters, saved segments, import a file, or retarget a past campaign) → **2 Template / Email** (fill the variables) → **3 Test** (send to yourself) → **4 Send**. WhatsApp broadcasts need an approved template and a payment method in WhatsApp Manager; new numbers can reach about 250 new people a day. People who reply STOP are skipped automatically.'],
   ['email', 'Email campaigns', 'email brevo sender smtp mail newsletter unsubscribe', '**Broadcast → Email**. Owner/Admin connects a sender once (free Brevo account, verified sender email, API key pasted only in the form). Write **Subject** + **Message** with {{first_name}}, {{name}}, {{business}}, {{city}}; **Test** to yourself, then **Send**. Every email has an Unsubscribe link.'],
   ['history', 'Campaign results and comparison', 'history results compare campaign read replied best time low performing retarget', '**Broadcast → History**: **Compare campaigns** shows sent, delivered, read %, replied % and failed for every run, plus your best time, best day and best content. Low runs get **⚠ Follow up** — it retargets people who did not read, with your follow-up template.'],

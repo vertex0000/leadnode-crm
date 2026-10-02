@@ -25,6 +25,30 @@ function templatePayload(to: string, name: string, language: string, params: unk
   const p = (params ?? []).map((t) => ({ type: 'text', text: String(t ?? '').slice(0, 1000) || '-' }));
   return { messaging_product: 'whatsapp', to, type: 'template', template: { name, language: { code: language || 'en' }, ...(p.length ? { components: [{ type: 'body', parameters: p }] } : {}) } };
 }
+/** Template message with media header, location, catalog thumbnail and our quick-reply payloads (nv|template|index) */
+function templatePayloadFor(to: string, t: any, params: string[]) {
+  const flow = t.flow ?? {}, comps: any[] = [];
+  const kind = String(flow.content ?? 'text');
+  if (['image', 'video', 'pdf'].includes(kind) && flow.mediaUrl) {
+    const typ = kind === 'pdf' ? 'document' : kind;
+    comps.push({ type: 'header', parameters: [{ type: typ, [typ]: { link: String(flow.mediaUrl), ...(typ === 'document' ? { filename: String(flow.fileName || 'document.pdf') } : {}) } }] });
+  } else if (kind === 'location' && flow.location?.lat) {
+    comps.push({ type: 'header', parameters: [{ type: 'location', location: { latitude: Number(flow.location.lat), longitude: Number(flow.location.lng), name: String(flow.location.name ?? ''), address: String(flow.location.address ?? '') } }] });
+  }
+  if (params.length) comps.push({ type: 'body', parameters: params.map((x) => ({ type: 'text', text: String(x || '-').slice(0, 1000) })) });
+  (Array.isArray(flow.buttons) ? flow.buttons : []).forEach((b: any, i: number) => {
+    const idx = Number.isInteger(b.index) ? b.index : i;
+    if (b.meta === 'QUICK_REPLY') comps.push({ type: 'button', sub_type: 'quick_reply', index: String(idx), parameters: [{ type: 'payload', payload: `nv|${t.template_name}|${idx}` }] });
+    else if (b.meta === 'CATALOG') comps.push({ type: 'button', sub_type: 'CATALOG', index: String(idx), parameters: [{ type: 'action', action: { thumbnail_product_retailer_id: String(flow.productId || '') } }] });
+  });
+  return { messaging_product: 'whatsapp', to, type: 'template', template: { name: t.template_name, language: { code: t.language || 'en' }, ...(comps.length ? { components: comps } : {}) } };
+}
+/** Our saved template row — only when it has a flow (media header / buttons with actions); otherwise the plain payload is used */
+async function tplRow(ws: string, name: string) {
+  const { data, error } = await db.from('templates').select('template_name, language, flow').eq('workspace_id', ws).eq('template_name', name).maybeSingle();
+  if (error || !data) return null;
+  const f = data.flow ?? {}; return (Array.isArray(f.buttons) && f.buttons.length) || (f.content && f.content !== 'text') ? data : null;
+}
 async function graphSend(acc: any, payload: unknown) {
   const r = await fetch(`${GRAPH}/${acc.phone_number_id}/messages`, { method: 'POST', headers: { Authorization: `Bearer ${acc.token}`, 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
   const out = await r.json();
@@ -66,6 +90,7 @@ Deno.serve(async (req) => {
       if (!perm('broadcast')) return json({ error: 'Your access does not include bulk broadcasts — ask the owner.' }, 403);
       if (!b.template) return json({ error: 'Pick an approved template' }, 400);
       const items = b.bulk.slice(0, 50), ids = items.map((x: any) => String(x.lead_id)), ok = await visible(ids);
+      const trow = await tplRow(ws, String(b.template));
       const { data: leads, error } = await db.from('leads').select('lead_id, phone, wa_opt_out').eq('workspace_id', ws).in('lead_id', ids);
       if (error) return json({ error: /wa_opt_out/.test(error.message) ? 'Run the database update 03_broadcast_email.sql first.' : error.message }, 500);
       const byId = new Map((leads ?? []).map((l: any) => [l.lead_id, l]));
@@ -78,7 +103,7 @@ Deno.serve(async (req) => {
         if (l.wa_opt_out) { results.push({ lead_id: it.lead_id, ok: false, skipped: true, error: 'Opted out (said STOP)' }); continue; }
         const to = cleanPhone(l.phone);
         if (!/^\d{8,15}$/.test(to)) { results.push({ lead_id: it.lead_id, ok: false, error: 'No valid phone' }); continue; }
-        const r = await graphSend(acc, templatePayload(to, String(b.template), String(b.language || 'en'), it.params ?? []));
+        const r = await graphSend(acc, trow ? templatePayloadFor(to, { ...trow, language: String(b.language || trow.language || 'en') }, it.params ?? []) : templatePayload(to, String(b.template), String(b.language || 'en'), it.params ?? []));
         if (!r.ok) { if (['190', '131042', '132001', '131048'].includes(r.code)) stop = r.error; results.push({ lead_id: it.lead_id, ok: false, error: r.error, code: r.code }); continue; }
         const text = String(it.preview || `Template: ${b.template}`);
         await logSent(ws, l.lead_id, to, 'template', text, r.id, by, b.broadcast_id ? String(b.broadcast_id) : null, `Broadcast: ${text}`, sentBy);
@@ -97,7 +122,8 @@ Deno.serve(async (req) => {
 
     let payload: unknown, logText: string, type: string;
     if (b.template) {
-      payload = templatePayload(to, String(b.template), String(b.language || 'en'), Array.isArray(b.params) ? b.params : []);
+      const trow = await tplRow(ws, String(b.template));
+      payload = trow ? templatePayloadFor(to, { ...trow, language: String(b.language || trow.language || 'en') }, Array.isArray(b.params) ? b.params : []) : templatePayload(to, String(b.template), String(b.language || 'en'), Array.isArray(b.params) ? b.params : []);
       logText = String(b.preview || `Template: ${b.template}`); type = 'template';
     } else {
       const text = String(b.text ?? '').trim(); if (!text) return json({ error: 'Type a message' }, 400);

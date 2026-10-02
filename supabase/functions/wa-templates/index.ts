@@ -11,6 +11,22 @@ const json = (o: unknown, status = 200) => new Response(JSON.stringify(o), { sta
 const STATUS: Record<string, string> = { APPROVED: 'Approved', PENDING: 'Pending', IN_APPEAL: 'Pending', REJECTED: 'Rejected', PAUSED: 'Paused', DISABLED: 'Disabled', PENDING_DELETION: 'Deleting' };
 const title = (s: string) => String(s || '').toLowerCase().replace(/(^|_)(\w)/g, (_m, a, b) => (a ? ' ' : '') + b.toUpperCase());
 
+/** Meta needs a sample file for image / video / PDF headers: upload it with the Resumable Upload API → handle */
+async function uploadSample(acc: any, url: string) {
+  if (!/^https:\/\//i.test(url)) throw new Error('Add a public https link to the sample image / video / PDF.');
+  const f = await fetch(url).catch(() => null); if (!f || !f.ok) throw new Error('Could not download the sample file — use a public https link that opens in a browser.');
+  if (Number(f.headers.get('content-length') ?? 0) > 100 * 1024 * 1024) throw new Error('The sample file is too big.');
+  const buf = new Uint8Array(await f.arrayBuffer()), type = (f.headers.get('content-type') ?? 'image/jpeg').split(';')[0].trim();
+  if (buf.length > 100 * 1024 * 1024) throw new Error('The sample file is too big.');
+  let appId = Deno.env.get('META_APP_ID') ?? '';
+  if (!appId) { const a = await (await fetch(`${GRAPH}/app?access_token=${encodeURIComponent(acc.token)}`)).json().catch(() => ({})); appId = a?.id ?? ''; }
+  if (!appId) throw new Error('Add the secret META_APP_ID (your Meta app ID) in Supabase → Edge Functions → Secrets.');
+  const s1 = await fetch(`${GRAPH}/${appId}/uploads?file_length=${buf.length}&file_type=${encodeURIComponent(type)}&access_token=${encodeURIComponent(acc.token)}`, { method: 'POST' });
+  const j1 = await s1.json().catch(() => ({})); if (!j1?.id) throw new Error('Meta upload: ' + (j1?.error?.message ?? s1.status));
+  const s2 = await fetch(`${GRAPH}/${j1.id}`, { method: 'POST', headers: { Authorization: `OAuth ${acc.token}`, file_offset: '0' }, body: buf });
+  const j2 = await s2.json().catch(() => ({})); if (!j2?.h) throw new Error('Meta upload: ' + (j2?.error?.message ?? s2.status));
+  return String(j2.h);
+}
 function fromMeta(t: any) {
   const c = (type: string) => (t.components ?? []).find((x: any) => x.type === type) ?? {};
   const h = c('HEADER');
@@ -61,12 +77,15 @@ Deno.serve(async (req) => {
       if (!body) return json({ error: 'Write the message body.' }, 400);
       const n = (body.match(/\{\{\d+\}\}/g) ?? []).length;
       const ex = Array.from({ length: n }, (_, i) => String((b.examples ?? [])[i] || ['Aarav', 'Diwali Sale', '20%', 'Mumbai', 'today'][i] || 'sample'));
-      const components: any[] = [];
-      if (String(b.header ?? '').trim()) components.push({ type: 'HEADER', format: 'TEXT', text: String(b.header).trim().slice(0, 60) });
+      const components: any[] = [], content = String(b.content ?? 'text');
+      if (['image', 'video', 'pdf'].includes(content)) components.push({ type: 'HEADER', format: content === 'pdf' ? 'DOCUMENT' : content.toUpperCase(), example: { header_handle: [await uploadSample(acc, String(b.media_url ?? ''))] } });
+      else if (content === 'location') components.push({ type: 'HEADER', format: 'LOCATION' });
+      else if (String(b.header ?? '').trim()) components.push({ type: 'HEADER', format: 'TEXT', text: String(b.header).trim().slice(0, 60) });
       components.push({ type: 'BODY', text: body, ...(n ? { example: { body_text: [ex] } } : {}) });
       if (String(b.footer ?? '').trim()) components.push({ type: 'FOOTER', text: String(b.footer).trim().slice(0, 60) });
-      const btns = (Array.isArray(b.buttons) ? b.buttons : []).filter((x: any) => String(x.text ?? '').trim()).slice(0, 10).map((x: any) =>
-        x.type === 'URL' ? { type: 'URL', text: String(x.text).slice(0, 25), url: String(x.url ?? '') }
+      const btns = (Array.isArray(b.buttons) ? b.buttons : []).filter((x: any) => String(x.text ?? '').trim() || x.type === 'CATALOG').slice(0, 10).map((x: any) =>
+        x.type === 'CATALOG' ? { type: 'CATALOG', text: String(x.text || 'View catalog').slice(0, 25) }
+        : x.type === 'URL' ? { type: 'URL', text: String(x.text).slice(0, 25), url: String(x.url ?? '') }
           : x.type === 'PHONE_NUMBER' ? { type: 'PHONE_NUMBER', text: String(x.text).slice(0, 25), phone_number: String(x.phone ?? '').replace(/[^\d+]/g, '') }
             : { type: 'QUICK_REPLY', text: String(x.text).slice(0, 25) });
       if (btns.length) components.push({ type: 'BUTTONS', buttons: btns });
@@ -74,9 +93,11 @@ Deno.serve(async (req) => {
       const r = await fetch(`${GRAPH}/${acc.waba_id}/message_templates`, { method: 'POST', headers: { ...auth, 'Content-Type': 'application/json' }, body: JSON.stringify({ name, language: String(b.language || 'en'), category, components }) });
       const j = await r.json();
       if (!r.ok) return json({ error: 'Meta did not accept this template: ' + (j?.error?.error_user_msg || j?.error?.message || r.status) }, 400);
-      const row = { workspace_id: ws, ...fromMeta({ id: j.id, name, status: j.status ?? 'PENDING', category: j.category ?? category, language: String(b.language || 'en'), components }) };
+      const row: any = { workspace_id: ws, ...fromMeta({ id: j.id, name, status: j.status ?? 'PENDING', category: j.category ?? category, language: String(b.language || 'en'), components }) };
+      if (b.flow && typeof b.flow === 'object') row.flow = b.flow;
       const up = await db.from('templates').upsert(row, { onConflict: 'workspace_id,template_name' });
-      if (up.error) return json({ error: up.error.message }, 500);
+      if (up.error && row.flow) { delete row.flow; const up2 = await db.from('templates').upsert(row, { onConflict: 'workspace_id,template_name' }); if (up2.error) return json({ error: up2.error.message }, 500); }
+      else if (up.error) return json({ error: up.error.message }, 500);
       return json({ ok: true, status: row.meta_status, name });
     }
 

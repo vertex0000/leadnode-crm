@@ -48,6 +48,120 @@ async function findOrCreateLead(ws: string, phone: string, name: string) {
   return { id: n.lead_id as string, created: true };
 }
 
+
+// ================= Button actions: a customer taps a quick-reply button on one of our templates =================
+const GRAPH = Deno.env.get('WA_GRAPH_URL') ?? 'https://graph.facebook.com/v21.0';
+const GEMINI = Deno.env.get('GEMINI_URL') ?? 'https://generativelanguage.googleapis.com/v1beta';
+const BREVO = Deno.env.get('BREVO_URL') ?? 'https://api.brevo.com/v3';
+const inr = (n: unknown) => (n === null || n === undefined || n === '') ? '' : '₹' + Number(n).toLocaleString('en-IN');
+async function graph(acc: any, payload: unknown) {
+  const r = await fetch(`${GRAPH}/${acc.phone_number_id}/messages`, { method: 'POST', headers: { Authorization: `Bearer ${acc.token}`, 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+  const j = await r.json().catch(() => ({})); return r.ok ? { ok: true, id: j?.messages?.[0]?.id ?? null } : { ok: false, error: j?.error?.message ?? String(r.status) };
+}
+async function logOut(ws: string, leadId: string, to: string, type: string, text: string, wamid: string | null, journey: string) {
+  const row: any = { workspace_id: ws, lead_id: leadId, phone: to, direction: 'out', type, text, status: 'sent', whatsapp_msg_id: wamid, sent_by: 'Automation' };
+  const ins = await db.from('messages').insert(row); if (ins.error) { delete row.sent_by; await db.from('messages').insert(row); }
+  await db.from('activities').insert({ workspace_id: ws, lead_id: leadId, type: 'WhatsApp Sent', details: journey.slice(0, 300), done_by: 'Automation' });
+}
+/** Template message with media header, location, catalog thumbnail and our quick-reply payloads (nv|template|index) */
+function templatePayloadFor(to: string, t: any, params: string[]) {
+  const flow = t.flow ?? {}, comps: any[] = [];
+  const kind = String(flow.content ?? 'text');
+  if (['image', 'video', 'pdf'].includes(kind) && flow.mediaUrl) {
+    const typ = kind === 'pdf' ? 'document' : kind;
+    comps.push({ type: 'header', parameters: [{ type: typ, [typ]: { link: String(flow.mediaUrl), ...(typ === 'document' ? { filename: String(flow.fileName || 'document.pdf') } : {}) } }] });
+  } else if (kind === 'location' && flow.location?.lat) {
+    comps.push({ type: 'header', parameters: [{ type: 'location', location: { latitude: Number(flow.location.lat), longitude: Number(flow.location.lng), name: String(flow.location.name ?? ''), address: String(flow.location.address ?? '') } }] });
+  }
+  if (params.length) comps.push({ type: 'body', parameters: params.map((x) => ({ type: 'text', text: String(x || '-').slice(0, 1000) })) });
+  (Array.isArray(flow.buttons) ? flow.buttons : []).forEach((b: any, i: number) => {
+    const idx = Number.isInteger(b.index) ? b.index : i;
+    if (b.meta === 'QUICK_REPLY') comps.push({ type: 'button', sub_type: 'quick_reply', index: String(idx), parameters: [{ type: 'payload', payload: `nv|${t.template_name}|${idx}` }] });
+    else if (b.meta === 'CATALOG') comps.push({ type: 'button', sub_type: 'CATALOG', index: String(idx), parameters: [{ type: 'action', action: { thumbnail_product_retailer_id: String(flow.productId || '') } }] });
+  });
+  return { messaging_product: 'whatsapp', to, type: 'template', template: { name: t.template_name, language: { code: t.language || 'en' }, ...(comps.length ? { components: comps } : {}) } };
+}
+const fillVars = (s: string, ctx: any) => String(s ?? '').replace(/\{\{\s*(first_name|name|business|city|order_id|amount|status|tracking_url|items)\s*\}\}/gi, (_m, k) => {
+  k = k.toLowerCase(); const l = ctx.lead ?? {}, o = ctx.order ?? {};
+  return k === 'first_name' ? (String(l.name ?? '').split(' ')[0] || 'there') : k === 'name' ? (l.name ?? '') : k === 'business' ? (l.business_name ?? '') : k === 'city' ? (l.city ?? '')
+    : k === 'order_id' ? (o.order_id ?? '') : k === 'amount' ? inr(o.amount) : k === 'status' ? (o.status ?? '') : k === 'tracking_url' ? (o.tracking_url ?? '') : (o.items ?? '');
+});
+async function lastOrder(ws: string, leadId: string) {
+  const { data } = await db.from('orders').select('*').eq('workspace_id', ws).eq('lead_id', leadId).neq('status', 'Cancelled').order('created_at', { ascending: false }).limit(1).maybeSingle();
+  return data;
+}
+async function runButton(ws: string, acc: any, leadId: string, phone: string, payload: string, label: string) {
+  const [, tplName, idxS] = payload.split('|'); const idx = Number(idxS);
+  const { data: t } = await db.from('templates').select('template_name, flow').eq('workspace_id', ws).eq('template_name', tplName).maybeSingle();
+  const btn = (t?.flow?.buttons ?? []).find((b: any, i: number) => (Number.isInteger(b.index) ? b.index : i) === idx);
+  if (!btn) return;
+  const { data: lead } = await db.from('leads').select('*').eq('workspace_id', ws).eq('lead_id', leadId).maybeSingle();
+  const ctx: any = { lead, order: await lastOrder(ws, leadId) };
+  await db.from('activities').insert({ workspace_id: ws, lead_id: leadId, type: 'Button Tapped', details: `${label || btn.label} · ${tplName}`, done_by: 'Customer' });
+  const say = async (text: string) => { const body = fillVars(text, ctx).trim(); if (!body) return; const r = await graph(acc, { messaging_product: 'whatsapp', to: phone, type: 'text', text: { body: body.slice(0, 4096), preview_url: true } }); if (r.ok) await logOut(ws, leadId, phone, 'text', body, r.id, body); };
+  for (const a of (Array.isArray(btn.actions) ? btn.actions : []).slice(0, 8)) {
+    try {
+      const p = a ?? {};
+      switch (p.type) {
+        case 'send_template': {
+          const { data: nt } = await db.from('templates').select('*').eq('workspace_id', ws).eq('template_name', String(p.template ?? '')).maybeSingle(); if (!nt) break;
+          // {{1}}, {{2}}… → the values typed on the action (may use {{first_name}}, {{order_id}}…); otherwise sensible defaults
+          const n = (String(nt.body ?? '').match(/\{\{\d+\}\}/g) ?? []).length, first = String(lead?.name ?? '').split(' ')[0] || 'there';
+          const given = String(p.params ?? '').trim() ? String(p.params).split(',').map((x: string) => fillVars(x.trim(), ctx)) : [];
+          const auto = ctx.order ? [first, ctx.order.order_id, ctx.order.status, inr(ctx.order.amount)] : [first, lead?.business_name || lead?.name || '', lead?.city || ''];
+          const r = await graph(acc, templatePayloadFor(phone, nt, Array.from({ length: n }, (_, k) => given[k] || auto[k] || '-')));
+          if (r.ok) await logOut(ws, leadId, phone, 'template', `Template: ${nt.template_name}`, r.id, `Flow → ${nt.template_name}`); break;
+        }
+        case 'send_text': case 'open_link': case 'open_form': case 'open_product': await say([p.text, p.url].filter(Boolean).join('\n')); break;
+        case 'send_payment_link': {
+          if (ctx.order) await db.from('orders').update({ payment: 'link' }).eq('workspace_id', ws).eq('order_id', ctx.order.order_id);
+          await say(p.text || `Here is your payment link${ctx.order?.amount ? ' for {{amount}}' : ''}:\n${p.url ?? ''}`); break;
+        }
+        case 'create_order': {
+          const status = ['Cart', 'New', 'Confirmed', 'COD'].includes(p.status) ? p.status : 'New';
+          const { data: o } = await db.from('orders').insert({ workspace_id: ws, lead_id: leadId, items: String(p.items ?? label ?? '').slice(0, 2000), amount: p.amount ? Number(p.amount) : null, status, payment: status === 'COD' ? 'COD' : '', source: `WhatsApp · ${tplName}` }).select().single();
+          ctx.order = o; await db.from('activities').insert({ workspace_id: ws, lead_id: leadId, type: 'Order', details: `${o?.order_id} created (${status})`, done_by: 'Automation' });
+          if (p.text) await say(p.text); break;
+        }
+        case 'update_order': {
+          const status = String(p.status || 'Confirmed');
+          if (!ctx.order) { const { data: o } = await db.from('orders').insert({ workspace_id: ws, lead_id: leadId, items: String(label ?? ''), status, payment: status === 'COD' ? 'COD' : '', source: `WhatsApp · ${tplName}` }).select().single(); ctx.order = o; }
+          else { const { data: o } = await db.from('orders').update({ status, ...(status === 'COD' ? { payment: 'COD' } : {}) }).eq('workspace_id', ws).eq('order_id', ctx.order.order_id).select().single(); ctx.order = o; }
+          await db.from('activities').insert({ workspace_id: ws, lead_id: leadId, type: 'Order', details: `${ctx.order?.order_id} → ${status}`, done_by: 'Automation' });
+          if (p.text) await say(p.text); break;
+        }
+        case 'cancel_order': {
+          if (ctx.order) { await db.from('orders').update({ status: 'Cancelled' }).eq('workspace_id', ws).eq('order_id', ctx.order.order_id); await db.from('activities').insert({ workspace_id: ws, lead_id: leadId, type: 'Order', details: `${ctx.order.order_id} cancelled by customer`, done_by: 'Customer' }); }
+          await say(p.text || (ctx.order ? 'Your order {{order_id}} is cancelled.' : 'We could not find an open order for you.')); break;
+        }
+        case 'track_order': await say(p.text || (ctx.order ? 'Order {{order_id}}: *{{status}}*' + (ctx.order.tracking_url ? '\nTrack it here: {{tracking_url}}' : '') : 'We could not find an open order for you — reply here and our team will help.')); break;
+        case 'generate_invoice': await say(ctx.order ? `*Invoice ${ctx.order.order_id}*\n${ctx.order.items || ''}\nAmount: ${inr(ctx.order.amount) || 'to be confirmed'}\nStatus: ${ctx.order.status}\nThank you for your order!` : 'We could not find an order to invoice — our team will contact you.'); break;
+        case 'assign_member': if (p.member) await db.from('leads').update({ assigned_to: String(p.member).slice(0, 60) }).eq('workspace_id', ws).eq('lead_id', leadId); break;
+        case 'add_tag': if (p.tag) await db.from('leads').update({ tag: String(p.tag).slice(0, 30) }).eq('workspace_id', ws).eq('lead_id', leadId); break;
+        case 'change_stage': if (p.stage) { const old = lead?.stage; await db.from('leads').update({ stage: String(p.stage) }).eq('workspace_id', ws).eq('lead_id', leadId); await db.from('activities').insert({ workspace_id: ws, lead_id: leadId, type: 'Stage Changed', details: `${old} → ${p.stage}`, done_by: 'Automation' }); } break;
+        case 'create_task': await db.from('tasks').insert({ workspace_id: ws, lead_id: leadId, title: fillVars(String(p.title || `Follow up: ${label}`), ctx).slice(0, 200), due_at: new Date(Date.now() + (Number(p.days) || 0) * 864e5 + 3600e3).toISOString(), priority: ['High', 'Medium', 'Low'].includes(p.priority) ? p.priority : 'High', assigned_to: String(p.member || lead?.assigned_to || ''), source: 'button' }); break;
+        case 'send_email': {
+          const { data: ea } = await db.from('email_accounts').select('*').eq('workspace_id', ws).maybeSingle();
+          if (ea && /@/.test(String(lead?.email ?? ''))) await fetch(`${BREVO}/smtp/email`, { method: 'POST', headers: { 'api-key': ea.api_key, 'Content-Type': 'application/json', accept: 'application/json' }, body: JSON.stringify({ sender: { email: ea.from_email, name: ea.from_name || undefined }, to: [{ email: lead.email, name: lead.name || '' }], subject: fillVars(String(p.subject || 'Thank you'), ctx), htmlContent: `<p>${fillVars(String(p.body || ''), ctx).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/\n/g, '<br>')}</p>` }) });
+          break;
+        }
+        case 'trigger_workflow': case 'custom_api': {
+          const u = String(p.url ?? ''); if (!/^https:\/\//i.test(u)) break;
+          await fetch(u, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ source: 'nodevers', event: 'button', template: tplName, button: label, lead, order: ctx.order ?? null }), signal: AbortSignal.timeout(10000) }).catch(() => null); break;
+        }
+        case 'run_ai_agent': {
+          const key = Deno.env.get('GEMINI_API_KEY'); if (!key) break;
+          const { data: hist } = await db.from('messages').select('direction, text').eq('workspace_id', ws).eq('lead_id', leadId).order('time', { ascending: false }).limit(12);
+          const chat = (hist ?? []).reverse().map((x: any) => `${x.direction === 'out' ? 'Business' : 'Customer'}: ${String(x.text).slice(0, 400)}`).join('\n');
+          const r = await fetch(`${GEMINI}/models/${Deno.env.get('GEMINI_MODEL') || 'gemini-3.5-flash-lite'}:generateContent`, { method: 'POST', headers: { 'Content-Type': 'application/json', 'x-goog-api-key': key }, body: JSON.stringify({ systemInstruction: { parts: [{ text: `You reply on WhatsApp for a business. ${String(p.prompt ?? '').slice(0, 800)}\nReply in the customer's language, under 60 words, no invented prices or promises.` }] }, contents: [{ role: 'user', parts: [{ text: chat || label }] }], generationConfig: { temperature: 0.6, maxOutputTokens: 1024 } }) });
+          const j = await r.json().catch(() => ({})); const text = (j?.candidates?.[0]?.content?.parts ?? []).filter((x: any) => !x.thought).map((x: any) => x.text ?? '').join('').trim();
+          if (text) await say(text); break;
+        }
+      }
+    } catch (e) { console.error('action failed', a?.type, e); }
+  }
+}
+
 Deno.serve(async (req) => {
   const url = new URL(req.url);
   if (req.method === 'GET') {
@@ -61,7 +175,7 @@ Deno.serve(async (req) => {
     for (const entry of body.entry ?? []) for (const ch of entry.changes ?? []) {
       if (ch.field !== 'messages') continue;
       const v = ch.value ?? {}, pid = v.metadata?.phone_number_id;
-      const { data: acc } = await db.from('wa_accounts').select('workspace_id').eq('phone_number_id', String(pid)).maybeSingle();
+      const { data: acc } = await db.from('wa_accounts').select('*').eq('phone_number_id', String(pid)).maybeSingle();
       if (!acc) continue;
       const ws = acc.workspace_id, names: Record<string, string> = {};
       for (const c of v.contacts ?? []) names[c.wa_id] = c.profile?.name ?? '';
@@ -75,6 +189,9 @@ Deno.serve(async (req) => {
           // "STOP" → no more broadcasts to this number; "START" → back in
           if (/^\s*(stop|unsubscribe|stop all|band karo)\s*[.!]?\s*$/i.test(text)) await db.from('leads').update({ wa_opt_out: true }).eq('workspace_id', ws).eq('lead_id', lead.id);
           else if (/^\s*start\s*$/i.test(text)) await db.from('leads').update({ wa_opt_out: false }).eq('workspace_id', ws).eq('lead_id', lead.id);
+          // quick-reply button on one of our templates → run its actions
+          const payload = m.type === 'button' ? String(m.button?.payload ?? '') : m.type === 'interactive' ? String(m.interactive?.button_reply?.id ?? '') : '';
+          if (payload.startsWith('nv|')) await runButton(ws, acc, lead.id, phone, payload, text);
         }
       }
       for (const s of v.statuses ?? []) {

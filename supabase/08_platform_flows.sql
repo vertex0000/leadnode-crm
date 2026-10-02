@@ -89,3 +89,42 @@ begin
 end $$;
 revoke execute on function public.admin_overview(), public.is_platform_admin(), public.is_platform_admin_uid(uuid) from public, anon;
 grant execute on function public.admin_overview(), public.is_platform_admin() to authenticated;
+
+-- ---------- 2. Template flows: content type, media, buttons → actions (send next template, tag, stage, order…) ----------
+alter table public.templates add column if not exists flow jsonb not null default '{}'::jsonb;
+
+-- ---------- 3. Orders (created / updated by WhatsApp buttons or by your team) ----------
+create table if not exists public.orders (
+  workspace_id uuid not null default public.my_workspace() references public.workspaces(id) on delete cascade,
+  order_id     text not null,
+  lead_id      text,
+  items        text not null default '' check (length(items) <= 2000),
+  amount       numeric check (amount is null or amount >= 0),
+  status       text not null default 'New' check (status in ('Cart', 'New', 'Confirmed', 'Paid', 'COD', 'Shipped', 'Delivered', 'Cancelled')),
+  payment      text not null default '' check (length(payment) <= 40),
+  tracking_url text not null default '' check (length(tracking_url) <= 500),
+  notes        text not null default '' check (length(notes) <= 2000),
+  source       text not null default '' check (length(source) <= 80),
+  created_at   timestamptz not null default now(),
+  updated_at   timestamptz not null default now(),
+  primary key (workspace_id, order_id),
+  foreign key (workspace_id, lead_id) references public.leads(workspace_id, lead_id) on delete set null (lead_id)
+);
+create index if not exists orders_lead_idx on public.orders (workspace_id, lead_id, created_at);
+drop trigger if exists orders_code on public.orders;
+create trigger orders_code before insert on public.orders for each row execute function public.set_code('O', 'order_id');
+drop trigger if exists orders_touch on public.orders;
+create trigger orders_touch before update on public.orders for each row execute function public.touch_updated();
+alter table public.orders enable row level security;
+drop policy if exists o_select on public.orders;
+drop policy if exists o_write on public.orders;
+create policy o_select on public.orders for select to authenticated using (public.is_member(workspace_id) and (public.sees_all(workspace_id) or lead_id is null or exists (select 1 from public.leads l where l.workspace_id = orders.workspace_id and l.lead_id = orders.lead_id)));
+create policy o_write on public.orders for all to authenticated using (public.can_write(workspace_id) and (public.sees_all(workspace_id) or lead_id is null or exists (select 1 from public.leads l where l.workspace_id = orders.workspace_id and l.lead_id = orders.lead_id))) with check (public.can_write(workspace_id));
+grant select, insert, update, delete on public.orders to authenticated;
+grant all on public.orders to service_role;
+do $$ begin
+  if exists (select 1 from pg_publication where pubname = 'supabase_realtime')
+     and not exists (select 1 from pg_publication_tables where pubname = 'supabase_realtime' and schemaname = 'public' and tablename = 'orders') then
+    alter publication supabase_realtime add table public.orders;
+  end if;
+end $$;
