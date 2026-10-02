@@ -654,6 +654,109 @@ body.cl-tenant [data-go="scripts"],body.cl-tenant [data-stab="conn"],body.cl-ten
 .sub-banner.warn{background:var(--yellow-soft)}.sub-banner.bad{background:color-mix(in srgb,var(--coral) 12%,transparent);border-color:color-mix(in srgb,var(--coral) 45%,transparent)}.sub-banner{flex-wrap:wrap}.sub-banner .btn{white-space:nowrap}
 body.sub-locked #roBanner{display:none!important}
 body.brand-ro #brandRowSite,body.brand-ro #setModal .acc[data-acc="s-wl"]{display:none!important}
+/* ---- home header (hero) ---- */
+.hero{position:relative;overflow:hidden;border-radius:22px;margin:2px 0 18px;min-height:250px;display:flex;background:linear-gradient(115deg,color-mix(in srgb,var(--blue-2) 10%,var(--card)) 0%,color-mix(in srgb,#A78BFA 14%,var(--card)) 55%,color-mix(in srgb,var(--blue-2) 18%,var(--card)) 100%);isolation:isolate}
+.hero-in{position:relative;z-index:2;display:flex;flex-direction:column;justify-content:center;gap:10px;padding:34px 38px;max-width:min(620px,58%)}
+.hero.al-center .hero-in{margin:0 auto;text-align:center;align-items:center;max-width:720px}.hero.al-right .hero-in{margin-left:auto;text-align:right;align-items:flex-end}
+.hero-eb{font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.hero h2{margin:0;font-size:clamp(28px,3.4vw,44px);line-height:1.08;letter-spacing:-.025em;font-weight:800}
+.hero-in p{margin:0;font-size:15.5px;color:var(--muted);max-width:520px;line-height:1.5}
+.hero-btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}.hero.al-center .hero-btns{justify-content:center}.hero.al-right .hero-btns{justify-content:flex-end}
+.hero-b{height:44px;padding:0 20px;font-size:14.5px;border-radius:12px}.hero-b .i{width:18px;height:18px}
+.hero-l{background:var(--card);border:1px solid var(--line);color:var(--blue-2)}.hero-o{background:transparent;border:1.5px solid currentColor}
+.hero.has-img{background:var(--card)}.hero.img-bad .hero-pic{display:none}.hero-pic{position:absolute;inset:0;z-index:0}.hero-pic img{width:100%;height:100%;object-fit:cover;object-position:center right;display:block}
+.hero.has-img:not(.no-tx)::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,color-mix(in srgb,var(--card) 88%,transparent) 0%,color-mix(in srgb,var(--card) 55%,transparent) 42%,transparent 68%)}
+.hero.has-img.al-center:not(.no-tx)::before{background:color-mix(in srgb,var(--card) 55%,transparent)}.hero.has-img.al-right:not(.no-tx)::before{background:linear-gradient(270deg,color-mix(in srgb,var(--card) 88%,transparent) 0%,transparent 68%)}
+.hero.has-img.no-tx{min-height:0;display:block}.hero.has-img.no-tx .hero-pic{position:relative}.hero.has-img.no-tx .hero-pic img{height:auto;max-height:560px}.hero.has-img.no-tx .hero-in{position:absolute;inset:0;max-width:none}
+.hero.vp-top .hero-in{justify-content:flex-start}.hero.vp-bottom .hero-in{justify-content:flex-end}
+.hero.dark .hero-in,.hero.dark h2{color:#fff}.hero.dark .hero-in p,.hero.dark .hero-eb{color:rgba(255,255,255,.82)}
+.hero.dark.has-img:not(.no-tx)::before{background:linear-gradient(90deg,rgba(8,10,16,.82) 0%,rgba(8,10,16,.5) 45%,transparent 72%)}.hero.dark:not(.has-img){background:linear-gradient(115deg,#0F172A,#1E1B4B 60%,#172554)}
+.hero.dark .hero-l{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.25);color:#fff}
+.hero-edit{position:absolute;top:12px;right:12px;z-index:3;border:1px solid var(--line);background:color-mix(in srgb,var(--card) 88%,transparent);backdrop-filter:blur(8px);border-radius:10px;padding:6px 11px;font-weight:700;font-size:12.5px;color:var(--text);opacity:.85;transition:opacity .2s,transform .2s}.hero-edit:hover{opacity:1;transform:translateY(-1px)}
+.hero-off{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 14px;border-radius:14px;margin-bottom:14px;border:1px dashed var(--line-2)}
+.hero-art{position:absolute;right:0;top:0;bottom:0;width:48%;z-index:1;pointer-events:none}
+.ha-c{position:absolute;display:grid;grid-template-columns:auto 1fr;column-gap:10px;align-items:center;padding:14px 16px;border-radius:18px;background:var(--card);box-shadow:0 18px 40px -18px rgba(30,41,90,.35),0 0 0 1px var(--line);animation:haFloat 6s ease-in-out infinite}
+.ha-c b{font-size:15px}.ha-c small{grid-column:2;color:var(--muted);font-weight:600;font-size:12.5px}.ha-i{grid-row:span 2;width:40px;height:40px;border-radius:12px;display:grid;place-items:center;color:#fff}.ha-i .i{width:22px;height:22px}
+.ha-wa{left:2%;top:22%;width:200px;transform:rotate(-6deg)}.ha-rows{grid-column:1/-1;display:flex;flex-direction:column;gap:7px;margin-top:10px}.ha-rows i{height:8px;border-radius:5px;background:var(--line-2)}.ha-rows i:nth-child(2){width:80%}.ha-rows i:nth-child(3){width:60%}
+.ha-leads{left:36%;top:9%;width:200px;background:linear-gradient(135deg,#2563EB,#60A5FA);color:#fff;transform:rotate(-8deg);animation-delay:-1.5s}.ha-leads small,.ha-auto small{color:rgba(255,255,255,.85)}.ha-bar{grid-column:1/-1;height:8px;border-radius:5px;background:rgba(255,255,255,.3);margin-top:12px;overflow:hidden}.ha-bar i{display:block;height:100%;width:68%;background:#fff;border-radius:5px}
+.ha-ord{left:40%;top:56%;width:170px;transform:rotate(-5deg);animation-delay:-3s}.ha-auto{left:68%;top:50%;width:180px;background:linear-gradient(135deg,#7C3AED,#A78BFA);color:#fff;transform:rotate(-7deg);animation-delay:-4.5s}
+.ha-note{position:absolute;left:72%;top:12%;font:italic 600 15px/1.3 'Segoe Script','Bradley Hand',cursive;color:var(--muted);transform:rotate(-6deg)}
+@keyframes haFloat{0%,100%{translate:0 0}50%{translate:0 -8px}}
+@media (prefers-reduced-motion:reduce){.ha-c{animation:none}}
+@media (max-width:1100px){.ha-note{display:none}.hero-art{width:44%}.ha-auto{left:58%}}
+@media (max-width:760px){.hero{flex-direction:column;min-height:0}.hero-in{max-width:none;padding:24px 20px}.hero-art{position:relative;width:100%;height:190px;order:2}.ha-wa{left:4%;top:12%;width:170px}.ha-leads{left:46%;top:4%;width:170px}.ha-ord{left:8%;top:58%;width:150px}.ha-auto{left:50%;top:56%;width:160px}
+  .hero.has-img{min-height:340px}.hero.has-img:not(.no-tx)::before{background:linear-gradient(180deg,color-mix(in srgb,var(--card) 90%,transparent) 0%,color-mix(in srgb,var(--card) 60%,transparent) 55%,transparent 100%)}.hero.dark.has-img:not(.no-tx)::before{background:linear-gradient(180deg,rgba(8,10,16,.82),rgba(8,10,16,.35) 70%,transparent)}
+  .hero.has-img .hero-in{justify-content:flex-start}.hero.has-img.no-tx .hero-in{justify-content:flex-end;min-height:340px}.hero-b{flex:1 1 auto}}
+.hero-vid{position:relative;aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:#000}.hero-vid iframe,.hero-vid video{position:absolute;inset:0;width:100%;height:100%;border:0}
+.modal .box.narrow.wide-vid{width:min(960px,100%)}.modal .box.narrow.pl-ed-box{width:min(1040px,100%)}
+/* ---- pricing section ---- */
+.pr{--pa:#F97316;position:relative;overflow:hidden;border-radius:26px;padding:46px 28px 34px;margin:0 0 20px;background:radial-gradient(120% 90% at 50% -30%,color-mix(in srgb,var(--pa) 26%,transparent) 0%,transparent 55%),linear-gradient(180deg,#141210,#0B0A09);color:#F5F1EC;isolation:isolate;box-shadow:0 30px 60px -30px rgba(0,0,0,.55)}
+.pr-glow{position:absolute;left:50%;bottom:calc(100% - 38px);width:min(900px,120%);aspect-ratio:2/1;transform:translateX(-50%);border-radius:50%;border-bottom:3px solid color-mix(in srgb,var(--pa) 85%,#fff);box-shadow:0 22px 70px -10px color-mix(in srgb,var(--pa) 70%,transparent),inset 0 -30px 60px -30px color-mix(in srgb,var(--pa) 60%,transparent);z-index:-1;pointer-events:none}
+.pr-h{text-align:center;max-width:640px;margin:0 auto 26px;display:flex;flex-direction:column;align-items:center;gap:10px}
+.pr-eb{font-size:11.5px;font-weight:700;padding:4px 12px;border-radius:20px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);color:rgba(255,255,255,.85)}
+.pr h2{margin:0;font-size:clamp(24px,2.8vw,36px);letter-spacing:-.02em;line-height:1.15}.pr-h p{margin:0;color:rgba(245,241,236,.66);font-size:14.5px}
+.pr-tg{display:inline-flex;gap:4px;padding:4px;border-radius:30px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);margin-top:4px}
+.pr-tg button{border:0;background:transparent;color:rgba(255,255,255,.7);font-weight:700;font-size:13px;padding:7px 16px;border-radius:24px;transition:background .2s,color .2s}.pr-tg button.on{background:#fff;color:#111}.pr-tg span{font-size:11px;color:var(--pa);margin-left:4px}.pr-tg button.on span{color:color-mix(in srgb,var(--pa) 80%,#000)}
+.pr-cards{display:grid;grid-template-columns:repeat(var(--n),minmax(0,1fr));gap:16px;max-width:calc(var(--n) * 330px);margin:0 auto}
+.pr-c{position:relative;display:flex;flex-direction:column;gap:10px;padding:22px;border-radius:20px;background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,.025));border:1px solid rgba(255,255,255,.1);backdrop-filter:blur(6px);transition:transform .25s,border-color .25s,box-shadow .25s}
+.pr-c:hover{transform:translateY(-4px);border-color:rgba(255,255,255,.2)}
+.pr-c.hl{border-color:color-mix(in srgb,var(--pa) 70%,transparent);box-shadow:0 0 0 1px color-mix(in srgb,var(--pa) 40%,transparent),0 24px 50px -24px color-mix(in srgb,var(--pa) 70%,transparent);background:linear-gradient(180deg,color-mix(in srgb,var(--pa) 14%,rgba(255,255,255,.06)),rgba(255,255,255,.03))}
+.pr-c.off{opacity:.55}.pr-c.cur{border-color:#22C55E}
+.pr-ct{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.pr-ct b{font-size:15px}
+.pr-bd{font-size:11px;font-weight:800;padding:3px 9px;border-radius:20px;background:color-mix(in srgb,var(--pa,#F97316) 22%,transparent);color:var(--pa,#F97316);border:1px solid color-mix(in srgb,var(--pa,#F97316) 45%,transparent)}.pr-bd.sm{font-size:10.5px;padding:1px 7px}
+.pr-hid{font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px;background:rgba(255,255,255,.1)}
+.pr-p{font-size:34px;font-weight:800;letter-spacing:-.03em;line-height:1.1}.pr-p small{font-size:13.5px;font-weight:600;color:rgba(245,241,236,.6);letter-spacing:0}
+.pr-d{margin:0;font-size:13px;color:rgba(245,241,236,.62)}.pr-sv{color:var(--pa);font-weight:700;font-size:12.5px;margin-top:-4px}
+.pr-in{font-size:12.5px;font-weight:700;margin-top:6px;padding-top:12px;border-top:1px solid rgba(255,255,255,.08)}
+.pr-c ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px;font-size:13.2px;color:rgba(245,241,236,.82);flex:1}.pr-c li{display:flex;gap:8px;align-items:flex-start}.pr-c li i{font-style:normal;flex:none;width:17px;height:17px;border-radius:50%;display:grid;place-items:center;font-size:10px;background:rgba(255,255,255,.1);color:#fff;margin-top:1px}.pr-c.hl li i{background:var(--pa)}
+.pr-b{margin-top:12px;height:42px;border-radius:12px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.06);color:#fff;font-weight:700;font-size:14px;transition:background .2s,transform .2s}.pr-b:hover:not(:disabled){background:rgba(255,255,255,.14);transform:translateY(-1px)}
+.pr-c.hl .pr-b{background:var(--pa);border-color:transparent;color:#fff;box-shadow:0 10px 24px -10px var(--pa)}.pr-c.hl .pr-b:hover{filter:brightness(1.08)}.pr-b:disabled{opacity:.7;cursor:default;border-color:#22C55E;color:#86EFAC}
+.pr-adm{margin-top:10px;display:flex;justify-content:flex-end}.pr .pr-adm .btn{background:rgba(255,255,255,.1);color:#fff;border-color:rgba(255,255,255,.2)}
+.pr-note{text-align:center;margin:18px 0 0;font-size:12.5px;color:rgba(245,241,236,.55)}
+.pr .hero-edit{color:#111}
+.pr-pop{position:absolute;top:-13px;left:50%;transform:translateX(-50%);z-index:2;white-space:nowrap;font-size:12px;font-weight:700;padding:5px 14px;border-radius:20px;background:#17181C;color:#fff;box-shadow:0 8px 18px -8px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.18)}
+.pr .pr-c.hl{margin-top:4px}.pr-cards{padding-top:14px}
+/* light (clean) pricing — default */
+.pr.light{--prb:#FCFCFD;--prc:#F4F5F7;--prh:#FFFFFF;--prt:#111318;--prm:#6B7280;--prl:#E6E8EC;color:var(--prt);background:linear-gradient(color-mix(in srgb,var(--prl) 70%,transparent) 1px,transparent 1px) 0 0/56px 56px,linear-gradient(90deg,color-mix(in srgb,var(--prl) 70%,transparent) 1px,transparent 1px) 0 0/56px 56px,var(--prb);box-shadow:0 0 0 1px var(--prl);padding:46px 28px 36px}
+.pr.light::before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(70% 60% at 50% 40%,transparent 0%,var(--prb) 85%)}
+.pr.light .pr-glow{display:none}.pr.light h2{font-weight:600;font-size:clamp(28px,3.2vw,42px);letter-spacing:-.03em}
+.pr.light .pr-h p{color:var(--prm);max-width:520px}.pr.light .pr-eb{background:var(--prc);border-color:var(--prl);color:var(--prm)}
+.pr.light .pr-tg{background:var(--prc);border-color:var(--prl)}.pr.light .pr-tg button{color:var(--prm)}.pr.light .pr-tg button.on{background:var(--prt);color:var(--prb)}.pr.light .pr-tg button.on span{color:color-mix(in srgb,var(--pa) 60%,#fff)}
+.pr.light .pr-cards{align-items:start;gap:18px}
+.pr.light .pr-c{background:color-mix(in srgb,var(--prt) 0%,var(--prc));border:1px solid var(--prl);backdrop-filter:none;box-shadow:none;gap:8px;padding:24px 22px 22px}
+.pr.light .pr-c:hover{transform:translateY(-3px);box-shadow:0 18px 40px -26px rgba(15,23,42,.35)}
+.pr.light .pr-c.hl{background:radial-gradient(60% 45% at 100% 0%,color-mix(in srgb,var(--pa) 30%,transparent) 0%,transparent 100%),var(--prh);border-color:var(--prl);box-shadow:0 26px 60px -24px rgba(15,23,42,.32),0 0 0 1px var(--prl);transform:translateY(-12px)}
+.pr.light .pr-c.hl:hover{transform:translateY(-15px)}.pr.light .pr-c.cur{box-shadow:0 0 0 2px #22C55E}
+.pr.light .pr-ct b{font-size:19px;font-weight:600}.pr.light .pr-d{color:var(--prm);font-size:13.5px}
+.pr.light .pr-p{font-size:34px;font-weight:600;margin-top:14px;padding-bottom:14px;border-bottom:1px solid var(--prl)}.pr.light .pr-p small{color:var(--prm);font-size:13px;font-weight:500}
+.pr.light .pr-sv{margin-top:2px}.pr.light .pr-in{border:0;padding-top:4px;margin-top:4px;font-weight:500;font-size:12.5px;color:var(--prm)}
+.pr.light .pr-c ul{color:var(--prt);font-size:13.5px;gap:10px}.pr.light .pr-c li i{background:transparent;border:1.3px solid color-mix(in srgb,var(--prm) 70%,transparent);color:var(--prm);font-size:9px}
+.pr.light .pr-c.hl li i{background:transparent;border-color:color-mix(in srgb,var(--pa) 70%,var(--prm));color:var(--pa)}
+.pr.light .pr-b{margin-top:16px;height:44px;border-radius:24px;background:color-mix(in srgb,var(--prt) 6%,var(--prh));border:1px solid var(--prl);color:var(--prt);font-weight:600}.pr.light .pr-b:hover:not(:disabled){background:color-mix(in srgb,var(--prt) 10%,var(--prh))}
+.pr.light .pr-c.hl .pr-b{background:color-mix(in srgb,var(--prt) 6%,var(--prh));color:var(--prt);box-shadow:none;border-color:var(--prl)}.pr.light .pr-c.hl .pr-b:hover{background:var(--prt);color:var(--prh);filter:none}
+.pr.light .pr-b:disabled{color:#16A34A;border-color:#86EFAC}
+.pr.light .pr-bd{background:var(--prc);color:var(--prt);border-color:var(--prl)}.pr.light .pr-hid{background:var(--prl)}.pr.light .pr-note{color:var(--prm)}
+.pr.light .pr-adm .btn{background:var(--prh);color:var(--prt);border-color:var(--prl)}.pr.light .hero-edit{color:var(--prt)}
+[data-theme="dark"] .pr.light{--prb:#0F1115;--prc:#161920;--prh:#1C2029;--prt:#F3F4F6;--prm:#9CA3AF;--prl:#272B35}
+[data-theme="dark"] .pr-pop{background:#fff;color:#111}
+@media (max-width:640px){.pr.light{padding:34px 0 24px}.pr.light .pr-c.hl{transform:none}.pr-cards{padding-top:18px}}
+
+@media (max-width:980px){.pr-cards{grid-template-columns:repeat(min(var(--n),2),minmax(0,1fr))}}
+@media (max-width:640px){.pr{padding:34px 0 24px;border-radius:20px}.pr-h{padding:0 14px}.pr-cards{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:12px;padding:6px 14px 10px;scrollbar-width:none;max-width:none}.pr-cards::-webkit-scrollbar{display:none}.pr-c{flex:0 0 84%;scroll-snap-align:center}.pr-c:hover{transform:none}.pr-glow{width:180%}.pr-note{padding:0 14px}}
+/* ---- admin: home page editor, plans ---- */
+.ah-prev-h{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin:0 0 8px}.ah-prev-h b{font-size:14px}.ah-prev-h .muted{font-size:12.5px}
+#admHeroPrev .hero{margin:0}#admPrPrev .pr,#plPrev .pr{margin:0}
+.ah-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.ah-col{display:flex;flex-direction:column;gap:10px;min-width:0}@media (max-width:860px){.ah-grid{grid-template-columns:1fr}}
+.ah-sec{font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:14px 0 6px}.ah-sec .muted{text-transform:none;letter-spacing:0;font-weight:600}
+.adm-sw{padding:10px 12px;border:1px solid var(--line);border-radius:12px;cursor:pointer}
+.ah-b{display:grid;grid-template-columns:auto 1.2fr 1.3fr 1.5fr 1.2fr 1fr auto;gap:10px;align-items:end;padding:12px;border-radius:14px;margin-bottom:8px}.ah-b>.sw{margin-bottom:8px}.ah-b .field{min-width:0}.ah-bx{display:flex;gap:4px;margin-bottom:2px}.ah-nv{display:block;font-size:12.5px;padding:10px 0}
+@media (max-width:1100px){.ah-b{grid-template-columns:auto 1fr 1fr}.ah-bx{grid-column:-2/-1}}@media (max-width:560px){.ah-b{grid-template-columns:1fr}}
+.adm-ph2{display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap;padding:16px 18px;border-radius:16px}.adm-ph2 p{margin:4px 0 0;font-size:13px}.adm-ph2-b{display:flex;gap:8px;flex-wrap:wrap}
+.pl-ed{display:grid;grid-template-columns:1.25fr 1fr;gap:20px}.pl-ed-p{position:sticky;top:0;align-self:start}.pl-ed-p .pr{padding:22px 14px}.pl-ed-p .pr-glow{bottom:calc(100% - 14px)}@media (max-width:860px){.pl-ed{grid-template-columns:1fr}.pl-ed-p{position:static}}
+.pl-ed .form{gap:10px}
+.adm-who{display:flex;gap:14px;align-items:flex-start;padding:16px 18px;border-radius:16px;border:1px solid color-mix(in srgb,#A78BFA 40%,transparent)}.adm-who p{margin:4px 0 0;font-size:13.5px;line-height:1.55}.adm-who-i{font-size:24px;line-height:1}
+.adm-brand{display:flex;gap:12px;align-items:center;flex-wrap:wrap}.adm-brand .brand-logo{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;overflow:hidden;background:var(--text);color:var(--card);flex:none}.adm-brand .brand-logo img{width:100%;height:100%;object-fit:cover}.adm-brand small{display:block}
+.acct-plat{display:block;margin-top:3px;color:#7C5CD6!important;font-weight:600}
 body.np-add [data-add],body.np-add .addcard,body.np-import #csvImportBtn,body.np-import #pImport,body.np-import [data-bcimport],body.np-import .bc-imp,body.np-export #csvExport,body.np-delete #panel [data-delete],body.np-edit #panel [data-edit],body.np-broadcast [data-go="broadcast"],body.np-automation [data-go="automation"],body.np-automation [data-go="scripts"],body.np-automation [data-go="n8n"],body.np-analytics [data-go="analytics"],body.np-analytics [data-go="reports"],body.np-analytics [data-go="performance"],body.np-analytics [data-go="insights"],body.np-analytics [data-go="insales"],body.np-analytics [data-go="inmarketing"],body.np-calls [data-calllog],body.np-tasks [data-go="tasks"],body.np-whatsapp #inbox .ib-comp,body.np-email [data-bctab="email"]{display:none!important}body.np-edit #panel .stagebar{pointer-events:none}
 body.ro [data-add],body.ro .addcard,body.ro #addMember,body.ro [data-lginvite],body.ro #pImport,body.ro #scrNew,body.ro [data-go="industry"],body.ro [data-go="scripts"],body.ro [data-go="automation"],body.ro [data-go="broadcast"],body.ro [data-stab="conn"],body.ro [data-stab="wl"],body.ro #acctImport,body.ro #acctWs,body.ro #panel .notebox,body.ro #panel [data-delete],body.ro #panel [data-edit],body.ro #panel [data-focus-note],body.ro #panel .p-foot,body.ro #panel .aisum-act button{display:none!important}body.ro #panel .stagebar{pointer-events:none}
 .lg-card{padding:18px;border-radius:16px;margin-top:18px}.lg-h{display:flex;gap:12px;align-items:flex-start;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap}.lg-h h3{margin:0 0 4px}.lg-h p{margin:0;font-size:13px}
@@ -4815,11 +4918,13 @@ function aiSummaryHTML(l) {
 }
 
 /* ================= platform-wide settings (brand, white label, trial, support) ================= */
-const PLAT = { s: {}, loaded: false };
+const PLAT = { s: {}, loaded: false, plans: null };
 async function platLoad() {
   const c = sbConf(); if (!c.url || !c.key) return;
   try { const r = await fetch(c.url.replace(/\/$/, '') + '/rest/v1/platform_settings?select=key,value', { headers: { apikey: c.key } }); if (!r.ok) return; const rows = await r.json(); if (!Array.isArray(rows)) return;
     PLAT.s = Object.fromEntries(rows.map(x => [x.key, x.value])); PLAT.loaded = true; applyBranding(); authBrand(); } catch (e) { }
+  try { const r = await fetch(c.url.replace(/\/$/, '') + '/rest/v1/plans?select=*&order=sort', { headers: { apikey: c.key } }); if (r.ok) { const rows = await r.json(); if (Array.isArray(rows)) PLAT.plans = rows; } } catch (e) { }
+  if (typeof activeView === 'function' && activeView() === 'home' && typeof renderHome === 'function' && S && S.leads) renderHome();
 }
 /* ================= White label (agencies resell Nodevers as their own platform) ================= */
 const WL_KEYS = ['accentColor', 'buttonColor', 'loginHeadline', 'loginSub', 'hidePowered', 'subdomain', 'customDomain'];
@@ -4990,7 +5095,7 @@ function fillAcct() {
   $('#sbUrl').value = c.url || ''; $('#sbKey').value = c.key || '';
   $('#sbStatus').className = 'status'; $('#sbStatus').textContent = c.url ? 'Logins are on.' : 'Logins are off — the site uses your API key only.';
   $('#acctSigned').hidden = !u; $('#sbLogin').hidden = !c.url || !!u; $('#acctImport').hidden = !(cloud && settings.url && settings.key);
-  if (u) $('#acctSigned').innerHTML = `${avatar(u.name, '', brand().userPhoto)}<div class="grow"><b>${esc(u.name)}</b><small>${esc(u.email)}${cloud ? ` · ${esc(AUTH.wsName || 'Workspace')} (${esc(AUTH.role)})` : ''}</small></div><button class="btn sm" id="sbOut">Sign out</button>`;
+  if (u) $('#acctSigned').innerHTML = `${avatar(u.name, '', brand().userPhoto)}<div class="grow"><b>${esc(u.name)}</b><small>${esc(u.email)}${cloud ? ` · ${esc(AUTH.wsName || 'Workspace')} (${esc(AUTH.role)})` : ''}</small>${cloud && AUTH.platform ? `<small class="acct-plat">🛡 Platform team · ${esc((PLAT_ROLES.find(r => r[0] === AUTH.platRole) || [0, 'Admin'])[1])} — you can open the <a class="bc-link" data-go="admin" data-close>Admin Console</a></small>` : ''}</div><button class="btn sm" id="sbOut">Sign out</button>`;
   $('#acctPw').hidden = !u; $('#pwNew').value = '';
   const wl = cloud ? (AUTH.wsList || []) : []; $('#acctSw').hidden = wl.length < 2;
   if (wl.length > 1) $('#wsSwitch').innerHTML = wl.map(w => `<option value="${esc(w.workspace_id)}" ${w.workspace_id === AUTH.ws ? 'selected' : ''}>${esc(w.name)} · ${esc(ROLE_LABEL[w.role] || w.role)}</option>`).join('');
@@ -5229,7 +5334,7 @@ function compressImage(file, max, png) {
   });
 }
 async function uploadPhoto(file, kind, max) {
-  const png = kind === 'logo' && file.type === 'image/png';
+  const png = (kind === 'logo' || kind === 'hero') && file.type === 'image/png';
   const dataUrl = await compressImage(file, max, png);
   if (demo) return dataUrl;                      // demo: this browser only
   const r = await api('uploadImage', { base64: dataUrl, mimeType: png ? 'image/png' : 'image/jpeg', kind });
@@ -5253,7 +5358,7 @@ $('#fileIn').addEventListener('change', async e => {
     upStore[tgt.scope][tgt.key] = await uploadPhoto(file, el.dataset.kind, +el.dataset.max || 1000);
     toast('Photo uploaded ✓');
   } catch (err) { toast('Photo upload failed: ' + err.message, true); }
-  finally { upBusy--; const now = findUploader(tgt.scope, tgt.key); if (now) refreshUploader(now); }
+  finally { upBusy--; const now = findUploader(tgt.scope, tgt.key); if (now) refreshUploader(now); document.dispatchEvent(new CustomEvent('nv-uploaded', { detail: tgt })); }
 });
 
 /* ================= cloud database (Supabase) =================
@@ -6744,7 +6849,7 @@ function renderReports(anim) {
 
 /* ================= modal helpers ================= */
 function showModal(sel) { $(sel).classList.add('show'); $('#scrim').classList.add('show'); }
-function hideModal(sel) { const ae = document.activeElement; if (ae && $(sel).contains(ae)) ae.blur(); $(sel).classList.remove('show'); if (!ui.openId) $('#scrim').classList.remove('show'); }
+function hideModal(sel) { const ae = document.activeElement; if (ae && $(sel).contains(ae)) ae.blur(); $(sel).classList.remove('show'); if (sel === '#stageModal') { const sb = $('#stageBox'); sb.classList.remove('pl-ed-box', 'wide-vid'); const vd = sb.querySelector('.hero-vid'); if (vd) vd.innerHTML = ''; } if (!ui.openId) $('#scrim').classList.remove('show'); }
 
 /* ================= routing ================= */
 const authInUrl = () => /access_token=|refresh_token=|error_description=|type=recovery|[?&]code=/.test(location.hash + location.search);
@@ -7532,7 +7637,7 @@ function renderHome(anim) {
   const hr = now.getHours(), greet = hr < 12 ? 'Good morning' : hr < 17 ? 'Good afternoon' : 'Good evening', who = (typeof me === 'function' && me()) || brand().userName || '';
   const card = (ic, color, title, n, sub, go, btn, extra) => `<div class="home-c glass" style="--c:${color}"><div class="home-ch"><span class="home-ci">${ic}</span><span>${esc(title)}</span></div><div class="home-cn"><b>${n}</b>${extra || ''}</div><p>${sub}</p><button class="btn sm" ${go}>${esc(btn)} →</button></div>`;
   const todo = overdue.concat(dueToday).sort((a, b) => String(a.dueAt).localeCompare(String(b.dueAt))).slice(0, 6);
-  box.innerHTML = `<div class="home-hi"><div><h1>${greet}${who ? ', ' + esc(String(who).split(' ')[0]) : ''} 👋</h1><p class="muted">${now.toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'long' })} — here is what needs you today.</p></div></div>
+  box.innerHTML = `${homeHero()}${homePricing()}<div class="home-hi"><div><h1>${greet}${who ? ', ' + esc(String(who).split(' ')[0]) : ''} 👋</h1><p class="muted">${now.toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'long' })} — here is what needs you today.</p></div></div>
     ${done < items.length ? `<div class="home-setup glass"><div class="home-ring" style="--p:${pctDone}"><svg viewBox="0 0 44 44"><circle cx="22" cy="22" r="19"/><circle cx="22" cy="22" r="19" class="on" stroke-dasharray="${(pctDone / 100 * 119.4).toFixed(1)} 119.4"/></svg><b>${done}/${items.length}</b></div>
       <div class="home-st"><b>Set up your business</b><span>${done} of ${items.length} done</span><small class="muted">Finish setup to unlock every feature.</small></div>
       <div class="home-steps">${items.map(([k, n, ok, sub, to]) => `<button class="home-step ${ok ? 'ok' : ''}" data-homego="${to}" title="${esc(n)} — ${esc(sub)}"><span class="home-sd">${ok ? '✓' : ''}</span><b>${esc(n)}</b><small>${esc(sub)}</small></button>`).join('')}</div>
@@ -7946,7 +8051,7 @@ function moreSheet() {
 /* ================= platform admin console ================= */
 /* ================= platform owner: Admin Console v2 (clients, plans, payments, team, brand, audit) ================= */
 const ADM2 = { tab: store.get('nv.admTab') || 'clients', rows: null, at: 0, q: '', f: '', plans: null, pays: null, team: null, audit: null, err: '' };
-const ADM_TABS = [['clients', 'Clients', ['super', 'admin', 'support', 'finance']], ['plans', 'Plans', ['super', 'admin', 'finance']], ['payments', 'Payments', ['super', 'admin', 'finance']], ['team', 'Platform team', ['super', 'admin']], ['brand', 'Brand & settings', ['super', 'admin']], ['audit', 'Audit log', ['super', 'admin']]];
+const ADM_TABS = [['clients', 'Clients', ['super', 'admin', 'support', 'finance']], ['plans', 'Plans & pricing', ['super', 'admin', 'finance']], ['payments', 'Payments', ['super', 'admin', 'finance']], ['home', 'Home page', ['super', 'admin']], ['team', 'Platform team', ['super', 'admin']], ['brand', 'Settings', ['super', 'admin']], ['audit', 'Audit log', ['super', 'admin']]];
 const PLAT_ROLES = [['super', 'Super admin', 'Everything, including the platform team'], ['admin', 'Admin', 'Clients, plans, payments, brand'], ['support', 'Support', 'See clients and open their data (read-only)'], ['finance', 'Finance', 'Subscriptions and payments']];
 const SUB_ST = { trial: ['Trial', 'wait'], active: ['Active', 'ok'], past_due: ['Payment due', 'wait'], suspended: ['Suspended', 'bad'], cancelled: ['Cancelled', 'bad'], free: ['Free', ''] };
 const admCan = (...roles) => cloud && roles.includes(AUTH.platRole);
@@ -7955,8 +8060,8 @@ const monthly = r => !r.price || ['free', 'suspended', 'cancelled', 'trial'].inc
 async function admLoad(force) {
   const rpc = (n, a) => sbq(AUTH.client.rpc(n, a || {}));
   try {
-    if (ADM2.tab === 'clients' && (force || !ADM2.rows || Date.now() - ADM2.at > 120000)) { ADM2.rows = await rpc('admin_overview2'); ADM2.at = Date.now(); }
-    if ((ADM2.tab === 'plans' || ADM2.tab === 'clients' || ADM2.tab === 'payments') && (force || !ADM2.plans)) ADM2.plans = await sbq(AUTH.client.from('plans').select('*').order('sort'));
+    if ((ADM2.tab === 'clients' || ADM2.tab === 'plans') && (force || !ADM2.rows || Date.now() - ADM2.at > 120000)) { ADM2.rows = await rpc('admin_overview2'); ADM2.at = Date.now(); }
+    if (force || !ADM2.plans) { ADM2.plans = await sbq(AUTH.client.from('plans').select('*').order('sort')); PLAT.plans = ADM2.plans; }
     if (ADM2.tab === 'payments' && (force || !ADM2.pays)) ADM2.pays = await rpc('admin_payments');
     if (ADM2.tab === 'team' && (force || !ADM2.team)) ADM2.team = await rpc('admin_team');
     if (ADM2.tab === 'audit') ADM2.audit = await rpc('admin_audit', { p_limit: 300 });
@@ -7971,7 +8076,7 @@ async function renderAdmin(anim) {
   box.innerHTML = '<div class="rcard glass"><div class="loader"><div class="spin"></div>Loading…</div></div>';
   await admLoad();
   if (ADM2.err) { box.innerHTML = `<div class="tp-empty glass"><b>Could not load</b><p class="muted">${esc(ADM2.err)}</p></div>`; return; }
-  box.innerHTML = ({ clients: admClients, plans: admPlans, payments: admPayments, team: admTeam, brand: admBrand, audit: admAudit }[ADM2.tab] || admClients)();
+  box.innerHTML = ({ clients: admClients, plans: admPlans, payments: admPayments, home: admHome, team: admTeam, brand: admBrand, audit: admAudit }[ADM2.tab] || admClients)();
   stagger(box, anim);
 }
 function admClients() {
@@ -8025,31 +8130,50 @@ function openSubManager(ws) {
   showModal('#stageModal');
 }
 function admPlans() {
-  const P = ADM2.plans || [], can = admCan('super', 'admin'), lim = (l, k) => l && +l[k] ? (+l[k]).toLocaleString('en-IN') : '∞';
-  return `<div class="cm-ch-h" style="margin-bottom:12px"><p class="help" style="margin:0">Plans clients can be on. Change prices, limits and features any time — existing clients keep their custom price if you set one.</p>${can ? '<button class="btn primary" data-admplan="">+ New plan</button>' : ''}</div>
-    <div class="adm-plans">${P.map(p => `<div class="adm-plan glass ${p.active ? '' : 'off'}"><div class="adm-ph"><b>${esc(p.name)}</b>${p.active ? '' : '<span class="acc-bd">Hidden</span>'}<span class="muted">${esc(p.id)}</span></div>
-      <div class="adm-pp">${inr(p.price)}<small>/${p.period === 'year' ? 'year' : p.period === 'month' ? 'month' : 'once'}</small></div><p class="muted">${esc(p.description || '')}</p>
-      <div class="adm-pl"><span>👥 ${lim(p.limits, 'members')} team</span><span>📇 ${lim(p.limits, 'leads')} leads</span><span>💬 ${lim(p.limits, 'wa_messages')} WhatsApp / month</span><span>🛒 ${lim(p.limits, 'store_connections')} ${+(p.limits || {}).store_connections === 1 ? 'store' : 'stores'}</span></div>
-      <ul>${(p.features || []).map(f => `<li>${esc(f)}</li>`).join('')}</ul>${can ? `<button class="btn sm" data-admplan="${esc(p.id)}">Edit</button>` : ''}</div>`).join('') || '<div class="tp-empty glass"><b>No plans yet</b></div>'}</div>`;
+  const can = admCan('super', 'admin'), P = ADM2.plans || [], rows = ADM2.rows || [], lim = (l, k) => l && +l[k] ? (+l[k]).toLocaleString('en-IN') : '∞';
+  const per = p => p.period === 'year' ? '/yr' : p.period === 'month' ? '/mo' : ' once';
+  return `<div class="adm-ph2 glass"><div><b>Your plans — exactly as clients see them</b><p class="muted">Press <b>✎ Edit</b> on a card to change the price, yearly price, limits, features or badge. Hidden plans show only here. Changes go live as soon as you save.</p></div>
+      <div class="adm-ph2-b">${can ? '<button class="btn" data-admtab="home" data-admacc="h-price">Pricing section settings</button><button class="btn primary" data-admplan="">+ New plan</button>' : ''}</div></div>
+    <div style="margin-top:14px">${pricingHTML({ admin: can })}</div>
+    <div class="rcard glass" style="margin-top:14px"><div class="cm-ch-h"><h3>All plans</h3><span class="muted" style="font-size:12.5px">∞ = unlimited</span></div>
+    <div class="tblwrap"><table class="tbl"><thead><tr><th>Plan</th><th class="num">Price</th><th class="num">Yearly</th><th>Team</th><th>Leads</th><th>WhatsApp / mo</th><th>Stores</th><th class="num">Clients on it</th><th>Shown to new clients</th><th></th></tr></thead><tbody>
+    ${P.map(p => `<tr style="cursor:default"><td><b>${esc(p.name)}</b>${p.badge ? ` <span class="pr-bd sm">${esc(p.badge)}</span>` : ''}<small class="muted" style="display:block">${esc(p.id)}</small></td><td class="num">${p.price_label ? esc(p.price_label) : inr(p.price) + per(p)}</td><td class="num">${+p.price_year ? inr(p.price_year) : '—'}</td>
+      <td>${lim(p.limits, 'members')}</td><td>${lim(p.limits, 'leads')}</td><td>${lim(p.limits, 'wa_messages')}</td><td>${lim(p.limits, 'store_connections')}</td><td class="num">${rows.filter(r => r.plan_id === p.id && r.status !== 'free').length}</td><td>${p.active ? '<span class="adm-ok">✓ Yes</span>' : '<span class="muted">Hidden</span>'}</td>
+      <td class="num">${can ? `<button class="btn sm" data-admplan="${esc(p.id)}">Edit</button>` : ''}</td></tr>`).join('') || '<tr><td colspan="10" class="empty">No plans yet — press “+ New plan”.</td></tr>'}</tbody></table></div></div>`;
 }
 function openPlanEditor(id) {
-  const p = id ? (ADM2.plans || []).find(x => x.id === id) : { id: '', name: '', description: '', price: '', period: 'month', limits: {}, features: [], active: true, sort: (ADM2.plans || []).length + 1 }, L = p.limits || {};
-  $('#stageBox').innerHTML = `<div class="m-head"><h2>${id ? 'Edit plan' : 'New plan'}</h2><button class="ibtn" data-close>${I.x}</button></div>
-    <div class="form" style="grid-template-columns:1fr 1fr"><div class="field"><label>Name</label><input class="input" id="plName" maxlength="60" value="${esc(p.name)}" placeholder="Growth"></div><div class="field"><label>Code <span class="muted">(can not change later)</span></label><input class="input" id="plId" maxlength="40" value="${esc(p.id)}" ${id ? 'disabled' : ''} placeholder="growth"></div>
-      <div class="field"><label>Price (₹)</label><input class="input" type="number" min="0" id="plPrice" value="${esc(p.price)}"></div><div class="field"><label>Billed</label><select class="input" id="plPeriod">${[['month', 'Every month'], ['year', 'Every year'], ['one_time', 'One time']].map(([v, l]) => `<option value="${v}" ${p.period === v ? 'selected' : ''}>${l}</option>`).join('')}</select></div>
-      <div class="field full"><label>Short description</label><input class="input" id="plDesc" maxlength="500" value="${esc(p.description)}"></div>
-      <div class="field"><label>Team members <span class="muted">(0 = unlimited)</span></label><input class="input" type="number" min="0" id="plMem" value="${esc(L.members || 0)}"></div><div class="field"><label>Leads</label><input class="input" type="number" min="0" id="plLeads" value="${esc(L.leads || 0)}"></div>
-      <div class="field"><label>WhatsApp messages / month</label><input class="input" type="number" min="0" id="plWa" value="${esc(L.wa_messages || 0)}"></div><div class="field"><label>Store connections</label><input class="input" type="number" min="0" id="plStores" value="${esc(L.store_connections || 0)}"></div>
-      <div class="field full"><label>Features shown to clients <span class="muted">(one per line)</span></label><textarea class="input" id="plFeat" rows="4">${esc((p.features || []).join('\n'))}</textarea></div>
-      <div class="field"><label>Order</label><input class="input" type="number" id="plSort" value="${esc(p.sort || 0)}"></div><label class="field" style="flex-direction:row;align-items:center;gap:8px"><input type="checkbox" id="plActive" ${p.active ? 'checked' : ''}> Visible for new clients</label></div>
+  if (!admCan('super', 'admin')) return;
+  const p = id ? (ADM2.plans || []).find(x => x.id === id) : { id: '', name: '', description: '', price: '', price_year: '', price_label: '', badge: '', highlight: false, period: 'month', limits: {}, features: [], active: true, sort: (ADM2.plans || []).length + 1 }, L = p.limits || {};
+  $('#stageBox').classList.add('pl-ed-box');
+  $('#stageBox').innerHTML = `<div class="m-head"><h2>${id ? 'Edit plan — ' + esc(p.name) : 'New plan'}</h2><button class="ibtn" data-close>${I.x}</button></div>
+    <div class="pl-ed"><div class="pl-ed-f">
+      <div class="ah-sec" style="margin-top:0">Name & price</div>
+      <div class="form" style="grid-template-columns:1fr 1fr"><div class="field"><label>Plan name</label><input class="input" id="plName" maxlength="60" value="${esc(p.name)}" placeholder="Growth"></div><div class="field"><label>Code <span class="muted">(fixed once saved)</span></label><input class="input" id="plId" maxlength="40" value="${esc(p.id)}" ${id ? 'disabled' : ''} placeholder="growth"></div>
+        <div class="field"><label>Price (₹)</label><input class="input" type="number" min="0" id="plPrice" value="${esc(p.price)}"></div><div class="field"><label>Billed</label><select class="input" id="plPeriod">${[['month', 'Every month'], ['year', 'Every year'], ['one_time', 'One time']].map(([v, l]) => `<option value="${v}" ${p.period === v ? 'selected' : ''}>${l}</option>`).join('')}</select></div>
+        <div class="field"><label>Yearly price (₹) <span class="muted">— optional, for the Monthly / Yearly switch</span></label><input class="input" type="number" min="0" id="plYear" value="${esc(p.price_year || '')}" placeholder="e.g. 10 × monthly"></div>
+        <div class="field"><label>Show text instead of a price <span class="muted">— optional</span></label><input class="input" id="plLabel" maxlength="30" value="${esc(p.price_label || '')}" placeholder="Custom"></div>
+        <div class="field full"><label>Short description</label><input class="input" id="plDesc" maxlength="500" value="${esc(p.description)}" placeholder="For a growing team"></div></div>
+      <div class="ah-sec">Limits <span class="muted">— 0 = unlimited</span></div>
+      <div class="form" style="grid-template-columns:repeat(4,1fr)"><div class="field"><label>Team members</label><input class="input" type="number" min="0" id="plMem" value="${esc(L.members || 0)}"></div><div class="field"><label>Leads</label><input class="input" type="number" min="0" id="plLeads" value="${esc(L.leads || 0)}"></div>
+        <div class="field"><label>WhatsApp / month</label><input class="input" type="number" min="0" id="plWa" value="${esc(L.wa_messages || 0)}"></div><div class="field"><label>Stores</label><input class="input" type="number" min="0" id="plStores" value="${esc(L.store_connections || 0)}"></div></div>
+      <div class="ah-sec">Card</div>
+      <div class="field"><label>Features <span class="muted">(one per line)</span></label><textarea class="input" id="plFeat" rows="4">${esc((p.features || []).join('\n'))}</textarea></div>
+      <div class="form" style="grid-template-columns:1fr 1fr"><div class="field"><label>Badge <span class="muted">— optional</span></label><input class="input" id="plBadge" maxlength="30" value="${esc(p.badge || '')}" placeholder="Most popular"></div><div class="field"><label>Order on the page</label><input class="input" type="number" id="plSort" value="${esc(p.sort || 0)}"></div></div>
+      <label class="mod-row adm-sw"><div><b>Highlight this card</b><small class="muted">Glowing border + main button (only one plan at a time)</small></div><span class="sw"><input type="checkbox" id="plHl" ${p.highlight ? 'checked' : ''}><i></i></span></label>
+      <label class="mod-row adm-sw"><div><b>Show to clients</b><small class="muted">Off = hidden from the pricing section; clients already on it keep it</small></div><span class="sw"><input type="checkbox" id="plActive" ${p.active ? 'checked' : ''}><i></i></span></label></div>
+      <div class="pl-ed-p"><div class="ah-prev-h"><b>Live preview</b></div><div id="plPrev"></div></div></div>
     <div class="m-foot">${id ? '<button class="btn danger" id="plDel">Delete</button>' : ''}<div class="grow"></div><button class="btn" data-close>Cancel</button><button class="btn primary" id="plSave">Save plan</button></div>`;
-  $('#plSave').onclick = async () => { const code = (id || $('#plId').value.trim().toLowerCase()); if (!/^[a-z0-9_-]{2,40}$/.test(code)) return toast('Code: 2–40 lowercase letters, numbers, - or _', true); if (!$('#plName').value.trim()) return toast('Give the plan a name', true);
-    const n = id2 => Math.max(0, parseInt($('#' + id2).value, 10) || 0);
-    try { await sbq(AUTH.client.rpc('admin_plan_save', { p: { id: code, name: $('#plName').value.trim(), description: $('#plDesc').value.trim(), price: +$('#plPrice').value || 0, period: $('#plPeriod').value, limits: { members: n('plMem'), leads: n('plLeads'), wa_messages: n('plWa'), store_connections: n('plStores') }, features: $('#plFeat').value.split('\n').map(x => x.trim()).filter(Boolean).slice(0, 20), active: $('#plActive').checked, sort: +$('#plSort').value || 0 } }));
-      toast('✓ Plan saved'); hideModal('#stageModal'); ADM2.plans = null; renderAdmin(); } catch (e) { toast(e.message, true); } };
-  if (id) $('#plDel').onclick = async () => { if (!confirm('Delete this plan? If clients use it, it is only hidden.')) return; try { const r = await sbq(AUTH.client.rpc('admin_plan_delete', { p_id: id })); toast(r === 'hidden' ? 'Clients use this plan — it is hidden for new clients' : 'Plan deleted'); hideModal('#stageModal'); ADM2.plans = null; renderAdmin(); } catch (e) { toast(e.message, true); } };
+  const num = id2 => Math.max(0, parseInt($('#' + id2).value, 10) || 0);
+  const draft = () => ({ id: id || $('#plId').value.trim().toLowerCase(), name: $('#plName').value.trim(), description: $('#plDesc').value.trim(), price: +$('#plPrice').value || 0, price_year: +$('#plYear').value || '', price_label: $('#plLabel').value.trim(), badge: $('#plBadge').value.trim(), highlight: $('#plHl').checked, period: $('#plPeriod').value,
+    limits: { members: num('plMem'), leads: num('plLeads'), wa_messages: num('plWa'), store_connections: num('plStores') }, features: $('#plFeat').value.split('\n').map(x => x.trim()).filter(Boolean).slice(0, 20), active: $('#plActive').checked, sort: +$('#plSort').value || 0 });
+  const prev = () => { $('#plPrev').innerHTML = pricingHTML({ plans: [Object.assign(draft(), { name: draft().name || 'Plan name', active: true })], mini: true }); };
+  $('#stageBox').querySelector('.pl-ed-f').addEventListener('input', prev); $('#stageBox').querySelector('.pl-ed-f').addEventListener('change', prev); prev();
+  $('#plSave').onclick = async () => { const d = draft(); if (!/^[a-z0-9_-]{2,40}$/.test(d.id)) return toast('Code: 2–40 lowercase letters, numbers, - or _', true); if (!d.name) return toast('Give the plan a name', true);
+    try { await sbq(AUTH.client.rpc('admin_plan_save', { p: d })); toast('✓ Plan saved — live for clients now'); hideModal('#stageModal'); ADM2.plans = null; platLoad(); renderAdmin(); } catch (e) { toast(e.message, true); } };
+  if (id) $('#plDel').onclick = async () => { if (!confirm('Delete this plan? If clients use it, it is only hidden.')) return; try { const r = await sbq(AUTH.client.rpc('admin_plan_delete', { p_id: id })); toast(r === 'hidden' ? 'Clients use this plan — it is hidden for new clients' : 'Plan deleted'); hideModal('#stageModal'); ADM2.plans = null; platLoad(); renderAdmin(); } catch (e) { toast(e.message, true); } };
   showModal('#stageModal');
 }
+
 function admPayments() {
   const P = ADM2.pays || [], m30 = P.filter(p => Date.now() - new Date(p.paid_at).getTime() < 30 * 864e5), sum = a => a.reduce((s2, p) => s2 + (+p.amount || 0), 0);
   return `<div class="adm-ks2">${`<div class="adm-k glass"><b style="color:var(--green)">${inr(sum(m30))}</b><small>Received · last 30 days</small></div><div class="adm-k glass"><b>${m30.length}</b><small>Payments · last 30 days</small></div><div class="adm-k glass"><b style="color:var(--blue-2)">${inr(sum(P))}</b><small>Received in total</small></div>`}</div>
@@ -8058,26 +8182,39 @@ function admPayments() {
     ${P.map(p => `<tr style="cursor:default"><td>${esc(fmtDate(String(p.paid_at).slice(0, 10)))}</td><td><b>${esc(p.workspace_name)}</b></td><td class="num"><b>${inr(p.amount)}</b></td><td>${esc(p.method || '-')}</td><td class="muted">${esc(p.reference || '-')}</td><td>${p.months ? p.months + ' mo' : '—'}</td><td>${p.period_end ? esc(fmtDate(String(p.period_end).slice(0, 10))) : '—'}</td><td class="muted">${esc(p.recorded_by || '')}</td></tr>`).join('') || '<tr><td colspan="8" class="empty">No payments yet.</td></tr>'}</tbody></table></div></div>`;
 }
 function admTeam() {
-  const T = ADM2.team || [], sup = admCan('super');
-  return `<div class="rcard glass"><div class="cm-ch-h"><div><h3>Platform team</h3><p class="sub muted">People who run Nodevers with you. They sign in with their own email + password — no shared keys. Every action is logged.</p></div></div>
-    ${sup ? `<div class="adm-add"><input class="input" id="tmEmail" type="email" placeholder="teammate@email.com"><select class="input" id="tmRole">${PLAT_ROLES.filter(r => r[0] !== 'super').concat(PLAT_ROLES.filter(r => r[0] === 'super')).map(([k, n]) => `<option value="${k}">${n}</option>`).join('')}</select><button class="btn primary" id="tmAdd">Add to team</button></div>` : '<p class="help">Only a super admin can add or remove team members.</p>'}
+  const T = ADM2.team || [], my = AUTH.platRole, can = admCan('super', 'admin'), sup = my === 'super', meEmail = (((AUTH.session || {}).user || {}).email || '').toLowerCase();
+  const roleOpts = cur => PLAT_ROLES.filter(r => sup || r[0] !== 'super' || r[0] === cur).map(([k, n]) => `<option value="${k}" ${k === cur ? 'selected' : ''} ${!sup && k === 'super' ? 'disabled' : ''}>${n}</option>`).join('');
+  return `<div class="adm-who glass"><div class="adm-who-i">🛡</div><div><b>Who is an admin?</b><p>Only the emails in the list below can open the <b>Admin Console</b>. You are signed in as <b>${esc(meEmail)}</b> — <span class="adm-role">${esc((PLAT_ROLES.find(r => r[0] === my) || [0, 'Platform team'])[1])}</span>. Your clients never see the Admin Console, plans of other clients or these settings.</p></div></div>
+    <div class="rcard glass" style="margin-top:14px"><div class="cm-ch-h"><div><h3>Platform team</h3><p class="sub muted">Add a person by email and pick a role. They sign in with their own email + password — no shared keys. Every change is in the Audit log.</p></div></div>
+    ${can ? `<div class="adm-add"><input class="input" id="tmEmail" type="email" placeholder="teammate@email.com"><select class="input" id="tmRole">${PLAT_ROLES.filter(r => r[0] !== 'super' || sup).map(([k, n]) => `<option value="${k}" ${k === 'admin' ? 'selected' : ''}>${n}</option>`).join('')}</select><button class="btn primary" id="tmAdd">+ Make admin</button></div>` : '<p class="help">Only a Super admin or an Admin can add people.</p>'}
     <div class="adm-roles">${PLAT_ROLES.map(([k, n, d]) => `<span><b>${n}</b> — ${d}</span>`).join('')}</div>
+    <p class="help" style="margin-top:6px">${sup ? 'As Super admin you can add anyone, including another Super admin.' : 'As Admin you can add Admins, Support and Finance. Only a Super admin can add or remove a Super admin.'}</p>
     <div class="tblwrap" style="margin-top:10px"><table class="tbl"><thead><tr><th>Email</th><th>Role</th><th>Account</th><th>Added by</th><th>Since</th><th></th></tr></thead><tbody>
-    ${T.map(t => `<tr style="cursor:default"><td><b>${esc(t.email)}</b></td><td>${sup ? `<select class="input sm" data-tmrole="${esc(t.email)}">${PLAT_ROLES.map(([k, n]) => `<option value="${k}" ${k === t.role ? 'selected' : ''}>${n}</option>`).join('')}</select>` : esc((PLAT_ROLES.find(r => r[0] === t.role) || [0, t.role])[1])}</td>
-      <td>${t.has_account ? '<span class="adm-ok">✓ Signed up</span>' : '<span class="muted">Not signed up yet — ask them to create an account with this email</span>'}</td><td class="muted">${esc(t.added_by || '—')}</td><td class="muted">${esc(fmtDate(String(t.created_at).slice(0, 10)))}</td><td>${sup ? `<button class="btn sm danger" data-tmdel="${esc(t.email)}">Remove</button>` : ''}</td></tr>`).join('')}</tbody></table></div>
+    ${T.map(t => { const lock = !can || (t.role === 'super' && !sup) || t.email === meEmail; return `<tr style="cursor:default"><td><b>${esc(t.email)}</b>${t.email === meEmail ? ' <span class="muted">(you)</span>' : ''}</td><td>${!lock ? `<select class="input sm" data-tmrole="${esc(t.email)}">${roleOpts(t.role)}</select>` : `<span class="adm-role">${esc((PLAT_ROLES.find(r => r[0] === t.role) || [0, t.role])[1])}</span>`}</td>
+      <td>${t.has_account ? '<span class="adm-ok">✓ Signed up</span>' : '<span class="muted">Not signed up yet — ask them to create an account with this email</span>'}</td><td class="muted">${esc(t.added_by || '—')}</td><td class="muted">${esc(fmtDate(String(t.created_at).slice(0, 10)))}</td><td>${!lock ? `<button class="btn sm danger" data-tmdel="${esc(t.email)}">Remove</button>` : ''}</td></tr>`; }).join('')}</tbody></table></div>
     <p class="help">Tip: ask every team member to use a strong password. Two-step login (authenticator app) is the next security step.</p></div>`;
 }
 function admBrand() {
-  const s = PLAT.s;
-  return `<div class="rcard glass"><h3>Platform brand</h3><p class="sub muted">Website name, logo and colours every client sees. Clients can not change these.</p>
-    <div class="cf-foot" style="border:0;margin-top:0;padding-top:0"><div class="grow"></div><button class="btn primary" data-admbrand>Edit name, logo & white label</button></div></div>
-    <div class="rcard glass" style="margin-top:14px"><h3>Plans & trials</h3><p class="sub muted">How new sign-ups start and what happens when time runs out.</p>
-    <div class="form" style="grid-template-columns:repeat(3,1fr)"><div class="field"><label>Free trial (days)</label><input class="input" type="number" min="0" max="90" id="psTrial" value="${esc(s.trialDays || 14)}"></div>
-      <div class="field"><label>Plan for new sign-ups</label><select class="input" id="psPlan">${(ADM2.plans || []).filter(p => p.active).map(p => `<option value="${esc(p.id)}" ${p.id === s.defaultPlan ? 'selected' : ''}>${esc(p.name)}</option>`).join('')}</select></div>
-      <div class="field"><label>Grace days after expiry</label><input class="input" type="number" min="0" max="30" id="psGrace" value="${esc(s.graceDays || 3)}"></div>
-      <div class="field"><label>Support WhatsApp (with country code)</label><input class="input" id="psPhone" value="${esc(s.supportPhone || '')}" placeholder="91 98…"></div><div class="field"><label>Support email</label><input class="input" id="psMail" value="${esc(s.supportEmail || '')}"></div><div class="field"><label>Renew / payment link (optional)</label><input class="input" id="psLink" value="${esc(s.renewLink || '')}" placeholder="https://rzp.io/…"></div></div>
-    <div class="cf-foot"><span class="cf-safe">Clients see the support contact and renew link in Settings → Plan & billing and on the expiry banner.</span><div class="grow"></div><button class="btn primary" id="psSave">Save</button></div></div>`;
+  const s = PLAT.s, b = brand(), open = store.get('nv.admAcc2') || 'b-brand', logo = safeUrl(b.logoUrl);
+  const f = (id, label, val, extra) => `<div class="field"><label>${label}</label><input class="input" id="${id}" value="${esc(val || '')}" ${extra || ''}></div>`;
+  return `<div class="acc-list" data-acckey="nv.admAcc2">
+    ${accItem('b-brand', { title: 'Website name & logo', icon: '<svg class="i" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M8 12h8M12 8v8"/></svg>', color: '#EC4899', dot: 'ok', status: `${esc(b.brandName)}${logo ? ' · logo added' : ' · default logo'}`, open: open === 'b-brand',
+      body: `<div class="adm-brand"><span class="brand-logo">${logo ? `<img src="${esc(logo)}" alt="">` : LOGO_DEFAULT}</span><div class="grow"><b>${esc(b.brandName)}</b><small class="muted">Shown in the top bar, login page and browser tab for every client.</small></div><button class="btn" data-admbrand>Change name & logo</button></div>
+        <div class="adm-brand" style="margin-top:10px"><span class="brand-logo" style="background:var(--blue-soft);color:var(--blue-2)">🎨</span><div class="grow"><b>White label</b><small class="muted">Colours, login page text, “Powered by”, your own domain.</small></div><button class="btn" data-admwl>Open white label</button></div>` })}
+    ${accItem('b-home', { title: 'Home page header & pricing', icon: '<svg class="i" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="m3 15 5-5 4 4 3-3 6 6"/></svg>', color: '#3B82F6', dot: 'ok', status: 'Banner image, text, buttons and the pricing cards', open: open === 'b-home',
+      body: `<div class="cf-foot" style="margin:0;border:0;padding:0"><span class="muted">Edit the banner, its buttons and the pricing section with a live preview.</span><div class="grow"></div><button class="btn primary" data-admtab="home">Open Home page editor</button></div>` })}
+    ${accItem('b-trial', { title: 'Free trial & expiry', icon: '<svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2M9 2h6"/></svg>', color: '#F59E0B', dot: 'ok', status: `${esc(s.trialDays || 14)} days trial · ${esc(s.graceDays || 3)} grace days`, open: open === 'b-trial',
+      body: `<div class="form" style="grid-template-columns:repeat(3,1fr)">${f('psTrial', 'Free trial (days)', s.trialDays || 14, 'type="number" min="0" max="90"')}
+        <div class="field"><label>Plan for new sign-ups</label><select class="input" id="psPlan">${(ADM2.plans || []).filter(p => p.active).map(p => `<option value="${esc(p.id)}" ${p.id === s.defaultPlan ? 'selected' : ''}>${esc(p.name)}</option>`).join('')}</select></div>
+        ${f('psGrace', 'Grace days after a paid plan ends', s.graceDays || 3, 'type="number" min="0" max="30"')}</div>
+        <p class="help">New businesses start on this plan as a free trial. When a trial ends — or a paid period ends plus the grace days — their workspace becomes view-only until you record a payment.</p>` })}
+    ${accItem('b-support', { title: 'Support contact & renew link', icon: '<svg class="i" viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3.5-7.1L21 4v5h-5"/></svg>', color: '#10B981', dot: s.supportPhone || s.supportEmail ? 'ok' : 'wait', status: s.supportPhone || s.supportEmail ? [s.supportPhone ? '+' + s.supportPhone : '', s.supportEmail].filter(Boolean).join(' · ') : 'Not set — clients can not contact you to renew', open: open === 'b-support',
+      body: `<div class="form" style="grid-template-columns:repeat(3,1fr)">${f('psPhone', 'Support WhatsApp (with country code)', s.supportPhone, 'placeholder="91 98…"')}${f('psMail', 'Support email', s.supportEmail)}${f('psLink', 'Renew / payment link (optional)', s.renewLink, 'placeholder="https://rzp.io/…"')}</div>
+        <p class="help">Used by the pricing buttons, the expiry banner and Settings → Plan & billing.</p>` })}
+    </div>
+    <div class="cf-foot"><span class="cf-safe">These settings are public (the login page reads them) — never put passwords or API keys here.</span><div class="grow"></div><button class="btn primary" id="psSave">Save settings</button></div>`;
 }
+
 function admAudit() {
   const A = ADM2.audit || [];
   return `<div class="rcard glass"><h3>Audit log</h3><p class="sub muted">Every change made by the platform team.</p><div class="tblwrap"><table class="tbl"><thead><tr><th>When</th><th>Who</th><th>What</th><th>Client / item</th><th>Details</th></tr></thead><tbody>
@@ -8087,7 +8224,9 @@ function admAudit() {
   const v = $('#v-admin'); if (!v) return;
   v.addEventListener('click', async e => {
     const t = e.target;
-    const tb = t.closest('[data-admtab]'); if (tb) { ADM2.tab = tb.dataset.admtab; store.set('nv.admTab', ADM2.tab); return renderAdmin(true); }
+    const ah = t.closest('.acc-h'); if (ah && !t.closest('.modal')) { const l = ah.closest('.acc-list'); accToggle(ah.closest('.acc'), (l && l.dataset.acckey) || 'nv.admAcc'); return; }
+    if (t.closest('[data-admwl]')) { openSettings('wl'); return; }
+    const tb = t.closest('[data-admtab]'); if (tb) { if (tb.dataset.admacc) store.set('nv.admAcc', tb.dataset.admacc); ADM2.tab = tb.dataset.admtab; store.set('nv.admTab', ADM2.tab); return renderAdmin(true); }
     const fl = t.closest('[data-admf]'); if (fl) { ADM2.f = ADM2.f === fl.dataset.admf ? '' : fl.dataset.admf; return renderAdmin(); }
     if (t.closest('[data-admreload]') || t.closest('#admRefresh')) { ADM2.rows = ADM2.plans = ADM2.pays = ADM2.team = null; return renderAdmin(); }
     if (t.closest('[data-admopen]')) return;
@@ -8140,6 +8279,216 @@ function planBody() {
     <div class="cf-foot"><span class="cf-safe">To change or renew your plan, contact us.</span><div class="grow"></div>${sup.supportEmail ? `<a class="btn sm" href="mailto:${esc(sup.supportEmail)}">Email</a>` : ''}${sup.supportPhone ? `<a class="btn sm" href="https://wa.me/${esc(sup.supportPhone)}" target="_blank" rel="noopener">WhatsApp</a>` : ''}${sup.renewLink ? `<a class="btn sm primary" href="${esc(sup.renewLink)}" target="_blank" rel="noopener">Renew / upgrade</a>` : ''}</div>`;
 }
 document.addEventListener('click', e => { if (e.target.closest('[data-planopen]')) { store.set('nv.setOpen', 's-plan'); openSettings('plan'); } });
+/* ================= Home header (top banner) + pricing section — edited only by the platform team ================= */
+const HERO_DEF = { on: true, show: 'all', image: '', imageMobile: '', textOn: true, theme: 'light', align: 'left', vpos: 'middle', eyebrow: 'All-in-one business OS', title: 'Turn Conversations Into Customers', sub: 'Manage leads, automate WhatsApp, track orders and grow your business — all in one place.',
+  buttons: [{ on: true, label: 'Create free account', action: 'signup', value: '', show: 'demo', style: 'primary' }, { on: true, label: 'Watch demo', action: 'video', value: '', show: 'all', style: 'light' }] };
+const HERO_ACTIONS = [['signup', 'Create account (sign-up page)', ''], ['video', 'Play a video', 'YouTube or video link'], ['url', 'Open a link', 'https://…'], ['whatsapp', 'Chat on WhatsApp', 'Message (optional)'], ['pricing', 'Scroll to pricing', ''], ['plan', 'Open “Plan & billing”', ''], ['page', 'Open a page in Nodevers', ''], ['demo', 'Open the demo', '']];
+const HERO_PAGES = [['leads', 'Leads'], ['commerce', 'Store'], ['whatsapp', 'Inbox'], ['broadcast', 'Campaigns'], ['automation', 'Automation'], ['insights', 'Insights'], ['connections', 'Connections'], ['team', 'Team'], ['industry', 'Industry Kits']];
+const SHOW_TO = [['all', 'Everyone'], ['demo', 'Demo visitors (not signed in)'], ['clients', 'Signed-in clients only']];
+const PRICING_DEF = { show: 'notpaying', eyebrow: '', title: 'Pricing Plans', sub: 'Simple plans for every business — start with a free trial and upgrade when you grow. No hidden fees.', accent: '#8B5CF6', style: 'light', limits: true, included: "What's included", ctaNew: 'Get started', ctaClient: 'Choose plan', ctaCustom: 'Talk to us', note: '' };
+const PRICING_SHOW = [['notpaying', 'Visitors, trial & free clients (hidden for paying clients)'], ['all', 'Everyone'], ['off', 'Nobody (hidden)']];
+const DEFAULT_PLANS = [
+  { id: 'starter', name: 'Starter', description: 'For a small business getting started', price: 999, price_year: 9990, period: 'month', limits: { members: 2, leads: 1000, wa_messages: 1000, store_connections: 1 }, features: ['CRM + pipeline', 'WhatsApp inbox', 'Broadcasts', 'Store'], active: true, sort: 1, badge: '', highlight: false, price_label: '' },
+  { id: 'growth', name: 'Growth', description: 'For a growing team', price: 2499, price_year: 24990, period: 'month', limits: { members: 5, leads: 10000, wa_messages: 5000, store_connections: 2 }, features: ['Everything in Starter', 'Automation + n8n', 'Store alerts', 'Insights'], active: true, sort: 2, badge: 'Most popular', highlight: true, price_label: '' },
+  { id: 'pro', name: 'Pro', description: 'For bigger teams and agencies', price: 4999, price_year: 49990, period: 'month', limits: { members: 20, leads: 100000, wa_messages: 25000, store_connections: 3 }, features: ['Everything in Growth', 'White label', 'Priority support'], active: true, sort: 3, badge: '', highlight: false, price_label: '' }];
+const jsonCfg = (k, def) => { let c = null; try { c = JSON.parse((PLAT.s || {})[k] || 'null'); } catch (e) { } return Object.assign({}, def, c || {}); };
+const heroCfg = () => { const c = jsonCfg('homeHeroJson', HERO_DEF); if (!Array.isArray(c.buttons)) c.buttons = HERO_DEF.buttons; return c; };
+const pricingCfg = () => jsonCfg('pricingJson', PRICING_DEF);
+const viewerSees = show => show === 'all' || (show === 'demo' ? !cloud : show === 'clients' ? cloud : true);
+const brandAdmin = () => cloud && AUTH.platform && canBrand();
+const pricePlans = all => (PLAT.plans || DEFAULT_PLANS).filter(p => all || p.active).slice().sort((a, b) => (a.sort || 0) - (b.sort || 0));
+const PR = { per: store.get('nv.prPer') || 'm' };
+
+/* ---- the top banner ---- */
+function heroArt() {
+  return `<div class="hero-art" aria-hidden="true">
+    <div class="ha-c ha-wa"><span class="ha-i" style="background:#22C55E">${INS_IC.wa}</span><b>WhatsApp</b><small>Team Inbox</small><div class="ha-rows"><i></i><i></i><i></i></div></div>
+    <div class="ha-c ha-leads"><span class="ha-i" style="background:rgba(255,255,255,.22)">${INS_IC.leads}</span><b>Leads</b><small>+220 this week</small><div class="ha-bar"><i></i></div></div>
+    <div class="ha-c ha-ord"><span class="ha-i" style="background:#16A34A">${INS_IC.orders}</span><b>Orders</b><small>24 today</small></div>
+    <div class="ha-c ha-auto"><span class="ha-i" style="background:rgba(255,255,255,.22)"><svg class="i" viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8Z"/></svg></span><b>Automation</b><small>Save 10+ hrs</small></div>
+    <div class="ha-note">Manage leads<br>Automate<br>Grow ↗</div></div>`;
+}
+function heroHTML(c, opt) {
+  opt = opt || {}; const img = safeUrl(c.image), imgM = safeUrl(c.imageMobile) || img;
+  const btns = (c.buttons || []).map((b, i) => [b, i]).filter(([b]) => b.on !== false && String(b.label || '').trim() && (opt.preview || viewerSees(b.show || 'all')));
+  return `<section class="hero glass ${c.theme === 'dark' ? 'dark' : ''} ${img ? 'has-img' : ''} ${c.textOn === false ? 'no-tx' : ''} al-${esc(c.align || 'left')} vp-${esc(c.vpos || 'middle')}">
+    ${img ? `<picture class="hero-pic"><source media="(max-width:760px)" srcset="${esc(imgM)}"><img src="${esc(img)}" alt="" referrerpolicy="no-referrer" onerror="this.closest('.hero').classList.add('img-bad')"></picture>` : heroArt()}
+    <div class="hero-in">${c.textOn === false ? '' : `${c.eyebrow ? `<div class="hero-eb">${esc(c.eyebrow)}</div>` : ''}<h2>${esc(c.title || '')}</h2>${c.sub ? `<p>${esc(c.sub)}</p>` : ''}`}
+      ${btns.length ? `<div class="hero-btns">${btns.map(([b, i]) => `<button type="button" class="btn hero-b ${b.style === 'primary' ? 'primary' : b.style === 'outline' ? 'hero-o' : 'hero-l'}" data-herob="${i}">${b.action === 'video' ? '<svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m10 8.5 5 3.5-5 3.5Z"/></svg>' : ''}${esc(b.label)}${b.style === 'primary' ? ' →' : ''}</button>`).join('')}</div>` : ''}</div>
+    ${opt.preview ? '' : brandAdmin() ? '<button type="button" class="hero-edit" data-heroedit title="Only the platform team sees this">✎ Edit header</button>' : ''}</section>`;
+}
+function homeHero() {
+  const c = heroCfg();
+  if (c.on === false || !viewerSees(c.show || 'all')) return brandAdmin() ? `<div class="hero-off glass"><span class="muted">The home header is hidden${c.on === false ? '' : ' for this view'}.</span><button class="btn sm" data-heroedit>✎ Edit header</button></div>` : '';
+  return heroHTML(c);
+}
+function heroAct(b) {
+  const v = String(b.value || '').trim(), sup = (PLAT.s || {}).supportPhone;
+  switch (b.action) {
+    case 'signup': if (cloud) return openSettings('plan'); if (sbConf().url) return showAuth('up'); return openSettings('conn');
+    case 'video': if (!v) { if (brandAdmin()) return toast('Add the video link in Admin Console → Home page', true); return $('#helpFab') && $('#helpFab').click(); } return openVideo(v);
+    case 'url': if (/^#/.test(v)) return go(v.slice(1)); if (/^https?:\/\//i.test(v)) return window.open(v, '_blank', 'noopener'); return toast('This button has no link yet', true);
+    case 'whatsapp': if (!sup) return toast('Support WhatsApp number is not set yet', true); return window.open(`https://wa.me/${sup}${v ? '?text=' + encodeURIComponent(v) : ''}`, '_blank', 'noopener');
+    case 'pricing': { const p = $('#pricing'); if (p) p.scrollIntoView({ behavior: 'smooth', block: 'start' }); return; }
+    case 'plan': return cloud ? openSettings('plan') : sbConf().url ? showAuth('up') : null;
+    case 'page': return go(v || 'leads');
+    case 'demo': return window.open(location.pathname + '?demo', '_blank', 'noopener');
+  }
+}
+function openVideo(u) {
+  const yt = u.match(/(?:youtube\.com\/(?:watch\?v=|shorts\/|embed\/)|youtu\.be\/)([\w-]{6,})/), vm = u.match(/vimeo\.com\/(\d+)/), file = /\.(mp4|webm|mov)(\?|$)/i.test(u);
+  if (!yt && !vm && !file) return window.open(u, '_blank', 'noopener');
+  const src = yt ? `https://www.youtube.com/embed/${yt[1]}?autoplay=1&rel=0` : vm ? `https://player.vimeo.com/video/${vm[1]}?autoplay=1` : '';
+  $('#stageBox').innerHTML = `<div class="m-head"><h2>Demo</h2><button class="ibtn" data-close>${I.x}</button></div><div class="hero-vid">${src ? `<iframe src="${esc(src)}" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>` : `<video src="${esc(u)}" controls autoplay playsinline></video>`}</div>`;
+  $('#stageBox').classList.add('wide-vid'); showModal('#stageModal');
+}
+
+/* ---- pricing cards ---- */
+const fmtLim = (n, one, many) => +n ? `${(+n).toLocaleString('en-IN')} ${+n === 1 ? one : many}` : `Unlimited ${many}`;
+function priceOf(p, per) {
+  if (p.price_label) return { big: esc(p.price_label), small: '' };
+  if (per === 'y' && +p.price_year) return { big: inr(p.price_year), small: ' / year', save: p.period === 'month' && +p.price ? Math.round((1 - p.price_year / (p.price * 12)) * 100) : 0, month: Math.round(p.price_year / 12) };
+  if (!+p.price) return { big: 'Free', small: ' / forever' };
+  return { big: inr(+p.price), small: p.period === 'year' ? ' / year' : p.period === 'one_time' ? ' one time' : ' / month' };
+}
+function pricingHTML(opt) {
+  opt = opt || {}; const c = Object.assign({}, pricingCfg(), opt.cfg || {}), plans = opt.plans || pricePlans(opt.admin), per = PR.per;
+  const hasYear = plans.some(p => +p.price_year && !p.price_label), maxSave = Math.max(0, ...plans.filter(p => +p.price_year && p.period === 'month' && +p.price).map(p => Math.round((1 - p.price_year / (p.price * 12)) * 100)));
+  const curId = cloud && SUB.me && SUB.me.status !== 'free' && SUB.me.state !== 'locked' ? SUB.me.plan_id : '';
+  const card = p => { const pr = priceOf(p, hasYear ? per : 'm'), L = p.limits || {}, cur = p.id === curId;
+    const lim = c.limits !== false ? [fmtLim(L.members, 'team member', 'team members'), fmtLim(L.leads, 'lead', 'leads'), `${+L.wa_messages ? (+L.wa_messages).toLocaleString('en-IN') : 'Unlimited'} WhatsApp messages / month`, fmtLim(L.store_connections, 'store connection', 'store connections')] : [];
+    const trialCur = cur && SUB.me.status === 'trial', cta = trialCur ? 'Keep this plan after the trial' : cur ? 'Your current plan' : p.price_label ? c.ctaCustom : cloud ? c.ctaClient : c.ctaNew;
+    return `<div class="pr-c ${p.highlight ? 'hl' : ''} ${p.active ? '' : 'off'} ${cur ? 'cur' : ''}">
+      ${p.highlight && p.badge ? `<span class="pr-pop">${esc(p.badge)}</span>` : ''}
+      <div class="pr-ct"><b>${esc(p.name)}</b>${p.badge && !p.highlight ? `<span class="pr-bd">${esc(p.badge)}</span>` : ''}${p.active ? '' : '<span class="pr-hid">Hidden</span>'}</div>
+      ${p.description ? `<p class="pr-d">${esc(p.description)}</p>` : ''}
+      <div class="pr-p">${pr.big}${pr.small ? `<small>${pr.small}</small>` : ''}</div>
+      ${pr.save > 0 ? `<div class="pr-sv">≈ ${inr(pr.month)} / month · save ${pr.save}%</div>` : ''}
+      <div class="pr-in">${esc(c.included || "What's included")}</div>
+      <ul>${lim.concat(p.features || []).map(f => `<li><i>✓</i>${esc(f)}</li>`).join('')}</ul>
+      ${opt.admin ? `<div class="pr-adm"><button class="btn sm" data-admplan="${esc(p.id)}">✎ Edit</button></div>` : `<button type="button" class="pr-b" data-prplan="${esc(p.id)}" ${cur && !trialCur ? 'disabled' : ''}>${esc(cta)}</button>`}</div>`; };
+  return `<section class="pr ${c.style === 'dark' ? '' : 'light'}" id="${opt.admin ? 'pricingPrev' : opt.mini ? 'pricingMini' : 'pricing'}" style="--pa:${okHex(c.accent) ? c.accent : '#8B5CF6'}">
+    <div class="pr-glow"></div>
+    ${!opt.admin && !opt.mini && brandAdmin() ? '<button type="button" class="hero-edit" data-pricedit title="Only the platform team sees this">✎ Edit plans</button>' : ''}
+    ${opt.mini ? '' : `<div class="pr-h">${c.eyebrow ? `<span class="pr-eb">${esc(c.eyebrow)}</span>` : ''}<h2>${esc(c.title)}</h2>${c.sub ? `<p>${esc(c.sub)}</p>` : ''}
+      ${hasYear ? `<div class="pr-tg" role="tablist"><button type="button" class="${per !== 'y' ? 'on' : ''}" data-prper="m">Monthly</button><button type="button" class="${per === 'y' ? 'on' : ''}" data-prper="y">Yearly${maxSave > 0 ? ` <span>Save ${maxSave}%</span>` : ''}</button></div>` : ''}</div>`}
+    <div class="pr-cards" style="--n:${Math.min(4, plans.length || 1)}">${plans.map(card).join('') || '<p class="muted" style="text-align:center">No plans yet.</p>'}</div>
+    ${c.note ? `<p class="pr-note">${esc(c.note)}</p>` : ''}</section>`;
+}
+function homePricing() {
+  const c = pricingCfg(); if (c.show === 'off') return '';
+  if (c.show === 'notpaying' && cloud && SUB.me && SUB.me.status === 'active' && SUB.me.state !== 'locked' && !brandAdmin()) return '';
+  return pricingHTML();
+}
+function prChoose(id) {
+  const p = pricePlans(true).find(x => x.id === id); if (!p) return; const s = PLAT.s || {}, per = PR.per === 'y' && +p.price_year ? 'yearly' : 'monthly';
+  if (!cloud && !p.price_label) { store.set('nv.wantPlan', { id, per, at: Date.now() }); if (sbConf().url) return showAuth('up'); return openSettings('conn'); }
+  const msg = `Hi, I want the ${p.name} plan (${per})${cloud && AUTH.wsName ? ' for ' + AUTH.wsName : ''}.`;
+  if (s.supportPhone) return window.open(`https://wa.me/${s.supportPhone}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener');
+  if (s.renewLink) return window.open(s.renewLink, '_blank', 'noopener');
+  if (s.supportEmail) return location.href = `mailto:${s.supportEmail}?subject=${encodeURIComponent(p.name + ' plan')}&body=${encodeURIComponent(msg)}`;
+  if (cloud) return openSettings('plan'); toast('Contact details are not set yet', true);
+}
+document.addEventListener('click', e => {
+  const t = e.target;
+  const hb = t.closest('[data-herob]'); if (hb && !t.closest('#admHeroPrev')) { const b = (heroCfg().buttons || [])[+hb.dataset.herob]; if (b) heroAct(b); return; }
+  if (t.closest('[data-heroedit]')) { ADM2.tab = 'home'; store.set('nv.admTab', 'home'); store.set('nv.admAcc', 'h-hero'); return go('admin'); }
+  if (t.closest('[data-pricedit]')) { ADM2.tab = 'plans'; store.set('nv.admTab', 'plans'); return go('admin'); }
+  const pp = t.closest('[data-prper]'); if (pp) { PR.per = pp.dataset.prper; store.set('nv.prPer', PR.per); const sec = pp.closest('.pr'); if (sec) { const adm = sec.id === 'pricingPrev'; const tmp = document.createElement('div'); tmp.innerHTML = pricingHTML(adm ? { admin: true, cfg: adm && typeof admPrDraft === 'function' ? admPrDraft() : null } : {}); sec.replaceWith(tmp.firstElementChild); } return; }
+  const pc = t.closest('[data-prplan]'); if (pc) return prChoose(pc.dataset.prplan);
+});
+
+/* ---- Admin Console → Home page (header + pricing section editors) ---- */
+const HERO_ED = { c: null };
+function admHome() {
+  const c = HERO_ED.c = JSON.parse(JSON.stringify(HERO_ED.next || heroCfg())), p = pricingCfg(); HERO_ED.next = null; const open = store.get('nv.admAcc') || 'h-hero';
+  upStore.hero = { image: c.image || '', imageMobile: c.imageMobile || '' };
+  const sel = (id, opts, v) => `<select class="input" id="${id}">${opts.map(([k, n]) => `<option value="${k}" ${k === v ? 'selected' : ''}>${esc(n)}</option>`).join('')}</select>`;
+  const sw = (id, on, label, help) => `<label class="mod-row adm-sw"><div><b>${label}</b>${help ? `<small class="muted">${help}</small>` : ''}</div><span class="sw"><input type="checkbox" id="${id}" ${on ? 'checked' : ''}><i></i></span></label>`;
+  const heroBody = `<div class="ah-grid">
+      <div class="ah-col">${sw('hrOn', c.on !== false, 'Show the header on Home', 'The big banner at the top of the Home page')}
+        <div class="field"><label>Who sees it</label>${sel('hrShow', SHOW_TO, c.show || 'all')}</div>
+        <div class="ah-sec">Picture</div>
+        <div class="field"><label>Banner image <span class="muted">— wide picture, about 1600 × 500</span></label>${uploaderHTML('hero', 'image', 'hero', 1800, 'wide', 'Upload banner image')}</div>
+        <div class="field"><label>…or paste an image link</label><input class="input" id="hrImgUrl" placeholder="https://…" value="${esc(/^data:/.test(c.image || '') ? '' : c.image || '')}"></div>
+        <div class="field"><label>Phone image <span class="muted">(optional — a taller picture for mobiles)</span></label>${uploaderHTML('hero', 'imageMobile', 'hero', 1200, 'wide', 'Upload phone image')}</div>
+        <p class="help">No image = the built-in Nodevers artwork (WhatsApp, Leads, Orders, Automation cards).</p></div>
+      <div class="ah-col">${sw('hrText', c.textOn !== false, 'Show text on the image', 'Turn off if the text is already part of your picture')}
+        <div class="field"><label>Small line on top</label><input class="input" id="hrEb" maxlength="60" value="${esc(c.eyebrow || '')}"></div>
+        <div class="field"><label>Headline</label><input class="input" id="hrTitle" maxlength="90" value="${esc(c.title || '')}"></div>
+        <div class="field"><label>Text below the headline</label><textarea class="input" id="hrSub" rows="2" maxlength="220">${esc(c.sub || '')}</textarea></div>
+        <div class="form" style="grid-template-columns:1fr 1fr;gap:10px"><div class="field"><label>Text colour</label>${sel('hrTheme', [['light', 'Dark text (light picture)'], ['dark', 'White text (dark picture)']], c.theme || 'light')}</div><div class="field"><label>Text & buttons — side</label>${sel('hrAlign', [['left', 'Left'], ['center', 'Center'], ['right', 'Right']], c.align || 'left')}</div><div class="field"><label>Text & buttons — height</label>${sel('hrVpos', [['top', 'Top'], ['middle', 'Middle'], ['bottom', 'Bottom']], c.vpos || 'middle')}</div></div></div></div>
+    <div class="ah-sec">Buttons <span class="muted">— up to 3. You choose the name, what it opens and who sees it.</span></div>
+    <div id="hrBtns"></div>
+    <div class="cf-foot"><button class="btn sm" id="hrAdd">+ Add button</button><button class="btn sm" id="hrReset">Reset to default</button><div class="grow"></div><button class="btn primary" id="hrSave">Save header</button></div>`;
+  const prBody = `<div class="ah-grid"><div class="ah-col">
+      <div class="field"><label>Show the pricing section to</label>${sel('prShow', PRICING_SHOW, p.show)}</div>
+      <div class="field"><label>Small line on top</label><input class="input" id="prEb" maxlength="40" value="${esc(p.eyebrow || '')}"></div>
+      <div class="field"><label>Title</label><input class="input" id="prTitle" maxlength="90" value="${esc(p.title || '')}"></div>
+      <div class="field"><label>Text below the title</label><textarea class="input" id="prSub" rows="2" maxlength="220">${esc(p.sub || '')}</textarea></div>
+      <div class="field"><label>Small note under the cards <span class="muted">(optional)</span></label><input class="input" id="prNote" maxlength="200" value="${esc(p.note || '')}" placeholder="Prices include GST · Cancel any time"></div></div>
+    <div class="ah-col"><div class="form" style="grid-template-columns:1fr 1fr;gap:10px"><div class="field"><label>Look</label>${sel('prStyle', [['light', 'Light (clean)'], ['dark', 'Dark (glow)']], p.style || 'light')}</div>
+        <div class="field"><label>Highlight colour</label><div style="display:flex;gap:8px;align-items:center"><input type="color" id="prAccent" value="${okHex(p.accent) ? p.accent : '#8B5CF6'}" style="width:46px;height:38px;border:0;background:none;padding:0"><span class="muted" style="font-size:12px">Glow behind the highlighted card</span></div></div></div>
+      ${sw('prLimits', p.limits !== false, 'List the plan limits on each card', 'Team members, leads, WhatsApp / month, stores')}
+      <div class="field"><label>Heading above the features</label><input class="input" id="prIncl" maxlength="40" value="${esc(p.included || '')}" placeholder="What's included"></div>
+      <div class="field"><label>Button text — visitors / demo</label><input class="input" id="prCtaNew" maxlength="30" value="${esc(p.ctaNew || '')}"></div>
+      <div class="field"><label>Button text — signed-in clients</label><input class="input" id="prCtaCl" maxlength="30" value="${esc(p.ctaClient || '')}"></div>
+      <div class="field"><label>Button text — plans with a custom price</label><input class="input" id="prCtaCu" maxlength="30" value="${esc(p.ctaCustom || '')}"></div>
+      <p class="help">Visitors go to “Create account”. Clients go to your support WhatsApp (or renew link / email) with the plan name filled in. Prices, features and the badge are edited in <a class="bc-link" data-admtab="plans">Plans & pricing</a>.</p></div></div>
+    <div class="cf-foot"><div class="grow"></div><button class="btn primary" id="prSave">Save pricing section</button></div>`;
+  setTimeout(() => { admHeroBtns(); admHeroPrev(); }, 0);
+  return `<div class="ah-prev-h"><b>Live preview</b><span class="muted">This is exactly what appears at the top of Home. Changes show here as you type — press Save to publish.</span></div>
+    <div id="admHeroPrev"></div>
+    <div class="acc-list" style="margin-top:14px">${accItem('h-hero', { title: 'Header (top banner)', icon: '<svg class="i" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="m3 15 5-5 4 4 3-3 6 6"/></svg>', color: '#3B82F6', dot: c.on !== false ? 'ok' : 'off', status: c.on !== false ? `On · ${c.image ? 'your image' : 'built-in artwork'} · ${(c.buttons || []).filter(b => b.on !== false).length} buttons` : 'Hidden', open: open === 'h-hero', body: heroBody })}
+      ${accItem('h-price', { title: 'Pricing section', icon: '<svg class="i" viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>', color: '#F97316', dot: p.show !== 'off' ? 'ok' : 'off', status: (PRICING_SHOW.find(x => x[0] === p.show) || PRICING_SHOW[0])[1], open: open === 'h-price', body: prBody })}</div>
+    <div class="ah-prev-h" style="margin-top:18px"><b>Pricing preview</b><span class="muted">Cards come from Plans & pricing.</span></div><div id="admPrPrev">${pricingHTML({ admin: true })}</div>`;
+}
+function admHeroDraft() {
+  const c = HERO_ED.c, v = id => ($('#' + id) || {}).value;
+  if (!$('#hrOn')) return c;
+  Object.assign(c, { on: $('#hrOn').checked, show: v('hrShow'), textOn: $('#hrText').checked, eyebrow: v('hrEb').trim(), title: v('hrTitle').trim(), sub: v('hrSub').trim(), theme: v('hrTheme'), align: v('hrAlign'), vpos: v('hrVpos'),
+    image: upStore.hero.image || (/^https:\/\//.test(v('hrImgUrl').trim()) ? v('hrImgUrl').trim() : ''), imageMobile: upStore.hero.imageMobile || '' });
+  c.buttons = $$('#hrBtns .ah-b').map(r => ({ on: r.querySelector('[data-k="on"]').checked, label: r.querySelector('[data-k="label"]').value.trim().slice(0, 40), action: r.querySelector('[data-k="action"]').value, value: (r.querySelector('[data-k="value"]') || {}).value || '', show: r.querySelector('[data-k="show"]').value, style: r.querySelector('[data-k="style"]').value }));
+  return c;
+}
+function admHeroBtns() {
+  const box = $('#hrBtns'); if (!box) return; const B = HERO_ED.c.buttons || [];
+  const opt = (arr, v) => arr.map(([k, n]) => `<option value="${k}" ${k === v ? 'selected' : ''}>${esc(n)}</option>`).join('');
+  box.innerHTML = B.map((b, i) => { const a = HERO_ACTIONS.find(x => x[0] === b.action) || HERO_ACTIONS[0];
+    const val = b.action === 'page' ? `<select class="input" data-k="value">${opt(HERO_PAGES, b.value || 'leads')}</select>` : a[2] ? `<input class="input" data-k="value" placeholder="${esc(a[2])}" value="${esc(b.value || '')}">` : '<span class="muted ah-nv">Nothing to fill</span>';
+    return `<div class="ah-b glass" data-i="${i}"><span class="sw" title="Show this button"><input type="checkbox" data-k="on" ${b.on !== false ? 'checked' : ''}><i></i></span>
+      <div class="field"><label>Button name</label><input class="input" data-k="label" maxlength="40" value="${esc(b.label || '')}"></div>
+      <div class="field"><label>When clicked</label><select class="input" data-k="action">${opt(HERO_ACTIONS.map(x => [x[0], x[1]]), b.action)}</select></div>
+      <div class="field"><label>Link / value</label>${val}</div>
+      <div class="field"><label>Who sees it</label><select class="input" data-k="show">${opt(SHOW_TO, b.show || 'all')}</select></div>
+      <div class="field"><label>Style</label><select class="input" data-k="style">${opt([['primary', 'Main (dark)'], ['light', 'Light'], ['outline', 'Outline']], b.style || 'light')}</select></div>
+      <div class="ah-bx"><button type="button" class="ibtn" data-hbmove="-1" title="Move up" ${i ? '' : 'disabled'}>↑</button><button type="button" class="ibtn" data-hbdel title="Remove">${I.x}</button></div></div>`; }).join('') || '<p class="help">No buttons — press “+ Add button”.</p>';
+  $('#hrAdd') && ($('#hrAdd').disabled = B.length >= 3);
+}
+function admHeroPrev() { const b = $('#admHeroPrev'); if (b) b.innerHTML = heroHTML(admHeroDraft(), { preview: true }); }
+function admPrDraft() { const v = id => ($('#' + id) || {}).value; if (!$('#prShow')) return pricingCfg(); return { show: v('prShow'), eyebrow: v('prEb').trim(), title: v('prTitle').trim(), sub: v('prSub').trim(), note: v('prNote').trim(), style: v('prStyle'), accent: v('prAccent'), limits: $('#prLimits').checked, included: v('prIncl').trim() || PRICING_DEF.included, ctaNew: v('prCtaNew').trim() || PRICING_DEF.ctaNew, ctaClient: v('prCtaCl').trim() || PRICING_DEF.ctaClient, ctaCustom: v('prCtaCu').trim() || PRICING_DEF.ctaCustom }; }
+function admPrPrev() { const b = $('#admPrPrev'); if (b) b.innerHTML = pricingHTML({ admin: true, cfg: admPrDraft() }); }
+async function platSave(k, val) { await sbq(AUTH.client.rpc('admin_setting_save', { p_key: k, p_value: val })); PLAT.s[k] = val; }
+(function () {
+  const v = $('#v-admin'); if (!v) return;
+  v.addEventListener('input', e => { if (e.target.closest('#acc-h-hero, .acc[data-acc="h-hero"]')) { if (e.target.closest('#hrBtns')) admHeroDraft(); admHeroPrev(); } if (e.target.closest('.acc[data-acc="h-price"]')) admPrPrev(); });
+  v.addEventListener('change', e => {
+    if (e.target.closest('.acc[data-acc="h-hero"]')) { if (e.target.matches('#hrBtns [data-k="action"]')) { admHeroDraft(); HERO_ED.c.buttons[+e.target.closest('.ah-b').dataset.i].value = ''; admHeroBtns(); } admHeroPrev(); }
+    if (e.target.closest('.acc[data-acc="h-price"]')) admPrPrev();
+  });
+  v.addEventListener('click', async e => {
+    const t = e.target;
+    if (t.id === 'hrAdd') { admHeroDraft(); if (HERO_ED.c.buttons.length >= 3) return; HERO_ED.c.buttons.push({ on: true, label: 'New button', action: 'url', value: '', show: 'all', style: 'light' }); admHeroBtns(); admHeroPrev(); return; }
+    const hd = t.closest('[data-hbdel]'); if (hd) { admHeroDraft(); HERO_ED.c.buttons.splice(+hd.closest('.ah-b').dataset.i, 1); admHeroBtns(); admHeroPrev(); return; }
+    const hm = t.closest('[data-hbmove]'); if (hm) { admHeroDraft(); const i = +hm.closest('.ah-b').dataset.i, B = HERO_ED.c.buttons; [B[i - 1], B[i]] = [B[i], B[i - 1]]; admHeroBtns(); admHeroPrev(); return; }
+    if (t.id === 'hrReset') { if (!confirm('Reset the header to the Nodevers default? (Press Save to publish.)')) return; HERO_ED.next = JSON.parse(JSON.stringify(HERO_DEF)); store.set('nv.admAcc', 'h-hero'); renderAdmin(); return; }
+    if (t.id === 'hrSave') { if (upBusy) return toast('Image is still uploading…', true); const c = admHeroDraft(); if (c.buttons.some(b => b.on !== false && !b.label)) return toast('Give every button a name', true);
+      if (c.buttons.some(b => b.on !== false && b.action === 'url' && b.value && !/^(https?:\/\/|#)/i.test(b.value))) return toast('Links must start with https://', true);
+      t.disabled = true; try { await platSave('homeHeroJson', JSON.stringify(c)); toast('✓ Header published — every client sees it now'); } catch (er) { toast(er.message, true); } t.disabled = false; return; }
+    if (t.id === 'prSave') { t.disabled = true; try { await platSave('pricingJson', JSON.stringify(admPrDraft())); toast('✓ Pricing section saved'); } catch (er) { toast(er.message, true); } t.disabled = false; return; }
+  });
+  document.addEventListener('nv-uploaded', e => { if (e.detail && e.detail.scope === 'hero') admHeroPrev(); });
+})();
 
 function platformBar() {
   const old = $('#platBar'); if (old) old.remove();
@@ -8424,6 +8773,7 @@ const HELP_GUIDE = [
   ['n8n', 'n8n Services (your workflows)', 'n8n workflow connect api key ngrok docker run now credentials red node', '**n8n Services → Connect n8n**: paste your n8n address (https) and API key. **Workflows**: switch them on/off, see last runs. **Set up** opens a workflow as nodes — red steps need your key, link or setting; click one, fill it, save (it goes straight into your n8n). **▶ Run now** starts it (first press **+ Add Run button**; the workflow must be ON). n8n on your own PC needs Docker + ngrok running.'],
   ['kits', 'Industry Kits', 'industry kit template setup furniture real estate salon gym restaurant', '**Industry Kits**: pick your business type → preview stages, lead sources, automations and WhatsApp templates → choose what to apply.'],
   ['settings', 'Your profile, logo and website name', 'settings profile photo name brand logo website name colour white label domain', '**Settings → Your profile**: your name and photo. The website name, logo and colours are set by the platform team for everyone, so they are not in your settings.'],
+  ['pricing', 'Pricing plans on Home', 'pricing price plans monthly yearly upgrade choose plan get started cost', 'The **Pricing Plans** section on **Home** shows every plan with its price, limits and features. Switch **Monthly / Yearly** to see yearly prices. Press the button on a plan to start (new visitors create an account; clients are taken to WhatsApp / the renew link to upgrade). Your current plan is marked.'],
   ['plan', 'Plan, trial and billing', 'plan billing subscription trial expire expired renew payment upgrade limit days left invoice paused view only', '**Settings → Plan & billing** shows your plan, days left, usage (team, leads, WhatsApp this month, stores) and your payments. A banner appears 7 days before the end. When a trial or plan ends the workspace becomes **view-only** — nothing is deleted. Use **Renew** or **WhatsApp us** on the banner to renew; it opens again as soon as the payment is recorded.'],
   ['ro', 'View-only / missing buttons', 'view only cannot edit button missing permission hidden not allowed', 'If buttons are missing or you see "View-only access", your owner limited your access (role **Client**, an area limit or a switched-off action). Ask the owner to open **Team → Access** for you.'],
 ];
@@ -8494,7 +8844,7 @@ document.addEventListener('click', e => {
   const ed = t.closest('[data-edit]'); if (ed) { openLeadModal(S.leads.find(l => l.leadId === ed.dataset.edit)); return; }
   const del = t.closest('[data-delete]'); if (del) { if (confirm('Delete this lead permanently?')) api('deleteLead', { id: del.dataset.delete }).then(() => { toast('Lead deleted'); closePanel(); demo ? renderAll() : load(true); }).catch(er => toast(er.message, true)); return; }
   if (t.closest('[data-focus-note]')) { $('#ntext').focus(); return; }
-  const upx = t.closest('[data-upclear]'); if (upx) { e.stopPropagation(); const u = upx.closest('.uploader'); upStore[u.dataset.scope][u.dataset.up] = ''; refreshUploader(u); return; }
+  const upx = t.closest('[data-upclear]'); if (upx) { e.stopPropagation(); const u = upx.closest('.uploader'), d = { scope: u.dataset.scope, key: u.dataset.up }; upStore[d.scope][d.key] = ''; refreshUploader(u); document.dispatchEvent(new CustomEvent('nv-uploaded', { detail: d })); return; }
   const up = t.closest('.uploader'); if (up) { if (up.classList.contains('busy')) return; pendingUp = { scope: up.dataset.scope, key: up.dataset.up }; $('#fileIn').value = ''; $('#fileIn').click(); return; }
   const stab = t.closest('.segb[data-stab]'); if (stab) { setSTab(stab.dataset.stab); return; }
   const th = t.closest('th[data-sort]'); if (th) { const k = th.dataset.sort; ui.sort = { k, d: ui.sort.k === k ? -ui.sort.d : 1 }; renderLeads(); return; }

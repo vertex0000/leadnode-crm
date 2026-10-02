@@ -62,16 +62,23 @@ create table if not exists public.plans (
   sort        integer not null default 0,
   created_at  timestamptz not null default now(),
   updated_at  timestamptz not null default now());
+-- pricing page extras: yearly price, "Custom" instead of a price, a badge like "Most popular", one highlighted card
+alter table public.plans add column if not exists price_year numeric check (price_year is null or price_year >= 0);
+alter table public.plans add column if not exists price_label text not null default '' check (length(price_label) <= 30);
+alter table public.plans add column if not exists badge text not null default '' check (length(badge) <= 30);
+alter table public.plans add column if not exists highlight boolean not null default false;
 alter table public.plans enable row level security;
 drop policy if exists plans_read on public.plans;
-create policy plans_read on public.plans for select to authenticated using (true);
-grant select on public.plans to authenticated;
+create policy plans_read on public.plans for select to anon, authenticated using (true);      -- the pricing section is public (sign-up page, demo)
+grant select on public.plans to anon, authenticated;
 grant all on public.plans to service_role;
 insert into public.plans (id, name, description, price, period, limits, features, sort) values
   ('starter', 'Starter', 'For a small business getting started', 999, 'month', '{"members":2,"leads":1000,"wa_messages":1000,"store_connections":1}', '{"CRM + pipeline","WhatsApp inbox","Broadcasts","Store"}', 1),
   ('growth', 'Growth', 'For a growing team', 2499, 'month', '{"members":5,"leads":10000,"wa_messages":5000,"store_connections":2}', '{"Everything in Starter","Automation + n8n","Store alerts","Insights"}', 2),
   ('pro', 'Pro', 'For bigger teams and agencies', 4999, 'month', '{"members":20,"leads":100000,"wa_messages":25000,"store_connections":3}', '{"Everything in Growth","White label","Priority support"}', 3)
 on conflict (id) do nothing;
+update public.plans set price_year = price * 10 where price_year is null and period = 'month' and id in ('starter', 'growth', 'pro');   -- 2 months free on yearly
+update public.plans set highlight = true, badge = 'Most popular' where id = 'growth' and badge = '' and not exists (select 1 from public.plans where highlight);
 
 -- ---------- 4. One subscription per client workspace ----------
 create table if not exists public.workspace_subscriptions (
@@ -264,11 +271,14 @@ create or replace function public.admin_plan_save(p jsonb) returns void
 language plpgsql security definer set search_path = public as $$
 begin
   if not public.has_platform_role(array['super', 'admin']) then raise exception 'Not allowed for your platform role'; end if;
-  insert into public.plans (id, name, description, price, currency, period, limits, features, active, sort, updated_at)
+  if coalesce((p ->> 'highlight')::boolean, false) then update public.plans set highlight = false where id <> lower(p ->> 'id'); end if;     -- only one highlighted card
+  insert into public.plans (id, name, description, price, currency, period, limits, features, active, sort, price_year, price_label, badge, highlight, updated_at)
   values (lower(p ->> 'id'), p ->> 'name', coalesce(p ->> 'description', ''), coalesce((p ->> 'price')::numeric, 0), coalesce(nullif(p ->> 'currency', ''), 'INR'), coalesce(nullif(p ->> 'period', ''), 'month'),
-          coalesce(p -> 'limits', '{}'::jsonb), coalesce((select array_agg(x) from jsonb_array_elements_text(coalesce(p -> 'features', '[]'::jsonb)) x), '{}'), coalesce((p ->> 'active')::boolean, true), coalesce((p ->> 'sort')::int, 0), now())
+          coalesce(p -> 'limits', '{}'::jsonb), coalesce((select array_agg(x) from jsonb_array_elements_text(coalesce(p -> 'features', '[]'::jsonb)) x), '{}'), coalesce((p ->> 'active')::boolean, true), coalesce((p ->> 'sort')::int, 0),
+          nullif(nullif(p ->> 'price_year', ''), '0')::numeric, left(coalesce(p ->> 'price_label', ''), 30), left(coalesce(p ->> 'badge', ''), 30), coalesce((p ->> 'highlight')::boolean, false), now())
   on conflict (id) do update set name = excluded.name, description = excluded.description, price = excluded.price, currency = excluded.currency, period = excluded.period,
-    limits = excluded.limits, features = excluded.features, active = excluded.active, sort = excluded.sort, updated_at = now();
+    limits = excluded.limits, features = excluded.features, active = excluded.active, sort = excluded.sort, price_year = excluded.price_year, price_label = excluded.price_label,
+    badge = excluded.badge, highlight = excluded.highlight, updated_at = now();
   perform public.paudit('plan.save', p ->> 'id', p);
 end $$;
 create or replace function public.admin_plan_delete(p_id text) returns text
@@ -292,9 +302,11 @@ create or replace function public.admin_team_save(p_email text, p_role text) ret
 language plpgsql security definer set search_path = public as $$
 declare e text := lower(trim(p_email));
 begin
-  if not public.has_platform_role(array['super']) then raise exception 'Only a super admin can manage the platform team'; end if;
+  if not public.has_platform_role(array['super', 'admin']) then raise exception 'Only a super admin or an admin can manage the platform team'; end if;
   if e !~ '^[^@\s]+@[^@\s]+\.[^@\s]+$' then raise exception 'Enter a valid email'; end if;
   if p_role not in ('super', 'admin', 'support', 'finance') then raise exception 'Unknown role'; end if;
+  if public.platform_role() <> 'super' and (p_role = 'super' or exists (select 1 from public.platform_admins where email = e and role = 'super')) then
+    raise exception 'Only a super admin can add or change a super admin'; end if;
   if e = lower(auth.jwt() ->> 'email') and p_role <> 'super' and (select count(*) from public.platform_admins where role = 'super') <= 1 then raise exception 'You are the only super admin — add another super admin first'; end if;
   insert into public.platform_admins (email, role, added_by) values (e, p_role, coalesce(auth.jwt() ->> 'email', '')) on conflict (email) do update set role = excluded.role;
   perform public.paudit('team.save', e, jsonb_build_object('role', p_role));
@@ -303,8 +315,9 @@ create or replace function public.admin_team_remove(p_email text) returns void
 language plpgsql security definer set search_path = public as $$
 declare e text := lower(trim(p_email));
 begin
-  if not public.has_platform_role(array['super']) then raise exception 'Only a super admin can manage the platform team'; end if;
+  if not public.has_platform_role(array['super', 'admin']) then raise exception 'Only a super admin or an admin can manage the platform team'; end if;
   if e = lower(auth.jwt() ->> 'email') then raise exception 'You can not remove yourself'; end if;
+  if public.platform_role() <> 'super' and exists (select 1 from public.platform_admins where email = e and role = 'super') then raise exception 'Only a super admin can remove a super admin'; end if;
   delete from public.platform_admins where email = e; perform public.paudit('team.remove', e, '{}');
 end $$;
 
