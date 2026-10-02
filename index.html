@@ -714,6 +714,13 @@ body.brand-ro #brandRowSite,body.brand-ro #setModal .acc[data-acc="s-wl"]{displa
 .pr-adm{margin-top:10px;display:flex;justify-content:flex-end}.pr .pr-adm .btn{background:rgba(255,255,255,.1);color:#fff;border-color:rgba(255,255,255,.2)}
 .pr-note{text-align:center;margin:18px 0 0;font-size:12.5px;color:rgba(245,241,236,.55)}
 .pr .hero-edit{color:#111}
+.pr-top{display:inline-flex;align-items:center;gap:7px;height:38px;padding:0 14px;border-radius:var(--r-ctl);border:1px solid color-mix(in srgb,#8B5CF6 35%,var(--stroke));background:linear-gradient(135deg,color-mix(in srgb,#8B5CF6 12%,var(--glass-2)),var(--glass-2));color:var(--text);font-weight:700;font-size:13.5px;white-space:nowrap;transition:transform .2s,box-shadow .2s,border-color .2s}
+.pr-top .i{width:17px;height:17px;color:#8B5CF6}.pr-top:hover{transform:translateY(-1px);border-color:#8B5CF6;box-shadow:0 8px 20px -10px #8B5CF6}.pr-top[hidden]{display:none}
+@media (max-width:760px){.pr-top{width:38px;padding:0;justify-content:center}.pr-top span{display:none}}
+.kbd-k{margin-left:auto;font:600 11px/1 inherit;padding:3px 6px;border-radius:6px;border:1px solid var(--stroke);background:var(--glass);color:var(--muted);white-space:nowrap}
+.top .search input{min-width:0}
+.modal .box.pr-box{width:min(1180px,100%);padding:0;background:transparent;border:0;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none;border-radius:26px;position:relative}
+.pr-box .pr{margin:0}.pr-box .pr .hero-edit{right:auto;left:14px}.pr-x{position:absolute;top:14px;right:14px;z-index:5;background:var(--card)}
 .pr-pop{position:absolute;top:-13px;left:50%;transform:translateX(-50%);z-index:2;white-space:nowrap;font-size:12px;font-weight:700;padding:5px 14px;border-radius:20px;background:#17181C;color:#fff;box-shadow:0 8px 18px -8px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.18)}
 .pr .pr-c.hl{margin-top:4px}.pr-cards{padding-top:14px}
 /* light (clean) pricing — default */
@@ -1404,7 +1411,8 @@ body.ro [data-cmw],body.np-commerce [data-cmw]{display:none!important}
         <a href="#insights" data-gofam="insights">Insights</a>
       </nav>
       <div class="grow"></div>
-      <label class="search"><svg class="i" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="gsearch" type="search" name="q-gsearch" autocomplete="off" readonly data-noautofill placeholder="Search anything… Ctrl+K city…"></label>
+      <button class="pr-top" id="pricingBtn" type="button" data-pricing hidden title="See plans and prices"><svg class="i" viewBox="0 0 24 24"><path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8Z"/><circle cx="7.5" cy="7.5" r="1.5"/></svg><span>Pricing</span></button>
+      <label class="search"><svg class="i" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="gsearch" type="search" name="q-gsearch" autocomplete="off" readonly data-noautofill placeholder="Search anything…"><kbd class="kbd-k">Ctrl K</kbd></label>
       <button class="ibtn" id="refreshBtn" title="Refresh data"><svg class="i" viewBox="0 0 24 24"><path d="M20 11a8 8 0 0 0-14.6-4.5L4 8M4 4v4h4M4 13a8 8 0 0 0 14.6 4.5L20 16M20 20v-4h-4"/></svg></button>
       <button class="ibtn" id="bellBtn" title="Follow-ups due"><svg class="i" viewBox="0 0 24 24"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10.3 21a1.9 1.9 0 0 0 3.4 0"/></svg><span class="dot-badge" id="bellDot" hidden></span></button>
       <button class="ibtn mobonly" id="mThemeBtn" title="Dark / Light"><svg class="i" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 1 1 9.5 4 6.5 6.5 0 0 0 20 14.5Z"/></svg></button>
@@ -1781,6 +1789,7 @@ body.ro [data-cmw],body.np-commerce [data-cmw]{display:none!important}
 </div>
 
 <!-- STAGE NODE MODAL -->
+<div class="modal" id="priceModal"><div class="box pr-box" id="priceBox"></div></div>
 <div class="modal" id="stageModal"><div class="box narrow" id="stageBox"></div></div>
 <div class="pop" id="nodeMenu"></div>
 <div class="pop pal" id="nodePal"></div>
@@ -2073,7 +2082,7 @@ function renderAll(anim) {
   const cur = activeView();
   Object.keys(VIEW_RENDER).forEach(k => { if (k === cur) VIEW_RENDER[k](anim); else staleViews.add(k); });
   if (ui.openId) renderPanel(ui.openId);
-  try { applyModules(); notifBadge(); } catch (e) { }
+  try { applyModules(); notifBadge(); pricingBtnSync(); } catch (e) { }
   try { const n = convos().reduce((s, c) => s + c.unread, 0), bd = $('#waBadge'); bd.hidden = !n; bd.textContent = n > 99 ? '99+' : n; } catch (e) { }
 }
 function fillSelects() {
@@ -4924,6 +4933,7 @@ async function platLoad() {
   try { const r = await fetch(c.url.replace(/\/$/, '') + '/rest/v1/platform_settings?select=key,value', { headers: { apikey: c.key } }); if (!r.ok) return; const rows = await r.json(); if (!Array.isArray(rows)) return;
     PLAT.s = Object.fromEntries(rows.map(x => [x.key, x.value])); PLAT.loaded = true; applyBranding(); authBrand(); } catch (e) { }
   try { const r = await fetch(c.url.replace(/\/$/, '') + '/rest/v1/plans?select=*&order=sort', { headers: { apikey: c.key } }); if (r.ok) { const rows = await r.json(); if (Array.isArray(rows)) PLAT.plans = rows; } } catch (e) { }
+  try { pricingBtnSync(); } catch (e) { }
   if (typeof activeView === 'function' && activeView() === 'home' && typeof renderHome === 'function' && S && S.leads) renderHome();
 }
 /* ================= White label (agencies resell Nodevers as their own platform) ================= */
@@ -7637,7 +7647,7 @@ function renderHome(anim) {
   const hr = now.getHours(), greet = hr < 12 ? 'Good morning' : hr < 17 ? 'Good afternoon' : 'Good evening', who = (typeof me === 'function' && me()) || brand().userName || '';
   const card = (ic, color, title, n, sub, go, btn, extra) => `<div class="home-c glass" style="--c:${color}"><div class="home-ch"><span class="home-ci">${ic}</span><span>${esc(title)}</span></div><div class="home-cn"><b>${n}</b>${extra || ''}</div><p>${sub}</p><button class="btn sm" ${go}>${esc(btn)} →</button></div>`;
   const todo = overdue.concat(dueToday).sort((a, b) => String(a.dueAt).localeCompare(String(b.dueAt))).slice(0, 6);
-  box.innerHTML = `${homeHero()}${homePricing()}<div class="home-hi"><div><h1>${greet}${who ? ', ' + esc(String(who).split(' ')[0]) : ''} 👋</h1><p class="muted">${now.toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'long' })} — here is what needs you today.</p></div></div>
+  box.innerHTML = `${homeHero()}<div class="home-hi"><div><h1>${greet}${who ? ', ' + esc(String(who).split(' ')[0]) : ''} 👋</h1><p class="muted">${now.toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'long' })} — here is what needs you today.</p></div></div>
     ${done < items.length ? `<div class="home-setup glass"><div class="home-ring" style="--p:${pctDone}"><svg viewBox="0 0 44 44"><circle cx="22" cy="22" r="19"/><circle cx="22" cy="22" r="19" class="on" stroke-dasharray="${(pctDone / 100 * 119.4).toFixed(1)} 119.4"/></svg><b>${done}/${items.length}</b></div>
       <div class="home-st"><b>Set up your business</b><span>${done} of ${items.length} done</span><small class="muted">Finish setup to unlock every feature.</small></div>
       <div class="home-steps">${items.map(([k, n, ok, sub, to]) => `<button class="home-step ${ok ? 'ok' : ''}" data-homego="${to}" title="${esc(n)} — ${esc(sub)}"><span class="home-sd">${ok ? '✓' : ''}</span><b>${esc(n)}</b><small>${esc(sub)}</small></button>`).join('')}</div>
@@ -8254,7 +8264,7 @@ function subApply() {
   const m = SUB.me, old = $('#subBanner'); if (old) old.remove();
   const locked = !!(m && m.state === 'locked' && AUTH.role !== 'platform');
   document.body.classList.toggle('ro', !!(cloud && (AUTH.role === 'client' || AUTH.role === 'platform' || locked)));
-  document.body.classList.toggle('sub-locked', locked);
+  document.body.classList.toggle('sub-locked', locked); try { pricingBtnSync(); } catch (e) { }
   if (!m || AUTH.role === 'platform' || m.status === 'free') return;
   const d = m.days_left, sup = m.support || {}, renew = sup.renewLink ? `<a class="btn sm primary" href="${esc(sup.renewLink)}" target="_blank" rel="noopener">Renew now</a>` : '', wa = sup.supportPhone ? `<a class="btn sm" href="https://wa.me/${esc(sup.supportPhone)}?text=${encodeURIComponent('Hi, I want to renew my ' + brand().brandName + ' plan for ' + (AUTH.wsName || ''))}" target="_blank" rel="noopener">WhatsApp us</a>` : '';
   let msg = '';
@@ -8282,11 +8292,11 @@ document.addEventListener('click', e => { if (e.target.closest('[data-planopen]'
 /* ================= Home header (top banner) + pricing section — edited only by the platform team ================= */
 const HERO_DEF = { on: true, show: 'all', image: '', imageMobile: '', textOn: true, theme: 'light', align: 'left', vpos: 'middle', eyebrow: 'All-in-one business OS', title: 'Turn Conversations Into Customers', sub: 'Manage leads, automate WhatsApp, track orders and grow your business — all in one place.',
   buttons: [{ on: true, label: 'Create free account', action: 'signup', value: '', show: 'demo', style: 'primary' }, { on: true, label: 'Watch demo', action: 'video', value: '', show: 'all', style: 'light' }] };
-const HERO_ACTIONS = [['signup', 'Create account (sign-up page)', ''], ['video', 'Play a video', 'YouTube or video link'], ['url', 'Open a link', 'https://…'], ['whatsapp', 'Chat on WhatsApp', 'Message (optional)'], ['pricing', 'Scroll to pricing', ''], ['plan', 'Open “Plan & billing”', ''], ['page', 'Open a page in Nodevers', ''], ['demo', 'Open the demo', '']];
+const HERO_ACTIONS = [['signup', 'Create account (sign-up page)', ''], ['video', 'Play a video', 'YouTube or video link'], ['url', 'Open a link', 'https://…'], ['whatsapp', 'Chat on WhatsApp', 'Message (optional)'], ['pricing', 'Open pricing', ''], ['plan', 'Open “Plan & billing”', ''], ['page', 'Open a page in Nodevers', ''], ['demo', 'Open the demo', '']];
 const HERO_PAGES = [['leads', 'Leads'], ['commerce', 'Store'], ['whatsapp', 'Inbox'], ['broadcast', 'Campaigns'], ['automation', 'Automation'], ['insights', 'Insights'], ['connections', 'Connections'], ['team', 'Team'], ['industry', 'Industry Kits']];
 const SHOW_TO = [['all', 'Everyone'], ['demo', 'Demo visitors (not signed in)'], ['clients', 'Signed-in clients only']];
 const PRICING_DEF = { show: 'notpaying', eyebrow: '', title: 'Pricing Plans', sub: 'Simple plans for every business — start with a free trial and upgrade when you grow. No hidden fees.', accent: '#8B5CF6', style: 'light', limits: true, included: "What's included", ctaNew: 'Get started', ctaClient: 'Choose plan', ctaCustom: 'Talk to us', note: '' };
-const PRICING_SHOW = [['notpaying', 'Visitors, trial & free clients (hidden for paying clients)'], ['all', 'Everyone'], ['off', 'Nobody (hidden)']];
+const PRICING_SHOW = [['notpaying', 'Visitors, trial & free clients (hidden for paying clients)'], ['all', 'Everyone'], ['off', 'Nobody (button hidden)']];
 const DEFAULT_PLANS = [
   { id: 'starter', name: 'Starter', description: 'For a small business getting started', price: 999, price_year: 9990, period: 'month', limits: { members: 2, leads: 1000, wa_messages: 1000, store_connections: 1 }, features: ['CRM + pipeline', 'WhatsApp inbox', 'Broadcasts', 'Store'], active: true, sort: 1, badge: '', highlight: false, price_label: '' },
   { id: 'growth', name: 'Growth', description: 'For a growing team', price: 2499, price_year: 24990, period: 'month', limits: { members: 5, leads: 10000, wa_messages: 5000, store_connections: 2 }, features: ['Everything in Starter', 'Automation + n8n', 'Store alerts', 'Insights'], active: true, sort: 2, badge: 'Most popular', highlight: true, price_label: '' },
@@ -8329,7 +8339,7 @@ function heroAct(b) {
     case 'video': if (!v) { if (brandAdmin()) return toast('Add the video link in Admin Console → Home page', true); return $('#helpFab') && $('#helpFab').click(); } return openVideo(v);
     case 'url': if (/^#/.test(v)) return go(v.slice(1)); if (/^https?:\/\//i.test(v)) return window.open(v, '_blank', 'noopener'); return toast('This button has no link yet', true);
     case 'whatsapp': if (!sup) return toast('Support WhatsApp number is not set yet', true); return window.open(`https://wa.me/${sup}${v ? '?text=' + encodeURIComponent(v) : ''}`, '_blank', 'noopener');
-    case 'pricing': { const p = $('#pricing'); if (p) p.scrollIntoView({ behavior: 'smooth', block: 'start' }); return; }
+    case 'pricing': return openPricing();
     case 'plan': return cloud ? openSettings('plan') : sbConf().url ? showAuth('up') : null;
     case 'page': return go(v || 'leads');
     case 'demo': return window.open(location.pathname + '?demo', '_blank', 'noopener');
@@ -8375,10 +8385,15 @@ function pricingHTML(opt) {
     <div class="pr-cards" style="--n:${Math.min(4, plans.length || 1)}">${plans.map(card).join('') || '<p class="muted" style="text-align:center">No plans yet.</p>'}</div>
     ${c.note ? `<p class="pr-note">${esc(c.note)}</p>` : ''}</section>`;
 }
-function homePricing() {
-  const c = pricingCfg(); if (c.show === 'off') return '';
-  if (c.show === 'notpaying' && cloud && SUB.me && SUB.me.status === 'active' && SUB.me.state !== 'locked' && !brandAdmin()) return '';
-  return pricingHTML();
+/** the "Pricing" button in the top bar opens the plans in a pop-up */
+function pricingVisible() {
+  const c = pricingCfg(); if (brandAdmin()) return true; if (c.show === 'off') return false;
+  return !(c.show === 'notpaying' && cloud && SUB.me && SUB.me.status === 'active' && SUB.me.state !== 'locked');
+}
+function pricingBtnSync() { const b = $('#pricingBtn'); if (b) b.hidden = !pricingVisible(); }
+function openPricing() {
+  $('#priceBox').innerHTML = `<button type="button" class="ibtn pr-x" data-close title="Close">${I.x}</button>${pricingHTML()}`;
+  showModal('#priceModal'); $('#priceBox').scrollTop = 0;
 }
 function prChoose(id) {
   const p = pricePlans(true).find(x => x.id === id); if (!p) return; const s = PLAT.s || {}, per = PR.per === 'y' && +p.price_year ? 'yearly' : 'monthly';
@@ -8393,9 +8408,10 @@ document.addEventListener('click', e => {
   const t = e.target;
   const hb = t.closest('[data-herob]'); if (hb && !t.closest('#admHeroPrev')) { const b = (heroCfg().buttons || [])[+hb.dataset.herob]; if (b) heroAct(b); return; }
   if (t.closest('[data-heroedit]')) { ADM2.tab = 'home'; store.set('nv.admTab', 'home'); store.set('nv.admAcc', 'h-hero'); return go('admin'); }
-  if (t.closest('[data-pricedit]')) { ADM2.tab = 'plans'; store.set('nv.admTab', 'plans'); return go('admin'); }
+  if (t.closest('[data-pricing]')) return openPricing();
+  if (t.closest('[data-pricedit]')) { hideModal('#priceModal'); ADM2.tab = 'plans'; store.set('nv.admTab', 'plans'); return go('admin'); }
   const pp = t.closest('[data-prper]'); if (pp) { PR.per = pp.dataset.prper; store.set('nv.prPer', PR.per); const sec = pp.closest('.pr'); if (sec) { const adm = sec.id === 'pricingPrev'; const tmp = document.createElement('div'); tmp.innerHTML = pricingHTML(adm ? { admin: true, cfg: adm && typeof admPrDraft === 'function' ? admPrDraft() : null } : {}); sec.replaceWith(tmp.firstElementChild); } return; }
-  const pc = t.closest('[data-prplan]'); if (pc) return prChoose(pc.dataset.prplan);
+  const pc = t.closest('[data-prplan]'); if (pc) { if (!t.closest('#plPrev')) hideModal('#priceModal'); return prChoose(pc.dataset.prplan); }
 });
 
 /* ---- Admin Console → Home page (header + pricing section editors) ---- */
@@ -8422,7 +8438,7 @@ function admHome() {
     <div id="hrBtns"></div>
     <div class="cf-foot"><button class="btn sm" id="hrAdd">+ Add button</button><button class="btn sm" id="hrReset">Reset to default</button><div class="grow"></div><button class="btn primary" id="hrSave">Save header</button></div>`;
   const prBody = `<div class="ah-grid"><div class="ah-col">
-      <div class="field"><label>Show the pricing section to</label>${sel('prShow', PRICING_SHOW, p.show)}</div>
+      <div class="field"><label>Show the “Pricing” button (top bar, next to search) to</label>${sel('prShow', PRICING_SHOW, p.show)}</div>
       <div class="field"><label>Small line on top</label><input class="input" id="prEb" maxlength="40" value="${esc(p.eyebrow || '')}"></div>
       <div class="field"><label>Title</label><input class="input" id="prTitle" maxlength="90" value="${esc(p.title || '')}"></div>
       <div class="field"><label>Text below the title</label><textarea class="input" id="prSub" rows="2" maxlength="220">${esc(p.sub || '')}</textarea></div>
@@ -8435,13 +8451,13 @@ function admHome() {
       <div class="field"><label>Button text — signed-in clients</label><input class="input" id="prCtaCl" maxlength="30" value="${esc(p.ctaClient || '')}"></div>
       <div class="field"><label>Button text — plans with a custom price</label><input class="input" id="prCtaCu" maxlength="30" value="${esc(p.ctaCustom || '')}"></div>
       <p class="help">Visitors go to “Create account”. Clients go to your support WhatsApp (or renew link / email) with the plan name filled in. Prices, features and the badge are edited in <a class="bc-link" data-admtab="plans">Plans & pricing</a>.</p></div></div>
-    <div class="cf-foot"><div class="grow"></div><button class="btn primary" id="prSave">Save pricing section</button></div>`;
+    <div class="cf-foot"><div class="grow"></div><button class="btn primary" id="prSave">Save pricing</button></div>`;
   setTimeout(() => { admHeroBtns(); admHeroPrev(); }, 0);
-  return `<div class="ah-prev-h"><b>Live preview</b><span class="muted">This is exactly what appears at the top of Home. Changes show here as you type — press Save to publish.</span></div>
+  return `<div class="ah-prev-h"><b>Live preview</b><span class="muted">This is exactly what appears at the top of Home. Changes show here as you type — press Save to publish. Pricing opens from the “Pricing” button next to the search box.</span></div>
     <div id="admHeroPrev"></div>
     <div class="acc-list" style="margin-top:14px">${accItem('h-hero', { title: 'Header (top banner)', icon: '<svg class="i" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="m3 15 5-5 4 4 3-3 6 6"/></svg>', color: '#3B82F6', dot: c.on !== false ? 'ok' : 'off', status: c.on !== false ? `On · ${c.image ? 'your image' : 'built-in artwork'} · ${(c.buttons || []).filter(b => b.on !== false).length} buttons` : 'Hidden', open: open === 'h-hero', body: heroBody })}
-      ${accItem('h-price', { title: 'Pricing section', icon: '<svg class="i" viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>', color: '#F97316', dot: p.show !== 'off' ? 'ok' : 'off', status: (PRICING_SHOW.find(x => x[0] === p.show) || PRICING_SHOW[0])[1], open: open === 'h-price', body: prBody })}</div>
-    <div class="ah-prev-h" style="margin-top:18px"><b>Pricing preview</b><span class="muted">Cards come from Plans & pricing.</span></div><div id="admPrPrev">${pricingHTML({ admin: true })}</div>`;
+      ${accItem('h-price', { title: 'Pricing pop-up', icon: '<svg class="i" viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>', color: '#F97316', dot: p.show !== 'off' ? 'ok' : 'off', status: (PRICING_SHOW.find(x => x[0] === p.show) || PRICING_SHOW[0])[1], open: open === 'h-price', body: prBody })}</div>
+    <div class="ah-prev-h" style="margin-top:18px"><b>Pricing pop-up preview</b><span class="muted">Opens when someone clicks “Pricing” in the top bar. Cards come from Plans & pricing.</span></div><div id="admPrPrev">${pricingHTML({ admin: true })}</div>`;
 }
 function admHeroDraft() {
   const c = HERO_ED.c, v = id => ($('#' + id) || {}).value;
@@ -8485,7 +8501,7 @@ async function platSave(k, val) { await sbq(AUTH.client.rpc('admin_setting_save'
     if (t.id === 'hrSave') { if (upBusy) return toast('Image is still uploading…', true); const c = admHeroDraft(); if (c.buttons.some(b => b.on !== false && !b.label)) return toast('Give every button a name', true);
       if (c.buttons.some(b => b.on !== false && b.action === 'url' && b.value && !/^(https?:\/\/|#)/i.test(b.value))) return toast('Links must start with https://', true);
       t.disabled = true; try { await platSave('homeHeroJson', JSON.stringify(c)); toast('✓ Header published — every client sees it now'); } catch (er) { toast(er.message, true); } t.disabled = false; return; }
-    if (t.id === 'prSave') { t.disabled = true; try { await platSave('pricingJson', JSON.stringify(admPrDraft())); toast('✓ Pricing section saved'); } catch (er) { toast(er.message, true); } t.disabled = false; return; }
+    if (t.id === 'prSave') { t.disabled = true; try { await platSave('pricingJson', JSON.stringify(admPrDraft())); pricingBtnSync(); toast('✓ Pricing saved'); } catch (er) { toast(er.message, true); } t.disabled = false; return; }
   });
   document.addEventListener('nv-uploaded', e => { if (e.detail && e.detail.scope === 'hero') admHeroPrev(); });
 })();
