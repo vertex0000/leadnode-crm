@@ -264,8 +264,8 @@ textarea.input{min-height:84px;resize:vertical}
 .pop .sep{height:1px;background:var(--line);margin:5px 4px}
 .pop .ttl{font-size:11.5px;font-weight:700;color:var(--faint);padding:6px 10px 4px;text-transform:uppercase;letter-spacing:.04em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .swatches{display:flex;flex-wrap:wrap;gap:7px;padding:4px 10px 8px}
-.sw{width:24px;height:24px;border-radius:6px;border:2px solid transparent;cursor:pointer;box-shadow:inset 0 0 0 1px rgba(0,0,0,.14);padding:0}
-.sw.on{border-color:var(--text)}
+button.sw{width:24px;height:24px;border-radius:6px;border:2px solid transparent;cursor:pointer;box-shadow:inset 0 0 0 1px rgba(0,0,0,.14);padding:0}
+button.sw.on{border-color:var(--text)}
 .pal{width:340px;max-width:calc(100vw - 24px);padding:0;display:flex;flex-direction:column;max-height:min(580px,78vh)}
 .pal .ph{padding:10px;border-bottom:1px solid var(--line)}
 .pal .ph .note{font-size:11.5px;color:var(--muted);margin-top:7px;line-height:1.4}
@@ -714,13 +714,50 @@ body.brand-ro #brandRowSite,body.brand-ro #setModal .acc[data-acc="s-wl"]{displa
 .pr-adm{margin-top:10px;display:flex;justify-content:flex-end}.pr .pr-adm .btn{background:rgba(255,255,255,.1);color:#fff;border-color:rgba(255,255,255,.2)}
 .pr-note{text-align:center;margin:18px 0 0;font-size:12.5px;color:rgba(245,241,236,.55)}
 .pr .hero-edit{color:#111}
+.hp-fab[hidden]{display:none}
+@media (min-width:821px){.main{padding-bottom:90px}}
+.hp-tabs{display:flex;gap:4px;padding:8px 12px 0}.hp-tabs button{flex:1;border:0;background:transparent;color:var(--muted);font-weight:700;font-size:13px;padding:8px;border-radius:10px}.hp-tabs button.on{background:var(--blue-soft);color:var(--blue-2)}
+.hp-gd{gap:12px}.pb-g{display:flex;flex-direction:column;gap:4px}.pb-g>b{font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:4px 2px}
+.pb-li{display:flex;align-items:center;gap:8px;text-align:left;border:1px solid var(--line);background:var(--glass);color:var(--text);border-radius:10px;padding:9px 10px;font-size:13px;font-weight:600;cursor:pointer}.pb-li:hover{border-color:var(--blue-2)}.pb-li i{margin-left:auto;font-style:normal;color:var(--muted)}
+.pb{display:flex;flex-direction:column;gap:8px;font-size:13px;line-height:1.5}.pb.in{margin-top:6px}.pb-t{font-weight:800;font-size:14px}.pb-need{background:var(--glass);border-radius:10px;padding:8px 10px}.pb-need ul{margin:4px 0 0;padding-left:18px}
+.pb-s{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:7px}.pb-s li::marker{font-weight:800;color:var(--blue-2)}.pb-tip{background:color-mix(in srgb,#F59E0B 12%,transparent);border-radius:10px;padding:8px 10px;font-size:12.5px}.pb-a{display:flex;gap:6px;flex-wrap:wrap}.pb code{font-size:11.5px}
+.hp-m.wide{max-width:100%}
+@media (min-width:821px){
+  #setModal .box.set-acc{width:min(1000px,100%)!important;padding:0;display:flex;flex-direction:column;overflow:hidden;height:min(720px,calc(100vh - 40px))}
+  #setModal .set-acc>.m-head{padding:16px 22px;margin:0;border-bottom:1px solid var(--line);background:linear-gradient(90deg,color-mix(in srgb,var(--blue-2) 8%,transparent),transparent 60%)}
+  #setModal .set-acc .acc-list{flex:1;min-height:0;display:grid;grid-template-columns:270px minmax(0,1fr);grid-auto-rows:min-content;gap:0;align-content:start;overflow:hidden;padding:10px 0;background:linear-gradient(90deg,color-mix(in srgb,var(--text) 3%,transparent) 270px,transparent 270px)}
+  #setModal .set-acc .acc{display:contents}
+  #setModal .set-acc .acc-h{grid-column:1;width:auto;margin:2px 10px;padding:10px 12px;border-radius:12px;transition:background .2s}
+  #setModal .set-acc .acc-h:hover{background:color-mix(in srgb,var(--text) 5%,transparent)}
+  #setModal .set-acc .acc.open .acc-h{background:var(--card);box-shadow:0 6px 18px -10px rgba(15,23,42,.35),inset 3px 0 0 var(--blue-2)}
+  #setModal .set-acc .acc-h .acc-dot,#setModal .set-acc .acc-chev{display:none}
+  #setModal .set-acc .acc-t small{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:170px;display:block}
+  #setModal .set-acc .acc-b{grid-column:2;grid-row:1 / span 40;display:none;overflow:auto;min-height:0;max-height:100%;border-left:1px solid var(--line);transition:none}
+  #setModal .set-acc .acc.open .acc-b{display:block;animation:setIn .25s ease}
+  #setModal .set-acc .acc-in{overflow:visible}#setModal .set-acc .acc-pad{padding:20px 26px;opacity:1;transform:none}
+  #setModal .set-pt{display:block}
+}
+.set-pt{display:none;margin:-2px 0 16px;padding-bottom:12px;border-bottom:1px solid var(--line)}.set-pt b{display:block;font-size:18px}.set-pt small{color:var(--muted);font-size:12.5px}
+@keyframes setIn{from{opacity:0;transform:translateX(8px)}to{opacity:1;transform:none}}
+.em-provs{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin:6px 0 10px}.em-p{display:grid;grid-template-columns:auto 1fr;column-gap:10px;align-items:center;text-align:left;padding:10px;border-radius:12px;border:1px solid var(--line);background:var(--glass);color:var(--text);cursor:pointer;transition:border-color .2s,transform .2s}
+.em-p:hover{transform:translateY(-1px)}.em-p.on{border-color:var(--blue-2);box-shadow:inset 0 0 0 1px var(--blue-2);background:var(--blue-soft)}.em-p b{font-size:13.5px}.em-p small{grid-column:2;color:var(--muted);font-size:11.5px}
+.em-pl{grid-row:span 2;width:32px;height:32px;border-radius:9px;display:grid;place-items:center;font-weight:800;color:#fff;background:var(--c)}.em-best{font-size:13px;padding:8px 12px;border-radius:10px;background:var(--glass);margin-bottom:10px}
+.em-how ol{padding-left:20px;display:flex;flex-direction:column;gap:6px;font-size:13px;line-height:1.5}
+.au-bar{display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:16px;margin:-4px 0 12px;flex-wrap:wrap;border:1px solid var(--line)}.au-bar .grow{min-width:220px;flex:1 1 320px}.au-act{display:flex;gap:8px;flex-wrap:wrap}.au-bar b{display:flex;align-items:center;gap:7px;font-size:14.5px}.au-bar small{display:block;color:var(--muted);font-size:12.5px;margin-top:2px}
+.au-bar.on{border-color:color-mix(in srgb,var(--green) 55%,transparent);background:linear-gradient(90deg,color-mix(in srgb,var(--green) 9%,var(--glass)),var(--glass))}.au-dot{width:9px;height:9px;border-radius:50%;background:var(--green);box-shadow:0 0 0 0 var(--green);animation:auPulse 1.8s infinite}
+@keyframes auPulse{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--green) 60%,transparent)}100%{box-shadow:0 0 0 9px transparent}}.au-stat{font-size:12.5px;color:var(--muted);white-space:nowrap}.au-stat b{color:var(--text)}
+.au-iss{position:relative;padding:10px 40px 10px 12px;border-radius:14px;margin:-4px 0 12px;display:flex;flex-direction:column;gap:6px}.au-iss .ibtn{position:absolute;top:6px;right:6px}
+.au-i{display:flex;gap:8px;align-items:flex-start;font-size:13px;cursor:default}.au-i[data-autonode]{cursor:pointer}.au-i span{flex:none;width:18px;height:18px;border-radius:50%;display:grid;place-items:center;font-size:11px;font-weight:800;color:#fff;background:var(--muted)}
+.au-i.bad span{background:var(--coral)}.au-i.warn span{background:#D97706}.au-i.ok span{background:var(--green)}.au-i.info span{background:var(--blue-2)}
+.ar-list{display:flex;flex-direction:column;gap:8px;max-height:62vh;overflow:auto}.ar{border-radius:12px;padding:0}.ar summary{display:flex;align-items:center;gap:10px;padding:10px 12px;cursor:pointer;list-style:none;flex-wrap:wrap}.ar summary::-webkit-details-marker{display:none}
+.ar-log{margin:0;padding:4px 14px 12px 14px;list-style:none;display:flex;flex-direction:column;gap:6px;font-size:13px}.ar-log li{display:grid;grid-template-columns:18px auto 1fr auto;gap:8px;align-items:baseline}.ar-log li>span:first-child{color:var(--green);font-weight:800}.ar-log li.bad>span:first-child{color:var(--coral)}
 .wl-sec{padding:12px;border:1px solid var(--line);border-radius:14px;margin-bottom:10px;display:flex;flex-direction:column;gap:10px}.wl-sec .adm-sw{border:0;padding:0}
 .wl-prev{background:var(--glass);border-radius:10px;padding:10px 12px;font-size:13px}.wl-prev p{margin:4px 0 0;white-space:pre-wrap}.wl-prev mark{background:color-mix(in srgb,var(--wa,#25A55F) 22%,transparent);color:inherit;border-radius:4px;padding:0 3px}
 .cap-link{display:flex;gap:8px}.cap-link .input{font-family:ui-monospace,monospace;font-size:12.5px}.cap-stats{font-size:12.5px;margin:6px 0 4px}
 .cap-code{background:#0F1115;color:#E5E7EB;border-radius:10px;padding:12px;font-size:12px;overflow:auto;white-space:pre;max-height:260px;margin:8px 0}
 .pr-off{margin:2px 0 4px;padding:10px 12px;border-radius:12px;background:color-mix(in srgb,var(--pa) 12%,transparent);border:1px dashed color-mix(in srgb,var(--pa) 55%,transparent);font-size:13.5px;display:flex;flex-direction:column;gap:2px}
 .pr-off-t{font-size:11.5px;font-weight:800;letter-spacing:.02em;color:var(--pa)}.pr-off b{font-size:17px}.pr-off small{opacity:.7;font-size:12px}
-.pl-offer-r{display:grid;grid-template-columns:130px auto 70px auto 1fr;gap:8px;align-items:center}.pl-offer-r .muted{font-size:12.5px;white-space:nowrap}@media (max-width:640px){.pl-offer-r{grid-template-columns:1fr 1fr}}
+.pl-offer-r{display:grid;grid-template-columns:minmax(90px,130px) auto minmax(54px,70px) auto minmax(0,1fr);gap:8px;align-items:center}.pl-offer-r .muted{font-size:12.5px;white-space:nowrap}@media (max-width:640px){.pl-offer-r{grid-template-columns:1fr 1fr}}
 .pr-top{display:inline-flex;align-items:center;gap:7px;height:38px;padding:0 14px;border-radius:var(--r-ctl);border:1px solid color-mix(in srgb,#8B5CF6 35%,var(--stroke));background:linear-gradient(135deg,color-mix(in srgb,#8B5CF6 12%,var(--glass-2)),var(--glass-2));color:var(--text);font-weight:700;font-size:13.5px;white-space:nowrap;transition:transform .2s,box-shadow .2s,border-color .2s}
 .pr-top .i{width:17px;height:17px;color:#8B5CF6}.pr-top:hover{transform:translateY(-1px);border-color:#8B5CF6;box-shadow:0 8px 20px -10px #8B5CF6}.pr-top[hidden]{display:none}
 @media (max-width:760px){.pr-top{width:38px;padding:0;justify-content:center}.pr-top span{display:none}}
@@ -760,13 +797,13 @@ body.brand-ro #brandRowSite,body.brand-ro #setModal .acc[data-acc="s-wl"]{displa
 /* ---- admin: home page editor, plans ---- */
 .ah-prev-h{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin:0 0 8px}.ah-prev-h b{font-size:14px}.ah-prev-h .muted{font-size:12.5px}
 #admHeroPrev .hero{margin:0}#admPrPrev .pr,#plPrev .pr{margin:0}
-.ah-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.ah-col{display:flex;flex-direction:column;gap:10px;min-width:0}@media (max-width:860px){.ah-grid{grid-template-columns:1fr}}
+.ah-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px}.ah-col .form{grid-template-columns:repeat(auto-fit,minmax(170px,1fr))!important}.ah-col{display:flex;flex-direction:column;gap:10px;min-width:0}@media (max-width:860px){.ah-grid{grid-template-columns:1fr}}
 .ah-sec{font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:14px 0 6px}.ah-sec .muted{text-transform:none;letter-spacing:0;font-weight:600}
-.adm-sw{padding:10px 12px;border:1px solid var(--line);border-radius:12px;cursor:pointer}
+.adm-sw{padding:10px 12px;border:1px solid var(--line);border-radius:12px;cursor:pointer;min-width:0}.adm-sw>div{min-width:0}.adm-sw .sw{margin-right:2px}
 .ah-b{display:grid;grid-template-columns:auto 1.2fr 1.3fr 1.5fr 1.2fr 1fr auto;gap:10px;align-items:end;padding:12px;border-radius:14px;margin-bottom:8px}.ah-b>.sw{margin-bottom:8px}.ah-b .field{min-width:0}.ah-bx{display:flex;gap:4px;margin-bottom:2px}.ah-nv{display:block;font-size:12.5px;padding:10px 0}
 @media (max-width:1100px){.ah-b{grid-template-columns:auto 1fr 1fr}.ah-bx{grid-column:-2/-1}}@media (max-width:560px){.ah-b{grid-template-columns:1fr}}
 .adm-ph2{display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap;padding:16px 18px;border-radius:16px}.adm-ph2 p{margin:4px 0 0;font-size:13px}.adm-ph2-b{display:flex;gap:8px;flex-wrap:wrap}
-.pl-ed{display:grid;grid-template-columns:1.25fr 1fr;gap:20px}.pl-ed-p{position:sticky;top:0;align-self:start}.pl-ed-p .pr{padding:22px 14px}.pl-ed-p .pr-glow{bottom:calc(100% - 14px)}@media (max-width:860px){.pl-ed{grid-template-columns:1fr}.pl-ed-p{position:static}}
+.pl-ed{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:20px}.pl-ed-f{min-width:0}.pl-ed-p{position:sticky;top:0;align-self:start}.pl-ed-p .pr{padding:22px 14px}.pl-ed-p .pr-glow{bottom:calc(100% - 14px)}@media (max-width:860px){.pl-ed{grid-template-columns:1fr}.pl-ed-p{position:static}}
 .pl-ed .form{gap:10px}
 .adm-who{display:flex;gap:14px;align-items:flex-start;padding:16px 18px;border-radius:16px;border:1px solid color-mix(in srgb,#A78BFA 40%,transparent)}.adm-who p{margin:4px 0 0;font-size:13.5px;line-height:1.55}.adm-who-i{font-size:24px;line-height:1}
 .adm-brand{display:flex;gap:12px;align-items:center;flex-wrap:wrap}.adm-brand .brand-logo{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;overflow:hidden;background:var(--text);color:var(--card);flex:none}.adm-brand .brand-logo img{width:100%;height:100%;object-fit:cover}.adm-brand small{display:block}
@@ -1677,6 +1714,7 @@ body.ro [data-cmw],body.np-commerce [data-cmw]{display:none!important}
     </section>
     <section class="view" id="v-automation">
       <div class="head"><div><div class="eyebrow">Messaging</div><h1>Automation</h1><p class="sub">n8n-style flows: triggers, WhatsApp, CRM, AI, Meta and n8n webhook nodes on one canvas.</p></div></div>
+      <div id="autoLive"></div>
       <div class="gen glass">
         <div class="gen-top"><span class="gen-ai">✦</span><div><b>Build with AI</b><small class="muted">Describe what should happen — in English or Hinglish. No n8n, webhooks or APIs needed.</small></div><span class="badge">Preview</span></div>
         <div class="gen-row"><textarea class="input" id="genIn" rows="2" placeholder="e.g. When a Facebook lead arrives, send a WhatsApp message and create a task"></textarea><button class="btn primary" id="genGo">✦ Generate</button></div>
@@ -2081,7 +2119,7 @@ function finishLoad(anim) {
   taskReminders(); { const b = $('#tasksBadge'), n = salesReady() ? (S.tasks || []).filter(t => t.status === 'Open' && taskState(t) === 'overdue' && (AUTH.role !== 'member' || t.assignedTo === me())).length : 0; if (b) { b.hidden = !n; b.textContent = n; } }
 }
 /** Render only the screen you're looking at; the others re-render when you open them */
-const VIEW_RENDER = { home: a => renderHome(a), insights: a => renderInsights(a), insales: a => renderInSales(a), inmarketing: a => renderInMarketing(a), connections: a => renderConnections(a), commerce: a => renderCommerce(a), orders: a => renderOrders(a), admin: a => renderAdmin(a), tasks: a => renderTasks(a), calls: a => renderCalls(a), performance: a => renderPerformance(a), analytics: a => renderAnalytics(a), industry: a => renderIndustry(a), n8n: a => renderN8n(a), automation: () => autoCanvas().sync(), dashboard: a => renderDashboard(a), pipeline: a => renderPipeline(a), leads: a => renderLeads(a), team: a => { renderTeam(a); renderLogins(); }, broadcast: () => renderBroadcast(), whatsapp: () => renderInbox(), reports: a => renderReports(a), templates: () => renderTemplates(), scripts: () => renderScripts(true), ads: a => renderAds(a) };
+const VIEW_RENDER = { home: a => renderHome(a), insights: a => renderInsights(a), insales: a => renderInSales(a), inmarketing: a => renderInMarketing(a), connections: a => renderConnections(a), commerce: a => renderCommerce(a), orders: a => renderOrders(a), admin: a => renderAdmin(a), tasks: a => renderTasks(a), calls: a => renderCalls(a), performance: a => renderPerformance(a), analytics: a => renderAnalytics(a), industry: a => renderIndustry(a), n8n: a => renderN8n(a), automation: () => { autoCanvas().sync(); renderAutoBar(); }, dashboard: a => renderDashboard(a), pipeline: a => renderPipeline(a), leads: a => renderLeads(a), team: a => { renderTeam(a); renderLogins(); }, broadcast: () => renderBroadcast(), whatsapp: () => renderInbox(), reports: a => renderReports(a), templates: () => renderTemplates(), scripts: () => renderScripts(true), ads: a => renderAds(a) };
 const staleViews = new Set();
 const activeView = () => { const v = $('.view.active'); return v ? v.id.slice(2) : 'dashboard'; };
 function renderAll(anim) {
@@ -3455,6 +3493,7 @@ const SECTIONS = {
   whatsapp: { name: 'WhatsApp', color: '#25A55F', ic: 'W' },
   logic: { name: 'Logic', color: '#F29A5C', ic: '◇' },
   ai: { name: 'AI', color: '#B08CEB', ic: '✦' },
+  email: { name: 'Email', color: '#38BDF8', ic: '@' },
   n8n: { name: 'n8n / Webhooks', color: '#EA4B71', ic: 'n' },
 };
 const F = (k, label, kind = 'text', extra = {}) => Object.assign({ k, label, kind }, extra);
@@ -3465,6 +3504,7 @@ const NODE_TYPES = [
   // triggers
   { type: 'trg.newlead', section: 'trigger', name: 'New lead', ins: 0, fields: [F('source', 'Source', 'select', { options: () => ['Any'].concat(S.lists.sources || []) })], sum: p => `Source: ${p.source || 'Any'}` },
   { type: 'trg.stage', section: 'trigger', name: 'Stage changed', ins: 0, fields: [F('stage', 'To stage', 'select', { options: stageOpts })], sum: p => `→ ${p.stage || stages()[0]}` },
+  { type: 'trg.tag', section: 'trigger', name: 'Tag set', ins: 0, fields: [F('tag', 'Tag', 'select', { options: tagOpts })], sum: p => `Tag → ${p.tag || tagOpts()[0]}` },
   { type: 'trg.wamsg', section: 'trigger', name: 'WhatsApp message', ins: 0, fields: [F('kw', 'Contains keyword (optional)')], sum: p => p.kw ? `Contains “${p.kw}”` : 'Any incoming message' },
   { type: 'trg.form', section: 'trigger', name: 'Meta lead form', ins: 0, fields: [F('form', 'Form name')], sum: p => p.form || 'Any form' },
   { type: 'trg.schedule', section: 'trigger', name: 'Schedule', ins: 0, fields: [F('every', 'Every', 'select', { options: ['Day', 'Week', 'Month'] }), F('time', 'Time', 'text', { def: '09:00' })], sum: p => `Every ${(p.every || 'Day').toLowerCase()} at ${p.time || '09:00'}` },
@@ -3485,13 +3525,16 @@ const NODE_TYPES = [
   { type: 'lead.followup', section: 'lead', name: 'Set follow-up', fields: [F('days', 'In (days)', 'number', { def: 1 })], sum: p => `In ${p.days || 1} day${(+p.days || 1) > 1 ? 's' : ''}` },
   { type: 'lead.note', section: 'lead', name: 'Add note', fields: [F('text', 'Note', 'textarea')], sum: p => p.text || 'Note text' },
   // whatsapp
-  { type: 'wa.template', section: 'whatsapp', name: 'Send template', fields: [F('template', 'Template name'), F('lang', 'Language', 'select', { options: ['en', 'hi', 'mr'] })], sum: p => p.template || 'Choose a template' },
+  { type: 'wa.template', section: 'whatsapp', name: 'Send template', fields: [F('template', 'Approved template', 'select', { options: () => { const a = (S.templates || []).filter(t => /approved/i.test(t.metaStatus || '')).map(t => t.templateName); return a.length ? [''].concat(a) : ['']; } }), F('lang', 'Language', 'select', { options: ['en', 'hi', 'mr', 'en_US'] }), F('params', 'Values for {{1}} | {{2}} …', 'text', { def: '{{first_name}}' })], sum: p => p.template || 'Choose a template', desc: 'Starts or continues a WhatsApp chat. Values: {{first_name}}, {{name}}, {{business}}, {{city}} — separate with |' },
   { type: 'wa.text', section: 'whatsapp', name: 'Send message', fields: [F('text', 'Message', 'textarea')], sum: p => p.text || 'Message text (24-hour window)' },
   { type: 'wa.wait', section: 'whatsapp', name: 'Wait for reply', outs: ['replied', 'no reply'], fields: [F('hours', 'Wait up to (hours)', 'number', { def: 24 })], sum: p => `Up to ${p.hours || 24} h` },
   // logic
   { type: 'logic.if', section: 'logic', name: 'If / Router', outs: ['yes', 'no'], fields: [F('field', 'Field', 'select', { options: ['Budget', 'Source', 'City', 'Tag', 'Stage', 'Business type'] }), F('op', 'Operator', 'select', { options: ['is', 'is not', 'above', 'below', 'contains'] }), F('value', 'Value')], sum: p => `${p.field || 'Budget'} ${p.op || 'above'} ${p.value || '…'}` },
   { type: 'logic.wait', section: 'logic', name: 'Wait', fields: [F('amount', 'Amount', 'number', { def: 1 }), F('unit', 'Unit', 'select', { options: ['days', 'hours', 'minutes'] })], sum: p => `${p.amount || 1} ${p.unit || 'days'}` },
   { type: 'logic.split', section: 'logic', name: 'A/B split', outs: ['A', 'B'], fields: [F('pct', 'A gets (%)', 'number', { def: 50 })], sum: p => `A ${p.pct || 50}% · B ${100 - (+p.pct || 50)}%` },
+  // email
+  { type: 'mail.send', section: 'email', name: 'Send email', fields: [F('subject', 'Subject', 'text', { def: 'Hi {{first_name}}' }), F('body', 'Message', 'textarea', { def: 'Hi {{first_name}},\n\nThanks for your interest.' })], sum: p => p.subject || 'Hi {{first_name}}', desc: 'Sent from your connected email sender with an unsubscribe link.' },
+  { type: 'lead.notify', section: 'lead', name: 'Notify team', fields: [F('email', 'Team email'), F('phone', 'Team WhatsApp (with country code)'), F('text', 'Message', 'textarea', { def: 'New hot lead: {{name}} ({{phone}}) from {{source}}' })], sum: p => p.email || p.phone || 'Email / WhatsApp the team', desc: 'WhatsApp uses the approved “nodevers_alert” template.' },
   // ai
   { type: 'ai.reply', section: 'ai', name: 'AI reply', fields: [F('prompt', 'Instructions', 'textarea', { def: 'Reply politely in Hinglish, share price range, ask for city.' })], sum: p => (p.prompt || 'Gemini reply').slice(0, 48) },
   { type: 'ai.score', section: 'ai', name: 'AI lead score', outs: ['hot', 'warm', 'cold'], fields: [F('criteria', 'What makes a lead hot?', 'textarea')], sum: () => 'Gemini scores the lead' },
@@ -3874,7 +3917,7 @@ function adsCanvas() {
 function autoCanvas() {
   if (CANVASES.auto) return CANVASES.auto;
   return CANVASES.auto = new FlowCanvas({
-    root: $('#autoCanvas'), key: 'AUTOMATION', title: 'Automation', sections: ['trigger', 'lead', 'whatsapp', 'logic', 'ai', 'n8n', 'meta'],
+    root: $('#autoCanvas'), key: 'AUTOMATION', title: 'Automation', sections: ['trigger', 'lead', 'whatsapp', 'email', 'logic', 'ai', 'n8n', 'meta'],
     status: 'Design mode — flows run once automations go live',
     seed: () => seedFlow([
       ['n1', 'trg.newlead', 0, 120, { source: 'Any' }],
@@ -3891,6 +3934,86 @@ function autoCanvas() {
   });
 }
 
+
+
+/* ================= Automation engine: Live switch, check, test, runs ================= */
+const AUTO = { today: null, at: 0, issues: null };
+function autoFillDefaults(f) {
+  (f.nodes || []).forEach(n => { const t = nodeType(n.type); n.p = n.p || {}; (t.fields || []).forEach(fl => { if (n.p[fl.k] === undefined || n.p[fl.k] === '') { const opts = typeof fl.options === 'function' ? fl.options() : (fl.options || []); const d = fl.def !== undefined ? fl.def : fl.kind === 'select' ? opts[0] : undefined; if (d !== undefined && d !== '') n.p[fl.k] = d; } }); });
+}
+function autoCheck(f) {
+  const out = [], N = f.nodes || [], L = f.links || [], name = n => n.title || nodeType(n.type).name, has = (id, dir) => L.some(l => dir === 'out' ? l[0] === id : l[2] === id);
+  const trig = N.filter(n => n.type.startsWith('trg.'));
+  if (!trig.length) out.push(['bad', null, 'Add a trigger — New lead, Stage changed, Tag set, WhatsApp message or Schedule.']);
+  const approved = (S.templates || []).filter(t => /approved/i.test(t.metaStatus || '')).map(t => t.templateName);
+  N.forEach(n => { const p = n.p || {}, nm = name(n);
+    if (n.type.startsWith('trg.') && !has(n.id, 'out')) out.push(['bad', n.id, `${nm}: connect it to a next step.`]);
+    if (!n.type.startsWith('trg.') && n.type !== 'n8n.in' && !has(n.id, 'in')) out.push(['warn', n.id, `${nm}: not connected to any trigger — it will never run.`]);
+    if (n.type === 'trg.form') out.push(['info', n.id, `${nm}: starts for leads that arrive from Facebook / Instagram lead ads through your Lead capture link.`]);
+    if (n.type === 'wa.template' && !p.template) out.push(['bad', n.id, `${nm}: pick an approved template.`]);
+    if (n.type === 'wa.template' && p.template && approved.length && !approved.includes(p.template)) out.push(['bad', n.id, `${nm}: “${p.template}” is not an approved template.`]);
+    if (n.type === 'wa.text') out.push(['info', n.id, `${nm}: free text only reaches people who messaged you in the last 24 hours — use “Send template” for new leads.`]);
+    if (n.type === 'wa.text' && !String(p.text || '').trim()) out.push(['bad', n.id, `${nm}: write the message.`]);
+    if (n.type === 'mail.send' && !String(p.body || '').trim()) out.push(['bad', n.id, `${nm}: write the email.`]);
+    if (n.type === 'lead.notify' && !p.email && !p.phone) out.push(['bad', n.id, `${nm}: add a team email or WhatsApp number.`]);
+    if ((n.type === 'n8n.send' || n.type === 'n8n.http') && !/^https:\/\/.+/.test(p.url || '')) out.push(['bad', n.id, `${nm}: add the https webhook link.`]);
+    if (n.type.startsWith('meta.') || n.type === 'n8n.in' || n.type.startsWith('custom.')) out.push(['warn', n.id, `${nm}: not live yet — this step is skipped.`]);
+    if (n.type.startsWith('ai.')) out.push(['info', n.id, `${nm}: needs AI switched on by your Nodevers provider (Gemini or Claude key).`]);
+  });
+  return out;
+}
+async function autoSaveNow(cv) { cv.save(); clearTimeout(cv.saveT); if (!demo) await api('saveFlow', { flowId: 'AUTOMATION', flowName: 'Automation', trigger: 'canvas', status: cv.flow.live ? 'Live' : 'Draft', flowJson: JSON.stringify(cv.flow) }); }
+function renderAutoBar() {
+  const box = $('#autoLive'); if (!box) return; const cv = autoCanvas(); if (!cv.flow) return;
+  const live = !!cv.flow.live, canEdit = cloud ? can('automation') && !document.body.classList.contains('ro') : false;
+  const st = cv.root.querySelector('.fx-status'); if (st) st.textContent = live ? '● Live — flows run for real' : 'Design mode — switch Live to run';
+  if (cloud && Date.now() - AUTO.at > 60000) { AUTO.at = Date.now(); const d = new Date(); d.setHours(0, 0, 0, 0); sbq(AUTH.client.from('automation_runs').select('status', { count: 'exact' }).eq('workspace_id', AUTH.ws).gte('created_at', d.toISOString()).limit(500)).then(r => { AUTO.today = r; renderAutoBar(); }, () => { AUTO.today = null; }); }
+  const T = AUTO.today || [], wait = T.filter(r => /waiting/.test(r.status)).length;
+  box.innerHTML = `<div class="au-bar glass ${live ? 'on' : ''}">
+    <label class="sw au-sw" title="${canEdit ? 'Switch automation on / off' : demo ? 'Sign in to run automations' : 'Only people with Automation access can switch this'}"><input type="checkbox" id="autoLiveSw" ${live ? 'checked' : ''} ${canEdit ? '' : 'disabled'}><i></i></label>
+    <div class="grow"><b>${live ? '<span class="au-dot"></span>Automation is LIVE' : 'Design mode'}</b><small>${live ? 'New leads, stage / tag changes, WhatsApp messages and schedules start your flows. Waits and “wait for reply” resume automatically.' : demo ? 'Demo: build and test the design — sign in to run it for real.' : 'Nothing runs yet. Build the flow, press “Check flow”, then switch it Live.'}</small></div>
+    ${cloud ? `<span class="au-stat"><b>${T.length}</b> runs today${wait ? ` · ${wait} waiting` : ''}</span>` : ''}
+    <div class="au-act"><button class="btn sm" data-autocheck>✓ Check flow</button>${cloud ? `<button class="btn sm" data-autotest ${canEdit ? '' : 'disabled'}>▶ Test with a lead</button><button class="btn sm primary" data-autoruns>Runs</button>` : ''}</div></div>
+    ${AUTO.issues ? `<div class="au-iss glass">${AUTO.issues.length ? AUTO.issues.map(([k, id, m]) => `<div class="au-i ${k}" ${id ? `data-autonode="${esc(id)}"` : ''}><span>${k === 'bad' ? '✕' : k === 'warn' ? '!' : 'i'}</span>${esc(m)}</div>`).join('') : '<div class="au-i ok"><span>✓</span>Looks good — every step is set up.</div>'}<button class="ibtn" data-autoissx title="Close">${I.x}</button></div>` : ''}`;
+}
+async function openAutoRuns() {
+  $('#stageBox').classList.add('pl-ed-box');
+  $('#stageBox').innerHTML = `<div class="m-head"><h2>Automation runs</h2><button class="ibtn" data-close>${I.x}</button></div><div id="arBody"><div class="loader"><div class="spin"></div>Loading…</div></div>`; showModal('#stageModal');
+  let rows = []; try { rows = await sbq(AUTH.client.from('automation_runs').select('*').eq('workspace_id', AUTH.ws).order('created_at', { ascending: false }).limit(60)); } catch (e) { $('#arBody').innerHTML = `<p class="cf-warn">${esc(/automation_runs|does not exist/.test(e.message) ? 'Run the database update 13_automation_engine.sql first.' : e.message)}</p>`; return; }
+  const ST = { done: ['Done', 'ok'], running: ['Running', 'wait'], waiting: ['Waiting', 'wait'], waiting_reply: ['Waiting for reply', 'wait'], failed: ['Failed', 'bad'], stopped: ['Stopped', ''] };
+  $('#arBody').innerHTML = rows.length ? `<div class="ar-list">${rows.map(r => { const bad = (r.log || []).filter(x => x.ok === false).length, [l, c] = ST[r.status] || [r.status, ''];
+    return `<details class="ar glass"><summary><span class="tp-st ${bad && r.status === 'done' ? 'wait' : c}"><i></i>${l}${bad ? ` · ${bad} step${bad > 1 ? 's' : ''} failed` : ''}</span><b>${esc(r.trigger_name || 'Run')}</b><span class="muted">${r.lead_id ? esc(leadName(r.lead_id) || r.lead_id) : 'no lead'}</span><span class="grow"></span><small class="muted">${esc(fmtWhen(r.created_at))}${/waiting/.test(r.status) && r.next_at ? ' · next ' + esc(fmtWhen(r.next_at)) : ''}</small>${/waiting|running/.test(r.status) ? `<button class="btn sm danger" data-arstop="${r.id}">Stop</button>` : ''}</summary>
+      <ol class="ar-log">${(r.log || []).map(x => `<li class="${x.ok === false ? 'bad' : ''}"><span>${x.ok === false ? '✕' : '✓'}</span><b>${esc(x.name || '')}</b><span class="muted">${esc(x.msg || '')}</span><small class="muted">${esc(String(x.at || '').slice(11, 16))}</small></li>`).join('')}</ol></details>`; }).join('')}</div>`
+    : '<div class="tp-empty"><b>No runs yet</b><p class="muted">Switch the automation Live, then add a lead (or press “Test with a lead”).</p></div>';
+}
+function openAutoTest() {
+  const L = S.leads.slice().sort((a, b) => String(b.createdOn).localeCompare(String(a.createdOn))).slice(0, 300);
+  $('#stageBox').innerHTML = `<div class="m-head"><h2>Test with a lead</h2><button class="ibtn" data-close>${I.x}</button></div>
+    <p class="help" style="margin-top:0">Runs your “New lead” steps for this lead now — real messages are sent, so pick your own test lead.</p>
+    <div class="field"><label>Lead</label><select class="input" id="atLead">${L.map(l => `<option value="${esc(l.leadId)}">${esc(l.name)}${l.phone ? ' · +' + esc(l.phone) : ''}</option>`).join('')}</select></div>
+    <div class="m-foot"><div class="grow"></div><button class="btn" data-close>Cancel</button><button class="btn primary" id="atGo">▶ Run test</button></div>`;
+  showModal('#stageModal');
+  $('#atGo').onclick = async () => { try { if (!autoCanvas().flow.live) throw new Error('Switch the automation Live first'); await sbq(AUTH.client.rpc('automation_test', { p_ws: AUTH.ws, p_lead: $('#atLead').value })); hideModal('#stageModal'); toast('▶ Test started — open Runs in a few seconds'); AUTO.at = 0; setTimeout(() => renderAutoBar(), 4000); } catch (e) { toast(e.message, true); } };
+}
+(function () {
+  const v = $('#v-automation'); if (!v) return;
+  v.addEventListener('change', async e => {
+    if (e.target.id !== 'autoLiveSw') return; const cv = autoCanvas(), on = e.target.checked;
+    if (on) { autoFillDefaults(cv.flow); const iss = autoCheck(cv.flow), bad = iss.filter(x => x[0] === 'bad'); AUTO.issues = iss;
+      if (bad.length && !confirm(`${bad.length} step${bad.length > 1 ? 's need' : ' needs'} fixing (see the list). Switch Live anyway? Those steps will fail.`)) { e.target.checked = false; renderAutoBar(); return; } }
+    cv.flow.live = on; try { await autoSaveNow(cv); toast(on ? '● Automation is LIVE — new leads and messages will run your flows' : 'Automation switched off — nothing runs now'); } catch (er) { cv.flow.live = !on; toast(er.message, true); }
+    cv.render(); renderAutoBar();
+  });
+  v.addEventListener('click', e => {
+    const t = e.target;
+    if (t.closest('[data-autocheck]')) { const cv = autoCanvas(); AUTO.issues = autoCheck(cv.flow); renderAutoBar(); return; }
+    if (t.closest('[data-autoissx]')) { AUTO.issues = null; renderAutoBar(); return; }
+    const an = t.closest('[data-autonode]'); if (an) { const cv = autoCanvas(); cv.sel = new Set([an.dataset.autonode]); cv.render(); return; }
+    if (t.closest('[data-autoruns]')) return openAutoRuns();
+    if (t.closest('[data-autotest]')) return openAutoTest();
+  });
+  document.addEventListener('click', async e => { const s = e.target.closest('[data-arstop]'); if (!s) return; e.preventDefault(); try { await sbq(AUTH.client.from('automation_runs').update({ status: 'stopped', updated_at: new Date().toISOString() }).eq('id', +s.dataset.arstop).eq('workspace_id', AUTH.ws)); toast('Run stopped'); openAutoRuns(); } catch (er) { toast(er.message, true); } });
+})();
 
 /* ================= n8n Services (each client has their own n8n; the website is the simple remote control) ================= */
 const N8 = { tab: 'services', role: 'admin', client: 'C1', open: null, run: null, data: null, view: null };
@@ -6162,14 +6285,37 @@ function inspSend(ch) {
     <div class="bc-sendrow"><button class="btn ${ch === 'email' ? 'primary' : 'wa'} bc-go" data-bcsend="${ch}" ${s.send === 'need' || BC.running ? 'disabled' : ''}>${ch === 'email' ? '' : I.wa}Send now to ${s.r.ok.length} ${s.r.ok.length === 1 ? 'lead' : 'leads'}</button><button class="btn" disabled title="Scheduling needs the server timer — coming next">Schedule · soon</button></div>`;
 }
 const bcRunHTML = () => BC.run ? `<div class="imp-prog"><div class="imp-bar"><i style="width:${Math.round(BC.run.done / Math.max(1, BC.run.total) * 100)}%"></i></div><span>${BC.run.done} / ${BC.run.total} · ✓ ${BC.run.sent} sent${BC.run.failed ? ` · ✕ ${BC.run.failed} failed` : ''}${BC.run.skipped ? ` · ${BC.run.skipped} skipped` : ''}</span>${BC.running ? '<button class="btn sm" data-bcstop>Stop</button>' : ''}</div>${BC.run.err ? `<p class="bc-warn">${esc(BC.run.err)}</p>` : ''}` : '';
+/* email providers: how each one connects (fields + full step-by-step) */
+const EMAIL_PROVIDERS = [
+  { id: 'brevo', name: 'Brevo', c: '#0B996E', tag: 'Free 300 / day', best: 'Easiest — works with a Gmail sender, no domain needed', key: ['Brevo API key', 'xkeysib-…'],
+    steps: ['Go to <b>brevo.com</b> → <b>Sign up free</b> and confirm your email.', 'Top-right menu → <b>Senders, Domains & Dedicated IPs</b> → <b>Senders</b> → <b>Add a sender</b> → enter the name and email clients will see → Brevo emails you a link → click it to verify.', 'Top-right menu → <b>SMTP & API</b> → tab <b>API Keys</b> → <b>Generate a new API key</b> → name it “Nodevers” → <b>Generate</b>.', 'Copy the key (starts with <code>xkeysib-</code>) — Brevo shows it only once.', 'Here: pick <b>Brevo</b>, type the same sender email + name, paste the key → <b>Connect email</b>.', 'Press <b>Send a test</b> on the Test step to check it lands in your inbox.'] },
+  { id: 'resend', name: 'Resend', c: '#111318', tag: 'Free plan', best: 'Modern and fast — needs your own domain (e.g. hello@yourbusiness.com)', key: ['Resend API key', 're_…'],
+    steps: ['Go to <b>resend.com</b> → <b>Get started</b> → sign up.', '<b>Domains</b> → <b>Add Domain</b> → type your domain (e.g. yourbusiness.com) → choose region.', 'Resend shows DNS records (MX, TXT / SPF, DKIM). Add each one at your domain provider (GoDaddy / Hostinger / Cloudflare → DNS) exactly as shown.', 'Back in Resend → <b>Verify DNS records</b> — wait until the domain shows <b>Verified</b> (minutes to a few hours).', '<b>API Keys</b> → <b>Create API Key</b> → permission <b>Full access</b> (or <b>Sending access</b>) → copy it (starts with <code>re_</code>).', 'Here: pick <b>Resend</b>, sender email on that domain (e.g. hello@yourbusiness.com), paste the key → <b>Connect email</b>.'] },
+  { id: 'sendgrid', name: 'SendGrid', c: '#1A82E2', tag: 'Twilio', best: 'Big and reliable — popular with agencies', key: ['SendGrid API key', 'SG.…'],
+    steps: ['Go to <b>sendgrid.com</b> → <b>Start for free</b> → sign up and finish the account setup questions.', '<b>Settings</b> → <b>Sender Authentication</b> → <b>Verify a Single Sender</b> (quick) or <b>Authenticate Your Domain</b> (best) → finish the email / DNS verification.', '<b>Settings</b> → <b>API Keys</b> → <b>Create API Key</b> → name “Nodevers” → <b>Restricted Access</b> → set <b>Mail Send</b> to <b>Full Access</b> → <b>Create & View</b>.', 'Copy the key (starts with <code>SG.</code>) — shown only once.', 'Here: pick <b>SendGrid</b>, the verified sender email, paste the key → <b>Connect email</b>.'] },
+  { id: 'mailgun', name: 'Mailgun', c: '#F06B66', tag: 'Developers', best: 'Good for high volume — needs a sending domain', key: ['Mailgun API key', 'key-… or private key'], domain: true, region: [['us', 'US'], ['eu', 'EU']],
+    steps: ['Go to <b>mailgun.com</b> → <b>Start sending</b> → sign up.', '<b>Send</b> → <b>Sending</b> → <b>Domains</b> → <b>Add new domain</b> → use a sub-domain like <code>mg.yourbusiness.com</code> → pick region <b>US</b> or <b>EU</b> (remember it).', 'Add the DNS records Mailgun shows (TXT, MX, CNAME) at your domain provider → <b>Verify DNS settings</b>.', 'Top-right → <b>API Security</b> (or Settings → API keys) → <b>Create API key</b> → copy it.', 'Here: pick <b>Mailgun</b>, sender email on that domain, the domain, the region, paste the key → <b>Connect email</b>.'] },
+  { id: 'postmark', name: 'Postmark', c: '#FFDE00', tag: 'Best inbox rate', best: 'Great for important one-to-one emails (welcome, follow-ups)', key: ['Server API token', 'xxxxxxxx-xxxx-…'], stream: true,
+    steps: ['Go to <b>postmarkapp.com</b> → <b>Start free trial</b> → sign up.', '<b>Sender Signatures</b> → <b>Add Domain or Signature</b> → verify your email (or add the DNS records for your domain).', 'Open your <b>Server</b> (e.g. “My First Server”) → tab <b>API Tokens</b> → copy the <b>Server API token</b>.', 'Message stream: keep <b>outbound</b> (transactional). For bulk campaigns create a <b>Broadcast</b> stream in Postmark and type its ID here.', 'Here: pick <b>Postmark</b>, the verified sender email, paste the token → <b>Connect email</b>.'] },
+  { id: 'zeptomail', name: 'Zoho ZeptoMail', c: '#E42527', tag: 'India data centre', best: 'From Zoho — cheap, Indian billing, good for transactional mail', key: ['Send Mail token', 'Zoho-enczapikey …'], region: [['in', 'India (zeptomail.zoho.in)'], ['com', 'Global (zeptomail.zoho.com)']],
+    steps: ['Go to <b>zeptomail.zoho.in</b> (India) or <b>zeptomail.zoho.com</b> → sign up with your Zoho account.', '<b>Mail Agents</b> → <b>Add Mail Agent</b> → <b>Domains</b> → add your domain → add the SPF + DKIM DNS records → <b>Verify</b>.', 'Open the Mail Agent → <b>SMTP / API</b> → tab <b>API</b> → copy the <b>Send Mail token</b> (starts with <code>Zoho-enczapikey</code>).', 'Here: pick <b>Zoho ZeptoMail</b>, the region you signed up in, a sender email on your domain, paste the token → <b>Connect email</b>, then press <b>Send a test</b> (ZeptoMail has no key check).'] },
+  { id: 'mailjet', name: 'Mailjet', c: '#9585F4', tag: 'Free plan', best: 'Simple — works with a verified single sender', key: ['API key', '32 characters'], secret: true,
+    steps: ['Go to <b>mailjet.com</b> → <b>Sign up for free</b>.', 'Account → <b>Account settings</b> → <b>Senders & domains</b> → <b>Add a sender address</b> → click the link Mailjet emails you.', 'Account settings → <b>API Key Management (Primary and Sub-account)</b> → copy the <b>API Key</b> and the <b>Secret Key</b>.', 'Here: pick <b>Mailjet</b>, the sender email, paste both keys → <b>Connect email</b>.'] },
+];
 function emailConnHTML() {
-  const s = BC.email || {};
-  if (s.connected && !BC.emailManage) return `<div class="wa-on"><span class="dot"></span>Sending as <b>${esc(s.from_name || '')}</b> &lt;${esc(s.from_email || '')}&gt;${s.demo ? ' <em class="srcTag sample">demo</em>' : ''}${canAdmin() ? '<button class="btn sm" data-bcemanage>Manage</button>' : ''}</div>`;
+  const s = BC.email || {}, prov = BC.emProv || s.provider || 'brevo', P = EMAIL_PROVIDERS.find(x => x.id === prov) || EMAIL_PROVIDERS[0], pn = (EMAIL_PROVIDERS.find(x => x.id === s.provider) || { name: 'Brevo' }).name;
+  if (s.connected && !BC.emailManage) return `<div class="wa-on"><span class="dot"></span>Sending as <b>${esc(s.from_name || '')}</b> &lt;${esc(s.from_email || '')}&gt; · ${esc(pn)}${s.demo ? ' <em class="srcTag sample">demo</em>' : ''}${canAdmin() ? '<button class="btn sm" data-bcemanage>Manage</button>' : ''}</div>`;
   if (!canAdmin() && !demo) return `<div class="bc-card glass"><b>Email is not connected yet.</b><p class="muted">Ask the workspace owner to connect the sender.</p></div>`;
-  return `<div class="bc-card glass"><h3>Connect your email sender (Brevo — free 300 emails a day)</h3>
-    <ol class="bc-rules"><li>Free account at <b>brevo.com</b>.</li><li>Brevo → <b>Senders, domains, IPs → Senders</b> → add and verify your email.</li><li>Brevo → <b>SMTP & API → API keys</b> → generate → paste here. Saved on the server only.</li></ol>
-    <div class="form wa-grid"><div class="field"><label>Sender email (verified in Brevo)</label><input class="input" id="emFrom" type="email" value="${esc(s.from_email || '')}" placeholder="you@business.com"></div><div class="field"><label>Sender name</label><input class="input" id="emName" value="${esc(s.from_name || brand().brandName)}"></div>
-    <div class="field span2"><label>Brevo API key</label><input class="input secret" id="emKey" type="text" name="em-key-${Date.now()}" autocomplete="off" spellcheck="false" readonly data-noautofill placeholder="xkeysib-…"></div></div>
+  return `<div class="bc-card glass em-conn"><h3>Connect your email sender</h3><p class="help" style="margin-top:0">Pick the email service you use (or want to use). Every one has a free plan or trial. The key is saved on the server only.</p>
+    <div class="em-provs">${EMAIL_PROVIDERS.map(x => `<button type="button" class="em-p ${x.id === prov ? 'on' : ''}" data-emprov="${x.id}"><span class="em-pl" style="--c:${x.c}">${esc(x.name[0])}</span><b>${esc(x.name)}</b><small>${esc(x.tag)}</small></button>`).join('')}</div>
+    <div class="em-best">💡 ${esc(P.best)}</div>
+    <div class="form wa-grid"><div class="field"><label>Sender email (verified with ${esc(P.name)})</label><input class="input" id="emFrom" type="email" value="${esc(s.from_email || '')}" placeholder="you@business.com"></div><div class="field"><label>Sender name</label><input class="input" id="emName" value="${esc(s.from_name || brand().brandName || '')}" placeholder="Your business"></div>
+      <div class="field span2"><label>${esc(P.key[0])}</label><input class="input secret" id="emKey" type="text" name="em-key-${Date.now()}" autocomplete="off" spellcheck="false" readonly data-noautofill placeholder="${esc(s.connected && s.provider === prov ? '•••••••• saved — paste only to change' : P.key[1])}"></div>
+      ${P.secret ? `<div class="field span2"><label>Secret key</label><input class="input secret" id="emSecret" type="text" name="em-sec-${Date.now()}" autocomplete="off" spellcheck="false" readonly data-noautofill placeholder="Mailjet secret key"></div>` : ''}
+      ${P.domain ? `<div class="field"><label>Sending domain</label><input class="input" id="emDomain" placeholder="mg.yourbusiness.com"></div>` : ''}
+      ${P.region ? `<div class="field"><label>Region</label><select class="input" id="emRegion">${P.region.map(([v, l]) => `<option value="${v}">${esc(l)}</option>`).join('')}</select></div>` : ''}
+      ${P.stream ? `<div class="field"><label>Message stream</label><input class="input" id="emStream" value="outbound"></div>` : ''}</div>
+    <details class="cf-how em-how" open><summary>How to get the ${esc(P.key[0].toLowerCase())} — full steps</summary><ol>${P.steps.map(x => `<li>${x}</li>`).join('')}</ol><p class="help">Gmail / Outlook passwords can not be used here (cloud servers can not log in to Gmail). Use <b>Brevo</b> with your Gmail address as the sender instead.</p></details>
     <div class="m-foot">${s.connected ? '<button class="btn danger" data-bcedisc>Disconnect</button><button class="btn" data-bceclose>Close</button>' : ''}<div class="grow"></div><button class="btn primary" data-bceconnect>${s.connected ? 'Save' : 'Connect email'}</button></div></div>`;
 }
 function composerHTML(ch) {
@@ -6312,12 +6458,19 @@ function bcDuplicate(id, retargetMode) {
     if (t.closest('[data-bcemanage]')) { BC.emailManage = true; return renderBroadcast(); }
     if (t.closest('[data-bceclose]')) { BC.emailManage = false; return renderBroadcast(); }
     if (t.closest('[data-bcedisc]')) { if (!confirm('Disconnect the email sender?')) return; try { await fnCall('email', { action: 'disconnect' }); BC.email = null; BC.emailManage = false; renderBroadcast(); } catch (err) { toast(err.message, true); } return; }
+    const ep = t.closest('[data-emprov]'); if (ep) { const keep = { f: ($('#emFrom') || {}).value, n: ($('#emName') || {}).value }; BC.emProv = ep.dataset.emprov; renderBroadcast(); if ($('#emFrom') && keep.f) $('#emFrom').value = keep.f; if ($('#emName') && keep.n) $('#emName').value = keep.n; return; }
     const cn = t.closest('[data-bceconnect]'); if (cn) {
-      const key = $('#emKey').value.trim(), from = $('#emFrom').value.trim(), name = $('#emName').value.trim();
+      const prov = BC.emProv || (BC.email || {}).provider || 'brevo', P = EMAIL_PROVIDERS.find(x => x.id === prov) || EMAIL_PROVIDERS[0], v = id => (($('#' + id) || {}).value || '').trim();
+      const key = v('emKey'), from = v('emFrom'), name = v('emName');
       if (!okMail(from)) return toast('Enter the sender email', true);
-      if (!/^xkeysib-[A-Za-z0-9-]{20,}$/.test(key)) return toast('Paste the Brevo API key — it starts with xkeysib-', true);
-      cn.disabled = true; cn.textContent = 'Checking with Brevo…';
-      try { const r = await fnCall('email', { action: 'connect', api_key: key, from_email: from, from_name: name }); BC.email = null; BC.emailManage = false; toast(`✓ Email connected — sending as ${r.from_email}`); renderBroadcast(); }
+      if (prov === 'brevo' && !/^xkeysib-[A-Za-z0-9-]{20,}$/.test(key)) return toast('Paste the Brevo API key — it starts with xkeysib-', true);
+      if (prov === 'resend' && !/^re_\w{10,}/.test(key)) return toast('Paste the Resend API key — it starts with re_', true);
+      if (prov === 'sendgrid' && !/^SG\./.test(key)) return toast('Paste the SendGrid API key — it starts with SG.', true);
+      if (key.length < 16) return toast(`Paste the ${P.key[0]}`, true);
+      if (P.secret && v('emSecret').length < 10) return toast('Paste the Mailjet secret key too', true);
+      if (P.domain && !/^[a-z0-9.-]+\.[a-z]{2,}$/i.test(v('emDomain'))) return toast('Enter the Mailgun sending domain', true);
+      cn.disabled = true; cn.textContent = `Checking with ${P.name}…`;
+      try { const r = await fnCall('email', { action: 'connect', provider: prov, api_key: key, secret: v('emSecret') || undefined, domain: v('emDomain') || undefined, region: v('emRegion') || undefined, stream: v('emStream') || undefined, from_email: from, from_name: name }); BC.email = null; BC.emailManage = false; BC.emProv = null; toast(`✓ ${P.name} connected — sending as ${r.from_email}`); renderBroadcast(); }
       catch (err) { toast(err.message, true); cn.disabled = false; cn.textContent = 'Connect email'; }
     }
   });
@@ -6674,7 +6827,8 @@ function openSettings(tab) {
   $('#upPhoto').innerHTML = uploaderHTML('brand', 'userPhoto', 'profile', 400, 'round', 'Photo');
   $('#brandHelp').textContent = cloud ? (canBrand() ? 'Website name and logo apply to the whole platform — every client sees them. Your name and photo are your profile.' : 'Your name and photo show on your profile, notes and messages.') : demo ? 'Demo mode: saved in this browser only.' : 'Pick a logo and photo from your gallery. They are saved to your Google Sheet (Settings tab) and Drive, so every device shows the same.';
   $('#sUrl').value = settings.url || ''; $('#sKey').value = settings.key || ''; $('#sStatus').textContent = ''; $('#sStatus').className = 'status';
-  setSTab(tab || (demo ? 'conn' : 'brand')); fillAcct(); fillWL(); { const pb = $('#planBody'); if (pb) pb.innerHTML = planBody(); } try { settingsStatus(); } catch (e) { }
+  setSTab(tab || (demo ? 'conn' : 'brand')); fillAcct(); fillWL(); { const pb = $('#planBody'); if (pb) pb.innerHTML = planBody(); const hb = $('#helpSetBody'); if (hb) hb.innerHTML = helpSetBody(); } try { settingsStatus(); } catch (e) { }
+  if (!tab && setTwoPane() && !$('#setModal .acc.open')) { const it = $(`#setModal .acc[data-acc="${store.get('nv.setOpen') || 's-brand'}"]`) || $('#setModal .acc'); if (it && getComputedStyle(it.querySelector('.acc-h')).display !== 'none') accToggle(it, 'nv.setOpen'); }
   if (tab) { const it = $(`#setModal .acc[data-acc="s-${tab}"]`); if (it && !it.classList.contains('open') && getComputedStyle(it).display !== 'none') accToggle(it, 'nv.setOpen'); }
   showModal('#setModal');
   if (cloud && tab === 'plan') subLoad().then(() => { const pb = $('#planBody'); if (pb) pb.innerHTML = planBody(); });
@@ -7909,7 +8063,7 @@ function renderConnections(anim) {
   ${grp('Messaging', [
     accItem('wa', { title: 'WhatsApp', icon: CONN_IC.wa, color: 'var(--wa)', open: open === 'wa', keywords: 'meta business number token inbox', dot: wa.connected ? 'ok' : wa.error ? 'bad' : 'off', status: wa.connected ? `Connected · ${esc(wa.verified_name || '')} ${esc(wa.display_phone || '')}` : 'Not connected',
       body: `<p class="help" style="margin-top:0">Chats, broadcasts, template flows and WhatsApp alerts use this number.</p><div class="cf-foot"><div class="grow"></div><button class="btn sm primary" data-connopen="wa">${wa.connected ? 'Manage WhatsApp' : 'Connect WhatsApp'}</button></div>` }),
-    accItem('email', { title: 'Email (Brevo)', icon: CONN_IC.mail, color: '#38BDF8', open: open === 'email', keywords: 'brevo smtp sender', dot: em.connected ? 'ok' : 'off', status: em.connected ? `Connected · ${esc(em.from_email || '')} · 300/day free` : 'Not connected',
+    accItem('email', { title: 'Email', icon: CONN_IC.mail, color: '#38BDF8', open: open === 'email', keywords: 'brevo resend sendgrid mailgun postmark zeptomail zoho mailjet smtp sender', dot: em.connected ? 'ok' : 'off', status: em.connected ? `Connected · ${esc(em.from_email || '')} · ${esc((EMAIL_PROVIDERS.find(x => x.id === em.provider) || { name: 'Brevo' }).name)}` : 'Not connected — Brevo, Resend, SendGrid, Mailgun, Postmark, ZeptoMail or Mailjet',
       body: `<p class="help" style="margin-top:0">Email campaigns, follow-ups and email alerts are sent from this sender.</p><div class="cf-foot"><div class="grow"></div><button class="btn sm primary" data-connopen="email">${em.connected ? 'Manage email' : 'Connect email'}</button></div>` }),
     accItem('welcome', { title: 'Auto welcome for new leads', icon: '<svg class="i" viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8Z"/></svg>', color: '#F59E0B', open: open === 'welcome', keywords: 'auto welcome reply new lead first message automatic email whatsapp greeting', dot: wcOn ? 'ok' : 'off', status: wcOn ? 'On · ' + [wc.wa.on ? 'WhatsApp template' : '', wc.reply.on ? 'auto-reply' : '', wc.email.on ? 'email' : ''].filter(Boolean).join(' + ') : 'Off — new leads get no automatic message', body: welcomeBody() }),
   ])}
@@ -8014,21 +8168,32 @@ function settingsAccordion() {
   const box = $('#setModal .box'); if (!box || box.querySelector('.acc-list')) return;
   const seg = box.querySelector(':scope > .seg'), info = { brand: ['Branding', '#EC4899', '<svg class="i" viewBox="0 0 24 24"><circle cx="13.5" cy="6.5" r="1.5"/><circle cx="17.5" cy="10.5" r="1.5"/><circle cx="8.5" cy="7.5" r="1.5"/><circle cx="6.5" cy="12.5" r="1.5"/><path d="M12 2a10 10 0 1 0 0 20c1.1 0 1.7-.9 1.4-1.8-.3-.9.3-1.8 1.3-1.8H17a5 5 0 0 0 5-5C22 6.6 17.5 2 12 2Z"/></svg>', 'Logo, website name, your photo'], conn: ['Google Sheet (old)', '#16A34A', CONN_IC.sheet, 'The old Apps Script connection'], acct: ['Account & workspace', 'var(--blue-2)', '<svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>', 'Password, workspace name, switch workspace, logins'], wl: ['White label', '#A78BFA', '<svg class="i" viewBox="0 0 24 24"><path d="M3 7h18M3 12h18M3 17h12"/></svg>', 'Your colours, login page and domain'] };
   const list = document.createElement('div'); list.className = 'acc-list'; list.dataset.acckey = 'nv.setOpen';
+  info.help = ['Help & learning', '#8B5CF6', '<svg class="i" viewBox="0 0 24 24"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/></svg>', 'The 🎓 Guide button, AI answers, setup guides'];
   info.plan = ['Plan & billing', '#10B981', '<svg class="i" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18M7 15h3"/></svg>', 'Your plan, days left, usage and payments'];
-  ['brand', 'plan', 'acct', 'wl', 'conn'].forEach(k => { const [t, c, ic, sub] = info[k];
-    const tmp = document.createElement('div'); tmp.innerHTML = accItem('s-' + k, { title: t, icon: ic, color: c, dot: 'off', status: sub, attrs: `data-stab="${k}"`, body: k === 'plan' ? '<div id="planBody"></div>' : '' }); const item = tmp.firstElementChild;
-    if (k !== 'plan') { const st = $('#stab-' + k); if (!st) return; item.querySelector('.acc-pad').appendChild(st); st.hidden = false; st.classList.add('stab-in'); }
+  ['brand', 'plan', 'acct', 'help', 'wl', 'conn'].forEach(k => { const [t, c, ic, sub] = info[k];
+    const tmp = document.createElement('div'); tmp.innerHTML = accItem('s-' + k, { title: t, icon: ic, color: c, dot: 'off', status: sub, attrs: `data-stab="${k}"`, body: k === 'plan' ? '<div id="planBody"></div>' : k === 'help' ? '<div id="helpSetBody"></div>' : '' }); const item = tmp.firstElementChild;
+    item.querySelector('.acc-pad').insertAdjacentHTML('afterbegin', `<div class="set-pt"><b>${esc(t)}</b><small>${esc(sub)}</small></div>`);
+    if (k !== 'plan' && k !== 'help') { const st = $('#stab-' + k); if (!st) return; item.querySelector('.acc-pad').appendChild(st); st.hidden = false; st.classList.add('stab-in'); }
     list.appendChild(item); });
   const extra = document.createElement('div'); extra.innerHTML = accItem('s-more', { title: 'Connections, modules & setup', icon: CONN_IC.n8n, color: '#F59E0B', dot: 'off', status: 'WhatsApp, email, stores, alerts, Industry Kits', body: `<div class="cf-foot" style="margin:0"><button class="btn sm" data-setgo="industry">Industry Kits</button><button class="btn sm" data-setgo="modules">Modules</button><div class="grow"></div><button class="btn sm primary" data-setgo="connections">Open Connections</button></div>` });
   list.appendChild(extra.firstElementChild);
   if (seg) seg.replaceWith(list); else box.appendChild(list);
   box.classList.remove('narrow'); box.classList.add('set-acc');
-  list.addEventListener('click', e => { const h = e.target.closest('.acc-h'); if (h && accToggle(h.closest('.acc'), 'nv.setOpen')) setSTab(h.closest('.acc').dataset.stab); const g = e.target.closest('[data-setgo]'); if (g) { hideModal('#setModal'); if (g.dataset.setgo === 'modules') return openModules(); go(g.dataset.setgo); } });
+  list.addEventListener('click', e => { const h = e.target.closest('.acc-h'); if (h && setTwoPane() && h.closest('.acc').classList.contains('open')) return; if (h && accToggle(h.closest('.acc'), 'nv.setOpen')) setSTab(h.closest('.acc').dataset.stab); const g = e.target.closest('[data-setgo]'); if (g) { hideModal('#setModal'); if (g.dataset.setgo === 'modules') return openModules(); go(g.dataset.setgo); } });
+}
+const setTwoPane = () => matchMedia('(min-width: 821px)').matches;
+function helpSetBody() {
+  const off = !!store.get('nv.guideOff'), aiOff = !!store.get('nv.guideAIOff');
+  return `<label class="mod-row adm-sw"><div><b>Show the 🎓 learning button</b><small class="muted">The round Nodevers Guide button at the bottom-right of every page</small></div><span class="sw"><input type="checkbox" id="hsGuide" ${off ? '' : 'checked'}><i></i></span></label>
+    <label class="mod-row adm-sw" style="margin-top:8px"><div><b>AI answers</b><small class="muted">The guide answers your own questions in your language (needs sign-in). Off = only the built-in guide.</small></div><span class="sw"><input type="checkbox" id="hsAI" ${aiOff ? '' : 'checked'}><i></i></span></label>
+    <div class="cf-foot"><span class="cf-safe">These switches are only for you, on this device.</span><div class="grow"></div><button class="btn sm" data-hsguides>📚 Setup guides</button><button class="btn sm primary" data-hsopen>Open the Guide</button></div>`;
 }
 function settingsStatus() {
   const b = brand(), set = (k, txt, dot) => { const it = $(`#setModal .acc[data-acc="s-${k}"]`); if (!it) return; it.querySelector('.acc-t small').innerHTML = txt; it.querySelector('.acc-dot').style.background = ACC_DOT[dot]; };
   const bi = $('#setModal .acc[data-acc="s-brand"] .acc-t b'); if (bi) bi.textContent = canBrand() ? 'Branding & profile' : 'Your profile';
+  const bp = $('#setModal .acc[data-acc="s-brand"] .set-pt'); if (bp) bp.innerHTML = canBrand() ? '<b>Branding & profile</b><small>Website name, logo, your name and photo</small>' : '<b>Your profile</b><small>Your name and photo</small>';
   if (canBrand()) set('brand', `${esc(b.brandName)}${b.logoUrl ? ' · logo added' : ' · no logo yet'} · ${esc(b.userName)}`, b.logoUrl ? 'ok' : 'off'); else set('brand', `${esc(b.userName)}${b.userPhoto ? ' · photo added' : ' · add your photo'}`, b.userPhoto ? 'ok' : 'off');
+  set('help', store.get('nv.guideOff') ? 'Guide button hidden' : 'Guide button on' + (store.get('nv.guideAIOff') ? ' · AI off' : ' · AI answers on'), store.get('nv.guideOff') ? 'off' : 'ok');
   const m = SUB.me; set('plan', !cloud ? 'Sign in to see your plan' : !m ? 'Loading…' : m.state === 'locked' ? 'Expired — workspace is view-only' : m.status === 'free' ? 'Free' : `${esc(m.plan_name || (SUB_ST[m.status] || [m.status])[0])}${m.days_left !== null && m.days_left !== undefined ? ' · ' + (m.days_left < 0 ? 'ended' : m.days_left + ' days left') : ''}`, !m ? 'off' : m.state === 'locked' ? 'bad' : m.days_left !== null && m.days_left <= 7 && m.status !== 'free' ? 'wait' : 'ok');
   set('acct', cloud ? `Signed in · ${esc(((AUTH.session || {}).user || {}).email || '')}${AUTH.wsName ? ' · ' + esc(AUTH.wsName) : ''}` : demo ? 'Demo — create a free account to save your data' : 'Not signed in', cloud ? 'ok' : 'off');
   set('wl', wl().accentColor ? 'Custom colours' + (cloud ? ' · whole platform' : '') : 'Default look' + (cloud ? ' · whole platform' : ''), wl().accentColor ? 'ok' : 'off');
@@ -8364,6 +8529,11 @@ function planBody() {
     ${(m.payments || []).length ? `<div class="pl-pay"><b>Payments</b>${m.payments.map(p => `<span>${esc(fmtDate(String(p.paid_at).slice(0, 10)))} · ${inr(p.amount)} · ${esc(p.method || '')}${p.period_end ? ' · until ' + esc(fmtDate(String(p.period_end).slice(0, 10))) : ''}</span>`).join('')}</div>` : ''}
     <div class="cf-foot"><span class="cf-safe">To change or renew your plan, contact us.</span><div class="grow"></div>${sup.supportEmail ? `<a class="btn sm" href="mailto:${esc(sup.supportEmail)}">Email</a>` : ''}${sup.supportPhone ? `<a class="btn sm" href="https://wa.me/${esc(sup.supportPhone)}" target="_blank" rel="noopener">WhatsApp</a>` : ''}${sup.renewLink ? `<a class="btn sm primary" href="${esc(sup.renewLink)}" target="_blank" rel="noopener">Renew / upgrade</a>` : ''}</div>`;
 }
+document.addEventListener('change', e => {
+  if (e.target.id === 'hsGuide') { if (e.target.checked) store.del('nv.guideOff'); else store.set('nv.guideOff', 1); guideFabSync(); try { settingsStatus(); } catch (er) { } toast(e.target.checked ? 'Guide button is on' : 'Guide button hidden — turn it on again here any time'); }
+  if (e.target.id === 'hsAI') { if (e.target.checked) store.del('nv.guideAIOff'); else store.set('nv.guideAIOff', 1); try { settingsStatus(); } catch (er) { } }
+});
+document.addEventListener('click', e => { if (e.target.closest('[data-hsopen]')) { hideModal('#setModal'); HELP.open = true; HELP.tab = 'ask'; helpRender(); } if (e.target.closest('[data-hsguides]')) { hideModal('#setModal'); HELP.open = true; HELP.tab = 'guides'; helpRender(); } });
 document.addEventListener('click', e => { if (e.target.closest('[data-planopen]')) { store.set('nv.setOpen', 's-plan'); openSettings('plan'); } });
 /* ================= Home header (top banner) + pricing section — edited only by the platform team ================= */
 const HERO_DEF = { on: true, show: 'all', image: '', imageMobile: '', textOn: true, theme: 'light', align: 'left', vpos: 'middle', eyebrow: 'All-in-one business OS', title: 'Turn Conversations Into Customers', sub: 'Manage leads, automate WhatsApp, track orders and grow your business — all in one place.',
@@ -8872,7 +9042,95 @@ const HELP_GUIDE = [
   ['plan', 'Plan, trial and billing', 'plan billing subscription trial expire expired renew payment upgrade limit days left invoice paused view only', '**Settings → Plan & billing** shows your plan, days left, usage (team, leads, WhatsApp this month, stores) and your payments. A banner appears 7 days before the end. When a trial or plan ends the workspace becomes **view-only** — nothing is deleted. Use **Renew** or **WhatsApp us** on the banner to renew; it opens again as soon as the payment is recorded.'],
   ['ro', 'View-only / missing buttons', 'view only cannot edit button missing permission hidden not allowed', 'If buttons are missing or you see "View-only access", your owner limited your access (role **Client**, an area limit or a switched-off action). Ask the owner to open **Team → Access** for you.'],
 ];
-const HELP = { open: false, msgs: [], busy: false };
+/* ================= Nodevers Guide: setup playbooks (full step-by-step for every connection) ================= */
+const PB_GROUPS = [['wa', 'WhatsApp'], ['email', 'Email'], ['leads', 'Getting leads in'], ['store', 'Store'], ['auto', 'Automation'], ['team', 'Team & account']];
+const HELP_PLAYBOOKS = [
+  { id: 'wa-connect', g: 'wa', title: 'Connect your WhatsApp number', kw: 'whatsapp connect phone number id business account id waba token system user meta api key cloud api', open: ['Open WhatsApp connect', 'wa'],
+    need: ['A Facebook account and a Meta Business account (business.facebook.com — free)', 'A phone number that is NOT on the WhatsApp app (or delete WhatsApp from it first)', 'A laptop — this is easier on a computer'],
+    steps: ['Go to **developers.facebook.com** → **My Apps** → **Create app** → choose **Business** → name it (e.g. “Acme CRM”) → pick your Business account → **Create**.', 'In the app → **Add product** → **WhatsApp** → **Set up**. Pick (or create) your WhatsApp Business account.', 'Left menu **WhatsApp → API Setup** → **Add phone number** → type your business name and number → verify with the OTP code.', 'On the same page copy two numbers: **Phone number ID** and **WhatsApp Business Account ID**.', 'Open **business.facebook.com → Settings → Users → System users** → **Add** → name “Nodevers”, role **Admin**.', 'Click the system user → **Add assets** → **Apps** → your app → **Full control**; then **WhatsApp accounts** → your account → **Full control** → Save.', 'Still on the system user → **Generate new token** → pick your app → token expiry **Never** → tick **whatsapp_business_messaging** and **whatsapp_business_management** → **Generate** → copy the token (starts with **EAA**).', 'In Nodevers: **Inbox → Connect WhatsApp** → paste Phone number ID, WhatsApp Business Account ID and the token → **Connect WhatsApp**.', 'So incoming messages arrive: Meta app → **WhatsApp → Configuration → Webhook → Edit** → paste the **Callback URL** shown in Nodevers (Inbox → Connect → “Webhook” section) and the **Verify token** your Nodevers provider gives you → **Verify and save** → in “Webhook fields” subscribe to **messages**.', 'Send “Hi” from another phone to your business number — it should appear in **Inbox** within seconds.'],
+    tips: ['Never share the EAA… token in chat or email — paste it only into the Nodevers box.', 'Before sending templates / broadcasts add a payment method (see “Add a payment method in WhatsApp”).'] },
+  { id: 'wa-template', g: 'wa', title: 'Create a WhatsApp template and get it approved', kw: 'template approval approved pending rejected create submit meta marketing utility', open: ['Open Templates', 'templates'],
+    need: ['WhatsApp connected'],
+    steps: ['Go to **Campaigns → Templates → New template**.', 'Name: small letters and _ only (e.g. **welcome_offer**). Category: **Marketing** for offers, **Utility** for order / account updates. Language: English / Hindi.', 'Write the message. Use **+ Variable** for personal parts — {{1}} becomes the customer’s first name when you send.', 'Fill **Sample values** for every variable (Meta checks them). Add a footer and buttons if you want.', 'Press **Submit to Meta for approval**. Status shows **Pending** — usually approved in minutes, sometimes a few hours.', 'Press **⟳ Sync from WhatsApp** to refresh. When it shows **Approved** you can use it in Broadcast, Auto welcome and Automation.'],
+    tips: ['Rejected? Open the card to see the reason — usually too salesy wording in Utility, or a missing sample.', 'No ALL CAPS, no misleading claims, don’t start or end with a variable.'] },
+  { id: 'wa-payment', g: 'wa', title: 'Add a payment method in WhatsApp (needed for templates)', kw: 'payment method card billing 131042 template failed whatsapp manager credit line', open: ['Open Inbox', 'whatsapp'],
+    need: ['A debit / credit card'],
+    steps: ['Open **business.facebook.com** → **WhatsApp Manager** (or business.facebook.com/wa/manage).', 'Left menu **Payment settings** (or ⚙ **Settings → Payment methods**).', '**Add payment method** → choose your business country / currency (INR) → add the card → save.', 'Wait 5–10 minutes, then send the template again from Nodevers.'],
+    tips: ['Replies inside 24 hours of the customer’s last message are free and need no template.', 'Error 131042 in Nodevers means exactly this — no payment method yet.'] },
+  ...EMAIL_PROVIDERS.map(P => ({ id: 'email-' + P.id, g: 'email', title: `Connect email with ${P.name}`, kw: `email ${P.id} ${P.name.toLowerCase()} api key sender smtp connect mail`, open: ['Open email connect', 'email:' + P.id], need: [P.best], html: true, steps: P.steps, tips: ['Every email has an unsubscribe link automatically.', 'Gmail / Outlook passwords can not be used — use Brevo with your Gmail as the sender instead.'] })),
+  { id: 'capture-website', g: 'leads', title: 'Website contact form → leads', kw: 'website form contact form wordpress wix shopify page html lead capture enquiry', open: ['Open Lead capture link', 'conn:capture'],
+    need: ['Access to edit your website'],
+    steps: ['Nodevers → **Connections → Lead capture link** → open **🌐 Website contact form** → **Copy form code**.', 'WordPress: edit the page → add a **Custom HTML** block → paste. Wix: **Add → Embed code → Custom code / HTML iframe** → paste. Shopify: **Online Store → Pages → Show HTML (<>)** → paste.', 'In the code change **redirect** to your thank-you page (or remove that line).', 'Publish the page, fill the form once yourself — the lead appears in **Leads** and gets your Auto welcome.'],
+    tips: ['Already have a form plugin (Contact Form 7, WPForms, Elementor)? Use its “Webhook” option and send the fields to your Lead capture link.'] },
+  { id: 'capture-fb-zapier', g: 'leads', title: 'Facebook / Instagram Lead Ads → leads (Zapier)', kw: 'facebook instagram meta lead ads lead form zapier integration api leads automatically', open: ['Open Lead capture link', 'conn:capture'],
+    need: ['Admin of the Facebook page that runs the lead ads', 'A free Zapier account (zapier.com)'],
+    steps: ['Nodevers → **Connections → Lead capture link** → **Copy link**.', 'zapier.com → **Create → Zaps**. Trigger app **Facebook Lead Ads** → event **New Lead** → sign in with Facebook → pick your **Page** and **Form**.', 'Action app **Webhooks by Zapier** → event **POST**.', 'URL: paste your Lead capture link. Payload type: **json**.', 'Data — add rows: **name** → Full name, **phone** → Phone number, **email** → Email, **city** → City, **source** → type “Facebook Lead Ads”, **campaign** → Campaign name, **form_name** → Form name.', '**Test step** → Zapier sends a sample lead → check **Leads** in Nodevers → **Publish** the Zap.'],
+    tips: ['Same steps work in Make (make.com: Facebook Lead Ads → HTTP “Make a request”) and n8n (Facebook Lead Ads Trigger → HTTP Request).', 'In Automation use the trigger **Meta lead form** to run steps only for these leads.'] },
+  { id: 'capture-google-forms', g: 'leads', title: 'Google Forms / Typeform / Tally → leads', kw: 'google form typeform tally jotform indiamart justdial form leads zapier make', open: ['Open Lead capture link', 'conn:capture'],
+    need: ['A free Zapier or Make account'],
+    steps: ['Copy your link from **Connections → Lead capture link**.', 'Zapier → **Create Zap** → trigger **Google Forms → New Form Response** (or Typeform / Tally / JotForm / IndiaMART “New lead”).', 'Action **Webhooks by Zapier → POST** → URL = your link → payload **json**.', 'Map **name**, **phone**, **email**, **city** and set **source** to the form’s name.', 'Test, then publish.'],
+    tips: ['Duplicates are handled: the same phone / email is added to the existing lead as a note.'] },
+  { id: 'auto-welcome', g: 'leads', title: 'Send an automatic welcome to every new lead', kw: 'auto welcome reply automatic first message greeting new lead whatsapp email', open: ['Open Auto welcome', 'conn:welcome'],
+    need: ['WhatsApp connected and an approved template (for WhatsApp welcome)', 'Email connected (for welcome email)'],
+    steps: ['Go to **Connections → Auto welcome for new leads**.', 'WhatsApp welcome: switch on → pick an **approved template** → set the value for {{1}} (e.g. {{first_name}}).', 'Auto-reply to new WhatsApp chats: switch on → write the reply (free, no template).', 'Welcome email: switch on → subject + message.', '**Save auto welcome**. Add a test lead with your own number to check.'],
+    tips: ['Excel imports never get it; STOP / unsubscribed people are skipped.'] },
+  { id: 'store-shopify', g: 'store', title: 'Connect a Shopify store', kw: 'shopify store orders products sync admin api access token shpat', open: ['Open Shopify', 'conn:shopify'],
+    need: ['Owner / staff access to the Shopify admin'],
+    steps: ['Shopify admin → **Settings → Apps and sales channels → Develop apps** → **Allow custom app development** (first time) → **Create an app** → name “Nodevers”.', '**Configuration → Admin API integration → Configure** → tick **read_orders**, **read_products**, **read_inventory** → **Save**.', '**API credentials → Install app** → **Reveal token once** → copy the **Admin API access token** (starts with shpat_).', 'Nodevers → **Connections → Shopify** → store link (yourstore.myshopify.com) + the token → choose how often to sync → **Connect**.', 'Press **⟳ Sync now** — orders and products appear in **Store**.'],
+    tips: ['The token is shown only once in Shopify — if lost, uninstall and reinstall the app.'] },
+  { id: 'store-woo', g: 'store', title: 'Connect a WooCommerce (WordPress) store', kw: 'woocommerce wordpress consumer key secret rest api orders products', open: ['Open WooCommerce', 'conn:woocommerce'],
+    need: ['WordPress admin access', 'Your site on https'],
+    steps: ['WordPress admin → **WooCommerce → Settings → Advanced → REST API** → **Add key**.', 'Description “Nodevers”, User: an admin, Permissions **Read** → **Generate API key**.', 'Copy the **Consumer key** (ck_…) and **Consumer secret** (cs_…).', 'Nodevers → **Connections → WooCommerce** → website link + both keys → **Connect** → **⟳ Sync now**.'],
+    tips: ['If it fails, check Settings → Permalinks is not “Plain”.'] },
+  { id: 'store-custom', g: 'store', title: 'Connect any website with an API', kw: 'custom website api json developer orders link key wix magento opencart', open: ['Open Custom website', 'conn:custom'],
+    need: ['Your developer (they create a link that returns your orders as JSON)'],
+    steps: ['Ask your developer for: the **orders API link**, optional **products API link**, and the **API key** + how it is sent (Bearer / header / in the link).', 'Nodevers → **Connections → Custom website (API)** → fill them → **Test connection**.', 'Match the fields once (Order ID, date, SKU, total, status, customer…) → **Connect**.'],
+    tips: ['Send your developer this page — everything they need is on the form.'] },
+  { id: 'store-import', g: 'store', title: 'Import products / orders from Excel or Google Sheet', kw: 'import excel sheet google sheet csv products orders amazon upload', open: ['Open import', 'cmimport'],
+    need: ['Your sheet with column names in the first row'],
+    steps: ['Go to **Store** → **⇪ Import Excel / Sheet**.', 'Upload the .xlsx / .csv, or paste a Google Sheet link (Share → **Anyone with the link → Viewer**).', 'Each tab is detected as Products / Orders / Ad spend — fix any column with **Edit columns**.', '**Import**. Importing again updates the same rows, it does not duplicate.'] },
+  { id: 'store-alerts', g: 'store', title: 'Get order and stock alerts on WhatsApp / email', kw: 'alerts notification new order low stock out of stock daily summary nodevers_alert template', open: ['Open Store alerts', 'conn:alerts'],
+    steps: ['**Connections → Store alerts** → add your emails and WhatsApp numbers.', 'For each alert choose **Email / WhatsApp / Both / Off**.', 'WhatsApp alerts need the template **nodevers_alert** — press **Create WhatsApp alert template** and wait for approval.', '**Send test alert**.'] },
+  { id: 'n8n-connect', g: 'auto', title: 'Connect your n8n', kw: 'n8n connect api key docker ngrok self hosted cloud workflow', open: ['Open n8n', 'n8n'],
+    need: ['n8n Cloud, or your own n8n (Docker) reachable on https'],
+    steps: ['In n8n → **Settings → n8n API** → **Create an API key** → copy it.', 'Your n8n address must be https. Self-hosted on a PC: run **ngrok http 5678** (or your fixed ngrok domain) and use the https link it shows.', 'Nodevers → **Automation → n8n Services → Connect n8n** → paste the address and API key → **Connect**.', 'Your workflows appear. Red steps need keys / links — click them and fill in.'],
+    tips: ['With a PC + ngrok, the PC, Docker and ngrok must stay on for workflows to run.'] },
+  { id: 'auto-first', g: 'auto', title: 'Build and switch on your first automation', kw: 'automation flow canvas live trigger wait follow up sequence run test', open: ['Open Automation', 'automation'],
+    steps: ['Go to **Automation → Flows**. Press **+ Node** and add a trigger, e.g. **New lead**.', 'Add steps: **Send template**, **Wait** (e.g. 2 days), **If / Router**, **Send email**, **Move to stage**… and drag wires between them.', 'Click a step to fill its settings on the right (pick the approved template, the stage, the email text…).', 'Press **✓ Check flow** and fix anything red.', 'Switch **Live** on. Press **▶ Test with a lead** (use your own number) and open **Runs** to see each step.'],
+    tips: ['“Send message” (free text) only reaches people who messaged you in the last 24 hours — use a template for new leads.', 'Imports never start flows.'] },
+  { id: 'team-invite', g: 'team', title: 'Invite your team and set their access', kw: 'team invite member admin client role access permission area', open: ['Open Team', 'team'],
+    steps: ['**Team → Logins & access → Invite** → choose **Member**, **Admin** or **Client (view only)**.', 'Send the link on WhatsApp / email (valid 7 days, one use).', 'After they join, press **Access** next to their name → choose which leads they see (all / their area / assigned to them) and switch actions on or off.'] },
+  { id: 'plan-renew', g: 'team', title: 'Plan, trial and renewing', kw: 'plan billing trial renew expired payment upgrade view only', open: ['Open Plan & billing', 'plan'],
+    steps: ['**Settings → Plan & billing** shows your plan, days left and usage.', 'To renew or upgrade press **Renew** or **WhatsApp us** — your provider records the payment and the workspace opens again at once.'] },
+];
+const pbText = p => `${p.title}\n${(p.need || []).length ? 'You need: ' + p.need.join('; ') + '\n' : ''}${p.steps.map((s, i) => `${i + 1}. ${String(s).replace(/<[^>]+>/g, '')}`).join('\n')}${(p.tips || []).length ? '\nTips: ' + p.tips.join(' ') : ''}`;
+const pbFmt = (s, html) => html ? s : esc(s).replace(/\*\*([^*]+)\*\*/g, '<b>$1</b>');
+function pbMatch(q) {
+  const words = helpTokens(q), low = String(q || '').toLowerCase(); if (!words.length) return null;
+  const how = /connect|setup|set up|api|key|token|kaise|kese|kaha|kahan|where|how|jod|link|add|lagaye|banaye|approve/.test(low);
+  const best = HELP_PLAYBOOKS.map(p => { const hay = (p.title + ' ' + p.kw).toLowerCase(); let sc = 0; words.forEach(w => { if (hay.includes(w)) sc += w.length > 4 ? 3 : 2; }); return [p, sc]; }).sort((a, b) => b[1] - a[1])[0];
+  return best && best[1] >= (how ? 5 : 8) ? best[0] : null;
+}
+function playbookHTML(p, inChat) {
+  return `<div class="pb ${inChat ? 'in' : ''}"><div class="pb-t">📘 ${esc(p.title)}</div>
+    ${(p.need || []).length ? `<div class="pb-need"><b>You need</b><ul>${p.need.map(x => `<li>${pbFmt(x, p.html)}</li>`).join('')}</ul></div>` : ''}
+    <ol class="pb-s">${p.steps.map(s => `<li>${pbFmt(s, p.html)}</li>`).join('')}</ol>
+    ${(p.tips || []).length ? `<div class="pb-tip">💡 ${p.tips.map(x => pbFmt(x, p.html)).join('<br>💡 ')}</div>` : ''}
+    <div class="pb-a">${p.open ? `<button class="btn sm primary" data-pbopen="${esc(p.open[1])}">${esc(p.open[0])} →</button>` : ''}<button class="btn sm" data-pbask="${esc(p.id)}">Ask about this</button></div></div>`;
+}
+function pbOpen(a) {
+  const [k, v] = String(a).split(':'); HELP.open = false; helpRender();
+  if (k === 'wa') { WA.manage = true; return go('whatsapp'); }
+  if (k === 'email') { BC.tab = 'email'; BC.emailManage = true; if (v) BC.emProv = v; return go('broadcast'); }
+  if (k === 'conn') { CONN.open = v; store.set('nv.connOpen', v); return go('connections'); }
+  if (k === 'n8n') { N8L.tab = N8L.st && N8L.st.connected ? 'workflows' : 'connect'; return go('n8n'); }
+  if (k === 'cmimport') { go('commerce'); return typeof openCmImport === 'function' && openCmImport(); }
+  if (k === 'plan') return openSettings('plan');
+  return go(k);
+}
+
+const HELP = { open: false, msgs: [], busy: false, tab: 'ask', pb: null, gq: '' };
+function guideFabSync() { const f = $('#helpFab'); if (f) f.hidden = !!store.get('nv.guideOff'); if (store.get('nv.guideOff') && HELP.open && !HELP.forced) { HELP.open = false; helpRender(); } }
 const helpTokens = s => String(s || '').toLowerCase().replace(/[^\p{L}\p{N} ]+/gu, ' ').split(/\s+/).filter(w => w.length > 2);
 function helpSearch(q, n = 3) {
   const words = helpTokens(q), page = activeView();
@@ -8880,27 +9138,36 @@ function helpSearch(q, n = 3) {
 }
 const helpMd = t => esc(t).replace(/\*\*([^*]+)\*\*/g, '<b>$1</b>').replace(/(^|\s)(\d{1,2})\.\s(?=\S)/gm, (m, sp, n) => (sp && sp !== '\n' ? '<br>' : sp) + '<span class="hp-n">' + n + '</span> ').replace(/\n/g, '<br>');
 const HELP_CHIPS = { home: ['What is on Home?', 'Finish my setup', 'Search anything (Ctrl + K)'], connections: ['Connect my Shopify store', 'Set up store alerts', 'Connect my website API'], insights: ['What do the Insights tabs show?', 'Export a report', 'Ad spend and ROAS'], commerce: ['Import my store sheet', 'Connect my website', 'Low stock alerts'], dashboard: ['How do I add a lead?', 'Import leads from Excel', 'Show my overdue tasks'], leads: ['Import leads from Excel', 'Export leads', 'Delete a lead'], whatsapp: ['Why did my message fail?', 'How does ✨ AI work?', '24-hour rule kya hai?'], broadcast: ['Bulk WhatsApp kaise bheju?', 'Send an email campaign', 'Compare campaigns'], templates: ['Create a template', 'Add buttons and actions', 'Why is my template pending?'], team: ['Invite a team member', 'Limit someone to Maharashtra', 'What can a Client see?'], tasks: ['How do auto-tasks work?', 'Create a task'], calls: ['Log a call', 'Where do I see call results?'], n8n: ['Connect my n8n', 'Fix red nodes', 'Run a workflow now'] };
+function helpGuidesHTML() {
+  if (HELP.pb) { const p = HELP_PLAYBOOKS.find(x => x.id === HELP.pb); if (p) return `<button class="btn sm" data-hpback>← All setup guides</button>${playbookHTML(p)}`; }
+  const q = HELP.gq.toLowerCase(), list = HELP_PLAYBOOKS.filter(p => !q || (p.title + ' ' + p.kw).toLowerCase().includes(q));
+  return `<input class="input" id="hpGSearch" placeholder="Search: WhatsApp, Shopify, Resend, lead ads…" value="${esc(HELP.gq)}" autocomplete="off">
+    ${PB_GROUPS.map(([g, n]) => { const L = list.filter(p => p.g === g); return L.length ? `<div class="pb-g"><b>${esc(n)}</b>${L.map(p => `<button class="pb-li" data-pbview="${esc(p.id)}"><span>📘</span>${esc(p.title)}<i>›</i></button>`).join('')}</div>` : ''; }).join('') || '<p class="muted">No guide found — ask in the 💬 Ask tab.</p>'}`;
+}
 function helpRender() {
   let p = $('#helpPanel');
   if (!p) { p = document.createElement('div'); p.id = 'helpPanel'; p.className = 'hp glass'; document.body.appendChild(p); }
   p.hidden = !HELP.open; $('#helpFab').classList.toggle('on', HELP.open); if (!HELP.open) return;
-  const chips = HELP_CHIPS[activeView()] || ['How do I add a lead?', 'Import leads from Excel', 'Invite a team member'];
-  p.innerHTML = `<div class="hp-h"><span class="hp-av">🎓</span><div class="grow"><b>Nodevers Guide</b><small>Ask anything about this website · English / Hinglish</small></div><button class="ibtn" data-hpclose title="Close">${I.x}</button></div>
-    <div class="hp-b" id="hpMsgs">${HELP.msgs.length ? '' : `<div class="hp-m bot">Namaste 👋 I can guide you through any screen — leads, WhatsApp, broadcasts, calls, tasks, team access, n8n. What do you want to do?</div>`}
-      ${HELP.msgs.map(m => `<div class="hp-m ${m.role === 'me' ? 'me' : 'bot'}">${m.role === 'me' ? esc(m.text) : helpMd(m.text)}${m.links ? `<div class="hp-l">${m.links.map(x => `<button class="chip" data-hpgo="${esc(x.id)}">${esc(x.title)}</button>`).join('')}</div>` : ''}</div>`).join('')}
+  const chips = HELP_CHIPS[activeView()] || ['How do I add a lead?', 'Import leads from Excel', 'Invite a team member'], tab = HELP.tab || 'ask';
+  const aiOn = cloud && AUTH.session && !store.get('nv.guideAIOff');
+  p.innerHTML = `<div class="hp-h"><span class="hp-av">🎓</span><div class="grow"><b>Nodevers Guide</b><small>${aiOn ? '✦ AI answers on · ' : ''}English / Hindi / Hinglish</small></div><button class="ibtn" data-hpclose title="Close">${I.x}</button></div>
+    <div class="hp-tabs"><button class="${tab === 'ask' ? 'on' : ''}" data-hptab="ask">💬 Ask</button><button class="${tab === 'guides' ? 'on' : ''}" data-hptab="guides">📚 Setup guides</button></div>
+    ${tab === 'guides' ? `<div class="hp-b hp-gd" id="hpMsgs">${helpGuidesHTML()}</div>` : `<div class="hp-b" id="hpMsgs">${HELP.msgs.length ? '' : `<div class="hp-m bot">Namaste 👋 Ask me anything — “WhatsApp kaise connect karu?”, “Shopify ka API key kaha milega?”, “lead ads se leads kaise aayenge?”. I give you the full process, step by step.</div>`}
+      ${HELP.msgs.map(m => m.pb ? `<div class="hp-m bot wide">${m.text ? helpMd(m.text) : ''}${(() => { const pp = HELP_PLAYBOOKS.find(x => x.id === m.pb); return pp ? playbookHTML(pp, true) : ''; })()}</div>` : `<div class="hp-m ${m.role === 'me' ? 'me' : 'bot'}">${m.role === 'me' ? esc(m.text) : helpMd(m.text)}${m.links ? `<div class="hp-l">${m.links.map(x => `<button class="chip" data-hpgo="${esc(x.id)}">${esc(x.title)}</button>`).join('')}</div>` : ''}</div>`).join('')}
       ${HELP.busy ? '<div class="hp-m bot hp-typing"><i></i><i></i><i></i></div>' : ''}</div>
     <div class="hp-c">${chips.map(c => `<button class="chip" data-hpask="${esc(c)}">${esc(c)}</button>`).join('')}</div>
-    <form class="hp-f" id="hpForm"><input class="input" id="hpIn" autocomplete="off" placeholder="Type your question…" maxlength="500"><button class="btn primary" type="submit">Ask</button></form>`;
-  const box = $('#hpMsgs'); box.scrollTop = box.scrollHeight;
+    <form class="hp-f" id="hpForm"><input class="input" id="hpIn" autocomplete="off" placeholder="Type your question…" maxlength="500"><button class="btn primary" type="submit">Ask</button></form>`}`;
+  const box = $('#hpMsgs'); if (tab === 'ask') box.scrollTop = box.scrollHeight;
 }
 async function helpAsk(q) {
   q = String(q || '').trim(); if (!q || HELP.busy) return;
   HELP.msgs.push({ role: 'me', text: q }); HELP.busy = true; helpRender();
-  const hits = helpSearch(q, 4);
+  const hits = helpSearch(q, 4), pb = pbMatch(q);
+  if (pb) { HELP.msgs.push({ role: 'bot', text: 'Here is the full process 👇', pb: pb.id }); HELP.busy = false; helpRender(); return; }
   let answer = '', ok = false;
-  if (cloud && AUTH.session) {
+  if (cloud && AUTH.session && !store.get('nv.guideAIOff')) {
     try {
-      const guide = HELP_GUIDE.map(([id, t, kw, tx]) => `## ${t}\n${tx}`).join('\n\n');
+      const guide = HELP_GUIDE.map(([id, t, kw, tx]) => `## ${t}\n${tx}`).join('\n\n') + '\n\n# SETUP PLAYBOOKS (full processes)\n' + HELP_PLAYBOOKS.map(p => '## ' + pbText(p)).join('\n\n');
       const r = await fnCall('ai-write', { mode: 'help', question: q, page: activeView(), role: AUTH.role || '', guide, history: HELP.msgs.slice(-7, -1) });
       answer = r.text; ok = true;
     } catch (e) { answer = ''; }
@@ -8912,14 +9179,20 @@ async function helpAsk(q) {
 (function helpInit() {
   const fab = document.createElement('button'); fab.id = 'helpFab'; fab.className = 'hp-fab'; fab.title = 'Nodevers Guide — ask how to do anything'; fab.setAttribute('aria-label', 'Open Nodevers Guide');
   fab.innerHTML = '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/></svg>';
-  document.body.appendChild(fab);
+  document.body.appendChild(fab); guideFabSync();
   document.addEventListener('click', e => {
     const t = e.target;
     if (t.closest('#helpFab')) { HELP.open = !HELP.open; helpRender(); if (HELP.open) setTimeout(() => { const i = $('#hpIn'); if (i) i.focus(); }, 50); return; }
     if (t.closest('[data-hpclose]')) { HELP.open = false; return helpRender(); }
+    const ht = t.closest('[data-hptab]'); if (ht) { HELP.tab = ht.dataset.hptab; HELP.pb = null; return helpRender(); }
+    const pv = t.closest('[data-pbview]'); if (pv) { HELP.pb = pv.dataset.pbview; helpRender(); const b = $('#hpMsgs'); if (b) b.scrollTop = 0; return; }
+    if (t.closest('[data-hpback]')) { HELP.pb = null; return helpRender(); }
+    const po = t.closest('[data-pbopen]'); if (po) return pbOpen(po.dataset.pbopen);
+    const pa = t.closest('[data-pbask]'); if (pa) { const pp = HELP_PLAYBOOKS.find(x => x.id === pa.dataset.pbask); HELP.tab = 'ask'; HELP.pb = null; helpRender(); const i = $('#hpIn'); if (i && pp) { i.value = `About “${pp.title}”: `; i.focus(); } return; }
     const a = t.closest('[data-hpask]'); if (a) return helpAsk(a.dataset.hpask);
     const g = t.closest('[data-hpgo]'); if (g) { const s2 = HELP_GUIDE.find(x => x[0] === g.dataset.hpgo); if (s2) { HELP.msgs.push({ role: 'bot', text: `**${s2[1]}**\n${s2[3]}` }); helpRender(); } }
   });
+  document.addEventListener('input', e => { if (e.target.id === 'hpGSearch') { HELP.gq = e.target.value; const pos = e.target.selectionStart; helpRender(); const s = $('#hpGSearch'); if (s) { s.focus(); s.setSelectionRange(pos, pos); } } });
   document.addEventListener('submit', e => { if (e.target.id === 'hpForm') { e.preventDefault(); const i = $('#hpIn'); const v = i.value; i.value = ''; helpAsk(v); } });
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && HELP.open) { HELP.open = false; helpRender(); } });
 })();

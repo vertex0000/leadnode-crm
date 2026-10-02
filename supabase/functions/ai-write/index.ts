@@ -1,6 +1,7 @@
 // Nodevers — ai-write: Gemini (free tier) helps write WhatsApp replies in the Inbox.
 // Deploy: Supabase → Edge Functions → Deploy a new function → Via Editor → name "ai-write" → paste → Deploy → turn OFF "Enforce JWT verification".
 // Secret needed (Edge Functions → Secrets): GEMINI_API_KEY = your key from Google AI Studio (aistudio.google.com → Get API key). Optional: GEMINI_MODEL.
+// Optional: ANTHROPIC_API_KEY (from console.anthropic.com → API keys) — then Claude answers first and Gemini is the backup. Optional: CLAUDE_MODEL.
 import { createClient } from 'npm:@supabase/supabase-js@2';
 
 const firstKey = (json?: string) => { try { return Object.values(JSON.parse(json ?? '{}'))[0] as string | undefined; } catch { return undefined; } };
@@ -22,7 +23,18 @@ const TASK: Record<string, string> = {
   hinglish: 'Rewrite the draft in Hinglish (Hindi in Roman letters mixed with English), casual and natural.',
 };
 
+const CLAUDE = Deno.env.get('ANTHROPIC_URL') ?? 'https://api.anthropic.com/v1';
+const CLAUDE_MODEL = Deno.env.get('CLAUDE_MODEL') ?? 'claude-haiku-4-5-20251001';
+/** Claude (when ANTHROPIC_API_KEY is set) — returns null if it can not answer, then Gemini is used */
+async function askClaude(system: string, user: string, temperature: number, maxTokens = 2048) {
+  const ck = Deno.env.get('ANTHROPIC_API_KEY'); if (!ck) return null;
+  const r = await fetch(`${CLAUDE}/messages`, { method: 'POST', headers: { 'x-api-key': ck, 'anthropic-version': '2023-06-01', 'content-type': 'application/json' }, body: JSON.stringify({ model: CLAUDE_MODEL, max_tokens: maxTokens, temperature, system, messages: [{ role: 'user', content: user }] }) }).catch(() => null);
+  const j: any = r ? await r.json().catch(() => ({})) : {}; const t = (j?.content ?? []).map((c: any) => c.text ?? '').join('').trim();
+  return r?.ok && t ? t : null;
+}
 async function ask(key: string, system: string, user: string, temperature: number, strip = true) {
+  const c = await askClaude(system, user, temperature); if (c) return json({ ok: true, text: strip ? c.replace(/^["“]|["”]$/g, '') : c, model: CLAUDE_MODEL });
+  if (!key) return json({ error: 'AI could not answer right now — try again in a minute.' }, 400);
   let last = '';
   for (const model of MODELS) {
     const r = await fetch(`${GEMINI}/models/${model}:generateContent`, {
@@ -53,8 +65,8 @@ Deno.serve(async (req) => {
     const jwt = (req.headers.get('Authorization') ?? '').replace(/^Bearer\s+/i, '');
     const { data: u } = await db.auth.getUser(jwt);
     if (!u?.user) return json({ error: 'Please sign in again.' }, 401);
-    const key = Deno.env.get('GEMINI_API_KEY');
-    if (!key) return json({ error: 'AI is not switched on yet — add the GEMINI_API_KEY secret in Supabase → Edge Functions → Secrets.' }, 400);
+    const key = Deno.env.get('GEMINI_API_KEY') ?? '';
+    if (!key && !Deno.env.get('ANTHROPIC_API_KEY')) return json({ error: 'AI is not switched on yet — add the GEMINI_API_KEY (or ANTHROPIC_API_KEY) secret in Supabase → Edge Functions → Secrets.' }, 400);
 
     // ---- Nodevers Guide: answers "how do I…" questions about the website (any signed-in user) ----
     if (b.mode === 'help') {
@@ -63,13 +75,15 @@ Deno.serve(async (req) => {
       const system = [
         'You are "Nodevers Guide", the friendly in-app helper of Nodevers — a CRM + WhatsApp + email + calls + tasks + automation website for small businesses in India.',
         'Answer ONLY questions about using Nodevers, using the GUIDE below as the source of truth. Use the exact English button and screen names from the guide, in **bold**.',
-        'Give short numbered steps (max 7) and one tip if useful. No long intros. Markdown: **bold**, numbered lists, short paragraphs only.',
+        'Give numbered steps and one tip if useful. No long intros. Markdown: **bold**, numbered lists, short paragraphs only.',
+        'When the user asks how to connect / set up something or where to find an API key / token: give the COMPLETE process from the matching SETUP PLAYBOOK — every step from opening the other website (Meta, Brevo, Shopify, Zapier…) to pasting into Nodevers and testing. Do not shorten it to "go to settings and paste the key".',
+        'If they use a tool not in the playbooks (e.g. Hostinger email, Wix forms), explain the closest working way with the tools Nodevers supports (Lead capture link, Zapier / Make / n8n, the listed email providers).',
         'Reply in the language the user writes in: English, Hindi or Hinglish (Roman Hindi). Default to simple Hinglish if the user mixes.',
         'If the guide does not cover it, say you are not sure and suggest asking the business owner / Nodevers support — never invent features, prices or settings.',
         'Never ask for or repeat passwords, API keys, tokens or OTPs; tell the user to paste keys only into the right box on the website.',
         'Off-topic questions (not about Nodevers or running their sales with it): politely say you can only help with Nodevers.',
       ].join('\n');
-      const user = `Current screen: ${cut(b.page, 40) || 'unknown'} · User role: ${cut(b.role, 20) || 'member'}\n\nGUIDE:\n${cut(b.guide, 16000)}\n\n${hist ? 'Conversation so far:\n' + hist + '\n\n' : ''}User question: ${q}`;
+      const user = `Current screen: ${cut(b.page, 40) || 'unknown'} · User role: ${cut(b.role, 20) || 'member'}\n\nGUIDE:\n${cut(b.guide, 40000)}\n\n${hist ? 'Conversation so far:\n' + hist + '\n\n' : ''}User question: ${q}`;
       return await ask(key, system, user, 0.3, false);
     }
 

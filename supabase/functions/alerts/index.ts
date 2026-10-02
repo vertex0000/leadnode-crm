@@ -30,12 +30,18 @@ const chOf = (cfg: any, kind: string) => (cfg.rules[kind]?.ch ?? DEF[kind] ?? 'o
 
 async function sendEmail(ws: string, to: string[], subject: string, lines: string[]) {
   if (!to.length) return 'no emails';
-  const { data: ea } = await db.from('email_accounts').select('*').eq('workspace_id', ws).maybeSingle();
+  const { data: ea } = await db.from('email_accounts').select('workspace_id').eq('workspace_id', ws).maybeSingle();
   if (!ea) return 'email not connected';
-  const html = `<div style="font-family:Arial,sans-serif;font-size:14px;line-height:1.6;color:#111">${lines.map((l) => `<p style="margin:0 0 8px">${esc(l)}</p>`).join('')}<p style="margin:16px 0 0;color:#888;font-size:12px">Sent by Nodevers · change alerts in Connections → Store alerts</p></div>`;
-  const r = await fetch(`${BREVO}/smtp/email`, { method: 'POST', headers: { 'api-key': ea.api_key, 'Content-Type': 'application/json', accept: 'application/json' },
-    body: JSON.stringify({ sender: { email: ea.from_email, name: ea.from_name || 'Nodevers alerts' }, to: to.map((email) => ({ email })), subject: subject.slice(0, 150), htmlContent: html }) }).catch(() => null);
-  return r && r.ok ? 'email ok' : `email failed${r ? ' ' + r.status : ''}`;
+  // sent through the "email" function so every provider (Brevo, Resend, SendGrid, …) works the same way
+  const { data: cfg } = await db.from('app_config').select('key,value').in('key', ['cron_secret', 'functions_url']);
+  const m = Object.fromEntries((cfg ?? []).map((r: any) => [r.key, r.value])), base = (m.functions_url || `${SB_URL.replace(/\/+$/, '')}/functions/v1`).replace(/\/+$/, '');
+  const body = lines.join('\n\n') + '\n\nSent by Nodevers · change alerts in Connections → Store alerts';
+  let ok = 0, last = '';
+  for (const addr of to) {
+    const r = await fetch(`${base}/email`, { method: 'POST', headers: { 'Content-Type': 'application/json', 'x-cron-secret': m.cron_secret ?? '' }, body: JSON.stringify({ action: 'system', workspace_id: ws, to_email: addr, subject: subject.slice(0, 150), body }) }).catch(() => null);
+    const j: any = r ? await r.json().catch(() => ({})) : {}; if (j.ok) ok++; else last = j.error ?? 'no answer';
+  }
+  return ok === to.length ? 'email ok' : `email failed${last ? ' ' + last : ''}`.slice(0, 120);
 }
 async function sendWa(ws: string, to: string[], brand: string, text: string) {
   if (!to.length) return 'no numbers';
