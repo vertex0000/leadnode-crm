@@ -760,6 +760,29 @@ body.n8l-noscroll{overflow:hidden}
 .acc-opts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.acc-opt{text-align:left;border:1px solid var(--line);background:var(--glass-3);border-radius:12px;padding:10px 12px;cursor:pointer;color:var(--text);display:flex;flex-direction:column;gap:3px}.acc-opt small{font-size:11.5px;color:var(--muted);line-height:1.35}.acc-opt.on{border-color:var(--blue-2);box-shadow:0 0 0 3px var(--blue-soft)}
 .acc-areas{display:flex;flex-wrap:wrap;gap:6px;min-height:30px;align-items:center}.acc-perms{display:grid;grid-template-columns:1fr 1fr;gap:6px 18px}.acc-p{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:6px 0;border-bottom:1px solid var(--line);font-size:13px;font-weight:600}
 @media (max-width:640px){.acc-opts,.acc-perms{grid-template-columns:1fr}}
+.nbadge{margin-left:auto;min-width:18px;height:18px;padding:0 5px;border-radius:9px;background:var(--coral);color:#fff;font-size:11px;font-weight:800;display:inline-grid;place-items:center}
+body.no-sales [data-go="tasks"],body.no-sales [data-go="calls"]{display:none!important}
+.cl-outs{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}.cl-o{display:flex;gap:8px;align-items:center;border:1px solid var(--line);background:var(--glass-3);color:var(--text);border-radius:12px;padding:9px 11px;font-weight:700;font-size:13px;cursor:pointer;text-align:left}.cl-o span{width:22px;height:22px;border-radius:7px;display:grid;place-items:center;background:var(--line);font-size:12px}.cl-o.pos span{background:var(--green-soft);color:var(--green)}.cl-o.neg span{background:color-mix(in srgb,var(--coral) 16%,transparent);color:var(--coral)}.cl-o.on{border-color:var(--blue-2);box-shadow:0 0 0 3px var(--blue-soft)}
+.cl-row.pos .n8l-i{background:var(--green-soft);color:var(--green)}.cl-row.neg .n8l-i{background:color-mix(in srgb,var(--coral) 16%,transparent);color:var(--coral)}.n8l-r a,.tk-r a{cursor:pointer;color:inherit;text-decoration:underline;text-decoration-color:var(--line-2)}
+.cl-bar{display:grid;grid-template-columns:130px 1fr 28px;gap:8px;align-items:center;font-size:12.5px;margin:7px 0}.cl-bar .bar{background:var(--blue-2)}.cl-bar.pos .bar{background:var(--green)}.cl-bar.neg .bar{background:var(--coral)}.cl-bar b{text-align:right}
+.tk-ks{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}.tk-k{border:0;cursor:pointer;color:var(--text);text-align:left;border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;gap:2px;outline:1px solid transparent}.tk-k b{font-size:24px}.tk-k small{font-size:12px;color:var(--muted)}.tk-k.on{outline-color:var(--blue-2);box-shadow:0 0 0 3px var(--blue-soft)}
+@media (max-width:760px){.tk-ks{grid-template-columns:repeat(2,1fr)}}
+.tk-list{margin-top:14px;border-radius:16px;padding:6px;display:flex;flex-direction:column}.tk-list.mini{margin:0;padding:0;gap:6px}.tk-list.mini .tk-r{border:1px solid var(--line);border-radius:12px}
+.tk-r{display:flex;align-items:center;gap:12px;padding:10px 12px;border-bottom:1px solid var(--line)}.tk-r:last-child{border-bottom:0}.tk-r b{display:block;font-size:13.5px;cursor:pointer}.tk-r small{font-size:12px}.tk-r.done b{text-decoration:line-through;color:var(--muted)}
+.tk-c{flex:none;width:22px;height:22px;border-radius:7px;border:2px solid var(--line-2);background:none;cursor:pointer;color:#fff;font-weight:900;font-size:12px;display:grid;place-items:center}.tk-c.on{background:var(--green);border-color:var(--green)}.tk-r.overdue .tk-c{border-color:var(--coral)}
+.tk-late{color:var(--coral);font-weight:700}.tk-auto{font-size:10.5px;font-weight:800;padding:1px 6px;border-radius:5px;background:var(--blue-soft);color:var(--blue-2)}
+.tk-p{font-size:11px}.tk-p.high{background:color-mix(in srgb,var(--coral) 16%,transparent);color:var(--coral)}.tk-p.medium{background:var(--yellow-soft);color:#C9971C}.tk-p.low{background:var(--line);color:var(--muted)}
+.tk-who{display:flex;align-items:center;gap:6px;min-width:110px}.tk-who small{font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:90px}
+@media (max-width:640px){.tk-who{display:none}}
+.dt{border-radius:16px;padding:12px;margin-bottom:14px;display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:center}.dt-k{display:flex;gap:8px}.dt-k button{border:1px solid var(--line);background:var(--glass-3);border-radius:12px;padding:8px 14px;cursor:pointer;color:var(--text);display:flex;flex-direction:column;align-items:flex-start;min-width:96px}.dt-k b{font-size:20px}.dt-k small{font-size:11.5px;color:var(--muted)}.dt-l .tk-r{padding:6px 8px}
+@media (max-width:900px){.dt{grid-template-columns:1fr}}
+.tr-h,.tr-r{display:grid;grid-template-columns:150px 1fr 64px 100px 44px 34px;gap:8px;align-items:center}.tr-h{font-size:11.5px;font-weight:800;color:var(--muted);text-transform:uppercase;margin-bottom:6px}.tr-r{margin-bottom:6px}
+.pf-ks{grid-template-columns:repeat(5,minmax(0,1fr))}@media (max-width:900px){.pf-ks{grid-template-columns:repeat(2,1fr)}}
+.pf-lg{display:inline-block;width:10px;height:10px;border-radius:3px;margin:0 4px 0 10px;vertical-align:-1px}.pf-lg.wa,.pf-st .wa{background:var(--green)}.pf-lg.em,.pf-st .em{background:var(--blue-2)}.pf-lg.cl,.pf-st .cl{background:#B08CEB}
+.pf-days{display:flex;align-items:flex-end;gap:4px;height:150px;margin-top:10px}.pf-d{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;height:100%;justify-content:flex-end}.pf-st{width:100%;max-width:26px;display:flex;flex-direction:column;border-radius:5px;overflow:hidden;min-height:2px;background:var(--line)}.pf-st i{display:block;min-height:0}.pf-d small{font-size:9.5px;color:var(--muted)}
+.pf-s{display:grid;grid-template-columns:140px 1fr;gap:4px 12px;align-items:center;margin:10px 0;cursor:pointer}.pf-s>span{font-weight:700;font-size:13px}.pf-s .bar-track{position:relative;height:10px}.pf-s .bar{position:absolute;left:0;top:0;bottom:0;border-radius:6px}.pf-s .pf-r{background:var(--green)}.pf-s small{grid-column:2;font-size:11.5px;color:var(--muted)}
+.tl-f{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}.tl-f .chip small{opacity:.7;margin-left:2px}
+.jn.tl-wa::before{background:var(--green);box-shadow:0 0 0 1.5px var(--green)}.jn.tl-em::before{background:var(--blue-2);box-shadow:0 0 0 1.5px var(--blue-2)}.jn.tl-cl::before{background:#B08CEB;box-shadow:0 0 0 1.5px #B08CEB}.jn.tl-tk::before{background:var(--yellow);box-shadow:0 0 0 1.5px var(--yellow)}.jn.tl-st::before{background:var(--muted);box-shadow:0 0 0 1.5px var(--muted)}.jn.inb>b{color:var(--green)}
 .imp-batch{display:flex;flex-direction:column;gap:6px;margin:12px 0 4px;font-size:13px;font-weight:600}.imp-batch small{font-weight:500;color:var(--muted)}.imp-batch .input{max-width:320px}
 .imp-done{display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px;padding:18px 8px}.imp-ok{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;font-size:22px;font-weight:800;color:#fff;background:linear-gradient(135deg,var(--blue-2),#A78BFA)}
 .srcTag{font-style:normal;font-size:10px;font-weight:700;padding:1px 5px;border-radius:4px;margin-left:4px;vertical-align:1px}
@@ -1051,6 +1074,8 @@ body.n8l-noscroll{overflow:hidden}
     <button class="sbtn" data-go="dashboard"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg><span class="lbl">Dashboard</span></button>
     <button class="sbtn" data-go="pipeline"><svg class="i" viewBox="0 0 24 24"><circle cx="5" cy="6" r="2"/><circle cx="19" cy="6" r="2"/><circle cx="12" cy="18" r="2"/><path d="M7 6h10M6 8l5 8.3M18 8l-5 8.3"/></svg><span class="lbl">Pipeline</span></button>
     <button class="sbtn" data-go="leads"><svg class="i" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13"/><circle cx="3.5" cy="6" r="1"/><circle cx="3.5" cy="12" r="1"/><circle cx="3.5" cy="18" r="1"/></svg><span class="lbl">Leads</span></button>
+    <button class="sbtn" data-go="tasks"><svg class="i" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg><span class="lbl">Tasks</span><span class="nbadge" id="tasksBadge" hidden></span></button>
+    <button class="sbtn" data-go="calls"><svg class="i" viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg><span class="lbl">Calls</span></button>
     <button class="sbtn" data-go="industry"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M17.5 14v7M14 17.5h7"/></svg><span class="lbl">Industry Kits</span></button>
     <div class="sgrp">WhatsApp</div>
     <button class="sbtn" data-go="whatsapp"><svg class="i" viewBox="0 0 24 24"><path d="M3.5 20.5 5 16a8.5 8.5 0 1 1 3.2 3.2Z"/><path d="M9 9.5c0 3 2.5 5.5 5.5 5.5l1.2-1.4-1.9-1-1 .8a4 4 0 0 1-2.2-2.2l.8-1-1-1.9Z"/></svg><span class="lbl">Inbox</span></button>
@@ -1064,6 +1089,7 @@ body.n8l-noscroll{overflow:hidden}
     <button class="sbtn" data-go="ads"><svg class="i" viewBox="0 0 24 24"><path d="M3 11v2a1 1 0 0 0 1 1h2l5 4V6L6 10H4a1 1 0 0 0-1 1Z"/><path d="M15 8.5a4.5 4.5 0 0 1 0 7M18 5.5a8.5 8.5 0 0 1 0 13"/></svg><span class="lbl">Meta Ads</span></button>
     <div class="sgrp">Insights</div>
     <button class="sbtn" data-go="analytics"><svg class="i" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="m7 15 4-5 3 3 5-6"/></svg><span class="lbl">Analytics</span></button>
+    <button class="sbtn" data-go="performance"><svg class="i" viewBox="0 0 24 24"><circle cx="8" cy="8" r="3"/><path d="M2.5 19a5.5 5.5 0 0 1 11 0"/><path d="M15 19v-5M18 19V9M21 19v-8"/></svg><span class="lbl">Team Performance</span></button>
     <button class="sbtn" data-go="reports"><svg class="i" viewBox="0 0 24 24"><path d="M3 3v18h18"/><rect x="7" y="12" width="3" height="6" rx=".8"/><rect x="12" y="8" width="3" height="10" rx=".8"/><rect x="17" y="5" width="3" height="13" rx=".8"/></svg><span class="lbl">Reports</span></button>
     <button class="sbtn" data-go="team"><svg class="i" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4.5a3.5 3.5 0 0 1 0 7M18 14a6 6 0 0 1 3.5 6"/></svg><span class="lbl">Team</span></button>
     <div class="spacer" style="flex:1;min-height:12px"></div>
@@ -1117,6 +1143,7 @@ body.n8l-noscroll{overflow:hidden}
         </div>
         <div class="stats" id="stats"></div>
       </div>
+      <div id="dashTasks"></div>
       <div class="toolbar glass">
         <div class="tabs" id="dtabs"></div>
         <div class="grow"></div>
@@ -1181,6 +1208,26 @@ body.n8l-noscroll{overflow:hidden}
         <select class="input" id="lfArea" style="width:auto"></select>
       </div>
       <div class="table-wrap glass"><table class="tbl" id="ltable"></table></div>
+    </section>
+
+    <!-- TASKS -->
+    <section class="view" id="v-tasks">
+      <div class="head"><div><div class="eyebrow">Sales</div><h1>Tasks</h1><p class="sub">Follow-ups for your team — created automatically when a lead reaches Interested, Quotation or Negotiation.</p></div>
+        <div class="head-actions"><button class="btn primary" data-tknew=""><svg class="i" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>New task</button></div></div>
+      <div id="tasksBody"></div>
+    </section>
+
+    <!-- CALLS -->
+    <section class="view" id="v-calls">
+      <div class="head"><div><div class="eyebrow">Sales</div><h1>Calls</h1><p class="sub">Every call your team makes — who called, what happened, and what's next.</p></div>
+        <div class="head-actions"><button class="btn primary" data-calllog=""><svg class="i" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Log a call</button></div></div>
+      <div id="callsBody"></div>
+    </section>
+
+    <!-- TEAM PERFORMANCE -->
+    <section class="view" id="v-performance">
+      <div class="head"><div><div class="eyebrow">Insights</div><h1>Team Performance</h1><p class="sub">How many WhatsApp messages, emails and calls each team and person made — and what came back.</p></div></div>
+      <div id="perfBody"></div>
     </section>
 
     <!-- TEAM -->
@@ -1497,7 +1544,25 @@ function demoData() {
     A('L008', 25, 'Lead Added', 'Meta ad'), A('L008', 9, 'Stage Changed', 'Quotation Sent → Lost'),
   ];
   ['aarav@brewbites.in', 'priya@spicegarden.in', '', 'sneha@theloungebar.in', 'karan@urbanbeans.in', 'meera@chaiadda.in', 'vikram@hotelsagar.com', ''].forEach((e, i) => { if (leads[i]) leads[i].email = e; });
-  return { messages: demoMessages(), broadcasts: [], leads, activities: acts, team: [{ memberId: 'T001', name: 'Shivam', role: 'Admin', active: true }, { memberId: 'T002', name: 'Riya Patil', role: 'Sales', active: true }, { memberId: 'T003', name: 'Amit Rao', role: 'Sales', active: true }], lists: DEFAULT_LISTS, templates: [], flows: store.get('leadnode.demoFlows') || [] };
+  const AREA = { Kalyan: 'Thane', Thane: 'Thane', Mumbai: 'Mumbai', 'Navi Mumbai': 'Thane', Pune: 'Pune', Alibaug: 'Raigad' }, OWN = ['Riya Patil', 'Riya Patil', 'Amit Rao', 'Riya Patil', 'Amit Rao', 'Shivam', 'Amit Rao', 'Riya Patil'];
+  leads.forEach((l, i) => { l.state = 'Maharashtra'; l.district = AREA[l.city] || l.city; l.assignedTo = OWN[i] || l.assignedTo; });
+  leads.push(Object.assign(L('L009', 'Hardik Shah', '919800000009', 'Café Mocha', 'Cafe', 'Ahmedabad', 'Meta Ad', 220000, 'Contacted', 'Warm', ago(-1), ago(1), 'Wants catalogue for 15 chairs', ago(4)), { state: 'Gujarat', district: 'Ahmedabad', assignedTo: 'Amit Rao', email: '' }));
+  const who = ['Riya Patil', 'Amit Rao', 'Shivam']; acts.forEach((a, i) => { if (a.type !== 'Lead Added') a.doneBy = (leads.find(l => l.leadId === a.leadId) || {}).assignedTo || who[i % 3]; });
+  for (let i = 0; i < 26; i++) { const l = leads[i % leads.length]; acts.push(A(l.leadId, i % 12, i % 3 ? 'WhatsApp Sent' : 'Email Sent', i % 3 ? 'Follow-up message' : 'Catalogue email')); acts[acts.length - 1].doneBy = l.assignedTo; }
+  return { messages: demoMessages(), broadcasts: [], leads, activities: acts, calls: demoCalls(), tasks: demoTasks(), team: [{ memberId: 'T001', name: 'Shivam', role: 'Admin', active: true, team: 'Head office' }, { memberId: 'T002', name: 'Riya Patil', role: 'Sales', active: true, team: 'Mumbai Team' }, { memberId: 'T003', name: 'Amit Rao', role: 'Sales', active: true, team: 'Pune Team' }], lists: DEFAULT_LISTS, templates: [], flows: store.get('leadnode.demoFlows') || [] };
+}
+function demoAutoTask(l, old) {
+  S.tasks = S.tasks || []; S.tasks.filter(t => t.leadId === l.leadId && t.source === 'auto' && t.status === 'Open' && t.stage === old).forEach(t => { t.status = 'Closed'; t.doneBy = 'Moved to ' + l.stage; });
+  let rules; try { rules = JSON.parse((S.settings || {}).taskRulesJson || 'null'); } catch (e) { } if (!Array.isArray(rules)) rules = [{ stage: 'Interested', title: 'Call back and share catalogue / prices', days: 1, priority: 'High' }, { stage: 'Quotation Sent', title: 'Follow up on the quotation', days: 2, priority: 'High' }, { stage: 'Negotiation', title: 'Close the deal — agree the final price', days: 1, priority: 'High' }];
+  rules.filter(r => !r.off && String(r.stage).toLowerCase() === String(l.stage).toLowerCase()).forEach(r => { if (!S.tasks.some(t => t.leadId === l.leadId && t.stage === l.stage && t.status === 'Open')) S.tasks.push({ taskId: nextId(S.tasks, 'taskId', 'K'), leadId: l.leadId, title: r.title, dueAt: new Date(Date.now() + (+r.days || 0) * 864e5).toISOString(), priority: r.priority || 'Medium', assignedTo: l.assignedTo || '', status: 'Open', source: 'auto', stage: l.stage, remind: true, createdAt: new Date().toISOString() }); });
+}
+function demoCalls() {
+  const t = Date.now(), O = ['Interested', 'Answered', 'No answer', 'Callback', 'Not interested', 'Answered', 'Busy / switched off', 'Interested', 'Wrong number', 'Answered', 'No answer', 'Callback'], L = ['L001', 'L002', 'L003', 'L004', 'L005', 'L007', 'L008', 'L009'], W = { L001: 'Riya Patil', L002: 'Riya Patil', L003: 'Amit Rao', L004: 'Riya Patil', L005: 'Amit Rao', L007: 'Amit Rao', L008: 'Riya Patil', L009: 'Amit Rao' };
+  return O.map((o, i) => { const lid = L[i % L.length]; return { callId: 'C' + String(i + 1).padStart(3, '0'), leadId: lid, member: W[lid], phone: '9198000000' + lid.slice(-2), direction: 'out', outcome: o, durationSec: /No answer|Busy|Wrong/.test(o) ? 0 : 60 + i * 40, notes: o === 'Interested' ? 'Wants price list' : '', calledAt: new Date(t - i * 0.8 * 864e5).toISOString() }; });
+}
+function demoTasks() {
+  const t = Date.now(), K = (id, lid, title, dh, pr, who, src, st) => ({ taskId: id, leadId: lid, title, dueAt: new Date(t + dh * 36e5).toISOString(), priority: pr, assignedTo: who, status: st || 'Open', source: src, stage: '', remind: true, createdAt: new Date(t - 864e5).toISOString() });
+  return [K('K001', 'L001', 'Call back and share catalogue / prices', -5, 'High', 'Riya Patil', 'auto'), K('K002', 'L005', 'Follow up on the quotation', 3, 'High', 'Amit Rao', 'auto'), K('K003', 'L004', 'Close the deal — agree the final price', 26, 'High', 'Riya Patil', 'auto'), K('K004', 'L009', 'Send catalogue PDF', 50, 'Medium', 'Amit Rao', 'manual'), K('K005', 'L006', 'Arrange delivery date', -30, 'Low', 'Shivam', 'manual', 'Done')];
 }
 function nextId(arr, key, prefix) { let m = 0; arr.forEach(o => { const x = String(o[key] || '').match(new RegExp('^' + prefix + '(\\d+)$')); if (x) m = Math.max(m, +x[1]); }); return prefix + String(m + 1).padStart(3, '0'); }
 function demoApi(action, d) {
@@ -1508,13 +1573,18 @@ function demoApi(action, d) {
     case 'getAll': return S;
     case 'addLead': { const l = Object.assign({ createdOn: todayStr(), stage: 'New Lead' }, d, { leadId: nextId(S.leads, 'leadId', 'L') }); delete l.by; S.leads.push(l); log(l.leadId, 'Lead Added', 'Source: ' + (l.source || '-'), d.by); return l; }
     case 'updateLead': { const l = find(d.id); Object.assign(l, d); delete l.id; return l; }
-    case 'moveStage': { const l = find(d.id); const old = l.stage; l.stage = d.stage; l.lastContact = todayStr(); log(d.id, 'Stage Changed', old + ' → ' + d.stage, d.by); return l; }
+    case 'moveStage': { const l = find(d.id); const old = l.stage; l.stage = d.stage; l.lastContact = todayStr(); log(d.id, 'Stage Changed', old + ' → ' + d.stage, d.by); demoAutoTask(l, old); return l; }
     case 'addActivity': { const a = log(d.leadId, d.type, d.details, d.doneBy); try { find(d.leadId).lastContact = todayStr(); } catch (e) { } return a; }
     case 'deleteLead': { S.leads = S.leads.filter(l => l.leadId !== d.id); return { deleted: d.id }; }
     case 'saveBroadcast': { S.broadcasts = S.broadcasts || []; const b = Object.assign({}, d); if (!b.broadcastId) b.broadcastId = nextId(S.broadcasts, 'broadcastId', 'B'); const i = S.broadcasts.findIndex(x => x.broadcastId === b.broadcastId); if (i > -1) S.broadcasts[i] = b; else S.broadcasts.push(b); return b; }
     case 'addTeamMember': { const m = Object.assign({ active: true }, d, { memberId: nextId(S.team, 'memberId', 'T') }); S.team.push(m); return m; }
     case 'saveFlow': { const f = Object.assign({}, d, { updatedOn: nowStr() }); if (!f.flowId) f.flowId = nextId(S.flows, 'flowId', 'F'); const i = S.flows.findIndex(x => String(x.flowId) === String(f.flowId)); if (i > -1) S.flows[i] = f; else S.flows.push(f); store.set('leadnode.demoFlows', S.flows.filter(x => ['preset', 'script', 'node', 'toolset'].includes(x.trigger))); return f; }
     case 'deleteFlow': { S.flows = S.flows.filter(x => String(x.flowId) !== String(d.id)); store.set('leadnode.demoFlows', S.flows.filter(x => ['preset', 'script', 'node', 'toolset'].includes(x.trigger))); return { deleted: d.id }; }
+    case 'logCall': { S.calls = S.calls || []; const c = Object.assign({ calledAt: new Date().toISOString() }, d, { callId: nextId(S.calls, 'callId', 'C') }); S.calls.push(c); if (d.leadId) { log(d.leadId, 'Call', [d.outcome, d.durationSec ? Math.round(d.durationSec / 60) + ' min' : '', d.notes].filter(Boolean).join(' · '), d.member); try { find(d.leadId).lastContact = todayStr(); } catch (e) { } } return c; }
+    case 'deleteCall': S.calls = (S.calls || []).filter(c => c.callId !== d.id); return { deleted: d.id };
+    case 'saveTask': { S.tasks = S.tasks || []; if (d.taskId) { const t = S.tasks.find(x => x.taskId === d.taskId); if (!t) throw new Error('Task not found'); Object.assign(t, d); return t; } const t = Object.assign({ status: 'Open', createdAt: new Date().toISOString() }, d, { taskId: nextId(S.tasks, 'taskId', 'K') }); S.tasks.push(t); return t; }
+    case 'deleteTask': S.tasks = (S.tasks || []).filter(t => t.taskId !== d.id); return { deleted: d.id };
+    case 'refreshCampaigns': return [];
     case 'updateTeamMember': { const m = S.team.find(x => x.memberId === d.id); if (!m) throw new Error('Member not found'); Object.assign(m, d); delete m.id; return m; }
   }
   throw new Error('Unknown action: ' + action);
@@ -1596,9 +1666,10 @@ function finishLoad(anim) {
   applyBranding();
   applyAccess();
   renderAll(anim);
+  taskReminders(); { const b = $('#tasksBadge'), n = salesReady() ? (S.tasks || []).filter(t => t.status === 'Open' && taskState(t) === 'overdue' && (AUTH.role !== 'member' || t.assignedTo === me())).length : 0; if (b) { b.hidden = !n; b.textContent = n; } }
 }
 /** Render only the screen you're looking at; the others re-render when you open them */
-const VIEW_RENDER = { analytics: a => renderAnalytics(a), industry: a => renderIndustry(a), n8n: a => renderN8n(a), automation: () => autoCanvas().sync(), dashboard: a => renderDashboard(a), pipeline: a => renderPipeline(a), leads: a => renderLeads(a), team: a => { renderTeam(a); renderLogins(); }, broadcast: () => renderBroadcast(), whatsapp: () => renderInbox(), reports: a => renderReports(a), templates: () => renderTemplates(), scripts: () => renderScripts(true), ads: a => renderAds(a) };
+const VIEW_RENDER = { tasks: a => renderTasks(a), calls: a => renderCalls(a), performance: a => renderPerformance(a), analytics: a => renderAnalytics(a), industry: a => renderIndustry(a), n8n: a => renderN8n(a), automation: () => autoCanvas().sync(), dashboard: a => renderDashboard(a), pipeline: a => renderPipeline(a), leads: a => renderLeads(a), team: a => { renderTeam(a); renderLogins(); }, broadcast: () => renderBroadcast(), whatsapp: () => renderInbox(), reports: a => renderReports(a), templates: () => renderTemplates(), scripts: () => renderScripts(true), ads: a => renderAds(a) };
 const staleViews = new Set();
 const activeView = () => { const v = $('.view.active'); return v ? v.id.slice(2) : 'dashboard'; };
 function renderAll(anim) {
@@ -1618,6 +1689,7 @@ function fillSelects() {
 
 /* ================= dashboard ================= */
 function renderDashboard(anim) {
+  renderDashTasks();
   const L = S.leads, open = L.filter(l => !isClosed(l));
   const hot = open.filter(l => l.tag === 'Hot'), won = L.filter(l => l.stage === 'Won'), due = L.filter(isDue);
   const weekNew = L.filter(l => l.createdOn && daysBetween(l.createdOn, todayStr()) <= 7).length;
@@ -4626,7 +4698,7 @@ const areaValues = k => [...new Set((S.leads || []).map(l => String(l[k] || '').
 const PERMS = [['add', 'Add leads'], ['edit', 'Edit leads & move stages'], ['delete', 'Delete leads'], ['import', 'Import Excel / CSV'], ['export', 'Export leads'], ['whatsapp', 'WhatsApp chats'], ['email', 'Send emails'], ['broadcast', 'Bulk broadcasts'], ['calls', 'Log calls'], ['tasks', 'Tasks'], ['analytics', 'See team analytics'], ['automation', 'Automation & n8n']];
 const SCOPES = { all: ['All leads', 'Sees every lead in the business'], area: ['Only their area', 'Leads whose State, District or City is in their areas — plus leads assigned to them'], own: ['Only assigned to them', 'Just the leads where “Assign to” is this person'] };
 const can = k => !cloud || /^(owner|admin)$/.test(AUTH.role || '') || (AUTH.role === 'member' && !(AUTH.access && AUTH.access.perms && AUTH.access.perms[k] === false));
-function applyAccess() { PERMS.forEach(([k]) => document.body.classList.toggle('np-' + k, !can(k))); }
+function applyAccess() { PERMS.forEach(([k]) => document.body.classList.toggle('np-' + k, !can(k))); document.body.classList.toggle('no-sales', !(demo || (cloud && AUTH.v7))); }
 async function moveStage(id, stage) {
   const l = S.leads.find(x => x.leadId === id); if (!l || l.stage === stage) return;
   flashId = id; setTimeout(() => { flashId = null; }, 1500);
@@ -4664,7 +4736,7 @@ function renderPanel(id) {
     const idx = st.indexOf(s), done = l.stage !== 'Lost' && idx < ci, cur = s === l.stage;
     return (i ? `<span class="sbl ${done || cur ? '' : 'pend'}"></span>` : '') + `<button class="sb ${done ? 'done' : ''} ${cur ? 'cur' : ''}" data-stage="${esc(s)}"><i></i><span>${esc(s)}</span></button>`;
   }).join('') + (st.includes('Lost') ? `<span class="sbl pend"></span><button class="sb lost ${l.stage === 'Lost' ? 'cur' : ''}" data-stage="Lost"><i></i><span>Lost</span></button>` : '');
-  const acts = actsOf(id);
+  const acts = actsOf(id), tl = leadTimeline(id);
   const nextStage = nextStageOf(l.stage);
   const journey = acts.map((a, i) => `<div class="jn" style="--i:${i}"><b>${esc(a.type)}</b>${a.details ? `<p>${esc(a.details)}</p>` : ''}<time>${esc(fmtDT(a.dateTime))}${a.doneBy ? ' · ' + esc(a.doneBy) : ''}</time></div>`).join('')
     + (l.followUpDate && !isClosed(l) ? `<div class="jn next"><b>Next follow-up</b><p>${esc(fmtDate(l.followUpDate))}${isDue(l) ? ' · <span style="color:var(--coral);font-weight:700">due</span>' : ''}</p></div>` : '');
@@ -4678,7 +4750,7 @@ function renderPanel(id) {
       ${aiSummaryHTML(l)}
       <div class="p-actions">
         <a class="btn wa" href="${waLink(l.phone, 'Hi ' + (l.name || '').split(' ')[0] + ', ')}" target="_blank" rel="noopener" ${l.phone ? '' : 'style="pointer-events:none;opacity:.5"'}>${I.wa}WhatsApp</a>
-        <a class="btn" href="tel:+${esc(String(l.phone || '').replace(/\D/g, ''))}">${I.phone}Call</a>
+        <a class="btn" href="tel:+${esc(String(l.phone || '').replace(/\D/g, ''))}" data-calllog="${esc(l.leadId)}">${I.phone}Call</a>
         <button class="btn" data-focus-note>${I.note}Note</button>
         <button class="btn" data-edit="${esc(l.leadId)}">${I.edit}Edit</button>
       </div>
@@ -4688,6 +4760,7 @@ function renderPanel(id) {
         <div><small>Email</small><b style="word-break:break-all">${l.email ? `<a href="mailto:${esc(l.email)}">${esc(l.email)}</a>` : '-'}${l.emailOptOut === true ? ' <span class="pill lost">unsubscribed</span>' : ''}</b></div>
         <div><small>Budget</small><b>${inr(l.budget)}</b></div>
         <div><small>Business type</small><b>${esc(l.businessType || '-')}</b></div>
+        <div><small>Area</small><b>${esc([l.city, l.district, l.state].filter(Boolean).filter((v, i, a) => a.indexOf(v) === i).join(', ') || '-')}</b></div>
         <div><small>Source</small><b>${esc(l.source || '-')}</b></div>
         <div><small>Assigned to</small><b>${esc(l.assignedTo || '-')}</b></div>
         <div><small>Follow-up</small><b style="${isDue(l) ? 'color:var(--coral)' : ''}">${esc(l.followUpDate ? fmtDate(l.followUpDate) : '-')}</b></div>
@@ -4700,8 +4773,12 @@ function renderPanel(id) {
       <div class="notebox"><div class="row"><select class="input" id="ntype" style="width:150px">${types.map(t => `<option>${esc(t)}</option>`).join('')}</select>
         <input class="input" id="ntext" placeholder="What happened? (e.g. spoke on a call)"></div>
         <div class="row" style="justify-content:flex-end"><button class="btn primary sm" id="nsave">Add to Journey</button></div></div>
-      <div><div class="sec-t" style="margin-bottom:12px">Journey <span class="muted" style="font-weight:500;font-size:12px">${acts.length} steps</span></div>
-        <div class="journey">${journey || '<p class="muted">No activity yet.</p>'}</div></div>
+      ${salesReady() ? `<div><div class="sec-t" style="margin-bottom:8px;display:flex;align-items:center">Tasks <span class="grow"></span><button class="btn sm" data-tknew="${esc(l.leadId)}">+ Task</button><button class="btn sm" data-calllog="${esc(l.leadId)}" style="margin-left:6px">${I.phone}Log call</button></div>
+        <div class="tk-list mini">${(S.tasks || []).filter(t => t.leadId === l.leadId && t.status === 'Open').map(taskRow).join('') || '<p class="muted" style="margin:0">No open tasks.</p>'}</div></div>` : ''}
+      <div><div class="sec-t" style="margin-bottom:8px">Timeline <span class="muted" style="font-weight:500;font-size:12px">${tl.length} events</span></div>
+        <div class="tl-f">${[['', 'All'], ['wa', 'WhatsApp'], ['em', 'Email'], ['cl', 'Calls'], ['tk', 'Tasks'], ['st', 'Stages'], ['nt', 'Notes']].map(([k, n]) => `<button class="chip ${SALES.tlFilter === k ? 'on' : ''}" data-tlf="${k}">${n}${k ? ` <small>${tl.filter(x => x.kind === k).length}</small>` : ''}</button>`).join('')}</div>
+        <div class="journey tl">${tl.filter(x => !SALES.tlFilter || x.kind === SALES.tlFilter).map((a, i) => `<div class="jn tl-${a.kind} ${a.inb ? 'inb' : ''} ${a.open ? 'next' : ''}" style="--i:${i}"><b>${esc(a.title)}</b>${a.text ? `<p>${esc(a.text)}</p>` : ''}<time>${esc(a.t ? fmtWhen(new Date(a.t).toISOString()) : '')}${a.by ? ' · ' + esc(a.by) : ''}</time></div>`).join('') || '<p class="muted">No activity yet.</p>'}
+        ${l.followUpDate && !isClosed(l) ? `<div class="jn next"><b>Next follow-up</b><p>${esc(fmtDate(l.followUpDate))}${isDue(l) ? ' · <span style="color:var(--coral);font-weight:700">due</span>' : ''}</p></div>` : ''}</div></div>
     </div>
     <div class="p-foot">
       ${l.stage !== 'Lost' && l.stage !== 'Won' ? '<button class="btn danger" data-move="Lost">Mark as Lost</button>' : `<button class="btn danger" data-delete="${esc(l.leadId)}">Delete Lead</button>`}
@@ -6039,12 +6116,249 @@ function go(name) {
   if (name === 'n8n') renderN8n(true);
   if (name === 'industry') renderIndustry(true);
   if (name === 'analytics') renderAnalytics(true);
+  if (name === 'tasks') renderTasks(true);
+  if (name === 'calls') renderCalls(true);
+  if (name === 'performance') renderPerformance(true);
   if (name === 'automation') requestAnimationFrame(() => autoCanvas().sync());
   if (name === 'templates' && stale) renderTemplates();
   closePops();
   window.scrollTo(0, 0);
 }
 window.addEventListener('hashchange', () => go(location.hash.slice(1)));
+
+/* ================= sales execution: calls, tasks, timeline, team performance ================= */
+const salesReady = () => demo || (cloud && AUTH.v7);
+async function refreshData() { if (demo) renderAll(); else await load(true); }
+const CALL_OUT = [['Interested', 'pos', '🔥'], ['Answered', 'pos', '✓'], ['Callback', 'pos', '↻'], ['No answer', 'none', '…'], ['Busy / switched off', 'none', '⦸'], ['Not interested', 'neg', '✕'], ['Wrong number', 'neg', '#']];
+const callKind = o => (CALL_OUT.find(x => x[0] === o) || [0, 'none'])[1];
+const PRIO = ['High', 'Medium', 'Low'];
+const tsOf = v => { if (!v) return 0; const d = new Date(String(v).length === 16 ? String(v).replace(' ', 'T') : v); return isNaN(d) ? 0 : d.getTime(); };
+const fmtWhen = v => { const t = tsOf(v); if (!t) return '-'; const d = new Date(t); return fmtDate(d.toISOString().slice(0, 10)) + ' ' + String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0'); };
+const leadName = id => { const l = S.leads.find(x => x.leadId === id); return l ? l.name : ''; };
+const teamNames = () => [...new Set(S.team.filter(t => t.active !== false && t.name).map(t => t.name))];
+const SALES = { taskTab: 'open', taskWho: '', callP: 30, callWho: '', callOut: '', perfP: 30, perfTeam: '', perfWho: '', perfState: '', tlFilter: '' };
+
+/* ---------- call logging ---------- */
+function openCallLog(leadId) {
+  if (!salesReady()) return toast('Calls need the Nodevers cloud with database update 07.', true);
+  const l = leadId && S.leads.find(x => x.leadId === leadId); let out = '';
+  $('#stageBox').innerHTML = `<div class="m-head"><h2>Log a call</h2><button class="ibtn" data-close>${I.x}</button></div>
+    ${l ? `<p class="help" style="margin-bottom:10px">${avatar(l.name, 'sm', l.clientPhoto)} <b>${esc(l.name)}</b> · ${l.phone ? '+' + esc(l.phone) : 'no phone'}${l.phone ? ` · <a href="tel:+${esc(l.phone)}">Call again</a>` : ''}</p>`
+      : `<div class="field"><label>Lead</label><input class="input" id="clLead" list="dlLeadsAll" placeholder="Type a name or number"><datalist id="dlLeadsAll">${S.leads.slice(0, 800).map(x => `<option value="${esc(x.name + ' · ' + (x.phone ? '+' + x.phone : x.leadId))}">`).join('')}</datalist></div>`}
+    <div class="field"><label>What happened?</label><div class="cl-outs">${CALL_OUT.map(([o, k, ic]) => `<button type="button" class="cl-o ${k}" data-clout="${esc(o)}"><span>${ic}</span>${esc(o)}</button>`).join('')}</div></div>
+    <div class="form" style="grid-template-columns:140px 1fr;margin-top:6px"><div class="field"><label>Duration (min)</label><input class="input" id="clDur" type="number" min="0" step="1" placeholder="3"></div>
+      <div class="field"><label>Notes</label><input class="input" id="clNotes" maxlength="400" placeholder="e.g. wants price list for 30 chairs"></div></div>
+    <label class="check" id="clTaskWrap" hidden><input type="checkbox" id="clTask" checked> Create a follow-up task in <input class="input sm" id="clDays" type="number" min="0" max="60" value="1" style="width:64px;display:inline-block"> day(s)</label>
+    <label class="check" id="clLostWrap" hidden><input type="checkbox" id="clLost"> Mark this lead as <b>Lost</b></label>
+    <div class="m-foot"><div class="grow"></div><button class="btn" data-close>Cancel</button><button class="btn primary" id="clSave">Save call</button></div>`;
+  $('#stageBox').querySelector('.cl-outs').onclick = e => { const b = e.target.closest('[data-clout]'); if (!b) return; out = b.dataset.clout; $$('#stageBox .cl-o').forEach(x => x.classList.toggle('on', x === b)); $('#clTaskWrap').hidden = !['Callback', 'Interested', 'No answer', 'Busy / switched off'].includes(out); $('#clLostWrap').hidden = callKind(out) !== 'neg'; $('#clDays').value = out === 'Interested' ? 1 : out === 'Callback' ? 1 : 2; };
+  $('#clSave').onclick = async () => {
+    let lead = l;
+    if (!lead) { const v = ($('#clLead').value || '').trim(); lead = S.leads.find(x => v === x.name + ' · ' + (x.phone ? '+' + x.phone : x.leadId)) || S.leads.find(x => x.name.toLowerCase() === v.toLowerCase()); if (!lead) return toast('Pick a lead from the list', true); }
+    if (!out) return toast('Choose what happened on the call', true);
+    const b = $('#clSave'); b.disabled = true;
+    try {
+      await api('logCall', { leadId: lead.leadId, phone: lead.phone || '', outcome: out, durationSec: Math.round((+$('#clDur').value || 0) * 60), notes: $('#clNotes').value.trim(), member: me(), direction: 'out', calledAt: nowStr() });
+      if (!$('#clTaskWrap').hidden && $('#clTask').checked) { const due = new Date(Date.now() + (+$('#clDays').value || 0) * 864e5); due.setHours(11, 0, 0, 0); await api('saveTask', { leadId: lead.leadId, title: (out === 'Callback' ? 'Call back' : out === 'Interested' ? 'Follow up — interested' : 'Try calling again') + ' · ' + lead.name, dueAt: due.toISOString(), priority: out === 'Interested' ? 'High' : 'Medium', assignedTo: lead.assignedTo || me(), status: 'Open', source: 'call', remind: true }); }
+      if (!$('#clLostWrap').hidden && $('#clLost').checked && lead.stage !== 'Lost') await api('moveStage', { id: lead.leadId, stage: 'Lost', by: me() });
+      hideModal('#stageModal'); toast('✓ Call saved'); await refreshData(); if (ui.openId) renderPanel(ui.openId);
+    } catch (e) { toast(e.message, true); b.disabled = false; }
+  };
+  showModal('#stageModal');
+}
+
+/* ---------- tasks ---------- */
+const taskState = t => t.status !== 'Open' ? 'done' : tsOf(t.dueAt) < Date.now() ? 'overdue' : tsOf(t.dueAt) < new Date(new Date().setHours(23, 59, 59, 999)).getTime() ? 'today' : 'upcoming';
+const myTasks = list => list.filter(t => !SALES.taskWho ? true : SALES.taskWho === '__me' ? (t.assignedTo || '') === me() : t.assignedTo === SALES.taskWho);
+function openTask(t, leadId) {
+  if (!salesReady()) return toast('Tasks need the Nodevers cloud with database update 07.', true);
+  const x = t || { title: '', leadId: leadId || '', dueAt: '', priority: 'Medium', assignedTo: (leadId && (S.leads.find(l => l.leadId === leadId) || {}).assignedTo) || me(), notes: '', remind: true };
+  const due = new Date(tsOf(x.dueAt) || Date.now() + 864e5), local = new Date(due.getTime() - due.getTimezoneOffset() * 6e4).toISOString().slice(0, 16);
+  const ln = x.leadId ? S.leads.find(l => l.leadId === x.leadId) : null;
+  $('#stageBox').innerHTML = `<div class="m-head"><h2>${t ? 'Edit task' : 'New task'}</h2><button class="ibtn" data-close>${I.x}</button></div>
+    <div class="form" style="grid-template-columns:1fr 1fr">
+      <div class="field full"><label>Task</label><input class="input" id="tkTitle" maxlength="200" value="${esc(x.title)}" placeholder="e.g. Send quotation for 30 chairs"></div>
+      <div class="field full"><label>Lead (optional)</label><input class="input" id="tkLead" list="dlLeadsT" value="${ln ? esc(ln.name + ' · ' + (ln.phone ? '+' + ln.phone : ln.leadId)) : ''}" placeholder="Type a name"><datalist id="dlLeadsT">${S.leads.slice(0, 800).map(l => `<option value="${esc(l.name + ' · ' + (l.phone ? '+' + l.phone : l.leadId))}">`).join('')}</datalist></div>
+      <div class="field"><label>Due</label><input class="input" id="tkDue" type="datetime-local" value="${local}"></div>
+      <div class="field"><label>Priority</label><select class="input" id="tkPrio">${PRIO.map(p => `<option ${p === x.priority ? 'selected' : ''}>${p}</option>`).join('')}</select></div>
+      <div class="field"><label>Assign to</label><select class="input" id="tkWho">${[...new Set(teamNames().concat([me(), x.assignedTo].filter(Boolean)))].map(n => `<option ${n === x.assignedTo ? 'selected' : ''}>${esc(n)}</option>`).join('')}</select></div>
+      <div class="field"><label>Reminder</label><label class="check" style="margin-top:8px"><input type="checkbox" id="tkRem" ${x.remind !== false ? 'checked' : ''}> Remind when it is due</label></div>
+      <div class="field full"><label>Notes</label><textarea class="input" id="tkNotes" rows="2">${esc(x.notes || '')}</textarea></div></div>
+    <div class="m-foot">${t ? `<button class="btn danger" id="tkDel">Delete</button>` : ''}<div class="grow"></div><button class="btn" data-close>Cancel</button><button class="btn primary" id="tkSave">${t ? 'Save' : 'Add task'}</button></div>`;
+  $('#tkSave').onclick = async () => {
+    const title = $('#tkTitle').value.trim(); if (!title) return toast('Write what needs to be done', true);
+    const v = $('#tkLead').value.trim(), lead = v ? S.leads.find(l => v === l.name + ' · ' + (l.phone ? '+' + l.phone : l.leadId)) || S.leads.find(l => l.name.toLowerCase() === v.toLowerCase()) : null;
+    if (v && !lead) return toast('Pick the lead from the list (or leave it empty)', true);
+    const b = $('#tkSave'); b.disabled = true;
+    try { await api('saveTask', Object.assign({}, t ? { taskId: t.taskId } : { status: 'Open', source: 'manual' }, { title, leadId: lead ? lead.leadId : '', dueAt: new Date($('#tkDue').value).toISOString(), priority: $('#tkPrio').value, assignedTo: $('#tkWho').value, notes: $('#tkNotes').value.trim(), remind: $('#tkRem').checked })); hideModal('#stageModal'); toast(t ? '✓ Task saved' : '✓ Task added'); await refreshData(); if (ui.openId) renderPanel(ui.openId); }
+    catch (e) { toast(e.message, true); b.disabled = false; }
+  };
+  if (t) $('#tkDel').onclick = async () => { if (!confirm('Delete this task?')) return; try { await api('deleteTask', { id: t.taskId }); hideModal('#stageModal'); toast('Task deleted'); await refreshData(); } catch (e) { toast(e.message, true); } };
+  showModal('#stageModal'); setTimeout(() => $('#tkTitle').focus(), 50);
+}
+async function doneTask(id, done) {
+  const t = S.tasks.find(x => x.taskId === id); if (!t) return;
+  try { await api('saveTask', { taskId: id, status: done ? 'Done' : 'Open', doneAt: done ? new Date().toISOString() : '', doneBy: done ? me() : '' }); if (done && t.leadId) await api('addActivity', { leadId: t.leadId, type: 'Task Done', details: t.title, doneBy: me() }).catch(() => { }); toast(done ? '✓ Task done' : 'Task re-opened'); await refreshData(); if (ui.openId) renderPanel(ui.openId); }
+  catch (e) { toast(e.message, true); }
+}
+const taskRow = t => { const s = taskState(t), l = t.leadId && S.leads.find(x => x.leadId === t.leadId); return `<div class="tk-r ${s}">
+  <button class="tk-c ${t.status !== 'Open' ? 'on' : ''}" data-tkdone="${esc(t.taskId)}" title="${t.status === 'Open' ? 'Mark done' : 'Re-open'}">${t.status !== 'Open' ? '✓' : ''}</button>
+  <div class="grow"><b data-tkedit="${esc(t.taskId)}">${esc(t.title)}</b><small class="muted">${l ? `<a data-open="${esc(l.leadId)}">${esc(l.name)}</a> · ` : ''}${s === 'overdue' ? '<span class="tk-late">Overdue · </span>' : ''}${t.status === 'Open' ? 'Due ' + esc(fmtWhen(t.dueAt)) : esc(t.status) + (t.doneBy ? ' · ' + esc(t.doneBy) : '')}${t.source === 'auto' ? ' · <span class="tk-auto">auto</span>' : ''}</small></div>
+  <span class="pill tk-p ${String(t.priority || '').toLowerCase()}">${esc(t.priority || 'Medium')}</span><span class="tk-who">${avatar(t.assignedTo || '?', 'sm')}<small>${esc(t.assignedTo || '—')}</small></span></div>`; };
+function renderTasks(anim) {
+  const box = $('#tasksBody'); if (!box) return;
+  if (!salesReady()) { box.innerHTML = `<div class="tp-empty glass"><b>Tasks need the 07 database update</b><p class="muted">Run <code>07_teams_tasks_calls.sql</code> in Supabase → SQL Editor, then refresh.</p></div>`; return; }
+  if (SALES.taskWho === '' && AUTH.role === 'member') SALES.taskWho = '__me';
+  const all = myTasks(S.tasks || []), by = k => all.filter(t => taskState(t) === k);
+  const groups = { open: all.filter(t => t.status === 'Open'), overdue: by('overdue'), today: by('today'), upcoming: by('upcoming'), done: all.filter(t => t.status !== 'Open') };
+  const list = groups[SALES.taskTab].slice().sort((a, b) => SALES.taskTab === 'done' ? tsOf(b.doneAt) - tsOf(a.doneAt) : tsOf(a.dueAt) - tsOf(b.dueAt) || PRIO.indexOf(a.priority) - PRIO.indexOf(b.priority));
+  const kpi = (k, n, l, c) => `<button class="tk-k glass ${SALES.taskTab === k ? 'on' : ''}" data-tktab="${k}"><b style="${c ? 'color:' + c : ''}">${n}</b><small>${l}</small></button>`;
+  box.innerHTML = `<div class="tk-ks">${kpi('open', groups.open.length, 'All open')}${kpi('overdue', groups.overdue.length, 'Overdue', groups.overdue.length ? 'var(--coral)' : '')}${kpi('today', groups.today.length, 'Due today', 'var(--blue-2)')}${kpi('upcoming', groups.upcoming.length, 'Upcoming')}${kpi('done', groups.done.length, 'Done')}</div>
+    <div class="toolbar glass" style="margin-top:14px"><select class="input" id="tkWhoF" style="width:auto"><option value="__me" ${SALES.taskWho === '__me' ? 'selected' : ''}>My tasks</option><option value="" ${SALES.taskWho === '' ? 'selected' : ''}>Everyone</option>${teamNames().map(n => `<option ${SALES.taskWho === n ? 'selected' : ''}>${esc(n)}</option>`).join('')}</select><div class="grow"></div>
+      ${canAdmin() || demo ? '<button class="btn" data-tkrules>⚙ Auto-task rules</button>' : ''}</div>
+    <div class="tk-list glass">${list.map(taskRow).join('') || `<p class="muted" style="padding:16px">${SALES.taskTab === 'overdue' ? 'Nothing overdue 🎉' : 'No tasks here.'}</p>`}</div>`;
+  stagger(box, anim);
+}
+function openTaskRules() {
+  let rules; try { rules = JSON.parse((S.settings || {}).taskRulesJson || 'null'); } catch (e) { rules = null; }
+  if (!Array.isArray(rules)) rules = [{ stage: 'Interested', title: 'Call back and share catalogue / prices', days: 1, priority: 'High' }, { stage: 'Quotation Sent', title: 'Follow up on the quotation', days: 2, priority: 'High' }, { stage: 'Negotiation', title: 'Close the deal — agree the final price', days: 1, priority: 'High' }];
+  const draw = () => { $('#trRows').innerHTML = rules.map((r, i) => `<div class="tr-r"><select class="input sm" data-tr="${i}" data-k="stage">${stages().filter(s => s !== 'Lost').map(s => `<option ${s === r.stage ? 'selected' : ''}>${esc(s)}</option>`).join('')}</select><input class="input sm" data-tr="${i}" data-k="title" value="${esc(r.title)}"><input class="input sm" type="number" min="0" max="60" data-tr="${i}" data-k="days" value="${+r.days || 0}" title="Due after (days)"><select class="input sm" data-tr="${i}" data-k="priority">${PRIO.map(p => `<option ${p === r.priority ? 'selected' : ''}>${p}</option>`).join('')}</select><button type="button" class="switch ${r.off ? '' : 'on'}" data-troff="${i}"></button><button type="button" class="ibtn" data-trdel="${i}">${I.x}</button></div>`).join(''); };
+  $('#stageBox').innerHTML = `<div class="m-head"><h2>Auto-task rules</h2><button class="ibtn" data-close>${I.x}</button></div>
+    <p class="help" style="margin-bottom:10px">When a lead moves into a stage, Nodevers creates this task for the lead's owner. When it moves on, the old auto task closes by itself.</p>
+    <div class="tr-h"><span>Stage</span><span>Task</span><span>Days</span><span>Priority</span><span>On</span><span></span></div><div id="trRows"></div>
+    <button class="btn sm" id="trAdd" style="margin-top:8px">+ Add rule</button>
+    <div class="m-foot"><div class="grow"></div><button class="btn" data-close>Cancel</button><button class="btn primary" id="trSave">Save rules</button></div>`;
+  $('#stageBox').oninput = e => { const f = e.target.closest('[data-tr]'); if (f) rules[+f.dataset.tr][f.dataset.k] = f.dataset.k === 'days' ? +f.value : f.value; };
+  $('#stageBox').onchange = $('#stageBox').oninput;
+  $('#stageBox').onclick = e => { const o = e.target.closest('[data-troff]'); if (o) { const r = rules[+o.dataset.troff]; r.off = !r.off; return draw(); } const d = e.target.closest('[data-trdel]'); if (d) { rules.splice(+d.dataset.trdel, 1); return draw(); } if (e.target.closest('#trAdd')) { rules.push({ stage: stages()[1] || stages()[0], title: 'Follow up', days: 1, priority: 'Medium' }); draw(); } };
+  $('#trSave').onclick = async () => { try { await api('saveSettings', { taskRulesJson: JSON.stringify(rules.filter(r => r.title)) }); S.settings = Object.assign(S.settings || {}, { taskRulesJson: JSON.stringify(rules) }); hideModal('#stageModal'); toast('✓ Rules saved'); } catch (e) { toast(e.message, true); } };
+  draw(); showModal('#stageModal');
+}
+function renderDashTasks() {
+  const box = $('#dashTasks'); if (!box) return;
+  if (!salesReady() || !can('tasks')) { box.innerHTML = ''; return; }
+  const mine = (S.tasks || []).filter(t => t.status === 'Open' && (AUTH.role !== 'member' || (t.assignedTo || '') === me()));
+  const over = mine.filter(t => taskState(t) === 'overdue'), today = mine.filter(t => taskState(t) === 'today');
+  const top = over.concat(today).sort((a, b) => tsOf(a.dueAt) - tsOf(b.dueAt)).slice(0, 4);
+  box.innerHTML = `<div class="dt glass"><div class="dt-k"><button data-gotasks="overdue"><b style="color:${over.length ? 'var(--coral)' : 'inherit'}">${over.length}</b><small>Overdue tasks</small></button><button data-gotasks="today"><b style="color:var(--blue-2)">${today.length}</b><small>Due today</small></button><button data-gotasks="open"><b>${mine.length}</b><small>Pending</small></button></div>
+    <div class="dt-l">${top.map(taskRow).join('') || '<p class="muted" style="margin:6px 0">No tasks due today — nice. Tasks appear here when leads move to Interested, Quotation or Negotiation.</p>'}</div></div>`;
+}
+let remindedOnce = false;
+function taskReminders() {
+  if (remindedOnce || !salesReady()) return; remindedOnce = true;
+  const due = (S.tasks || []).filter(t => t.status === 'Open' && t.remind !== false && (t.assignedTo || '') === me() && tsOf(t.dueAt) < Date.now() + 36e5);
+  if (due.length) setTimeout(() => toast(`⏰ ${due.length} task${due.length > 1 ? 's are' : ' is'} due — open Tasks`), 1500);
+}
+
+/* ---------- calls page ---------- */
+const inPeriod = (v, days) => !days || tsOf(v) >= Date.now() - days * 864e5;
+function renderCalls(anim) {
+  const box = $('#callsBody'); if (!box) return;
+  if (!salesReady()) { box.innerHTML = `<div class="tp-empty glass"><b>Calls need the 07 database update</b><p class="muted">Run <code>07_teams_tasks_calls.sql</code> in Supabase → SQL Editor, then refresh.</p></div>`; return; }
+  const all = (S.calls || []).filter(c => inPeriod(c.calledAt, SALES.callP) && (!SALES.callWho || c.member === SALES.callWho));
+  const list = all.filter(c => !SALES.callOut || c.outcome === SALES.callOut).sort((a, b) => tsOf(b.calledAt) - tsOf(a.calledAt));
+  const pos = all.filter(c => callKind(c.outcome) === 'pos').length, neg = all.filter(c => callKind(c.outcome) === 'neg').length, dur = all.reduce((s, c) => s + (+c.durationSec || 0), 0);
+  const members = [...new Set((S.calls || []).map(c => c.member).filter(Boolean).concat(teamNames()))];
+  const tile = (n, l, c) => `<div class="n8l-k glass"><b style="${c ? 'color:' + c : ''}">${n}</b><small class="muted">${l}</small></div>`;
+  const oc = CALL_OUT.map(([o, k]) => [o, k, all.filter(c => c.outcome === o).length]), mx = Math.max(1, ...oc.map(x => x[2]));
+  box.innerHTML = `<div class="n8l-ks">${tile(all.length, 'Calls')}${tile(all.length ? Math.round(pos / all.length * 100) + '%' : '—', 'Connected (answered / interested / callback)', 'var(--green)')}${tile(all.filter(c => c.outcome === 'Interested').length, 'Interested', 'var(--blue-2)')}${tile(neg, 'Rejected', neg ? 'var(--coral)' : '')}</div>
+    <div class="rgrid" style="margin-top:14px;grid-template-columns:minmax(0,2fr) minmax(0,1fr)">
+      <div class="rcard glass"><div class="n8l-h"><h3>Call log</h3>
+        <select class="input sm" id="clP" style="max-width:120px">${[[1, 'Today'], [7, '7 days'], [30, '30 days'], [90, '90 days'], [0, 'All time']].map(([v, n]) => `<option value="${v}" ${SALES.callP === v ? 'selected' : ''}>${n}</option>`).join('')}</select>
+        <select class="input sm" id="clWho" style="max-width:150px"><option value="">Everyone</option>${members.map(n => `<option ${n === SALES.callWho ? 'selected' : ''}>${esc(n)}</option>`).join('')}</select>
+        <select class="input sm" id="clOut" style="max-width:150px"><option value="">Any result</option>${CALL_OUT.map(([o]) => `<option ${o === SALES.callOut ? 'selected' : ''}>${esc(o)}</option>`).join('')}</select></div>
+        <div class="n8l-list" style="max-height:560px">${list.map(c => `<div class="n8l-r cl-row ${callKind(c.outcome)}"><span class="n8l-i">${(CALL_OUT.find(x => x[0] === c.outcome) || [0, 0, '•'])[2]}</span><div class="grow"><b>${c.leadId ? `<a data-open="${esc(c.leadId)}">${esc(leadName(c.leadId) || c.leadId)}</a>` : esc(c.phone || 'Unknown')}</b><small class="muted">${esc(c.outcome || '-')} · ${esc(c.member || '-')} · ${esc(fmtWhen(c.calledAt))}${+c.durationSec ? ' · ' + Math.round(c.durationSec / 60) + ' min' : ''}${c.notes ? ' · ' + esc(c.notes) : ''}</small></div></div>`).join('') || '<p class="muted">No calls yet. Open a lead → Call, then save what happened.</p>'}</div></div>
+      <div class="rcard glass"><h3>Results</h3><p class="sub muted">What happened on the calls</p>${oc.map(([o, k, n]) => `<div class="cl-bar ${k}"><span>${esc(o)}</span><div class="bar-track"><div class="bar" style="width:${n / mx * 100}%"></div></div><b>${n}</b></div>`).join('')}
+        <p class="help" style="margin-top:10px">Talk time: <b>${Math.round(dur / 60)} min</b></p></div></div>`;
+  stagger(box, anim);
+}
+
+/* ---------- team performance (for the boss) ---------- */
+async function perfMembers() {
+  if (cloud && canAdmin() && !AUTH.members) { try { AUTH.members = await sbq(AUTH.client.rpc('list_members', { p_ws: AUTH.ws })); } catch (e) { AUTH.members = []; } }
+  const fromLogins = (AUTH.members || []).map(m => ({ name: m.name, team: m.team_name || '' }));
+  const known = new Set(fromLogins.map(m => m.name));
+  return fromLogins.concat(S.team.filter(t => t.name && !known.has(t.name)).map(t => ({ name: t.name, team: t.team || '' })));
+}
+async function renderPerformance(anim) {
+  const box = $('#perfBody'); if (!box) return;
+  const P = SALES, days = P.perfP, mem = await perfMembers(), teamOf = n => (mem.find(m => m.name === n) || {}).team || '';
+  const leadOk = l => (!P.perfState || l.state === P.perfState);
+  const leadsById = new Map(S.leads.map(l => [l.leadId, l]));
+  const acts = S.activities.filter(a => inPeriod(a.dateTime, days) && (!a.leadId || !leadsById.get(a.leadId) || leadOk(leadsById.get(a.leadId))));
+  const calls = (S.calls || []).filter(c => inPeriod(c.calledAt, days) && (!c.leadId || !leadsById.get(c.leadId) || leadOk(leadsById.get(c.leadId))));
+  const inbound = (S.messages || []).filter(m => m.direction === 'in' && inPeriod(m.time, days));
+  const firstIn = new Map(); inbound.forEach(m => { const t = tsOf(m.time); if (m.leadId && (!firstIn.has(m.leadId) || firstIn.get(m.leadId) < t)) firstIn.set(m.leadId, t); });
+  const people = [...new Set(mem.map(m => m.name).concat(acts.map(a => a.doneBy), calls.map(c => c.member)).filter(n => n && n !== 'Customer' && n !== 'System'))];
+  const row = n => {
+    const a = acts.filter(x => x.doneBy === n), c = calls.filter(x => x.member === n), wa = a.filter(x => x.type === 'WhatsApp Sent'), em = a.filter(x => x.type === 'Email Sent');
+    const touched = new Set(a.filter(x => /WhatsApp Sent|Email Sent|Call/.test(x.type)).map(x => x.leadId).concat(c.map(x => x.leadId)).filter(Boolean));
+    const waLeads = new Set(wa.map(x => x.leadId)), replied = [...waLeads].filter(id => firstIn.has(id) && firstIn.get(id) > Math.min(...wa.filter(x => x.leadId === id).map(x => tsOf(x.dateTime))));
+    const respSet = new Set(replied.concat(c.filter(x => callKind(x.outcome) === 'pos').map(x => x.leadId)).filter(Boolean)), negCalls = c.filter(x => callKind(x.outcome) === 'neg').length;
+    const lost = a.filter(x => x.type === 'Stage Changed' && /→ Lost$/.test(x.details || '')).length, stops = [...waLeads].filter(id => (leadsById.get(id) || {}).waOptOut === true).length;
+    const mine = S.leads.filter(l => l.assignedTo === n && leadOk(l));
+    return { n, team: teamOf(n) || '—', wa: wa.length, em: em.length, calls: c.length, contacted: touched.size, responses: respSet.size, rejected: negCalls + lost + stops, leads: mine.length, won: mine.filter(l => l.stage === 'Won').length };
+  };
+  let rows = people.map(row).filter(r => (!P.perfTeam || r.team === P.perfTeam) && (!P.perfWho || r.n === P.perfWho));
+  rows = rows.filter(r => r.wa + r.em + r.calls + r.leads > 0 || P.perfWho === r.n).sort((a, b) => (b.wa + b.em + b.calls) - (a.wa + a.em + a.calls));
+  const sum = k => rows.reduce((s, r) => s + r[k], 0), rate = (a, b) => b ? Math.round(a / b * 100) + '%' : '—';
+  const teams = [...new Set(rows.map(r => r.team))].map(t => { const rs = rows.filter(r => r.team === t), g = k => rs.reduce((s, r) => s + r[k], 0); return { t, n: rs.length, wa: g('wa'), em: g('em'), calls: g('calls'), contacted: g('contacted'), responses: g('responses'), rejected: g('rejected'), won: g('won') }; }).sort((a, b) => b.responses - a.responses);
+  const states = [...new Set(S.leads.map(l => l.state || '').filter(Boolean))].map(st => {
+    const ls = S.leads.filter(l => l.state === st), ids = new Set(ls.map(l => l.leadId));
+    const contacted = new Set(acts.filter(a => ids.has(a.leadId) && /WhatsApp Sent|Email Sent|Call/.test(a.type)).map(a => a.leadId)).size;
+    const resp = new Set([...ids].filter(id => firstIn.has(id)).concat(calls.filter(c => ids.has(c.leadId) && callKind(c.outcome) === 'pos').map(c => c.leadId))).size;
+    return { st, leads: ls.length, contacted, resp, won: ls.filter(l => l.stage === 'Won').length, lost: ls.filter(l => l.stage === 'Lost').length };
+  }).sort((a, b) => b.leads - a.leads);
+  const mxs = Math.max(1, ...states.map(s => s.leads));
+  const daysN = days || 30, dayKeys = Array.from({ length: Math.min(daysN, 30) }, (_, i) => { const d = new Date(Date.now() - (Math.min(daysN, 30) - 1 - i) * 864e5); return d.toISOString().slice(0, 10); });
+  const perDay = dayKeys.map(k => ({ k, wa: acts.filter(a => a.type === 'WhatsApp Sent' && String(new Date(tsOf(a.dateTime)).toISOString()).slice(0, 10) === k && (!P.perfWho || a.doneBy === P.perfWho)).length, em: acts.filter(a => a.type === 'Email Sent' && new Date(tsOf(a.dateTime)).toISOString().slice(0, 10) === k && (!P.perfWho || a.doneBy === P.perfWho)).length, cl: calls.filter(c => new Date(tsOf(c.calledAt)).toISOString().slice(0, 10) === k && (!P.perfWho || c.member === P.perfWho)).length }));
+  const mxd = Math.max(1, ...perDay.map(d => d.wa + d.em + d.cl));
+  const tile = (n, l, c) => `<div class="n8l-k glass"><b style="${c ? 'color:' + c : ''}">${n}</b><small class="muted">${l}</small></div>`;
+  const allTeams = [...new Set(mem.map(m => m.team).filter(Boolean))];
+  box.innerHTML = `<div class="toolbar glass"><select class="input" id="pfP" style="width:auto">${[[7, 'Last 7 days'], [30, 'Last 30 days'], [90, 'Last 90 days'], [0, 'All time']].map(([v, n]) => `<option value="${v}" ${P.perfP === v ? 'selected' : ''}>${n}</option>`).join('')}</select>
+      <select class="input" id="pfTeam" style="width:auto"><option value="">All teams</option>${allTeams.map(t => `<option ${t === P.perfTeam ? 'selected' : ''}>${esc(t)}</option>`).join('')}</select>
+      <select class="input" id="pfWho" style="width:auto"><option value="">Everyone</option>${people.map(n => `<option ${n === P.perfWho ? 'selected' : ''}>${esc(n)}</option>`).join('')}</select>
+      <select class="input" id="pfState" style="width:auto"><option value="">All states</option>${states.map(s => `<option ${s.st === P.perfState ? 'selected' : ''}>${esc(s.st)}</option>`).join('')}</select></div>
+    <div class="n8l-ks pf-ks" style="margin-top:14px">${tile(sum('wa'), 'WhatsApp sent', 'var(--green)')}${tile(sum('em'), 'Emails sent', 'var(--blue-2)')}${tile(sum('calls'), 'Calls made', '#B08CEB')}${tile(sum('responses'), 'Responses · ' + rate(sum('responses'), sum('contacted')), 'var(--green)')}${tile(sum('rejected'), 'Rejected / lost', sum('rejected') ? 'var(--coral)' : '')}</div>
+    <div class="rcard glass" style="margin-top:14px"><h3>Daily outreach</h3><p class="sub muted"><span class="pf-lg wa"></span>WhatsApp <span class="pf-lg em"></span>Email <span class="pf-lg cl"></span>Calls</p>
+      <div class="pf-days">${perDay.map(d => `<div class="pf-d" title="${esc(fmtDate(d.k))}: ${d.wa} WhatsApp · ${d.em} email · ${d.cl} calls"><div class="pf-st" style="height:${(d.wa + d.em + d.cl) / mxd * 100}%"><i class="cl" style="flex:${d.cl}"></i><i class="em" style="flex:${d.em}"></i><i class="wa" style="flex:${d.wa}"></i></div><small>${d.k.slice(8)}</small></div>`).join('')}</div></div>
+    ${teams.length > 1 || (teams[0] && teams[0].t !== '—') ? `<div class="rcard glass" style="margin-top:14px"><h3>By team</h3><div class="tblwrap"><table class="tbl"><thead><tr><th>Team</th><th class="num">People</th><th class="num">WhatsApp</th><th class="num">Emails</th><th class="num">Calls</th><th class="num">Leads reached</th><th class="num">Responses</th><th class="num">Rejected</th><th class="num">Won</th><th class="num">Response rate</th></tr></thead><tbody>${teams.map(t => `<tr style="cursor:pointer" data-pfteam="${esc(t.t === '—' ? '' : t.t)}"><td><b>${esc(t.t === '—' ? 'No team' : t.t)}</b></td><td class="num">${t.n}</td><td class="num">${t.wa}</td><td class="num">${t.em}</td><td class="num">${t.calls}</td><td class="num">${t.contacted}</td><td class="num" style="color:var(--green)">${t.responses}</td><td class="num" style="color:var(--coral)">${t.rejected}</td><td class="num">${t.won}</td><td class="num"><b>${rate(t.responses, t.contacted)}</b></td></tr>`).join('')}</tbody></table></div></div>` : ''}
+    <div class="rcard glass" style="margin-top:14px"><h3>By person</h3><p class="sub muted">Responses = WhatsApp replies + connected calls · Rejected = not interested / wrong number + moved to Lost + said STOP</p><div class="tblwrap"><table class="tbl"><thead><tr><th>Person</th><th>Team</th><th class="num">Leads</th><th class="num">WhatsApp</th><th class="num">Emails</th><th class="num">Calls</th><th class="num">Reached</th><th class="num">Responses</th><th class="num">Rejected</th><th class="num">Won</th><th class="num">Response rate</th></tr></thead><tbody>
+      ${rows.map(r => `<tr style="cursor:pointer" data-pfwho="${esc(r.n)}"><td><div class="who">${avatar(r.n, 'sm')}${esc(r.n)}</div></td><td>${esc(r.team)}</td><td class="num">${r.leads}</td><td class="num">${r.wa}</td><td class="num">${r.em}</td><td class="num">${r.calls}</td><td class="num">${r.contacted}</td><td class="num" style="color:var(--green)">${r.responses}</td><td class="num" style="color:var(--coral)">${r.rejected}</td><td class="num">${r.won}</td><td class="num"><b>${rate(r.responses, r.contacted)}</b></td></tr>`).join('') || `<tr><td colspan="11" class="empty">No activity in this period yet.</td></tr>`}</tbody></table></div></div>
+    <div class="rcard glass" style="margin-top:14px"><h3>By state</h3><p class="sub muted">Where responses come from</p>${states.map(s => `<div class="pf-s" data-pfstate="${esc(s.st)}"><span>${esc(s.st)}</span><div class="bar-track"><div class="bar" style="width:${s.leads / mxs * 100}%;background:var(--line-2)"></div><div class="bar pf-r" style="width:${s.resp / mxs * 100}%"></div></div><small>${s.leads} leads · ${s.contacted} reached · <b style="color:var(--green)">${s.resp} responded</b> · ${s.won} won · <span style="color:var(--coral)">${s.lost} lost</span></small></div>`).join('') || '<p class="muted">Add State to your leads (form or Excel column "State") to see this.</p>'}</div>`;
+  stagger(box, anim);
+}
+
+/* ---------- unified lead timeline ---------- */
+const TL_KIND = a => /WhatsApp/.test(a.type) ? 'wa' : /Email/.test(a.type) ? 'em' : a.type === 'Call' ? 'cl' : /Stage|Lead Added/.test(a.type) ? 'st' : /Task/.test(a.type) ? 'tk' : 'nt';
+function leadTimeline(id) {
+  const items = actsOf(id).map(a => ({ t: tsOf(a.dateTime), kind: TL_KIND(a), title: a.type, text: a.details, by: a.doneBy }));
+  (S.messages || []).filter(m => m.leadId === id && m.direction === 'in').forEach(m => items.push({ t: tsOf(m.time), kind: 'wa', title: 'WhatsApp received', text: m.text, by: 'Customer', inb: true }));
+  (S.tasks || []).filter(t => t.leadId === id && t.status === 'Open').forEach(t => items.push({ t: tsOf(t.createdAt || t.dueAt), kind: 'tk', title: 'Task: ' + t.title, text: (t.status === 'Open' ? 'Due ' + fmtWhen(t.dueAt) : t.status + (t.doneBy ? ' · ' + t.doneBy : '')) + (t.source === 'auto' ? ' · auto' : ''), by: t.assignedTo, open: t.status === 'Open', task: t.taskId }));
+  return items.sort((a, b) => a.t - b.t);
+}
+
+/* ---------- events ---------- */
+document.addEventListener('click', e => {
+  const t = e.target;
+  const cl = t.closest('[data-calllog]'); if (cl) { if (cl.tagName === 'A' && cl.getAttribute('href')) setTimeout(() => openCallLog(cl.dataset.calllog || ''), 700); else { e.preventDefault(); openCallLog(cl.dataset.calllog || ''); } return; }
+  const tk = t.closest('[data-tkdone]'); if (tk) { const x = S.tasks.find(y => y.taskId === tk.dataset.tkdone); if (x) doneTask(x.taskId, x.status === 'Open'); return; }
+  const te = t.closest('[data-tkedit]'); if (te) return openTask(S.tasks.find(y => y.taskId === te.dataset.tkedit));
+  const tn = t.closest('[data-tknew]'); if (tn) return openTask(null, tn.dataset.tknew || '');
+  const tt = t.closest('[data-tktab]'); if (tt) { SALES.taskTab = tt.dataset.tktab; return renderTasks(); }
+  const gt = t.closest('[data-gotasks]'); if (gt) { SALES.taskTab = gt.dataset.gotasks; go('tasks'); return; }
+  if (t.closest('[data-tkrules]')) return openTaskRules();
+  const pt = t.closest('[data-pfteam]'); if (pt) { SALES.perfTeam = pt.dataset.pfteam; SALES.perfWho = ''; return renderPerformance(); }
+  const pw = t.closest('[data-pfwho]'); if (pw) { SALES.perfWho = SALES.perfWho === pw.dataset.pfwho ? '' : pw.dataset.pfwho; return renderPerformance(); }
+  const ps = t.closest('[data-pfstate]'); if (ps) { SALES.perfState = SALES.perfState === ps.dataset.pfstate ? '' : ps.dataset.pfstate; return renderPerformance(); }
+  const tf = t.closest('[data-tlf]'); if (tf) { SALES.tlFilter = tf.dataset.tlf; if (ui.openId) renderPanel(ui.openId); }
+});
+document.addEventListener('change', e => {
+  const id = e.target.id, v = e.target.value;
+  if (id === 'tkWhoF') { SALES.taskWho = v; renderTasks(); }
+  else if (id === 'clP') { SALES.callP = +v; renderCalls(); } else if (id === 'clWho') { SALES.callWho = v; renderCalls(); } else if (id === 'clOut') { SALES.callOut = v; renderCalls(); }
+  else if (id === 'pfP') { SALES.perfP = +v; renderPerformance(); } else if (id === 'pfTeam') { SALES.perfTeam = v; renderPerformance(); } else if (id === 'pfWho') { SALES.perfWho = v; renderPerformance(); } else if (id === 'pfState') { SALES.perfState = v; renderPerformance(); }
+});
 
 /* ================= global events ================= */
 document.addEventListener('click', e => {
