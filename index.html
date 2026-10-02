@@ -783,6 +783,9 @@ body.no-sales [data-go="tasks"],body.no-sales [data-go="calls"]{display:none!imp
 .pf-s{display:grid;grid-template-columns:140px 1fr;gap:4px 12px;align-items:center;margin:10px 0;cursor:pointer}.pf-s>span{font-weight:700;font-size:13px}.pf-s .bar-track{position:relative;height:10px}.pf-s .bar{position:absolute;left:0;top:0;bottom:0;border-radius:6px}.pf-s .pf-r{background:var(--green)}.pf-s small{grid-column:2;font-size:11.5px;color:var(--muted)}
 .tl-f{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}.tl-f .chip small{opacity:.7;margin-left:2px}
 .jn.tl-wa::before{background:var(--green);box-shadow:0 0 0 1.5px var(--green)}.jn.tl-em::before{background:var(--blue-2);box-shadow:0 0 0 1.5px var(--blue-2)}.jn.tl-cl::before{background:#B08CEB;box-shadow:0 0 0 1.5px #B08CEB}.jn.tl-tk::before{background:var(--yellow);box-shadow:0 0 0 1.5px var(--yellow)}.jn.tl-st::before{background:var(--muted);box-shadow:0 0 0 1.5px var(--muted)}.jn.inb>b{color:var(--green)}
+.pa-bar{position:relative;height:22px;min-width:120px;border-radius:7px;background:var(--line);overflow:hidden}.pa-bar i{position:absolute;left:0;top:0;bottom:0;opacity:.55;border-radius:7px}.pa-bar b{position:relative;padding-left:8px;line-height:22px;font-size:12.5px}.tbl tr.pa-bad td{background:color-mix(in srgb,var(--coral) 7%,transparent)}
+.bc-cmp{margin-bottom:14px}.bc-ins{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px;margin:6px 0 12px}
+.tp-uc{margin-top:6px;width:100%}.tp-uc-c{background:var(--blue-soft)!important;color:var(--blue-2)!important;border-color:transparent!important}.tp-uc-c.seg{background:var(--yellow-soft)!important;color:#C9971C!important}
 .imp-batch{display:flex;flex-direction:column;gap:6px;margin:12px 0 4px;font-size:13px;font-weight:600}.imp-batch small{font-weight:500;color:var(--muted)}.imp-batch .input{max-width:320px}
 .imp-done{display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px;padding:18px 8px}.imp-ok{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;font-size:22px;font-weight:800;color:#fff;background:linear-gradient(135deg,var(--blue-2),#A78BFA)}
 .srcTag{font-style:normal;font-size:10px;font-weight:700;padding:1px 5px;border-radius:4px;margin-left:4px;vertical-align:1px}
@@ -1259,6 +1262,7 @@ body.no-sales [data-go="tasks"],body.no-sales [data-go="calls"]{display:none!imp
     <section class="view" id="v-analytics">
       <div class="head"><div><div class="eyebrow">Insights</div><h1>Analytics</h1><p class="sub">Ads, leads, WhatsApp, appointments and revenue in one view.</p></div>
         <div class="adhead-r"><select class="input" id="anRange" style="width:auto"><option value="7">Last 7 days</option><option value="30">Last 30 days</option><option value="60">Last 60 days</option></select></div></div>
+      <div class="subnav" id="anTabs"><button class="tab active" data-antab="overview">Overview</button><button class="tab" data-antab="pipeline">Pipeline analytics</button></div>
       <div id="anBody"></div>
     </section>
 
@@ -1585,6 +1589,7 @@ function demoApi(action, d) {
     case 'saveTask': { S.tasks = S.tasks || []; if (d.taskId) { const t = S.tasks.find(x => x.taskId === d.taskId); if (!t) throw new Error('Task not found'); Object.assign(t, d); return t; } const t = Object.assign({ status: 'Open', createdAt: new Date().toISOString() }, d, { taskId: nextId(S.tasks, 'taskId', 'K') }); S.tasks.push(t); return t; }
     case 'deleteTask': S.tasks = (S.tasks || []).filter(t => t.taskId !== d.id); return { deleted: d.id };
     case 'refreshCampaigns': return [];
+    case 'saveTplInfo': { const t = (S.templates || []).find(x => x.templateName === d.templateName); if (!t) throw new Error('Template not found'); Object.assign(t, { useCase: d.useCase, segment: d.segment, tags: d.tags, notes: d.notes }); return t; }
     case 'updateTeamMember': { const m = S.team.find(x => x.memberId === d.id); if (!m) throw new Error('Member not found'); Object.assign(m, d); delete m.id; return m; }
   }
   throw new Error('Unknown action: ' + action);
@@ -4370,7 +4375,7 @@ function mergeSavedLists() { try { const j = S.settings && S.settings.listsJson 
 })();
 
 /* ================= Unified analytics (ads + CRM + WhatsApp + revenue in one view) ================= */
-const AN = { range: 30, g: null };
+const AN = { range: 30, g: null, tab: 'overview', pRange: 90, pWho: '', pSrc: '', pState: '' };
 const CHANNEL_OF = src => /meta|facebook|\bfb\b|insta(?:gram)?\s*ad/i.test(src || '') ? 'Meta Ads' : /google\s*ads?\b|adwords/i.test(src || '') ? 'Google Ads' : /whatsapp/i.test(src || '') ? 'WhatsApp' : 'Organic, social & referrals';
 const CHANNELS = ['Meta Ads', 'Google Ads', 'WhatsApp', 'Organic, social & referrals'];
 /** Sample Google Ads account (until connected) — 60 days of daily rows */
@@ -4417,6 +4422,8 @@ function anInsights(d) {
 }
 function renderAnalytics(anim) {
   if (!$('#v-analytics').classList.contains('active')) return;
+  $$('#anTabs [data-antab]').forEach(b => b.classList.toggle('active', b.dataset.antab === AN.tab)); $('#anRange').hidden = AN.tab !== 'overview';
+  if (AN.tab === 'pipeline') return renderPipeAnalytics(anim);
   const d = anData(), conv = d.leads.length ? Math.round(d.won.length / d.leads.length * 100) : 0, roas = d.paidSpend ? d.paidRev / d.paidSpend : 0;
   let si = 0; const tile = (ic, bg, fg, v, lbl, tag) => `<div class="stat glass" style="--i:${si++}"><div class="ic" style="background:${bg};color:${fg}">${ic}</div><div><b>${v}</b><span>${lbl}${tag ? ` <em class="srcTag ${tag}">${tag === 'real' ? 'your CRM' : 'sample'}</em>` : ''}</span></div></div>`;
   const ins = anInsights(d), icon = { good: '▲', warn: '!', bad: '●' };
@@ -4445,6 +4452,41 @@ function renderAnalytics(anim) {
   stagger($('#anBody'), anim);
 }
 $('#anRange').addEventListener('change', e => { AN.range = +e.target.value; renderAnalytics(true); });
+$('#anTabs').addEventListener('click', e => { const b = e.target.closest('[data-antab]'); if (!b) return; AN.tab = b.dataset.antab; renderAnalytics(true); });
+/* ---------- pipeline analytics: conversion, value, stage bottlenecks — filter by date, person, source, state ---------- */
+function renderPipeAnalytics(anim) {
+  const st = stages().filter(x => x !== 'Lost'), idx = n => st.indexOf(n), from = AN.pRange ? new Date(Date.now() - AN.pRange * 864e5).toISOString().slice(0, 10) : '';
+  const L = S.leads.filter(l => (!from || String(l.createdOn || '') >= from) && (!AN.pWho || l.assignedTo === AN.pWho) && (!AN.pSrc || l.source === AN.pSrc) && (!AN.pState || l.state === AN.pState));
+  const hist = new Map(); S.activities.forEach(a => { if (a.type === 'Stage Changed') { const m = String(a.details || '').split(' → '); if (m.length === 2) (hist.get(a.leadId) || hist.set(a.leadId, []).get(a.leadId)).push({ from: m[0], to: m[1], t: tsOf(a.dateTime) }); } });
+  const reach = l => Math.max(l.stage === 'Lost' ? -1 : idx(l.stage), ...(hist.get(l.leadId) || []).flatMap(h => [idx(h.from), idx(h.to)]), 0);
+  const won = L.filter(l => l.stage === 'Won'), lost = L.filter(l => l.stage === 'Lost'), open = L.filter(l => !isClosed(l));
+  const val = a => a.reduce((s, l) => s + (+l.budget || 0), 0), pct = (a, b) => b ? Math.round(a / b * 100) + '%' : '—';
+  const winDays = won.map(l => { const h = (hist.get(l.leadId) || []).find(x => x.to === 'Won'); return h && l.createdOn ? Math.max(0, Math.round((h.t - tsOf(l.createdOn + ' 00:00')) / 864e5)) : null; }).filter(v => v != null);
+  const rows = st.map((s2, i) => {
+    const here = L.filter(l => l.stage === s2), reached = L.filter(l => reach(l) >= i).length, next = i < st.length - 1 ? L.filter(l => reach(l) >= i + 1).length : null;
+    const lostHere = lost.filter(l => reach(l) === i).length, quiet = here.filter(l => !isClosed(l) && (!l.lastContact || daysBetween(dOnly(l.lastContact), todayStr()) > 7)).length;
+    const stays = []; L.forEach(l => { const hs = (hist.get(l.leadId) || []).sort((a, b) => a.t - b.t); hs.forEach((h, k) => { if (h.to === s2 && hs[k + 1]) stays.push((hs[k + 1].t - h.t) / 864e5); }); });
+    return { s: s2, here: here.length, value: val(here), reached, conv: next == null ? null : reached ? next / reached : 0, lostHere, quiet, days: stays.length ? stays.reduce((a, b) => a + b, 0) / stays.length : null };
+  });
+  const open2 = rows.filter(r => r.conv != null && r.reached >= 3 && r.s !== 'Won'), worst = open2.length ? open2.reduce((a, b) => (b.conv < a.conv ? b : a)) : null;
+  const group = key => [...new Set(L.map(l => l[key] || '—'))].map(k => { const g = L.filter(l => (l[key] || '—') === k), w = g.filter(l => l.stage === 'Won').length, lo = g.filter(l => l.stage === 'Lost').length; return { k, n: g.length, w, lo, conv: w + lo ? w / (w + lo) : null, pipe: val(g.filter(l => !isClosed(l))), won: val(g.filter(l => l.stage === 'Won')) }; }).sort((a, b) => b.n - a.n);
+  const tbl = (title, sub, list, label) => `<div class="rcard glass"><h3>${title}</h3><p class="sub muted">${sub}</p><div class="tblwrap"><table class="tbl"><thead><tr><th>${label}</th><th class="num">Leads</th><th class="num">Won</th><th class="num">Lost</th><th class="num">Win rate</th><th class="num">Open pipeline</th><th class="num">Won value</th></tr></thead><tbody>${list.map(r => `<tr style="cursor:default"><td><b>${esc(r.k)}</b></td><td class="num">${r.n}</td><td class="num" style="color:var(--green)">${r.w}</td><td class="num" style="color:var(--coral)">${r.lo}</td><td class="num"><b>${r.conv == null ? '—' : Math.round(r.conv * 100) + '%'}</b></td><td class="num">${inr(r.pipe)}</td><td class="num">${inr(r.won)}</td></tr>`).join('') || '<tr><td colspan="7" class="empty">No leads in this range.</td></tr>'}</tbody></table></div></div>`;
+  let si = 0; const tile = (v, l, c) => `<div class="stat glass" style="--i:${si++}"><div><b style="${c ? 'color:' + c : ''}">${v}</b><span>${l}</span></div></div>`;
+  const opts = (arr, cur, all) => `<option value="">${all}</option>` + arr.map(x => `<option ${x === cur ? 'selected' : ''}>${esc(x)}</option>`).join('');
+  const mx = Math.max(1, ...rows.map(r => r.reached));
+  $('#anBody').innerHTML = `<div class="toolbar glass"><select class="input" id="paRange" style="width:auto">${[[7, 'Last 7 days'], [30, 'Last 30 days'], [90, 'Last 90 days'], [365, 'Last 12 months'], [0, 'All time']].map(([v, n]) => `<option value="${v}" ${AN.pRange === v ? 'selected' : ''}>${n}</option>`).join('')}</select>
+      <select class="input" id="paWho" style="width:auto">${opts([...new Set(S.leads.map(l => l.assignedTo).filter(Boolean))].sort(), AN.pWho, 'All team members')}</select>
+      <select class="input" id="paSrc" style="width:auto">${opts([...new Set(S.leads.map(l => l.source).filter(Boolean))].sort(), AN.pSrc, 'All sources')}</select>
+      <select class="input" id="paState" style="width:auto">${opts(areaValues('state'), AN.pState, 'All states')}</select><div class="grow"></div><small class="muted">Leads created in this range</small></div>
+    <div class="stats anstats" style="margin-top:14px">${tile(L.length, 'Total leads')}${tile(won.length, 'Won deals', 'var(--green)')}${tile(lost.length, 'Lost deals', 'var(--coral)')}${tile(pct(won.length, won.length + lost.length), 'Win rate (won ÷ closed)')}${tile(pct(won.length, L.length), 'Lead → won')}${tile(inrShort(val(open)), 'Open pipeline value', 'var(--blue-2)')}${tile(inrShort(val(won)), 'Won value', 'var(--green)')}${tile(winDays.length ? Math.round(winDays.reduce((a, b) => a + b, 0) / winDays.length) + ' days' : '—', 'Average time to win')}</div>
+    ${worst && worst.conv < 0.6 ? `<div class="ins warn" style="margin-top:14px"><span class="ii">!</span><div><b>Bottleneck: ${esc(worst.s)}</b><p>Only ${Math.round(worst.conv * 100)}% of leads that reach “${esc(worst.s)}” move forward${worst.quiet ? ` · ${worst.quiet} lead${worst.quiet > 1 ? 's are' : ' is'} sitting there with no contact for 7+ days` : ''}. Add an auto-task for this stage or a follow-up template.</p></div></div>` : ''}
+    <div class="rcard glass" style="margin-top:14px"><h3>Stage-wise performance</h3><p class="sub muted">Reached = leads that got to this stage (or further) · Moves on = share that went to the next stage</p>
+      <div class="tblwrap"><table class="tbl"><thead><tr><th>Stage</th><th>Reached</th><th class="num">In stage now</th><th class="num">Value now</th><th class="num">Moves on</th><th class="num">Lost here</th><th class="num">Avg days here</th><th class="num">No contact 7d+</th></tr></thead><tbody>
+      ${rows.map(r => `<tr style="cursor:default" class="${worst && r.s === worst.s ? 'pa-bad' : ''}"><td><span class="pill stage"><span class="sdot" style="background:${stageColor(r.s)}"></span>${esc(r.s)}</span></td><td><div class="pa-bar"><i style="width:${r.reached / mx * 100}%;background:${stageColor(r.s)}"></i><b>${r.reached}</b></div></td><td class="num">${r.here}</td><td class="num">${inr(r.value)}</td><td class="num"><b>${r.conv == null ? '—' : Math.round(r.conv * 100) + '%'}</b></td><td class="num" style="color:var(--coral)">${r.lostHere || '—'}</td><td class="num">${r.days == null ? '—' : r.days.toFixed(1)}</td><td class="num" style="${r.quiet ? 'color:var(--coral);font-weight:700' : ''}">${r.quiet || '—'}</td></tr>`).join('')}</tbody></table></div></div>
+    <div class="rgrid" style="margin-top:14px">${tbl('By team member', 'Who converts best', group('assignedTo'), 'Person')}${tbl('By lead source', 'Which channels bring deals', group('source'), 'Source')}</div>`;
+  stagger($('#anBody'), anim);
+}
+document.addEventListener('change', e => { const m = { paRange: 'pRange', paWho: 'pWho', paSrc: 'pSrc', paState: 'pState' }[e.target.id]; if (!m) return; AN[m] = m === 'pRange' ? +e.target.value : e.target.value; renderPipeAnalytics(); });
 
 /* ================= AI lead summary & recommendations =================
    Preview: built from the lead's data, source, journey and timing with rules.
@@ -4476,7 +4518,7 @@ function leadInsight(l) {
 }
 function aiSummaryHTML(l) {
   const x = leadInsight(l), cls = x.score >= 70 ? 'hot' : x.score >= 40 ? 'warm' : 'cold';
-  const btn = ([k, label, v]) => k === 'call' ? `<a class="btn sm" href="tel:+${esc(String(l.phone || '').replace(/\D/g, ''))}">${I.phone}${esc(label)}</a>`
+  const btn = ([k, label, v]) => k === 'call' ? `<a class="btn sm" href="tel:+${esc(String(l.phone || '').replace(/\D/g, ''))}" data-calllog="${esc(l.leadId)}">${I.phone}${esc(label)}</a>`
     : k === 'wa' ? `<a class="btn sm wa" target="_blank" rel="noopener" href="${waLink(l.phone, v)}" title="${esc(v)}">${I.wa}${esc(label)}</a>`
     : k === 'fu' ? `<button class="btn sm" data-aifu="${v}">${I.cal}${esc(label)}</button>` : `<button class="btn sm" data-aimeet>${I.cal}${esc(label)}</button>`;
   return `<div class="aisum"><div class="aisum-h"><span class="gen-ai">✦</span><b>AI summary</b><span class="pill ${cls}" title="How likely this lead is to buy, based on stage, activity, budget and timing">Score ${x.score}</span></div>
@@ -4919,7 +4961,7 @@ $('#fileIn').addEventListener('change', async e => {
 const SB_COLS = {
   leads: ['lead_id', 'created_on', 'name', 'phone', 'email', 'email_opt_out', 'wa_opt_out', 'business_name', 'business_type', 'city', 'state', 'district', 'source', 'budget', 'stage', 'tag', 'assigned_to', 'follow_up_date', 'last_contact', 'notes', 'business_photo', 'client_photo'],
   activities: ['activity_id', 'lead_id', 'date_time', 'type', 'details', 'done_by'],
-  templates: ['template_name', 'category', 'language', 'header', 'body', 'footer', 'buttons', 'meta_status', 'meta_id', 'quality', 'reject_reason'],
+  templates: ['template_name', 'category', 'language', 'header', 'body', 'footer', 'buttons', 'meta_status', 'meta_id', 'quality', 'reject_reason', 'use_case', 'segment', 'tags', 'notes'],
   broadcasts: ['broadcast_id', 'name', 'channel', 'template', 'subject', 'body', 'audience_filter', 'contacts', 'sent', 'failed', 'delivered', 'read', 'replies', 'scheduled_for', 'sent_at', 'status'],
   flows: ['flow_id', 'flow_name', 'trigger', 'status', 'flow_json', 'updated_on'],
   team: ['member_id', 'name', 'role', 'phone', 'email', 'active'],
@@ -5038,6 +5080,10 @@ async function sbApi(action, d = {}) {
       if (!row.task_id) { delete row.task_id; return fromRow(await sbq(T('tasks').insert(row).select().single())); }
       return fromRow(await sbq(T('tasks').update(row).eq('workspace_id', ws).eq('task_id', d.taskId).select().single()));
     }
+    case 'saveTplInfo': {
+      if (!AUTH.v7) throw new Error('Run the database update 07_teams_tasks_calls.sql first.');
+      return fromRow(await sbq(T('templates').update({ use_case: String(d.useCase || '').slice(0, 40), segment: String(d.segment || '').slice(0, 80), tags: String(d.tags || '').slice(0, 200), notes: String(d.notes || '').slice(0, 1000) }).eq('workspace_id', ws).eq('template_name', d.templateName).select().single()));
+    }
     case 'deleteTask': await sbq(T('tasks').delete().eq('workspace_id', ws).eq('task_id', d.id)); return { deleted: d.id };
     case 'refreshCampaigns': { if (!AUTH.v7) return []; await sbq(cl.rpc('refresh_campaign_stats', { p_ws: ws })); return (await sbq(T('campaign_stats').select('*').eq('workspace_id', ws))).map(fromRow); }
     case 'addActivity': {
@@ -5053,7 +5099,7 @@ async function sbApi(action, d = {}) {
     case 'saveTemplate': {
       const row = toRow('templates', d); row.workspace_id = ws; row.template_name = String(row.template_name || '').toLowerCase().replace(/[^a-z0-9_]+/g, '_').slice(0, 512);
       if (!row.template_name) throw new Error('Template name is required');
-      ['footer', 'meta_id', 'quality', 'reject_reason'].forEach(k => { if (!row[k]) delete row[k]; });          // works before database update 04
+      ['footer', 'meta_id', 'quality', 'reject_reason', 'use_case', 'segment', 'tags', 'notes'].forEach(k => { if (!row[k]) delete row[k]; });          // works before database updates 04 / 07
       return fromRow(await sbq(T('templates').upsert(row, { onConflict: 'workspace_id,template_name' }).select().single()));
     }
     case 'addTeamMember': { const row = toRow('team', Object.assign({ active: true }, d)); delete row.member_id; row.workspace_id = ws; return fromRow(await sbq(T('team').insert(row).select().single())); }
@@ -5606,10 +5652,15 @@ function waPreview(t, l) {
   const btns = String(t.buttons || '').split('|').map(x => x.trim()).filter(Boolean);
   return `<div class="wa-phone"><div class="wa-top">${avatar(brand().brandName)}<div><b>${esc(brand().brandName)}</b><small>Business account</small></div></div><div class="wa-chat"><div class="bub in tpl">${t.header ? `<b class="hd">${esc(t.header)}</b>` : ''}<span>${body.replace(/\n/g, '<br>')}</span>${t.footer ? `<em class="ft">${esc(t.footer)}</em>` : ''}<small>${nowStr().slice(11)}</small></div>${btns.map(x => `<div class="wa-qb">${esc(x)}</div>`).join('')}</div></div>`;
 }
+function tplGroups(tpls) {
+  const rec = BC.segName ? tpls.filter(x => x.segment === BC.segName && /approved/i.test(x.metaStatus || '')) : [], seen = new Set(rec.map(x => x.templateName)), g = {};
+  tpls.filter(x => !seen.has(x.templateName)).sort((a, b) => /approved/i.test(b.metaStatus || '') - /approved/i.test(a.metaStatus || '')).forEach(x => { const k = x.useCase || 'Other templates'; (g[k] = g[k] || []).push(x); });
+  return (rec.length ? [['★ Recommended for ' + BC.segName, rec]] : []).concat(USE_CASES.concat(['Other templates']).filter(k => g[k]).map(k => [k, g[k]]));
+}
 function inspMsgWa() {
   const tpls = (S.templates || []).filter(t => t.templateName), t = tpls.find(x => x.templateName === BC.tpl) || null, n = tplVars(t);
   while (BC.vars.length < n) BC.vars.push({ src: BC.vars.length ? 'custom' : 'first', text: '' });
-  return `<div class="field"><label>Approved template <a href="#templates" data-go="templates" class="bc-link">Manage templates →</a></label><select class="input" id="bcTpl"><option value="">Choose a template…</option>${tpls.map(x => `<option value="${esc(x.templateName)}" ${x.templateName === BC.tpl ? 'selected' : ''}>${esc(x.templateName)} · ${esc(x.metaStatus || 'Not submitted')}</option>`).join('')}</select>
+  return `<div class="field"><label>Approved template <a href="#templates" data-go="templates" class="bc-link">Manage templates →</a></label><select class="input" id="bcTpl"><option value="">Choose a template…</option>${tplGroups(tpls).map(([g, arr]) => `<optgroup label="${esc(g)}">${arr.map(x => `<option value="${esc(x.templateName)}" ${x.templateName === BC.tpl ? 'selected' : ''}>${x.segment && x.segment === BC.segName ? '★ ' : ''}${esc(x.templateName)} · ${esc(x.metaStatus || 'Not submitted')}</option>`).join('')}</optgroup>`).join('')}</select>
       ${t && !/approved/i.test(t.metaStatus || '') ? '<p class="bc-warn">Not approved yet — Meta only delivers templates approved in WhatsApp Manager. Use “Sync from WhatsApp” on the Templates page to refresh statuses.</p>' : ''}${!tpls.length ? '<p class="help">No templates yet — create one on the <a href="#templates" data-go="templates">Templates</a> page.</p>' : ''}</div>
     ${n ? `<label class="bc-lbl">Fill the variables for each lead</label><div class="bc-vars">${BC.vars.slice(0, n).map((v, i) => `<div class="bc-var"><span class="pill stage">{{${i + 1}}}</span><select class="input sm" data-bcvar="${i}">${VAR_SRC.map(([k, lb]) => `<option value="${k}" ${v.src === k ? 'selected' : ''}>${lb}</option>`).join('')}</select>${v.src === 'custom' ? `<input class="input sm" data-bcvtext="${i}" value="${esc(v.text)}" placeholder="Text for everyone">` : ''}</div>`).join('')}</div>` : ''}`;
 }
@@ -5657,10 +5708,41 @@ function composerHTML(ch) {
     <div class="bc-insp glass"><div class="bc-insp-h"><span class="bc-ic">${NODE_IC[k]}</span><div><b>${i + 1} · ${meta[0]}</b><small>${meta[1]}</small></div><div class="grow"></div>${i > 0 ? `<button class="btn sm" data-bcnode="${order[i - 1]}">← Back</button>` : ''}${i < 3 ? `<button class="btn sm primary" data-bcnode="${order[i + 1]}">Next →</button>` : ''}</div>
       <div class="bc-insp-b"><div class="bc-left">${left}</div><div class="bc-right"><div class="bc-rh">${k === 'aud' ? 'Reach' : 'Live preview'}</div>${right}${k !== 'aud' ? `<p class="muted" style="font-size:12px;margin-top:8px">Shown for ${esc(first.name || 'a lead')}. Each lead gets their own values.</p>` : ''}</div></div></div>`;
 }
+/* ---------- campaign analytics: compare every run, spot weak ones, suggest the follow-up ---------- */
+function campaignRows() {
+  const stats = new Map((S.campaignStats || []).map(c => [c.broadcastId, c]));
+  return bcList().map(b => {
+    const wa = (b.channel || 'whatsapp') === 'whatsapp', c = stats.get(b.broadcastId), ms = msgs().filter(m => m.broadcastId === b.broadcastId);
+    const sent = c ? +c.sent : (+b.sent || ms.length), del = c ? +c.delivered : ms.filter(m => /delivered|read/.test(m.status)).length, rd = c ? +c.read : ms.filter(m => m.status === 'read').length;
+    const rep = c ? +c.replied : wa ? new Set(msgs().filter(m => m.direction === 'in' && b.sentAt && String(m.time) > String(b.sentAt) && ms.some(x => x.leadId && x.leadId === m.leadId)).map(m => m.leadId)).size : 0;
+    const t = tsOf(b.sentAt), d = t ? new Date(t) : null;
+    return { b, wa, tpl: wa ? b.template : b.subject, sent, del, rd, rep, fail: c ? +c.failed : +b.failed || 0, readR: wa && sent ? rd / sent : null, repR: wa && sent ? rep / sent : null, hour: d ? d.getHours() : null, day: d ? d.getDay() : null };
+  }).filter(r => r.sent > 0);
+}
+const SLOT = h => h == null ? '' : h < 12 ? 'Morning (before 12)' : h < 16 ? 'Afternoon (12–4)' : h < 20 ? 'Evening (4–8)' : 'Night (after 8)';
+const DAYN = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+function campaignCompareHTML() {
+  const rows = campaignRows(); if (!rows.length) return '';
+  const wa = rows.filter(r => r.wa), pc = v => v == null ? '—' : Math.round(v * 100) + '%', avg = (a, k) => a.length ? a.reduce((s, r) => s + (r[k] || 0), 0) / a.length : 0;
+  const best = (key, k) => { const g = {}; wa.forEach(r => { const x = key(r); if (x === '' || x == null) return; (g[x] = g[x] || []).push(r); }); const e = Object.entries(g).filter(([, a]) => a.length).map(([x, a]) => [x, avg(a, k), a.length]).sort((a, b) => b[1] - a[1]); return e[0] || null; };
+  const bSlot = best(r => SLOT(r.hour), 'readR'), bDay = best(r => r.day == null ? '' : DAYN[r.day], 'readR'), bTpl = best(r => r.tpl, 'repR');
+  const fu = (S.templates || []).filter(t => /follow/i.test(t.useCase || '') && (t.metaStatus || '') === 'Approved')[0] || (bTpl && (S.templates || []).find(t => t.templateName === bTpl[0]));
+  const low = r => r.wa && r.sent >= 5 && ((r.readR != null && r.readR < 0.4) || (r.repR != null && r.repR < 0.05));
+  const ins = [];
+  if (bSlot && wa.length >= 2) ins.push(['good', `Best time: ${bSlot[0]}`, `Campaigns sent then were read by ${pc(bSlot[1])} of people on average.`]);
+  if (bDay && wa.length >= 3) ins.push(['good', `Best day: ${bDay[0]}`, `Highest read rate across ${bDay[2]} campaign${bDay[2] > 1 ? 's' : ''}.`]);
+  if (bTpl && wa.length >= 2) ins.push(['good', `Best content: ${bTpl[0]}`, `Gets the most replies (${pc(bTpl[1])}). Reuse it for similar audiences.`]);
+  const lows = wa.filter(low); if (lows.length) ins.push(['warn', `${lows.length} low-performing campaign${lows.length > 1 ? 's' : ''}`, `Read under 40% or replies under 5%. Retarget the people who did not read it${fu ? ` with “${fu.templateName}”` : ' with a follow-up template'}.`]);
+  return `<div class="bc-card glass bc-cmp"><div class="n8l-h"><h3>Compare campaigns</h3><small class="muted">${rows.length} sent · rates are out of messages sent</small></div>
+    ${ins.length ? `<div class="insights bc-ins">${ins.map(([k, h, tx]) => `<div class="ins ${k}"><span class="ii">${k === 'warn' ? '!' : '▲'}</span><div><b>${esc(h)}</b><p>${esc(tx)}</p></div></div>`).join('')}</div>` : ''}
+    <div class="tblwrap"><table class="tbl"><thead><tr><th>Campaign</th><th>Content</th><th>Sent at</th><th class="num">Sent</th><th class="num">Delivered</th><th class="num">Read</th><th class="num">Replied</th><th class="num">Failed</th><th></th></tr></thead><tbody>
+    ${rows.map(r => `<tr style="cursor:default" class="${low(r) ? 'pa-bad' : ''}"><td><b>${esc(r.b.name || r.b.broadcastId)}</b><small class="muted" style="display:block">${r.wa ? 'WhatsApp' : 'Email'}</small></td><td>${esc(r.tpl || '-')}</td><td class="muted">${r.b.sentAt ? esc(fmtWhen(r.b.sentAt)) : '-'}</td><td class="num">${r.sent}</td><td class="num">${r.wa ? pc(r.del / r.sent) : '—'}</td><td class="num"><b>${pc(r.readR)}</b></td><td class="num"><b>${pc(r.repR)}</b></td><td class="num" style="${r.fail ? 'color:var(--coral)' : ''}">${r.fail || '—'}</td>
+      <td class="num">${low(r) ? `<button class="btn sm" data-bcretarget="${esc(r.b.broadcastId)}" data-mode="unread" ${fu ? `data-bcfu="${esc(fu.templateName)}"` : ''}>⚠ Follow up${fu ? ' with ' + esc(fu.templateName) : ''}</button>` : r.wa ? '<span class="tp-st ok"><i></i>Good</span>' : ''}</td></tr>`).join('')}</tbody></table></div></div>`;
+}
 function bcHistoryHTML() {
   const list = bcList();
   if (!list.length) return `<div class="bc-card glass"><p class="muted">No campaigns yet. Sent campaigns and their results show here.</p></div>`;
-  return `<div class="bc-hist">${list.map(b => {
+  return campaignCompareHTML() + `<div class="bc-hist">${list.map(b => {
     const wa = (b.channel || 'whatsapp') === 'whatsapp', ms = msgs().filter(m => m.broadcastId === b.broadcastId), sent = +b.sent || ms.length;
     const del = ms.filter(m => /delivered|read/.test(m.status)).length, rd = ms.filter(m => m.status === 'read').length;
     const rep = wa ? new Set(msgs().filter(m => m.direction === 'in' && b.sentAt && String(m.time) > String(b.sentAt) && ms.some(x => x.leadId && x.leadId === m.leadId)).map(m => m.leadId)).size : 0;
@@ -5677,6 +5759,7 @@ async function renderBroadcast() {
     if (cloud) { try { BC.email = await sbq(AUTH.client.rpc('email_status', { p_ws: AUTH.ws })); } catch (e) { BC.email = { connected: false, error: e.message }; } }
   }
   if (BC.tab === 'whatsapp' && !WA.status) { await waLoadStatus(); }
+  if (BC.tab === 'history' && cloud && AUTH.v7 && !BC.statsAt) { BC.statsAt = Date.now(); api('refreshCampaigns').then(cs => { if (cs && cs.length) { S.campaignStats = cs; if (BC.tab === 'history') renderBroadcast(); } }).catch(() => { }); }
   $$('#bcTabs .tab').forEach(t => t.classList.toggle('active', t.dataset.bctab === BC.tab));
   const ae = document.activeElement, keep = ae && ae.closest && ae.closest('#v-broadcast') && /^(INPUT|TEXTAREA)$/.test(ae.tagName) ? { sel: ae.id ? '#' + ae.id : ae.dataset.bcvtext != null ? `[data-bcvtext="${ae.dataset.bcvtext}"]` : '', s: ae.selectionStart, e: ae.selectionEnd } : null;
   $('#bcBodyWrap').innerHTML = (!cloud && !demo && BC.tab !== 'history') ? `<div class="bc-card glass"><b>Broadcasts run on the Nodevers cloud.</b><p class="muted">Sign in (Settings → Accounts) to send WhatsApp and email campaigns.</p></div>`
@@ -5707,6 +5790,7 @@ async function bcSend(ch) {
   BC.running = false;
   b = Object.assign(b, { sent: BC.run.sent, failed: BC.run.failed, status: BC.stop && BC.run.done < list.length ? 'Stopped' : BC.run.failed && !BC.run.sent ? 'Failed' : 'Sent' });
   try { await api('saveBroadcast', b); } catch (e) { }
+  try { const cs = await api('refreshCampaigns'); if (cs && cs.length) S.campaignStats = cs; } catch (e) { }
   toast(`${ch === 'email' ? 'Email' : 'WhatsApp'} campaign: ${BC.run.sent} sent${BC.run.failed ? `, ${BC.run.failed} failed` : ''}${BC.run.skipped ? `, ${BC.run.skipped} skipped` : ''}`, !BC.run.sent);
   if (demo) renderAll(); else load(true);
 }
@@ -5741,13 +5825,13 @@ function bcDuplicate(id, retargetMode) {
     const nd = t.closest('[data-bcnode]'); if (nd) { BC.node = nd.dataset.bcnode; return renderBroadcast(); }
     const src = t.closest('[data-bcsrc]'); if (src) { BC.aud.src = src.dataset.bcsrc; return renderBroadcast(); }
     const st = t.closest('[data-bcstage]'); if (st) { const s = st.dataset.bcstage, a = BC.aud.stages; BC.aud.stages = a.includes(s) ? a.filter(x => x !== s) : a.concat(s); return renderBroadcast(); }
-    const sg = t.closest('[data-bcseg]'); if (sg) { const g = segments()[+sg.dataset.bcseg]; if (g) BC.aud = Object.assign({}, BC.aud, g.aud, { src: 'filters' }); return renderBroadcast(); }
+    const sg = t.closest('[data-bcseg]'); if (sg) { const g = segments()[+sg.dataset.bcseg]; if (g) { BC.aud = Object.assign({}, BC.aud, g.aud, { src: 'filters' }); BC.segName = g.name; const r = (S.templates || []).find(x => x.segment === g.name && /approved/i.test(x.metaStatus || '')); if (r && !BC.tpl) { BC.tpl = r.templateName; BC.vars = []; toast(`★ “${r.templateName}” is the library pick for ${g.name}`); } } return renderBroadcast(); }
     if (t.closest('[data-bcsave]')) { const nm = prompt('Name this segment', 'Hot leads in Mumbai'); if (!nm) return; const list = segments().filter(g => g.name !== nm).concat([{ name: nm.slice(0, 40), aud: { stages: BC.aud.stages, tag: BC.aud.tag, source: BC.aud.source, city: BC.aud.city, assigned: BC.aud.assigned } }]).slice(-12); const val = JSON.stringify(list); S.settings = Object.assign({}, S.settings, { segmentsJson: val }); try { if (demo) store.set('leadnode.branding', Object.assign({}, store.get('leadnode.branding') || {}, { segmentsJson: val })); else await api('saveSettings', { segmentsJson: val }); toast('Segment saved'); } catch (err) { toast(err.message, true); } return renderBroadcast(); }
     if (t.closest('[data-bclist]')) { BC.showList = !BC.showList; return renderBroadcast(); }
     const ins = t.closest('[data-bcins]'); if (ins) { const ta = $('#bcBody'), at = ta.selectionStart ?? ta.value.length; ta.value = ta.value.slice(0, at) + ins.dataset.bcins + ta.value.slice(ta.selectionEnd ?? at); BC.body = ta.value; return renderBroadcast(); }
     const sd = t.closest('[data-bcsend]'); if (sd) return bcSend(sd.dataset.bcsend);
     const ts = t.closest('[data-bctest]'); if (ts) return bcTest(ts.dataset.bctest);
-    const rt = t.closest('[data-bcretarget]'); if (rt) return bcDuplicate(rt.dataset.bcretarget, rt.dataset.mode);
+    const rt = t.closest('[data-bcretarget]'); if (rt) { bcDuplicate(rt.dataset.bcretarget, rt.dataset.mode); if (rt.dataset.bcfu) { BC.tpl = rt.dataset.bcfu; BC.vars = []; renderBroadcast(); } return; }
     const dp = t.closest('[data-bcdup]'); if (dp) return bcDuplicate(dp.dataset.bcdup);
     if (t.closest('[data-bcstop]')) { BC.stop = true; return; }
     if (t.closest('[data-bcemanage]')) { BC.emailManage = true; return renderBroadcast(); }
@@ -5783,10 +5867,23 @@ const tplBody = s => esc(String(s || '')).replace(/\{\{(\d+)\}\}/g, '<mark>{{$1}
 function tplCard(t, i) {
   const st = t.metaStatus || 'Draft', cls = TPL_STATUS[st] || 'draft', btns = String(t.buttons || '').split('|').map(b => b.trim()).filter(Boolean);
   return `<div class="tp glass" style="--i:${i}"><div class="tp-h"><code>${esc(t.templateName)}</code><span class="tp-st ${cls}"><i></i>${esc(st)}</span></div>
-    <div class="tp-meta"><span>${esc(t.category || 'Marketing')}</span><span>${esc(t.language || 'en')}</span>${tplVars(t) ? `<span>${tplVars(t)} variable${tplVars(t) > 1 ? 's' : ''}</span>` : ''}${t.quality ? `<span>Quality: ${esc(t.quality)}</span>` : ''}</div>
+    <div class="tp-meta">${t.useCase ? `<span class="tp-uc-c">${esc(t.useCase)}</span>` : ''}${t.segment ? `<span class="tp-uc-c seg">★ ${esc(t.segment)}</span>` : ''}<span>${esc(t.category || 'Marketing')}</span><span>${esc(t.language || 'en')}</span>${tplVars(t) ? `<span>${tplVars(t)} variable${tplVars(t) > 1 ? 's' : ''}</span>` : ''}${t.quality ? `<span>Quality: ${esc(t.quality)}</span>` : ''}</div>
     <div class="tp-phone"><div class="bub in tpl">${t.header ? `<b class="hd">${esc(t.header)}</b>` : ''}<span>${tplBody(t.body)}</span>${t.footer ? `<em class="ft">${esc(t.footer)}</em>` : ''}</div>${btns.map(b => `<div class="wa-qb">${esc(b)}</div>`).join('')}</div>
     ${t.rejectReason ? `<p class="bc-warn">Rejected: ${esc(t.rejectReason)}</p>` : ''}
-    <div class="tp-act">${TPL_STATUS[st] ? `<button class="btn sm primary" data-tpuse="${esc(t.templateName)}" ${st === 'Approved' ? '' : 'title="Works only after Meta approves it"'}>Use in broadcast</button>` : `<button class="btn sm primary" data-tpedit="${esc(t.templateName)}">Edit &amp; submit to Meta</button>`}<button class="btn sm" data-tpdup="${esc(t.templateName)}">Duplicate</button><button class="ibtn" data-tpdel="${esc(t.templateName)}" title="Delete">${I.trash}</button></div></div>`;
+    <div class="tp-act">${TPL_STATUS[st] ? `<button class="btn sm primary" data-tpuse="${esc(t.templateName)}" ${st === 'Approved' ? '' : 'title="Works only after Meta approves it"'}>Use in broadcast</button>` : `<button class="btn sm primary" data-tpedit="${esc(t.templateName)}">Edit &amp; submit to Meta</button>`}<button class="btn sm" data-tplib="${esc(t.templateName)}" title="Use case, segment, tags">Library</button><button class="btn sm" data-tpdup="${esc(t.templateName)}">Duplicate</button><button class="ibtn" data-tpdel="${esc(t.templateName)}" title="Delete">${I.trash}</button></div></div>`;
+}
+const USE_CASES = ['Welcome', 'Follow-up', 'Offer / promotion', 'Reminder', 'Quotation / price', 'Order / payment update', 'Re-engage', 'Thank you / review', 'Other'];
+function openTplLib(name) {
+  const t = (S.templates || []).find(x => x.templateName === name); if (!t) return;
+  $('#stageBox').innerHTML = `<div class="m-head"><h2>Library · ${esc(name)}</h2><button class="ibtn" data-close>${I.x}</button></div>
+    <p class="help" style="margin-bottom:12px">Tell your team when to use this template. Broadcast shows it first for the matching segment, and campaign analytics suggests it for follow-ups.</p>
+    <div class="form" style="grid-template-columns:1fr 1fr"><div class="field"><label>Use case</label><select class="input" id="tlUse"><option value="">—</option>${USE_CASES.map(u => `<option ${u === t.useCase ? 'selected' : ''}>${esc(u)}</option>`).join('')}</select></div>
+      <div class="field"><label>Best for segment</label><select class="input" id="tlSeg"><option value="">Any audience</option>${segments().map(g => `<option ${g.name === t.segment ? 'selected' : ''}>${esc(g.name)}</option>`).join('')}</select></div>
+      <div class="field full"><label>Tags <span class="muted">(comma separated)</span></label><input class="input" id="tlTags" maxlength="200" value="${esc(t.tags || '')}" placeholder="diwali, cafes, hindi"></div>
+      <div class="field full"><label>Notes for the team</label><textarea class="input" id="tlNotes" rows="2" maxlength="1000" placeholder="e.g. Send 2 days after the quotation">${esc(t.notes || '')}</textarea></div></div>
+    <div class="m-foot"><div class="grow"></div><button class="btn" data-close>Cancel</button><button class="btn primary" id="tlSave">Save</button></div>`;
+  $('#tlSave').onclick = async () => { try { await api('saveTplInfo', { templateName: name, useCase: $('#tlUse').value, segment: $('#tlSeg').value, tags: $('#tlTags').value.trim(), notes: $('#tlNotes').value.trim() }); hideModal('#stageModal'); toast('✓ Saved to the library'); if (demo) renderTemplates(); else load(true); } catch (e) { toast(/use_case|segment|column/i.test(e.message) ? 'Run the database update 07_teams_tasks_calls.sql first.' : e.message, true); } };
+  showModal('#stageModal');
 }
 function renderTemplates() {
   if (!$('#tplgrid')) return;
@@ -5794,13 +5891,15 @@ function renderTemplates() {
   const count = s => all.filter(t => (t.metaStatus || 'Draft') === s).length;
   $('#tplBar').innerHTML = `<div class="tp-chips">${[['', 'All', all.length], ['Approved', 'Approved', count('Approved')], ['Pending', 'Pending', count('Pending')], ['Rejected', 'Rejected', count('Rejected')], ['Draft', 'Drafts', all.filter(t => !t.metaStatus || /draft|not submitted/i.test(t.metaStatus)).length]].map(([k, n, c]) => `<button class="chip ${TPL.status === k ? 'on' : ''}" data-tpst="${k}">${n} <span class="n">${c}</span></button>`).join('')}</div>
     <label class="search tp-q"><svg class="i" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="tpQ" type="search" name="q-tpl" autocomplete="off" placeholder="Search templates" value="${esc(TPL.q)}"></label>`;
-  const list = all.filter(t => (!q || [t.templateName, t.body, t.category].some(v => String(v || '').toLowerCase().includes(q))) && (!TPL.status || (TPL.status === 'Draft' ? (!t.metaStatus || /draft|not submitted/i.test(t.metaStatus)) : t.metaStatus === TPL.status)));
+  const ucs = USE_CASES.filter(u => all.some(t => t.useCase === u));
+  if (ucs.length) $('#tplBar').insertAdjacentHTML('beforeend', `<div class="tp-chips tp-uc"><span class="muted" style="font-size:12px;font-weight:700">Use case:</span>${[['', 'Any']].concat(ucs.map(u => [u, u])).map(([k, n]) => `<button class="chip ${(TPL.uc || '') === k ? 'on' : ''}" data-tpuc="${esc(k)}">${esc(n)}</button>`).join('')}</div>`);
+  const list = all.filter(t => (!q || [t.templateName, t.body, t.category, t.useCase, t.tags].some(v => String(v || '').toLowerCase().includes(q))) && (!TPL.uc || t.useCase === TPL.uc) && (!TPL.status || (TPL.status === 'Draft' ? (!t.metaStatus || /draft|not submitted/i.test(t.metaStatus)) : t.metaStatus === TPL.status)));
   $('#tplgrid').innerHTML = list.map(tplCard).join('') || `<div class="tp-empty glass"><b>${all.length ? 'No templates match.' : 'No templates yet'}</b><p class="muted">${all.length ? 'Try another filter.' : 'Create one here and submit it to Meta, or press “Sync from WhatsApp” to bring in templates you already made in WhatsApp Manager.'}</p><button class="btn primary" data-tpnew>+ New template</button></div>`;
   stagger($('#tplgrid'), true);
 }
 function openTplEditor(base) {
   const t = Object.assign({ templateName: '', category: 'Marketing', language: 'en', header: '', body: 'Hi {{1}}, ', footer: '', buttons: '' }, base || {});
-  TPL.edit = { name: t.templateName, category: /utility/i.test(t.category) ? 'UTILITY' : 'MARKETING', language: t.language || 'en', header: t.header && !/^\[/.test(t.header) ? t.header : '', body: t.body, footer: t.footer || '', buttons: String(t.buttons || '').split('|').map(x => x.trim()).filter(Boolean).map(x => /^🔗/.test(x) ? { type: 'URL', text: x.replace(/^🔗\s*/, ''), url: 'https://' } : /^📞/.test(x) ? { type: 'PHONE_NUMBER', text: x.replace(/^📞\s*/, ''), phone: '' } : { type: 'QUICK_REPLY', text: x }), examples: [] };
+  TPL.edit = { useCase: t.useCase || '', name: t.templateName, category: /utility/i.test(t.category) ? 'UTILITY' : 'MARKETING', language: t.language || 'en', header: t.header && !/^\[/.test(t.header) ? t.header : '', body: t.body, footer: t.footer || '', buttons: String(t.buttons || '').split('|').map(x => x.trim()).filter(Boolean).map(x => /^🔗/.test(x) ? { type: 'URL', text: x.replace(/^🔗\s*/, ''), url: 'https://' } : /^📞/.test(x) ? { type: 'PHONE_NUMBER', text: x.replace(/^📞\s*/, ''), phone: '' } : { type: 'QUICK_REPLY', text: x }), examples: [] };
   drawTplEditor(); showModal('#leadModal');
 }
 function drawTplEditor() {
@@ -5811,6 +5910,7 @@ function drawTplEditor() {
       <div class="form" style="grid-template-columns:1fr 1fr"><div class="field full"><label>Name <span class="muted">— lowercase, numbers and _ only</span></label><input class="input" id="teName" value="${esc(e.name)}" placeholder="diwali_offer_2026"></div>
       <div class="field"><label>Category</label><select class="input" id="teCat"><option value="MARKETING" ${e.category === 'MARKETING' ? 'selected' : ''}>Marketing — offers, news</option><option value="UTILITY" ${e.category === 'UTILITY' ? 'selected' : ''}>Utility — orders, reminders</option></select></div>
       <div class="field"><label>Language</label><select class="input" id="teLang">${LANGS.map(([k, n2]) => `<option value="${k}" ${e.language === k ? 'selected' : ''}>${n2}</option>`).join('')}</select></div>
+      <div class="field full"><label>Use case <span class="muted">— helps your team pick the right template in Broadcast</span></label><select class="input" id="teUse"><option value="">—</option>${USE_CASES.map(u => `<option ${u === e.useCase ? 'selected' : ''}>${esc(u)}</option>`).join('')}</select></div>
       <div class="field full"><label>Header <span class="muted">(optional, 60 characters)</span></label><input class="input" id="teHead" maxlength="60" value="${esc(e.header)}" placeholder="🎉 Diwali Sale"></div>
       <div class="field full"><label>Body <span class="muted">— *bold*, _italic_, {{1}} for each personal value</span><button class="btn sm" type="button" data-teaddvar style="float:right">+ Variable</button></label><textarea class="input" id="teBody" rows="6" maxlength="1024">${esc(e.body)}</textarea></div>
       ${n ? `<div class="field full"><label>Sample values <span class="muted">(Meta needs examples to approve)</span></label><div class="bc-vars">${Array.from({ length: n }, (_, i) => `<div class="bc-var"><span class="pill stage">{{${i + 1}}}</span><input class="input sm" data-teex="${i}" value="${esc(e.examples[i] || '')}" placeholder="${['Aarav', 'Diwali Sale', '20%', 'Mumbai'][i] || 'sample'}"></div>`).join('')}</div></div>` : ''}
@@ -5822,13 +5922,15 @@ function drawTplEditor() {
 }
 function readTplEditor() {
   const e = TPL.edit; e.name = $('#teName').value.toLowerCase().replace(/[^a-z0-9_]+/g, '_').replace(/^_+/, '').slice(0, 512); e.category = $('#teCat').value; e.language = $('#teLang').value;
-  e.header = $('#teHead').value; e.body = $('#teBody').value; e.footer = $('#teFoot').value; return e;
+  e.header = $('#teHead').value; e.body = $('#teBody').value; e.footer = $('#teFoot').value; e.useCase = $('#teUse') ? $('#teUse').value : e.useCase; return e;
 }
 (function tplEvents() {
   const v = $('#v-templates');
   v.addEventListener('click', async ev => {
     const t = ev.target;
     const sc = t.closest('[data-tpst]'); if (sc) { TPL.status = sc.dataset.tpst; return renderTemplates(); }
+    const uc = t.closest('[data-tpuc]'); if (uc) { TPL.uc = uc.dataset.tpuc; return renderTemplates(); }
+    const lb = t.closest('[data-tplib]'); if (lb) return openTplLib(lb.dataset.tplib);
     if (t.closest('[data-tpnew]') || t.id === 'tpNew') return openTplEditor(null);
     const us = t.closest('[data-tpuse]'); if (us) { BC.tab = 'whatsapp'; BC.tpl = us.dataset.tpuse; BC.vars = []; BC.node = 'msg'; go('broadcast'); return; }
     const ed = t.closest('[data-tpedit]'); if (ed) { const x = (S.templates || []).find(y => y.templateName === ed.dataset.tpedit); if (x) openTplEditor(Object.assign({}, x)); return; }
@@ -5874,6 +5976,7 @@ function readTplEditor() {
       if (submit) { const r = await fnCall('wa-templates', { action: 'create', name: e.name, category: e.category, language: e.language, header: e.header, body: e.body, footer: e.footer, buttons: e.buttons, examples: e.examples }); toast(`✓ Sent to Meta — status: ${r.status}`); }
       else if (demo) { S.templates = (S.templates || []).filter(x => x.templateName !== row.templateName).concat(row); toast('Draft saved'); }
       else { await api('saveTemplate', cloud ? row : Object.assign({}, row, { footer: undefined })); toast('Draft saved'); }
+      if (e.useCase && (demo || AUTH.v7)) { const old = (S.templates || []).find(x => x.templateName === e.name) || {}; await api('saveTplInfo', { templateName: e.name, useCase: e.useCase, segment: old.segment || '', tags: old.tags || '', notes: old.notes || '' }).catch(() => { }); }
       hideModal('#leadModal'); TPL.edit = null; if (demo) renderTemplates(); else load(true);
     } catch (err) { toast(err.message, true); b.disabled = false; }
   });

@@ -269,6 +269,7 @@ end $$;
 alter table public.templates add column if not exists use_case text not null default '';
 alter table public.templates add column if not exists tags     text not null default '';
 alter table public.templates add column if not exists notes    text not null default '';
+alter table public.templates add column if not exists segment  text not null default '';
 
 -- ---------- 7. Live updates + access ----------
 do $$
