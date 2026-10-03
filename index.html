@@ -1152,32 +1152,34 @@ html.accm-lock{overflow:hidden}
 @media(max-width:760px){.accm{padding:0}.accm-box{height:100%;width:100%;border-radius:0}.accm-in{grid-template-columns:1fr;grid-template-rows:auto minmax(0,1fr)}
   .accm-nav{flex-direction:row;overflow-x:auto;overflow-y:hidden;border-right:0;border-bottom:1px solid var(--line);padding:8px;gap:6px}.accm-g{display:none}.accm-it{flex:none;width:auto;padding:6px 10px 6px 6px;border:1px solid var(--line)}.accm-it.on{box-shadow:inset 0 -3px 0 var(--c)}.accm-tx small{display:none}.accm-ic{width:28px;height:28px;border-radius:8px}
   .accm-mh{padding:14px 16px 12px}.accm-slot{padding:14px 16px 18px}.accm-slot>.acc .acc-pad>.cf-foot:last-child,.accm-slot>.acc .acc-pad>.m-foot:last-child{margin:14px -16px -18px;padding:10px 16px;bottom:-18px}.accm-ft{padding:10px 16px}}
-/* ---- Template studio (template editor as a node canvas) ---- */
-#leadModal.studio{padding:14px}
-#leadModal.studio .box{width:min(1560px,100%)!important;height:calc(100vh - 28px);max-height:none;padding:0;overflow:hidden;display:flex;flex-direction:column;background:var(--bg1,var(--card));border-radius:20px}
-.tps{display:flex;flex-direction:column;height:100%;min-height:0}
-.tps-top{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--line);background:var(--glass-2,var(--card));flex-wrap:wrap}
+/* ---- Template settings panel in the Flow builder ---- */
 .tps-badge{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;background:color-mix(in srgb,#25A55F 18%,transparent);color:#25A55F;font-weight:800}
 .tps-ti{display:flex;flex-direction:column;gap:3px;min-width:0}.tps-ti b{font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:42vw}.tps-ti small{display:flex;align-items:center;gap:6px;color:var(--muted);font-size:12px}.tps-ti .pill{font-size:11px;padding:1px 8px}
-.tps-body{flex:1;min-height:0;display:grid;grid-template-columns:360px minmax(0,1fr) 300px}
-.tps-form{overflow:auto;border-right:1px solid var(--line);background:color-mix(in srgb,var(--text) 2.5%,transparent)}
-.tps-ph{position:sticky;top:0;z-index:3;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:12px 16px 8px;background:inherit;backdrop-filter:blur(10px)}
 .tps-tpe{display:block!important;padding:0 16px 18px}.tps-tpe .tpe-f{display:flex;flex-direction:column;gap:12px}
 .tps-sec{border:1px solid var(--line);border-radius:14px;padding:12px;background:var(--glass-2,var(--card));display:flex;flex-direction:column;gap:10px}
 .tps-st{display:flex;align-items:center;gap:8px;font-weight:800;font-size:13.5px}.tps-st span{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:11.5px;background:color-mix(in srgb,#25A55F 16%,transparent);color:#25A55F}.tps-st small{font-weight:500;font-size:11.5px}
-.tps-sec .field{margin:0;min-width:0}.tps-2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px}.tps-top .grow{flex:1}
+.tps-sec .field{margin:0;min-width:0}.tps-2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px}
 .tps-sec .tb-cts{grid-template-columns:repeat(3,minmax(0,1fr))!important}.tps-sec .tb-cts>*{min-width:0}
 .tps-wire{font-size:11.5px;font-weight:700;color:#B45309;padding:4px 2px 0}.tps-wire.on{color:var(--green)}
-.tps-cv{position:relative;min-width:0;display:flex;flex-direction:column;min-height:0}
-.tps-cvh{position:absolute;left:14px;bottom:14px;right:330px;z-index:4;pointer-events:none;display:flex;justify-content:flex-start}.tps-cvh>div{pointer-events:auto;max-width:560px;font-size:12px;color:var(--muted);background:var(--glass-3);border:1px solid var(--line);border-radius:999px;padding:6px 14px;display:flex;gap:8px;align-items:center;box-shadow:var(--shadow)}.tps-cvh b{color:var(--text)}
-#tsCanvas{flex:1;height:100%!important;min-height:0!important;border-radius:0}
-#tsCanvas .hint,#tsCanvas [data-fx="preset"]{display:none}
-.tps-prev{overflow:auto;border-left:1px solid var(--line);padding:0 14px 16px;background:color-mix(in srgb,var(--text) 2.5%,transparent)}.tps-prev .tps-ph{padding-left:0}
 .tps-lock{display:flex;flex-direction:column;gap:4px;padding:12px;border-radius:12px;background:var(--green-soft);font-size:12.5px}.tps-lock b{color:var(--green)}.tps-lock span{color:var(--muted)}
 .tps-msg{display:flex;flex-direction:column;gap:4px;font-size:13px;white-space:pre-wrap;line-height:1.45}.tps-msg small{color:var(--muted)}
 .tps-bl{display:flex;align-items:center;gap:8px;padding:8px 10px;border:1px solid var(--line);border-radius:10px;font-size:13px}.tps-bl small{margin-left:auto;color:var(--muted);font-size:11.5px}.tps-bl.qr small{color:#B45309}
-@media(max-width:1200px){.tps-body{grid-template-columns:340px minmax(0,1fr)}.tps-prev{display:none}}
-@media(max-width:820px){#leadModal.studio{padding:0}#leadModal.studio .box{height:100vh;border-radius:0}.tps-body{display:flex;flex-direction:column;overflow:auto}.tps-form{overflow:visible;border-right:0;border-bottom:1px solid var(--line)}.tps-cv{min-height:520px;flex:none}.tps-cvh{display:none}.tps-ti b{max-width:50vw}.tps-top .btn{padding:7px 10px;font-size:12.5px}}
+.tf-panel{position:absolute;right:12px;top:58px;bottom:12px;width:432px;z-index:7;display:flex;flex-direction:column;background:var(--glass-3);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);border:1px solid var(--stroke);border-radius:var(--r-panel);box-shadow:var(--shadow-2);overflow:hidden;animation:tfpIn .22s cubic-bezier(.2,.8,.2,1)}.tf-panel[hidden]{display:none}
+@keyframes tfpIn{from{opacity:0;transform:translateX(18px)}}
+.tfp-h{display:flex;align-items:center;gap:10px;padding:12px 12px 10px 14px;border-bottom:1px solid var(--line)}.tfp-h .tps-ti{flex:1}.tfp-h .tps-ti b{max-width:none}
+.tfp-b{flex:1;min-height:0;overflow:auto;overscroll-behavior:contain;padding:12px;display:flex;flex-direction:column;gap:12px}.tfp-b .tps-tpe{padding:0}
+.tfp-f{display:flex;align-items:center;gap:8px;padding:10px 12px;border-top:1px solid var(--line);background:var(--glass-2,var(--card))}.tfp-f .grow{flex:1}
+.tfp-dirty{color:#B45309;font-style:normal;font-weight:700}.tfp-pick{background:color-mix(in srgb,#25A55F 7%,var(--glass-2,var(--card)))}
+.tfp-prev .wa-phone{margin:0}
+.tf-wrap.panel-on #tfCanvas .ctrls{right:456px}
+.tf-wrap.panel-on #tfCanvas .hint{display:none}
+body:has(#v-templates.active .tf-wrap.panel-on:not([hidden])) .hp-fab{opacity:0;pointer-events:none;transform:scale(.6)}
+.tp[data-tpopen]{cursor:pointer}
+.tfp-grab{display:none}
+.tf-wrap:not(.panel-on) #tfCanvas .ctrls{right:84px}
+@media(max-width:820px){.tfp-grab{display:block;position:absolute;left:50%;top:5px;transform:translateX(-50%);width:54px;height:16px;border:0;background:none;cursor:pointer;padding:0}.tfp-grab::before{content:'';display:block;margin:5px auto 0;width:40px;height:5px;border-radius:9px;background:var(--line-2,var(--line))}.tfp-h{padding-top:18px}
+  .tf-panel{position:fixed;left:0;right:0;bottom:0;top:auto;width:auto;height:62vh;transition:height .25s ease;border-radius:20px 20px 0 0;z-index:65;padding-bottom:env(safe-area-inset-bottom);animation-name:tfpUp}.tf-panel.full{height:92vh}.tf-wrap.panel-on #tfCanvas .ctrls{display:none}.tfp-f .btn{padding:8px 11px;font-size:13px}}
+@keyframes tfpUp{from{opacity:.6;transform:translateY(40px)}}
 .conn-g{margin-bottom:20px}.conn-gt{font-size:11.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin:0 2px 8px}
 .conn-q{min-width:240px}
 .cf-grid{grid-template-columns:1fr 1fr}.cf-in{position:relative;display:flex;align-items:center}.cf-in .input{flex:1}.cf-eye{position:absolute;right:6px;border:0;background:transparent;opacity:.6;font-size:13px}
@@ -1774,7 +1776,7 @@ body.ro [data-cmw],body.np-commerce [data-cmw]{display:none!important}
         <div class="head-actions"><div class="tp-seg" role="tablist"><button type="button" data-tpview="list" role="tab">Templates</button><button type="button" data-tpview="flow" role="tab"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="4" width="6" height="5" rx="1.5"/><rect x="15" y="4" width="6" height="5" rx="1.5"/><rect x="9" y="15" width="6" height="5" rx="1.5"/><path d="M6 9v2a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V9M12 13v2"/></svg>Flow builder</button></div><button class="btn" id="tpSync">⟳ Sync from WhatsApp</button><button class="btn primary" id="tpNew"><svg class="i" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>New template</button></div></div>
       <div class="tp-bar" id="tplBar"></div>
       <div class="tpgrid" id="tplgrid"></div>
-      <div class="tf-wrap" id="tfWrap" hidden><div class="tf-intro"><div class="tf-steps"><span><b>1</b>Add a <i>WhatsApp template</i> node</span><span><b>2</b>Drag from a button's dot to the next template or an action</span><span><b>3</b>Click a node for its settings</span><span><b>4</b>Press <i>Apply to WhatsApp</i> — customers get it when they tap</span></div><button type="button" class="btn sm" data-pbguide="wa-flow">How it works</button></div><div class="tf-stage"><div id="tfCanvas"></div><div class="tf-empty" id="tfEmpty" hidden><div class="tf-emi"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="4" width="6" height="5" rx="1.5"/><rect x="15" y="4" width="6" height="5" rx="1.5"/><rect x="9" y="15" width="6" height="5" rx="1.5"/><path d="M6 9v2a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V9M12 13v2"/></svg></div><b>Build your first WhatsApp flow</b><p>Start with a template that has reply buttons — like a welcome menu — then wire each button to the next message or an action.</p><button type="button" class="btn primary" data-tfaddt>+ Add a template node</button></div></div></div>
+      <div class="tf-wrap" id="tfWrap" hidden><div class="tf-intro"><div class="tf-steps"><span><b>1</b>Add a <i>WhatsApp template</i> node</span><span><b>2</b>Drag from a button's dot to the next template or an action</span><span><b>3</b>Click a template — all its settings open on the right</span><span><b>4</b>Press <i>Save</i> — customers get it when they tap</span></div><button type="button" class="btn sm" data-pbguide="wa-flow">How it works</button></div><div class="tf-stage"><div id="tfCanvas"></div><aside class="tf-panel fx-own" id="tfPanel" hidden aria-label="Template settings"></aside><div class="tf-empty" id="tfEmpty" hidden><div class="tf-emi"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="4" width="6" height="5" rx="1.5"/><rect x="15" y="4" width="6" height="5" rx="1.5"/><rect x="9" y="15" width="6" height="5" rx="1.5"/><path d="M6 9v2a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V9M12 13v2"/></svg></div><b>Build your first WhatsApp flow</b><p>Start with a template that has reply buttons — like a welcome menu — then wire each button to the next message or an action.</p><button type="button" class="btn primary" data-tfaddt>+ Add a template node</button></div></div></div>
     </section>
 
     <!-- UNIFIED ANALYTICS -->
@@ -3755,7 +3757,7 @@ function parseNodeDef(o, quiet) {
   }
   return { ok: true, def: { desc: cleanName(o.description).slice(0, 140), color: color || undefined, ins, outs: outs.map(cleanName), fields: out, sum: p => { const f = out[0]; return f ? `${f.label}: ${p[f.k] ?? f.def ?? '–'}` : (cleanName(o.description) || 'Custom node'); } } };
 }
-const outsOf = (t, n) => { if (t.noOut) return []; if (t.outsFn && n) { const o = t.outsFn(n.p || {}); return o.length ? o : t.emptyNoPort ? [] : ['—']; } return t.outs && t.outs.length ? t.outs : ['out']; };   // outsFn: ports that depend on the node's settings (template buttons)
+const outsOf = (t, n) => { if (t.noOut) return []; if (t.outsFn && n) { const o = t.outsFn(n.p || {}, n); return o.length ? o : t.emptyNoPort ? [] : ['—']; } return t.outs && t.outs.length ? t.outs : ['out']; };   // outsFn: ports that depend on the node's settings (template buttons)
 const multiOut = (t, outs) => outs.length > 1 || (!!t.outsFn && outs.length > 0);
 const insOf = t => (t.ins === 0 ? 0 : 1);
 const colorOf = t => t.color || SECTIONS[t.section].color;
@@ -3806,10 +3808,10 @@ class FlowCanvas {
   }
   nodeHTML(n, i) {
     const t = nodeType(n.type), outs = outsOf(t, n), c = colorOf(t), sec = SECTIONS[t.section] || SECTIONS.logic, p = n.p || {}, mo = multiOut(t, outs);
-    let sum = ''; try { sum = t.sum(p); } catch (e) { sum = ''; }
+    let sum = ''; try { sum = t.sum(p, n); } catch (e) { sum = ''; }
     const h = mo ? 74 + outs.length * 24 : 66;
     return `<div class="fx-node ${t.missing ? 'missing' : ''} ${this.born && this.born.has(n.id) ? 'born' : ''}" data-id="${esc(n.id)}" style="left:${n.x}px;top:${n.y}px;min-height:${h}px;--c:${esc(c)};--i:${Math.min(i, 20)}">
-      <div class="fx-h"><span class="fx-ic">${esc(sec.ic)}</span><b>${esc(n.title || (t.head && t.head(p)) || t.name)}</b>${t.custom ? '<span class="badge mine">Custom</span>' : ''}</div>
+      <div class="fx-h"><span class="fx-ic">${esc(sec.ic)}</span><b>${esc(n.title || (t.head && t.head(p, n)) || t.name)}</b>${t.custom ? '<span class="badge mine">Custom</span>' : ''}</div>
       <div class="fx-s">${esc(String(sum).slice(0, 80))}</div>
       ${insOf(t) ? '<span class="fx-port in" data-pin></span>' : ''}
       ${outs.map((o, k) => `<span class="fx-port out" data-pout="${k}" style="top:${mo ? 70 + k * 24 : 26}px"></span>${mo ? `<span class="fx-ol" style="top:${70 + k * 24}px">${esc(o)}</span>` : ''}`).join('')}
@@ -3860,8 +3862,9 @@ class FlowCanvas {
   select(id, add) { if (!add) this.sel.clear(); if (id) this.sel.add(id); this.syncSel(); }
   /* ---- inspector (node properties) ---- */
   renderInsp() {
-    const one = this.sel.size === 1 ? this.node([...this.sel][0]) : null;
-    if (!one) { this.insp.hidden = true; return; }
+    const one = this.sel.size === 1 ? this.node([...this.sel][0]) : null, own = one && nodeType(one.type).ownPanel;
+    if (this.o.onPanel) this.o.onPanel(own ? one : null);   // some nodes (WhatsApp template) open a full settings panel instead
+    if (!one || own) { this.insp.hidden = true; return; }
     const t = nodeType(one.type), p = one.p || (one.p = {}), sec = SECTIONS[t.section] || SECTIONS.logic;
     const val = f => p[f.k] ?? f.def ?? '';
     const input = f => {
@@ -4061,6 +4064,7 @@ class FlowCanvas {
     R.querySelector('.minimap').addEventListener('click', e => { const mm = e.currentTarget, r = mm.getBoundingClientRect(), s = mm._s || 1, b = mm._b || { x1: 0, y1: 0 }; const wx = (e.clientX - r.left) / s + b.x1, wy = (e.clientY - r.top) / s + b.y1; this.view.x = R.clientWidth / 2 - wx * this.view.k; this.view.y = R.clientHeight / 2 - wy * this.view.k; this.apply(); });
     R.addEventListener('pointerenter', () => { FlowCanvas.active = this; });
   }
+  redrawNode(n) { const el = this.nodesEl.querySelector(`.fx-node[data-id="${CSS.escape(n.id)}"]`); if (el) { el.outerHTML = this.nodeHTML(n, 0); this.syncSelOnly(); this.drawWires(); } }
   syncSelOnly() { this.nodesEl.querySelectorAll('.fx-node').forEach(e => e.classList.toggle('sel', this.sel.has(e.dataset.id))); }
   key(e) {
     const k = e.key.toLowerCase(), mod = e.ctrlKey || e.metaKey;
@@ -4080,7 +4084,7 @@ function toolsets() {
 }
 addEventListener('keydown', e => {
   const fc = FlowCanvas.active; if (!fc || !fc.root.offsetParent) return;
-  if (e.target.closest && e.target.closest('input,textarea,select,[contenteditable]')) return;
+  if (e.target.closest && e.target.closest('input,textarea,select,[contenteditable],.fx-own')) return;
   if ($('.modal.show') || $('#panel.show') || ($('.pop.show') && e.key !== 'Escape')) return;
   if (fc.key(e)) e.stopImmediatePropagation();
 }, true);
@@ -6754,16 +6758,16 @@ function bcDuplicate(id, retargetMode) {
 })();
 
 /* ================= WhatsApp templates (premium list + editor + Meta sync) ================= */
-const TPL = { q: '', status: '', edit: null };
+const TPL = { q: '', status: '', edit: null, drafts: {}, node: null };
 const TPL_STATUS = { Approved: 'ok', Pending: 'wait', Rejected: 'bad', Paused: 'wait', Disabled: 'bad' };
 const tplBody = s => esc(String(s || '')).replace(/\{\{(\d+)\}\}/g, '<mark>{{$1}}</mark>').replace(/\*([^*\n]+)\*/g, '<b>$1</b>').replace(/_([^_\n]+)_/g, '<i>$1</i>').replace(/\n/g, '<br>');
 function tplCard(t, i) {
   const st = t.metaStatus || 'Draft', cls = TPL_STATUS[st] || 'draft', btns = String(t.buttons || '').split('|').map(b => b.trim()).filter(Boolean);
-  return `<div class="tp glass" style="--i:${i}"><div class="tp-h"><code>${esc(t.templateName)}</code><span class="tp-st ${cls}"><i></i>${esc(st)}</span></div>
+  return `<div class="tp glass" style="--i:${i}" data-tpopen="${esc(t.templateName)}" title="Open in the Flow builder"><div class="tp-h"><code>${esc(t.templateName)}</code><span class="tp-st ${cls}"><i></i>${esc(st)}</span></div>
     <div class="tp-meta">${t.useCase ? `<span class="tp-uc-c">${esc(t.useCase)}</span>` : ''}${t.segment ? `<span class="tp-uc-c seg">★ ${esc(t.segment)}</span>` : ''}<span>${esc(t.category || 'Marketing')}</span><span>${esc(t.language || 'en')}</span>${tplVars(t) ? `<span>${tplVars(t)} variable${tplVars(t) > 1 ? 's' : ''}</span>` : ''}${t.quality ? `<span>Quality: ${esc(t.quality)}</span>` : ''}</div>
     <div class="tp-phone"><div class="bub in tpl">${t.header ? `<b class="hd">${esc(t.header)}</b>` : ''}<span>${tplBody(t.body)}</span>${t.footer ? `<em class="ft">${esc(t.footer)}</em>` : ''}</div>${btns.map(b => `<div class="wa-qb">${esc(b)}</div>`).join('')}</div>
     ${t.rejectReason ? `<p class="bc-warn">Rejected: ${esc(t.rejectReason)}</p>` : ''}
-    <div class="tp-act">${TPL_STATUS[st] ? `<button class="btn sm primary" data-tpuse="${esc(t.templateName)}" ${st === 'Approved' ? '' : 'title="Works only after Meta approves it"'}>Use in broadcast</button>` : `<button class="btn sm primary" data-tpedit="${esc(t.templateName)}">Edit &amp; submit to Meta</button>`}<button class="btn sm" data-tpact="${esc(t.templateName)}" title="Open the node editor: what each button does"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="4" width="6" height="5" rx="1.5"/><rect x="15" y="4" width="6" height="5" rx="1.5"/><rect x="9" y="15" width="6" height="5" rx="1.5"/><path d="M6 9v2a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V9M12 13v2"/></svg>Button flow</button><button class="btn sm" data-tplib="${esc(t.templateName)}" title="Use case, segment, tags">Library</button><button class="btn sm" data-tpdup="${esc(t.templateName)}">Duplicate</button><button class="ibtn" data-tpdel="${esc(t.templateName)}" title="Delete">${I.trash}</button></div></div>`;
+    <div class="tp-act">${TPL_STATUS[st] ? `<button class="btn sm primary" data-tpuse="${esc(t.templateName)}" ${st === 'Approved' ? '' : 'title="Works only after Meta approves it"'}>Use in broadcast</button>` : `<button class="btn sm primary" data-tpedit="${esc(t.templateName)}">Edit &amp; submit to Meta</button>`}<button class="btn sm" data-tpact="${esc(t.templateName)}" title="Open in the Flow builder: settings and what each button does"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="4" width="6" height="5" rx="1.5"/><rect x="15" y="4" width="6" height="5" rx="1.5"/><rect x="9" y="15" width="6" height="5" rx="1.5"/><path d="M6 9v2a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V9M12 13v2"/></svg>Button flow</button><button class="btn sm" data-tplib="${esc(t.templateName)}" title="Use case, segment, tags">Library</button><button class="btn sm" data-tpdup="${esc(t.templateName)}">Duplicate</button><button class="ibtn" data-tpdel="${esc(t.templateName)}" title="Delete">${I.trash}</button></div></div>`;
 }
 /* ---------- advanced template builder: content types, buttons, actions, flows ---------- */
 const TB_CONTENT = [['text', 'Text', '✎'], ['image', 'Image', '🖼'], ['video', 'Video', '▶'], ['pdf', 'PDF', '📄'], ['location', 'Location', '📍'], ['catalog', 'Catalog', '🛍'], ['product', 'Product card', '🏷'], ['payment', 'Payment link', '₹'], ['contact', 'Contact card', '👤']];
@@ -6870,13 +6874,8 @@ function tbFlowSummary(e) {
   if (!qr.length) return '';
   return `<div class="tb-flow"><div class="bc-rh">What happens when tapped</div>${qr.map(b => `<div class="tb-fr"><span class="tb-fb">↩ ${esc(b.text || '…')}</span><span class="tb-fa">${(b.actions || []).map(a => a.type === 'send_template' ? `<b>→ ${esc(a.template || '?')}</b>` : esc(botLabel(a))).join(' · ') || '<span class="muted">lands in Inbox</span>'}</span></div>`).join('')}</div>`;
 }
-/* buttons & actions for an existing (e.g. Meta-approved) template — no new Meta review needed */
-function openTplActions(name) {
-  const t = (S.templates || []).find(x => x.templateName === name); if (!t) return;
-  if (!TPL_STATUS[t.metaStatus || 'Draft']) return openTplEditor(Object.assign({}, t));   // not on Meta yet → the whole template can still change
-  TPL.edit = Object.assign({ name, header: t.header && !/^\[/.test(t.header) ? t.header : '', body: t.body || '', footer: t.footer || '', examples: [], actionsOnly: true }, tbFromTemplate(t));
-  $('#leadBox').innerHTML = ''; TPL.cv = null; showModal('#leadModal'); drawTplEditor();
-}
+/* a template's buttons & actions → its node in the Flow builder */
+function openTplActions(name) { if (tfTpl(name)) tfOpen(name); }
 function tbMapHTML(T) {
   const byName = new Map(T.map(t => [t.templateName, t])), btns = t => (t.flow || {}).buttons || [];
   const nexts = t => btns(t).map(b => (b.actions || []).filter(a => a.type === 'send_template' && byName.has(a.template)).map(a => a.template));
@@ -6929,6 +6928,8 @@ SECTIONS.tflow = { name: 'WhatsApp templates', color: '#25A55F', ic: 'T' };
 SECTIONS.tact = { name: 'Actions when tapped', color: '#F29A5C', ic: '↯' };
 const tfTpl = name => (S.templates || []).find(t => t.templateName === name);
 const tfQR = t => t ? tbFromTemplate(t).buttons.map((b, i) => ({ b, i })).filter(x => x.b.type === 'QUICK_REPLY') : [];
+const tfDraft = n => (n && TPL.drafts && TPL.drafts[n.id]) || null;   // unsaved edits made in the Flow builder panel
+const tfQRof = (p, n) => { const d = tfDraft(n); return d ? d.buttons.map((b, i) => ({ b, i })).filter(x => x.b.type === 'QUICK_REPLY') : tfQR(tfTpl(p.template)); };
 const TF_ICON = { handover: '🙋', send_media: '🖼', send_location: '📍', add_note: '🗒', set_followup: '📅', update_lead: '✎', stop_messages: '⛔', send_text: '💬', open_link: '🔗', open_form: '📝', open_product: '🛍', send_email: '✉', send_payment_link: '₹', create_order: '🧾', update_order: '🔄', cancel_order: '✖', track_order: '🚚', generate_invoice: '📄', assign_member: '👤', add_tag: '🏷', change_stage: '➜', create_task: '✓', trigger_workflow: 'n', run_ai_agent: '✦', custom_api: '⇄' };
 const tfField = ([k, label, kind]) => {
   const sel = options => F(k, label, 'select', { options });
@@ -6940,16 +6941,13 @@ const tfField = ([k, label, kind]) => {
   if (kind === 'leadfield') return F(k, label, 'select', { options: LEAD_FIELDS.map(x => x[0]), def: 'city', help: 'city · budget · business · business_type · email · source · notes' });
   if (kind === 'num') return F(k, label, 'number'); return F(k, label, 'text', kind === 'url' ? { def: 'https://' } : {});
 };
-NODE_TYPES.push({ type: 'tf.template', section: 'tflow', name: 'WhatsApp template', desc: 'Sends this template. Each reply button becomes an output — wire it to the next template or to actions.',
-  fields: [F('template', 'Template', 'select', { options: () => [''].concat((S.templates || []).filter(t => t.templateName).map(t => t.templateName)) }), F('params', 'Values for {{1}}, {{2}}… when sent as a next step (optional)', 'text', { help: 'Comma separated, e.g. {{first_name}}, {{order_id}}. Empty = first name, order or business details.' })],
-  head: p => p.template || '',
-  outsFn: p => tfQR(tfTpl(p.template)).map(x => String(x.b.text || 'Button ' + (x.i + 1)).slice(0, 18)),
-  sum: p => { const t = tfTpl(p.template); if (!p.template) return 'Choose a template'; if (!t) return `${p.template} — not found`; const n = tfQR(t).length; return `${p.template} · ${n ? n + ' reply button' + (n > 1 ? 's' : '') : 'no reply buttons'}${/approved/i.test(t.metaStatus || '') ? '' : ' · ' + (t.metaStatus || 'Draft')}`; },
-  info: (p, n, cv) => { const t = tfTpl(p.template); if (!t) return '<p class="help">Pick a template. Make new ones in the Templates tab.</p>';
-    const qr = tfQR(t), to = k => cv.flow.links.filter(l => l[0] === n.id && l[1] === k).map(l => { const m = cv.node(l[2]); return m ? (m.title || (m.type === 'tf.template' ? (m.p.template || 'Template') : nodeType(m.type).name)) : ''; }).filter(Boolean);
-    return `<div class="tf-prev"><div class="tf-bub">${t.header && !/^\[/.test(t.header) ? `<b>${esc(t.header)}</b>` : ''}<span>${esc(String(t.body || '').slice(0, 400))}</span>${t.footer ? `<small>${esc(t.footer)}</small>` : ''}</div>
-      ${tbFromTemplate(t).buttons.map((b, i) => { const k = qr.findIndex(x => x.i === i), dest = k > -1 ? to(k) : []; return `<div class="tf-pb ${b.type === 'QUICK_REPLY' ? '' : 'ext'}"><span>${b.type === 'URL' ? '🔗 ' : b.type === 'PHONE_NUMBER' ? '📞 ' : ''}${esc(b.text || 'Button')}</span><small>${b.type !== 'QUICK_REPLY' ? esc(TB_META[b.type] || '') : dest.length ? '→ ' + esc(dest.join(', ')) : 'not wired — reply lands in Inbox'}</small></div>`; }).join('')}
-      </div><div class="tf-st"><span class="pill ${/approved/i.test(t.metaStatus || '') ? 'ok' : ''}">${esc(t.metaStatus || 'Draft')}</span><button type="button" class="btn sm" data-tfedit="${esc(t.templateName)}">Edit template</button></div>`; } });
+NODE_TYPES.push({ type: 'tf.template', section: 'tflow', name: 'WhatsApp template', ownPanel: true, emptyNoPort: true, desc: 'Sends this template. Each reply button becomes an output — wire it to the next template or to actions.',
+  fields: [F('template', 'Template', 'select', { options: () => [''].concat((S.templates || []).filter(t => t.templateName).map(t => t.templateName)) }), F('params', 'Values for {{1}}, {{2}}… when sent as a next step (optional)', 'text')],
+  head: (p, n) => { const d = tfDraft(n); return d ? d.name || 'New template' : p.template || 'New template'; },
+  outsFn: (p, n) => tfQRof(p, n).map(x => String(x.b.text || 'Button ' + (x.i + 1)).slice(0, 18)),
+  sum: (p, n) => { const d = tfDraft(n), t = tfTpl(p.template); if (!d && !p.template) return 'Click to choose or create a template'; if (!d && !t) return `${p.template} — not found`;
+    const k = tfQRof(p, n).length, st = d && d.isNew ? 'New' : (t && t.metaStatus) || 'Draft';
+    return `${k ? k + ' reply button' + (k > 1 ? 's' : '') : 'no reply buttons'}${/approved/i.test(st) ? '' : ' · ' + st}${d && d._dirty ? ' · ● not saved' : ''}`; } });
 Object.entries(TB_ACT).filter(([k]) => k !== 'send_template').forEach(([k, [name, fields]]) => NODE_TYPES.push({ type: 'tf.' + k, section: 'tact', name, color: k === 'run_ai_agent' ? '#B08CEB' : /order|invoice|payment/.test(k) ? '#E8707E' : /tag|stage|member|task/.test(k) ? '#3CB4A0' : /workflow|api/.test(k) ? '#EA4B71' : undefined,
   fields: fields.map(tfField), sum: p => { const f = fields[0]; const v = f ? p[f[0]] : ''; return `${TF_ICON[k] || ''} ${v && v !== 'https://' ? String(v).slice(0, 60) : f ? f[1] : name}`.trim(); } }));
 
@@ -7098,10 +7096,12 @@ function tfSeed() {
     tfQR(t).forEach((x, k) => botNodes(x.b.actions, [me, k], add, link, a => { if (!a.template) return null; if (tfTpl(a.template) && !done.has(a.template)) queue.push(a.template); const id = tplNode(a.template), tn = nodes.find(m => m.id === id); if (a.params && !tn.p.params) tn.p.params = a.params; return id; })); }
   botLayout(nodes, links, 320); return { nodes, links };
 }
+const tfTerm = n => n.type === 'tf.template' ? (n.p && n.p.template && tfTpl(n.p.template) ? Object.assign({ type: 'send_template', template: n.p.template }, n.p.params ? { params: n.p.params } : {}) : null) : undefined;
 /** Flow builder canvas → { templateName: { buttonIndex: steps[] } } */
 function tfCompile(flow) {
-  const out = {}, warn = [], term = n => n.type === 'tf.template' ? (n.p && n.p.template && tfTpl(n.p.template) ? Object.assign({ type: 'send_template', template: n.p.template }, n.p.params ? { params: n.p.params } : {}) : null) : undefined;
+  const out = {}, warn = [], term = tfTerm;
   flow.nodes.filter(n => n.type === 'tf.template').forEach(T => {
+    if (tfDraft(T) && tfDraft(T)._dirty) warn.push(`${tfDraft(T).name || 'A new template'} has unsaved changes — open it and press Save in its panel.`);
     const t = tfTpl(T.p && T.p.template); if (!t) { warn.push(T.p && T.p.template ? `“${T.p.template}” no longer exists — that node is skipped.` : 'A template node has no template chosen — it is skipped.'); return; }
     const res = out[t.templateName] = out[t.templateName] || {};
     tfQR(t).forEach((x, k) => { res[x.i] = (res[x.i] || []).concat(botTree(flow, T.id, k, term)); botWarn(res[x.i], `${t.templateName} → “${x.b.text}”`, warn); });
@@ -7115,12 +7115,11 @@ function tfCanvas() {
   if (CANVASES.tpl) return CANVASES.tpl;
   const cv = CANVASES.tpl = new FlowCanvas({ root: $('#tfCanvas'), key: 'TPL-FLOW', title: 'Template flows', sections: ['tflow', 'tact', 'tlogic'], seed: tfSeed, status: '',
     bar: '<span class="tf-sync" id="tfSync"></span><span class="grow"></span><button class="btn sm" data-fx="tidy" title="Arrange the nodes neatly">⇢ Tidy up</button><button class="btn sm" data-tfprev>▶ Preview chat</button><button class="btn sm" data-tfrebuild>⟳ Rebuild from templates</button><button class="btn sm primary" data-tfapply>Apply to WhatsApp</button>',
-    onChange: () => tfSyncState() });
+    onChange: () => { tfSyncState(); tfPanelLive(); }, onPanel: n => tfPanel(n) });
   cv.root.addEventListener('click', e => {
     if (e.target.closest('[data-tfapply]')) return tfApply(e.target.closest('[data-tfapply]'));
     if (e.target.closest('[data-tfrebuild]')) { if (!confirm('Rebuild the canvas from the button actions saved in your templates? Changes on the canvas that were not applied are lost.')) return; cv.flow = tfSeed(); cv.sel.clear(); cv.render(); cv.save(); cv.fit(); toast('Canvas rebuilt from your templates'); return; }
     if (e.target.closest('[data-tfprev]')) return tfPreview();
-    const ed = e.target.closest('[data-tfedit]'); if (ed) { const t = tfTpl(ed.dataset.tfedit); if (t) openTplEditor(t); }
   });
   return cv;
 }
@@ -7129,7 +7128,7 @@ function tfSyncState() {
   const d = tfDiff(cv.flow), tn = cv.flow.nodes.filter(n => n.type === 'tf.template').length;
   el.className = 'tf-sync ' + (d.length ? 'dirty' : 'ok');
   const em = $('#tfEmpty'); if (em) em.hidden = !!cv.flow.nodes.length;
-  el.textContent = !tn ? 'Add a template node to start' : d.length ? `● Not live yet — ${d.length} template${d.length > 1 ? 's' : ''} changed. Press Apply.` : '✓ Live on WhatsApp';
+  el.textContent = !tn ? 'Add a template node to start' : d.length ? `● Not live yet — ${d.length} template${d.length > 1 ? 's' : ''} changed. Press Save on it, or Apply.` : '✓ Live on WhatsApp';
 }
 async function tfApply(btn) {
   const cv = tfCanvas(), { out, warn } = tfCompile(cv.flow), names = tfDiff(cv.flow);
@@ -7145,7 +7144,8 @@ async function tfApply(btn) {
 }
 /** ▶ Preview: chat with the flow — tap buttons and see what the customer gets */
 function tfPreview() {
-  const cv = tfCanvas(), sel = cv.sel.size === 1 ? cv.node([...cv.sel][0]) : null, starts = cv.flow.nodes.filter(n => n.type === 'tf.template' && tfTpl(n.p.template));
+  const cv = tfCanvas(), sel = cv.sel.size === 1 ? cv.node([...cv.sel][0]) : null; if (sel && sel.id === TPL.node && TPL.edit) return tsPreview();
+  const starts = cv.flow.nodes.filter(n => n.type === 'tf.template' && tfTpl(n.p.template));
   const incoming = new Set(cv.flow.links.map(l => l[2])), first = sel && sel.type === 'tf.template' && tfTpl(sel.p.template) ? sel : starts.find(n => !incoming.has(n.id)) || starts[0];
   if (!first) return toast('Add a template node first', true);
   const { out } = tfCompile(cv.flow), t = tfTpl(first.p.template), saved = (name, bi) => ((tbFromTemplate(tfTpl(name) || {}).buttons || [])[bi] || {}).actions || [];
@@ -7183,60 +7183,92 @@ function renderTemplates() {
   $('#tplgrid').innerHTML = list.map(tplCard).join('') || `<div class="tp-empty glass"><b>${all.length ? 'No templates match.' : 'No templates yet'}</b><p class="muted">${all.length ? 'Try another filter.' : 'Create one here and submit it to Meta, or press “Sync from WhatsApp” to bring in templates you already made in WhatsApp Manager.'}</p><button class="btn primary" data-tpnew>+ New template</button></div>`;
   stagger($('#tplgrid'), true);
 }
-function openTplEditor(base) {
-  const t = Object.assign({ templateName: '', category: 'Marketing', language: 'en', header: '', body: 'Hi {{1}}, ', footer: '', buttons: '' }, base || {});
-  TPL.edit = Object.assign({ useCase: t.useCase || '', name: t.templateName, category: /utility/i.test(t.category) ? 'UTILITY' : 'MARKETING', language: t.language || 'en', header: t.header && !/^\[/.test(t.header) ? t.header : '', body: t.body, footer: t.footer || '', examples: [] }, tbFromTemplate(t));
-  $('#leadBox').innerHTML = ''; TPL.cv = null; showModal('#leadModal'); drawTplEditor();
+/** new template / a copy / an existing one → its node in the Flow builder, with all its settings in the side panel */
+function openTplEditor(base) { if (base && base.templateName && tfTpl(base.templateName) && !base.isCopy) return tfOpen(base.templateName); tfOpen(null, tfEditFrom(base, true)); }
+/** the editor state for one template (existing or new) */
+function tfEditFrom(t, fresh) {
+  if (t && !fresh && TPL_STATUS[t.metaStatus || 'Draft']) return Object.assign({ name: t.templateName, header: t.header && !/^\[/.test(t.header) ? t.header : '', body: t.body || '', footer: t.footer || '', category: /utility/i.test(t.category) ? 'UTILITY' : 'MARKETING', language: t.language || 'en', examples: [], actionsOnly: true }, tbFromTemplate(t));   // on Meta: words locked, the button flow can still change
+  const b = Object.assign({ templateName: '', category: 'Marketing', language: 'en', header: '', body: 'Hi {{1}}, ', footer: '', buttons: '' }, t || {});
+  return Object.assign({ useCase: b.useCase || '', name: b.templateName, category: /utility/i.test(b.category) ? 'UTILITY' : 'MARKETING', language: b.language || 'en', header: b.header && !/^\[/.test(b.header) ? b.header : '', body: b.body, footer: b.footer || '', examples: [], isNew: !t || !!fresh || !tfTpl(b.templateName) }, tbFromTemplate(b));
 }
-/* ================= Template studio — the template editor as a node canvas =================
-   Left: the message (content, body, buttons). Middle: this template as a node — every reply button is a dot you drag from to
-   add what happens when it is tapped (next template, reply, tag, stage, order, task, AI…). Right: the WhatsApp preview.
-   The canvas is compiled into each button's actions (the same data wa-webhook runs), so Save / Submit work as before. */
-SECTIONS.tnext = { name: 'Next message', color: '#25A55F', ic: '→' };
-SECTIONS.tsroot = { name: 'This template', color: '#25A55F', ic: 'T' };
-const tsQR = () => (TPL.edit ? TPL.edit.buttons.map((b, i) => ({ b, i })).filter(x => x.b.type === 'QUICK_REPLY') : []);
-NODE_TYPES.push({ type: 'ts.root', section: 'tsroot', name: 'This template', ins: 0, fixed: true, emptyNoPort: true, fields: [], head: () => (TPL.edit && TPL.edit.name) || 'New template',
-  desc: 'Your message. Each reply button is a dot on the right side — drag from it to add what happens when a customer taps it.',
-  outsFn: () => tsQR().map(x => String(x.b.text || 'Button').slice(0, 18)),
-  sum: () => { const n = tsQR().length; return n ? `${n} reply button${n > 1 ? 's' : ''} · drag from a dot →` : 'Add a reply button on the left'; },
-  info: () => { const e = TPL.edit; if (!e) return ''; return `<div class="tf-prev"><div class="tf-bub">${e.header ? `<b>${esc(e.header)}</b>` : ''}<span>${esc(String(e.body || '').slice(0, 400))}</span>${e.footer ? `<small>${esc(e.footer)}</small>` : ''}</div>${e.buttons.map(b => `<div class="tf-pb ${b.type === 'QUICK_REPLY' ? '' : 'ext'}"><span>${b.type === 'URL' ? '🔗 ' : b.type === 'PHONE_NUMBER' ? '📞 ' : ''}${esc(b.text || 'Button')}</span><small>${b.type !== 'QUICK_REPLY' ? esc(TB_META[b.type] || '') : (b.actions || []).length ? (b.actions || []).length + ' step' + ((b.actions || []).length > 1 ? 's' : '') : 'not wired yet'}</small></div>`).join('')}</div><p class="help">Change the text and buttons in the <b>Message</b> panel on the left.</p>`; } });
-NODE_TYPES.push({ type: 'ts.next', section: 'tnext', name: 'Send next template', noOut: true, desc: 'Sends another approved template — that is how one template leads to the next, like a chatbot menu.',
-  fields: [F('template', 'Template', 'select', { options: () => [''].concat((S.templates || []).filter(t => t.templateName && t.templateName !== (TPL.edit || {}).name).map(t => t.templateName)) }), F('params', 'Values for {{1}}, {{2}}… (optional)', 'text', { help: 'Comma separated, e.g. {{first_name}}, {{order_id}}. Empty = first name, order or business details.' })],
-  head: p => p.template ? '→ ' + p.template : '', sum: p => { const t = tfTpl(p.template); return !p.template ? 'Choose the next template' : t ? String(t.body || '').slice(0, 70) : p.template + ' — not found'; },
-  info: p => { const t = tfTpl(p.template); return t ? `<div class="tf-prev"><div class="tf-bub">${t.header && !/^\[/.test(t.header) ? `<b>${esc(t.header)}</b>` : ''}<span>${esc(String(t.body || '').slice(0, 300))}</span></div>${tbFromTemplate(t).buttons.map(b => `<div class="tf-pb ext"><span>${esc(b.text || 'Button')}</span></div>`).join('')}</div><div class="tf-st"><span class="pill ${/approved/i.test(t.metaStatus || '') ? 'ok' : ''}">${esc(t.metaStatus || 'Draft')}</span><span class="muted" style="font-size:11.5px">Its own buttons follow its own flow</span></div>` : ''; } });
-
-const tsP = a => { const p = {}; ((TB_ACT[a.type] || [0, []])[1]).forEach(([fk, , kind]) => { if (a[fk] !== undefined) p[fk] = kind === 'member' && !a[fk] ? 'Lead owner' : a[fk]; }); return p; };
-/** studio canvas from the template's buttons */
-function tsSeed() {
-  const nodes = [{ id: 'root', type: 'ts.root', x: 40, y: 40, p: {} }], links = []; let c = 0;
-  const add = (type, p) => { const id = 'n' + (++c); nodes.push({ id, type, x: 0, y: 0, p }); return id; };
-  const link = (prev, id) => { if (prev) links.push([prev[0], prev[1], id]); };
-  tsQR().forEach((x, k) => botNodes(x.b.actions, ['root', k], add, link, a => add('ts.next', { template: a.template || '', params: a.params || '' })));
-  botLayout(nodes, links, 290); return { nodes, links };
+/* ================= Template settings inside the Flow builder =================
+   Clicking a template (card, Edit, Button flow) opens the Flow builder on that template's node. The node's settings panel holds the whole
+   template — basics, message, variables, buttons, preview — and its reply buttons are the node's outputs on the canvas.
+   One Save stores the message and the wiring of its buttons together (Submit to Meta for new ones). */
+const tfQRB = e => e.buttons.filter(b => b.type === 'QUICK_REPLY');
+/** open the Flow builder on a template (name) or on a new template (draft) */
+function tfOpen(name, draft) {
+  TPL.view = 'flow'; store.set('nv.tpView', 'flow');
+  if (!$('#v-templates').classList.contains('active')) go('templates');
+  renderTemplates();
+  const cv = tfCanvas();
+  requestAnimationFrame(() => requestAnimationFrame(() => {   // after the canvas loaded and fitted itself
+    if (!cv.flow) cv.load();
+    let n = name ? cv.flow.nodes.find(x => x.type === 'tf.template' && x.p && x.p.template === name) : null;
+    if (!n) n = tfAddTplNode(cv, name, draft);
+    cv.select(n.id); tfFocus(cv, n);
+  }));
 }
-/** studio canvas → each reply button's steps (what wa-webhook runs) */
-function tsCompile() {
-  const cv = TPL.cv, e = TPL.edit; if (!cv || !cv.flow || !e) return;
-  const term = n => n.type === 'ts.next' ? Object.assign({ type: 'send_template', template: (n.p || {}).template || '' }, (n.p || {}).params ? { params: n.p.params } : {}) : undefined;
-  tsQR().forEach((x, k) => { x.b.actions = botTree(cv.flow, 'root', k, term); });
+/** add a template node (and the steps already saved on its buttons) below the canvas content */
+function tfAddTplNode(cv, name, draft) {
+  const start = cv.flow.nodes.length, maxY = cv.flow.nodes.reduce((m, x) => Math.max(m, x.y + 74 + outsOf(nodeType(x.type), x).length * 24), -Infinity), minX = start ? Math.min(...cv.flow.nodes.map(x => x.x)) : 40;
+  const add = (type, p) => { const id = cv.uid(); cv.flow.nodes.push({ id, type, x: 0, y: 0, p }); return id; };
+  const link = (prev, id) => { if (prev) cv.flow.links.push([prev[0], prev[1], id]); };
+  const me = add('tf.template', { template: name || '', params: '' });
+  if (draft) TPL.drafts[me] = Object.assign(draft, { _dirty: true });
+  const t = tfTpl(name), src = draft ? draft.buttons : t ? tbFromTemplate(t).buttons : [];
+  src.filter(b => b.type === 'QUICK_REPLY').forEach((b, k) => botNodes(b.actions, [me, k], add, link, a => { if (!a.template) return null; const ex = cv.flow.nodes.find(x => x.type === 'tf.template' && x.p && x.p.template === a.template); return ex ? ex.id : add('tf.template', { template: a.template, params: a.params || '' }); }));
+  const fresh = cv.flow.nodes.slice(start), ids = new Set(fresh.map(x => x.id));
+  botLayout(fresh, cv.flow.links.filter(l => ids.has(l[0]) && ids.has(l[2])), 320, 0);
+  const dy = isFinite(maxY) ? maxY + 90 : 40; fresh.forEach(x => { x.x += minX; x.y += dy; });
+  cv.born = ids; cv.render(); cv.born = null; cv.save();
+  return cv.node(me);
 }
-const tpsWireText = b => { const n = botCount(b.actions); return n ? `● ${n} step${n > 1 ? 's' : ''} on the canvas` : '○ Not wired — drag from its dot on the canvas →'; };
-const tpsWireDraw = () => $$('#leadBox [data-tpsl]').forEach(el => { const b = (TPL.edit || { buttons: [] }).buttons[+el.dataset.tpsl]; if (!b || b.type !== 'QUICK_REPLY') return; const n = botCount(b.actions); el.textContent = n ? n + ' step' + (n > 1 ? 's' : '') : 'not wired yet'; el.parentElement.classList.toggle('on', !!n); }) || $$('#leadBox [data-tpsw]').forEach(el => { const b = (TPL.edit || { buttons: [] }).buttons[+el.dataset.tpsw]; if (!b) return; el.textContent = tpsWireText(b); el.classList.toggle('on', !!(b.actions || []).length); });
-const tsSig = () => tsQR().map(x => x.i).join(',');
-function tsSync() {
-  if (!TPL.cv) {
-    setTimeout(() => { const root = $('#tsCanvas'); if (!root || TPL.cv || !TPL.edit) return;
-      TPL.cv = new FlowCanvas({ root, key: 'TPL-ED', title: 'Button flow', sections: ['tnext', 'tact', 'tlogic'], seed: tsSeed, local: true, bar: '<span class="grow"></span><button class="btn sm" data-fx="tidy" title="Arrange the nodes neatly">⇢ Tidy up</button>', onChange: () => { tsCompile(); tpsPrevDraw(); tpsWireDraw(); } });
-      TPL.sig = tsSig(); TPL.cv.load(); }, 60);
-    return;
+/** zoom to a node, leaving room for the settings panel */
+function tfFocus(cv, n) {
+  const R = cv.root, W = R.clientWidth, H = R.clientHeight, el = cv.nodesEl.querySelector(`.fx-node[data-id="${CSS.escape(n.id)}"]`); if (!W || !el) return;
+  const phone = innerWidth < 820, k = phone ? 0.75 : Math.max(0.8, Math.min(1, cv.view.k)), free = phone ? W : W - 456;
+  const bar = (R.querySelector('.fx-bar') || { offsetHeight: 50 }).offsetHeight + 24;
+  cv.view = { k, x: Math.max(16, free * 0.2) - n.x * k, y: (phone ? bar : Math.max(bar, H / 2 - el.offsetHeight * k / 2)) - n.y * k }; cv.apply();
+  if (phone) { R.style.height = Math.max(R.clientHeight, innerHeight - 70) + 'px'; scrollTo({ top: R.getBoundingClientRect().top + scrollY - 64 }); }   // canvas on top, the settings sheet below
+}
+/** the canvas selected a node (or nothing) → show / hide its settings panel */
+function tfPanel(n) {
+  const P = $('#tfPanel'); if (!P) return;
+  if (n && TPL.node === n.id && !P.hidden && TPL.edit) return;
+  if (TPL.node && (!n || TPL.node !== n.id)) { const d = TPL.drafts[TPL.node]; if (d && !d._dirty) delete TPL.drafts[TPL.node]; else if (d && !n && CANVASES.tpl && CANVASES.tpl.node(TPL.node)) toast('Not saved yet — your changes stay on this node until you press Save'); }
+  if (!n) { TPL.node = null; TPL.edit = null; TPL.qr = null; P.hidden = true; P.innerHTML = ''; $('#tfWrap').classList.remove('panel-on'); return; }
+  TPL.node = n.id; TPL.edit = TPL.drafts[n.id] || (TPL.drafts[n.id] = tfEditFrom(n.p.template ? tfTpl(n.p.template) : null)); TPL.qr = tfQRB(TPL.edit);
+  P.hidden = false; $('#tfWrap').classList.add('panel-on'); drawTplEditor(true);
+}
+/** the canvas changed → the panel's step counts and preview follow */
+function tfPanelLive() { if (!TPL.node || !TPL.edit) return; tfCompileInto(); tpsPrevDraw(); tpsWireDraw(); }
+/** the wiring after this node's reply buttons → each button's steps (what wa-webhook runs) */
+function tfCompileInto() {
+  const cv = CANVASES.tpl, e = TPL.edit, n = cv && TPL.node && cv.flow && cv.node(TPL.node); if (!e || !n) return;
+  tfQRB(e).forEach((b, k) => { b.actions = botTree(cv.flow, n.id, k, tfTerm); });
+}
+/** reply buttons added / removed / reordered → keep each wire on its own button */
+function tfRemap(cv, n, e) {
+  const now = tfQRB(e), was = TPL.qr || now;
+  if (was.length !== now.length || was.some((b, k) => now[k] !== b)) { cv.flow.links = cv.flow.links.map(l => { if (l[0] !== n.id) return l; const j = now.indexOf(was[l[1]]); return j < 0 ? null : [l[0], j, l[2]]; }).filter(Boolean); cv.save(); }
+  // a new reply button with ready-made steps (Order Now, Get Quote…) → those steps appear as nodes wired to its dot
+  const add = now.map((b, k) => ({ b, k })).filter(x => !was.includes(x.b) && (x.b.actions || []).length);
+  if (add.length) {
+    const start = cv.flow.nodes.length, mk = (type, p) => { const id = cv.uid(); cv.flow.nodes.push({ id, type, x: 0, y: 0, p }); return id; };
+    add.forEach(x => botNodes(x.b.actions, [n.id, x.k], mk, (prev, id) => { if (prev) cv.flow.links.push([prev[0], prev[1], id]); }, a => { const ex = a.template && cv.flow.nodes.find(m => m.type === 'tf.template' && m.p && m.p.template === a.template); return ex ? ex.id : a.template ? mk('tf.template', { template: a.template, params: a.params || '' }) : null; }));
+    const fresh = cv.flow.nodes.slice(start), ids = new Set(fresh.map(m => m.id)), y0 = Math.max(n.y, ...cv.flow.nodes.slice(0, start).filter(m => m.x > n.x + 100 && m.x < n.x + 700 && cv.flow.links.some(l => l[0] === n.id && l[2] === m.id)).map(m => m.y + 110));
+    botLayout(fresh, cv.flow.links.filter(l => ids.has(l[0]) && ids.has(l[2])), 300, 0); fresh.forEach(m => { m.x += n.x + 330; m.y += y0 - 30; });
+    cv.born = ids; cv.render(); cv.born = null; cv.save();
   }
-  if (tsSig() !== TPL.sig) { TPL.sig = tsSig(); TPL.cv.flow = tsSeed(); TPL.cv.sel.clear(); TPL.cv.render(); requestAnimationFrame(() => TPL.cv && TPL.cv.fit()); }
-  else TPL.cv.render();
+  TPL.qr = now;
 }
+const tpsWireText = b => { const n = botCount(b.actions); return n ? `● ${n} step${n > 1 ? 's' : ''} wired on the canvas` : '○ Not wired — drag from its dot on the node ←'; };
+const tpsWireDraw = () => { $$('#tfPanel [data-tpsl]').forEach(el => { const b = (TPL.edit || { buttons: [] }).buttons[+el.dataset.tpsl]; if (!b || b.type !== 'QUICK_REPLY') return; const n = botCount(b.actions); el.textContent = n ? n + ' step' + (n > 1 ? 's' : '') : 'not wired yet'; el.parentElement.classList.toggle('on', !!n); }); $$('#tfPanel [data-tpsw]').forEach(el => { const b = (TPL.edit || { buttons: [] }).buttons[+el.dataset.tpsw]; if (!b) return; el.textContent = tpsWireText(b); el.classList.toggle('on', !!(b.actions || []).length); }); };
 function tpsPrevDraw() {
   const e = TPL.edit, box = $('#tpsPrev'); if (!e || !box) return;
-  box.innerHTML = `<div class="tps-ph">Preview</div><div class="wa-phone"><div class="wa-top">${avatar(brand().brandName)}<div><b>${esc(brand().brandName)}</b><small>Business account</small></div></div><div class="wa-chat">${tbPreview(e)}</div></div>${tbFlowSummary(e)}
-    <ul class="bc-rules" style="margin-top:12px"><li>Meta usually reviews in minutes, sometimes up to 24 hours.</li><li>Marketing templates need a clear offer; don't start or end the body with a variable.</li><li>Button flows change without a new review.</li></ul>`;
+  box.innerHTML = `<div class="tps-st"><span>👁</span>Preview</div><div class="wa-phone"><div class="wa-top">${avatar(brand().brandName)}<div><b>${esc(brand().brandName)}</b><small>Business account</small></div></div><div class="wa-chat">${tbPreview(e)}</div></div>${tbFlowSummary(e)}
+    ${e.actionsOnly ? '' : '<ul class="bc-rules" style="margin-top:12px"><li>Meta usually reviews in minutes, sometimes up to 24 hours.</li><li>Marketing templates need a clear offer; don\'t start or end the body with a variable.</li><li>Button flows change any time without a new review.</li></ul>'}`;
 }
 const TPS_LANGS = [['en', 'English'], ['en_US', 'English (US)'], ['hi', 'Hindi'], ['mr', 'Marathi'], ['gu', 'Gujarati'], ['ta', 'Tamil'], ['te', 'Telugu'], ['bn', 'Bengali'], ['kn', 'Kannada'], ['ml', 'Malayalam'], ['pa', 'Punjabi']];
 function tpsFormHTML(e) {
@@ -7253,53 +7285,64 @@ function tpsFormHTML(e) {
       <div class="field"><label>Body <span class="muted">— *bold*, _italic_, {{1}}</span><button class="btn sm" type="button" data-teaddvar style="float:right">+ Variable</button></label><textarea class="input" id="teBody" rows="5" maxlength="1024">${esc(e.body)}</textarea></div>
       ${n ? `<div class="field"><label>Sample values <span class="muted">(Meta needs examples)</span></label><div class="bc-vars">${Array.from({ length: n }, (_, i) => `<div class="bc-var"><span class="pill stage">{{${i + 1}}}</span><input class="input sm" data-teex="${i}" value="${esc(e.examples[i] || '')}" placeholder="${['Aarav', 'Diwali Sale', '20%', 'Mumbai'][i] || 'sample'}"></div>`).join('')}</div></div>` : ''}
       <div class="field"><label>Footer <span class="muted">(optional)</span></label><input class="input" id="teFoot" maxlength="60" value="${esc(e.footer)}" placeholder="Reply STOP to unsubscribe"></div></div>
-    <div class="tps-sec"><div class="tps-st"><span>3</span>Buttons <small class="muted">— reply buttons get a dot on the canvas</small></div>${tbButtonsHTML(e, true)}</div>
+    <div class="tps-sec"><div class="tps-st"><span>3</span>Buttons <small class="muted">— each reply button is a dot on the node</small></div>${tbButtonsHTML(e, true)}</div>
   </div></div>`;
 }
 function tpsLockedHTML(e) {
   const media = ['image', 'video', 'pdf'].includes(e.content), t = tfTpl(e.name) || {};
   return `<div class="tpe tps-tpe"><div class="tpe-f">
-    <div class="tps-lock"><b>✓ ${esc(t.metaStatus || 'Approved')} by Meta</b><span>The message itself can't change without a new review — duplicate the template to edit its words. The button flow on the canvas can change any time.</span></div>
+    <div class="tps-lock"><b>✓ ${esc(t.metaStatus || 'Approved')} by Meta</b><span>The words can't change without a new review — use <b>Duplicate</b> on the template card to edit them. What each button does (the wiring on the canvas) can change any time.</span></div>
     ${media ? `<div class="field"><label>${e.content === 'pdf' ? 'PDF' : esc(e.content)} link sent with every message (required)</label><input class="input" id="tbMedia" value="${esc(e.mediaUrl || '')}" placeholder="https://…"></div>` : ''}
     <div class="tps-sec"><div class="tps-st"><span>✓</span>Message</div><div class="tps-msg">${e.header ? `<b>${esc(e.header)}</b>` : ''}<span>${esc(e.body)}</span>${e.footer ? `<small>${esc(e.footer)}</small>` : ''}</div></div>
-    <div class="tps-sec"><div class="tps-st"><span>✓</span>Buttons</div>${e.buttons.map((b, i) => `<div class="tps-bl ${b.type === 'QUICK_REPLY' ? 'qr' : ''}"><span class="tb-bi">${i + 1}</span><b>${esc(b.text || 'Button')}</b><small data-tpsl="${i}">${b.type === 'QUICK_REPLY' ? (botCount(b.actions) ? botCount(b.actions) + ' step' + (botCount(b.actions) > 1 ? 's' : '') : 'not wired yet') : esc(TB_META[b.type] || '')}</small></div>`).join('') || '<p class="muted">No buttons.</p>'}</div>
+    <div class="tps-sec"><div class="tps-st"><span>✓</span>Buttons <small class="muted">— drag from a dot on the node to wire it</small></div>${e.buttons.map((b, i) => `<div class="tps-bl ${b.type === 'QUICK_REPLY' ? 'qr' : ''}"><span class="tb-bi">${i + 1}</span><b>${esc(b.text || 'Button')}</b><small data-tpsl="${i}">${b.type === 'QUICK_REPLY' ? (botCount(b.actions) ? botCount(b.actions) + ' step' + (botCount(b.actions) > 1 ? 's' : '') : 'not wired yet') : esc(TB_META[b.type] || '')}</small></div>`).join('') || '<p class="muted">No buttons.</p>'}</div>
   </div></div>`;
 }
-function tpsTopHTML(e) {
-  const t = tfTpl(e.name), canMeta = cloud && !(WA.status && WA.status.connected === false && !WA.status.error), st = e.actionsOnly ? (t && t.metaStatus) || 'Approved' : (t && t.metaStatus) || 'Draft';
-  return `<button type="button" class="ibtn" data-close title="Close">${I.x}</button><span class="tps-badge">T</span>
-    <div class="tps-ti"><b>${esc(e.name || 'New template')}</b><small><span class="pill ${/approved/i.test(st) ? 'ok' : ''}">${esc(st)}</span> ${esc(e.category === 'UTILITY' ? 'Utility' : 'Marketing')} · ${esc((TPS_LANGS.find(x => x[0] === e.language) || [0, e.language || 'English'])[1])}</small></div>
-    <div class="grow"></div><button type="button" class="btn" data-tsprev>▶ Preview chat</button>
-    ${e.actionsOnly ? '<button type="button" class="btn primary" data-tbsaveflow>Save button flow</button>' : `<button type="button" class="btn" data-tesave>Save draft</button><button type="button" class="btn primary" data-tesubmit ${canMeta ? '' : `disabled title="${demo ? 'Demo mode' : 'Connect WhatsApp first'}"`}>Submit to Meta</button>`}`;
+function tfPanelHTML(e, n) {
+  const t = tfTpl(e.name), st = e.isNew ? 'New' : (t && t.metaStatus) || 'Draft', canMeta = cloud && !(WA.status && WA.status.connected === false && !WA.status.error), cv = CANVASES.tpl;
+  const others = (S.templates || []).filter(x => x.templateName), into = cv && cv.flow.links.some(l => l[2] === n.id);
+  return `<button type="button" class="tfp-grab" data-tfpgrab title="Bigger / smaller" aria-label="Resize the settings sheet"></button><div class="tfp-h"><span class="tps-badge">T</span><div class="tps-ti"><b>${esc(e.name || 'New template')}</b><small><span class="pill ${/approved/i.test(st) ? 'ok' : ''}">${esc(st)}</span>${esc(e.category === 'UTILITY' ? 'Utility' : 'Marketing')} · ${esc((TPS_LANGS.find(x => x[0] === e.language) || [0, e.language || 'English'])[1])}${e._dirty ? ' · <em class="tfp-dirty">● not saved</em>' : ''}</small></div><button type="button" class="ibtn" data-tfpx title="Close">${I.x}</button></div>
+    <div class="tfp-b">
+      ${!n.p.template && others.length ? `<div class="tps-sec tfp-pick"><div class="field"><label>Use a template you already have</label><select class="input" data-tfpick><option value="">— or create a new one below —</option>${others.map(x => `<option>${esc(x.templateName)}</option>`).join('')}</select></div></div>` : ''}
+      ${e.actionsOnly ? tpsLockedHTML(e) : tpsFormHTML(e)}
+      ${into ? `<div class="tps-sec"><div class="tps-st"><span>→</span>When another button sends this</div><div class="field"><label>Values for {{1}}, {{2}}… <span class="muted">(optional, comma separated)</span></label><input class="input" data-tfparam value="${esc(n.p.params || '')}" placeholder="{{first_name}}, {{order_id}}"><small class="muted">Empty = first name, order or business details.</small></div></div>` : ''}
+      <div class="tps-sec tfp-prev" id="tpsPrev"></div>
+    </div>
+    <div class="tfp-f"><button type="button" class="btn" data-tsprev>▶ Preview chat</button><div class="grow"></div>
+      ${e.actionsOnly ? '<button type="button" class="btn primary" data-tbsaveflow>Save</button>' : `<button type="button" class="btn ${canMeta ? '' : 'primary'}" data-tesave>Save</button><button type="button" class="btn primary" data-tesubmit ${canMeta ? '' : `disabled title="${demo ? 'Demo mode' : 'Connect WhatsApp first'}"`}>Submit to Meta</button>`}</div>`;
 }
 function drawTplEditor() {
-  const e = TPL.edit, box = $('#leadBox'); if (!e) return;
-  if (!box.querySelector('.tps')) {
-    TPL.cv = null; TPL.sig = null; $('#leadModal').classList.add('studio');
-    box.innerHTML = `<div class="tps"><div class="tps-top" id="tpsTop"></div><div class="tps-body">
-      <aside class="tps-form"><div class="tps-ph">${e.actionsOnly ? 'Message' : 'Message'}</div><div id="tpsForm"></div></aside>
-      <section class="tps-cv"><div class="tps-cvh"><div><b>Button flow</b><span>What happens when a customer taps each reply button. Drag from a button's dot, or press <b>+ Node</b>.</span></div></div><div id="tsCanvas"></div></section>
-      <aside class="tps-prev" id="tpsPrev"></aside></div></div>`;
-  }
-  $('#tpsTop').innerHTML = tpsTopHTML(e);
-  $('#tpsForm').innerHTML = e.actionsOnly ? tpsLockedHTML(e) : tpsFormHTML(e);
-  tpsPrevDraw(); tsSync();
+  const e = TPL.edit, P = $('#tfPanel'), cv = CANVASES.tpl, n = cv && TPL.node && cv.flow && cv.node(TPL.node); if (!e || !P || !n) return;
+  tfRemap(cv, n, e); tfCompileInto();
+  const old = P.querySelector('.tfp-b'), st = old ? old.scrollTop : 0;
+  P.innerHTML = tfPanelHTML(e, n); tpsPrevDraw();
+  P.querySelector('.tfp-b').scrollTop = st;
+  cv.redrawNode(n);
 }
 const drawTplActions = drawTplEditor;
-/** ▶ Preview chat for the template being edited */
+/** ▶ Preview chat for the template in the panel (other templates follow the canvas) */
 function tsPreview() {
-  const e = TPL.edit; if (!e) return; if (TPL.cv) tsCompile();
-  const saved = (name, bi) => ((tbFromTemplate(tfTpl(name) || {}).buttons || [])[bi] || {}).actions || [];
-  botPreview({ first: { h: e.header, b: e.body, f: e.footer, btns: e.buttons, acts: bi => (e.buttons[bi] || {}).actions || [] }, tplActs: saved });
+  const e = TPL.edit; if (!e) return; tfCompileInto();
+  const { out } = tfCompile(tfCanvas().flow), saved = (name, bi) => ((tbFromTemplate(tfTpl(name) || {}).buttons || [])[bi] || {}).actions || [];
+  botPreview({ first: { h: e.header, b: e.body, f: e.footer, btns: e.buttons, acts: bi => (e.buttons[bi] || {}).actions || [] }, tplActs: (name, bi) => out[name] && out[name][bi] !== undefined ? out[name][bi] : saved(name, bi) });
 }
-document.addEventListener('click', ev => { if (ev.target.closest('#leadBox [data-tsprev]')) tsPreview(); });
-
-function tbRedraw(fn) { if (!TPL.edit || !$('#leadModal').classList.contains('show') || !$('#leadBox .tpe, #leadBox .tb-btns')) return; const a = document.activeElement, sel = a && (a.id ? '#' + a.id : ['teex', 'tebx', 'tebu', 'tebp', 'tbtx', 'tburl', 'tbph', 'tbaf'].map(k => a.dataset && a.dataset[k] != null ? `[data-${k}="${a.dataset[k]}"]` : '').join('')), p = a && a.selectionStart; fn(); const n = sel && $('#leadBox ' + sel); if (n) { n.focus(); try { n.setSelectionRange(p, p); } catch (er) { } } }
+/** after Save / Submit: the node now points at the saved template and the panel shows it fresh */
+async function tplAfterSave(name) {
+  const cv = CANVASES.tpl, n = cv && TPL.node && cv.node(TPL.node);
+  if (n) { n.p.template = name; delete TPL.drafts[n.id]; }
+  TPL.node = null; TPL.edit = null; TPL.qr = null;
+  if (cv) cv.save();
+  if (demo) renderTemplates(); else await load(true);
+  if (cv && n && cv.node(n.id)) { cv.sel = new Set([n.id]); cv.render(); }
+  tfSyncState();
+}
+function tbRedraw(fn) { const P = $('#tfPanel'); if (!TPL.edit || !P || P.hidden || !P.querySelector('.tpe, .tb-btns')) return; const a = document.activeElement, sel = a && (a.id ? '#' + a.id : ['teex', 'tebx', 'tebu', 'tebp', 'tbtx', 'tburl', 'tbph', 'tbaf'].map(k => a.dataset && a.dataset[k] != null ? `[data-${k}="${a.dataset[k]}"]` : '').join('')), p = a && a.selectionStart; fn(); const n = sel && P.querySelector(sel); if (n) { n.focus(); try { n.setSelectionRange(p, p); } catch (er) { } } }
 function tbReadContent(e) { const v = id => $(id) ? $(id).value.trim() : null; if (v('#tbMedia') != null) e.mediaUrl = v('#tbMedia'); if (v('#tbFile') != null) e.fileName = v('#tbFile'); if (v('#tbProd') != null) e.productId = v('#tbProd'); if (v('#tbLat') != null) e.location = { lat: v('#tbLat'), lng: v('#tbLng'), name: v('#tbLname'), address: v('#tbLaddr') }; }
 function readTplEditor() {
   const e = TPL.edit; e.name = $('#teName').value.toLowerCase().replace(/[^a-z0-9_]+/g, '_').replace(/^_+/, '').slice(0, 512); e.category = $('#teCat').value; e.language = $('#teLang').value;
   e.header = $('#teHead') ? $('#teHead').value : ''; e.body = $('#teBody').value; e.footer = $('#teFoot').value; e.useCase = $('#teUse') ? $('#teUse').value : e.useCase; tbReadContent(e); return e;
 }
+/** the panel's template has changes that are not saved yet (shown on the node and in the panel) */
+function tfDirty() { const e = TPL.edit; if (!e || e._dirty) return; e._dirty = true; const cv = CANVASES.tpl, n = cv && TPL.node && cv.node(TPL.node); if (n) cv.redrawNode(n); const h = $('#tfPanel .tps-ti small'); if (h && !h.querySelector('.tfp-dirty')) h.insertAdjacentHTML('beforeend', ' · <em class="tfp-dirty">● not saved</em>'); }
 (function tplEvents() {
   const v = $('#v-templates');
   v.addEventListener('click', async ev => {
@@ -7307,19 +7350,20 @@ function readTplEditor() {
     const sc = t.closest('[data-tpst]'); if (sc) { TPL.status = sc.dataset.tpst; return renderTemplates(); }
     const uc = t.closest('[data-tpuc]'); if (uc) { TPL.uc = uc.dataset.tpuc; return renderTemplates(); }
     const lb = t.closest('[data-tplib]'); if (lb) return openTplLib(lb.dataset.tplib);
-    const ta = t.closest('[data-tpact]'); if (ta) return openTplActions(ta.dataset.tpact);
-    if (t.closest('[data-tfaddt]')) { const cv = tfCanvas(); cv.select(null); cv.addNode('tf.template', null, false); return; }
+    const ta = t.closest('[data-tpact]'); if (ta) return tfOpen(ta.dataset.tpact);
+    if (t.closest('[data-tfaddt]')) return tfOpen(null, tfEditFrom(null, true));
     const tv = t.closest('[data-tpview]'); if (tv) { TPL.view = tv.dataset.tpview; store.set('nv.tpView', TPL.view); return renderTemplates(); }
-    if (t.closest('[data-tpnew]') || t.id === 'tpNew') return openTplEditor(null);
+    if (t.closest('[data-tpnew]') || t.id === 'tpNew') return tfOpen(null, tfEditFrom(null, true));
     const us = t.closest('[data-tpuse]'); if (us) { BC.tab = 'whatsapp'; BC.tpl = us.dataset.tpuse; BC.vars = []; BC.node = 'msg'; go('broadcast'); return; }
-    const ed = t.closest('[data-tpedit]'); if (ed) { const x = (S.templates || []).find(y => y.templateName === ed.dataset.tpedit); if (x) openTplEditor(Object.assign({}, x)); return; }
-    const du = t.closest('[data-tpdup]'); if (du) { const x = (S.templates || []).find(y => y.templateName === du.dataset.tpdup); return openTplEditor(Object.assign({}, x, { templateName: x.templateName + '_copy' })); }
+    const ed = t.closest('[data-tpedit]'); if (ed) return tfOpen(ed.dataset.tpedit);
+    const du = t.closest('[data-tpdup]'); if (du) { const x = tfTpl(du.dataset.tpdup); if (!x) return; let nm = x.templateName.slice(0, 500) + '_copy', c = 2; while (tfTpl(nm)) nm = x.templateName.slice(0, 500) + '_copy' + c++; return tfOpen(null, tfEditFrom(Object.assign({}, x, { templateName: nm, metaStatus: '', metaId: '' }), true)); }
     const dl = t.closest('[data-tpdel]'); if (dl) {
       const name = dl.dataset.tpdel, x = (S.templates || []).find(y => y.templateName === name) || {}, onMeta = x.metaId || /approved|pending|rejected|paused/i.test(x.metaStatus || '');
       if (!confirm(onMeta ? `Delete “${name}” from Meta too? Campaigns can't use it after this.` : `Delete the draft “${name}”?`)) return;
       try { if (cloud && onMeta) await fnCall('wa-templates', { action: 'delete', name }); else if (cloud) await sbq(AUTH.client.from('templates').delete().eq('workspace_id', AUTH.ws).eq('template_name', name)); else S.templates = S.templates.filter(y => y.templateName !== name); toast('Template deleted'); if (cloud) load(true); else renderTemplates(); } catch (err) { toast(err.message, true); }
       return;
     }
+    const op = t.closest('[data-tpopen]'); if (op && !t.closest('button,a,select,input,textarea,label')) return tfOpen(op.dataset.tpopen);   // the whole card opens it in the Flow builder
     if (t.id === 'tpSync' || t.closest('#tpSync')) {
       if (demo) return toast('Demo: connect WhatsApp to sync your real templates');
       const b = $('#tpSync'); b.disabled = true; b.textContent = 'Syncing…';
@@ -7328,10 +7372,21 @@ function readTplEditor() {
     }
   });
   v.addEventListener('input', ev => { if (ev.target.id === 'tpQ') { TPL.q = ev.target.value; const pos = ev.target.selectionStart; renderTemplates(); const q = $('#tpQ'); q.focus(); try { q.setSelectionRange(pos, pos); } catch (e) { } } });
-  // editor lives in the shared lead modal
-  const box = $('#leadBox');
+  // the template's settings live in the Flow builder's side panel
+  const box = $('#tfPanel');
+  box.addEventListener('click', ev => {
+    if (ev.target.closest('[data-tfpx]')) { const cv = CANVASES.tpl; if (cv) cv.select(null); return; }
+    if (ev.target.closest('[data-tfpgrab]')) { box.classList.toggle('full'); return; }
+    if (ev.target.closest('[data-tsprev]')) return tsPreview();
+  });
+  box.addEventListener('keydown', ev => { if (ev.key === 'Escape' && !ev.target.closest('select')) { const cv = CANVASES.tpl; if (cv) cv.select(null); } });
+  box.addEventListener('change', ev => {
+    const pk = ev.target.closest('[data-tfpick]'), cv = CANVASES.tpl, n = cv && TPL.node && cv.node(TPL.node); if (!pk || !n || !pk.value) return;
+    n.p.template = pk.value; delete TPL.drafts[n.id]; TPL.node = null; TPL.edit = null; cv.flow.links = cv.flow.links.filter(l => l[0] !== n.id || l[1] < tfQR(tfTpl(pk.value)).length); cv.save(); cv.render();
+  });
+  box.addEventListener('input', ev => { const pr = ev.target.closest('[data-tfparam]'), cv = CANVASES.tpl, n = cv && TPL.node && cv.node(TPL.node); if (pr && n) { n.p.params = pr.value.slice(0, 300); cv.save(); } });
   box.addEventListener('input', ev => {
-    if (!TPL.edit || !box.querySelector('.tpe') || ev.target.closest('#tsCanvas')) return; const t = ev.target, e = TPL.edit;
+    if (!TPL.edit || !box.querySelector('.tpe') || ev.target.closest('[data-tfparam]')) return; const t = ev.target, e = TPL.edit; tfDirty();
     const ex = t.closest('[data-teex]'); if (ex) e.examples[+ex.dataset.teex] = t.value;
     const bx = t.closest('[data-tebx]'); if (bx) e.buttons[+bx.dataset.tebx].text = t.value;
     const bu = t.closest('[data-tebu]'); if (bu) e.buttons[+bu.dataset.tebu].url = t.value;
@@ -7344,15 +7399,16 @@ function readTplEditor() {
     readTplEditor(); clearTimeout(TPL.tm); TPL.tm = setTimeout(() => tbRedraw(drawTplEditor), 300);
   });
   box.addEventListener('change', ev => {
-    if (ev.target.closest('#tsCanvas')) return;
-    if (TPL.edit && box.querySelector('.tpe')) { const e = TPL.edit, t = ev.target, redraw = () => { if (!e.actionsOnly) readTplEditor(); else tbReadContent(e); (e.actionsOnly ? drawTplActions : drawTplEditor)(); };
+    if (ev.target.closest('[data-tfpick]')) return;
+    if (TPL.edit && box.querySelector('.tpe')) { tfDirty(); const e = TPL.edit, t = ev.target, redraw = () => { if (!e.actionsOnly) readTplEditor(); else tbReadContent(e); (e.actionsOnly ? drawTplActions : drawTplEditor)(); };
       const ty = t.closest('[data-tbtype]'); if (ty) { const b = e.buttons[+ty.dataset.tbtype]; b.type = t.value; if (t.value === 'URL' && !b.url) b.url = 'https://'; return redraw(); }
       if (t.matches('[data-tbaddbtn]')) { if (t.value) e.buttons.push(tbNew(t.value)); return redraw(); }
       const aa = t.closest('[data-tbaddact]'); if (aa) { if (t.value) (e.buttons[+aa.dataset.tbaddact].actions = e.buttons[+aa.dataset.tbaddact].actions || []).push(tbActNew(t.value)); return redraw(); }
       const af = t.closest('select[data-tbaf]'); if (af) { const [bi, ai, k] = af.dataset.tbaf.split('|'); e.buttons[+bi].actions[+ai][k] = t.value; return redraw(); } }
     if (!TPL.edit || !box.querySelector('.tpe')) return; const bt = ev.target.closest('[data-tebt]'); if (bt) { TPL.edit.buttons[+bt.dataset.tebt].type = ev.target.value; readTplEditor(); drawTplEditor(); } else if (/^te(Cat|Lang)$/.test(ev.target.id)) readTplEditor(); });
   box.addEventListener('click', async ev => {
-    if (!TPL.edit || !box.querySelector('.tpe') || ev.target.closest('#tsCanvas')) return; const t = ev.target, e = TPL.edit; if (TPL.cv) tsCompile();
+    if (!TPL.edit || !box.querySelector('.tpe')) return; const t = ev.target, e = TPL.edit; tfCompileInto();
+    if (t.closest('[data-teaddvar],[data-tbct],[data-tbdel],[data-tbup],[data-tbadel],[data-teaddbtn],[data-tebdel]')) tfDirty();
     if (t.closest('[data-teaddvar]')) { readTplEditor(); const n = (e.body.match(/\{\{\d+\}\}/g) || []).length; e.body = e.body.replace(/\s*$/, '') + ` {{${n + 1}}}`; return drawTplEditor(); }
     const redraw = () => { if (!e.actionsOnly) readTplEditor(); else tbReadContent(e); (e.actionsOnly ? drawTplActions : drawTplEditor)(); };
     const ct = t.closest('[data-tbct]'); if (ct) { readTplEditor(); const k = ct.dataset.tbct; if (k === 'contact') { e.content = 'contact'; return drawTplEditor(); } e.content = k;
@@ -7363,7 +7419,7 @@ function readTplEditor() {
     const bup = t.closest('[data-tbup]'); if (bup) { const i2 = +bup.dataset.tbup; if (i2) { const x = e.buttons.splice(i2, 1)[0]; e.buttons.splice(i2 - 1, 0, x); } return redraw(); }
     const adl = t.closest('[data-tbadel]'); if (adl) { const [bi, ai] = adl.dataset.tbadel.split('|'); e.buttons[+bi].actions.splice(+ai, 1); return redraw(); }
     if (t.closest('[data-tbsaveflow]')) { tbReadContent(e); const errs = e.buttons.flatMap((b, i) => (b.actions || []).filter(a => a.type === 'send_template' && !a.template).map(() => `Button ${i + 1}: choose the next template`)); if (errs.length) return toast(errs[0], true); const sb = t.closest('[data-tbsaveflow]'); sb.disabled = true;
-      try { await api('saveTplFlow', { templateName: e.name, flow: tbFlowOf(e) }); hideModal('#leadModal'); TPL.edit = null; toast('✓ Button actions saved'); if (demo) renderTemplates(); else load(true); } catch (er) { toast(er.message, true); sb.disabled = false; } return; }
+      try { await api('saveTplFlow', { templateName: e.name, flow: tbFlowOf(e) }); toast('✓ Saved — live on WhatsApp'); await tplAfterSave(e.name); } catch (er) { toast(er.message, true); sb.disabled = false; } return; }
     if (t.closest('[data-teaddbtn]')) { readTplEditor(); e.buttons.push({ type: 'QUICK_REPLY', text: '' }); return drawTplEditor(); }
     const bd = t.closest('[data-tebdel]'); if (bd) { readTplEditor(); e.buttons.splice(+bd.dataset.tebdel, 1); return drawTplEditor(); }
     const submit = t.closest('[data-tesubmit]'), save = t.closest('[data-tesave]'); if (!submit && !save) return;
@@ -7383,7 +7439,7 @@ function readTplEditor() {
       else if (demo) { S.templates = (S.templates || []).filter(x => x.templateName !== row.templateName).concat(row); toast('Draft saved'); }
       else { await api('saveTemplate', cloud ? row : Object.assign({}, row, { footer: undefined })); toast('Draft saved'); }
       if (e.useCase && (demo || AUTH.v7)) { const old = (S.templates || []).find(x => x.templateName === e.name) || {}; await api('saveTplInfo', { templateName: e.name, useCase: e.useCase, segment: old.segment || '', tags: old.tags || '', notes: old.notes || '' }).catch(() => { }); }
-      hideModal('#leadModal'); TPL.edit = null; if (demo) renderTemplates(); else load(true);
+      await tplAfterSave(e.name);
     } catch (err) { toast(err.message, true); b.disabled = false; }
   });
 })();
@@ -7616,7 +7672,7 @@ function renderReports(anim) {
 
 /* ================= modal helpers ================= */
 function showModal(sel) { $(sel).classList.add('show'); $('#scrim').classList.add('show'); }
-function hideModal(sel) { const ae = document.activeElement; if (ae && $(sel).contains(ae)) ae.blur(); $(sel).classList.remove('show'); if (sel === '#leadModal') { $(sel).classList.remove('studio'); if (typeof TPL === 'object') TPL.cv = null; } if (sel === '#stageModal') { const sb = $('#stageBox'); sb.classList.remove('pl-ed-box', 'wide-vid'); const vd = sb.querySelector('.hero-vid'); if (vd) vd.innerHTML = ''; } if (!ui.openId) $('#scrim').classList.remove('show'); }
+function hideModal(sel) { const ae = document.activeElement; if (ae && $(sel).contains(ae)) ae.blur(); $(sel).classList.remove('show'); if (sel === '#stageModal') { const sb = $('#stageBox'); sb.classList.remove('pl-ed-box', 'wide-vid'); const vd = sb.querySelector('.hero-vid'); if (vd) vd.innerHTML = ''; } if (!ui.openId) $('#scrim').classList.remove('show'); }
 
 /* ================= routing ================= */
 const authInUrl = () => /access_token=|refresh_token=|error_description=|type=recovery|[?&]code=/.test(location.hash + location.search);
@@ -10462,9 +10518,9 @@ const HELP_PLAYBOOKS = [
     need: ['WhatsApp connected'],
     steps: ['Go to **Campaigns → Templates → New template**.', 'Name: small letters and _ only (e.g. **welcome_offer**). Category: **Marketing** for offers, **Utility** for order / account updates. Language: English / Hindi.', 'Write the message. Use **+ Variable** for personal parts — {{1}} becomes the customer’s first name when you send.', 'Fill **Sample values** for every variable (Meta checks them). Add a footer and buttons if you want.', 'Press **Submit to Meta for approval**. Status shows **Pending** — usually approved in minutes, sometimes a few hours.', 'Press **⟳ Sync from WhatsApp** to refresh. When it shows **Approved** you can use it in Broadcast, Auto welcome and Automation.'],
     tips: ['Rejected? Open the card to see the reason — usually too salesy wording in Utility, or a missing sample.', 'No ALL CAPS, no misleading claims, don’t start or end with a variable.'] },
-  { id: 'wa-flow', g: 'wa', title: 'Build a WhatsApp chatbot (template studio & Flow builder)', kw: 'flow builder chatbot bot node canvas template studio button next template chain multi step actions wire if else condition business hours wait delay ask question menu list reply buttons hand over a/b split', open: ['Open Templates', 'templates'],
+  { id: 'wa-flow', g: 'wa', title: 'Build a WhatsApp chatbot (Flow builder)', kw: 'flow builder chatbot bot node canvas template settings button next template chain multi step actions wire if else condition business hours wait delay ask question menu list reply buttons hand over a/b split', open: ['Open Templates', 'templates'],
     need: ['WhatsApp connected', 'A template with reply buttons (Quick reply)'],
-    steps: ['Open **Templates** → press **Edit** (or **Buttons & actions**) on a template. The **template studio** opens: your message on the left, the **button flow** canvas in the middle, the WhatsApp preview on the right.', 'Every reply button is a **dot** on the template node. Drag from a dot to an empty spot (or press **+ Node**) and pick what happens: **Send next template**, a reply, tag, stage, order, task, AI reply, image / PDF / location, follow-up date, lead field…', 'Use **Chatbot logic** nodes for smart flows: **If / else** (tag, stage, city, budget, order, last message), **Business hours** (open / closed), **A/B split**, **Wait**, **Ask a question** (the customer’s answer is saved in the lead — city, email, budget…), **Reply buttons / list** (up to 10 choices, no Meta approval) and **Hand over to a person**.', 'Click any node to change its settings on the right. **⇢ Tidy up** arranges the nodes neatly.', 'Press **▶ Preview chat** — tap buttons, pick paths and type answers like a customer.', 'Press **Save button flow** (approved templates) or **Save draft / Submit to Meta** (new ones). It works on WhatsApp right away.', 'Want to see all templates together? **Templates → Flow builder** shows every flow on one map — change things there and press **Apply to WhatsApp**.'],
+    steps: ['Open **Templates** and click any template (or **+ New template**). The **Flow builder** opens on that template’s node, with all its settings on the right: name, category, language, message, variables, buttons and a WhatsApp preview. On a phone the settings open as a sheet from the bottom.', 'Every reply button is a **dot** on the template node. Drag from a dot to an empty spot (or press **+ Node**) and pick what happens: **WhatsApp template** (send the next one), a reply, tag, stage, order, task, AI reply, image / PDF / location, follow-up date, lead field…', 'Use **Chatbot logic** nodes for smart flows: **If / else** (tag, stage, city, budget, order, last message), **Business hours** (open / closed), **A/B split**, **Wait**, **Ask a question** (the customer’s answer is saved in the lead — city, email, budget…), **Reply buttons / list** (up to 10 choices, no Meta approval) and **Hand over to a person**.', 'Click any other node to change its settings. **⇢ Tidy up** arranges the nodes neatly.', 'Press **▶ Preview chat** — tap buttons, pick paths and type answers like a customer.', 'Press **Save** in the template’s panel — the message and what each button does are saved together and work on WhatsApp right away. New templates also have **Submit to Meta**. Approved templates keep their words (use **Duplicate** on the card to change them); their button flow can change any time.', 'All your templates live on one map. **Apply to WhatsApp** in the toolbar saves every changed flow at once.'],
     tips: ['Free messages, menus and questions work inside the 24-hour chat window (after the customer tapped or wrote). After a long Wait, send a template instead.', 'Up to 30 steps run per tap. A new tap cancels an open question.', 'Waits continue within about 2 minutes of their time (needs the 21_chatbot.sql update).'] },
   { id: 'wa-payment', g: 'wa', title: 'Add a payment method in WhatsApp (needed for templates)', kw: 'payment method card billing 131042 template failed whatsapp manager credit line', open: ['Open Inbox', 'whatsapp'],
     need: ['A debit / credit card'],
