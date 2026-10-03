@@ -1039,7 +1039,7 @@ body.no-sales [data-go="tasks"],body.no-sales [data-go="calls"],body.no-orders [
 .hl-types{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-bottom:12px}
 @media (max-width:1100px){.hl-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.hl-half{grid-column:1/-1}}
 @media (max-width:640px){.hl-grid{gap:8px}.hl-editing .hl-w{grid-column:1/-1}.hl-types{grid-template-columns:1fr 1fr}.hl-top .grow{flex-basis:100%}}.home-hi h1{margin:0 0 4px;font-size:26px}.home-hi p{margin:0}
-.home-setup{display:flex;align-items:center;gap:18px;padding:16px 18px;border-radius:16px;margin-bottom:14px;flex-wrap:wrap}
+.home-setup{display:flex;align-items:center;gap:18px;padding:16px 18px;border-radius:16px;margin-bottom:14px;flex-wrap:wrap;position:relative}.home-setup:has(.home-setx){padding-right:46px}.home-setx{position:absolute;top:8px;right:8px;width:28px;height:28px;opacity:.6}.home-setx:hover{opacity:1}.home-sbar{display:none}
 .home-ring{position:relative;width:62px;height:62px;flex:none}.home-ring svg{width:62px;height:62px;transform:rotate(-90deg)}.home-ring circle{fill:none;stroke:var(--line);stroke-width:4.5}.home-ring circle.on{stroke:var(--blue-2);stroke-linecap:round;transition:stroke-dasharray .8s cubic-bezier(.2,.8,.2,1)}.home-ring b{position:absolute;inset:0;display:grid;place-items:center;font-size:14px}
 .home-st{display:flex;flex-direction:column;min-width:170px}.home-st span{font-weight:800;font-size:17px}.home-st small{font-size:12.5px}
 .home-steps{display:flex;gap:4px;flex:1;justify-content:center;flex-wrap:wrap}
@@ -1056,7 +1056,7 @@ body.no-sales [data-go="tasks"],body.no-sales [data-go="calls"],body.no-orders [
 .home-li{display:flex;gap:10px;align-items:center;padding:8px 6px;border-radius:10px;cursor:pointer}.home-li .grow{min-width:0}
 .home-chats{margin-top:14px}.home-av{display:flex;gap:10px;overflow-x:auto;padding:8px 0 2px}.home-chat{display:flex;flex-direction:column;align-items:center;gap:4px;border:0;background:transparent;color:var(--text);min-width:86px;padding:8px;border-radius:12px}.home-chat:hover{background:var(--line)}.home-chat small{font-size:11px;color:var(--muted);max-width:90px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 @media (max-width:1100px){.home-cards{grid-template-columns:1fr 1fr}.home-2{grid-template-columns:1fr}}
-@media (max-width:640px){.home-li .tp-st{display:none}.home-li small{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}.home-cards{gap:8px}.home-c{padding:12px}.home-cn b{font-size:24px}.home-steps{justify-content:flex-start}.home-step{min-width:64px}.home-setup .btn{width:100%}}
+@media (max-width:640px){.home-setup:has(.home-setx){padding-right:14px}.home-setup{gap:10px;padding:14px;flex-direction:column;align-items:stretch}.home-setup .home-ring{display:none}.home-setup .home-st{min-width:0;padding-right:30px}.home-sbar{display:block;height:6px;border-radius:6px;background:var(--line);overflow:hidden;order:2}.home-sbar i{display:block;height:100%;background:var(--blue-2);border-radius:6px}.home-setup .home-steps{order:3;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}.home-setup .home-step.ok{display:none}.home-setup .home-step{min-width:0;border:1px solid var(--line);background:var(--glass-2)}.home-setup>.btn.primary{order:4;width:100%;justify-content:center}.home-li .tp-st{display:none}.home-li small{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}.home-cards{gap:8px}.home-c{padding:12px}.home-cn b{font-size:24px}.home-steps{justify-content:flex-start}.home-step{min-width:64px}.home-setup .btn{width:100%}}
 /* accordion */
 .acc-list{display:flex;flex-direction:column;gap:10px}
 .acc{border-radius:14px;border:1px solid var(--line);background:var(--glass-2,var(--card));transition:border-color .25s,box-shadow .25s}.acc.open{border-color:color-mix(in srgb,var(--blue-2) 55%,transparent);box-shadow:0 0 0 3px color-mix(in srgb,var(--blue-2) 12%,transparent),0 10px 30px rgba(0,0,0,.18)}
@@ -7924,7 +7924,7 @@ function renderHome(anim) {
     setup: () => done < items.length ? `<div class="home-setup glass"><div class="home-ring" style="--p:${pctDone}"><svg viewBox="0 0 44 44"><circle cx="22" cy="22" r="19"/><circle cx="22" cy="22" r="19" class="on" stroke-dasharray="${(pctDone / 100 * 119.4).toFixed(1)} 119.4"/></svg><b>${done}/${items.length}</b></div>
       <div class="home-st"><b>Set up your business</b><span>${done} of ${items.length} done</span><small class="muted">Finish setup to unlock every feature.</small></div>
       <div class="home-steps">${items.map(([k, n, ok, sub, to]) => `<button class="home-step ${ok ? 'ok' : ''}" data-homego="${to}" title="${esc(n)} — ${esc(sub)}"><span class="home-sd">${ok ? '✓' : ''}</span><b>${esc(n)}</b><small>${esc(sub)}</small></button>`).join('')}</div>
-      <button class="btn primary" data-homego="${(items.find(x => !x[2]) || [])[4] || 'connections'}">Complete setup →</button></div>` : '',
+      <button class="btn primary" data-homego="${(items.find(x => !x[2]) || [])[4] || 'connections'}">Complete setup →</button>${!document.body.classList.contains('ro') && (demo || (cloud && canAdmin())) ? '<button type="button" class="ibtn home-setx" data-setuphide title="Hide the setup guide (bring it back from ✎ Customize)">' + I.x + '</button>' : ''}<div class="home-sbar"><i style="width:${pctDone}%"></i></div></div>` : '',
     tasks: () => card('<svg class="i" viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3h6v1M9 11l2 2 4-4M9 17h6"/></svg>', 'var(--coral)', 'Overdue tasks', overdue.length, overdue.length ? `${dueToday.length} more due today` : dueToday.length ? `${dueToday.length} due today` : 'Nothing overdue 🎉', 'data-go="tasks"', 'View tasks'),
     hot: () => card(INS_IC.leads, '#F97316', 'Hot leads', hot.length, 'Hot or follow-up due — reply first', 'data-go="leads"', 'View leads'),
     orders: () => card(INS_IC.orders, 'var(--green)', 'New orders', ordT.length, `${inr(cmSum(ordT, cmRev))} revenue today`, 'data-go="orders"', 'View orders', ordY.length ? insDelta(ordT.length, ordY.length) : ''),
@@ -8211,8 +8211,9 @@ function hlBlockEditor(id) {
 }
 (function () {
   const box = $('#homeBody'); if (!box) return;
-  box.addEventListener('click', e => {
+  box.addEventListener('click', async e => {
     const t = e.target;
+    if (t.closest('[data-setuphide]')) { if (!confirm('Hide the setup guide? You can bring it back any time from ✎ Customize → Show.')) return; HL.edit = true; HL.target = 'ws'; HL.draft = homeLayout('ws'); if (!HL.draft.hidden.includes('setup')) HL.draft.hidden.push('setup'); return hlSave(false); }
     if (t.closest('[data-hlstart]')) return hlStart('ws');
     if (!HL.edit) return;
     const cell = t.closest('[data-hlid]'), id = cell && cell.dataset.hlid, L = HL.draft;
