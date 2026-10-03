@@ -820,7 +820,7 @@ body.ro [data-add],body.ro .addcard,body.ro #addMember,body.ro [data-lginvite],b
 .wa-on{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:13px;margin-bottom:12px}.wa-on .dot{width:8px;height:8px;border-radius:50%;background:var(--wa,#25A55F);box-shadow:0 0 0 3px color-mix(in srgb,var(--wa,#25A55F) 25%,transparent)}
 .wa-conn{padding:16px;border-radius:14px;margin-bottom:14px;display:flex;flex-direction:column;gap:4px;font-size:13.5px}.wa-fh{display:flex;justify-content:space-between;gap:10px}.wa-fh h3{margin:0 0 4px}.wa-fh p{margin:0 0 10px;font-size:13px}
 .input.secret{-webkit-text-security:disc}
-.wa-grid{grid-template-columns:1fr 1fr}.wa-grid .span2{grid-column:1/-1}.wa-help{margin:6px 0 4px;font-size:13px}.wa-help summary{cursor:pointer;font-weight:700}.wa-help p{color:var(--muted)}
+.wa-grid{grid-template-columns:1fr 1fr}.wa-grid .span2{grid-column:1/-1}.wa-help{margin:6px 0 4px;font-size:13px}.wa-es{display:flex;flex-direction:column;align-items:flex-start;gap:6px;margin:10px 0 6px}.wa-es .btn{min-width:220px}.wa-manual{margin-top:8px}.wa-help summary{cursor:pointer;font-weight:700}.wa-help p{color:var(--muted)}
 .inbox{display:grid;grid-template-columns:320px 1fr;height:calc(100vh - 250px);min-height:460px;border-radius:16px;overflow:hidden}
 .ib-list{border-right:1px solid var(--line);display:flex;flex-direction:column;min-height:0}.ib-search{padding:10px}.ib-scroll{overflow:auto;flex:1}
 .ib-c{display:flex;gap:10px;align-items:center;width:100%;padding:10px 12px;border:0;background:none;text-align:left;color:inherit;cursor:pointer;border-bottom:1px solid var(--line)}.ib-c:hover{background:var(--glass-3)}.ib-c.on{background:var(--blue-soft)}
@@ -6016,6 +6016,7 @@ async function waLoadStatus() {
   if (demo) return WA.status = { connected: true, demo: true, verified_name: 'Demo Business', display_phone: '+91 98000 00000' };
   if (!cloud) return WA.status = { connected: false, sheet: true };
   try { WA.status = await sbq(AUTH.client.rpc('wa_status', { p_ws: AUTH.ws })); } catch (e) { WA.status = { connected: false, error: e.message }; }
+  if (WA.es === undefined) { WA.es = null; try { const c = await fnCall('wa-signup', { config: true }); WA.es = c && c.enabled ? c : null; } catch (e) { WA.es = null; } }
   return WA.status;
 }
 function waConnHTML() {
@@ -6023,14 +6024,18 @@ function waConnHTML() {
   if (s.sheet) return `<div class="glass wa-conn"><b>The inbox runs on the Nodevers cloud.</b><span class="muted">Sign in (Settings → Accounts) to receive and reply to WhatsApp chats here.</span></div>`;
   if (s.connected && !WA.manage) return `<div class="wa-on"><span class="dot"></span>Connected · <b>${esc(s.verified_name || 'WhatsApp')}</b> ${esc(s.display_phone || '')}${s.demo ? ' <em class="srcTag sample">demo</em>' : ''}${canAdmin() ? '<button class="btn sm" data-wamanage>Manage</button>' : ''}</div>`;
   if (!canAdmin()) return `<div class="glass wa-conn"><b>WhatsApp is not connected yet.</b><span class="muted">Ask the workspace owner to connect the business number.</span></div>`;
-  return `<div class="glass wa-conn wa-form"><div class="wa-fh"><div><h3>${s.connected ? 'WhatsApp connection' : 'Connect your WhatsApp number'}</h3><p class="muted">From Meta → WhatsApp Manager → <b>API Setup</b>. The token is saved on the server only — it never comes back to the browser.</p></div>${s.connected ? '<button class="btn sm" data-waclose>Close</button>' : ''}</div>
-    <div class="form wa-grid"><div class="field"><label>Phone number ID</label><input class="input" id="waPid" inputmode="numeric" autocomplete="off" value="${esc(s.phone_number_id || '')}" placeholder="e.g. 1234567890123"></div>
+  const es = WA.es && WA.es.enabled;
+  const manual = `<div class="form wa-grid"><div class="field"><label>Phone number ID</label><input class="input" id="waPid" inputmode="numeric" autocomplete="off" value="${esc(s.phone_number_id || '')}" placeholder="e.g. 1234567890123"></div>
     <div class="field"><label>WhatsApp Business Account ID</label><input class="input" id="waWaba" inputmode="numeric" autocomplete="off" value="${esc(s.waba_id || '')}" placeholder="e.g. 9876543210987"></div>
     <div class="field span2"><label>Permanent access token (System user)</label><input class="input secret" id="waTok" type="text" name="wa-token-${Date.now()}" autocomplete="off" autocapitalize="off" spellcheck="false" readonly data-noautofill placeholder="${s.connected ? 'Paste the token again to change it' : 'EAA… (long token, ~200 characters)'}"></div></div>
     <details class="wa-help"><summary>Webhook — so incoming messages arrive here</summary><p>Meta app → WhatsApp → Configuration → Webhook → Edit:</p>
       <div class="field"><label>Callback URL</label><div style="display:flex;gap:8px"><input class="input" readonly value="${esc(WEBHOOK_URL())}"><button class="btn" type="button" data-wacopy>Copy</button></div></div>
-      <p>Verify token: the same text you saved as <code>WA_VERIFY_TOKEN</code> in Supabase → Edge Functions → Secrets. Then subscribe to the <b>messages</b> field.</p></details>
-    <div class="m-foot">${s.connected ? '<button class="btn danger" data-wadisc>Disconnect</button>' : ''}<div class="grow"></div><button class="btn primary" data-waconnect>${s.connected ? 'Save' : 'Connect WhatsApp'}</button></div></div>`;
+      <p>Verify token: the same text you saved as <code>WA_VERIFY_TOKEN</code> in Supabase → Edge Functions → Secrets. Then subscribe to the <b>messages</b> field.</p></details>`;
+  const save = `<button class="btn${es ? '' : ' primary'}" data-waconnect>${s.connected ? 'Save' : es ? 'Connect with token' : 'Connect WhatsApp'}</button>`;
+  return `<div class="glass wa-conn wa-form"><div class="wa-fh"><div><h3>${s.connected ? 'WhatsApp connection' : 'Connect your WhatsApp number'}</h3><p class="muted">From Meta → WhatsApp Manager → <b>API Setup</b>. The token is saved on the server only — it never comes back to the browser.</p></div>${s.connected ? '<button class="btn sm" data-waclose>Close</button>' : ''}</div>
+    ${es ? `<div class="wa-es"><button class="btn primary" data-waes>${s.connected ? 'Reconnect with Facebook' : 'Connect with Facebook'}</button><span class="muted">Log in with Facebook, pick your business and WhatsApp number — done in about 2 minutes. No token or webhook needed.</span></div>
+    <details class="wa-help wa-manual"><summary>Advanced: connect with your own Meta app token</summary>${manual}<div class="m-foot"><div class="grow"></div>${save}</div></details>` : manual}
+    <div class="m-foot">${s.connected ? '<button class="btn danger" data-wadisc>Disconnect</button>' : ''}<div class="grow"></div>${es ? '' : save}</div></div>`;
 }
 async function fnCall(name, body) {
   const { data, error } = await AUTH.client.functions.invoke(name, { body: Object.assign({ workspace_id: AUTH.ws }, body) });
@@ -6107,6 +6112,48 @@ async function ibSendTpl(c) {
   try { await fnCall('wa-send', { lead_id: c.leadId, phone: c.phone, template: name, language: sel.selectedOptions[0].dataset.lang || 'en', params, preview: String(t.body || name).replace(/\{\{(\d+)\}\}/g, (m, k) => params[k - 1] || m), by: me() }); toast('Template sent ✓'); load(true); }
   catch (e) { toast(e.message, true); }
 }
+/* One-click WhatsApp connect — Meta Embedded Signup v4 (we are the Tech Provider; secrets live in the wa-signup function) */
+function waLoadFbSdk(c) {
+  if (window.FB) return Promise.resolve(window.FB);
+  return new Promise((res, rej) => {
+    window.fbAsyncInit = () => { FB.init({ appId: c.app_id, autoLogAppEvents: true, xfbml: false, version: c.version || 'v25.0' }); res(FB); };
+    const sc = document.createElement('script'); sc.src = 'https://connect.facebook.net/en_US/sdk.js'; sc.async = true; sc.defer = true; sc.crossOrigin = 'anonymous';
+    sc.onerror = () => rej(new Error('Could not load Facebook login — check your internet or ad-blocker.'));
+    document.head.appendChild(sc);
+  });
+}
+async function waEmbeddedSignup(btn) {
+  const c = WA.es; if (!c) return toast('One-click connect is not switched on yet', true);
+  const label = btn.textContent; const done = () => { btn.disabled = false; btn.textContent = label; };
+  btn.disabled = true; btn.textContent = 'Opening Facebook…';
+  let FBk; try { FBk = await waLoadFbSdk(c); } catch (err) { done(); return toast(err.message, true); }
+  let info = null, code = null, finished = false;
+  const finish = async () => {
+    if (finished || !code || !info) return; finished = true; window.removeEventListener('message', onMsg);
+    btn.textContent = 'Connecting your number…';
+    try {
+      const r = await fnCall('wa-signup', { code, phone_number_id: info.phone_number_id || '', waba_id: info.waba_id || '', event: info.event || 'FINISH' });
+      WA.status = null; WA.manage = false;
+      toast(`✓ Connected ${r.verified_name || ''} ${r.display_phone || ''}${!r.subscribed ? ' — but incoming messages could not be switched on, click Reconnect' : ''}${r.register_error ? ' — number registration: ' + r.register_error : ''}`, !r.subscribed || !!r.register_error);
+      renderInbox();
+    } catch (err) { toast(err.message, true); done(); }
+  };
+  const onMsg = e => {
+    if (!/(^|\.)facebook\.com$/.test(new URL(e.origin).hostname)) return;
+    let d; try { d = typeof e.data === 'string' ? JSON.parse(e.data) : e.data; } catch (x) { return; }
+    if (!d || d.type !== 'WA_EMBEDDED_SIGNUP') return;
+    if (d.event === 'CANCEL') { window.removeEventListener('message', onMsg); finished = true; done(); return toast(d.data && d.data.error_message ? 'Facebook: ' + d.data.error_message : 'Connection cancelled', true); }
+    if (/^FINISH/.test(d.event || '')) {
+      if (d.event === 'FINISH_ONLY_WABA') { window.removeEventListener('message', onMsg); finished = true; done(); return toast('No phone number was added — click Connect again and add your business number.', true); }
+      info = Object.assign({ event: d.event }, d.data || {}); finish();
+    }
+  };
+  window.addEventListener('message', onMsg);
+  FBk.login(resp => {
+    if (resp && resp.authResponse && resp.authResponse.code) { code = resp.authResponse.code; setTimeout(() => { if (!info && !finished) { finished = true; window.removeEventListener('message', onMsg); done(); toast('Facebook did not send the number details — please try again.', true); } }, 20000); finish(); }
+    else if (!finished) { finished = true; window.removeEventListener('message', onMsg); done(); toast('Facebook login was closed', true); }
+  }, { config_id: c.config_id, response_type: 'code', override_default_response_type: true, extras: { setup: {}, sessionInfoVersion: '3' } });
+}
 (function inboxEvents() {
   $('#v-whatsapp').addEventListener('click', async e => {
     const t = e.target;
@@ -6118,6 +6165,7 @@ async function ibSendTpl(c) {
     if (t.closest('[data-wamanage]')) { WA.manage = true; return renderInbox(); }
     if (t.closest('[data-waclose]')) { WA.manage = false; return renderInbox(); }
     if (t.closest('[data-wacopy]')) return copyText(WEBHOOK_URL());
+    const esb = t.closest('[data-waes]'); if (esb) return waEmbeddedSignup(esb);
     if (t.closest('[data-wadisc]')) { if (!confirm('Disconnect this WhatsApp number from Nodevers? Chats stay saved.')) return; try { await fnCall('wa-connect', { disconnect: true }); WA.status = null; WA.manage = false; toast('Disconnected'); renderInbox(); } catch (err) { toast(err.message, true); } return; }
     const cb = t.closest('[data-waconnect]'); if (cb) {
       const pid = $('#waPid').value.trim(), waba = $('#waWaba').value.trim(), tok = $('#waTok').value.replace(/\s+/g, '');
