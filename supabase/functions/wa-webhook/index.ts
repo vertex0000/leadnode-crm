@@ -148,6 +148,29 @@ async function runButton(ws: string, acc: any, leadId: string, phone: string, pa
           if (ea && /@/.test(String(lead?.email ?? ''))) await fetch(`${BREVO}/smtp/email`, { method: 'POST', headers: { 'api-key': ea.api_key, 'Content-Type': 'application/json', accept: 'application/json' }, body: JSON.stringify({ sender: { email: ea.from_email, name: ea.from_name || undefined }, to: [{ email: lead.email, name: lead.name || '' }], subject: fillVars(String(p.subject || 'Thank you'), ctx), htmlContent: `<p>${fillVars(String(p.body || ''), ctx).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/\n/g, '<br>')}</p>` }) });
           break;
         }
+        case 'send_media': {
+          const kind = ['image', 'video', 'document'].includes(p.kind) ? p.kind : 'image', u = String(p.url ?? '').trim(); if (!/^https:\/\/\S+\.\S+/.test(u)) break;
+          const media: any = { link: u }; if (p.text) media.caption = fillVars(String(p.text), ctx).slice(0, 1024);
+          if (kind === 'document') media.filename = (decodeURIComponent(u.split('?')[0].split('/').pop() || '') || 'document.pdf').slice(0, 80);
+          const r = await graph(acc, { messaging_product: 'whatsapp', to: phone, type: kind, [kind]: media });
+          if (r.ok) await logOut(ws, leadId, phone, kind, media.caption || `[${kind}]`, r.id, `Sent ${kind === 'document' ? 'PDF' : kind}`); break;
+        }
+        case 'send_location': {
+          const lat = Number(p.lat), lng = Number(p.lng); if (!isFinite(lat) || !isFinite(lng) || (!lat && !lng)) break;
+          const r = await graph(acc, { messaging_product: 'whatsapp', to: phone, type: 'location', location: { latitude: lat, longitude: lng, name: String(p.name ?? '').slice(0, 100), address: String(p.address ?? '').slice(0, 200) } });
+          if (r.ok) await logOut(ws, leadId, phone, 'location', `[location] ${String(p.name ?? '')}`.trim(), r.id, 'Sent location'); break;
+        }
+        case 'add_note': if (p.text) await db.from('activities').insert({ workspace_id: ws, lead_id: leadId, type: 'Note', details: fillVars(String(p.text), ctx).slice(0, 1000), done_by: 'Automation' }); break;
+        case 'set_followup': { const d = new Date(Date.now() + Math.max(0, Math.min(365, Number(p.days) || 0)) * 864e5); await db.from('leads').update({ follow_up_date: new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Kolkata' }).format(d) }).eq('workspace_id', ws).eq('lead_id', leadId); break; }
+        case 'update_lead': {
+          const col = ({ city: 'city', budget: 'budget', business: 'business_name', business_type: 'business_type', email: 'email', source: 'source', notes: 'notes' } as Record<string, string>)[String(p.field)]; if (!col) break;
+          let v: any = fillVars(String(p.value ?? ''), ctx).trim().slice(0, 500);
+          if (col === 'budget') { v = Number(String(v).replace(/[^\d.]/g, '')); if (!isFinite(v) || !v) break; }
+          if (col === 'email' && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v)) break;
+          if (col === 'notes') v = [String(lead?.notes ?? '').trim(), v].filter(Boolean).join('\n').slice(0, 4000);
+          await db.from('leads').update({ [col]: v }).eq('workspace_id', ws).eq('lead_id', leadId); break;
+        }
+        case 'stop_messages': await db.from('leads').update({ wa_opt_out: true }).eq('workspace_id', ws).eq('lead_id', leadId); await db.from('activities').insert({ workspace_id: ws, lead_id: leadId, type: 'Opt-out', details: `Tapped “${label}” — no more broadcasts`, done_by: 'Customer' }); break;
         case 'trigger_workflow': case 'custom_api': {
           const u = String(p.url ?? ''); if (!/^https:\/\//i.test(u)) break;
           await fetch(u, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ source: 'nodevers', event: 'button', template: tplName, button: label, lead, order: ctx.order ?? null }), signal: AbortSignal.timeout(10000) }).catch(() => null); break;

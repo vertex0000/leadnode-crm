@@ -1088,7 +1088,7 @@ body.no-sales [data-go="tasks"],body.no-sales [data-go="calls"],body.no-orders [
 .acc-grid>.acc:not(.open) .acc-desc{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;font-size:12.5px;line-height:1.45;color:var(--muted)}
 .acc-grid>.acc:not(.open) .acc-st{order:9;margin-top:auto;position:relative;display:block;padding:8px 12px 8px 27px;border-radius:999px;border:1px solid var(--line);background:var(--glass-3);font-size:12.5px;font-weight:600}
 .acc-grid>.acc:not(.open) .acc-st::before{content:'';position:absolute;left:12px;top:50%;width:8px;height:8px;margin-top:-4px;border-radius:50%;background:var(--dot);box-shadow:0 0 0 3px color-mix(in srgb,var(--dot) 22%,transparent)}
-.acc-grid>.acc.open{grid-column:1/-1}
+.acc-grid>.acc.open:not(.acc-ph){grid-column:auto}
 @media(max-width:640px){.acc-grid{grid-template-columns:minmax(0,1fr);gap:10px}.acc-grid>.acc:not(.open){min-height:0}}
 /* connection cards: compact, status pill next to the name, Manage / Connect */
 .cg-panel{min-width:0;padding:16px;border-radius:18px;border:1px solid var(--line);background:linear-gradient(160deg,color-mix(in srgb,var(--c) 7%,transparent),transparent 45%),var(--glass-2,var(--card));margin-bottom:16px}
@@ -1123,6 +1123,58 @@ body.no-sales [data-go="tasks"],body.no-sales [data-go="calls"],body.no-orders [
 .tf-btns{display:flex;flex-direction:column;gap:4px}.tf-cb{border:1px solid var(--line);background:var(--glass-3);color:#1E88E5;font:inherit;font-weight:700;font-size:13px;padding:8px;border-radius:10px;cursor:pointer}.tf-cb:disabled{opacity:.55;cursor:default}.tf-cb:not(:disabled):hover{background:color-mix(in srgb,#1E88E5 10%,var(--glass-3))}
 .tf-sys{align-self:center;font-size:11.5px;color:var(--muted);background:var(--glass-3);border:1px dashed var(--line-2);padding:4px 10px;border-radius:999px;text-align:center;max-width:90%}
 @media(max-width:640px){.tf-steps{display:none}.tp-seg button{padding:7px 10px}}
+/* ---- card popup (Settings-style) ---- */
+html.accm-lock{overflow:hidden}
+.accm{position:fixed;inset:0;z-index:55;display:grid;place-items:center;padding:24px}
+.accm-bg{position:absolute;inset:0;background:rgba(15,23,42,.42);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);opacity:0;transition:opacity .2s}
+.accm-box{position:relative;width:min(1120px,100%);height:min(780px,calc(100vh - 48px));display:flex;flex-direction:column;border-radius:20px;background:var(--bg1,var(--card));border:1px solid var(--line-2);box-shadow:0 30px 90px -20px rgba(0,0,0,.45);overflow:hidden;opacity:0;transform:translateY(10px) scale(.985);transition:opacity .2s,transform .22s cubic-bezier(.2,.8,.2,1)}
+.accm.show .accm-bg{opacity:1}.accm.show .accm-box{opacity:1;transform:none}
+.accm-hd{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--line);background:var(--glass-2,var(--card))}.accm-hd b{font-size:18px;letter-spacing:-.01em}
+.accm-in{flex:1;min-height:0;display:grid;grid-template-columns:290px minmax(0,1fr)}
+.accm-nav{overflow:auto;padding:10px;border-right:1px solid var(--line);background:color-mix(in srgb,var(--text) 3%,transparent);display:flex;flex-direction:column;gap:2px}
+.accm-g{font-size:11px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);padding:12px 10px 6px}.accm-g:first-child{padding-top:4px}
+.accm-it{display:flex;align-items:center;gap:11px;width:100%;text-align:left;border:0;background:transparent;color:var(--text);font:inherit;padding:9px 10px;border-radius:12px;cursor:pointer;transition:background .15s}
+.accm-it:hover{background:color-mix(in srgb,var(--text) 5%,transparent)}.accm-it.on{background:var(--glass-3,var(--card));box-shadow:0 6px 18px -10px rgba(15,23,42,.35),inset 3px 0 0 var(--c)}
+.accm-ic{width:36px;height:36px;border-radius:10px;flex:none;display:grid;place-items:center;background:color-mix(in srgb,var(--c) 16%,transparent);color:var(--c)}.accm-ic .i{width:18px;height:18px}.accm-ic.big{width:46px;height:46px;border-radius:13px}.accm-ic.big .i{width:22px;height:22px}
+.accm-tx{min-width:0;display:flex;flex-direction:column}.accm-tx b{font-size:13.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.accm-tx small{font-size:11.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.accm-main{min-width:0;display:flex;flex-direction:column;min-height:0}
+.accm-mh{display:flex;gap:14px;align-items:center;padding:18px 24px 14px;border-bottom:1px solid var(--line)}.accm-mt{min-width:0;display:flex;flex-direction:column;gap:3px}.accm-tr{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.accm-tr b{font-size:17px}.accm-mt small{color:var(--muted);font-size:12.5px}.accm-mt .accm-st{color:var(--text);opacity:.75}
+.accm-slot{flex:1;min-height:0;overflow:auto;padding:18px 24px 24px}
+.accm-slot>.acc{border:0!important;background:none!important;box-shadow:none!important;min-height:0!important;transform:none!important}
+.accm-slot>.acc>.acc-h{display:none!important}
+.accm-slot>.acc .acc-b{display:block!important}.accm-slot>.acc .acc-in{overflow:visible}.accm-slot>.acc .acc-pad{padding:0!important;opacity:1!important;transform:none!important}
+.accm-slot>.acc .acc-pad>.cf-foot:last-child,.accm-slot>.acc .acc-pad>.m-foot:last-child{position:sticky;bottom:-24px;margin:16px -24px -24px;padding:12px 24px;background:var(--bg1,var(--card));border-top:1px solid var(--line);z-index:2}
+.accm-ft{display:flex;align-items:center;gap:10px;padding:12px 24px;border-top:1px solid var(--line);background:var(--glass-2,var(--card))}.accm-ft[hidden]{display:none}.accm-ft .muted{font-size:12px}
+.acc-grid>.acc.acc-ph{outline:2px solid color-mix(in srgb,var(--c) 45%,transparent);outline-offset:2px}
+@media(max-width:760px){.accm{padding:0}.accm-box{height:100%;width:100%;border-radius:0}.accm-in{grid-template-columns:1fr;grid-template-rows:auto minmax(0,1fr)}
+  .accm-nav{flex-direction:row;overflow-x:auto;overflow-y:hidden;border-right:0;border-bottom:1px solid var(--line);padding:8px;gap:6px}.accm-g{display:none}.accm-it{flex:none;width:auto;padding:6px 10px 6px 6px;border:1px solid var(--line)}.accm-it.on{box-shadow:inset 0 -3px 0 var(--c)}.accm-tx small{display:none}.accm-ic{width:28px;height:28px;border-radius:8px}
+  .accm-mh{padding:14px 16px 12px}.accm-slot{padding:14px 16px 18px}.accm-slot>.acc .acc-pad>.cf-foot:last-child,.accm-slot>.acc .acc-pad>.m-foot:last-child{margin:14px -16px -18px;padding:10px 16px;bottom:-18px}.accm-ft{padding:10px 16px}}
+/* ---- Template studio (template editor as a node canvas) ---- */
+#leadModal.studio{padding:14px}
+#leadModal.studio .box{width:min(1560px,100%)!important;height:calc(100vh - 28px);max-height:none;padding:0;overflow:hidden;display:flex;flex-direction:column;background:var(--bg1,var(--card));border-radius:20px}
+.tps{display:flex;flex-direction:column;height:100%;min-height:0}
+.tps-top{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--line);background:var(--glass-2,var(--card));flex-wrap:wrap}
+.tps-badge{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;background:color-mix(in srgb,#25A55F 18%,transparent);color:#25A55F;font-weight:800}
+.tps-ti{display:flex;flex-direction:column;gap:3px;min-width:0}.tps-ti b{font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:42vw}.tps-ti small{display:flex;align-items:center;gap:6px;color:var(--muted);font-size:12px}.tps-ti .pill{font-size:11px;padding:1px 8px}
+.tps-body{flex:1;min-height:0;display:grid;grid-template-columns:360px minmax(0,1fr) 300px}
+.tps-form{overflow:auto;border-right:1px solid var(--line);background:color-mix(in srgb,var(--text) 2.5%,transparent)}
+.tps-ph{position:sticky;top:0;z-index:3;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:12px 16px 8px;background:inherit;backdrop-filter:blur(10px)}
+.tps-tpe{display:block!important;padding:0 16px 18px}.tps-tpe .tpe-f{display:flex;flex-direction:column;gap:12px}
+.tps-sec{border:1px solid var(--line);border-radius:14px;padding:12px;background:var(--glass-2,var(--card));display:flex;flex-direction:column;gap:10px}
+.tps-st{display:flex;align-items:center;gap:8px;font-weight:800;font-size:13.5px}.tps-st span{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:11.5px;background:color-mix(in srgb,#25A55F 16%,transparent);color:#25A55F}.tps-st small{font-weight:500;font-size:11.5px}
+.tps-sec .field{margin:0;min-width:0}.tps-2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px}.tps-top .grow{flex:1}
+.tps-sec .tb-cts{grid-template-columns:repeat(3,1fr)!important}
+.tps-wire{font-size:11.5px;font-weight:700;color:#B45309;padding:4px 2px 0}.tps-wire.on{color:var(--green)}
+.tps-cv{position:relative;min-width:0;display:flex;flex-direction:column;min-height:0}
+.tps-cvh{position:absolute;left:190px;right:14px;top:12px;z-index:4;pointer-events:none;display:flex;justify-content:flex-end}.tps-cvh>div{pointer-events:auto;max-width:560px;font-size:12px;color:var(--muted);background:var(--glass-3);border:1px solid var(--line);border-radius:999px;padding:6px 14px;display:flex;gap:8px;align-items:center;box-shadow:var(--shadow)}.tps-cvh b{color:var(--text)}
+#tsCanvas{flex:1;height:100%!important;min-height:0!important;border-radius:0}
+#tsCanvas .hint,#tsCanvas [data-fx="preset"]{display:none}
+.tps-prev{overflow:auto;border-left:1px solid var(--line);padding:0 14px 16px;background:color-mix(in srgb,var(--text) 2.5%,transparent)}.tps-prev .tps-ph{padding-left:0}
+.tps-lock{display:flex;flex-direction:column;gap:4px;padding:12px;border-radius:12px;background:var(--green-soft);font-size:12.5px}.tps-lock b{color:var(--green)}.tps-lock span{color:var(--muted)}
+.tps-msg{display:flex;flex-direction:column;gap:4px;font-size:13px;white-space:pre-wrap;line-height:1.45}.tps-msg small{color:var(--muted)}
+.tps-bl{display:flex;align-items:center;gap:8px;padding:8px 10px;border:1px solid var(--line);border-radius:10px;font-size:13px}.tps-bl small{margin-left:auto;color:var(--muted);font-size:11.5px}.tps-bl.qr small{color:#B45309}
+@media(max-width:1200px){.tps-body{grid-template-columns:340px minmax(0,1fr)}.tps-prev{display:none}}
+@media(max-width:820px){#leadModal.studio{padding:0}#leadModal.studio .box{height:100vh;border-radius:0}.tps-body{display:flex;flex-direction:column;overflow:auto}.tps-form{overflow:visible;border-right:0;border-bottom:1px solid var(--line)}.tps-cv{min-height:520px;flex:none}.tps-cvh{display:none}.tps-ti b{max-width:50vw}.tps-top .btn{padding:7px 10px;font-size:12.5px}}
 .conn-g{margin-bottom:20px}.conn-gt{font-size:11.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin:0 2px 8px}
 .conn-q{min-width:240px}
 .cf-grid{grid-template-columns:1fr 1fr}.cf-in{position:relative;display:flex;align-items:center}.cf-in .input{flex:1}.cf-eye{position:absolute;right:6px;border:0;background:transparent;opacity:.6;font-size:13px}
@@ -3700,8 +3752,8 @@ function parseNodeDef(o, quiet) {
   }
   return { ok: true, def: { desc: cleanName(o.description).slice(0, 140), color: color || undefined, ins, outs: outs.map(cleanName), fields: out, sum: p => { const f = out[0]; return f ? `${f.label}: ${p[f.k] ?? f.def ?? '–'}` : (cleanName(o.description) || 'Custom node'); } } };
 }
-const outsOf = (t, n) => { if (t.outsFn && n) { const o = t.outsFn(n.p || {}); return o.length ? o : ['—']; } return t.outs && t.outs.length ? t.outs : ['out']; };   // outsFn: ports that depend on the node's settings (template buttons)
-const multiOut = (t, outs) => outs.length > 1 || !!t.outsFn;
+const outsOf = (t, n) => { if (t.noOut) return []; if (t.outsFn && n) { const o = t.outsFn(n.p || {}); return o.length ? o : ['—']; } return t.outs && t.outs.length ? t.outs : ['out']; };   // outsFn: ports that depend on the node's settings (template buttons)
+const multiOut = (t, outs) => outs.length > 1 || (!!t.outsFn && outs.length > 0);
 const insOf = t => (t.ins === 0 ? 0 : 1);
 const colorOf = t => t.color || SECTIONS[t.section].color;
 
@@ -3722,6 +3774,7 @@ class FlowCanvas {
   }
   /* ---- data ---- */
   load() {
+    if (this.o.local) { this.flow = this.o.seed(); this.fromSeed = false; this.render(); if (!this.fitted && this.root.offsetParent) { requestAnimationFrame(() => this.fit(true)); this.fitted = true; } return; }
     let f = null; const row = (S.flows || []).find(x => String(x.flowId) === this.o.key);
     if (row) { try { f = JSON.parse(row.flowJson); } catch (e) { } }
     if (!f) f = store.get('leadnode.flow.' + this.o.key);
@@ -3732,6 +3785,7 @@ class FlowCanvas {
   size() { if (!this.root.offsetParent) return; const top = this.root.getBoundingClientRect().top + scrollY; this.root.style.height = Math.max(innerWidth < 820 ? 360 : 520, innerHeight - top - 20) + 'px'; }
   sync() { this.size(); if (!this.flow || (this.fromSeed && (S.flows || []).some(x => String(x.flowId) === this.o.key))) { this.fitted = false; this.load(); } else { this.render(); if (!this.fitted && this.root.offsetParent) { requestAnimationFrame(() => this.fit(true)); this.fitted = true; } } }
   save() {
+    if (this.o.local) { if (this.o.onChange) setTimeout(() => this.o.onChange(), 0); return; }
     store.set('leadnode.flow.' + this.o.key, this.flow); this.fromSeed = false; if (this.o.onChange) setTimeout(() => this.o.onChange(), 0);
     const row = { flowId: this.o.key, flowName: this.o.title, trigger: 'canvas', status: 'Draft', flowJson: JSON.stringify(this.flow) };
     const i = (S.flows || []).findIndex(x => String(x.flowId) === this.o.key); if (i > -1) S.flows[i] = row; else (S.flows = S.flows || []).push(row);
@@ -3816,10 +3870,10 @@ class FlowCanvas {
     this.insp.hidden = false;
     this.insp.innerHTML = `<div class="fx-ih"><span class="fx-ic" style="background:${esc(colorOf(t))}">${esc(sec.ic)}</span><div><small>${esc(sec.name)}${t.custom ? ' · custom' : ''}</small><b>${esc(t.name)}</b></div><button class="ibtn" data-fx="close" title="Close">${I.x}</button></div>
       ${t.desc ? `<p class="help">${esc(t.desc)}</p>` : ''}
-      <div class="field"><label>Label</label><input class="input" data-fp="__title" value="${esc(one.title || '')}" placeholder="${esc(t.name)}"></div>
+      ${t.fixed ? '' : `<div class="field"><label>Label</label><input class="input" data-fp="__title" value="${esc(one.title || '')}" placeholder="${esc(t.name)}"></div>`}
       ${t.fields.map(f => `<div class="field"><label>${esc(f.label)}</label>${input(f)}${f.help ? `<small class="muted">${esc(f.help)}</small>` : ''}</div>`).join('')}
       ${t.info ? t.info(p, one, this) : ''}
-      <div class="fx-if"><button class="btn sm" data-fx="dup">Duplicate</button><button class="btn sm danger" data-fx="del">${I.trash}Delete</button></div>`;
+      ${t.fixed ? '' : `<div class="fx-if"><button class="btn sm" data-fx="dup">Duplicate</button><button class="btn sm danger" data-fx="del">${I.trash}Delete</button></div>`}`;
   }
   /* ---- edits ---- */
   addNode(type, at, connect = true) {
@@ -3836,6 +3890,7 @@ class FlowCanvas {
   deleteSel() {
     if (this.selWire !== null && !this.sel.size) { this.flow.links.splice(this.selWire, 1); this.selWire = null; this.render(); this.save(); return; }
     if (!this.sel.size) return;
+    [...this.sel].forEach(id => { const x = this.node(id); if (x && nodeType(x.type).fixed) this.sel.delete(id); }); if (!this.sel.size) return toast('This node is the template itself — it can not be deleted', true);
     const n = this.sel.size;
     this.flow.nodes = this.flow.nodes.filter(x => !this.sel.has(x.id));
     this.flow.links = this.flow.links.filter(l => !this.sel.has(l[0]) && !this.sel.has(l[2]));
@@ -6704,7 +6759,7 @@ function tplCard(t, i) {
     <div class="tp-meta">${t.useCase ? `<span class="tp-uc-c">${esc(t.useCase)}</span>` : ''}${t.segment ? `<span class="tp-uc-c seg">★ ${esc(t.segment)}</span>` : ''}<span>${esc(t.category || 'Marketing')}</span><span>${esc(t.language || 'en')}</span>${tplVars(t) ? `<span>${tplVars(t)} variable${tplVars(t) > 1 ? 's' : ''}</span>` : ''}${t.quality ? `<span>Quality: ${esc(t.quality)}</span>` : ''}</div>
     <div class="tp-phone"><div class="bub in tpl">${t.header ? `<b class="hd">${esc(t.header)}</b>` : ''}<span>${tplBody(t.body)}</span>${t.footer ? `<em class="ft">${esc(t.footer)}</em>` : ''}</div>${btns.map(b => `<div class="wa-qb">${esc(b)}</div>`).join('')}</div>
     ${t.rejectReason ? `<p class="bc-warn">Rejected: ${esc(t.rejectReason)}</p>` : ''}
-    <div class="tp-act">${TPL_STATUS[st] ? `<button class="btn sm primary" data-tpuse="${esc(t.templateName)}" ${st === 'Approved' ? '' : 'title="Works only after Meta approves it"'}>Use in broadcast</button>` : `<button class="btn sm primary" data-tpedit="${esc(t.templateName)}">Edit &amp; submit to Meta</button>`}<button class="btn sm" data-tpact="${esc(t.templateName)}" title="What each button does">Buttons & actions</button><button class="btn sm" data-tplib="${esc(t.templateName)}" title="Use case, segment, tags">Library</button><button class="btn sm" data-tpdup="${esc(t.templateName)}">Duplicate</button><button class="ibtn" data-tpdel="${esc(t.templateName)}" title="Delete">${I.trash}</button></div></div>`;
+    <div class="tp-act">${TPL_STATUS[st] ? `<button class="btn sm primary" data-tpuse="${esc(t.templateName)}" ${st === 'Approved' ? '' : 'title="Works only after Meta approves it"'}>Use in broadcast</button>` : `<button class="btn sm primary" data-tpedit="${esc(t.templateName)}">Edit &amp; submit to Meta</button>`}<button class="btn sm" data-tpact="${esc(t.templateName)}" title="Open the node editor: what each button does"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="4" width="6" height="5" rx="1.5"/><rect x="15" y="4" width="6" height="5" rx="1.5"/><rect x="9" y="15" width="6" height="5" rx="1.5"/><path d="M6 9v2a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V9M12 13v2"/></svg>Button flow</button><button class="btn sm" data-tplib="${esc(t.templateName)}" title="Use case, segment, tags">Library</button><button class="btn sm" data-tpdup="${esc(t.templateName)}">Duplicate</button><button class="ibtn" data-tpdel="${esc(t.templateName)}" title="Delete">${I.trash}</button></div></div>`;
 }
 /* ---------- advanced template builder: content types, buttons, actions, flows ---------- */
 const TB_CONTENT = [['text', 'Text', '✎'], ['image', 'Image', '🖼'], ['video', 'Video', '▶'], ['pdf', 'PDF', '📄'], ['location', 'Location', '📍'], ['catalog', 'Catalog', '🛍'], ['product', 'Product card', '🏷'], ['payment', 'Payment link', '₹'], ['contact', 'Contact card', '👤']];
@@ -6721,8 +6776,17 @@ const TB_BTN = {
   contact_support: ['Contact Support', ['QUICK_REPLY'], [{ type: 'create_task', title: 'Support request from {{name}}', days: 0, priority: 'High' }, { type: 'send_text', text: 'Thanks — our support team will reply here shortly.' }]],
   talk_agent: ['Talk to Agent', ['QUICK_REPLY'], [{ type: 'create_task', title: '{{name}} wants to talk to an agent', days: 0, priority: 'High' }, { type: 'send_text', text: 'Connecting you to our team 🙂' }]],
   rate_us: ['Rate Us', ['URL', 'QUICK_REPLY']], reorder: ['Reorder', ['QUICK_REPLY'], [{ type: 'create_order', status: 'New', text: 'Reorder placed ✅ — order {{order_id}}.' }]],
+  get_quote: ['Get Quote', ['QUICK_REPLY'], [{ type: 'change_stage', stage: 'Interested' }, { type: 'create_task', title: 'Send a quotation to {{name}}', days: 0, priority: 'High' }, { type: 'send_text', text: 'Sure {{first_name}}! Our team will share the best price with you shortly 🙂' }]],
+  call_me: ['Call Me Back', ['QUICK_REPLY'], [{ type: 'create_task', title: 'Call back {{name}}', days: 0, priority: 'High' }, { type: 'send_text', text: 'Thanks! We will call you shortly 📞' }]],
+  interested: ['Interested', ['QUICK_REPLY'], [{ type: 'add_tag', tag: 'Hot' }, { type: 'change_stage', stage: 'Interested' }]],
+  not_interested: ['Not Interested', ['QUICK_REPLY'], [{ type: 'add_tag', tag: 'Cold' }, { type: 'send_text', text: 'No problem — thank you for your time 🙏' }]],
+  price_list: ['Price List', ['QUICK_REPLY', 'URL'], [{ type: 'send_media', kind: 'document', url: 'https://', text: 'Here is our latest price list' }]],
+  location: ['Our Location', ['QUICK_REPLY', 'URL'], [{ type: 'send_location', lat: '', lng: '', name: '', address: '' }]],
+  book_visit: ['Book a Visit', ['QUICK_REPLY'], [{ type: 'change_stage', stage: 'Interested' }, { type: 'set_followup', days: 1 }, { type: 'create_task', title: 'Fix a visit with {{name}}', days: 0, priority: 'High' }, { type: 'send_text', text: 'Great! Our team will call you to fix a time 📅' }]],
+  stop: ['Stop Messages', ['QUICK_REPLY'], [{ type: 'stop_messages' }, { type: 'send_text', text: 'Done — you will not get offers from us anymore.' }]],
   refer_friend: ['Refer Friend', ['URL']], thank_you: ['Thank You', ['QUICK_REPLY'], [{ type: 'add_tag', tag: 'Happy' }]], custom: ['Custom Button', ['QUICK_REPLY', 'URL', 'PHONE_NUMBER']],
 };
+const LEAD_FIELDS = [['city', 'City'], ['budget', 'Budget (₹)'], ['business', 'Business name'], ['business_type', 'Business type'], ['email', 'Email'], ['source', 'Source'], ['notes', 'Notes (adds a line)']];
 const TB_META = { QUICK_REPLY: 'Reply button (runs actions)', URL: 'Opens a link', PHONE_NUMBER: 'Calls a number', CATALOG: 'Opens your Meta catalog' };
 // action type → [label, fields [key, label, kind]]
 const TB_ACT = {
@@ -6734,9 +6798,11 @@ const TB_ACT = {
   track_order: ['Track order (reply status)', [['text', 'Reply (optional)', 'text']]], generate_invoice: ['Send invoice summary', []],
   assign_member: ['Assign team member', [['member', 'Member', 'member']]], add_tag: ['Add tag', [['tag', 'Tag', 'tag']]], change_stage: ['Change pipeline stage', [['stage', 'Stage', 'stage']]],
   create_task: ['Create task', [['title', 'Task', 'text'], ['days', 'Due in days', 'num'], ['priority', 'Priority', 'prio']]],
+  send_media: ['Send image / video / PDF', [['kind', 'Type', 'mediakind'], ['url', 'File link (https)', 'url'], ['text', 'Caption (optional)', 'text']]], send_location: ['Send location (map pin)', [['lat', 'Latitude', 'text'], ['lng', 'Longitude', 'text'], ['name', 'Place name', 'text'], ['address', 'Address', 'text']]],
+  add_note: ['Add note to the lead', [['text', 'Note', 'area']]], set_followup: ['Set follow-up date', [['days', 'In how many days', 'num']]], update_lead: ['Update a lead field', [['field', 'Field', 'leadfield'], ['value', 'New value', 'text']]], stop_messages: ['Stop marketing messages (opt-out)', []],
   trigger_workflow: ['Trigger workflow (n8n webhook)', [['url', 'Webhook URL (https)', 'url']]], run_ai_agent: ['Run AI agent (Gemini reply)', [['prompt', 'Instructions for the AI', 'area']]], custom_api: ['Custom API request (POST)', [['url', 'URL (https)', 'url']]],
 };
-const tbActNew = type => { const a = { type }; ((TB_ACT[type] || [0, []])[1]).forEach(([k, , kind]) => { if (kind === 'tag') a[k] = ((S.lists && S.lists.tags) || ['Hot'])[0]; else if (kind === 'stage') a[k] = stages()[0]; else if (kind === 'prio') a[k] = 'High'; else if (kind === 'ostatus') a[k] = 'New'; }); return a; };
+const tbActNew = type => { const a = { type }; ((TB_ACT[type] || [0, []])[1]).forEach(([k, , kind]) => { if (kind === 'mediakind') a[k] = 'image'; else if (kind === 'leadfield') a[k] = 'city'; else if (kind === 'tag') a[k] = ((S.lists && S.lists.tags) || ['Hot'])[0]; else if (kind === 'stage') a[k] = stages()[0]; else if (kind === 'prio') a[k] = 'High'; else if (kind === 'ostatus') a[k] = 'New'; }); return a; };
 const tbNew = kind => { const k = TB_BTN[kind] || TB_BTN.custom; return { kind, text: kind === 'custom' ? '' : k[0], type: k[1][0], url: k[1][0] === 'URL' ? 'https://' : '', phone: '', actions: JSON.parse(JSON.stringify(k[2] || [])) }; };
 function tbLimits(btns) {
   const c = t => btns.filter(b => b.type === t).length, err = [];
@@ -6763,18 +6829,21 @@ function tbActionRow(bi, ai, a) {
     if (kind === 'member') return `<select class="input sm" ${at}><option value="">Lead owner</option>${teamNames().map(x => `<option ${x === v ? 'selected' : ''}>${esc(x)}</option>`).join('')}</select>`;
     if (kind === 'tag') return `<select class="input sm" ${at}>${(S.lists.tags || ['Hot', 'Warm', 'Cold']).concat(['Happy', 'Cart']).filter((x, i, arr) => arr.indexOf(x) === i).map(x => `<option ${x === v ? 'selected' : ''}>${esc(x)}</option>`).join('')}</select>`;
     if (kind === 'prio') return `<select class="input sm" ${at}>${PRIO.map(x => `<option ${x === (v || 'High') ? 'selected' : ''}>${x}</option>`).join('')}</select>`;
+    if (kind === 'mediakind') return `<select class="input sm" ${at}>${[['image', 'Image'], ['video', 'Video'], ['document', 'PDF / document']].map(([x, l]) => `<option value="${x}" ${x === (v || 'image') ? 'selected' : ''}>${l}</option>`).join('')}</select>`;
+    if (kind === 'leadfield') return `<select class="input sm" ${at}>${LEAD_FIELDS.map(([x, l]) => `<option value="${x}" ${x === (v || 'city') ? 'selected' : ''}>${l}</option>`).join('')}</select>`;
     if (kind === 'ostatus') return `<select class="input sm" ${at}>${['New', 'Cart', 'Confirmed', 'Paid', 'COD', 'Shipped', 'Delivered'].map(x => `<option ${x === (v || 'New') ? 'selected' : ''}>${x}</option>`).join('')}</select>`;
     if (kind === 'area') return `<textarea class="input sm" rows="2" ${at} placeholder="${esc(lab)} — {{first_name}}, {{order_id}}, {{amount}}, {{tracking_url}} work">${esc(v)}</textarea>`;
     return `<input class="input sm" ${at} ${kind === 'num' ? 'type="number" min="0"' : ''} value="${esc(v)}" placeholder="${esc(lab)}">`;
   };
   return `<div class="tb-act"><span class="tb-an">${ai + 1}</span><div class="grow"><b>${esc(def[0])}</b><div class="tb-af">${def[1].map(fld).join('')}</div></div><button type="button" class="ibtn" data-tbadel="${bi}|${ai}" title="Remove action">${I.x}</button></div>`;
 }
-function tbButtonsHTML(e) {
+function tbButtonsHTML(e, studio) {
   const err = tbLimits(e.buttons);
   return `<div class="tb-btns">${e.buttons.map((b, i) => { const k = TB_BTN[b.kind] || TB_BTN.custom, types = k[1]; return `<div class="tb-b ${b.type === 'QUICK_REPLY' ? 'qr' : ''}">
     <div class="tb-bh"><span class="tb-bi">${i + 1}</span><b>${esc(k[0])}</b><select class="input sm" data-tbtype="${i}" ${types.length < 2 ? 'disabled' : ''}>${types.map(t => `<option value="${t}" ${t === b.type ? 'selected' : ''}>${TB_META[t]}</option>`).join('')}</select><button type="button" class="ibtn" data-tbup="${i}" title="Move up" ${i ? '' : 'disabled'}>↑</button><button type="button" class="ibtn" data-tbdel="${i}" title="Remove">${I.x}</button></div>
     <div class="tb-bf">${b.type !== 'CATALOG' ? `<input class="input sm" data-tbtx="${i}" maxlength="25" value="${esc(b.text)}" placeholder="Button text (25)">` : '<span class="muted" style="font-size:12px">Shows “View catalog” — needs a Meta Commerce catalog linked to your WhatsApp.</span>'}${b.type === 'URL' ? `<input class="input sm" data-tburl="${i}" value="${esc(b.url || '')}" placeholder="https://…">` : ''}${b.type === 'PHONE_NUMBER' ? `<input class="input sm" data-tbph="${i}" value="${esc(b.phone || '')}" placeholder="+91 98…">` : ''}</div>
-    ${b.type === 'QUICK_REPLY' ? `<div class="tb-acts">${(b.actions || []).map((a, ai) => tbActionRow(i, ai, a)).join('') || '<p class="muted" style="font-size:12px;margin:2px 0">No actions yet — when tapped, the reply just lands in your Inbox.</p>'}
+    ${b.type === 'QUICK_REPLY' && studio ? `<div class="tps-wire ${(b.actions || []).length ? 'on' : ''}" data-tpsw="${i}">${tpsWireText(b)}</div>` : ''}
+    ${b.type === 'QUICK_REPLY' && !studio ? `<div class="tb-acts">${(b.actions || []).map((a, ai) => tbActionRow(i, ai, a)).join('') || '<p class="muted" style="font-size:12px;margin:2px 0">No actions yet — when tapped, the reply just lands in your Inbox.</p>'}
       <select class="input sm tb-add" data-tbaddact="${i}"><option value="">+ Add action when tapped…</option>${Object.entries(TB_ACT).map(([k2, v]) => `<option value="${k2}">${esc(v[0])}</option>`).join('')}</select></div>` : ''}</div>`; }).join('')}
     ${e.buttons.length < 10 ? `<select class="input sm tb-add" data-tbaddbtn><option value="">+ Add button…</option>${Object.entries(TB_BTN).map(([k, v]) => `<option value="${k}">${esc(v[0])}</option>`).join('')}</select>` : ''}
     ${err.length ? `<div class="bc-warn">${err.map(esc).join('<br>')}</div>` : `<small class="muted">${e.buttons.length}/10 buttons · ${e.buttons.filter(b => b.type === 'URL').length}/2 links · ${e.buttons.filter(b => b.type === 'PHONE_NUMBER').length}/1 call</small>`}</div>`;
@@ -6800,18 +6869,9 @@ function tbFlowSummary(e) {
 /* buttons & actions for an existing (e.g. Meta-approved) template — no new Meta review needed */
 function openTplActions(name) {
   const t = (S.templates || []).find(x => x.templateName === name); if (!t) return;
+  if (!TPL_STATUS[t.metaStatus || 'Draft']) return openTplEditor(Object.assign({}, t));   // not on Meta yet → the whole template can still change
   TPL.edit = Object.assign({ name, header: t.header && !/^\[/.test(t.header) ? t.header : '', body: t.body || '', footer: t.footer || '', examples: [], actionsOnly: true }, tbFromTemplate(t));
-  drawTplActions(); showModal('#leadModal');
-}
-function drawTplActions() {
-  const e = TPL.edit, media = ['image', 'video', 'pdf'].includes(e.content);
-  $('#leadBox').innerHTML = `<div class="m-head"><h2>Buttons & actions · ${esc(e.name)}</h2><button class="ibtn" data-close>${I.x}</button></div>
-    <p class="help" style="margin-bottom:10px">Decide what Nodevers does when a customer taps each reply button — send the next template, tag, move stage, create an order or task… Button texts come from WhatsApp; changing them needs a new template.</p>
-    <div class="tpe tb-tpe"><div class="tpe-f">${media ? `<div class="field"><label>${e.content === 'pdf' ? 'PDF' : e.content} link sent with every message (required)</label><input class="input" id="tbMedia" value="${esc(e.mediaUrl || '')}" placeholder="https://…"></div>` : ''}
-      <div class="tb-btns">${e.buttons.map((b, i) => `<div class="tb-b ${b.type === 'QUICK_REPLY' ? 'qr' : ''}"><div class="tb-bh"><span class="tb-bi">${i + 1}</span><b>${esc(b.text || 'Button')}</b><span class="muted" style="font-size:12px">${TB_META[b.type] || ''}</span></div>
-        ${b.type === 'QUICK_REPLY' ? `<div class="tb-acts">${(b.actions || []).map((a, ai) => tbActionRow(i, ai, a)).join('')}<select class="input sm tb-add" data-tbaddact="${i}"><option value="">+ Add action when tapped…</option>${Object.entries(TB_ACT).map(([k2, v]) => `<option value="${k2}">${esc(v[0])}</option>`).join('')}</select></div>` : ''}</div>`).join('') || '<p class="muted">This template has no buttons.</p>'}</div></div>
-      <div class="tpe-p"><div class="bc-rh">Preview</div><div class="wa-phone"><div class="wa-chat">${tbPreview(e)}</div></div>${tbFlowSummary(e)}</div></div>
-    <div class="m-foot"><button class="btn" data-close>Cancel</button><div class="grow"></div><button class="btn primary" data-tbsaveflow>Save actions</button></div>`;
+  $('#leadBox').innerHTML = ''; TPL.cv = null; showModal('#leadModal'); drawTplEditor();
 }
 function tbMapHTML(T) {
   const byName = new Map(T.map(t => [t.templateName, t])), btns = t => (t.flow || {}).buttons || [];
@@ -6865,13 +6925,15 @@ SECTIONS.tflow = { name: 'WhatsApp templates', color: '#25A55F', ic: 'T' };
 SECTIONS.tact = { name: 'Actions when tapped', color: '#F29A5C', ic: '↯' };
 const tfTpl = name => (S.templates || []).find(t => t.templateName === name);
 const tfQR = t => t ? tbFromTemplate(t).buttons.map((b, i) => ({ b, i })).filter(x => x.b.type === 'QUICK_REPLY') : [];
-const TF_ICON = { send_text: '💬', open_link: '🔗', open_form: '📝', open_product: '🛍', send_email: '✉', send_payment_link: '₹', create_order: '🧾', update_order: '🔄', cancel_order: '✖', track_order: '🚚', generate_invoice: '📄', assign_member: '👤', add_tag: '🏷', change_stage: '➜', create_task: '✓', trigger_workflow: 'n', run_ai_agent: '✦', custom_api: '⇄' };
+const TF_ICON = { send_media: '🖼', send_location: '📍', add_note: '🗒', set_followup: '📅', update_lead: '✎', stop_messages: '⛔', send_text: '💬', open_link: '🔗', open_form: '📝', open_product: '🛍', send_email: '✉', send_payment_link: '₹', create_order: '🧾', update_order: '🔄', cancel_order: '✖', track_order: '🚚', generate_invoice: '📄', assign_member: '👤', add_tag: '🏷', change_stage: '➜', create_task: '✓', trigger_workflow: 'n', run_ai_agent: '✦', custom_api: '⇄' };
 const tfField = ([k, label, kind]) => {
   const sel = options => F(k, label, 'select', { options });
   if (kind === 'stage') return sel(stageOpts); if (kind === 'tag') return sel(() => (S.lists.tags || ['Hot', 'Warm', 'Cold']).concat(['Happy', 'Cart']).filter((x, i, a) => a.indexOf(x) === i));
   if (kind === 'member') return sel(() => ['Lead owner'].concat(teamNames())); if (kind === 'prio') return F(k, label, 'select', { options: () => ['High', 'Medium', 'Low'], def: 'High' });
   if (kind === 'ostatus') return F(k, label, 'select', { options: ['New', 'Cart', 'Confirmed', 'Paid', 'COD', 'Shipped', 'Delivered'], def: 'New' });
   if (kind === 'area') return F(k, label, 'textarea', { help: 'Personal fields: {{first_name}} {{name}} {{order_id}} {{amount}} {{status}} {{tracking_url}}' });
+  if (kind === 'mediakind') return F(k, label, 'select', { options: ['image', 'video', 'document'], def: 'image' });
+  if (kind === 'leadfield') return F(k, label, 'select', { options: LEAD_FIELDS.map(x => x[0]), def: 'city', help: 'city · budget · business · business_type · email · source · notes' });
   if (kind === 'num') return F(k, label, 'number'); return F(k, label, 'text', kind === 'url' ? { def: 'https://' } : {});
 };
 NODE_TYPES.push({ type: 'tf.template', section: 'tflow', name: 'WhatsApp template', desc: 'Sends this template. Each reply button becomes an output — wire it to the next template or to actions.',
@@ -7027,27 +7089,149 @@ function renderTemplates() {
 function openTplEditor(base) {
   const t = Object.assign({ templateName: '', category: 'Marketing', language: 'en', header: '', body: 'Hi {{1}}, ', footer: '', buttons: '' }, base || {});
   TPL.edit = Object.assign({ useCase: t.useCase || '', name: t.templateName, category: /utility/i.test(t.category) ? 'UTILITY' : 'MARKETING', language: t.language || 'en', header: t.header && !/^\[/.test(t.header) ? t.header : '', body: t.body, footer: t.footer || '', examples: [] }, tbFromTemplate(t));
-  drawTplEditor(); showModal('#leadModal');
+  $('#leadBox').innerHTML = ''; TPL.cv = null; showModal('#leadModal'); drawTplEditor();
+}
+/* ================= Template studio — the template editor as a node canvas =================
+   Left: the message (content, body, buttons). Middle: this template as a node — every reply button is a dot you drag from to
+   add what happens when it is tapped (next template, reply, tag, stage, order, task, AI…). Right: the WhatsApp preview.
+   The canvas is compiled into each button's actions (the same data wa-webhook runs), so Save / Submit work as before. */
+SECTIONS.tnext = { name: 'Next message', color: '#25A55F', ic: '→' };
+SECTIONS.tsroot = { name: 'This template', color: '#25A55F', ic: 'T' };
+const tsQR = () => (TPL.edit ? TPL.edit.buttons.map((b, i) => ({ b, i })).filter(x => x.b.type === 'QUICK_REPLY') : []);
+NODE_TYPES.push({ type: 'ts.root', section: 'tsroot', name: 'This template', ins: 0, fixed: true, fields: [], head: () => (TPL.edit && TPL.edit.name) || 'New template',
+  desc: 'Your message. Each reply button is a dot on the right side — drag from it to add what happens when a customer taps it.',
+  outsFn: () => tsQR().map(x => String(x.b.text || 'Button').slice(0, 18)),
+  sum: () => { const n = tsQR().length; return n ? `${n} reply button${n > 1 ? 's' : ''} · drag from a dot →` : 'Add a reply button on the left'; },
+  info: () => { const e = TPL.edit; if (!e) return ''; return `<div class="tf-prev"><div class="tf-bub">${e.header ? `<b>${esc(e.header)}</b>` : ''}<span>${esc(String(e.body || '').slice(0, 400))}</span>${e.footer ? `<small>${esc(e.footer)}</small>` : ''}</div>${e.buttons.map(b => `<div class="tf-pb ${b.type === 'QUICK_REPLY' ? '' : 'ext'}"><span>${b.type === 'URL' ? '🔗 ' : b.type === 'PHONE_NUMBER' ? '📞 ' : ''}${esc(b.text || 'Button')}</span><small>${b.type !== 'QUICK_REPLY' ? esc(TB_META[b.type] || '') : (b.actions || []).length ? (b.actions || []).length + ' step' + ((b.actions || []).length > 1 ? 's' : '') : 'not wired yet'}</small></div>`).join('')}</div><p class="help">Change the text and buttons in the <b>Message</b> panel on the left.</p>`; } });
+NODE_TYPES.push({ type: 'ts.next', section: 'tnext', name: 'Send next template', noOut: true, desc: 'Sends another approved template — that is how one template leads to the next, like a chatbot menu.',
+  fields: [F('template', 'Template', 'select', { options: () => [''].concat((S.templates || []).filter(t => t.templateName && t.templateName !== (TPL.edit || {}).name).map(t => t.templateName)) }), F('params', 'Values for {{1}}, {{2}}… (optional)', 'text', { help: 'Comma separated, e.g. {{first_name}}, {{order_id}}. Empty = first name, order or business details.' })],
+  head: p => p.template ? '→ ' + p.template : '', sum: p => { const t = tfTpl(p.template); return !p.template ? 'Choose the next template' : t ? String(t.body || '').slice(0, 70) : p.template + ' — not found'; },
+  info: p => { const t = tfTpl(p.template); return t ? `<div class="tf-prev"><div class="tf-bub">${t.header && !/^\[/.test(t.header) ? `<b>${esc(t.header)}</b>` : ''}<span>${esc(String(t.body || '').slice(0, 300))}</span></div>${tbFromTemplate(t).buttons.map(b => `<div class="tf-pb ext"><span>${esc(b.text || 'Button')}</span></div>`).join('')}</div><div class="tf-st"><span class="pill ${/approved/i.test(t.metaStatus || '') ? 'ok' : ''}">${esc(t.metaStatus || 'Draft')}</span><span class="muted" style="font-size:11.5px">Its own buttons follow its own flow</span></div>` : ''; } });
+
+const tsP = a => { const p = {}; ((TB_ACT[a.type] || [0, []])[1]).forEach(([fk, , kind]) => { if (a[fk] !== undefined) p[fk] = kind === 'member' && !a[fk] ? 'Lead owner' : a[fk]; }); return p; };
+/** canvas from the template's buttons */
+function tsSeed() {
+  const nodes = [{ id: 'root', type: 'ts.root', x: 40, y: 40, p: {} }], links = []; let c = 0;
+  tsQR().forEach((x, k) => {
+    let prev = ['root', k], col = 1; const y = 20 + k * 130, acts = x.b.actions || [];
+    acts.filter(a => a.type !== 'send_template' && TB_ACT[a.type]).forEach(a => { const id = 'n' + (++c); nodes.push({ id, type: 'tf.' + a.type, x: 40 + col * 280, y, p: tsP(a) }); links.push([prev[0], prev[1], id]); prev = [id, 0]; col++; });
+    acts.filter(a => a.type === 'send_template').forEach(a => { const id = 'n' + (++c); nodes.push({ id, type: 'ts.next', x: 40 + col * 280, y, p: { template: a.template || '', params: a.params || '' } }); links.push([prev[0], prev[1], id]); });
+  });
+  return { nodes, links };
+}
+/** canvas → each reply button's actions (what wa-webhook runs) */
+function tsCompile() {
+  const cv = TPL.cv, e = TPL.edit; if (!cv || !cv.flow || !e) return;
+  tsQR().forEach((x, k) => {
+    const acts = [];
+    const walk = (id, seen) => { if (seen.has(id) || seen.size > 30) return; seen.add(id); const n = cv.node(id); if (!n) return;
+      if (n.type === 'ts.next') { acts.push(Object.assign({ type: 'send_template', template: (n.p || {}).template || '' }, (n.p || {}).params ? { params: n.p.params } : {})); return; }
+      const type = n.type.slice(3); if (!TB_ACT[type]) return; const a = { type };
+      (TB_ACT[type][1]).forEach(([fk, , kind]) => { let v = (n.p || {})[fk]; if (kind === 'member' && v === 'Lead owner') v = ''; if (kind === 'url' && v === 'https://') v = ''; if (v !== undefined && v !== '') a[fk] = kind === 'num' ? Number(v) : v; });
+      acts.push(a); cv.flow.links.filter(l => l[0] === id).forEach(l => walk(l[2], seen)); };
+    cv.flow.links.filter(l => l[0] === 'root' && l[1] === k).forEach(l => walk(l[2], new Set()));
+    x.b.actions = acts.slice(0, 8);
+  });
+}
+const tpsWireText = b => (b.actions || []).length ? `● ${(b.actions || []).length} step${(b.actions || []).length > 1 ? 's' : ''} on the canvas` : '○ Not wired — drag from its dot on the canvas →';
+const tpsWireDraw = () => $$('#leadBox [data-tpsw]').forEach(el => { const b = (TPL.edit || { buttons: [] }).buttons[+el.dataset.tpsw]; if (!b) return; el.textContent = tpsWireText(b); el.classList.toggle('on', !!(b.actions || []).length); });
+const tsSig = () => tsQR().map(x => x.i).join(',');
+function tsSync() {
+  if (!TPL.cv) {
+    setTimeout(() => { const root = $('#tsCanvas'); if (!root || TPL.cv || !TPL.edit) return;
+      TPL.cv = new FlowCanvas({ root, key: 'TPL-ED', title: 'Button flow', sections: ['tnext', 'tact'], seed: tsSeed, local: true, onChange: () => { tsCompile(); tpsPrevDraw(); tpsWireDraw(); } });
+      TPL.sig = tsSig(); TPL.cv.load(); }, 60);
+    return;
+  }
+  if (tsSig() !== TPL.sig) { TPL.sig = tsSig(); TPL.cv.flow = tsSeed(); TPL.cv.sel.clear(); TPL.cv.render(); requestAnimationFrame(() => TPL.cv && TPL.cv.fit()); }
+  else TPL.cv.render();
+}
+function tpsPrevDraw() {
+  const e = TPL.edit, box = $('#tpsPrev'); if (!e || !box) return;
+  box.innerHTML = `<div class="tps-ph">Preview</div><div class="wa-phone"><div class="wa-top">${avatar(brand().brandName)}<div><b>${esc(brand().brandName)}</b><small>Business account</small></div></div><div class="wa-chat">${tbPreview(e)}</div></div>${tbFlowSummary(e)}
+    <ul class="bc-rules" style="margin-top:12px"><li>Meta usually reviews in minutes, sometimes up to 24 hours.</li><li>Marketing templates need a clear offer; don't start or end the body with a variable.</li><li>Button flows change without a new review.</li></ul>`;
+}
+const TPS_LANGS = [['en', 'English'], ['en_US', 'English (US)'], ['hi', 'Hindi'], ['mr', 'Marathi'], ['gu', 'Gujarati'], ['ta', 'Tamil'], ['te', 'Telugu'], ['bn', 'Bengali'], ['kn', 'Kannada'], ['ml', 'Malayalam'], ['pa', 'Punjabi']];
+function tpsFormHTML(e) {
+  const n = (e.body.match(/\{\{\d+\}\}/g) || []).length;
+  return `<div class="tpe tps-tpe"><div class="tpe-f">
+    <div class="tps-sec"><div class="tps-st"><span>1</span>Basics</div>
+      <div class="field"><label>Name <span class="muted">— lowercase, numbers and _ only</span></label><input class="input" id="teName" value="${esc(e.name)}" placeholder="diwali_offer_2026"></div>
+      <div class="tps-2"><div class="field"><label>Category</label><select class="input" id="teCat"><option value="MARKETING" ${e.category === 'MARKETING' ? 'selected' : ''}>Marketing — offers, news</option><option value="UTILITY" ${e.category === 'UTILITY' ? 'selected' : ''}>Utility — orders, reminders</option></select></div>
+      <div class="field"><label>Language</label><select class="input" id="teLang">${TPS_LANGS.map(([k, n2]) => `<option value="${k}" ${e.language === k ? 'selected' : ''}>${n2}</option>`).join('')}</select></div></div>
+      <div class="field"><label>Use case <span class="muted">— shown first in Broadcast</span></label><select class="input" id="teUse"><option value="">—</option>${USE_CASES.map(u => `<option ${u === e.useCase ? 'selected' : ''}>${esc(u)}</option>`).join('')}</select></div></div>
+    <div class="tps-sec"><div class="tps-st"><span>2</span>Message</div>
+      <div class="field"><label>Starts with</label>${tbContentHTML(e)}</div>
+      ${(e.content || 'text') === 'text' ? `<div class="field"><label>Header <span class="muted">(optional, 60)</span></label><input class="input" id="teHead" maxlength="60" value="${esc(e.header)}" placeholder="🎉 Diwali Sale"></div>` : ''}
+      <div class="field"><label>Body <span class="muted">— *bold*, _italic_, {{1}}</span><button class="btn sm" type="button" data-teaddvar style="float:right">+ Variable</button></label><textarea class="input" id="teBody" rows="5" maxlength="1024">${esc(e.body)}</textarea></div>
+      ${n ? `<div class="field"><label>Sample values <span class="muted">(Meta needs examples)</span></label><div class="bc-vars">${Array.from({ length: n }, (_, i) => `<div class="bc-var"><span class="pill stage">{{${i + 1}}}</span><input class="input sm" data-teex="${i}" value="${esc(e.examples[i] || '')}" placeholder="${['Aarav', 'Diwali Sale', '20%', 'Mumbai'][i] || 'sample'}"></div>`).join('')}</div></div>` : ''}
+      <div class="field"><label>Footer <span class="muted">(optional)</span></label><input class="input" id="teFoot" maxlength="60" value="${esc(e.footer)}" placeholder="Reply STOP to unsubscribe"></div></div>
+    <div class="tps-sec"><div class="tps-st"><span>3</span>Buttons <small class="muted">— reply buttons get a dot on the canvas</small></div>${tbButtonsHTML(e, true)}</div>
+  </div></div>`;
+}
+function tpsLockedHTML(e) {
+  const media = ['image', 'video', 'pdf'].includes(e.content), t = tfTpl(e.name) || {};
+  return `<div class="tpe tps-tpe"><div class="tpe-f">
+    <div class="tps-lock"><b>✓ ${esc(t.metaStatus || 'Approved')} by Meta</b><span>The message itself can't change without a new review — duplicate the template to edit its words. The button flow on the canvas can change any time.</span></div>
+    ${media ? `<div class="field"><label>${e.content === 'pdf' ? 'PDF' : esc(e.content)} link sent with every message (required)</label><input class="input" id="tbMedia" value="${esc(e.mediaUrl || '')}" placeholder="https://…"></div>` : ''}
+    <div class="tps-sec"><div class="tps-st"><span>✓</span>Message</div><div class="tps-msg">${e.header ? `<b>${esc(e.header)}</b>` : ''}<span>${esc(e.body)}</span>${e.footer ? `<small>${esc(e.footer)}</small>` : ''}</div></div>
+    <div class="tps-sec"><div class="tps-st"><span>✓</span>Buttons</div>${e.buttons.map((b, i) => `<div class="tps-bl ${b.type === 'QUICK_REPLY' ? 'qr' : ''}"><span class="tb-bi">${i + 1}</span><b>${esc(b.text || 'Button')}</b><small>${b.type === 'QUICK_REPLY' ? ((b.actions || []).length ? (b.actions || []).length + ' step' + ((b.actions || []).length > 1 ? 's' : '') : 'not wired yet') : esc(TB_META[b.type] || '')}</small></div>`).join('') || '<p class="muted">No buttons.</p>'}</div>
+  </div></div>`;
+}
+function tpsTopHTML(e) {
+  const t = tfTpl(e.name), canMeta = cloud && !(WA.status && WA.status.connected === false && !WA.status.error), st = e.actionsOnly ? (t && t.metaStatus) || 'Approved' : (t && t.metaStatus) || 'Draft';
+  return `<button type="button" class="ibtn" data-close title="Close">${I.x}</button><span class="tps-badge">T</span>
+    <div class="tps-ti"><b>${esc(e.name || 'New template')}</b><small><span class="pill ${/approved/i.test(st) ? 'ok' : ''}">${esc(st)}</span> ${esc(e.category === 'UTILITY' ? 'Utility' : 'Marketing')} · ${esc((TPS_LANGS.find(x => x[0] === e.language) || [0, e.language || 'English'])[1])}</small></div>
+    <div class="grow"></div><button type="button" class="btn" data-tsprev>▶ Preview chat</button>
+    ${e.actionsOnly ? '<button type="button" class="btn primary" data-tbsaveflow>Save button flow</button>' : `<button type="button" class="btn" data-tesave>Save draft</button><button type="button" class="btn primary" data-tesubmit ${canMeta ? '' : `disabled title="${demo ? 'Demo mode' : 'Connect WhatsApp first'}"`}>Submit to Meta</button>`}`;
 }
 function drawTplEditor() {
-  const e = TPL.edit, n = (e.body.match(/\{\{\d+\}\}/g) || []).length, LANGS = [['en', 'English'], ['en_US', 'English (US)'], ['hi', 'Hindi'], ['mr', 'Marathi'], ['gu', 'Gujarati'], ['ta', 'Tamil'], ['te', 'Telugu'], ['bn', 'Bengali'], ['kn', 'Kannada'], ['ml', 'Malayalam'], ['pa', 'Punjabi']];
-  const canMeta = cloud && !(WA.status && WA.status.connected === false && !WA.status.error);   // the server double-checks
-  $('#leadBox').innerHTML = `<div class="m-head"><h2>${e.name ? 'Template' : 'New template'}</h2><button class="ibtn" data-close>${I.x}</button></div>
-    <div class="tpe"><div class="tpe-f">
-      <div class="form" style="grid-template-columns:1fr 1fr"><div class="field full"><label>Name <span class="muted">— lowercase, numbers and _ only</span></label><input class="input" id="teName" value="${esc(e.name)}" placeholder="diwali_offer_2026"></div>
-      <div class="field"><label>Category</label><select class="input" id="teCat"><option value="MARKETING" ${e.category === 'MARKETING' ? 'selected' : ''}>Marketing — offers, news</option><option value="UTILITY" ${e.category === 'UTILITY' ? 'selected' : ''}>Utility — orders, reminders</option></select></div>
-      <div class="field"><label>Language</label><select class="input" id="teLang">${LANGS.map(([k, n2]) => `<option value="${k}" ${e.language === k ? 'selected' : ''}>${n2}</option>`).join('')}</select></div>
-      <div class="field full"><label>Use case <span class="muted">— helps your team pick the right template in Broadcast</span></label><select class="input" id="teUse"><option value="">—</option>${USE_CASES.map(u => `<option ${u === e.useCase ? 'selected' : ''}>${esc(u)}</option>`).join('')}</select></div>
-      <div class="field full"><label>Content <span class="muted">— what the message starts with</span></label>${tbContentHTML(e)}</div>
-      ${(e.content || 'text') === 'text' ? `<div class="field full"><label>Header <span class="muted">(optional, 60 characters)</span></label><input class="input" id="teHead" maxlength="60" value="${esc(e.header)}" placeholder="🎉 Diwali Sale"></div>` : ''}
-      <div class="field full"><label>Body <span class="muted">— *bold*, _italic_, {{1}} for each personal value</span><button class="btn sm" type="button" data-teaddvar style="float:right">+ Variable</button></label><textarea class="input" id="teBody" rows="6" maxlength="1024">${esc(e.body)}</textarea></div>
-      ${n ? `<div class="field full"><label>Sample values <span class="muted">(Meta needs examples to approve)</span></label><div class="bc-vars">${Array.from({ length: n }, (_, i) => `<div class="bc-var"><span class="pill stage">{{${i + 1}}}</span><input class="input sm" data-teex="${i}" value="${esc(e.examples[i] || '')}" placeholder="${['Aarav', 'Diwali Sale', '20%', 'Mumbai'][i] || 'sample'}"></div>`).join('')}</div></div>` : ''}
-      <div class="field full"><label>Footer <span class="muted">(optional)</span></label><input class="input" id="teFoot" maxlength="60" value="${esc(e.footer)}" placeholder="Reply STOP to unsubscribe"></div>
-      <div class="field full"><label>Buttons <span class="muted">— up to 10; reply buttons can run actions and open the next template</span></label>${tbButtonsHTML(e)}</div></div></div>
-      <div class="tpe-p"><div class="bc-rh">Preview</div><div class="wa-phone"><div class="wa-top">${avatar(brand().brandName)}<div><b>${esc(brand().brandName)}</b><small>Business account</small></div></div><div class="wa-chat">${tbPreview(e)}</div></div>${tbFlowSummary(e)}
-      <ul class="bc-rules" style="margin-top:12px"><li>Meta usually reviews in minutes, sometimes up to 24 hours.</li><li>Marketing templates need a clear offer; don't start or end the body with a variable.</li></ul></div></div>
-    <div class="m-foot"><button class="btn" data-close>Cancel</button><div class="grow"></div><button class="btn" data-tesave>Save as draft</button><button class="btn primary" data-tesubmit ${canMeta ? '' : `disabled title="${demo ? 'Demo mode' : 'Connect WhatsApp first'}"`}>Submit to Meta for approval</button></div>`;
+  const e = TPL.edit, box = $('#leadBox'); if (!e) return;
+  if (!box.querySelector('.tps')) {
+    TPL.cv = null; TPL.sig = null; $('#leadModal').classList.add('studio');
+    box.innerHTML = `<div class="tps"><div class="tps-top" id="tpsTop"></div><div class="tps-body">
+      <aside class="tps-form"><div class="tps-ph">${e.actionsOnly ? 'Message' : 'Message'}</div><div id="tpsForm"></div></aside>
+      <section class="tps-cv"><div class="tps-cvh"><div><b>Button flow</b><span>What happens when a customer taps each reply button. Drag from a button's dot, or press <b>+ Node</b>.</span></div></div><div id="tsCanvas"></div></section>
+      <aside class="tps-prev" id="tpsPrev"></aside></div></div>`;
+  }
+  $('#tpsTop').innerHTML = tpsTopHTML(e);
+  $('#tpsForm').innerHTML = e.actionsOnly ? tpsLockedHTML(e) : tpsFormHTML(e);
+  tpsPrevDraw(); tsSync();
 }
+const drawTplActions = drawTplEditor;
+/** ▶ Preview chat for the template being edited */
+function tsPreview() {
+  const e = TPL.edit, cv = TPL.cv; if (!e) return; if (cv) tsCompile();
+  const log = [], fill = s => String(s || '').replace(/\{\{\s*first_name\s*\}\}/gi, 'Riya').replace(/\{\{\s*name\s*\}\}/gi, 'Riya Shah').replace(/\{\{\s*order_id\s*\}\}/gi, 'O123').replace(/\{\{\s*amount\s*\}\}/gi, '₹1,499').replace(/\{\{\s*status\s*\}\}/gi, 'Confirmed').replace(/\{\{1\}\}/g, 'Riya').replace(/\{\{\d+\}\}/g, '…');
+  const bubble = (h, b, f) => `<div class="tf-bub">${h ? `<b>${esc(h)}</b>` : ''}<span>${esc(fill(b))}</span>${f ? `<small>${esc(f)}</small>` : ''}</div>`;
+  const draw = () => {
+    $('#stageBox').innerHTML = `<div class="m-head"><h2>Preview chat</h2><button class="ibtn" data-close>${I.x}</button></div><p class="help" style="margin-top:0">Tap the buttons like a customer. Nothing is sent.</p>
+      <div class="tf-chat">${log.map((m, i) => m.kind === 'me' ? `<div class="tf-b out"><div class="tf-bub">${esc(m.text)}</div></div>` : m.kind === 'bot' ? `<div class="tf-b in"><div class="tf-bub">${esc(m.text)}</div></div>` : m.kind === 'sys' ? `<div class="tf-sys">${esc(m.text)}</div>`
+        : `<div class="tf-b in">${bubble(m.h, m.b, m.f)}<div class="tf-btns">${m.btns.map((b, bi) => `<button type="button" class="tf-cb" ${m.root && b.type === 'QUICK_REPLY' && !m.done ? `data-tspt="${i}|${bi}"` : 'disabled'}>${b.type === 'URL' ? '🔗 ' : b.type === 'PHONE_NUMBER' ? '📞 ' : ''}${esc(b.text || 'Button')}</button>`).join('')}</div></div>`).join('')}</div>
+      <div class="m-foot"><button class="btn" data-tsreset>Start again</button><div class="grow"></div><button class="btn primary" data-close>Done</button></div>`;
+    const c = $('#stageBox .tf-chat'); c.scrollTop = c.scrollHeight;
+  };
+  const start = () => { log.length = 0; log.push({ kind: 'tpl', root: true, h: e.header, b: e.body, f: e.footer, btns: e.buttons }); draw(); };
+  $('#stageBox').onclick = ev => {
+    if (ev.target.closest('[data-tsreset]')) return start();
+    const b = ev.target.closest('[data-tspt]'); if (!b) return; const [i, bi] = b.dataset.tspt.split('|').map(Number), btn = e.buttons[bi];
+    log[i].done = true; log.push({ kind: 'me', text: btn.text || 'Button' });
+    const acts = btn.actions || []; if (!acts.length) log.push({ kind: 'sys', text: 'Nothing wired — the reply lands in your Inbox for the team.' });
+    acts.forEach(a => { const p = a;
+      if (a.type === 'send_template') { const t = tfTpl(a.template); if (t) log.push({ kind: 'tpl', h: t.header && !/^\[/.test(t.header) ? t.header : '', b: t.body, f: t.footer, btns: tbFromTemplate(t).buttons }); else log.push({ kind: 'sys', text: '→ next template not chosen' }); return; }
+      const say = [p.text, p.url && p.url !== 'https://' && a.type !== 'send_media' ? p.url : ''].filter(Boolean).join('\n');
+      if (['send_text', 'open_link', 'open_form', 'open_product', 'send_payment_link', 'track_order', 'cancel_order'].includes(a.type) && say) log.push({ kind: 'bot', text: fill(say) });
+      else if (a.type === 'send_media') log.push({ kind: 'bot', text: `${p.kind === 'video' ? '🎬' : p.kind === 'document' ? '📄' : '🖼'} ${fill(p.text || (p.kind === 'document' ? 'PDF' : p.kind || 'image'))}` });
+      else if (a.type === 'send_location') log.push({ kind: 'bot', text: `📍 ${p.name || 'Location'}${p.address ? '\n' + p.address : ''}` });
+      else if (a.type === 'run_ai_agent') log.push({ kind: 'bot', text: '✦ AI writes a reply here' });
+      else log.push({ kind: 'sys', text: `${TF_ICON[a.type] || '•'} ${(TB_ACT[a.type] || [a.type])[0]}${p.stage ? ' → ' + p.stage : p.tag ? ' → ' + p.tag : p.member ? ' → ' + p.member : p.title ? ': ' + fill(p.title) : p.status ? ' → ' + p.status : p.field ? ' → ' + p.field : ''}` });
+    });
+    draw();
+  };
+  start(); showModal('#stageModal');
+}
+document.addEventListener('click', ev => { if (ev.target.closest('#leadBox [data-tsprev]')) tsPreview(); });
+
 function tbRedraw(fn) { if (!TPL.edit || !$('#leadModal').classList.contains('show') || !$('#leadBox .tpe, #leadBox .tb-btns')) return; const a = document.activeElement, sel = a && (a.id ? '#' + a.id : ['teex', 'tebx', 'tebu', 'tebp', 'tbtx', 'tburl', 'tbph', 'tbaf'].map(k => a.dataset && a.dataset[k] != null ? `[data-${k}="${a.dataset[k]}"]` : '').join('')), p = a && a.selectionStart; fn(); const n = sel && $('#leadBox ' + sel); if (n) { n.focus(); try { n.setSelectionRange(p, p); } catch (er) { } } }
 function tbReadContent(e) { const v = id => $(id) ? $(id).value.trim() : null; if (v('#tbMedia') != null) e.mediaUrl = v('#tbMedia'); if (v('#tbFile') != null) e.fileName = v('#tbFile'); if (v('#tbProd') != null) e.productId = v('#tbProd'); if (v('#tbLat') != null) e.location = { lat: v('#tbLat'), lng: v('#tbLng'), name: v('#tbLname'), address: v('#tbLaddr') }; }
 function readTplEditor() {
@@ -7085,7 +7269,7 @@ function readTplEditor() {
   // editor lives in the shared lead modal
   const box = $('#leadBox');
   box.addEventListener('input', ev => {
-    if (!TPL.edit || !box.querySelector('.tpe')) return; const t = ev.target, e = TPL.edit;
+    if (!TPL.edit || !box.querySelector('.tpe') || ev.target.closest('#tsCanvas')) return; const t = ev.target, e = TPL.edit;
     const ex = t.closest('[data-teex]'); if (ex) e.examples[+ex.dataset.teex] = t.value;
     const bx = t.closest('[data-tebx]'); if (bx) e.buttons[+bx.dataset.tebx].text = t.value;
     const bu = t.closest('[data-tebu]'); if (bu) e.buttons[+bu.dataset.tebu].url = t.value;
@@ -7098,6 +7282,7 @@ function readTplEditor() {
     readTplEditor(); clearTimeout(TPL.tm); TPL.tm = setTimeout(() => tbRedraw(drawTplEditor), 300);
   });
   box.addEventListener('change', ev => {
+    if (ev.target.closest('#tsCanvas')) return;
     if (TPL.edit && box.querySelector('.tpe')) { const e = TPL.edit, t = ev.target, redraw = () => { if (!e.actionsOnly) readTplEditor(); else tbReadContent(e); (e.actionsOnly ? drawTplActions : drawTplEditor)(); };
       const ty = t.closest('[data-tbtype]'); if (ty) { const b = e.buttons[+ty.dataset.tbtype]; b.type = t.value; if (t.value === 'URL' && !b.url) b.url = 'https://'; return redraw(); }
       if (t.matches('[data-tbaddbtn]')) { if (t.value) e.buttons.push(tbNew(t.value)); return redraw(); }
@@ -7105,7 +7290,7 @@ function readTplEditor() {
       const af = t.closest('select[data-tbaf]'); if (af) { const [bi, ai, k] = af.dataset.tbaf.split('|'); e.buttons[+bi].actions[+ai][k] = t.value; return redraw(); } }
     if (!TPL.edit || !box.querySelector('.tpe')) return; const bt = ev.target.closest('[data-tebt]'); if (bt) { TPL.edit.buttons[+bt.dataset.tebt].type = ev.target.value; readTplEditor(); drawTplEditor(); } else if (/^te(Cat|Lang)$/.test(ev.target.id)) readTplEditor(); });
   box.addEventListener('click', async ev => {
-    if (!TPL.edit || !box.querySelector('.tpe')) return; const t = ev.target, e = TPL.edit;
+    if (!TPL.edit || !box.querySelector('.tpe') || ev.target.closest('#tsCanvas')) return; const t = ev.target, e = TPL.edit; if (TPL.cv) tsCompile();
     if (t.closest('[data-teaddvar]')) { readTplEditor(); const n = (e.body.match(/\{\{\d+\}\}/g) || []).length; e.body = e.body.replace(/\s*$/, '') + ` {{${n + 1}}}`; return drawTplEditor(); }
     const redraw = () => { if (!e.actionsOnly) readTplEditor(); else tbReadContent(e); (e.actionsOnly ? drawTplActions : drawTplEditor)(); };
     const ct = t.closest('[data-tbct]'); if (ct) { readTplEditor(); const k = ct.dataset.tbct; if (k === 'contact') { e.content = 'contact'; return drawTplEditor(); } e.content = k;
@@ -7369,7 +7554,7 @@ function renderReports(anim) {
 
 /* ================= modal helpers ================= */
 function showModal(sel) { $(sel).classList.add('show'); $('#scrim').classList.add('show'); }
-function hideModal(sel) { const ae = document.activeElement; if (ae && $(sel).contains(ae)) ae.blur(); $(sel).classList.remove('show'); if (sel === '#stageModal') { const sb = $('#stageBox'); sb.classList.remove('pl-ed-box', 'wide-vid'); const vd = sb.querySelector('.hero-vid'); if (vd) vd.innerHTML = ''; } if (!ui.openId) $('#scrim').classList.remove('show'); }
+function hideModal(sel) { const ae = document.activeElement; if (ae && $(sel).contains(ae)) ae.blur(); $(sel).classList.remove('show'); if (sel === '#leadModal') { $(sel).classList.remove('studio'); if (typeof TPL === 'object') TPL.cv = null; } if (sel === '#stageModal') { const sb = $('#stageBox'); sb.classList.remove('pl-ed-box', 'wide-vid'); const vd = sb.querySelector('.hero-vid'); if (vd) vd.innerHTML = ''; } if (!ui.openId) $('#scrim').classList.remove('show'); }
 
 /* ================= routing ================= */
 const authInUrl = () => /access_token=|refresh_token=|error_description=|type=recovery|[?&]code=/.test(location.hash + location.search);
@@ -8525,8 +8710,10 @@ function accItem(id, o) {
       <span class="acc-t"><span class="acc-tr"><b>${esc(o.title)}</b>${pill ? `<i class="acc-pill">${esc(pill)}</i>` : ''}</span>${st ? `<small class="acc-st" style="color:${stc}">${st}</small>` : ''}${o.desc ? `<span class="acc-desc">${esc(o.desc)}</span>` : ''}</span>${o.badge ? `<span class="acc-bd">${o.badge}</span>` : ''}${o.cta ? `<span class="acc-cta" data-close="Close">${esc(o.cta)} <svg class="i" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></svg></span>` : ''}<span class="acc-go"><svg class="i acc-chev" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></svg></span></button>
     <div class="acc-b"><div class="acc-in"><div class="acc-pad">${o.body || ''}</div></div></div></div>`;
 }
-/** one open at a time inside a container; remembers which one */
+/** one open at a time inside a container; remembers which one. Card grids open their card in the popup panel instead. */
 function accToggle(item, key) {
+  if (item.classList.contains('acc-ph') || (item.parentElement && item.parentElement.classList.contains('acc-grid'))) { const ok = accmOpen(item); if (key) store.set(key, ok && ACCM.item ? ACCM.item.dataset.acc : ''); return ok; }
+  if (ACCM.item === item) { accmClose(); return false; }
   const box = item.parentElement, open = !item.classList.contains('open');
   box.querySelectorAll(':scope > .acc.open').forEach(x => { if (x !== item) { x.classList.remove('open'); x.querySelector('.acc-h').setAttribute('aria-expanded', 'false'); } });
   item.classList.toggle('open', open); item.querySelector('.acc-h').setAttribute('aria-expanded', String(open));
@@ -8534,6 +8721,99 @@ function accToggle(item, key) {
   if (open) setTimeout(() => { const r = item.getBoundingClientRect(); if (r.top < 70 || r.top > innerHeight - 120) item.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, 260);
   return open;
 }
+
+/* ================= Card → popup (Settings-style): every card list opens one clean panel — list on the left, that card's settings on the right =================
+   The real card element (with its inputs and ids) moves into the panel, so every existing button and save keeps working; a look-alike stays in the grid. */
+const ACCM = { el: null, item: null, ph: null, view: null, extras: [] };
+const accmSafe = s => esc(String(s || '').replace(/\s+/g, ' ').trim());
+function accmNav(scope) {
+  const groups = []; let cur = null;
+  scope.querySelectorAll('.acc-grid > .acc').forEach(a => {
+    if (a.hidden) return;
+    const gp = a.closest('.cg-panel'), gt = gp ? (gp.querySelector('.cg-h b') || {}).textContent : '';
+    if (!cur || cur.t !== gt) groups.push(cur = { t: gt, items: [] });
+    const real = a.classList.contains('acc-ph') ? ACCM.item : a; if (!real) return;
+    cur.items.push({ id: a.dataset.acc, ic: (real.querySelector('.acc-ic') || {}).innerHTML || '', c: real.style.getPropertyValue('--c'), dot: real.style.getPropertyValue('--dot'),
+      t: (real.querySelector('.acc-tr b') || {}).textContent || '', s: ((real.querySelector('.acc-pill') || {}).textContent || '') + (real.querySelector('.acc-st') ? ((real.querySelector('.acc-pill') ? ' · ' : '') + real.querySelector('.acc-st').textContent) : '') });
+  });
+  return groups.map(g => `${g.t ? `<div class="accm-g">${accmSafe(g.t)}</div>` : ''}${g.items.map(x => `<button type="button" class="accm-it ${ACCM.item && ACCM.item.dataset.acc === x.id ? 'on' : ''}" data-accmgo="${esc(x.id)}" style="--c:${esc(x.c)};--dot:${esc(x.dot)}"><span class="accm-ic">${x.ic}</span><span class="accm-tx"><b>${accmSafe(x.t)}</b><small>${accmSafe(x.s)}</small></span></button>`).join('')}`).join('');
+}
+function accmHead(item) {
+  const pill = item.querySelector('.acc-pill'), st = item.querySelector('.acc-st'), d = item.querySelector('.acc-desc');
+  return `<span class="accm-ic big" style="--c:${esc(item.style.getPropertyValue('--c'))}">${(item.querySelector('.acc-ic') || {}).innerHTML || ''}</span><div class="accm-mt"><div class="accm-tr"><b>${accmSafe((item.querySelector('.acc-tr b') || {}).textContent)}</b>${pill ? `<i class="acc-pill" style="--dot:${esc(item.style.getPropertyValue('--dot'))}">${accmSafe(pill.textContent)}</i>` : ''}</div><small>${accmSafe(d ? d.textContent : st ? st.textContent : '')}</small>${d && st && st.textContent.trim() ? `<small class="accm-st">${accmSafe(st.textContent)}</small>` : ''}</div>`;
+}
+function accmPut(item) {
+  // put the real card into the panel and leave a look-alike in the grid
+  const ph = item.cloneNode(false); ph.classList.add('acc-ph'); ph.classList.remove('open'); ph.removeAttribute('id');
+  const h = item.querySelector('.acc-h'); if (h) ph.appendChild(h.cloneNode(true));
+  item.replaceWith(ph); ACCM.item = item; ACCM.ph = ph;
+  item.classList.add('open'); if (h) h.setAttribute('aria-expanded', 'true');
+  const box = ACCM.el; box.querySelector('.accm-mh').innerHTML = accmHead(item);
+  const slot = box.querySelector('.accm-slot'); slot.innerHTML = ''; slot.appendChild(item); slot.scrollTop = 0;
+  ACCM.extras = (item.dataset.accwith || '').split(',').filter(Boolean).map(sel => { const x = ACCM.view.querySelector(sel); if (!x) return null; const mark = document.createComment('accm'); x.replaceWith(mark); slot.insertBefore(x, item); return [x, mark]; }).filter(Boolean);
+  const sv = item.dataset.accsave, ft = box.querySelector('.accm-ft'); ft.hidden = !sv; if (sv) ft.querySelector('[data-accmsave]').dataset.accmsave = sv;
+  box.querySelector('.accm-nav').innerHTML = ACCM.nav = accmNav(ACCM.scope);
+  const on = box.querySelector('.accm-it.on'); if (on) on.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+}
+function accmTake() {
+  // card back into its grid
+  const { item, ph } = ACCM; if (!item) return;
+  ACCM.extras.forEach(([x, mark]) => { if (mark.parentNode) mark.replaceWith(x); else x.remove(); }); ACCM.extras = [];
+  item.classList.remove('open'); const h = item.querySelector('.acc-h'); if (h) h.setAttribute('aria-expanded', 'false');
+  if (ph && ph.isConnected) ph.replaceWith(item); else item.remove();
+  ACCM.item = ACCM.ph = null;
+}
+function accmOpen(item) {
+  if (ACCM.item === item) return true;
+  if (item.classList.contains('acc-ph')) { if (ACCM.item && ACCM.item.dataset.acc === item.dataset.acc) return true; item = null; }
+  if (!item) return false;
+  const view = item.closest('.view') || document.body;
+  if (ACCM.item) accmTake();
+  if (!ACCM.el || ACCM.view !== view || !view.contains(ACCM.el)) {
+    if (ACCM.el) ACCM.el.remove();
+    const list = item.parentElement, title = list.dataset.accmtitle || ((view.querySelector('.head h1') || {}).textContent || 'Settings');
+    ACCM.el = document.createElement('div'); ACCM.el.className = 'accm'; ACCM.el.setAttribute('role', 'dialog'); ACCM.el.setAttribute('aria-modal', 'true'); ACCM.el.setAttribute('aria-label', title);
+    ACCM.el.innerHTML = `<div class="accm-bg" data-accmx></div><div class="accm-box"><div class="accm-hd"><b>${esc(title)}</b><button type="button" class="ibtn" data-accmx title="Close (Esc)">${I.x}</button></div>
+      <div class="accm-in"><nav class="accm-nav" aria-label="${esc(title)}"></nav><section class="accm-main"><div class="accm-mh"></div><div class="accm-slot"></div><div class="accm-ft" hidden><span class="muted">Changes are saved only when you press Save.</span><div class="grow"></div><button type="button" class="btn primary" data-accmsave>Save changes</button></div></section></div></div>`;
+    view.appendChild(ACCM.el); ACCM.view = view; try { view.getAnimations().forEach(a => a.finish()); } catch (er) { }
+    document.documentElement.classList.add('accm-lock');
+    requestAnimationFrame(() => ACCM.el && ACCM.el.classList.add('show'));
+  }
+  ACCM.scope = item.closest('#connBody') || item.parentElement;
+  ACCM.key = (item.parentElement.dataset.acckey) || '';
+  accmPut(item); return true;
+}
+function accmClose() {
+  if (!ACCM.el) return;
+  const id = ACCM.item && ACCM.item.dataset.acc, key = ACCM.key;
+  accmTake(); const el = ACCM.el; ACCM.el = null; el.classList.remove('show'); setTimeout(() => el.remove(), 180);
+  document.documentElement.classList.remove('accm-lock');
+  if (key) store.set(key, ''); if (key === 'nv.connOpen' && typeof CONN === 'object') CONN.open = '';
+  if (id) { const back = ACCM.view && ACCM.view.querySelector(`.acc-grid > .acc[data-acc="${CSS.escape(id)}"] .acc-h`); if (back) back.focus({ preventScroll: true }); }
+}
+document.addEventListener('click', e => {
+  if (!ACCM.el || !ACCM.el.contains(e.target)) return;
+  if (e.target.closest('[data-accmx]')) { e.stopPropagation(); return accmClose(); }
+  const go = e.target.closest('[data-accmgo]'); if (go) { e.stopPropagation(); const a = ACCM.view.querySelector(`.acc-grid > .acc[data-acc="${CSS.escape(go.dataset.accmgo)}"]:not(.acc-ph)`); if (a) { accmOpen(a); if (ACCM.key) store.set(ACCM.key, go.dataset.accmgo); if (ACCM.key === 'nv.connOpen') CONN.open = go.dataset.accmgo; } return; }
+  const sv = e.target.closest('[data-accmsave]'); if (sv) { const b = ACCM.view.querySelector(sv.dataset.accmsave); if (b) b.click(); }
+}, true);
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && ACCM.el && !document.querySelector('.modal.show') && !(typeof NVDD === 'object' && NVDD.pop)) { e.preventDefault(); accmClose(); } });
+// a view re-drew its cards while the panel is open → keep showing the fresh card; a card drawn "open" → open it in the panel
+new MutationObserver(recs => {
+  if (ACCM.el && recs.every(r => ACCM.el.contains(r.target))) return;
+  if (ACCM.busy) return; ACCM.busy = true;
+  requestAnimationFrame(() => { ACCM.busy = false;
+    if (ACCM.el && (!ACCM.view || !ACCM.view.classList.contains('active'))) { accmTake(); ACCM.el.remove(); ACCM.el = null; document.documentElement.classList.remove('accm-lock'); return; }
+    if (ACCM.el && ACCM.item) {
+      const fresh = ACCM.view.querySelector(`.acc-grid > .acc[data-acc="${CSS.escape(ACCM.item.dataset.acc)}"]:not(.acc-ph)`);
+      if (fresh && fresh !== ACCM.item && !ACCM.el.contains(fresh)) { const old = ACCM.item; ACCM.extras.forEach(([x, mark]) => { if (mark.parentNode) mark.replaceWith(x); }); ACCM.extras = []; ACCM.item = null; old.remove(); ACCM.scope = fresh.closest('#connBody') || fresh.parentElement; accmPut(fresh); }
+      else if (!ACCM.ph || !ACCM.ph.isConnected) { const ph = ACCM.view.querySelector(`.acc-grid > .acc.acc-ph[data-acc="${CSS.escape(ACCM.item.dataset.acc)}"]`); if (!ph) accmClose(); }
+      else { const n = accmNav(ACCM.scope); if (n !== ACCM.nav) ACCM.el.querySelector('.accm-nav').innerHTML = ACCM.nav = n; }
+      return;
+    }
+    if (!ACCM.el) { const v = $('.view.active'), o = v && v.querySelector('.acc-grid > .acc.open:not(.acc-ph)'); if (o) accmOpen(o); }
+  });
+}).observe(document.body, { childList: true, subtree: true });
 
 /* ================= premium dropdown: enhances every <select class="input"> on desktop (keeps the real select for values & events) ================= */
 const NVDD = { pop: null, sel: null, i: -1, coarse: matchMedia('(pointer: coarse)').matches };
@@ -9405,9 +9685,9 @@ const UT_IC = '<svg class="i" viewBox="0 0 24 24"><path d="M4 5h16v11H8l-4 4z"/>
 function admTexts() {
   const c = UT.c || (UT.c = JSON.parse(JSON.stringify(uiCfg()))), open = store.get('nv.admAcc3') || 'ut-lock';
   return `<div class="adm-ph2 glass"><div><b>Messages & buttons</b><p class="muted">The words and buttons clients see on these screens. Change them here — no code needed. Leave a box empty to use the default (shown in grey). Words in {curly brackets} are filled in automatically, **two stars** make text bold.</p></div></div>
-    <div class="acc-list acc-grid ut-wrap" data-acckey="nv.admAcc3" style="margin-top:14px">${UI_TEXTS.map(g => { const n = g.items.filter(([k]) => String(c[k] || '').trim()).length + (g.btns && Array.isArray(c[g.btns]) ? 1 : 0);
+    <div class="acc-list acc-grid ut-wrap" data-acckey="nv.admAcc3" data-accmtitle="Messages & buttons" style="margin-top:14px">${UI_TEXTS.map(g => { const n = g.items.filter(([k]) => String(c[k] || '').trim()).length + (g.btns && Array.isArray(c[g.btns]) ? 1 : 0);
       const look = { lock: ['#8B5CF6', '<svg class="i" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>', 'Screen shown when a section is not in the client\'s plan.'], sub: ['#F59E0B', '<svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2M9 2h6"/></svg>', 'Banner when a plan is ending or has expired.'], ro: ['#64748B', '<svg class="i" viewBox="0 0 24 24"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg>', 'Bar shown to people with view-only access.'], trial: ['#10B981', '<svg class="i" viewBox="0 0 24 24"><path d="M20 12v9H4v-9M2 7h20v5H2zM12 22V7M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7ZM12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7Z"/></svg>', 'Free-trial box on the pricing cards.'] }[g.id] || ['#0EA5E9', UT_IC, ''];
-      return accItem('ut-' + g.id, { title: g.title, icon: look[1], color: look[0], desc: look[2], dot: n ? 'ok' : '', status: n ? `${n} changed` : 'Default words', open: open === 'ut-' + g.id,
+      return accItem('ut-' + g.id, { attrs: 'data-accsave="#utSave"', title: g.title, icon: look[1], color: look[0], desc: look[2], dot: n ? 'ok' : '', status: n ? `${n} changed` : 'Default words', open: open === 'ut-' + g.id,
         body: `${g.fill ? `<p class="help" style="margin-top:0">Fill-ins: <code>${esc(g.fill)}</code></p>` : ''}<div class="ut-grid ${g.id === 'lock' ? 'two' : ''}"><div>
           ${g.items.map(([k, l, d]) => `<div class="field"><label>${esc(l)}</label><input class="input" data-ut="${k}" maxlength="300" placeholder="${esc(d)}" value="${esc(c[k] || '')}"></div>`).join('')}
           ${g.btns ? `<div class="ah-sec">Buttons</div><div class="ut-btns" data-utbtns="${g.btns}">${utBtnRows(g.btns)}</div><div class="cf-foot" style="border:0;padding:0;margin-top:8px"><button type="button" class="btn sm" data-utadd="${g.btns}">+ Add button</button><button type="button" class="btn sm" data-utbdef="${g.btns}">Default buttons</button></div>` : ''}</div>
@@ -9453,13 +9733,13 @@ function utPrev() { const b = $('#utPrev'); if (b) { UIB.list = []; b.innerHTML 
 function admBrand() {
   const s = PLAT.s, b = brand(), open = store.get('nv.admAcc2') || '', logo = safeUrl(b.logoUrl);
   const f = (id, label, val, extra) => `<div class="field"><label>${label}</label><input class="input" id="${id}" value="${esc(val || '')}" ${extra || ''}></div>`;
-  return `<div class="acc-list acc-grid" data-acckey="nv.admAcc2">
+  return `<div class="acc-list acc-grid" data-acckey="nv.admAcc2" data-accmtitle="Platform settings">
     ${accItem('b-brand', { desc: 'Brand name, logo and white label — shown to every client.', title: 'Website name & logo', icon: '<svg class="i" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M8 12h8M12 8v8"/></svg>', color: '#EC4899', dot: 'ok', status: `${esc(b.brandName)}${logo ? ' · logo added' : ' · default logo'}`, open: open === 'b-brand',
       body: `<div class="adm-brand"><span class="brand-logo">${logo ? `<img src="${esc(logo)}" alt="">` : LOGO_DEFAULT}</span><div class="grow"><b>${esc(b.brandName)}</b><small class="muted">Shown in the top bar, login page and browser tab for every client.</small></div><button class="btn" data-admbrand>Change name & logo</button></div>
         <div class="adm-brand" style="margin-top:10px"><span class="brand-logo" style="background:var(--blue-soft);color:var(--blue-2)">🎨</span><div class="grow"><b>White label</b><small class="muted">Colours, login page text, “Powered by”, your own domain.</small></div><button class="btn" data-admwl>Open white label</button></div>` })}
     ${accItem('b-home', { desc: 'Home page banner, buttons and the pricing cards.', title: 'Home page header & pricing', icon: '<svg class="i" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="m3 15 5-5 4 4 3-3 6 6"/></svg>', color: '#3B82F6', dot: 'ok', status: 'Banner image, text, buttons and the pricing cards', open: open === 'b-home',
       body: `<div class="cf-foot" style="margin:0;border:0;padding:0"><span class="muted">Edit the banner, its buttons and the pricing section with a live preview.</span><div class="grow"></div><button class="btn primary" data-admtab="home">Open Home page editor</button></div>` })}
-    ${accItem('b-trial', { desc: 'Trial length, plan for new sign-ups and grace days.', title: 'Free trial & expiry', icon: '<svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2M9 2h6"/></svg>', color: '#F59E0B', dot: 'ok', status: `${esc(s.trialDays || 14)} days trial · ${esc(s.graceDays || 3)} grace days`, open: open === 'b-trial',
+    ${accItem('b-trial', { attrs: 'data-accsave="#psSave"', desc: 'Trial length, plan for new sign-ups and grace days.', title: 'Free trial & expiry', icon: '<svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2M9 2h6"/></svg>', color: '#F59E0B', dot: 'ok', status: `${esc(s.trialDays || 14)} days trial · ${esc(s.graceDays || 3)} grace days`, open: open === 'b-trial',
       body: `<div class="form" style="grid-template-columns:repeat(3,1fr)">${f('psTrial', 'Free trial (days)', s.trialDays || 14, 'type="number" min="0" max="90"')}
         <div class="field"><label>Plan for new sign-ups</label><select class="input" id="psPlan">${(ADM2.plans || []).filter(p => p.active).map(p => `<option value="${esc(p.id)}" ${p.id === s.defaultPlan ? 'selected' : ''}>${esc(p.name)}</option>`).join('')}</select></div>
         ${f('psGrace', 'Grace days after a paid plan ends', s.graceDays || 3, 'type="number" min="0" max="30"')}</div>
@@ -9468,7 +9748,7 @@ function admBrand() {
     ${accItem('b-advisor', { desc: "Starting numbers for every client's AI Advisor tips.", title: 'AI Advisor defaults', icon: '<svg class="i" viewBox="0 0 24 24"><path d="M12 3l1.8 4.7L18.5 9l-4.7 1.8L12 15.5l-1.8-4.7L5.5 9l4.7-1.3z"/><path d="M19 15l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z"/></svg>', color: '#0EA5E9', dot: 'ok', status: (() => { const c = Object.assign({}, ADV_DEF, (() => { try { return JSON.parse(s.advisorJson || '{}'); } catch (e) { return {}; } })()); return `Target ROAS ${c.roas} · stock warning ${c.stockDays} days · ad tips after ₹${c.minSpend}`; })(), open: open === 'b-advisor',
       body: `<p class="help" style="margin-top:0">The numbers every client's AI Advisor starts with (target ROAS, when a lead counts as untouched, low-stock warning, returns limit, minimum ad spend before ad tips). Clients can change them for their own business. Switch the Advisor on / off per plan in Plans & pricing → Sections.</p><div class="cf-foot" style="margin:0;border:0;padding:0"><div class="grow"></div><button class="btn primary" data-advcfgp>Edit defaults</button></div>` })}
     ${accItem('b-connect', { desc: 'Option A / B for WhatsApp, Shopify, Amazon and Meta Ads.', title: 'Connect methods', icon: '<svg class="i" viewBox="0 0 24 24"><path d="M9 7V3M15 7V3M7 7h10v4a5 5 0 0 1-10 0V7ZM12 16v5"/></svg>', color: '#25D366', dot: 'ok', status: (() => { const on = Object.keys(CONNM_DEF).map(k => { const M = connModes(k, true); return `${CONNM_DEF[k].label}: ${M.a.on && M.b.on ? 'A + B' : M.a.on ? 'A' : M.b.on ? 'B' : 'off'}`; }); return on.join(' · '); })(), open: open === 'b-connect', body: admConnBody() })}
-    ${accItem('b-support', { desc: 'WhatsApp, email and renew link clients use to reach you.', title: 'Support contact & renew link', icon: '<svg class="i" viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3.5-7.1L21 4v5h-5"/></svg>', color: '#10B981', dot: s.supportPhone || s.supportEmail ? 'ok' : 'wait', status: s.supportPhone || s.supportEmail ? [s.supportPhone ? '+' + s.supportPhone : '', s.supportEmail].filter(Boolean).join(' · ') : 'Not set — clients can not contact you to renew', open: open === 'b-support',
+    ${accItem('b-support', { attrs: 'data-accsave="#psSave"', desc: 'WhatsApp, email and renew link clients use to reach you.', title: 'Support contact & renew link', icon: '<svg class="i" viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3.5-7.1L21 4v5h-5"/></svg>', color: '#10B981', dot: s.supportPhone || s.supportEmail ? 'ok' : 'wait', status: s.supportPhone || s.supportEmail ? [s.supportPhone ? '+' + s.supportPhone : '', s.supportEmail].filter(Boolean).join(' · ') : 'Not set — clients can not contact you to renew', open: open === 'b-support',
       body: `<div class="form" style="grid-template-columns:repeat(3,1fr)">${f('psPhone', 'Support WhatsApp (with country code)', s.supportPhone, 'placeholder="91 98…"')}${f('psMail', 'Support email', s.supportEmail)}${f('psLink', 'Renew / payment link (optional)', s.renewLink, 'placeholder="https://rzp.io/…"')}</div>
         <p class="help">Used by the pricing buttons, the expiry banner and Settings → Plan & billing.</p>` })}
     </div>
@@ -9762,8 +10042,8 @@ function admHome() {
   setTimeout(() => { admHeroBtns(); admHeroPrev(); }, 0);
   return `<div class="ah-prev-h"><b>Live preview</b><span class="muted">This is exactly what appears at the top of Home. Changes show here as you type — press Save to publish. Pricing opens from the “Pricing” button next to the search box.</span></div>
     <div id="admHeroPrev"></div>
-    <div class="acc-list acc-grid" style="margin-top:14px">${accItem('h-hero', { desc: 'Banner image, headline, text and buttons on the Home page.', title: 'Header (top banner)', icon: '<svg class="i" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="m3 15 5-5 4 4 3-3 6 6"/></svg>', color: '#3B82F6', dot: c.on !== false ? 'ok' : 'off', status: c.on !== false ? `On · ${c.image ? 'your image' : 'built-in artwork'} · ${(c.buttons || []).filter(b => b.on !== false).length} buttons` : 'Hidden', open: open === 'h-hero', body: heroBody })}
-      ${accItem('h-price', { desc: 'Pricing pop-up: plans, intro offer and trial box.', title: 'Pricing pop-up', icon: '<svg class="i" viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>', color: '#F97316', dot: p.show !== 'off' ? 'ok' : 'off', status: (PRICING_SHOW.find(x => x[0] === p.show) || PRICING_SHOW[0])[1], open: open === 'h-price', body: prBody })}
+    <div class="acc-list acc-grid" data-accmtitle="Home page" style="margin-top:14px">${accItem('h-hero', { attrs: 'data-accwith="#admHeroPrev"', desc: 'Banner image, headline, text and buttons on the Home page.', title: 'Header (top banner)', icon: '<svg class="i" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="m3 15 5-5 4 4 3-3 6 6"/></svg>', color: '#3B82F6', dot: c.on !== false ? 'ok' : 'off', status: c.on !== false ? `On · ${c.image ? 'your image' : 'built-in artwork'} · ${(c.buttons || []).filter(b => b.on !== false).length} buttons` : 'Hidden', open: open === 'h-hero', body: heroBody })}
+      ${accItem('h-price', { attrs: 'data-accwith="#admPrPrev"', desc: 'Pricing pop-up: plans, intro offer and trial box.', title: 'Pricing pop-up', icon: '<svg class="i" viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>', color: '#F97316', dot: p.show !== 'off' ? 'ok' : 'off', status: (PRICING_SHOW.find(x => x[0] === p.show) || PRICING_SHOW[0])[1], open: open === 'h-price', body: prBody })}
       ${accItem('h-layout', { desc: "Default card order for every client's Home.", title: 'Client Home layout (default)', icon: '<svg class="i" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="18" height="7" rx="1.5"/></svg>', color: '#10B981', dot: hlParse(PLAT.s.homeLayoutJson) ? 'ok' : '', status: hlParse(PLAT.s.homeLayoutJson) ? 'Your own default layout' : 'Built-in layout', open: open === 'h-layout',
         body: `<p class="help" style="margin-top:0">The Home cards every client sees until they press <b>✎ Customize</b> on their own Home: which cards, in which order, and your own blocks (a welcome note, a training video, a link to support). Clients who already changed their Home keep their layout.</p>
           <div class="cf-foot" style="margin:0;border:0;padding:0"><button class="btn danger sm" data-hlresetall title="Every client goes back to your default layout">Apply to all clients</button><div class="grow"></div><button class="btn primary" data-hldefault>Edit default layout</button></div>` })}</div>
