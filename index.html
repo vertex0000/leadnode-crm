@@ -1018,7 +1018,17 @@ body.no-sales [data-go="tasks"],body.no-sales [data-go="calls"],body.no-orders [
 .ins-big{display:flex;gap:28px;flex-wrap:wrap;margin:6px 0 4px}.ins-big b{font-size:22px;font-weight:800;display:block}.ins-big span{font-size:12.5px;color:var(--muted)}.ins-big i{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px}
 .ins-sec{margin:22px 0 10px}.ins-sec h3{margin:0}
 /* home */
-.home-hi{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;margin:4px 0 16px}.home-hi h1{margin:0 0 4px;font-size:26px}.home-hi p{margin:0}
+.home-hi{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;margin:4px 0 16px}
+.hl-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;align-items:stretch}.hl-w{min-width:0;display:flex;flex-direction:column}.hl-w>.home-c,.hl-w>.rcard,.hl-w>.home-setup,.hl-in>.home-c,.hl-in>.rcard{flex:1;margin:0}
+.hl-small{grid-column:span 1}.hl-half{grid-column:span 2}.hl-full{grid-column:1/-1}.hl-w .home-setup,.hl-w .home-chats{margin:0}
+.hl-top{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:12px 16px;border-radius:14px;margin-bottom:14px;border:1px dashed color-mix(in srgb,var(--blue-2) 50%,var(--line-2))}.hl-top b{display:block}.hl-top small{font-size:12px}
+.hl-ed{border:1.5px dashed var(--line-2);border-radius:18px;padding:6px;background:color-mix(in srgb,var(--blue-2) 3%,transparent);cursor:grab}.hl-ed.off{opacity:.5}.hl-ed.lock{opacity:.6}.hl-ed.drag{opacity:.35}.hl-ed.over{border-color:var(--blue-2);box-shadow:0 0 0 3px var(--blue-soft)}
+.hl-bar{display:flex;flex-wrap:wrap;align-items:center;gap:4px;padding:2px 4px 8px;font-size:12.5px;min-width:0}.hl-bar b{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.hl-bar .ibtn{width:26px;height:26px}.hl-grip{color:var(--muted);letter-spacing:-2px;font-weight:800;cursor:grab}
+.hl-editing .hl-in{pointer-events:none;flex:1;display:flex;flex-direction:column}.hl-blk h3{margin:0 0 6px}.hl-tx{margin:0 0 10px;color:var(--muted);font-size:13.5px;line-height:1.5}.hl-note{background:linear-gradient(135deg,color-mix(in srgb,#F59E0B 10%,transparent),transparent)}
+.hl-img{padding:0;overflow:hidden}.hl-img img{width:100%;height:100%;min-height:120px;max-height:320px;object-fit:cover;display:block}.hl-cap{display:block;padding:10px 14px;font-size:13.5px}.hl-vidw{width:100%;max-width:720px;margin:0 auto}.hl-vid{position:relative;padding-top:56.25%;border-radius:12px;overflow:hidden;margin-bottom:8px}.hl-vid iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.hl-types{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-bottom:12px}
+@media (max-width:1100px){.hl-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.hl-half{grid-column:1/-1}}
+@media (max-width:640px){.hl-grid{gap:8px}.hl-editing .hl-w{grid-column:1/-1}.hl-types{grid-template-columns:1fr 1fr}.hl-top .grow{flex-basis:100%}}.home-hi h1{margin:0 0 4px;font-size:26px}.home-hi p{margin:0}
 .home-setup{display:flex;align-items:center;gap:18px;padding:16px 18px;border-radius:16px;margin-bottom:14px;flex-wrap:wrap}
 .home-ring{position:relative;width:62px;height:62px;flex:none}.home-ring svg{width:62px;height:62px;transform:rotate(-90deg)}.home-ring circle{fill:none;stroke:var(--line);stroke-width:4.5}.home-ring circle.on{stroke:var(--blue-2);stroke-linecap:round;transition:stroke-dasharray .8s cubic-bezier(.2,.8,.2,1)}.home-ring b{position:absolute;inset:0;display:grid;place-items:center;font-size:14px}
 .home-st{display:flex;flex-direction:column;min-width:170px}.home-st span{font-weight:800;font-size:17px}.home-st small{font-size:12.5px}
@@ -7881,27 +7891,133 @@ function renderHome(anim) {
   const hr = now.getHours(), greet = hr < 12 ? 'Good morning' : hr < 17 ? 'Good afternoon' : 'Good evening', who = (typeof me === 'function' && me()) || brand().userName || '';
   const card = (ic, color, title, n, sub, go, btn, extra) => `<div class="home-c glass" style="--c:${color}"><div class="home-ch"><span class="home-ci">${ic}</span><span>${esc(title)}</span></div><div class="home-cn"><b>${n}</b>${extra || ''}</div><p>${sub}</p><button class="btn sm" ${go}>${esc(btn)} →</button></div>`;
   const todo = overdue.concat(dueToday).sort((a, b) => String(a.dueAt).localeCompare(String(b.dueAt))).slice(0, 6);
-  box.innerHTML = `${homeHero()}<div class="home-hi"><div><h1>${greet}${who ? ', ' + esc(String(who).split(' ')[0]) : ''} 👋</h1><p class="muted">${now.toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'long' })} — here is what needs you today.</p></div></div>
-    ${done < items.length ? `<div class="home-setup glass"><div class="home-ring" style="--p:${pctDone}"><svg viewBox="0 0 44 44"><circle cx="22" cy="22" r="19"/><circle cx="22" cy="22" r="19" class="on" stroke-dasharray="${(pctDone / 100 * 119.4).toFixed(1)} 119.4"/></svg><b>${done}/${items.length}</b></div>
+  const W = {
+    setup: () => done < items.length ? `<div class="home-setup glass"><div class="home-ring" style="--p:${pctDone}"><svg viewBox="0 0 44 44"><circle cx="22" cy="22" r="19"/><circle cx="22" cy="22" r="19" class="on" stroke-dasharray="${(pctDone / 100 * 119.4).toFixed(1)} 119.4"/></svg><b>${done}/${items.length}</b></div>
       <div class="home-st"><b>Set up your business</b><span>${done} of ${items.length} done</span><small class="muted">Finish setup to unlock every feature.</small></div>
       <div class="home-steps">${items.map(([k, n, ok, sub, to]) => `<button class="home-step ${ok ? 'ok' : ''}" data-homego="${to}" title="${esc(n)} — ${esc(sub)}"><span class="home-sd">${ok ? '✓' : ''}</span><b>${esc(n)}</b><small>${esc(sub)}</small></button>`).join('')}</div>
-      <button class="btn primary" data-homego="${(items.find(x => !x[2]) || [])[4] || 'connections'}">Complete setup →</button></div>` : ''}
-    <div class="home-cards">
-      ${card('<svg class="i" viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3h6v1M9 11l2 2 4-4M9 17h6"/></svg>', 'var(--coral)', 'Overdue tasks', overdue.length, overdue.length ? `${dueToday.length} more due today` : dueToday.length ? `${dueToday.length} due today` : 'Nothing overdue 🎉', 'data-go="tasks"', 'View tasks')}
-      ${card(INS_IC.leads, '#F97316', 'Hot leads', hot.length, 'Hot or follow-up due — reply first', 'data-go="leads"', 'View leads')}
-      ${(S.products || []).length || ord.some(o => o.channel && o.channel !== 'WhatsApp') || ord.length ? card(INS_IC.orders, 'var(--green)', 'New orders', ordT.length, `${inr(cmSum(ordT, cmRev))} revenue today`, 'data-go="orders"', 'View orders', ordY.length ? insDelta(ordT.length, ordY.length) : '') : card(INS_IC.wa, 'var(--wa)', 'Unread chats', unread.length, 'Customers waiting for a reply', 'data-go="whatsapp"', 'Open inbox')}
-      ${(S.products || []).length ? card('<svg class="i" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="5" rx="1"/><path d="M5 9v10h14V9M10 13h4"/></svg>', '#D97706', 'Low stock', low.length, low.length ? 'Products low or out of stock' : 'Stock is healthy', 'data-homego="commerce:inventory"', 'View products') : card(INS_IC.calls, '#38BDF8', 'Calls today', (S.calls || []).filter(c => dOnly(c.calledAt) === today).length, 'Logged by your team', 'data-go="calls"', 'Log a call')}
-    </div>
-    <div class="home-2">
-      <div class="rcard glass"><div class="cm-ch-h"><h3>Do this now <span class="home-n">${todo.length} tasks</span></h3><a class="bc-link" data-go="tasks">View all →</a></div>
-        ${todo.length ? `<div class="home-todo">${todo.map(t => `<label class="home-t"><input type="checkbox" data-hometask="${esc(t.taskId)}"><div><b>${esc(t.title)}</b><small class="muted">${t.leadId ? esc(leadName(t.leadId) || '') + ' · ' : ''}${dOnly(t.dueAt) < today ? '<span style="color:var(--coral)">Overdue</span>' : 'Today'} · ${esc((t.dueAt || '').slice(11, 16))}</small></div><span class="home-pr ${String(t.priority || '').toLowerCase()}">${esc(t.priority || '')}</span></label>`).join('')}</div>` : `<div class="cm-empty">No tasks due — ${hot.length ? `reply to your ${hot.length} hot leads` : 'add leads or import a sheet'}.</div>`}</div>
-      <div class="rcard glass"><div class="cm-ch-h"><h3>${ord.length ? 'Recent orders' : 'Newest leads'}</h3><a class="bc-link" data-go="${ord.length ? 'orders' : 'leads'}">View all →</a></div>
+      <button class="btn primary" data-homego="${(items.find(x => !x[2]) || [])[4] || 'connections'}">Complete setup →</button></div>` : '',
+    tasks: () => card('<svg class="i" viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3h6v1M9 11l2 2 4-4M9 17h6"/></svg>', 'var(--coral)', 'Overdue tasks', overdue.length, overdue.length ? `${dueToday.length} more due today` : dueToday.length ? `${dueToday.length} due today` : 'Nothing overdue 🎉', 'data-go="tasks"', 'View tasks'),
+    hot: () => card(INS_IC.leads, '#F97316', 'Hot leads', hot.length, 'Hot or follow-up due — reply first', 'data-go="leads"', 'View leads'),
+    orders: () => card(INS_IC.orders, 'var(--green)', 'New orders', ordT.length, `${inr(cmSum(ordT, cmRev))} revenue today`, 'data-go="orders"', 'View orders', ordY.length ? insDelta(ordT.length, ordY.length) : ''),
+    stock: () => card('<svg class="i" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="5" rx="1"/><path d="M5 9v10h14V9M10 13h4"/></svg>', '#D97706', 'Low stock', low.length, low.length ? 'Products low or out of stock' : 'Stock is healthy', 'data-homego="commerce:inventory"', 'View products'),
+    unreadc: () => card(INS_IC.wa, 'var(--wa)', 'Unread chats', unread.length, 'Customers waiting for a reply', 'data-go="whatsapp"', 'Open inbox'),
+    calls: () => card(INS_IC.calls, '#38BDF8', 'Calls today', (S.calls || []).filter(c => dOnly(c.calledAt) === today).length, 'Logged by your team', 'data-go="calls"', 'Log a call'),
+    todo: () => `<div class="rcard glass"><div class="cm-ch-h"><h3>Do this now <span class="home-n">${todo.length} tasks</span></h3><a class="bc-link" data-go="tasks">View all →</a></div>
+        ${todo.length ? `<div class="home-todo">${todo.map(t => `<label class="home-t"><input type="checkbox" data-hometask="${esc(t.taskId)}"><div><b>${esc(t.title)}</b><small class="muted">${t.leadId ? esc(leadName(t.leadId) || '') + ' · ' : ''}${dOnly(t.dueAt) < today ? '<span style="color:var(--coral)">Overdue</span>' : 'Today'} · ${esc((t.dueAt || '').slice(11, 16))}</small></div><span class="home-pr ${String(t.priority || '').toLowerCase()}">${esc(t.priority || '')}</span></label>`).join('')}</div>` : `<div class="cm-empty">No tasks due — ${hot.length ? `reply to your ${hot.length} hot leads` : 'add leads or import a sheet'}.</div>`}</div>`,
+    recent: () => `<div class="rcard glass"><div class="cm-ch-h"><h3>${ord.length ? 'Recent orders' : 'Newest leads'}</h3><a class="bc-link" data-go="${ord.length ? 'orders' : 'leads'}">View all →</a></div>
         ${ord.length ? `<div class="home-list">${ord.slice().sort((a, b) => cmDate(b).localeCompare(cmDate(a)) || String(b.orderId).localeCompare(String(a.orderId), undefined, { numeric: true })).slice(0, 6).map(o => `<div class="home-li" data-ordedit="${esc(o.orderId)}">${cmChTag(o.channel || 'WhatsApp')}<div class="grow"><b>${esc(o.productName || o.items || o.orderId)}</b><small class="muted">${esc(o.extId || o.orderId)} · ${esc(fmtDate(cmDate(o)))}</small></div><b>${inr(cmRev(o) || o.amount)}</b>${cmStBadge(o.status)}</div>`).join('')}</div>`
-        : `<div class="home-list">${S.leads.slice().sort((a, b) => String(b.createdOn).localeCompare(String(a.createdOn))).slice(0, 6).map(l => `<div class="home-li" data-open="${esc(l.leadId)}">${avatar(l.name)}<div class="grow"><b>${esc(l.name)}</b><small class="muted">${esc(l.source || '')} · ${esc(fmtDate(l.createdOn))}</small></div><span class="pill stage">${esc(l.stage)}</span></div>`).join('') || '<div class="cm-empty">No leads yet</div>'}</div>`}</div>
-    </div>
-    ${unread.length ? `<div class="rcard glass home-chats"><div class="cm-ch-h"><h3>Unread WhatsApp chats</h3><a class="bc-link" data-go="whatsapp">Open inbox →</a></div><div class="home-av">${unread.map(c => `<button class="home-chat" data-homechat="${esc(c.key)}">${avatar(c.name || '')}<b>${esc(String(c.name || '').split(' ')[0])}</b><small>${esc(String((c.last && c.last.text) || '').slice(0, 28))}</small></button>`).join('')}</div></div>` : ''}`;
+        : `<div class="home-list">${S.leads.slice().sort((a, b) => String(b.createdOn).localeCompare(String(a.createdOn))).slice(0, 6).map(l => `<div class="home-li" data-open="${esc(l.leadId)}">${avatar(l.name)}<div class="grow"><b>${esc(l.name)}</b><small class="muted">${esc(l.source || '')} · ${esc(fmtDate(l.createdOn))}</small></div><span class="pill stage">${esc(l.stage)}</span></div>`).join('') || '<div class="cm-empty">No leads yet</div>'}</div>`}</div>`,
+    chats: () => unread.length ? `<div class="rcard glass home-chats"><div class="cm-ch-h"><h3>Unread WhatsApp chats</h3><a class="bc-link" data-go="whatsapp">Open inbox →</a></div><div class="home-av">${unread.map(c => `<button class="home-chat" data-homechat="${esc(c.key)}">${avatar(c.name || '')}<b>${esc(String(c.name || '').split(' ')[0])}</b><small>${esc(String((c.last && c.last.text) || '').slice(0, 28))}</small></button>`).join('')}</div></div>` : '',
+  };
+  const canHL = !document.body.classList.contains('ro') && (demo || (cloud && canAdmin()));
+  box.innerHTML = `${homeHero()}<div class="home-hi"><div><h1>${greet}${who ? ', ' + esc(String(who).split(' ')[0]) : ''} 👋</h1><p class="muted">${now.toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'long' })} — here is what needs you today.</p></div>${canHL && !HL.edit ? '<button class="btn sm" data-hlstart title="Move, hide and add cards on this page">✎ Customize</button>' : ''}</div>${homeGrid(W)}`;
   stagger(box, anim);
 }
+/* ================= Home layout: drag cards, hide / show, own blocks (owner & admins); default layout from the platform team ================= */
+// [id, name, size, section that must be in the plan]
+const HOME_W = [['setup', 'Set up your business', 'full'], ['tasks', 'Overdue tasks', 'small', 'tasks'], ['hot', 'Hot leads', 'small'], ['orders', 'New orders', 'small', 'orders'], ['stock', 'Low stock', 'small', 'store'],
+  ['unreadc', 'Unread chats', 'small'], ['calls', 'Calls today', 'small', 'tasks'], ['todo', 'Do this now', 'half', 'tasks'], ['recent', 'Recent orders / newest leads', 'half'], ['chats', 'Unread WhatsApp chats', 'full']];
+const HL_TYPES = [['note', 'Note', 'A message for your team — targets, offers, rules'], ['link', 'Link / button', 'Open a website, form, price list or a page in Nodevers'], ['image', 'Image', 'A banner, poster or price list picture (https link)'], ['video', 'YouTube video', 'Training or product video']];
+const HL_SIZES = [['small', 'Small (¼)'], ['half', 'Half (½)'], ['full', 'Full width']];
+const HL = { edit: false, target: 'ws', draft: null, drag: '' };
+const hlParse = v => { try { const o = JSON.parse(v || 'null'); return o && Array.isArray(o.order) ? o : null; } catch (e) { return null; } };
+/** the layout in use: this workspace's own → the platform default → built-in */
+function homeLayout(target) {
+  const own = target === 'platform' ? null : hlParse((S.settings || {}).homeLayoutJson), plat = hlParse((PLAT.s || {}).homeLayoutJson), base = own || plat;
+  const store = (S.products || []).length > 0 || (S.orders || []).some(o => o.channel && o.channel !== 'WhatsApp');
+  const L = base ? { order: base.order.slice(), hidden: (base.hidden || []).slice(), blocks: Object.assign({}, base.blocks || {}) } : { order: HOME_W.map(w => w[0]), hidden: store ? ['unreadc', 'calls'] : ['orders', 'stock'], blocks: {} };
+  HOME_W.forEach(([id]) => { if (!L.order.includes(id)) { L.order.push(id); if (base) L.hidden.push(id); } });           // cards added in a later update
+  L.order = L.order.filter((id, i, a) => a.indexOf(id) === i && (HOME_W.some(w => w[0] === id) || L.blocks[id]));
+  L.src = own ? 'ws' : plat ? 'platform' : 'default'; return L;
+}
+const hlYt = u => { const m = String(u || '').match(/(?:youtube\.com\/(?:watch\?(?:.*&)?v=|embed\/|shorts\/|live\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/); return m ? m[1] : ''; };
+function hlBlockHTML(b) {
+  const t = b.title ? `<h3>${esc(b.title)}</h3>` : '', tx = b.text ? `<p class="hl-tx">${esc(b.text).replace(/\n/g, '<br>')}</p>` : '';
+  if (b.type === 'link') { const u = String(b.url || ''), inApp = /^#[a-z]+$/.test(u), ok = inApp || /^https:\/\//i.test(u);
+    return `<div class="rcard glass hl-blk">${t}${tx}${ok ? (inApp ? `<button class="btn primary sm" data-go="${esc(u.slice(1))}">${esc(b.label || 'Open')} →</button>` : `<a class="btn primary sm" href="${esc(u)}" target="_blank" rel="noopener noreferrer">${esc(b.label || 'Open')} ↗</a>`) : '<span class="muted">Add a link that starts with https://</span>'}</div>`; }
+  if (b.type === 'image') { const u = /^https:\/\//i.test(b.url || '') ? b.url : ''; return `<div class="rcard glass hl-blk hl-img">${u ? `<img src="${esc(u)}" alt="${esc(b.title || 'Image')}" loading="lazy" referrerpolicy="no-referrer">` : '<div class="cm-empty">Add an image link (https://…)</div>'}${b.title ? `<b class="hl-cap">${esc(b.title)}</b>` : ''}</div>`; }
+  if (b.type === 'video') { const id = hlYt(b.url); return `<div class="rcard glass hl-blk">${t}${id ? `<div class="hl-vidw"><div class="hl-vid"><iframe src="https://www.youtube-nocookie.com/embed/${id}" title="${esc(b.title || 'Video')}" loading="lazy" allow="encrypted-media; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div></div>` : '<div class="cm-empty">Paste a YouTube link</div>'}${tx}</div>`; }
+  return `<div class="rcard glass hl-blk hl-note">${t}${tx || '<p class="muted">Empty note</p>'}</div>`;
+}
+function homeGrid(W) {
+  const L = HL.edit ? HL.draft : homeLayout(), mods = modulesCfg();
+  const top = HL.edit ? `<div class="hl-top glass"><div class="grow"><b>${HL.target === 'platform' ? 'Default Home for every client' : 'Customize your Home'}</b><small class="muted">${HL.target === 'platform' ? 'Clients who have not changed their own Home see this. Their own changes stay.' : 'Drag cards (or use ↑ ↓), hide what your team does not need and add your own blocks. Everyone in this workspace sees this Home.'}</small></div>
+      <button class="btn sm" data-hladd>+ Add block</button><button class="btn sm" data-hlreset>${HL.target === 'platform' ? 'Back to built-in' : 'Reset to default'}</button><button class="btn sm" data-hlcancel>Cancel</button><button class="btn sm primary" data-hlsave>Save</button></div>` : '';
+  const cells = L.order.map((id, i) => {
+    const w = HOME_W.find(x => x[0] === id), b = L.blocks[id], hidden = L.hidden.includes(id), locked = w && w[3] && (featOff(w[3]) || mods[w[3]] === false);
+    if (!HL.edit && (hidden || locked)) return '';
+    const inner = w ? (W[id] ? W[id]() : '') : hlBlockHTML(b), size = (b && b.size) || (w && w[2]) || 'half', name = w ? w[1] : (b.title || (HL_TYPES.find(x => x[0] === b.type) || ['', 'Block'])[1]);
+    if (!HL.edit) return inner ? `<div class="hl-w hl-${size}" data-hlid="${esc(id)}">${inner}</div>` : '';
+    return `<div class="hl-w hl-${size} hl-ed ${hidden ? 'off' : ''} ${locked ? 'lock' : ''}" data-hlid="${esc(id)}" draggable="true"><div class="hl-bar"><span class="hl-grip" title="Drag to move">⋮⋮</span><b>${esc(name)}</b>${locked ? '<span class="mod-lk">🔒 Not in your plan</span>' : hidden ? '<span class="muted">Hidden</span>' : ''}<span class="grow"></span>
+        <button type="button" class="ibtn" data-hlmove="-1" title="Move up" ${i ? '' : 'disabled'}>↑</button><button type="button" class="ibtn" data-hlmove="1" title="Move down" ${i < L.order.length - 1 ? '' : 'disabled'}>↓</button>
+        ${b ? `<button type="button" class="ibtn" data-hledit title="Edit">✎</button><button type="button" class="ibtn" data-hldel title="Delete">${I.x}</button>` : ''}<button type="button" class="btn sm" data-hlhide>${hidden ? 'Show' : 'Hide'}</button></div>
+      <div class="hl-in">${inner || `<div class="cm-empty">${esc(name)} — shows up when there is something to show</div>`}</div></div>`;
+  }).join('');
+  return `${top}<div class="hl-grid ${HL.edit ? 'hl-editing' : ''}">${cells || '<div class="hl-w hl-full"><div class="cm-empty glass" style="padding:24px;border-radius:16px">Everything is hidden — press ✎ Customize to show cards again.</div></div>'}</div>`;
+}
+function hlStart(target) { HL.edit = true; HL.target = target || 'ws'; HL.draft = homeLayout(HL.target); if (activeView() !== 'home') go('home'); else renderHome(); }
+function hlStop() { HL.edit = false; HL.draft = null; HL.target = 'ws'; renderHome(); }
+async function hlSave(reset) {
+  const L = HL.draft, val = reset ? '' : JSON.stringify({ order: L.order, hidden: L.hidden, blocks: L.blocks, v: 1 });
+  try {
+    if (HL.target === 'platform') { await platSave('homeLayoutJson', val); toast(reset ? 'Default Home is back to the built-in layout' : '✓ Default Home saved — clients without their own layout see it now'); }
+    else if (demo) { S.settings = Object.assign({}, S.settings, { homeLayoutJson: val }); store.set('leadnode.branding', Object.assign(store.get('leadnode.branding') || {}, { homeLayoutJson: val })); toast(reset ? 'Home is back to the default layout' : '✓ Home saved'); }
+    else { S.settings = Object.assign({}, S.settings, await api('saveSettings', { homeLayoutJson: val })); toast(reset ? 'Home is back to the default layout' : '✓ Home saved for everyone in this workspace'); }
+    const back = HL.target === 'platform'; hlStop(); if (back) { ADM2.tab = 'home'; store.set('nv.admAcc', 'h-layout'); go('admin'); }
+  } catch (e) { toast(e.message, true); }
+}
+function hlBlockEditor(id) {
+  const b = id ? HL.draft.blocks[id] : { type: 'note', title: '', text: '', url: '', label: '', size: 'half' };
+  const opt = (arr, v) => arr.map(([k, n]) => `<option value="${k}" ${k === v ? 'selected' : ''}>${esc(n)}</option>`).join('');
+  $('#stageBox').innerHTML = `<div class="m-head"><h2>${id ? 'Edit block' : 'Add a block'}</h2><button class="ibtn" data-close>${I.x}</button></div>
+    <div class="hl-types">${HL_TYPES.map(([k, n, d]) => `<button type="button" class="mod-type ${b.type === k ? 'on' : ''}" data-hltype="${k}"><b>${n}</b><small>${d}</small></button>`).join('')}</div>
+    <div class="form" style="grid-template-columns:1fr 1fr">
+      <div class="field full"><label>Title</label><input class="input" id="hlTitle" maxlength="80" value="${esc(b.title || '')}" placeholder="e.g. This month's target"></div>
+      <div class="field full" data-hlf="note link video"><label>Text</label><textarea class="input" id="hlText" rows="3" maxlength="600" placeholder="Write the message">${esc(b.text || '')}</textarea></div>
+      <div class="field full" data-hlf="link image video"><label id="hlUrlL">Link</label><input class="input" id="hlUrl" maxlength="500" value="${esc(b.url || '')}" placeholder="https://…"></div>
+      <div class="field" data-hlf="link"><label>Button text</label><input class="input" id="hlLabel" maxlength="30" value="${esc(b.label || '')}" placeholder="Open"></div>
+      <div class="field"><label>Size</label><select class="input" id="hlSize">${opt(HL_SIZES, b.size || 'half')}</select></div></div>
+    <p class="help" id="hlHelp"></p>
+    <div class="m-foot"><div class="grow"></div><button class="btn" data-close>Cancel</button><button class="btn primary" id="hlBlkOk">${id ? 'Save block' : 'Add block'}</button></div>`;
+  let type = b.type;
+  const sync = () => { $$('#stageBox [data-hltype]').forEach(x => x.classList.toggle('on', x.dataset.hltype === type)); $$('#stageBox [data-hlf]').forEach(f => { f.hidden = !f.dataset.hlf.split(' ').includes(type); });
+    $('#hlUrlL').textContent = type === 'image' ? 'Image link (https://…)' : type === 'video' ? 'YouTube link' : 'Link — https://… or a page like #leads, #orders';
+    $('#hlHelp').textContent = type === 'image' ? 'Tip: upload the picture to Google Drive / Imgur / your website and paste its direct https link.' : type === 'video' ? 'Works with youtube.com/watch, youtu.be and Shorts links.' : type === 'link' ? 'Opens in a new tab. Pages inside Nodevers: #leads, #tasks, #orders, #commerce, #broadcast, #insights.' : 'Only people in this workspace see it.'; };
+  $$('#stageBox [data-hltype]').forEach(x => x.onclick = () => { type = x.dataset.hltype; sync(); }); sync();
+  $('#hlBlkOk').onclick = () => {
+    const nb = { type, title: $('#hlTitle').value.trim(), text: type === 'image' ? '' : $('#hlText').value.trim(), url: type === 'note' ? '' : $('#hlUrl').value.trim(), label: type === 'link' ? $('#hlLabel').value.trim() : '', size: $('#hlSize').value };
+    if (type === 'note' && !nb.title && !nb.text) return toast('Write a title or a message', true);
+    if (type === 'link' && !/^(https:\/\/\S+|#[a-z]+)$/i.test(nb.url)) return toast('The link must start with https:// (or be a page like #leads)', true);
+    if (type === 'image' && !/^https:\/\/\S+$/i.test(nb.url)) return toast('The image link must start with https://', true);
+    if (type === 'video' && !hlYt(nb.url)) return toast('Paste a YouTube link', true);
+    const bid = id || 'b' + Date.now().toString(36); HL.draft.blocks[bid] = nb; if (!id) HL.draft.order.unshift(bid);
+    hideModal('#stageModal'); renderHome();
+  };
+  showModal('#stageModal');
+}
+(function () {
+  const box = $('#homeBody'); if (!box) return;
+  box.addEventListener('click', e => {
+    const t = e.target;
+    if (t.closest('[data-hlstart]')) return hlStart('ws');
+    if (!HL.edit) return;
+    const cell = t.closest('[data-hlid]'), id = cell && cell.dataset.hlid, L = HL.draft;
+    if (t.closest('[data-hlcancel]')) return hlStop();
+    if (t.closest('[data-hlsave]')) return hlSave(false);
+    if (t.closest('[data-hlreset]')) { if (!confirm(HL.target === 'platform' ? 'Go back to the built-in default Home for clients?' : 'Reset this Home to the default layout? Your own blocks are removed.')) return; return hlSave(true); }
+    if (t.closest('[data-hladd]')) return hlBlockEditor('');
+    if (!id) return;
+    const mv = t.closest('[data-hlmove]'); if (mv) { const i = L.order.indexOf(id), j = i + (+mv.dataset.hlmove); if (j < 0 || j >= L.order.length) return; [L.order[i], L.order[j]] = [L.order[j], L.order[i]]; return renderHome(); }
+    if (t.closest('[data-hlhide]')) { L.hidden = L.hidden.includes(id) ? L.hidden.filter(x => x !== id) : L.hidden.concat(id); return renderHome(); }
+    if (t.closest('[data-hledit]')) return hlBlockEditor(id);
+    if (t.closest('[data-hldel]')) { if (!confirm('Delete this block?')) return; delete L.blocks[id]; L.order = L.order.filter(x => x !== id); L.hidden = L.hidden.filter(x => x !== id); return renderHome(); }
+  });
+  box.addEventListener('dragstart', e => { const c = e.target.closest && e.target.closest('.hl-ed'); if (!HL.edit || !c) return; HL.drag = c.dataset.hlid; c.classList.add('drag'); try { e.dataTransfer.effectAllowed = 'move'; e.dataTransfer.setData('text/plain', HL.drag); } catch (er) { } });
+  box.addEventListener('dragover', e => { const c = e.target.closest && e.target.closest('.hl-ed'); if (!HL.edit || !HL.drag || !c) return; e.preventDefault(); $$('#homeBody .hl-ed').forEach(x => x.classList.toggle('over', x === c && c.dataset.hlid !== HL.drag)); });
+  box.addEventListener('dragend', () => { HL.drag = ''; $$('#homeBody .hl-ed').forEach(x => x.classList.remove('drag', 'over')); });
+  box.addEventListener('drop', e => { const c = e.target.closest && e.target.closest('.hl-ed'); if (!HL.edit || !HL.drag || !c) return; e.preventDefault(); const L = HL.draft, from = L.order.indexOf(HL.drag), to = L.order.indexOf(c.dataset.hlid); HL.drag = '';
+    if (from < 0 || to < 0 || from === to) return renderHome(); const [x] = L.order.splice(from, 1); L.order.splice(to, 0, x); renderHome(); });
+})();
 document.addEventListener('click', e => {
   const t = e.target;
   const fg = t.closest('[data-gofam]'); if (fg) { e.preventDefault(); return famGo(fg.dataset.gofam); }
@@ -8547,6 +8663,7 @@ function openSubManager(ws) {
       <div class="field"><label>Custom price (₹) <span class="muted">— empty = plan price</span></label><input class="input" type="number" min="0" id="asPrice" value="${r.price != null && r.plan_id && plans.find(p => p.id === r.plan_id) && +plans.find(p => p.id === r.plan_id).price !== +r.price ? esc(r.price) : ''}"></div>
       <div class="field"><label>Billing email</label><input class="input" id="asMail" value="${esc(r.billing_email || r.owner_email || '')}"></div>
       <div class="field full"><label>Notes (only the platform team sees this)</label><input class="input" id="asNotes" maxlength="2000" value="${esc(r.notes || '')}"></div></div>
+    <div class="adm-brand" style="margin-top:12px"><span class="brand-logo" style="background:var(--blue-soft);color:var(--blue-2)">▦</span><div class="grow"><b>Home layout</b><small class="muted" id="asHome">Checking…</small></div>${admCan('super', 'admin') ? '<button class="btn sm" data-ashome>Reset to default</button>' : ''}</div>
     <div class="ah-sec" style="margin-top:14px">Sections for this client <span class="muted">— follow the plan, or switch one on / off just for them</span></div>
     <div id="asSec"><div class="loader"><div class="spin"></div>Loading…</div></div>
     <div class="adm-quick"><span class="muted">Quick:</span><button class="btn sm" data-asq="trial7">+7 days trial</button><button class="btn sm" data-asq="trial14">+14 days trial</button><button class="btn sm" data-asq="pay">Record payment</button>${r.status === 'suspended' ? '<button class="btn sm" data-asq="resume">Reactivate</button>' : '<button class="btn sm danger" data-asq="suspend">Suspend</button>'}</div>
@@ -8565,6 +8682,8 @@ function openSubManager(ws) {
       <p class="help" style="margin-top:6px">Always on: ${CORE_SECTIONS}. Switched-off sections show a 🔒 with an Upgrade button for the client — nothing is deleted.${secCan ? '' : ' Only a Super admin or an Admin can change sections.'}</p>`; };
   const secNorm = o => JSON.stringify(Object.keys(o).sort().map(k => [k, o[k]]));
   const secRead = () => { if (!SEC.d) return null; const o = {}; $$('#asSec [data-assec]').forEach(x => { if (x.value) o[x.dataset.assec] = x.value === 'on'; }); return o; };
+  sbq(AUTH.client.from('settings').select('value').eq('workspace_id', ws).eq('key', 'homeLayoutJson')).then(r => { const el = $('#asHome'); if (el) el.textContent = r && r[0] && hlParse(r[0].value) ? 'Customized by the client' : 'Default layout'; }, () => { const el = $('#asHome'); if (el) el.textContent = 'Default layout'; });
+  const hb = $('#stageBox [data-ashome]'); if (hb) hb.onclick = async () => { if (!confirm('Reset this client\'s Home to your default layout?')) return; try { await sbq(AUTH.client.rpc('admin_home_reset', { p_ws: ws })); $('#asHome').textContent = 'Default layout'; toast('✓ Home reset to the default layout'); } catch (er) { toast(/admin_home_reset|function|schema cache/i.test(er.message) ? 'Run the database update 17_home_layout.sql first' : er.message, true); } };
   sbq(AUTH.client.rpc('admin_ws_sections', { p_ws: ws })).then(d => { SEC.d = d || { override: {} }; SEC.d.override = SEC.d.override || {}; SEC.d.override0 = Object.assign({}, SEC.d.override); secDraw(); }, e => { const b = $('#asSec'); if (b) b.innerHTML = `<p class="cf-warn">${esc(/admin_ws_sections|function|schema cache/i.test(e.message) ? 'Run the database update 15_sections.sql to choose sections per client.' : e.message)}</p>`; });
   ['#asPlan', '#asSt'].forEach(q => $(q).addEventListener('change', () => { if (SEC.d) { SEC.d.override = secRead(); secDraw(); } }));
   $('#stageBox').addEventListener('change', e => { if (e.target.closest('[data-assec]') && SEC.d) { SEC.d.override = secRead(); secDraw(); } });
@@ -8784,6 +8903,8 @@ function admAudit() {
     const t = e.target;
     const ah = t.closest('.acc-h'); if (ah && !t.closest('.modal')) { const l = ah.closest('.acc-list'); accToggle(ah.closest('.acc'), (l && l.dataset.acckey) || 'nv.admAcc'); return; }
     if (t.closest('[data-admwl]')) { openSettings('wl'); return; }
+    if (t.closest('[data-hldefault]')) return hlStart('platform');
+    if (t.closest('[data-hlresetall]')) { if (!confirm('Reset the Home of EVERY client to your default layout? Their own blocks and order are removed.')) return; return sbq(AUTH.client.rpc('admin_home_reset_all')).then(n => toast(`✓ ${n || 0} client Home layout${n === 1 ? '' : 's'} reset to the default`), er => toast(/admin_home_reset|function|schema cache/i.test(er.message) ? 'Run the database update 17_home_layout.sql first' : er.message, true)); }
     const tb = t.closest('[data-admtab]'); if (tb) { if (tb.dataset.admacc) store.set('nv.admAcc', tb.dataset.admacc); ADM2.tab = tb.dataset.admtab; store.set('nv.admTab', ADM2.tab); return renderAdmin(true); }
     const fl = t.closest('[data-admf]'); if (fl) { ADM2.f = ADM2.f === fl.dataset.admf ? '' : fl.dataset.admf; return renderAdmin(); }
     if (t.closest('[data-admreload]') || t.closest('#admRefresh')) { ADM2.rows = ADM2.plans = ADM2.pays = ADM2.team = null; return renderAdmin(); }
@@ -9018,7 +9139,10 @@ function admHome() {
   return `<div class="ah-prev-h"><b>Live preview</b><span class="muted">This is exactly what appears at the top of Home. Changes show here as you type — press Save to publish. Pricing opens from the “Pricing” button next to the search box.</span></div>
     <div id="admHeroPrev"></div>
     <div class="acc-list" style="margin-top:14px">${accItem('h-hero', { title: 'Header (top banner)', icon: '<svg class="i" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="m3 15 5-5 4 4 3-3 6 6"/></svg>', color: '#3B82F6', dot: c.on !== false ? 'ok' : 'off', status: c.on !== false ? `On · ${c.image ? 'your image' : 'built-in artwork'} · ${(c.buttons || []).filter(b => b.on !== false).length} buttons` : 'Hidden', open: open === 'h-hero', body: heroBody })}
-      ${accItem('h-price', { title: 'Pricing pop-up', icon: '<svg class="i" viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>', color: '#F97316', dot: p.show !== 'off' ? 'ok' : 'off', status: (PRICING_SHOW.find(x => x[0] === p.show) || PRICING_SHOW[0])[1], open: open === 'h-price', body: prBody })}</div>
+      ${accItem('h-price', { title: 'Pricing pop-up', icon: '<svg class="i" viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>', color: '#F97316', dot: p.show !== 'off' ? 'ok' : 'off', status: (PRICING_SHOW.find(x => x[0] === p.show) || PRICING_SHOW[0])[1], open: open === 'h-price', body: prBody })}
+      ${accItem('h-layout', { title: 'Client Home layout (default)', icon: '<svg class="i" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="18" height="7" rx="1.5"/></svg>', color: '#10B981', dot: hlParse(PLAT.s.homeLayoutJson) ? 'ok' : '', status: hlParse(PLAT.s.homeLayoutJson) ? 'Your own default layout' : 'Built-in layout', open: open === 'h-layout',
+        body: `<p class="help" style="margin-top:0">The Home cards every client sees until they press <b>✎ Customize</b> on their own Home: which cards, in which order, and your own blocks (a welcome note, a training video, a link to support). Clients who already changed their Home keep their layout.</p>
+          <div class="cf-foot" style="margin:0;border:0;padding:0"><button class="btn danger sm" data-hlresetall title="Every client goes back to your default layout">Apply to all clients</button><div class="grow"></div><button class="btn primary" data-hldefault>Edit default layout</button></div>` })}</div>
     <div class="ah-prev-h" style="margin-top:18px"><b>Pricing pop-up preview</b><span class="muted">Opens when someone clicks “Pricing” in the top bar. Cards come from Plans & pricing.</span></div><div id="admPrPrev">${pricingHTML({ admin: true })}</div>`;
 }
 function admHeroDraft() {
@@ -9355,6 +9479,7 @@ const HELP_GUIDE = [
   ['capture', 'Website form and Facebook lead ads → leads', 'website form lead ads facebook instagram meta zapier make n8n google form capture link webhook', '**Connections → Lead capture link**: copy your private link. **Website**: copy the ready form code into WordPress / Wix / Shopify. **Facebook / Instagram Lead Ads**: in Zapier, Make or n8n use trigger "Facebook Lead Ads → New lead" and send it with a Webhook POST (JSON) to your link. New leads appear in Leads at once and get your auto welcome; repeated people are added to their existing lead. Press **Send a test lead** to check.'],
   ['pricing', 'Pricing plans on Home', 'pricing price plans monthly yearly upgrade choose plan get started cost', 'The **Pricing Plans** section on **Home** shows every plan with its price, limits and features. Switch **Monthly / Yearly** to see yearly prices. Press the button on a plan to start (new visitors create an account; clients are taken to WhatsApp / the renew link to upgrade). Your current plan is marked.'],
   ['plan', 'Plan, trial and billing', 'plan billing subscription trial expire expired renew payment upgrade limit days left invoice paused view only', '**Settings → Plan & billing** shows your plan, days left, usage (team, leads, WhatsApp this month, stores) and your payments. A banner appears 7 days before the end. When a trial or plan ends the workspace becomes **view-only** — nothing is deleted. Use **Renew** or **WhatsApp us** on the banner to renew; it opens again as soon as the payment is recorded.'],
+  ['homelayout', 'Customize the Home page', 'home customize layout drag move hide show cards block note video link image reset dashboard', 'On **Home** the owner or an admin presses **✎ Customize**: drag cards (or use ↑ ↓) to change the order, **Hide** / **Show** cards, and **+ Add block** — a Note, a Link / button, an Image or a YouTube video, in small, half or full width. Press **Save** — everyone in the workspace sees the same Home. **Reset to default** brings back the standard layout. Team members and view-only people can not change it.'],
   ['locked', 'A section shows a 🔒 lock', 'lock locked padlock not in your plan upgrade section hidden missing ads automation store campaigns tasks orders pipeline insights modules', 'A **🔒** next to a menu item means that section is **not in your plan**. Opening it shows which plans include it, with **See plans** and **Ask on WhatsApp**. Nothing is deleted — your data comes back as soon as the section is switched on. **Settings → Plan & billing** lists the sections in your plan. Always included: Home, Leads, Inbox, Connections, Team and Settings. A section that is simply **missing** (no lock) was hidden by your owner in **Settings → Modules** — they can switch it back on.'],
   ['ro', 'View-only / missing buttons', 'view only cannot edit button missing permission hidden not allowed', 'If buttons are missing or you see "View-only access", your owner limited your access (role **Client**, an area limit or a switched-off action). Ask the owner to open **Team → Access** for you.'],
 ];
