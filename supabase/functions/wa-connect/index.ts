@@ -1,16 +1,15 @@
 // Nodevers — wa-connect: save a workspace's WhatsApp number. The token and the App secret are stored server-side only.
 // Deploy: Supabase → Edge Functions → Deploy a new function → name "wa-connect" → paste → turn OFF "Verify JWT".
 // Two ways to connect (Admin Console → Settings → Connect methods):
-//   A "own"  — the client's own Meta app: Phone number ID + WABA ID + permanent token + App secret; its own webhook verify token (SQL 19).
-//   B "app"  — "Connect with Facebook" (Meta Embedded Signup through the platform's Meta app — needs Meta Tech Provider). Secrets for B:
-//              META_APP_SECRET (already there) and META_APP_ID (or the App ID typed in Admin Console). Off until the admin switches it on.
+//   A "own"  — the client's own Meta app: Phone number ID + WABA ID + permanent token + App secret; its own webhook verify token (SQL 20).
+//   B "app"  — "Connect with Facebook" (Meta Embedded Signup) lives in the wa-signup function. Off until the admin switches it on.
+// This function also answers the Admin Console "Check Supabase secrets" button (yes / no only).
 import { createClient } from 'npm:@supabase/supabase-js@2';
 
 const GRAPH = (Deno.env.get('WA_GRAPH_URL') ?? 'https://graph.facebook.com/v21.0').replace(/\/+$/, '');
 const firstKey = (json?: string) => { try { return Object.values(JSON.parse(json ?? '{}'))[0] as string | undefined; } catch { return undefined; } };
 const SERVICE = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') || firstKey(Deno.env.get('SUPABASE_SECRET_KEYS')) || '';
 const db = createClient(Deno.env.get('SUPABASE_URL')!, SERVICE, { auth: { persistSession: false } });
-const APP_SECRET = Deno.env.get('META_APP_SECRET') ?? '';
 const cors = { 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type', 'Access-Control-Allow-Methods': 'POST, OPTIONS' };
 const json = (o: unknown, status = 200) => new Response(JSON.stringify(o), { status, headers: { ...cors, 'Content-Type': 'application/json' } });
 
@@ -49,7 +48,7 @@ async function platformAdmin(user: any) {
 /** save the number + make sure the workspace has its webhook verify token */
 async function saveAccount(ws: string, row: any, appSecret?: string) {
   let up = await db.from('wa_accounts').upsert(row, { onConflict: 'workspace_id' });
-  if (up.error && /connect_mode/.test(up.error.message)) { const { connect_mode: _m, ...old } = row; up = await db.from('wa_accounts').upsert(old, { onConflict: 'workspace_id' }); }   // before SQL 19
+  if (up.error && /onboarded_via/.test(up.error.message)) { const { onboarded_via: _m, ...old } = row; up = await db.from('wa_accounts').upsert(old, { onConflict: 'workspace_id' }); }   // before SQL 19 / 20
   if (up.error) throw new Error(up.error.message);
   const { data: h } = await db.from('wa_hooks').select('workspace_id').eq('workspace_id', ws).maybeSingle();
   if (!h) await db.from('wa_hooks').insert({ workspace_id: ws, verify_token: newToken(), app_secret: appSecret ?? '' });
@@ -67,7 +66,7 @@ Deno.serve(async (req) => {
     if (b.action === 'methods_env') {
       if (!(await platformAdmin(user))) return json({ error: 'Platform admins only.' }, 403);
       const has = (k: string) => !!(Deno.env.get(k) ?? '').trim();
-      return json({ ok: true, env: { META_APP_SECRET: has('META_APP_SECRET'), META_APP_ID: has('META_APP_ID'), WA_VERIFY_TOKEN: has('WA_VERIFY_TOKEN'),
+      return json({ ok: true, env: { META_APP_SECRET: has('META_APP_SECRET'), META_APP_ID: has('META_APP_ID'), WA_VERIFY_TOKEN: has('WA_VERIFY_TOKEN'), META_ES_CONFIG_ID: has('META_ES_CONFIG_ID'),
         AMAZON_LWA_CLIENT_ID: has('AMAZON_LWA_CLIENT_ID'), AMAZON_LWA_CLIENT_SECRET: has('AMAZON_LWA_CLIENT_SECRET'), AMAZON_APP_ID: has('AMAZON_APP_ID'),
         SHOPIFY_CLIENT_ID: has('SHOPIFY_CLIENT_ID'), SHOPIFY_CLIENT_SECRET: has('SHOPIFY_CLIENT_SECRET') } });
     }
@@ -79,46 +78,10 @@ Deno.serve(async (req) => {
 
     if (b.disconnect) { await db.from('wa_accounts').delete().eq('workspace_id', ws); return json({ connected: false }); }
     const M = await methods('wa');
-    const { data: cur } = await db.from('wa_accounts').select('connect_mode, phone_number_id').eq('workspace_id', ws).maybeSingle();
-
-    // ================= Option B: Connect with Facebook (Embedded Signup) =================
-    if (b.action === 'embedded') {
-      if (!M.b.on) return json({ error: `“${M.b.name}” is switched off. Use “${M.a.name}” instead.` }, 403);
-      const appId = (Deno.env.get('META_APP_ID') || String(M.b.appId ?? '')).trim();
-      if (!appId || !APP_SECRET) return json({ error: 'Connect with Facebook is not set up on the server yet (META_APP_ID / META_APP_SECRET). Please tell the Nodevers team.' }, 500);
-      const code = String(b.code ?? '').trim(), pin = String(b.pin ?? '').trim();
-      if (code.length < 10) return json({ error: 'Facebook did not send a login code — please try again.' }, 400);
-      if (pin && !/^\d{6}$/.test(pin)) return json({ error: 'The two-step PIN must be 6 digits.' }, 400);
-      const ex = await fetch(`${GRAPH}/oauth/access_token?` + new URLSearchParams({ client_id: appId, client_secret: APP_SECRET, code }));
-      const ej = await ex.json().catch(() => ({}));
-      if (!ex.ok || !ej.access_token) return json({ error: 'Facebook did not accept the login: ' + (ej?.error?.message ?? ex.status) }, 400);
-      const token = String(ej.access_token);
-      let pid = String(b.phone_number_id ?? '').trim(), waba = String(b.waba_id ?? '').trim();
-      if (!/^\d{6,20}$/.test(waba)) {          // the popup did not tell us → ask Meta which WhatsApp account was shared
-        const dt = await fetch(`${GRAPH}/debug_token?input_token=${encodeURIComponent(token)}`, { headers: { Authorization: `Bearer ${appId}|${APP_SECRET}` } }).then(r => r.json()).catch(() => ({}));
-        waba = String((dt?.data?.granular_scopes ?? []).find((g: any) => g.scope === 'whatsapp_business_management')?.target_ids?.[0] ?? '');
-      }
-      if (!/^\d{6,20}$/.test(waba)) return json({ error: 'No WhatsApp Business account was shared. Press Connect with Facebook again and pick your WhatsApp account.' }, 400);
-      if (!/^\d{6,20}$/.test(pid)) {
-        const pn = await fetch(`${GRAPH}/${waba}/phone_numbers?fields=id,display_phone_number`, { headers: { Authorization: `Bearer ${token}` } }).then(r => r.json()).catch(() => ({}));
-        pid = String(pn?.data?.[0]?.id ?? '');
-      }
-      if (!/^\d{6,20}$/.test(pid)) return json({ error: 'No phone number found in that WhatsApp account. Add a number in Facebook, then try again.' }, 400);
-      const taken = await db.from('wa_accounts').select('workspace_id').eq('phone_number_id', pid).neq('workspace_id', ws).maybeSingle();
-      if (taken.data) return json({ error: 'This WhatsApp number is already connected to another workspace.' }, 409);
-      const warn: string[] = [];
-      if (pin) { const rg = await fetch(`${GRAPH}/${pid}/register`, { method: 'POST', headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' }, body: JSON.stringify({ messaging_product: 'whatsapp', pin }) }); if (!rg.ok) { const rj = await rg.json().catch(() => ({})); warn.push('Number registration: ' + (rj?.error?.message ?? rg.status)); } }
-      const s = await fetch(`${GRAPH}/${waba}/subscribed_apps`, { method: 'POST', headers: { Authorization: `Bearer ${token}` } });
-      if (!s.ok) warn.push('Webhook subscription failed — press Connect again.');
-      const r = await fetch(`${GRAPH}/${pid}?fields=display_phone_number,verified_name,quality_rating`, { headers: { Authorization: `Bearer ${token}` } });
-      const info = await r.json().catch(() => ({}));
-      const row = { workspace_id: ws, phone_number_id: pid, waba_id: waba, token, connect_mode: 'app', display_phone: info.display_phone_number ?? '', verified_name: info.verified_name ?? '', quality: info.quality_rating ?? '', updated_at: new Date().toISOString() };
-      await saveAccount(ws, row);
-      return json({ connected: true, mode: 'app', display_phone: row.display_phone, verified_name: row.verified_name, quality: row.quality, subscribed: s.ok, warning: warn.join(' · ') });
-    }
+    const { data: cur } = await db.from('wa_accounts').select('*').eq('workspace_id', ws).maybeSingle();
 
     // ================= Option A: own Meta app (manual) =================
-    if (!M.a.on && cur?.connect_mode !== 'own') return json({ error: `“${M.a.name}” is switched off. Use “${M.b.name}” instead.` }, 403);
+    if (!M.a.on && !(cur && (cur.onboarded_via ?? 'manual') === 'manual')) return json({ error: `“${M.a.name}” is switched off. Use “${M.b.name}” instead.` }, 403);
     const pid = String(b.phone_number_id ?? '').trim(), waba = String(b.waba_id ?? '').trim(), token = String(b.token ?? '').trim();
     const appSecret = String(b.app_secret ?? '').trim().toLowerCase();
     if (!/^\d{6,20}$/.test(pid)) return json({ error: 'Phone number ID should be only digits (WhatsApp Manager → API Setup).' }, 400);
@@ -144,7 +107,7 @@ Deno.serve(async (req) => {
     let subscribed = false;
     if (waba) { const s = await fetch(`${GRAPH}/${waba}/subscribed_apps`, { method: 'POST', headers: { Authorization: `Bearer ${token}` } }); subscribed = s.ok; }
 
-    const row = { workspace_id: ws, phone_number_id: pid, waba_id: waba, token, connect_mode: 'own', display_phone: info.display_phone_number ?? '', verified_name: info.verified_name ?? '', quality: info.quality_rating ?? '', updated_at: new Date().toISOString() };
+    const row = { workspace_id: ws, phone_number_id: pid, waba_id: waba, token, onboarded_via: 'manual', display_phone: info.display_phone_number ?? '', verified_name: info.verified_name ?? '', quality: info.quality_rating ?? '', updated_at: new Date().toISOString() };
     await saveAccount(ws, row, appSecret || undefined);
     return json({ connected: true, mode: 'own', display_phone: row.display_phone, verified_name: row.verified_name, quality: row.quality, subscribed });
   } catch (e) {

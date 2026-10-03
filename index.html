@@ -823,7 +823,7 @@ body.ro [data-add],body.ro .addcard,body.ro #addMember,body.ro [data-lginvite],b
 .wa-on{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:13px;margin-bottom:12px}.wa-on .dot{width:8px;height:8px;border-radius:50%;background:var(--wa,#25A55F);box-shadow:0 0 0 3px color-mix(in srgb,var(--wa,#25A55F) 25%,transparent)}
 .wa-conn{padding:16px;border-radius:14px;margin-bottom:14px;display:flex;flex-direction:column;gap:4px;font-size:13.5px}.wa-fh{display:flex;justify-content:space-between;gap:10px}.wa-fh h3{margin:0 0 4px}.wa-fh p{margin:0 0 10px;font-size:13px}
 .input.secret{-webkit-text-security:disc}
-.wa-grid{grid-template-columns:1fr 1fr}.wa-grid .span2{grid-column:1/-1}.wa-help{margin:6px 0 4px;font-size:13px}.wa-help summary{cursor:pointer;font-weight:700}.wa-help p{color:var(--muted)}
+.wa-grid{grid-template-columns:1fr 1fr}.wa-grid .span2{grid-column:1/-1}.wa-help{margin:6px 0 4px;font-size:13px}.wa-es{display:flex;flex-direction:column;align-items:flex-start;gap:6px;margin:10px 0 6px}.wa-es .btn{min-width:220px}.wa-manual{margin-top:8px}.wa-help summary{cursor:pointer;font-weight:700}.wa-help p{color:var(--muted)}
 .inbox{display:grid;grid-template-columns:320px 1fr;height:calc(100vh - 250px);min-height:460px;border-radius:16px;overflow:hidden}
 .ib-list{border-right:1px solid var(--line);display:flex;flex-direction:column;min-height:0}.ib-search{padding:10px}.ib-scroll{overflow:auto;flex:1}
 .ib-c{display:flex;gap:10px;align-items:center;width:100%;padding:10px 12px;border:0;background:none;text-align:left;color:inherit;cursor:pointer;border-bottom:1px solid var(--line)}.ib-c:hover{background:var(--glass-3)}.ib-c.on{background:var(--blue-soft)}
@@ -6020,6 +6020,7 @@ async function waLoadStatus() {
   if (demo) return WA.status = { connected: true, demo: true, verified_name: 'Demo Business', display_phone: '+91 98000 00000' };
   if (!cloud) return WA.status = { connected: false, sheet: true };
   try { WA.status = await sbq(AUTH.client.rpc('wa_status', { p_ws: AUTH.ws })); } catch (e) { WA.status = { connected: false, error: e.message }; }
+  if (WA.es === undefined) { WA.es = null; try { const c = await fnCall('wa-signup', { config: true }); WA.es = c && c.enabled ? c : null; } catch (e) { WA.es = null; } }
   return WA.status;
 }
 function waConnHTML() {
@@ -6033,9 +6034,8 @@ function waConnHTML() {
   const head = `<div class="wa-fh"><div><h3>${s.connected ? 'WhatsApp connection' : 'Connect your WhatsApp number'}</h3>${s.connected && h && !h.error ? `<p class="muted">Connected with <b>${esc(connModeName('wa', mode))}</b>.</p>` : ''}</div>${close}</div>${connModeBar('wa', sel)}`;
   if (sel === 'b') return `<div class="glass wa-conn wa-form">${head}
     <p class="muted" style="margin:6px 0 10px">${esc(M.b.desc)}</p>
-    <div class="form wa-grid"><div class="field"><label>Two-step PIN for the number <span class="muted">(optional, 6 digits)</span></label><input class="input" id="waPin" inputmode="numeric" maxlength="6" autocomplete="off" data-lpignore="true" data-1p-ignore placeholder="Choose any 6 digits and keep them safe"></div></div>
     <ol class="wa-steps"><li>Press <b>${esc(M.b.name)}</b> — a Facebook window opens.</li><li>Log in, choose (or create) your business and WhatsApp account.</li><li>Add your number or pick one, and confirm it with the code Meta sends.</li><li>Done — chats start arriving here. Nothing to copy.</li></ol>
-    <div class="m-foot">${s.connected ? '<button class="btn danger" data-wadisc>Disconnect</button>' : ''}<div class="grow"></div><button class="btn primary" data-waes>${esc(M.b.name)}</button></div></div>`;
+    <div class="m-foot">${s.connected ? '<button class="btn danger" data-wadisc>Disconnect</button>' : ''}<div class="grow"></div><button class="btn primary" data-waes>${s.connected && mode === 'app' ? 'Reconnect with Facebook' : esc(M.b.name)}</button></div></div>`;
   const [hs, ht] = waHookState(h), secretSaved = h && h.has_app_secret, tokSaved = s.connected && mode === 'own';
   const ro = `type="text" autocomplete="off" autocapitalize="off" spellcheck="false" readonly data-noautofill data-lpignore="true" data-1p-ignore`;
   return `<div class="glass wa-conn wa-form">${head}
@@ -6126,6 +6126,48 @@ async function ibSendTpl(c) {
   try { await fnCall('wa-send', { lead_id: c.leadId, phone: c.phone, template: name, language: sel.selectedOptions[0].dataset.lang || 'en', params, preview: String(t.body || name).replace(/\{\{(\d+)\}\}/g, (m, k) => params[k - 1] || m), by: me() }); toast('Template sent ✓'); load(true); }
   catch (e) { toast(e.message, true); }
 }
+/* One-click WhatsApp connect — Meta Embedded Signup v4 (we are the Tech Provider; secrets live in the wa-signup function) */
+function waLoadFbSdk(c) {
+  if (window.FB) return Promise.resolve(window.FB);
+  return new Promise((res, rej) => {
+    window.fbAsyncInit = () => { FB.init({ appId: c.app_id, autoLogAppEvents: true, xfbml: false, version: c.version || 'v25.0' }); res(FB); };
+    const sc = document.createElement('script'); sc.src = 'https://connect.facebook.net/en_US/sdk.js'; sc.async = true; sc.defer = true; sc.crossOrigin = 'anonymous';
+    sc.onerror = () => rej(new Error('Could not load Facebook login — check your internet or ad-blocker.'));
+    document.head.appendChild(sc);
+  });
+}
+async function waEmbeddedSignup(btn) {
+  const c = WA.es; if (!c) return toast('One-click connect is not switched on yet', true);
+  const label = btn.textContent; const done = () => { btn.disabled = false; btn.textContent = label; };
+  btn.disabled = true; btn.textContent = 'Opening Facebook…';
+  let FBk; try { FBk = await waLoadFbSdk(c); } catch (err) { done(); return toast(err.message, true); }
+  let info = null, code = null, finished = false;
+  const finish = async () => {
+    if (finished || !code || !info) return; finished = true; window.removeEventListener('message', onMsg);
+    btn.textContent = 'Connecting your number…';
+    try {
+      const r = await fnCall('wa-signup', { code, phone_number_id: info.phone_number_id || '', waba_id: info.waba_id || '', event: info.event || 'FINISH' });
+      WA.status = null; WA.hook = null; WA.manage = false; CONNM.wa = '';
+      toast(`✓ Connected ${r.verified_name || ''} ${r.display_phone || ''}${!r.subscribed ? ' — but incoming messages could not be switched on, click Reconnect' : ''}${r.register_error ? ' — number registration: ' + r.register_error : ''}`, !r.subscribed || !!r.register_error);
+      renderInbox();
+    } catch (err) { toast(err.message, true); done(); }
+  };
+  const onMsg = e => {
+    let host = ''; try { host = new URL(e.origin).hostname; } catch (x) { return; } if (!/(^|\.)facebook\.com$/.test(host)) return;
+    let d; try { d = typeof e.data === 'string' ? JSON.parse(e.data) : e.data; } catch (x) { return; }
+    if (!d || d.type !== 'WA_EMBEDDED_SIGNUP') return;
+    if (d.event === 'CANCEL') { window.removeEventListener('message', onMsg); finished = true; done(); return toast(d.data && d.data.error_message ? 'Facebook: ' + d.data.error_message : 'Connection cancelled', true); }
+    if (/^FINISH/.test(d.event || '')) {
+      if (d.event === 'FINISH_ONLY_WABA') { window.removeEventListener('message', onMsg); finished = true; done(); return toast('No phone number was added — click Connect again and add your business number.', true); }
+      info = Object.assign({ event: d.event }, d.data || {}); finish();
+    }
+  };
+  window.addEventListener('message', onMsg);
+  FBk.login(resp => {
+    if (resp && resp.authResponse && resp.authResponse.code) { code = resp.authResponse.code; setTimeout(() => { if (!info && !finished) { finished = true; window.removeEventListener('message', onMsg); done(); toast('Facebook did not send the number details — please try again.', true); } }, 20000); finish(); }
+    else if (!finished) { finished = true; window.removeEventListener('message', onMsg); done(); toast('Facebook login was closed', true); }
+  }, { config_id: c.config_id, response_type: 'code', override_default_response_type: true, extras: { setup: {}, sessionInfoVersion: '3' } });
+}
 (function inboxEvents() {
   $('#v-whatsapp').addEventListener('click', async e => {
     const t = e.target;
@@ -6138,7 +6180,7 @@ async function ibSendTpl(c) {
     if (t.closest('[data-waclose]')) { WA.manage = false; return renderInbox(); }
     const cp = t.closest('[data-wacopy]'); if (cp) return copyText(cp.dataset.wacopy === 'vt' ? ((WA.hook || {}).verify_token || '') : WEBHOOK_URL());
     if (t.closest('[data-wanewvt]')) { e.preventDefault(); if (!confirm('Make a new verify token? The old one stops working — paste the new one in your Meta app and press Verify and save again.')) return; try { await sbq(AUTH.client.rpc('wa_hook_new_token', { p_ws: AUTH.ws })); WA.hook = null; await waHookLoad(); renderInbox(); toast('✓ New verify token made — copy it into Meta'); } catch (err) { toast(err.message, true); } return; }
-    const es = t.closest('[data-waes]'); if (es) return waEmbedded(es);
+    const es = t.closest('[data-waes]'); if (es) return waEmbeddedSignup(es);
     if (t.closest('[data-wadisc]')) { if (!confirm('Disconnect this WhatsApp number from Nodevers? Chats stay saved.')) return; try { await fnCall('wa-connect', { disconnect: true }); WA.status = null; WA.hook = null; WA.manage = false; CONNM.wa = ''; toast('Disconnected'); renderInbox(); } catch (err) { toast(err.message, true); } return; }
     const cb = t.closest('[data-waconnect]'); if (cb) {
       const pid = $('#waPid').value.trim(), waba = $('#waWaba').value.trim(), tok = $('#waTok').value.replace(/\s+/g, ''), sec = ($('#waSecret') || { value: '' }).value.replace(/\s+/g, '').toLowerCase();
@@ -8387,7 +8429,7 @@ const AMZ_MKTS = [['A21TBJUM6AAA2I', 'Amazon.in (India)'], ['A2VIGQ35RCS4UG', 'A
 /* ================= Two ways to connect — A: the client's own app keys · B: one click through Nodevers' approved app =================
    Admin Console → Settings → Connect methods turns each option on / off and names it (platform_settings connectModesJson — names, on/off and public IDs only). */
 const CONNM_DEF = {
-  wa: { label: 'WhatsApp', a: { on: true, name: 'Own Meta app', desc: 'Use your own Meta developer app: paste the Phone number ID, WhatsApp Business Account ID, a permanent token and the App secret.' }, b: { on: false, name: 'Connect with Facebook', desc: 'One click: log in with Facebook, pick or add your WhatsApp number and confirm. Nothing to copy.', appId: '', configId: '' } },
+  wa: { label: 'WhatsApp', a: { on: true, name: 'Own Meta app', desc: 'Use your own Meta developer app: paste the Phone number ID, WhatsApp Business Account ID, a permanent token and the App secret.' }, b: { on: false, name: 'Connect with Facebook', desc: 'One click: log in with Facebook, pick or add your WhatsApp number and confirm. Nothing to copy.' } },
   shopify: { label: 'Shopify', a: { on: true, name: 'Own Shopify app', desc: 'Make an app in the Shopify Dev Dashboard and paste its Client ID and Client secret (an old shpat_ token also works).' }, b: { on: false, name: 'Connect with Shopify', desc: 'One click: type your store link and approve on Shopify. Nothing to copy.', clientId: '' } },
   amazon: { label: 'Amazon', a: { on: true, name: 'Own Amazon developer app', desc: 'Make a private SP-API app in Seller Central and paste the LWA client ID, client secret and refresh token.' }, b: { on: false, name: 'Connect with Amazon', desc: 'One click: log in to Seller Central and approve. Nothing to copy.', appId: '', beta: true } },
   ads: { label: 'Meta Ads', a: { on: true, name: 'Access token', desc: 'Make a System user token with ads_read in Meta Business settings and paste it with your ad account ID.' }, b: { on: false, name: 'Connect with Facebook', desc: 'One click: log in with Facebook and pick your ad account. Nothing to copy.', appId: '', configId: '' } },
@@ -8396,7 +8438,9 @@ const CONNM_ADMIN = { wa: 'Meta Embedded Signup — needs Nodevers to be a Meta 
 const CONNM_KEY = { wa: 'wa', shopify: 'shopify', amazon: 'amazon', meta_ads: 'ads' };
 const CONNM = {};   // the option the client picked on screen
 function connModesAll() { try { const c = JSON.parse((PLAT.s || {}).connectModesJson || '{}'); return c && typeof c === 'object' ? c : {}; } catch (e) { return {}; } }
-function connModes(k) { const d = CONNM_DEF[k], x = connModesAll()[k] || {}; return { a: Object.assign({}, d.a, x.a || {}), b: Object.assign({}, d.b, x.b || {}) }; }
+function connModes(k, raw) { const d = CONNM_DEF[k], x = connModesAll()[k] || {}, M = { a: Object.assign({}, d.a, x.a || {}), b: Object.assign({}, d.b, x.b || {}) };
+  if (k === 'wa' && !raw && cloud && !(WA.es && WA.es.enabled)) M.b.on = false;   // Connect with Facebook also needs the wa-signup function + META_APP_ID / META_ES_CONFIG_ID secrets
+  return M; }
 /** which option to show: what the client clicked → how it is connected now → A → B → none */
 function connMode(k, curMode) { const M = connModes(k); if (CONNM[k] && M[CONNM[k]].on) return CONNM[k]; const cur = curMode === 'app' ? 'b' : curMode ? 'a' : ''; if (cur && M[cur].on) return cur; return M.a.on ? 'a' : M.b.on ? 'b' : ''; }
 function connModeBar(k, sel) { const M = connModes(k); if (!(M.a.on && M.b.on)) return '';
@@ -8444,39 +8488,11 @@ async function oauthReturn() {
   store.del ? store.del('nv.oauthBack') : store.set('nv.oauthBack', null);
 }
 
-/* ---- WhatsApp option B: Meta Embedded Signup popup (Facebook JS SDK) ---- */
-function fbSdk(appId) {
-  return new Promise((ok, no) => {
-    const init = () => { window.FB.init({ appId, cookie: false, xfbml: false, version: 'v21.0' }); ok(window.FB); };
-    if (window.FB) return init();
-    window.fbAsyncInit = init; const s = document.createElement('script'); s.src = 'https://connect.facebook.net/en_US/sdk.js'; s.async = true; s.defer = true; s.crossOrigin = 'anonymous';
-    s.onerror = () => no(new Error('Could not load Facebook — check your internet or switch off the ad blocker for this site.')); document.head.appendChild(s);
-    setTimeout(() => { if (!window.FB) no(new Error('Facebook did not load — check your internet or ad blocker.')); }, 20000);
-  });
-}
-async function waEmbedded(btn) {
-  const M = connModes('wa'), pin = (($('#waPin') || {}).value || '').trim();
-  if (pin && !/^\d{6}$/.test(pin)) return toast('The PIN must be 6 digits', true);
-  if (demo) return toast('Demo: a Facebook window would open to pick your WhatsApp number');
-  if (!String(M.b.appId || '').trim() || !String(M.b.configId || '').trim()) return toast(`${M.b.name} is not set up yet — please contact support`, true);
-  btn.disabled = true; const label = btn.textContent; btn.textContent = 'Opening Facebook…';
-  const info = {}, onMsg = ev => { let host = ''; try { host = new URL(ev.origin).hostname; } catch (e) { return; } if (!/(^|\.)facebook\.com$/.test(host)) return;
-    try { const d = typeof ev.data === 'string' ? JSON.parse(ev.data) : ev.data; if (d && d.type === 'WA_EMBEDDED_SIGNUP') { if (/^FINISH/.test(d.event || '')) Object.assign(info, d.data || {}); else if (d.event === 'CANCEL') info.cancel = true; } } catch (e) { } };
-  try {
-    const FBx = await fbSdk(String(M.b.appId).trim()); window.addEventListener('message', onMsg);
-    const code = await new Promise(ok => FBx.login(r => ok((r && r.authResponse && r.authResponse.code) || ''), { config_id: String(M.b.configId).trim(), response_type: 'code', override_default_response_type: true, extras: { setup: {}, featureType: '', sessionInfoVersion: '3' } }));
-    if (!code) throw new Error(info.cancel ? 'The Facebook window was closed before the end — press the button again.' : 'Facebook login was cancelled.');
-    btn.textContent = 'Connecting…';
-    const r = await fnCall('wa-connect', { action: 'embedded', code, phone_number_id: info.phone_number_id || '', waba_id: info.waba_id || '', pin });
-    WA.status = null; WA.hook = null; WA.manage = false; CONNM.wa = '';
-    toast(`✓ Connected ${r.verified_name || ''} ${r.display_phone || ''}${r.warning ? ' — ' + r.warning : ''}`, !!r.warning); renderInbox();
-  } catch (e) { toast(e.message, true); }
-  finally { window.removeEventListener('message', onMsg); const b = $('[data-waes]'); if (b) { b.disabled = false; b.textContent = label; } }
-}
+/* ---- WhatsApp option B: Connect with Facebook = waEmbeddedSignup() (Meta Embedded Signup, wa-signup function) ---- */
 async function waHookLoad() {
   if (!cloud || !canAdmin() || WA.hookLoading) return;
   WA.hookLoading = true;
-  try { WA.hook = await sbq(AUTH.client.rpc('wa_hook_info', { p_ws: AUTH.ws })) || {}; } catch (e) { WA.hook = { error: /wa_hook_info|schema cache|function/i.test(e.message) ? 'Run the database update 19_connect_methods.sql in Supabase.' : e.message }; }
+  try { WA.hook = await sbq(AUTH.client.rpc('wa_hook_info', { p_ws: AUTH.ws })) || {}; } catch (e) { WA.hook = { error: /wa_hook_info|schema cache|function/i.test(e.message) ? 'Run the database update 20_connect_methods.sql in Supabase.' : e.message }; }
   WA.hookLoading = false; WA.hookWs = AUTH.ws;
 }
 function waHookState(h) {
@@ -8493,12 +8509,12 @@ function admConnBody() {
   const env = ADM2.connEnv, site = location.origin + location.pathname, all = connModesAll();
   const envChip = names => names.map(n => `<span class="cmx-env ${env ? (env[n] ? 'ok' : 'no') : ''}">${env ? (env[n] ? '✓' : '✗') : '•'} ${n}</span>`).join('');
   const inp = (k, f, label, ph) => `<div class="field"><label>${label}</label><input class="input sm" data-cmx="${k}|b|${f}" value="${esc((((all[k] || {}).b) || {})[f] || '')}" placeholder="${esc(ph)}" autocomplete="off" spellcheck="false"></div>`;
-  const extra = { wa: `<div class="cmx-f">${inp('wa', 'appId', 'Meta App ID', 'e.g. 1234567890123')}${inp('wa', 'configId', 'Embedded Signup configuration ID', 'from Facebook Login for Business → Configurations')}</div><div class="cmx-envs">Supabase secrets: ${envChip(['META_APP_SECRET', 'WA_VERIFY_TOKEN'])}</div><p class="help">In your Meta app: WhatsApp → Configuration → Callback URL <code>${esc(WEBHOOK_URL())}</code> with the verify token you saved as WA_VERIFY_TOKEN. Facebook Login for Business → allowed domain <code>${esc(location.host)}</code>.</p>`,
+  const extra = { wa: `<div class="cmx-envs">Supabase secrets: ${envChip(['META_APP_ID', 'META_APP_SECRET', 'META_ES_CONFIG_ID', 'WA_VERIFY_TOKEN'])}</div><p class="help">Needs the <b>wa-signup</b> function deployed and these secrets (full steps: TECH_PROVIDER_SETUP.md in the repo). Clients see this option only when it is on here <i>and</i> the server is set up. In your Meta app: WhatsApp → Configuration → Callback URL <code>${esc(WEBHOOK_URL())}</code> with the verify token you saved as WA_VERIFY_TOKEN. Facebook Login for Business → allowed domain <code>${esc(location.host)}</code>.</p>`,
     shopify: `<div class="cmx-f">${inp('shopify', 'clientId', 'Nodevers Shopify app — Client ID', 'Dev Dashboard → your app → Settings')}</div><div class="cmx-envs">Supabase secrets: ${envChip(['SHOPIFY_CLIENT_SECRET'])}</div><p class="help">Allowed redirection URL in the Shopify app: <code>${esc(site)}</code> · scopes read_orders, read_products, read_inventory.</p>`,
     amazon: `<div class="cmx-f">${inp('amazon', 'appId', 'SP-API application ID', 'amzn1.sp.solution.…')}<label class="cmx-chk"><input type="checkbox" data-cmx="amazon|b|beta" ${((all.amazon || {}).b || {}).beta !== false ? 'checked' : ''}> Draft app (adds version=beta)</label></div><div class="cmx-envs">Supabase secrets: ${envChip(['AMAZON_LWA_CLIENT_ID', 'AMAZON_LWA_CLIENT_SECRET'])}</div><p class="help">OAuth redirect URI in the app: <code>${esc(site)}</code>.</p>`,
-    ads: `<div class="cmx-f">${inp('ads', 'appId', 'Meta App ID (empty = same as WhatsApp)', 'e.g. 1234567890123')}${inp('ads', 'configId', 'Facebook Login for Business configuration ID', 'with ads_read')}</div><div class="cmx-envs">Supabase secrets: ${envChip(['META_APP_SECRET'])}</div><p class="help">Valid OAuth redirect URI in the Meta app: <code>${esc(site)}</code>.</p>` };
+    ads: `<div class="cmx-f">${inp('ads', 'appId', 'Meta App ID (empty = META_APP_ID secret)', 'e.g. 1234567890123')}${inp('ads', 'configId', 'Facebook Login for Business configuration ID', 'with ads_read')}</div><div class="cmx-envs">Supabase secrets: ${envChip(['META_APP_SECRET'])}</div><p class="help">Valid OAuth redirect URI in the Meta app: <code>${esc(site)}</code>.</p>` };
   return `<p class="help" style="margin-top:0">Every connection can be made two ways. <b>Option A</b> — the business uses its own developer app and pastes its keys (works today). <b>Option B</b> — one click through <i>your</i> approved app; switch it on only after the platform approved your app. Clients see only the options that are on; with both on they choose. Names you type here are what clients see. Keys never go here — client secrets go in Supabase → Edge Functions → Secrets.</p>
-    ${Object.keys(CONNM_DEF).map(k => { const M = connModes(k); return `<div class="cmx"><div class="cmx-h"><b>${esc(CONNM_DEF[k].label)}</b><small class="muted">${M.a.on && M.b.on ? 'Clients choose' : M.a.on ? 'Only option A' : M.b.on ? 'Only option B' : '⚠ Switched off — clients can not connect'}</small></div>
+    ${Object.keys(CONNM_DEF).map(k => { const M = connModes(k, true); return `<div class="cmx"><div class="cmx-h"><b>${esc(CONNM_DEF[k].label)}</b><small class="muted">${M.a.on && M.b.on ? 'Clients choose' : M.a.on ? 'Only option A' : M.b.on ? 'Only option B' : '⚠ Switched off — clients can not connect'}</small></div>
       ${['a', 'b'].map(x => `<div class="cmx-r"><span class="sw"><input type="checkbox" data-cmx="${k}|${x}|on" ${M[x].on ? 'checked' : ''} aria-label="${x === 'a' ? 'Option A' : 'Option B'} on"><i></i></span><div class="grow"><div class="cmx-t"><span class="cmx-l">${x === 'a' ? 'A · own app' : 'B · one click'}</span><input class="input sm" data-cmx="${k}|${x}|name" value="${esc(M[x].name)}" maxlength="40" aria-label="Name clients see"></div><small class="muted">${esc(x === 'a' ? CONNM_DEF[k].a.desc : CONNM_ADMIN[k])}</small>${x === 'b' ? extra[k] : ''}</div></div>`).join('')}</div>`; }).join('')}
     <div class="cf-foot"><button class="btn sm" data-cmxenv>${env ? '⟳ Check secrets again' : 'Check Supabase secrets'}</button><div class="grow"></div><button class="btn sm primary" data-cmxsave>Save connect methods</button></div>`;
 }
@@ -8512,7 +8528,7 @@ async function admConnAct(kind) {
   const rerender = () => { const it = $('#v-admin .acc[data-acc="b-connect"] .acc-pad'); if (it) it.innerHTML = admConnBody(); };
   if (kind === 'env') { try { ADM2.connEnv = (await fnCall('wa-connect', { action: 'methods_env' })).env; rerender(); } catch (e) { toast(e.message, true); } return; }
   const c = admConnRead(), off = Object.keys(CONNM_DEF).filter(k => !c[k] || !(c[k].a || {}).on && !(c[k].b || {}).on);
-  const bad = Object.keys(CONNM_DEF).find(k => c[k] && c[k].b && c[k].b.on && (k === 'wa' ? !(c.wa.b.appId && c.wa.b.configId) : k === 'shopify' ? !c.shopify.b.clientId : k === 'amazon' ? !c.amazon.b.appId : !((c.ads.b.appId || (c.wa && c.wa.b && c.wa.b.appId)))));
+  const bad = ['shopify', 'amazon'].find(k => c[k] && c[k].b && c[k].b.on && !(k === 'shopify' ? c.shopify.b.clientId : c.amazon.b.appId));
   if (bad) return toast(`${CONNM_DEF[bad].label}: fill the IDs of option B before switching it on`, true);
   if (off.length && !confirm(`${off.map(k => CONNM_DEF[k].label).join(', ')}: both options are off — clients will not be able to connect. Save anyway?`)) return;
   try { await sbq(AUTH.client.rpc('admin_setting_save', { p_key: 'connectModesJson', p_value: JSON.stringify(c) })); PLAT.s.connectModesJson = JSON.stringify(c); rerender(); toast('✓ Connect methods saved — clients see the change now'); } catch (e) { toast(e.message, true); }
@@ -9234,7 +9250,7 @@ function admBrand() {
     ${accItem('b-ai', { title: 'AI for the whole website', icon: '<svg class="i" viewBox="0 0 24 24"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/><circle cx="12" cy="12" r="3"/></svg>', color: '#8B5CF6', dot: 'ok', status: `In use: ${esc((AI_PROVIDERS.find(x => x[0] === (s.aiProvider || 'gemini')) || AI_PROVIDERS[0])[1])}${(s.aiProvider || 'gemini') === 'gemini' ? ' (free)' : ''} · Inbox AI, Guide, Automation AI steps`, open: open === 'b-ai', body: admAiBody() })}
     ${accItem('b-advisor', { title: 'AI Advisor defaults', icon: '<svg class="i" viewBox="0 0 24 24"><path d="M12 3l1.8 4.7L18.5 9l-4.7 1.8L12 15.5l-1.8-4.7L5.5 9l4.7-1.3z"/><path d="M19 15l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z"/></svg>', color: '#0EA5E9', dot: 'ok', status: (() => { const c = Object.assign({}, ADV_DEF, (() => { try { return JSON.parse(s.advisorJson || '{}'); } catch (e) { return {}; } })()); return `Target ROAS ${c.roas} · stock warning ${c.stockDays} days · ad tips after ₹${c.minSpend}`; })(), open: open === 'b-advisor',
       body: `<p class="help" style="margin-top:0">The numbers every client's AI Advisor starts with (target ROAS, when a lead counts as untouched, low-stock warning, returns limit, minimum ad spend before ad tips). Clients can change them for their own business. Switch the Advisor on / off per plan in Plans & pricing → Sections.</p><div class="cf-foot" style="margin:0;border:0;padding:0"><div class="grow"></div><button class="btn primary" data-advcfgp>Edit defaults</button></div>` })}
-    ${accItem('b-connect', { title: 'Connect methods (WhatsApp, Shopify, Amazon, Meta Ads)', icon: '<svg class="i" viewBox="0 0 24 24"><path d="M9 7V3M15 7V3M7 7h10v4a5 5 0 0 1-10 0V7ZM12 16v5"/></svg>', color: '#25D366', dot: 'ok', status: (() => { const on = Object.keys(CONNM_DEF).map(k => { const M = connModes(k); return `${CONNM_DEF[k].label}: ${M.a.on && M.b.on ? 'A + B' : M.a.on ? 'A' : M.b.on ? 'B' : 'off'}`; }); return on.join(' · '); })(), open: open === 'b-connect', body: admConnBody() })}
+    ${accItem('b-connect', { title: 'Connect methods (WhatsApp, Shopify, Amazon, Meta Ads)', icon: '<svg class="i" viewBox="0 0 24 24"><path d="M9 7V3M15 7V3M7 7h10v4a5 5 0 0 1-10 0V7ZM12 16v5"/></svg>', color: '#25D366', dot: 'ok', status: (() => { const on = Object.keys(CONNM_DEF).map(k => { const M = connModes(k, true); return `${CONNM_DEF[k].label}: ${M.a.on && M.b.on ? 'A + B' : M.a.on ? 'A' : M.b.on ? 'B' : 'off'}`; }); return on.join(' · '); })(), open: open === 'b-connect', body: admConnBody() })}
     ${accItem('b-support', { title: 'Support contact & renew link', icon: '<svg class="i" viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3.5-7.1L21 4v5h-5"/></svg>', color: '#10B981', dot: s.supportPhone || s.supportEmail ? 'ok' : 'wait', status: s.supportPhone || s.supportEmail ? [s.supportPhone ? '+' + s.supportPhone : '', s.supportEmail].filter(Boolean).join(' · ') : 'Not set — clients can not contact you to renew', open: open === 'b-support',
       body: `<div class="form" style="grid-template-columns:repeat(3,1fr)">${f('psPhone', 'Support WhatsApp (with country code)', s.supportPhone, 'placeholder="91 98…"')}${f('psMail', 'Support email', s.supportEmail)}${f('psLink', 'Renew / payment link (optional)', s.renewLink, 'placeholder="https://rzp.io/…"')}</div>
         <p class="help">Used by the pricing buttons, the expiry banner and Settings → Plan & billing.</p>` })}

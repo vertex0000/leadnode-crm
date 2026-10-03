@@ -1,11 +1,11 @@
--- Nodevers 19 — Two ways to connect WhatsApp, Shopify, Amazon and Meta Ads.
+-- Nodevers 20 — Two ways to connect WhatsApp, Shopify, Amazon and Meta Ads.
 --   Option A ("own app"):  the client uses its own Meta / Shopify / Amazon developer app and pastes its keys.
 --                          WhatsApp: every client gets its OWN webhook verify token, and its Meta App secret is kept on the server,
 --                          so incoming messages from the client's own Meta app are accepted (before only the platform's app worked).
 --   Option B ("one click"): the client presses "Connect with Facebook / Shopify / Amazon" and approves — uses the platform's
---                          approved app (Meta Tech Provider, Shopify public app, Amazon public app). Switched OFF until approved.
+--                          approved app (Meta Tech Provider = wa-signup function, Shopify public app, Amazon public app). Switched OFF until approved.
 -- Which option a client sees is chosen in Admin Console → Settings → Connect methods (saved as connectModesJson — names and on/off only, never keys).
--- Nothing existing is changed or deleted. Safe to run more than once. Needs 02_team_whatsapp_realtime.sql and 11_platform_billing.sql first.
+-- Nothing existing is changed or deleted. Safe to run more than once. Needs 02_team_whatsapp_realtime.sql and 11_platform_billing.sql first (19_embedded_signup.sql is included below, safe if already run).
 
 -- ---------- 1. WhatsApp webhook keys per client (server only — browsers can never read this table) ----------
 create table if not exists public.wa_hooks (
@@ -22,10 +22,9 @@ alter table public.wa_hooks enable row level security;
 revoke all on public.wa_hooks from anon, authenticated;
 grant all on public.wa_hooks to service_role;
 
--- how the number was connected: own = client's own Meta app (A), app = Connect with Facebook (B)
-alter table public.wa_accounts add column if not exists connect_mode text not null default 'own';
-alter table public.wa_accounts drop constraint if exists wa_accounts_connect_mode_check;
-alter table public.wa_accounts add constraint wa_accounts_connect_mode_check check (connect_mode in ('own', 'app'));
+-- how the number was connected (same columns as 19_embedded_signup.sql): manual = client's own Meta app (A), embedded_signup = Connect with Facebook (B)
+alter table public.wa_accounts add column if not exists pin text not null default '';
+alter table public.wa_accounts add column if not exists onboarded_via text not null default 'manual';
 
 -- the owner / an admin sees the workspace's webhook verify token (made the first time) — never the App secret
 create or replace function public.wa_hook_info(p_ws uuid) returns jsonb
@@ -39,7 +38,7 @@ begin
     on conflict (workspace_id) do nothing;
     select * into h from public.wa_hooks where workspace_id = p_ws;
   end if;
-  select connect_mode into m from public.wa_accounts where workspace_id = p_ws;
+  select case when onboarded_via = 'embedded_signup' then 'app' else 'own' end into m from public.wa_accounts where workspace_id = p_ws;
   return jsonb_build_object('verify_token', h.verify_token, 'has_app_secret', h.app_secret <> '', 'verified_at', h.verified_at,
     'last_event_at', h.last_event_at, 'last_bad_sig_at', h.last_bad_sig_at, 'connect_mode', m);
 end $$;

@@ -1,7 +1,7 @@
 // Nodevers — wa-webhook: Meta sends incoming WhatsApp messages + delivery ticks here.
 // Deploy: Supabase → Edge Functions → wa-webhook → Code → replace all → Deploy. "Enforce JWT verification" stays OFF.
 // Secrets (Edge Functions → Secrets): WA_VERIFY_TOKEN (any long random text, same as in Meta), META_APP_SECRET (Meta app → Basic → App secret).
-// Clients who use their OWN Meta app (Option A) get their own verify token and their App secret is kept in wa_hooks (SQL 19) —
+// Clients who use their OWN Meta app (Option A) get their own verify token and their App secret is kept in wa_hooks (SQL 20) —
 // a message is accepted when Meta's signature matches the platform's App secret OR that client's own App secret.
 import { createClient } from 'npm:@supabase/supabase-js@2';
 

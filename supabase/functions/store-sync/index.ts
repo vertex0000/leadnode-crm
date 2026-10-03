@@ -4,11 +4,11 @@
 //   Meta Ads (ad account id + access token with ads_read — daily spend per campaign → ad_spend, used for net profit).
 //   Actions (signed-in owner / admin): list · test · save · sync · delete.   Every 15 min (pg_cron, header x-cron-secret): cron.
 // Deploy: Supabase → Edge Functions → Deploy a new function → Via Editor → name "store-sync" → paste → Deploy → turn OFF "Enforce JWT verification".
-// Two ways to connect (Admin Console → Settings → Connect methods, SQL 19):
+// Two ways to connect (Admin Console → Settings → Connect methods, SQL 20):
 //   A "own"  — the client's own app keys (Shopify Dev Dashboard client ID + secret, or an old shpat_ token; Amazon private app; Meta system user token).
 //   B "app"  — one click "Connect with Shopify / Amazon / Facebook" through the platform's approved app (off until approved). Secrets for B only:
 //              SHOPIFY_CLIENT_ID + SHOPIFY_CLIENT_SECRET · AMAZON_LWA_CLIENT_ID + AMAZON_LWA_CLIENT_SECRET (+ AMAZON_APP_ID) · META_APP_ID + META_APP_SECRET.
-// No secrets are needed for option A. Needs 10_connections_alerts.sql (19_connect_methods.sql for option B).
+// No secrets are needed for option A. Needs 10_connections_alerts.sql (20_connect_methods.sql for option B).
 import { createClient } from 'npm:@supabase/supabase-js@2';
 
 const firstKey = (json?: string) => { try { return Object.values(JSON.parse(json ?? '{}'))[0] as string | undefined; } catch { return undefined; } };
@@ -365,7 +365,7 @@ async function oauthStart(ws: string, uid: string, platform: string, b: any) {
   }
   await db.from('oauth_states').delete().lt('created_at', new Date(Date.now() - 864e5).toISOString());
   const { error } = await db.from('oauth_states').insert({ state, workspace_id: ws, user_id: uid, platform, redirect_uri: redirect, extra });
-  if (error) return json({ error: 'Run 19_connect_methods.sql in Supabase first (' + error.message + ').' }, 500);
+  if (error) return json({ error: 'Run 20_connect_methods.sql in Supabase first (' + error.message + ').' }, 500);
   return json({ ok: true, url });
 }
 
