@@ -1119,25 +1119,21 @@ body.no-sales [data-go="tasks"],body.no-sales [data-go="calls"],body.no-orders [
 .ut-rs{display:flex;align-items:center;margin-top:12px}
 .tf-sys{align-self:center;font-size:11.5px;color:var(--muted);background:var(--glass-3);border:1px dashed var(--line-2);padding:4px 10px;border-radius:999px;text-align:center;max-width:90%}
 /* ---- Template editor (full screen, WATI / Interakt style) ---- */
-html.tped-lock{overflow:hidden}
-.tp[data-tpopen]{cursor:pointer;transition:transform .18s ease,box-shadow .18s ease}.tp[data-tpopen]:hover{transform:translateY(-2px);box-shadow:var(--shadow-2)}
-.tp-auto{display:inline-flex;align-items:center;gap:4px;font-weight:700;color:#7C3AED;background:color-mix(in srgb,#8B5CF6 12%,transparent);padding:2px 8px;border-radius:20px}
-.tped{position:fixed;inset:0;z-index:62;display:flex;padding:14px;background:color-mix(in srgb,#0B1020 34%,transparent);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);opacity:0;transition:opacity .22s ease}
-.tped[hidden]{display:none}.tped.show{opacity:1}
-.tped-box{flex:1;min-width:0;display:flex;flex-direction:column;border-radius:22px;overflow:hidden;background:linear-gradient(165deg,var(--bg1),var(--bg2));border:1px solid var(--stroke);box-shadow:0 30px 80px rgba(10,14,30,.28);transform:translateY(18px) scale(.985);transition:transform .32s cubic-bezier(.2,.8,.2,1)}
-.tped.show .tped-box{transform:none}
-.tped-top{display:flex;align-items:center;gap:10px;padding:12px 18px;background:var(--glass-3);border-bottom:1px solid var(--line);flex-wrap:wrap;position:relative;z-index:2}
+.tped[hidden]{display:none}
+#v-templates.editing>:not(.tped){display:none!important}
+.tped{animation:viewIn .35s cubic-bezier(.2,.7,.2,1)}
+.tped-top{display:flex;align-items:center;gap:10px;padding:12px 16px;background:var(--glass-3);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);border:1px solid var(--stroke);border-radius:18px;box-shadow:0 8px 26px rgba(15,18,40,.07);flex-wrap:wrap;position:sticky;top:8px;z-index:20;margin-bottom:18px}
 .tped-top .grow{flex:1}
 .tpe-back{display:inline-flex;align-items:center;gap:4px;border:1px solid var(--line-2);background:var(--glass-2,var(--card));color:var(--text);font:inherit;font-size:13px;font-weight:700;padding:7px 12px 7px 8px;border-radius:12px;cursor:pointer}.tpe-back:hover{background:var(--glass-3)}.tpe-back .i{width:18px;height:18px}
 .tpe-ti{display:flex;flex-direction:column;gap:3px;min-width:0;padding-left:4px}.tpe-ti b{font-size:17px;letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:38vw}.tpe-ti small{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:12px;flex-wrap:wrap}.tpe-ti .tp-st{font-size:11px;padding:2px 8px}
 .tpe-dirty{color:#B45309;font-style:normal;font-weight:700}
 .tpe-tc .i{width:14px;height:14px;fill:currentColor;stroke:none}
 .tpe-tabs{display:none;gap:3px;padding:3px;border-radius:11px;background:var(--glass-2,var(--card));border:1px solid var(--line)}.tpe-tabs button{border:0;background:none;font:inherit;font-size:12.5px;font-weight:700;color:var(--muted);padding:6px 12px;border-radius:8px;cursor:pointer}.tpe-tabs button.on{background:var(--primary);color:var(--on-primary)}
-.tped-body{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) 380px}
-.tped-form{overflow:auto;overscroll-behavior:contain;padding:22px clamp(16px,3vw,40px) 60px}
-.tpe-form-in{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:16px}
-.tped-side{border-left:1px solid var(--line);background:var(--glass);overflow:auto;overscroll-behavior:contain}
-.tped-sticky{padding:20px 22px 28px;display:flex;flex-direction:column;gap:14px}
+.tped-body{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:20px;align-items:start}
+.tped-form{min-width:0;padding-bottom:40px}
+.tpe-form-in{display:flex;flex-direction:column;gap:16px}
+.tped-side{position:sticky;top:92px;max-height:calc(100vh - 104px);overflow:auto;overscroll-behavior:contain;border-radius:18px;background:var(--glass-2,var(--card));border:1px solid var(--stroke);box-shadow:0 6px 22px rgba(15,18,40,.05)}
+.tped-sticky{padding:18px 18px 22px;display:flex;flex-direction:column;gap:14px}
 .tpe-pt{display:flex;align-items:baseline;justify-content:space-between;gap:8px}.tpe-pt span{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}.tpe-pt small{font-size:11.5px;color:var(--faint)}
 .tpe-phone{margin:0;border-radius:22px}.tpe-phone .wa-chat{min-height:260px}.tpe-pe{margin:auto;color:var(--muted);font-size:13px;padding:40px 10px;text-align:center}
 .tpe-rules{margin:0}
@@ -1188,10 +1184,10 @@ html.tped-lock{overflow:hidden}
 .tpe-sc b{font-size:14.5px}.tpe-sc small{color:var(--muted);font-size:12.5px;line-height:1.4}.tpe-sc em{position:absolute;top:14px;right:14px;font-style:normal;font-size:10.5px;font-weight:700;color:var(--muted);background:var(--line);padding:2px 7px;border-radius:20px}
 .tpe-scb{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px}.tpe-scb i{font-style:normal;font-size:11px;font-weight:600;color:#1E88E5;border:1px solid color-mix(in srgb,#1E88E5 25%,var(--line));border-radius:7px;padding:2px 6px}
 .tped.starting .tped-side{display:none}.tped.starting .tped-body{grid-template-columns:minmax(0,1fr)}
-@media(max-width:1100px){.tped-body{grid-template-columns:minmax(0,1fr) 320px}.tpe-kv{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:900px){.tped{padding:0}.tped-box{border-radius:0}.tped-body{grid-template-columns:minmax(0,1fr)}.tped-side{display:none;border-left:0}.tped.show-prev .tped-side{display:block}.tped.show-prev .tped-form{display:none}.tpe-tabs{display:inline-flex}
+@media(max-width:1100px){.tped-body{grid-template-columns:minmax(0,1fr) 320px;gap:14px}.tpe-kv{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:900px){.tped-body{grid-template-columns:minmax(0,1fr)}.tped-side{display:none;position:static;max-height:none}.tped.show-prev .tped-side{display:block}.tped.show-prev .tped-form{display:none}.tpe-tabs{display:inline-flex}
   .tped-top{padding:10px 12px;gap:8px}.tpe-back span{display:none}.tpe-ti b{max-width:52vw;font-size:15.5px}.tped-top .grow{flex-basis:0}.tped-top .btn{padding:8px 11px;font-size:12.5px}.tpe-tc{display:none}
-  .tped-form{padding:14px 12px 90px}.tpe-sec{padding:14px;border-radius:16px}.tpe-sec .tb-cts{grid-template-columns:repeat(3,minmax(0,1fr))!important}.tpe-sf{grid-template-columns:minmax(0,1fr)}.tpe-bh select{max-width:40%}.tpe-when{margin-left:6px;padding-left:20px}.tpe-step::before{left:-21px;width:18px}.tpe-sn{left:-31px}.tpe-2{grid-template-columns:minmax(0,1fr)}.tpe-sth h2{font-size:20px}.tpe-btag{display:none}.tpe-tcm{display:flex!important}}
+  .tped-form{padding-bottom:90px}.tpe-sec{padding:14px;border-radius:16px}.tpe-sec .tb-cts{grid-template-columns:repeat(3,minmax(0,1fr))!important}.tpe-sf{grid-template-columns:minmax(0,1fr)}.tpe-bh select{max-width:40%}.tpe-when{margin-left:6px;padding-left:20px}.tpe-step::before{left:-21px;width:18px}.tpe-sn{left:-31px}.tpe-2{grid-template-columns:minmax(0,1fr)}.tpe-sth h2{font-size:20px}.tpe-btag{display:none}.tpe-tcm{display:flex!important}}
 .tpe-tcm{display:none!important;justify-content:center}
 @media(max-width:900px){.tped-top>.tpe-tabs{order:5}.tped-top>[data-tesave],.tped-top>[data-tesubmit],.tped-top>[data-tbsaveflow]{order:6}}
 /* ---- card popup (Settings-style) ---- */
@@ -1816,6 +1812,7 @@ body.ro [data-cmw],body.np-commerce [data-cmw]{display:none!important}
         <div class="head-actions"><button class="btn" id="tpSync">⟳ Sync from WhatsApp</button><button class="btn primary" id="tpNew"><svg class="i" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>New template</button></div></div>
       <div class="tp-bar" id="tplBar"></div>
       <div class="tpgrid" id="tplgrid"></div>
+      <div class="tped" id="tplEd" hidden aria-label="Template editor"><div class="tped-box"><header class="tped-top" id="tpeTop"></header><div class="tped-body"><div class="tped-form" id="tpeForm"></div><aside class="tped-side"><div class="tped-sticky" id="tpsPrev"></div></aside></div></div></div>
     </section>
 
     <!-- UNIFIED ANALYTICS -->
@@ -1919,7 +1916,6 @@ body.ro [data-cmw],body.np-commerce [data-cmw]{display:none!important}
 
 <!-- LEAD MODAL -->
 <div id="famProbe" hidden aria-hidden="true"></div>
-<div class="tped" id="tplEd" hidden role="dialog" aria-modal="true" aria-label="Template editor"><div class="tped-box"><header class="tped-top" id="tpeTop"></header><div class="tped-body"><div class="tped-form" id="tpeForm"></div><aside class="tped-side"><div class="tped-sticky" id="tpsPrev"></div></aside></div></div></div>
 <div class="modal" id="leadModal"><div class="box" id="leadBox"></div></div>
 
 <!-- SETTINGS MODAL -->
@@ -7191,14 +7187,22 @@ const drawTplActions = drawTplEditor;
 function tplEdOpen(e) {
   e.buttons.forEach(b => { b.flat = botFlat(b.actions); });
   TPL.edit = e; TPL.dirty = false; TPL.pick = null;
-  const R = $('#tplEd'); R.hidden = false; R.classList.remove('show-prev'); document.documentElement.classList.add('tped-lock');
-  $('#tpeForm').scrollTop = 0; drawTplEditor(); requestAnimationFrame(() => requestAnimationFrame(() => R.classList.add('show')));
+  if (!$('#v-templates').classList.contains('active')) go('templates');
+  const R = $('#tplEd'); R.hidden = false; R.classList.remove('show-prev'); R.classList.add('show'); $('#v-templates').classList.add('editing');
+  drawTplEditor(); scrollTo({ top: 0 });
+  if (!(history.state && history.state.tpe)) history.pushState({ tpe: 1 }, '');   // browser Back = back to the list
 }
 function tplEdClose(force) {
   if (!force && TPL.dirty && !confirm('Close without saving? Your changes will be lost.')) return;
-  const R = $('#tplEd'); R.classList.remove('show'); document.documentElement.classList.remove('tped-lock'); TPL.edit = null; TPL.dirty = false; TPL.pick = null;
-  setTimeout(() => { if (!TPL.edit) R.hidden = true; }, 230);
+  tpeHide(); if (history.state && history.state.tpe) { TPL.skipPop = true; history.back(); }
 }
+function tpeHide() { const R = $('#tplEd'); R.classList.remove('show'); R.hidden = true; $('#v-templates').classList.remove('editing'); TPL.edit = null; TPL.dirty = false; TPL.pick = null; scrollTo({ top: 0 }); }
+addEventListener('popstate', () => {
+  if (TPL.skipPop) { TPL.skipPop = false; return; }
+  if (!TPL.edit || $('#tplEd').hidden) return;
+  if (TPL.dirty && !confirm('Close without saving? Your changes will be lost.')) { history.pushState({ tpe: 1 }, ''); return; }
+  tpeHide();
+});
 /** new template (null), a copy, or an existing one → the editor */
 function openTplEditor(base) { const t = base && base.templateName && tfTpl(base.templateName); if (t && !base.isCopy) return openTplActions(t.templateName); const e = tfEditFrom(base || null, true); tplEdOpen(e); }
 function openTplActions(name) { const t = tfTpl(name); if (t) tplEdOpen(tfEditFrom(t)); }
@@ -7274,7 +7278,6 @@ function readTplEditor() {
   R.addEventListener('click', ev => {
     const e = TPL.edit, t = ev.target; if (!e) return;
     if (t.closest('[data-tpex]')) return tplEdClose();
-    if (t === R) return tplEdClose();
     const vw = t.closest('[data-tpeview]'); if (vw) { R.classList.toggle('show-prev', vw.dataset.tpeview === 'prev'); $$('#tplEd [data-tpeview]').forEach(b => b.classList.toggle('on', b === vw)); return; }
     const sp = t.closest('[data-tpestart]'); if (sp) return tpeStart(+sp.dataset.tpestart);
     if (t.closest('[data-tsprev]')) return tsPreview();
