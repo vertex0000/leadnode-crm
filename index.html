@@ -733,7 +733,7 @@ body.brand-ro #brandRowSite,body.brand-ro #setModal .acc[data-acc="s-wl"]{displa
   #setModal .set-acc .acc-h{grid-column:1;width:auto;margin:2px 10px;padding:10px 12px;border-radius:12px;transition:background .2s}
   #setModal .set-acc .acc-h:hover{background:color-mix(in srgb,var(--text) 5%,transparent)}
   #setModal .set-acc .acc.open .acc-h{background:var(--card);box-shadow:0 6px 18px -10px rgba(15,23,42,.35),inset 3px 0 0 var(--blue-2)}
-  #setModal .set-acc .acc-h .acc-dot,#setModal .set-acc .acc-chev{display:none}
+  #setModal .set-acc .acc-h .acc-dot,#setModal .set-acc .acc-chev,#setModal .set-acc .acc-go{display:none}
   #setModal .set-acc .acc-t small{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:170px;display:block}
   #setModal .set-acc .acc-b{grid-column:2;grid-row:1 / span 40;display:none;overflow:auto;min-height:0;max-height:100%;border-left:1px solid var(--line);transition:none}
   #setModal .set-acc .acc.open .acc-b{display:block;animation:setIn .25s ease}
@@ -1065,12 +1065,64 @@ body.no-sales [data-go="tasks"],body.no-sales [data-go="calls"],body.no-orders [
 .acc{border-radius:14px;border:1px solid var(--line);background:var(--glass-2,var(--card));transition:border-color .25s,box-shadow .25s}.acc.open{border-color:color-mix(in srgb,var(--blue-2) 55%,transparent);box-shadow:0 0 0 3px color-mix(in srgb,var(--blue-2) 12%,transparent),0 10px 30px rgba(0,0,0,.18)}
 .acc-h{display:flex;align-items:center;gap:12px;width:100%;padding:14px 16px;border:0;background:transparent;color:var(--text);text-align:left;border-radius:14px}
 .acc-dot{width:9px;height:9px;border-radius:50%;flex:none;box-shadow:0 0 0 3px color-mix(in srgb,currentColor 0%,transparent)}
-.acc-ic{width:40px;height:40px;border-radius:11px;display:grid;place-items:center;flex:none;background:color-mix(in srgb,var(--c) 18%,transparent);color:var(--c)}.acc-ic .i{width:20px;height:20px}.acc-txt{font-size:13px;font-weight:800}
+.acc-ic{width:40px;height:40px;border-radius:11px;display:grid;place-items:center;flex:none;background:color-mix(in srgb,var(--c) 18%,transparent);color:var(--c)}.acc-go{display:grid;place-items:center;flex:none}.acc-tr{display:flex;align-items:center;gap:8px;flex-wrap:wrap;min-width:0}.acc-desc{display:none}.acc-cta{display:none}
+.acc-pill{font-style:normal;font-size:11px;font-weight:700;padding:2px 9px 2px 8px;border-radius:999px;background:color-mix(in srgb,var(--dot) 15%,transparent);color:color-mix(in srgb,var(--dot) 78%,var(--text));display:inline-flex;align-items:center;gap:5px;white-space:nowrap}.acc-pill::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--dot)}.acc-ic .i{width:20px;height:20px}.acc-txt{font-size:13px;font-weight:800}
 .acc-t{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}.acc-t b{font-size:14.5px}.acc-t small{font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .acc-bd{font-size:11px;font-weight:800;color:#8B5CF6;background:color-mix(in srgb,#A78BFA 18%,transparent);padding:2px 8px;border-radius:20px}
 .acc-chev{transition:transform .3s cubic-bezier(.2,.8,.2,1);color:var(--muted)}.acc.open .acc-chev{transform:rotate(90deg);color:var(--blue-2)}
 .acc-b{display:grid;grid-template-rows:0fr;transition:grid-template-rows .3s cubic-bezier(.2,.8,.2,1)}.acc.open .acc-b{grid-template-rows:1fr}.acc-in{overflow:hidden;min-height:0}
 .acc-pad{padding:0 16px 16px;opacity:0;transform:translateY(-4px);transition:opacity .25s,transform .25s}.acc.open .acc-pad{opacity:1;transform:none}
+/* ---- accordion as a grid of cards (Admin Console, Home page editor, Messages, Connections) — the open card spans the full row ---- */
+.acc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px;grid-auto-flow:row dense}
+.acc-grid>.acc{display:flex;flex-direction:column;position:relative;min-width:0;border-color:color-mix(in srgb,var(--c) 24%,var(--line));background:linear-gradient(155deg,color-mix(in srgb,var(--c) 12%,transparent),transparent 58%),var(--glass-2,var(--card));transition:border-color .25s,box-shadow .25s,transform .25s}
+.acc-grid>.acc:not(.open){min-height:178px}
+.acc-grid>.acc:not(.open):hover{transform:translateY(-3px);border-color:color-mix(in srgb,var(--c) 48%,var(--line));box-shadow:0 18px 36px -22px color-mix(in srgb,var(--c) 70%,transparent)}
+.acc-grid>.acc:not(.open)>.acc-h{flex:1;display:grid;grid-template-columns:auto minmax(0,1fr) auto;grid-template-areas:"ic bd go" "t t t";align-content:start;align-items:start;gap:14px 10px;padding:18px}
+.acc-grid>.acc:not(.open) .acc-dot{display:none}
+.acc-grid>.acc:not(.open) .acc-ic{grid-area:ic;width:48px;height:48px;border-radius:14px;border:1px solid color-mix(in srgb,var(--c) 32%,transparent);background:color-mix(in srgb,var(--c) 16%,transparent)}.acc-grid>.acc:not(.open) .acc-ic .i{width:22px;height:22px}
+.acc-grid>.acc:not(.open) .acc-bd{grid-area:bd;justify-self:start;align-self:center}
+.acc-grid>.acc .acc-go{grid-area:go;width:36px;height:36px;border-radius:50%;background:var(--glass-3);border:1px solid var(--line);color:var(--text)}
+.acc-grid>.acc:not(.open):hover .acc-go{background:color-mix(in srgb,var(--c) 18%,var(--glass-3));border-color:color-mix(in srgb,var(--c) 40%,var(--line))}
+.acc-grid>.acc:not(.open) .acc-t{grid-area:t;gap:6px;align-self:stretch;height:100%}
+.acc-grid>.acc:not(.open) .acc-t b{font-size:15.5px;letter-spacing:-.01em}
+.acc-grid>.acc:not(.open) .acc-desc{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;font-size:12.5px;line-height:1.45;color:var(--muted)}
+.acc-grid>.acc:not(.open) .acc-st{order:9;margin-top:auto;position:relative;display:block;padding:8px 12px 8px 27px;border-radius:999px;border:1px solid var(--line);background:var(--glass-3);font-size:12.5px;font-weight:600}
+.acc-grid>.acc:not(.open) .acc-st::before{content:'';position:absolute;left:12px;top:50%;width:8px;height:8px;margin-top:-4px;border-radius:50%;background:var(--dot);box-shadow:0 0 0 3px color-mix(in srgb,var(--dot) 22%,transparent)}
+.acc-grid>.acc.open{grid-column:1/-1}
+@media(max-width:640px){.acc-grid{grid-template-columns:minmax(0,1fr);gap:10px}.acc-grid>.acc:not(.open){min-height:0}}
+/* connection cards: compact, status pill next to the name, Manage / Connect */
+.cg-panel{min-width:0;padding:16px;border-radius:18px;border:1px solid var(--line);background:linear-gradient(160deg,color-mix(in srgb,var(--c) 7%,transparent),transparent 45%),var(--glass-2,var(--card));margin-bottom:16px}
+.cg-h{display:flex;align-items:center;gap:12px;margin:0 2px 14px}.cg-ic{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;flex:none;background:color-mix(in srgb,var(--c) 18%,transparent);color:var(--c)}.cg-ic .i{width:19px;height:19px}
+.cg-h b{display:block;font-size:15.5px}.cg-h small{display:block;color:var(--muted);font-size:12.5px;margin-top:1px}.cg-h .grow{flex:1;min-width:0}
+.cg-all{border:0;background:none;color:var(--blue-2);font-weight:700;font-size:13px;cursor:pointer;white-space:nowrap;padding:6px 4px;font-family:inherit}
+.cg-panel:not(.all) .acc-grid>.acc.cg-more:not(.open){display:none}
+.conn-grid.acc-grid{grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:12px}
+.conn-grid>.acc:not(.open){min-height:128px;background:var(--glass-3,var(--card));border-color:var(--line)}
+.conn-grid>.acc:not(.open)>.acc-h{grid-template-columns:auto minmax(0,1fr) auto;grid-template-areas:"ic tr cta" "ic st st" "ic desc desc";align-items:start;gap:4px 12px;padding:14px}
+.conn-grid>.acc:not(.open) .acc-t{display:contents}.conn-grid>.acc:not(.open) .acc-tr{grid-area:tr;align-self:center;min-height:32px;row-gap:4px}.conn-grid>.acc:not(.open) .acc-st{grid-area:st}.conn-grid>.acc:not(.open) .acc-desc{grid-area:desc;margin-top:2px}
+.conn-grid>.acc:not(.open) .acc-ic{grid-row:1/4;width:44px;height:44px;border-radius:12px}
+.conn-grid>.acc:not(.open) .acc-go,.conn-grid>.acc:not(.open) .acc-bd{display:none}
+.conn-grid>.acc:not(.open) .acc-t{gap:4px}.conn-grid>.acc:not(.open) .acc-t b{font-size:14.5px}
+.conn-grid>.acc:not(.open) .acc-st{order:0;margin:0;padding:0;border:0;background:none;font-size:12.5px;font-weight:500;color:var(--muted)!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.conn-grid>.acc:not(.open) .acc-st::before{display:none}
+.conn-grid>.acc:not(.open) .acc-desc{-webkit-line-clamp:2;font-size:12px}
+.conn-grid .acc-cta{grid-area:cta;display:inline-flex;align-items:center;gap:2px;font-size:12.5px;font-weight:700;padding:6px 8px 6px 12px;border-radius:10px;border:1px solid var(--line-2);background:var(--glass-2,var(--card));color:var(--text);white-space:nowrap;align-self:start;transition:background .2s,border-color .2s}.conn-grid .acc-cta .i{width:15px;height:15px}
+.conn-grid>.acc:not(.open):hover{border-color:color-mix(in srgb,var(--c) 45%,var(--line))}.conn-grid>.acc:not(.open):hover .acc-cta{border-color:color-mix(in srgb,var(--c) 55%,var(--line));background:color-mix(in srgb,var(--c) 10%,var(--glass-2,var(--card)))}
+.conn-grid>.acc.open .acc-cta{display:none}
+@media(max-width:640px){.cg-panel{padding:12px}.conn-grid.acc-grid{grid-template-columns:minmax(0,1fr)}.acc-grid .cf-safe{flex:1 1 100%}}
+/* ---- Templates: view switch + flow builder ---- */
+.tp-seg{display:inline-flex;gap:3px;padding:3px;border-radius:12px;background:var(--glass-2,var(--card));border:1px solid var(--line)}.tp-seg button{display:inline-flex;align-items:center;gap:6px;border:0;background:transparent;color:var(--muted);font:inherit;font-weight:700;font-size:13px;padding:7px 13px;border-radius:9px;cursor:pointer}.tp-seg button .i{width:16px;height:16px}.tp-seg button.on{background:var(--glass-3);color:var(--text);box-shadow:0 1px 4px rgba(0,0,0,.12)}
+.tf-intro{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px}.tf-steps{display:flex;gap:8px;flex-wrap:wrap;flex:1;min-width:0}.tf-steps span{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;color:var(--muted);padding:6px 11px 6px 6px;border-radius:999px;background:var(--glass-2,var(--card));border:1px solid var(--line)}.tf-steps b{width:20px;height:20px;border-radius:50%;display:grid;place-items:center;background:color-mix(in srgb,#25A55F 18%,transparent);color:#25A55F;font-size:11px}.tf-steps i{font-style:normal;color:var(--text);font-weight:600}
+.tf-stage{position:relative}.tf-empty{position:absolute;left:50%;top:50%;transform:translate(-50%,-40%);z-index:4;width:min(380px,calc(100% - 32px));text-align:center;padding:22px;border-radius:18px;background:var(--glass-3);border:1px solid var(--line);box-shadow:var(--shadow-2);display:flex;flex-direction:column;align-items:center;gap:8px}.tf-empty[hidden]{display:none}.tf-empty p{margin:0 0 6px;color:var(--muted);font-size:13px;line-height:1.5}.tf-emi{width:52px;height:52px;border-radius:15px;display:grid;place-items:center;background:color-mix(in srgb,#25A55F 16%,transparent);color:#25A55F}.tf-emi .i{width:26px;height:26px}#tfCanvas [data-fx="preset"]{display:none}
+.fx-bar .grow{flex:1;pointer-events:none}.fx-status:empty{display:none}.tf-sync{font-size:12px;font-weight:700;padding:6px 10px;border-radius:var(--r-ctl);border:1px solid var(--line-2);background:var(--glass-3)}.tf-sync.ok{color:var(--green)}.tf-sync.dirty{color:#B45309;background:var(--yellow-soft)}
+.tf-prev{border:1px solid var(--line);border-radius:12px;padding:10px;background:color-mix(in srgb,#25A55F 6%,var(--glass-2,var(--card)));display:flex;flex-direction:column;gap:6px}
+.tf-bub{background:var(--glass-3);border-radius:10px 10px 10px 3px;padding:8px 10px;font-size:12.5px;line-height:1.45;display:flex;flex-direction:column;gap:4px;white-space:pre-wrap;word-break:break-word;box-shadow:0 1px 2px rgba(0,0,0,.08)}.tf-bub small{color:var(--muted);font-size:11px}
+.tf-pb{display:flex;flex-direction:column;gap:1px;padding:6px 9px;border-radius:9px;border:1px solid var(--line);background:var(--glass-3);font-size:12.5px}.tf-pb span{font-weight:700;color:#1E88E5}.tf-pb small{font-size:11px;color:var(--muted)}.tf-pb.ext span{color:var(--muted)}
+.tf-st{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:8px}
+.tf-chat{display:flex;flex-direction:column;gap:8px;max-height:56vh;overflow:auto;padding:12px;border-radius:14px;background:color-mix(in srgb,#25A55F 8%,var(--glass-2,var(--card)));border:1px solid var(--line)}
+.tf-b{display:flex;flex-direction:column;gap:4px;max-width:82%}.tf-b.in{align-self:flex-start}.tf-b.out{align-self:flex-end}.tf-b.out .tf-bub{background:color-mix(in srgb,#25A55F 22%,var(--glass-3));border-radius:10px 10px 3px 10px}
+.tf-btns{display:flex;flex-direction:column;gap:4px}.tf-cb{border:1px solid var(--line);background:var(--glass-3);color:#1E88E5;font:inherit;font-weight:700;font-size:13px;padding:8px;border-radius:10px;cursor:pointer}.tf-cb:disabled{opacity:.55;cursor:default}.tf-cb:not(:disabled):hover{background:color-mix(in srgb,#1E88E5 10%,var(--glass-3))}
+.tf-sys{align-self:center;font-size:11.5px;color:var(--muted);background:var(--glass-3);border:1px dashed var(--line-2);padding:4px 10px;border-radius:999px;text-align:center;max-width:90%}
+@media(max-width:640px){.tf-steps{display:none}.tp-seg button{padding:7px 10px}}
 .conn-g{margin-bottom:20px}.conn-gt{font-size:11.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin:0 2px 8px}
 .conn-q{min-width:240px}
 .cf-grid{grid-template-columns:1fr 1fr}.cf-in{position:relative;display:flex;align-items:center}.cf-in .input{flex:1}.cf-eye{position:absolute;right:6px;border:0;background:transparent;opacity:.6;font-size:13px}
@@ -1664,9 +1716,10 @@ body.ro [data-cmw],body.np-commerce [data-cmw]{display:none!important}
     <!-- TEMPLATES -->
     <section class="view" id="v-templates">
       <div class="head"><div><div class="eyebrow">Messaging</div><h1>Templates</h1><p class="sub">Approved messages you can send anytime — campaigns, offers, reminders.</p></div>
-        <div class="head-actions"><button class="btn" id="tpFlow">⇢ Flow map</button><button class="btn" id="tpSync">⟳ Sync from WhatsApp</button><button class="btn primary" id="tpNew"><svg class="i" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>New template</button></div></div>
+        <div class="head-actions"><div class="tp-seg" role="tablist"><button type="button" data-tpview="list" role="tab">Templates</button><button type="button" data-tpview="flow" role="tab"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="4" width="6" height="5" rx="1.5"/><rect x="15" y="4" width="6" height="5" rx="1.5"/><rect x="9" y="15" width="6" height="5" rx="1.5"/><path d="M6 9v2a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V9M12 13v2"/></svg>Flow builder</button></div><button class="btn" id="tpSync">⟳ Sync from WhatsApp</button><button class="btn primary" id="tpNew"><svg class="i" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>New template</button></div></div>
       <div class="tp-bar" id="tplBar"></div>
       <div class="tpgrid" id="tplgrid"></div>
+      <div class="tf-wrap" id="tfWrap" hidden><div class="tf-intro"><div class="tf-steps"><span><b>1</b>Add a <i>WhatsApp template</i> node</span><span><b>2</b>Drag from a button's dot to the next template or an action</span><span><b>3</b>Click a node for its settings</span><span><b>4</b>Press <i>Apply to WhatsApp</i> — customers get it when they tap</span></div><button type="button" class="btn sm" data-pbguide="wa-flow">How it works</button></div><div class="tf-stage"><div id="tfCanvas"></div><div class="tf-empty" id="tfEmpty" hidden><div class="tf-emi"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="4" width="6" height="5" rx="1.5"/><rect x="15" y="4" width="6" height="5" rx="1.5"/><rect x="9" y="15" width="6" height="5" rx="1.5"/><path d="M6 9v2a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V9M12 13v2"/></svg></div><b>Build your first WhatsApp flow</b><p>Start with a template that has reply buttons — like a welcome menu — then wire each button to the next message or an action.</p><button type="button" class="btn primary" data-tfaddt>+ Add a template node</button></div></div></div>
     </section>
 
     <!-- UNIFIED ANALYTICS -->
@@ -3647,7 +3700,8 @@ function parseNodeDef(o, quiet) {
   }
   return { ok: true, def: { desc: cleanName(o.description).slice(0, 140), color: color || undefined, ins, outs: outs.map(cleanName), fields: out, sum: p => { const f = out[0]; return f ? `${f.label}: ${p[f.k] ?? f.def ?? '–'}` : (cleanName(o.description) || 'Custom node'); } } };
 }
-const outsOf = t => (t.outs && t.outs.length ? t.outs : ['out']);
+const outsOf = (t, n) => { if (t.outsFn && n) { const o = t.outsFn(n.p || {}); return o.length ? o : ['—']; } return t.outs && t.outs.length ? t.outs : ['out']; };   // outsFn: ports that depend on the node's settings (template buttons)
+const multiOut = (t, outs) => outs.length > 1 || !!t.outsFn;
 const insOf = t => (t.ins === 0 ? 0 : 1);
 const colorOf = t => t.color || SECTIONS[t.section].color;
 
@@ -3657,7 +3711,7 @@ class FlowCanvas {
     this.sel = new Set(); this.selWire = null; this.flow = null; this.saveT = null; this.fitted = false;
     this.root.classList.add('fx', 'canvas-like');
     this.root.innerHTML = `<div class="fx-world"><svg class="fx-wires"></svg><div class="fx-nodes"></div></div>
-      <div class="fx-bar"><button class="btn sm primary" data-fx="add">${I.plus}Node</button><button class="btn sm" data-fx="preset" disabled>${I.folder}Save as preset</button><button class="btn sm" data-fx="del" disabled>${I.trash}Delete</button><span class="fx-status">${esc(o.status || '')}</span></div>
+      <div class="fx-bar"><button class="btn sm primary" data-fx="add">${I.plus}Node</button><button class="btn sm" data-fx="preset" disabled>${I.folder}Save as preset</button><button class="btn sm" data-fx="del" disabled>${I.trash}Delete</button><span class="fx-status">${esc(o.status || '')}</span>${o.bar || ''}</div>
       <aside class="fx-insp" hidden></aside>
       <div class="marquee"></div>
       <div class="hint"><span><span class="kbd">Tab</span> add · Drag empty = select box · <span class="kbd">Del</span> delete · <span class="kbd">Ctrl</span>+<span class="kbd">C</span>/<span class="kbd">V</span>/<span class="kbd">D</span> · <span class="kbd">Space</span>+drag = hand · <span class="kbd">Ctrl</span>+scroll = zoom</span></div>
@@ -3678,7 +3732,7 @@ class FlowCanvas {
   size() { if (!this.root.offsetParent) return; const top = this.root.getBoundingClientRect().top + scrollY; this.root.style.height = Math.max(innerWidth < 820 ? 360 : 520, innerHeight - top - 20) + 'px'; }
   sync() { this.size(); if (!this.flow || (this.fromSeed && (S.flows || []).some(x => String(x.flowId) === this.o.key))) { this.fitted = false; this.load(); } else { this.render(); if (!this.fitted && this.root.offsetParent) { requestAnimationFrame(() => this.fit(true)); this.fitted = true; } } }
   save() {
-    store.set('leadnode.flow.' + this.o.key, this.flow); this.fromSeed = false;
+    store.set('leadnode.flow.' + this.o.key, this.flow); this.fromSeed = false; if (this.o.onChange) setTimeout(() => this.o.onChange(), 0);
     const row = { flowId: this.o.key, flowName: this.o.title, trigger: 'canvas', status: 'Draft', flowJson: JSON.stringify(this.flow) };
     const i = (S.flows || []).findIndex(x => String(x.flowId) === this.o.key); if (i > -1) S.flows[i] = row; else (S.flows = S.flows || []).push(row);
     if (demo) return;
@@ -3694,22 +3748,22 @@ class FlowCanvas {
     this.drawWires(); this.apply(); this.syncSel(); this.renderInsp();
   }
   nodeHTML(n, i) {
-    const t = nodeType(n.type), outs = outsOf(t), c = colorOf(t), sec = SECTIONS[t.section] || SECTIONS.logic, p = n.p || {};
+    const t = nodeType(n.type), outs = outsOf(t, n), c = colorOf(t), sec = SECTIONS[t.section] || SECTIONS.logic, p = n.p || {}, mo = multiOut(t, outs);
     let sum = ''; try { sum = t.sum(p); } catch (e) { sum = ''; }
-    const h = outs.length > 1 ? 74 + outs.length * 24 : 66;
+    const h = mo ? 74 + outs.length * 24 : 66;
     return `<div class="fx-node ${t.missing ? 'missing' : ''} ${this.born && this.born.has(n.id) ? 'born' : ''}" data-id="${esc(n.id)}" style="left:${n.x}px;top:${n.y}px;min-height:${h}px;--c:${esc(c)};--i:${Math.min(i, 20)}">
-      <div class="fx-h"><span class="fx-ic">${esc(sec.ic)}</span><b>${esc(n.title || t.name)}</b>${t.custom ? '<span class="badge mine">Custom</span>' : ''}</div>
+      <div class="fx-h"><span class="fx-ic">${esc(sec.ic)}</span><b>${esc(n.title || (t.head && t.head(p)) || t.name)}</b>${t.custom ? '<span class="badge mine">Custom</span>' : ''}</div>
       <div class="fx-s">${esc(String(sum).slice(0, 80))}</div>
       ${insOf(t) ? '<span class="fx-port in" data-pin></span>' : ''}
-      ${outs.map((o, k) => `<span class="fx-port out" data-pout="${k}" style="top:${outs.length > 1 ? 70 + k * 24 : 26}px"></span>${outs.length > 1 ? `<span class="fx-ol" style="top:${70 + k * 24}px">${esc(o)}</span>` : ''}`).join('')}
+      ${outs.map((o, k) => `<span class="fx-port out" data-pout="${k}" style="top:${mo ? 70 + k * 24 : 26}px"></span>${mo ? `<span class="fx-ol" style="top:${70 + k * 24}px">${esc(o)}</span>` : ''}`).join('')}
     </div>`;
   }
   portXY(id, kind, k = 0) {
     const n = this.node(id); if (!n) return { x: 0, y: 0 };
     const el = this.nodesEl.querySelector(`.fx-node[data-id="${CSS.escape(id)}"]`), w = el ? el.offsetWidth : 230;
-    const outs = outsOf(nodeType(n.type));
+    const t = nodeType(n.type), outs = outsOf(t, n);
     if (kind === 'in') return { x: n.x, y: n.y + 33 };
-    return { x: n.x + w, y: n.y + (outs.length > 1 ? 77 + k * 24 : 33) };
+    return { x: n.x + w, y: n.y + (multiOut(t, outs) ? 77 + k * 24 : 33) };
   }
   drawWires(tmp) {
     const W = this.flow.links.map((l, i) => {
@@ -3763,7 +3817,8 @@ class FlowCanvas {
     this.insp.innerHTML = `<div class="fx-ih"><span class="fx-ic" style="background:${esc(colorOf(t))}">${esc(sec.ic)}</span><div><small>${esc(sec.name)}${t.custom ? ' · custom' : ''}</small><b>${esc(t.name)}</b></div><button class="ibtn" data-fx="close" title="Close">${I.x}</button></div>
       ${t.desc ? `<p class="help">${esc(t.desc)}</p>` : ''}
       <div class="field"><label>Label</label><input class="input" data-fp="__title" value="${esc(one.title || '')}" placeholder="${esc(t.name)}"></div>
-      ${t.fields.map(f => `<div class="field"><label>${esc(f.label)}</label>${input(f)}</div>`).join('')}
+      ${t.fields.map(f => `<div class="field"><label>${esc(f.label)}</label>${input(f)}${f.help ? `<small class="muted">${esc(f.help)}</small>` : ''}</div>`).join('')}
+      ${t.info ? t.info(p, one, this) : ''}
       <div class="fx-if"><button class="btn sm" data-fx="dup">Duplicate</button><button class="btn sm danger" data-fx="del">${I.trash}Delete</button></div>`;
   }
   /* ---- edits ---- */
@@ -3939,7 +3994,9 @@ class FlowCanvas {
     this.insp.addEventListener('input', e => {
       const f = e.target.closest('[data-fp]'); if (!f) return; const n = this.node([...this.sel][0]); if (!n) return;
       if (f.dataset.fp === '__title') n.title = cleanName(f.value).slice(0, 40); else n.p[f.dataset.fp] = f.type === 'number' ? (f.value === '' ? '' : +f.value) : f.value;
+      const t = nodeType(n.type); if (t.outsFn) { const k = outsOf(t, n).length; this.flow.links = this.flow.links.filter(l => l[0] !== n.id || l[1] < k); }
       const el = this.nodesEl.querySelector(`.fx-node[data-id="${CSS.escape(n.id)}"]`); if (el) { el.outerHTML = this.nodeHTML(n, 0); this.syncSelOnly(); this.drawWires(); }
+      if (t.info && f.tagName === 'SELECT') this.renderInsp();
       this.save();
     });
     R.querySelector('.minimap').addEventListener('click', e => { const mm = e.currentTarget, r = mm.getBoundingClientRect(), s = mm._s || 1, b = mm._b || { x1: 0, y1: 0 }; const wx = (e.clientX - r.left) / s + b.x1, wy = (e.clientY - r.top) / s + b.y1; this.view.x = R.clientWidth / 2 - wx * this.view.k; this.view.y = R.clientHeight / 2 - wy * this.view.k; this.apply(); });
@@ -6800,6 +6857,143 @@ function openFlowMap() {
   host.addEventListener('pointerup', ev => { if (down && down.c && Math.hypot(ev.clientX - down.x, ev.clientY - down.y) < 6) { const n = down.c.dataset.tfc; down = null; openTplActions(n); } });
 }
 
+/* ================= Templates → Flow builder: a node canvas for WhatsApp chatbots =================
+   A "Template" node has one output per reply button. Wire a button to another Template (= send it next) or to actions
+   (tag, stage, order, task, AI reply…). "Apply to WhatsApp" writes the wiring into each template's button actions,
+   which the wa-webhook function runs when a customer taps the button. The canvas itself is saved in flows (TPL-FLOW). */
+SECTIONS.tflow = { name: 'WhatsApp templates', color: '#25A55F', ic: 'T' };
+SECTIONS.tact = { name: 'Actions when tapped', color: '#F29A5C', ic: '↯' };
+const tfTpl = name => (S.templates || []).find(t => t.templateName === name);
+const tfQR = t => t ? tbFromTemplate(t).buttons.map((b, i) => ({ b, i })).filter(x => x.b.type === 'QUICK_REPLY') : [];
+const TF_ICON = { send_text: '💬', open_link: '🔗', open_form: '📝', open_product: '🛍', send_email: '✉', send_payment_link: '₹', create_order: '🧾', update_order: '🔄', cancel_order: '✖', track_order: '🚚', generate_invoice: '📄', assign_member: '👤', add_tag: '🏷', change_stage: '➜', create_task: '✓', trigger_workflow: 'n', run_ai_agent: '✦', custom_api: '⇄' };
+const tfField = ([k, label, kind]) => {
+  const sel = options => F(k, label, 'select', { options });
+  if (kind === 'stage') return sel(stageOpts); if (kind === 'tag') return sel(() => (S.lists.tags || ['Hot', 'Warm', 'Cold']).concat(['Happy', 'Cart']).filter((x, i, a) => a.indexOf(x) === i));
+  if (kind === 'member') return sel(() => ['Lead owner'].concat(teamNames())); if (kind === 'prio') return F(k, label, 'select', { options: () => ['High', 'Medium', 'Low'], def: 'High' });
+  if (kind === 'ostatus') return F(k, label, 'select', { options: ['New', 'Cart', 'Confirmed', 'Paid', 'COD', 'Shipped', 'Delivered'], def: 'New' });
+  if (kind === 'area') return F(k, label, 'textarea', { help: 'Personal fields: {{first_name}} {{name}} {{order_id}} {{amount}} {{status}} {{tracking_url}}' });
+  if (kind === 'num') return F(k, label, 'number'); return F(k, label, 'text', kind === 'url' ? { def: 'https://' } : {});
+};
+NODE_TYPES.push({ type: 'tf.template', section: 'tflow', name: 'WhatsApp template', desc: 'Sends this template. Each reply button becomes an output — wire it to the next template or to actions.',
+  fields: [F('template', 'Template', 'select', { options: () => [''].concat((S.templates || []).filter(t => t.templateName).map(t => t.templateName)) }), F('params', 'Values for {{1}}, {{2}}… when sent as a next step (optional)', 'text', { help: 'Comma separated, e.g. {{first_name}}, {{order_id}}. Empty = first name, order or business details.' })],
+  head: p => p.template || '',
+  outsFn: p => tfQR(tfTpl(p.template)).map(x => String(x.b.text || 'Button ' + (x.i + 1)).slice(0, 18)),
+  sum: p => { const t = tfTpl(p.template); if (!p.template) return 'Choose a template'; if (!t) return `${p.template} — not found`; const n = tfQR(t).length; return `${p.template} · ${n ? n + ' reply button' + (n > 1 ? 's' : '') : 'no reply buttons'}${/approved/i.test(t.metaStatus || '') ? '' : ' · ' + (t.metaStatus || 'Draft')}`; },
+  info: (p, n, cv) => { const t = tfTpl(p.template); if (!t) return '<p class="help">Pick a template. Make new ones in the Templates tab.</p>';
+    const qr = tfQR(t), to = k => cv.flow.links.filter(l => l[0] === n.id && l[1] === k).map(l => { const m = cv.node(l[2]); return m ? (m.title || (m.type === 'tf.template' ? (m.p.template || 'Template') : nodeType(m.type).name)) : ''; }).filter(Boolean);
+    return `<div class="tf-prev"><div class="tf-bub">${t.header && !/^\[/.test(t.header) ? `<b>${esc(t.header)}</b>` : ''}<span>${esc(String(t.body || '').slice(0, 400))}</span>${t.footer ? `<small>${esc(t.footer)}</small>` : ''}</div>
+      ${tbFromTemplate(t).buttons.map((b, i) => { const k = qr.findIndex(x => x.i === i), dest = k > -1 ? to(k) : []; return `<div class="tf-pb ${b.type === 'QUICK_REPLY' ? '' : 'ext'}"><span>${b.type === 'URL' ? '🔗 ' : b.type === 'PHONE_NUMBER' ? '📞 ' : ''}${esc(b.text || 'Button')}</span><small>${b.type !== 'QUICK_REPLY' ? esc(TB_META[b.type] || '') : dest.length ? '→ ' + esc(dest.join(', ')) : 'not wired — reply lands in Inbox'}</small></div>`; }).join('')}
+      </div><div class="tf-st"><span class="pill ${/approved/i.test(t.metaStatus || '') ? 'ok' : ''}">${esc(t.metaStatus || 'Draft')}</span><button type="button" class="btn sm" data-tfedit="${esc(t.templateName)}">Edit template</button></div>`; } });
+Object.entries(TB_ACT).filter(([k]) => k !== 'send_template').forEach(([k, [name, fields]]) => NODE_TYPES.push({ type: 'tf.' + k, section: 'tact', name, color: k === 'run_ai_agent' ? '#B08CEB' : /order|invoice|payment/.test(k) ? '#E8707E' : /tag|stage|member|task/.test(k) ? '#3CB4A0' : /workflow|api/.test(k) ? '#EA4B71' : undefined,
+  fields: fields.map(tfField), sum: p => { const f = fields[0]; const v = f ? p[f[0]] : ''; return `${TF_ICON[k] || ''} ${v && v !== 'https://' ? String(v).slice(0, 60) : f ? f[1] : name}`.trim(); } }));
+
+/** canvas from the templates' current button actions (first open, or "Rebuild from templates") */
+function tfSeed() {
+  const T = (S.templates || []).filter(t => t.templateName), nodes = [], links = [], idOf = {}; let c = 0;
+  const id = () => 'n' + (++c);
+  const tplNode = name => idOf[name] || (nodes.push({ id: idOf[name] = id(), type: 'tf.template', x: 0, y: 0, p: { template: name, params: '' } }), idOf[name]);
+  const withFlow = T.filter(t => tfQR(t).some(x => (x.b.actions || []).length));
+  (withFlow.length ? withFlow : T.filter(t => tfQR(t).length).slice(0, 3)).forEach(t => {
+    const me = tplNode(t.templateName);
+    tfQR(t).forEach((x, k) => {
+      let prev = [me, k]; const acts = x.b.actions || [];
+      acts.filter(a => a.type !== 'send_template' && TB_ACT[a.type]).forEach(a => { const n = id(), p = {}; (TB_ACT[a.type][1]).forEach(([fk, , kind]) => { if (a[fk] !== undefined) p[fk] = kind === 'member' && !a[fk] ? 'Lead owner' : a[fk]; }); nodes.push({ id: n, type: 'tf.' + a.type, x: 0, y: 0, p }); links.push([prev[0], prev[1], n]); prev = [n, 0]; });
+      acts.filter(a => a.type === 'send_template' && a.template).forEach(a => { const to = tplNode(a.template); const tn = nodes.find(m => m.id === to); if (a.params && !tn.p.params) tn.p.params = a.params; links.push([prev[0], prev[1], to]); });
+    });
+  });
+  // layered layout: column = longest path from a start, rows in order
+  const depth = {}, incoming = new Set(links.map(l => l[2])), roots = nodes.filter(n => !incoming.has(n.id));
+  const walk = (nid, d, seen) => { if (seen.has(nid) || d > 40) return; if ((depth[nid] ?? -1) >= d) return; depth[nid] = d; const s2 = new Set(seen).add(nid); links.filter(l => l[0] === nid).forEach(l => walk(l[2], d + 1, s2)); };
+  (roots.length ? roots : nodes.slice(0, 1)).forEach(r => walk(r.id, 0, new Set())); nodes.forEach(n => { if (depth[n.id] === undefined) depth[n.id] = 0; });
+  const rows = {}; nodes.forEach(n => { const d = depth[n.id], r = rows[d] = (rows[d] || 0); n.x = 60 + d * 330; n.y = 40 + r; rows[d] = r + (n.type === 'tf.template' ? 74 + Math.max(1, outsOf(nodeType('tf.template'), n).length) * 24 + 50 : 120); });
+  return { nodes, links };
+}
+/** canvas → { templateName: { buttonIndex: actions[] } } */
+function tfCompile(flow) {
+  const out = {}, warn = [], node = i => flow.nodes.find(n => n.id === i);
+  flow.nodes.filter(n => n.type === 'tf.template').forEach(T => {
+    const t = tfTpl(T.p && T.p.template); if (!t) { if (T.p && T.p.template) warn.push(`“${T.p.template}” no longer exists — that node is skipped.`); else warn.push('A template node has no template chosen — it is skipped.'); return; }
+    const res = out[t.templateName] = out[t.templateName] || {};
+    tfQR(t).forEach((x, k) => {
+      const acts = res[x.i] = res[x.i] || [];
+      const walk = (nid, d, seen) => { if (d > 20 || seen.has(nid)) return; seen.add(nid); const n = node(nid); if (!n) return;
+        if (n.type === 'tf.template') { if (n.p && n.p.template && tfTpl(n.p.template)) acts.push(Object.assign({ type: 'send_template', template: n.p.template }, n.p.params ? { params: n.p.params } : {})); return; }
+        const type = n.type.slice(3); if (!TB_ACT[type]) return; const a = { type };
+        (TB_ACT[type][1]).forEach(([fk, , kind]) => { let v = (n.p || {})[fk]; if (kind === 'member' && v === 'Lead owner') v = ''; if (kind === 'url' && v === 'https://') v = ''; if (v !== undefined && v !== '') a[fk] = kind === 'num' ? Number(v) : v; });
+        if ((type === 'trigger_workflow' || type === 'custom_api') && !/^https:\/\//.test(a.url || '')) warn.push(`${n.title || TB_ACT[type][0]}: the URL must start with https://`);
+        acts.push(a); flow.links.filter(l => l[0] === nid).forEach(l => walk(l[2], d + 1, seen)); };
+      flow.links.filter(l => l[0] === T.id && l[1] === k).forEach(l => walk(l[2], 0, new Set()));
+      if (acts.length > 8) warn.push(`${t.templateName} → “${x.b.text}”: only the first 8 steps run (${acts.length} wired).`);
+    });
+  });
+  Object.values(out).forEach(r => Object.keys(r).forEach(i => { r[i] = r[i].slice(0, 8); }));
+  return { out, warn };
+}
+const tfCurrent = t => Object.fromEntries(tfQR(t).map(x => [x.i, x.b.actions || []]));
+const tfCanon = v => Array.isArray(v) ? '[' + v.map(tfCanon).join(',') + ']' : v && typeof v === 'object' ? '{' + Object.keys(v).filter(k => v[k] !== '' && v[k] != null).sort().map(k => JSON.stringify(k) + ':' + tfCanon(v[k])).join(',') + '}' : JSON.stringify(typeof v === 'number' ? String(v) : v);
+function tfDiff(flow) { const { out } = tfCompile(flow); return Object.keys(out).filter(name => tfCanon(out[name]) !== tfCanon(tfCurrent(tfTpl(name)))); }
+function tfCanvas() {
+  if (CANVASES.tpl) return CANVASES.tpl;
+  const cv = CANVASES.tpl = new FlowCanvas({ root: $('#tfCanvas'), key: 'TPL-FLOW', title: 'Template flows', sections: ['tflow', 'tact'], seed: tfSeed, status: '',
+    bar: '<span class="tf-sync" id="tfSync"></span><span class="grow"></span><button class="btn sm" data-tfprev>▶ Preview chat</button><button class="btn sm" data-tfrebuild>⟳ Rebuild from templates</button><button class="btn sm primary" data-tfapply>Apply to WhatsApp</button>',
+    onChange: () => tfSyncState() });
+  cv.root.addEventListener('click', e => {
+    if (e.target.closest('[data-tfapply]')) return tfApply(e.target.closest('[data-tfapply]'));
+    if (e.target.closest('[data-tfrebuild]')) { if (!confirm('Rebuild the canvas from the button actions saved in your templates? Changes on the canvas that were not applied are lost.')) return; cv.flow = tfSeed(); cv.sel.clear(); cv.render(); cv.save(); cv.fit(); toast('Canvas rebuilt from your templates'); return; }
+    if (e.target.closest('[data-tfprev]')) return tfPreview();
+    const ed = e.target.closest('[data-tfedit]'); if (ed) { const t = tfTpl(ed.dataset.tfedit); if (t) openTplEditor(t); }
+  });
+  return cv;
+}
+function tfSyncState() {
+  const el = $('#tfSync'), cv = CANVASES.tpl; if (!el || !cv || !cv.flow) return;
+  const d = tfDiff(cv.flow), tn = cv.flow.nodes.filter(n => n.type === 'tf.template').length;
+  el.className = 'tf-sync ' + (d.length ? 'dirty' : 'ok');
+  const em = $('#tfEmpty'); if (em) em.hidden = !!cv.flow.nodes.length;
+  el.textContent = !tn ? 'Add a template node to start' : d.length ? `● Not live yet — ${d.length} template${d.length > 1 ? 's' : ''} changed. Press Apply.` : '✓ Live on WhatsApp';
+}
+async function tfApply(btn) {
+  const cv = tfCanvas(), { out, warn } = tfCompile(cv.flow), names = tfDiff(cv.flow);
+  if (!Object.keys(out).length) return toast('Add a template node and wire its buttons first', true);
+  if (!names.length) return toast(warn.length ? warn[0] : '✓ Already live — nothing changed', !!warn.length);
+  if (!confirm(`Make these flows live?\n\n${names.map(n => '• ' + n).join('\n')}\n\nThe reply buttons of these templates will run exactly what is wired on the canvas.${warn.length ? '\n\nNote:\n' + warn.slice(0, 4).join('\n') : ''}`)) return;
+  btn.disabled = true; let ok = 0;
+  try {
+    for (const name of names) { const t = tfTpl(name), e = tbFromTemplate(t); Object.entries(out[name]).forEach(([i, acts]) => { if (e.buttons[i]) e.buttons[i].actions = acts; }); const flow = tbFlowOf(e); await api('saveTplFlow', { templateName: name, flow }); t.flow = flow; ok++; }
+    toast(`✓ Live — ${ok} template${ok > 1 ? 's' : ''} updated`); if (!demo) load(true);
+  } catch (er) { toast(er.message, true); }
+  btn.disabled = false; tfSyncState(); cv.renderInsp();
+}
+/** ▶ Preview: chat with the flow — tap buttons and see what the customer gets */
+function tfPreview() {
+  const cv = tfCanvas(), sel = cv.sel.size === 1 ? cv.node([...cv.sel][0]) : null, starts = cv.flow.nodes.filter(n => n.type === 'tf.template' && tfTpl(n.p.template));
+  const incoming = new Set(cv.flow.links.map(l => l[2])), first = sel && sel.type === 'tf.template' && tfTpl(sel.p.template) ? sel : starts.find(n => !incoming.has(n.id)) || starts[0];
+  if (!first) return toast('Add a template node first', true);
+  const log = [], fill = s => String(s || '').replace(/\{\{\s*first_name\s*\}\}/gi, 'Riya').replace(/\{\{\s*name\s*\}\}/gi, 'Riya Shah').replace(/\{\{\s*order_id\s*\}\}/gi, 'O123').replace(/\{\{\s*amount\s*\}\}/gi, '₹1,499').replace(/\{\{\s*status\s*\}\}/gi, 'Confirmed').replace(/\{\{1\}\}/g, 'Riya');
+  const sendTpl = n => { const t = tfTpl(n.p.template); log.push({ kind: 'tpl', n, t }); };
+  const tap = (n, k) => {
+    const t = tfTpl(n.p.template), x = tfQR(t)[k]; log.forEach(m => { if (m.kind === 'tpl') m.done = true; }); log.push({ kind: 'me', text: x ? x.b.text : 'Button' });
+    const run = (nid, seen) => { if (seen.has(nid)) return; seen.add(nid); const m = cv.node(nid); if (!m) return;
+      if (m.type === 'tf.template') { if (tfTpl(m.p.template)) sendTpl(m); return; }
+      const type = m.type.slice(3), p = m.p || {}, say = [p.text, p.url && p.url !== 'https://' ? p.url : ''].filter(Boolean).join('\n');
+      if (['send_text', 'open_link', 'open_form', 'open_product', 'send_payment_link', 'track_order', 'cancel_order'].includes(type) && say) log.push({ kind: 'bot', text: fill(say) });
+      else if (type === 'run_ai_agent') log.push({ kind: 'bot', text: '✦ AI writes a reply here (Gemini)' });
+      else log.push({ kind: 'sys', text: `${TF_ICON[type] || '•'} ${TB_ACT[type] ? TB_ACT[type][0] : type}${p.stage ? ' → ' + p.stage : p.tag ? ' → ' + p.tag : p.member ? ' → ' + p.member : p.title ? ': ' + fill(p.title) : p.status ? ' → ' + p.status : ''}` });
+      cv.flow.links.filter(l => l[0] === nid).forEach(l => run(l[2], seen)); };
+    const outs = cv.flow.links.filter(l => l[0] === n.id && l[1] === k); if (!outs.length) log.push({ kind: 'sys', text: 'Nothing wired — the reply lands in your Inbox for the team.' }); outs.forEach(l => run(l[2], new Set()));
+    draw();
+  };
+  const draw = () => {
+    $('#stageBox').innerHTML = `<div class="m-head"><h2>Preview chat</h2><button class="ibtn" data-close>${I.x}</button></div><p class="help" style="margin-top:0">Tap the buttons like a customer. Nothing is sent — this only shows what your flow does.</p>
+      <div class="tf-chat">${log.map((m, i) => m.kind === 'tpl' ? `<div class="tf-b in"><div class="tf-bub">${m.t.header && !/^\[/.test(m.t.header) ? `<b>${esc(m.t.header)}</b>` : ''}<span>${esc(fill(m.t.body))}</span>${m.t.footer ? `<small>${esc(m.t.footer)}</small>` : ''}</div><div class="tf-btns">${tbFromTemplate(m.t).buttons.map((b, bi) => { const k = tfQR(m.t).findIndex(x => x.i === bi); return `<button type="button" class="tf-cb" ${k < 0 || m.done ? 'disabled' : `data-tfpt="${i}|${k}"`}>${b.type === 'URL' ? '🔗 ' : b.type === 'PHONE_NUMBER' ? '📞 ' : ''}${esc(b.text || 'Button')}</button>`; }).join('')}</div></div>`
+        : m.kind === 'me' ? `<div class="tf-b out"><div class="tf-bub">${esc(m.text)}</div></div>` : m.kind === 'bot' ? `<div class="tf-b in"><div class="tf-bub">${esc(m.text)}</div></div>` : `<div class="tf-sys">${esc(m.text)}</div>`).join('')}</div>
+      <div class="m-foot"><button class="btn" data-tfreset>Start again</button><div class="grow"></div><button class="btn primary" data-close>Done</button></div>`;
+    const box = $('#stageBox .tf-chat'); box.scrollTop = box.scrollHeight;
+    $('#stageBox').onclick = e => { const b = e.target.closest('[data-tfpt]'); if (b) { const [i, k] = b.dataset.tfpt.split('|').map(Number); tap(log[i].n, k); } if (e.target.closest('[data-tfreset]')) { log.length = 0; sendTpl(first); draw(); } };
+  };
+  sendTpl(first); draw(); showModal('#stageModal');
+}
+
 const USE_CASES = ['Welcome', 'Follow-up', 'Offer / promotion', 'Reminder', 'Quotation / price', 'Order / payment update', 'Re-engage', 'Thank you / review', 'Other'];
 function openTplLib(name) {
   const t = (S.templates || []).find(x => x.templateName === name); if (!t) return;
@@ -6815,6 +7009,11 @@ function openTplLib(name) {
 }
 function renderTemplates() {
   if (!$('#tplgrid')) return;
+  TPL.view = TPL.view || store.get('nv.tpView') || 'list';
+  const flowV = TPL.view === 'flow';
+  $$('#v-templates [data-tpview]').forEach(b => { b.classList.toggle('on', b.dataset.tpview === TPL.view); b.setAttribute('aria-selected', String(b.dataset.tpview === TPL.view)); });
+  $('#tplBar').hidden = flowV; $('#tplgrid').hidden = flowV; $('#tfWrap').hidden = !flowV; const ns = $('#tpNew'); if (ns) ns.hidden = flowV;
+  if (flowV) { const cv = tfCanvas(); requestAnimationFrame(() => { cv.sync(); tfSyncState(); }); return; }
   const all = (S.templates || []).filter(t => t.templateName), q = TPL.q.toLowerCase();
   const count = s => all.filter(t => (t.metaStatus || 'Draft') === s).length;
   $('#tplBar').innerHTML = `<div class="tp-chips">${[['', 'All', all.length], ['Approved', 'Approved', count('Approved')], ['Pending', 'Pending', count('Pending')], ['Rejected', 'Rejected', count('Rejected')], ['Draft', 'Drafts', all.filter(t => !t.metaStatus || /draft|not submitted/i.test(t.metaStatus)).length]].map(([k, n, c]) => `<button class="chip ${TPL.status === k ? 'on' : ''}" data-tpst="${k}">${n} <span class="n">${c}</span></button>`).join('')}</div>
@@ -6863,7 +7062,8 @@ function readTplEditor() {
     const uc = t.closest('[data-tpuc]'); if (uc) { TPL.uc = uc.dataset.tpuc; return renderTemplates(); }
     const lb = t.closest('[data-tplib]'); if (lb) return openTplLib(lb.dataset.tplib);
     const ta = t.closest('[data-tpact]'); if (ta) return openTplActions(ta.dataset.tpact);
-    if (t.closest('#tpFlow')) return openFlowMap();
+    if (t.closest('[data-tfaddt]')) { const cv = tfCanvas(); cv.select(null); cv.addNode('tf.template', null, false); return; }
+    const tv = t.closest('[data-tpview]'); if (tv) { TPL.view = tv.dataset.tpview; store.set('nv.tpView', TPL.view); return renderTemplates(); }
     if (t.closest('[data-tpnew]') || t.id === 'tpNew') return openTplEditor(null);
     const us = t.closest('[data-tpuse]'); if (us) { BC.tab = 'whatsapp'; BC.tpl = us.dataset.tpuse; BC.vars = []; BC.node = 'msg'; go('broadcast'); return; }
     const ed = t.closest('[data-tpedit]'); if (ed) { const x = (S.templates || []).find(y => y.templateName === ed.dataset.tpedit); if (x) openTplEditor(Object.assign({}, x)); return; }
@@ -8315,10 +8515,14 @@ document.addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === 
 
 /* ================= accordion (settings & connections) ================= */
 const ACC_DOT = { ok: 'var(--green)', bad: 'var(--coral)', off: 'var(--faint)', wait: '#F59E0B', soon: '#A78BFA' };
+const ACC_PILL = { ok: 'Connected', bad: 'Needs attention', wait: 'Waiting', soon: 'Coming soon', off: 'Not connected' };
 function accItem(id, o) {
-  return `<div class="acc ${o.open ? 'open' : ''}" data-acc="${esc(id)}" ${o.attrs || ''} data-acctext="${esc((o.title + ' ' + (o.keywords || '') + ' ' + (o.status || '')).toLowerCase())}">
-    <button type="button" class="acc-h" aria-expanded="${o.open ? 'true' : 'false'}"><span class="acc-dot" style="background:${ACC_DOT[o.dot] || o.dot || 'var(--faint)'}"></span><span class="acc-ic" style="--c:${o.color || 'var(--blue-2)'}">${o.icon}</span>
-      <span class="acc-t"><b>${esc(o.title)}</b><small style="color:${o.dot === 'ok' ? 'var(--green)' : o.dot === 'bad' ? 'var(--coral)' : o.dot === 'wait' ? '#D97706' : 'var(--muted)'}">${o.status || ''}</small></span>${o.badge ? `<span class="acc-bd">${o.badge}</span>` : ''}<svg class="i acc-chev" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></svg></button>
+  const dot = ACC_DOT[o.dot] || o.dot || 'var(--faint)', stc = o.dot === 'ok' ? 'var(--green)' : o.dot === 'bad' ? 'var(--coral)' : o.dot === 'wait' ? '#D97706' : 'var(--muted)';
+  const pill = o.pill === true ? (ACC_PILL[o.dot] || 'Not connected') : o.pill || '';
+  let st = o.status || ''; if (pill) st = st.replace(/^(Connected|Not connected)\s*(·|—)?\s*/, '');
+  return `<div class="acc ${o.open ? 'open' : ''}" data-acc="${esc(id)}" style="--c:${o.color || 'var(--blue-2)'};--dot:${dot}" ${o.attrs || ''} data-acctext="${esc((o.title + ' ' + (o.keywords || '') + ' ' + (o.status || '') + ' ' + (o.desc || '')).toLowerCase())}">
+    <button type="button" class="acc-h" aria-expanded="${o.open ? 'true' : 'false'}"><span class="acc-dot" style="background:${dot}"></span><span class="acc-ic">${o.icon}</span>
+      <span class="acc-t"><span class="acc-tr"><b>${esc(o.title)}</b>${pill ? `<i class="acc-pill">${esc(pill)}</i>` : ''}</span>${st ? `<small class="acc-st" style="color:${stc}">${st}</small>` : ''}${o.desc ? `<span class="acc-desc">${esc(o.desc)}</span>` : ''}</span>${o.badge ? `<span class="acc-bd">${o.badge}</span>` : ''}${o.cta ? `<span class="acc-cta" data-close="Close">${esc(o.cta)} <svg class="i" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></svg></span>` : ''}<span class="acc-go"><svg class="i acc-chev" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></svg></span></button>
     <div class="acc-b"><div class="acc-in"><div class="acc-pad">${o.body || ''}</div></div></div></div>`;
 }
 /** one open at a time inside a container; remembers which one */
@@ -8358,7 +8562,7 @@ function nvddOpen(sel) {
   const w = Math.max(r.width, 180), below = innerHeight - r.bottom, h = Math.min(320, p.scrollHeight);
   p.style.minWidth = w + 'px'; p.style.left = Math.min(r.left, innerWidth - w - 8) + 'px';
   if (below < h + 12 && r.top > below) { p.style.bottom = (innerHeight - r.top + 6) + 'px'; p.classList.add('up'); } else p.style.top = (r.bottom + 6) + 'px';
-  NVDD.pop = p; NVDD.sel = sel; NVDD.i = sel.selectedIndex; b.classList.add('open'); b.setAttribute('aria-expanded', 'true');
+  NVDD.pop = p; NVDD.sel = sel; NVDD.i = sel.selectedIndex; NVDD.at = Date.now(); b.classList.add('open'); b.setAttribute('aria-expanded', 'true');
   requestAnimationFrame(() => { p.classList.add('show'); const on = p.querySelector('.nvdd-o.on'); if (on) on.scrollIntoView({ block: 'nearest' }); });
   const s = p.querySelector('.nvdd-s input'); if (s) { s.focus(); s.addEventListener('input', () => draw(s.value.trim().toLowerCase())); }
   p.addEventListener('click', e => { const o = e.target.closest('.nvdd-o'); if (!o || o.disabled) return; nvddPick(sel, +o.dataset.i); });
@@ -8387,7 +8591,7 @@ function nvddPick(sel, i) {
     }
     if (e.target.classList && e.target.classList.contains('nvdd-b') && (e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); nvddOpen(e.target.parentElement.querySelector('select')); }
   });
-  addEventListener('resize', nvddClose); document.addEventListener('scroll', e => { if (NVDD.pop && !NVDD.pop.contains(e.target)) nvddClose(); }, true);
+  addEventListener('resize', nvddClose); document.addEventListener('scroll', e => { if (NVDD.pop && !NVDD.pop.contains(e.target) && Date.now() - (NVDD.at || 0) > 400) nvddClose(); }, true);   // ignore the scroll that brings the box into view
   let t = 0; const run = () => { t = 0; nvddEnhance(); };
   new MutationObserver(muts => { if (NVDD.coarse) return; let need = false; for (const m of muts) { if (m.target.closest && m.target.closest('.nvdd-b,.nvdd-pop')) continue; const sel = m.target.closest && m.target.closest('select'); if (sel && sel._nvdd) { nvddSync(sel); continue; } need = true; } if (need && !t) t = requestAnimationFrame(run); }).observe(document.body, { childList: true, subtree: true });
   run();
@@ -8666,42 +8870,51 @@ function renderConnections(anim) {
   if (!CONN.list) return;
   const wc = welcomeCfg(), wcOn = wc.wa.on || wc.reply.on || wc.email.on;
   const L = CONN.list || {}, wa = WA.status || {}, em = BC.email || {}, al = alertsCfg(), alOn = al.emails.length || al.phones.length, open = CONN.open, n8 = N8L.st;
-  const grp = (title, items) => `<div class="conn-g"><div class="conn-gt">${title}</div><div class="acc-list" data-acckey="nv.connOpen">${items.join('')}</div></div>`;
-  const soon = (k, n, ic, c, d) => accItem(k, { title: n, icon: ic, color: c, dot: 'soon', status: 'Coming soon — needs the marketplace’s approval', badge: 'Soon', open: open === k, keywords: 'marketplace', body: `<p class="help" style="margin-top:0">${d}</p><div class="cf-foot"><span class="cf-safe">Until then, import its order report — the dashboards work the same.</span><div class="grow"></div><button class="btn sm primary" data-cmimport="orders" data-cmch="${n.split(' ')[0]}">⇪ Import ${n.split(' ')[0]} orders</button></div>` });
+  const GI = { msg: ['#22C55E', '<svg class="i" viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"/></svg>'], leads: ['#8B5CF6', '<svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/></svg>'], store: ['#F43F5E', '<svg class="i" viewBox="0 0 24 24"><path d="M4 9h16l-1-5H5L4 9Zm0 0v11h16V9M9 20v-6h6v6"/></svg>'], other: ['#F97316', '<svg class="i" viewBox="0 0 24 24"><path d="m12 3 9 5-9 5-9-5 9-5Z"/><path d="m3 13 9 5 9-5"/></svg>'] };
+  const grp = (key, title, sub, items, limit = 99) => { CONN.all = CONN.all || {}; const more = items.length > limit, all = !more || CONN.all[key] || !!CONN.q || items.slice(limit).some(x => / open"/.test(x.slice(0, 40)));
+    return `<div class="conn-g cg-panel ${all ? 'all' : ''}" data-cg="${key}" style="--c:${GI[key][0]}"><div class="cg-h"><span class="cg-ic">${GI[key][1]}</span><div class="grow"><b>${title}</b><small>${sub}</small></div>${more ? `<button type="button" class="cg-all" data-cgall="${key}">${all && CONN.all[key] ? 'Show less' : `View all (${items.length}) →`}</button>` : ''}</div>
+      <div class="acc-list acc-grid conn-grid" data-acckey="nv.connOpen">${items.map((x, i) => i >= limit ? x.replace('<div class="acc ', '<div class="acc cg-more ') : x).join('')}</div></div>`; };
+  const CDESC = { wa: 'Send and receive chats, broadcasts and template flows.', email: 'Campaigns, follow-ups and email alerts from your sender.', welcome: 'Greets every new lead on WhatsApp or email automatically.', capture: 'Website forms, Facebook / Instagram lead ads, Google Forms, Zapier, n8n.', shopify: 'Sync orders, products and stock from your Shopify store.', woocommerce: 'Sync orders and products from your WordPress shop.', custom: 'Any website — orders and products through your own API.', amazon: 'Orders, status changes and FBA stock (SP-API).', flipkart: 'Orders, commission, returns and payouts from Flipkart.', meesho: 'Orders, returns and payouts from Meesho.', sheet: 'Import products, orders and ad spend from Excel or a Google Sheet.', alerts: 'New orders, cancellations and low stock on email / WhatsApp.', n8n: 'Run your n8n workflows and fill their keys from Nodevers.', meta_ads: 'Daily ad spend for net profit, ROAS and the AI Advisor.' };
+  const ci = (id, o) => accItem(id, Object.assign({ pill: true, desc: CDESC[id] || '', cta: o.dot === 'soon' ? 'Details' : o.dot === 'ok' || o.dot === 'bad' ? 'Manage' : 'Connect' }, o));
+  const soon = (k, n, ic, c, d) => ci(k, { title: n, icon: ic, color: c, dot: 'soon', status: 'Coming soon — needs the marketplace’s approval', badge: 'Soon', open: open === k, keywords: 'marketplace', body: `<p class="help" style="margin-top:0">${d}</p><div class="cf-foot"><span class="cf-safe">Until then, import its order report — the dashboards work the same.</span><div class="grow"></div><button class="btn sm primary" data-cmimport="orders" data-cmch="${n.split(' ')[0]}">⇪ Import ${n.split(' ')[0]} orders</button></div>` });
   const [sd, ss] = connStatus(L.shopify), [wd, wsx] = connStatus(L.woocommerce), [cd, cs] = connStatus(L.custom), [ad, as] = connStatus(L.amazon), [md, ms] = connStatus(L.meta_ads);
   box.innerHTML = `${CONN.err ? `<div class="banner" style="margin-bottom:12px"><div class="grow">Store connections need the <b>store-sync</b> function and the 10 database update. (${esc(CONN.err)})</div></div>` : ''}
-  ${grp('Messaging', [
-    accItem('wa', { title: 'WhatsApp', icon: CONN_IC.wa, color: 'var(--wa)', open: open === 'wa', keywords: 'meta business number token inbox', dot: wa.connected ? 'ok' : wa.error ? 'bad' : 'off', status: wa.connected ? `Connected · ${esc(wa.verified_name || '')} ${esc(wa.display_phone || '')}` : 'Not connected',
+  ${grp('msg', 'Messaging channels', 'Talk to leads and customers from one inbox.', [
+    ci('wa', { title: 'WhatsApp', icon: CONN_IC.wa, color: 'var(--wa)', open: open === 'wa', keywords: 'meta business number token inbox', dot: wa.connected ? 'ok' : wa.error ? 'bad' : 'off', status: wa.connected ? `Connected · ${esc(wa.verified_name || '')} ${esc(wa.display_phone || '')}` : 'Not connected',
       body: `<p class="help" style="margin-top:0">Chats, broadcasts, template flows and WhatsApp alerts use this number.</p><div class="cf-foot"><div class="grow"></div><button class="btn sm primary" data-connopen="wa">${wa.connected ? 'Manage WhatsApp' : 'Connect WhatsApp'}</button></div>` }),
-    accItem('email', { title: 'Email', icon: CONN_IC.mail, color: '#38BDF8', open: open === 'email', keywords: 'brevo resend sendgrid mailgun postmark zeptomail zoho mailjet smtp sender', dot: em.connected ? 'ok' : 'off', status: em.connected ? `Connected · ${esc(em.from_email || '')} · ${esc((EMAIL_PROVIDERS.find(x => x.id === em.provider) || { name: 'Brevo' }).name)}` : 'Not connected — Brevo, Resend, SendGrid, Mailgun, Postmark, ZeptoMail or Mailjet',
+    ci('email', { title: 'Email', icon: CONN_IC.mail, color: '#38BDF8', open: open === 'email', keywords: 'brevo resend sendgrid mailgun postmark zeptomail zoho mailjet smtp sender', dot: em.connected ? 'ok' : 'off', status: em.connected ? `Connected · ${esc(em.from_email || '')} · ${esc((EMAIL_PROVIDERS.find(x => x.id === em.provider) || { name: 'Brevo' }).name)}` : 'Not connected — Brevo, Resend, SendGrid, Mailgun, Postmark, ZeptoMail or Mailjet',
       body: `<p class="help" style="margin-top:0">Email campaigns, follow-ups and email alerts are sent from this sender.</p><div class="cf-foot"><div class="grow"></div><button class="btn sm primary" data-connopen="email">${em.connected ? 'Manage email' : 'Connect email'}</button></div>` }),
-    accItem('welcome', { title: 'Auto welcome for new leads', icon: '<svg class="i" viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8Z"/></svg>', color: '#F59E0B', open: open === 'welcome', keywords: 'auto welcome reply new lead first message automatic email whatsapp greeting', dot: wcOn ? 'ok' : 'off', status: wcOn ? 'On · ' + [wc.wa.on ? 'WhatsApp template' : '', wc.reply.on ? 'auto-reply' : '', wc.email.on ? 'email' : ''].filter(Boolean).join(' + ') : 'Off — new leads get no automatic message', body: welcomeBody() }),
+    ci('welcome', { title: 'Auto welcome for new leads', icon: '<svg class="i" viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8Z"/></svg>', color: '#F59E0B', open: open === 'welcome', keywords: 'auto welcome reply new lead first message automatic email whatsapp greeting', dot: wcOn ? 'ok' : 'off', pill: wcOn ? 'On' : 'Off', cta: wcOn ? 'Manage' : 'Set up', status: wcOn ? [wc.wa.on ? 'WhatsApp template' : '', wc.reply.on ? 'auto-reply' : '', wc.email.on ? 'email' : ''].filter(Boolean).join(' + ') : '', body: welcomeBody() }),
   ])}
-  ${grp('Lead sources', [
-    accItem('capture', { title: 'Lead capture link — website forms & lead ads', icon: '<svg class="i" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></svg>', color: '#0EA5E9', open: open === 'capture', keywords: 'website form lead ads facebook instagram zapier make n8n google forms webhook capture api', dot: CAPTURE.uses ? 'ok' : 'off', status: CAPTURE.uses ? `${CAPTURE.uses} leads received` : 'Website forms, Facebook / Instagram lead ads, Google Forms', body: captureBody() }),
+  ${grp('leads', 'Lead sources', 'Bring leads in from forms, ads and other apps.', [
+    ci('capture', { title: 'Website forms & lead capture link', icon: '<svg class="i" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></svg>', color: '#0EA5E9', open: open === 'capture', keywords: 'website form lead ads facebook instagram zapier make n8n google forms webhook capture api', dot: CAPTURE.uses ? 'ok' : 'off', pill: CAPTURE.uses ? 'Receiving' : 'Ready', cta: CAPTURE.uses ? 'Manage' : 'Set up', status: CAPTURE.uses ? `${CAPTURE.uses} leads received` : '', body: captureBody() }),
+    ci('fbleads', { title: 'Facebook & Instagram lead ads', icon: '<svg class="i" viewBox="0 0 24 24"><path d="M15 3h-2a4 4 0 0 0-4 4v3H7v4h2v7h4v-7h3l1-4h-4V7a1 1 0 0 1 1-1h2V3Z"/></svg>', color: '#1877F2', open: open === 'fbleads', keywords: 'facebook instagram lead ads form zapier make meta leadgen', dot: CAPTURE.uses ? 'ok' : 'off', pill: CAPTURE.uses ? 'Uses capture link' : 'Not set up', cta: 'Set up', desc: 'Every lead-form fill lands in Leads within seconds (via Zapier / Make).', status: '',
+      body: `<p class="help" style="margin-top:0">Meta lead forms reach Nodevers through your <b>lead capture link</b> — Zapier or Make sends each new form fill to it. Takes about 10 minutes, once.</p><div class="cf-foot"><div class="grow"></div><button class="btn sm" data-pbguide="capture-fb-zapier">Step-by-step guide</button><button class="btn sm primary" data-connjump="capture">Open my capture link</button></div>` }),
+    ci('gforms', { title: 'Google Forms, Typeform & Tally', icon: '<svg class="i" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/></svg>', color: '#7C3AED', open: open === 'gforms', keywords: 'google forms typeform tally jotform survey', dot: 'off', pill: 'Via capture link', cta: 'Set up', desc: 'Send every form answer straight into Leads.', status: '',
+      body: `<p class="help" style="margin-top:0">Any form tool that can call a webhook (directly or through Zapier / Make) can post to your lead capture link.</p><div class="cf-foot"><div class="grow"></div><button class="btn sm" data-pbguide="capture-google-forms">Step-by-step guide</button><button class="btn sm primary" data-connjump="capture">Open my capture link</button></div>` }),
+    ci('leadimport', { title: 'Import leads (Excel / CSV)', icon: '<svg class="i" viewBox="0 0 24 24"><path d="M12 15V3M7 8l5-5 5 5M4 15v4a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4"/></svg>', color: '#F97316', open: open === 'leadimport', keywords: 'import leads excel csv upload sheet', dot: S.leads.length ? 'ok' : 'off', pill: `${S.leads.length} leads`, cta: 'Import', desc: 'Upload a sheet — columns are matched for you, duplicates skipped.', status: '',
+      body: `<p class="help" style="margin-top:0">Excel or CSV with names, phones, emails, cities… Nodevers matches the columns, skips people already in your CRM and lets you message the batch right after.</p><div class="cf-foot"><div class="grow"></div><button class="btn sm primary" data-connleadimp>⇪ Choose a file</button></div>` }),
   ])}
-  ${grp('Store channels', [
-    accItem('shopify', { title: 'Shopify', icon: CONN_IC.shopify, color: '#22C55E', open: open === 'shopify', keywords: 'store website orders products sync', dot: sd, status: ss, body: connStoreBody('shopify', L.shopify) }),
-    accItem('woocommerce', { title: 'WooCommerce (WordPress)', icon: CONN_IC.woo, color: '#A78BFA', open: open === 'woocommerce', keywords: 'wordpress woo website orders sync', dot: wd, status: wsx, body: connStoreBody('woocommerce', L.woocommerce) }),
-    accItem('custom', { title: 'Custom website (API)', icon: CONN_IC.code, color: '#64748B', open: open === 'custom', keywords: 'api custom website wix webflow magento opencart json developer', dot: cd, status: cs, body: connStoreBody('custom', L.custom) }),
-    accItem('sheet', { title: 'Excel / Google Sheet import', icon: CONN_IC.sheet, color: '#16A34A', open: open === 'sheet', keywords: 'excel csv google sheet import upload', dot: (S.products || []).length ? 'ok' : 'off', status: (S.products || []).length ? `${(S.products || []).length} products · ${(S.orders || []).filter(o => /^Import/.test(o.source || '')).length} imported orders` : 'Any sheet — products, orders, ad spend',
-      body: `<p class="help" style="margin-top:0">Upload an Excel file (all tabs) or paste a Google Sheet link. Re-importing updates rows instead of duplicating.</p><div class="cf-foot"><div class="grow"></div><button class="btn sm primary" data-cmimport>⇪ Import Excel / Google Sheet</button></div>` }),
-    accItem('amazon', { title: 'Amazon Seller Central', icon: CONN_IC.amazon, color: '#F59E0B', open: open === 'amazon', keywords: 'amazon seller central sp-api fba orders marketplace', dot: ad, status: L.amazon && L.amazon.connected ? as : 'Not connected — orders, status and FBA stock (SP-API)', body: connStoreBody('amazon', L.amazon) }),
+  ${grp('store', 'Store channels', 'Orders, products and stock from where you sell.', [
+    ci('shopify', { title: 'Shopify', icon: CONN_IC.shopify, color: '#22C55E', open: open === 'shopify', keywords: 'store website orders products sync', dot: sd, status: ss, body: connStoreBody('shopify', L.shopify) }),
+    ci('woocommerce', { title: 'WooCommerce (WordPress)', icon: CONN_IC.woo, color: '#A78BFA', open: open === 'woocommerce', keywords: 'wordpress woo website orders sync', dot: wd, status: wsx, body: connStoreBody('woocommerce', L.woocommerce) }),
+    ci('custom', { title: 'Custom website (API)', icon: CONN_IC.code, color: '#64748B', open: open === 'custom', keywords: 'api custom website wix webflow magento opencart json developer', dot: cd, status: cs, body: connStoreBody('custom', L.custom) }),
+    ci('amazon', { title: 'Amazon Seller Central', icon: CONN_IC.amazon, color: '#F59E0B', open: open === 'amazon', keywords: 'amazon seller central sp-api fba orders marketplace', dot: ad, status: L.amazon && L.amazon.connected ? as : 'Not connected — orders, status and FBA stock (SP-API)', body: connStoreBody('amazon', L.amazon) }),
     soon('flipkart', 'Flipkart Seller Hub', CONN_IC.flipkart, '#3B82F6', 'Orders, commission, returns and payouts from Flipkart.'),
     soon('meesho', 'Meesho Supplier', CONN_IC.meesho, '#EC4899', 'Orders, returns and payouts from Meesho.'),
-  ])}
-  ${grp('Notifications', [
-    accItem('alerts', { title: 'Store alerts', icon: CONN_IC.bell, color: 'var(--coral)', open: open === 'alerts', keywords: 'alert notification email whatsapp order stock low summary', dot: alOn ? 'ok' : 'bad', status: alOn ? `On · ${al.emails.length} email${al.emails.length === 1 ? '' : 's'} · ${al.phones.length} WhatsApp` : 'Add a number or email', body: alertsBody() }),
-  ])}
-  ${grp('Automation & ads', [
-    accItem('n8n', { title: 'n8n', icon: CONN_IC.n8n, color: '#EA4B71', open: open === 'n8n', keywords: 'n8n automation workflows docker', dot: n8 && n8.connected ? 'ok' : 'off', status: n8 && n8.connected ? `Connected · ${esc(String(n8.base_url || n8.url || '').replace(/^https?:\/\//, '').slice(0, 40))}` : 'Not connected',
+  ], 3)}
+  ${grp('other', 'Other integrations', 'Imports, alerts, automation and ad spend.', [
+    ci('sheet', { title: 'Products & orders import', icon: CONN_IC.sheet, color: '#16A34A', open: open === 'sheet', keywords: 'excel csv google sheet import upload', dot: (S.products || []).length ? 'ok' : 'off', pill: (S.products || []).length ? 'Imported' : 'Not used', cta: 'Import', status: (S.products || []).length ? `${(S.products || []).length} products · ${(S.orders || []).filter(o => /^Import/.test(o.source || '')).length} imported orders` : 'Any sheet — products, orders, ad spend',
+      body: `<p class="help" style="margin-top:0">Upload an Excel file (all tabs) or paste a Google Sheet link. Re-importing updates rows instead of duplicating.</p><div class="cf-foot"><div class="grow"></div><button class="btn sm primary" data-cmimport>⇪ Import Excel / Google Sheet</button></div>` }),
+    ci('alerts', { title: 'Store alerts', icon: CONN_IC.bell, color: 'var(--coral)', open: open === 'alerts', keywords: 'alert notification email whatsapp order stock low summary', dot: alOn ? 'ok' : 'bad', pill: alOn ? 'On' : 'Not set', cta: alOn ? 'Manage' : 'Set up', status: alOn ? `On · ${al.emails.length} email${al.emails.length === 1 ? '' : 's'} · ${al.phones.length} WhatsApp` : 'Add a number or email', body: alertsBody() }),
+    ci('n8n', { title: 'n8n', icon: CONN_IC.n8n, color: '#EA4B71', open: open === 'n8n', keywords: 'n8n automation workflows docker', dot: n8 && n8.connected ? 'ok' : 'off', status: n8 && n8.connected ? `Connected · ${esc(String(n8.base_url || n8.url || '').replace(/^https?:\/\//, '').slice(0, 40))}` : 'Not connected',
       body: `<p class="help" style="margin-top:0">Run your n8n workflows from Nodevers and fill in their keys, links and settings.</p><div class="cf-foot"><div class="grow"></div><button class="btn sm primary" data-connopen="n8n">${n8 && n8.connected ? 'Open n8n services' : 'Connect n8n'}</button></div>` }),
-    accItem('meta_ads', { title: 'Meta Ads (ad spend)', icon: CONN_IC.meta, color: '#3B82F6', open: open === 'meta_ads' || open === 'meta', keywords: 'facebook instagram ads meta campaign spend roas', dot: md, status: L.meta_ads && L.meta_ads.connected ? ms : 'Not connected — add spend by hand or import it meanwhile', body: connStoreBody('meta_ads', L.meta_ads) + '<div class="cf-foot" style="border:0;padding-top:0"><div class="grow"></div><button class="btn sm" data-goads="spend">Spend & ROAS</button><button class="btn sm" data-goads="overview">Open Ads Manager</button></div>' }),
+    ci('meta_ads', { title: 'Meta Ads', icon: CONN_IC.meta, color: '#3B82F6', open: open === 'meta_ads' || open === 'meta', keywords: 'facebook instagram ads meta campaign spend roas', dot: md, status: L.meta_ads && L.meta_ads.connected ? ms : 'Not connected — add spend by hand or import it meanwhile', body: connStoreBody('meta_ads', L.meta_ads) + '<div class="cf-foot" style="border:0;padding-top:0"><div class="grow"></div><button class="btn sm" data-goads="spend">Spend & ROAS</button><button class="btn sm" data-goads="overview">Open Ads Manager</button></div>' }),
   ])}`;
   if (CONN.q) connFilter();
   stagger(box, anim);
 }
-function connFilter() { const q = CONN.q.toLowerCase(); $$('#connBody .acc').forEach(a => { a.hidden = !!q && !a.dataset.acctext.includes(q); }); $$('#connBody .conn-g').forEach(g => { g.hidden = ![...g.querySelectorAll('.acc')].some(a => !a.hidden); }); }
+function connFilter() { const q = CONN.q.toLowerCase(); $$('#connBody .acc').forEach(a => { a.hidden = !!q && !a.dataset.acctext.includes(q); }); $$('#connBody .conn-g').forEach(g => { g.hidden = ![...g.querySelectorAll('.acc')].some(a => !a.hidden); g.classList.toggle('all', !!q || !g.querySelector('.cg-all') || !!(CONN.all || {})[g.dataset.cg]); }); }
 function connRead(k) {
   const v = id => ($('#' + id) || {}).value || '';
   if (CONN.modeNow && CONN.modeNow[k] === 'b') { const cf = (((CONN.list || {})[k]) || {}).config || {}; return { config: Object.assign({}, cf, { sync_minutes: +v('cfAppSync') || cf.sync_minutes || 15 }, k === 'meta_ads' && v('cfAppAcct') ? { ad_account: v('cfAppAcct') } : {}), secret: null }; }
@@ -8759,6 +8972,9 @@ function alertsReadUI() {
     const eye = t.closest('[data-cfeye]'); if (eye) { const i = $('#' + eye.dataset.cfeye); i.type = i.type === 'password' ? 'text' : 'password'; return; }
     const o = t.closest('[data-connopen]'); if (o) { const k = o.dataset.connopen; if (k === 'wa') { WA.manage = true; return go('whatsapp'); } if (k === 'email') { BC.tab = 'email'; BC.emailManage = true; return go('broadcast'); } if (k === 'n8n') { N8L.tab = N8L.st && N8L.st.connected ? 'workflows' : 'connect'; return go('n8n'); } }
     const imp = t.closest('[data-cmimport]'); if (imp) return openCmImport(imp.dataset.cmimport, imp.dataset.cmch);
+    const cj = t.closest('[data-connjump]'); if (cj) { CONN.open = cj.dataset.connjump; store.set('nv.connOpen', CONN.open); renderConnections(); setTimeout(() => { const a = $(`#connBody .acc[data-acc="${CONN.open}"]`); if (a) a.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 80); return; }
+    if (t.closest('[data-connleadimp]')) { IMP.fromBc = ''; $('#csvFile').value = ''; $('#csvFile').click(); return; }
+    const cga = t.closest('[data-cgall]'); if (cga) { CONN.all = CONN.all || {}; CONN.all[cga.dataset.cgall] = !CONN.all[cga.dataset.cgall]; return renderConnections(); }
     const ca = t.closest('[data-connapp]'); if (ca) return connApp(ca.dataset.connapp, ca);
     for (const [attr, kind] of [['connsave', 'save'], ['conntest', 'test'], ['connsync', 'sync'], ['connx', 'x']]) { const b = t.closest(`[data-${attr}]`); if (b) return connAct(kind, b.dataset[attr], b); }
     const ch = t.closest('[data-alch]'); if (ch) { const [k] = ch.dataset.alch.split('|'); ch.parentElement.querySelectorAll('button').forEach(x => { x.classList.toggle('on', x === ch); x.setAttribute('aria-checked', String(x === ch)); }); return; }
@@ -9189,8 +9405,9 @@ const UT_IC = '<svg class="i" viewBox="0 0 24 24"><path d="M4 5h16v11H8l-4 4z"/>
 function admTexts() {
   const c = UT.c || (UT.c = JSON.parse(JSON.stringify(uiCfg()))), open = store.get('nv.admAcc3') || 'ut-lock';
   return `<div class="adm-ph2 glass"><div><b>Messages & buttons</b><p class="muted">The words and buttons clients see on these screens. Change them here — no code needed. Leave a box empty to use the default (shown in grey). Words in {curly brackets} are filled in automatically, **two stars** make text bold.</p></div></div>
-    <div class="acc-list ut-wrap" data-acckey="nv.admAcc3" style="margin-top:14px">${UI_TEXTS.map(g => { const n = g.items.filter(([k]) => String(c[k] || '').trim()).length + (g.btns && Array.isArray(c[g.btns]) ? 1 : 0);
-      return accItem('ut-' + g.id, { title: g.title, icon: UT_IC, color: '#0EA5E9', dot: n ? 'ok' : '', status: n ? `${n} changed` : 'Default words', open: open === 'ut-' + g.id,
+    <div class="acc-list acc-grid ut-wrap" data-acckey="nv.admAcc3" style="margin-top:14px">${UI_TEXTS.map(g => { const n = g.items.filter(([k]) => String(c[k] || '').trim()).length + (g.btns && Array.isArray(c[g.btns]) ? 1 : 0);
+      const look = { lock: ['#8B5CF6', '<svg class="i" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>', 'Screen shown when a section is not in the client\'s plan.'], sub: ['#F59E0B', '<svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2M9 2h6"/></svg>', 'Banner when a plan is ending or has expired.'], ro: ['#64748B', '<svg class="i" viewBox="0 0 24 24"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg>', 'Bar shown to people with view-only access.'], trial: ['#10B981', '<svg class="i" viewBox="0 0 24 24"><path d="M20 12v9H4v-9M2 7h20v5H2zM12 22V7M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7ZM12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7Z"/></svg>', 'Free-trial box on the pricing cards.'] }[g.id] || ['#0EA5E9', UT_IC, ''];
+      return accItem('ut-' + g.id, { title: g.title, icon: look[1], color: look[0], desc: look[2], dot: n ? 'ok' : '', status: n ? `${n} changed` : 'Default words', open: open === 'ut-' + g.id,
         body: `${g.fill ? `<p class="help" style="margin-top:0">Fill-ins: <code>${esc(g.fill)}</code></p>` : ''}<div class="ut-grid ${g.id === 'lock' ? 'two' : ''}"><div>
           ${g.items.map(([k, l, d]) => `<div class="field"><label>${esc(l)}</label><input class="input" data-ut="${k}" maxlength="300" placeholder="${esc(d)}" value="${esc(c[k] || '')}"></div>`).join('')}
           ${g.btns ? `<div class="ah-sec">Buttons</div><div class="ut-btns" data-utbtns="${g.btns}">${utBtnRows(g.btns)}</div><div class="cf-foot" style="border:0;padding:0;margin-top:8px"><button type="button" class="btn sm" data-utadd="${g.btns}">+ Add button</button><button type="button" class="btn sm" data-utbdef="${g.btns}">Default buttons</button></div>` : ''}</div>
@@ -9234,24 +9451,24 @@ function utPrev() { const b = $('#utPrev'); if (b) { UIB.list = []; b.innerHTML 
   });
 })();
 function admBrand() {
-  const s = PLAT.s, b = brand(), open = store.get('nv.admAcc2') || 'b-brand', logo = safeUrl(b.logoUrl);
+  const s = PLAT.s, b = brand(), open = store.get('nv.admAcc2') || '', logo = safeUrl(b.logoUrl);
   const f = (id, label, val, extra) => `<div class="field"><label>${label}</label><input class="input" id="${id}" value="${esc(val || '')}" ${extra || ''}></div>`;
-  return `<div class="acc-list" data-acckey="nv.admAcc2">
-    ${accItem('b-brand', { title: 'Website name & logo', icon: '<svg class="i" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M8 12h8M12 8v8"/></svg>', color: '#EC4899', dot: 'ok', status: `${esc(b.brandName)}${logo ? ' · logo added' : ' · default logo'}`, open: open === 'b-brand',
+  return `<div class="acc-list acc-grid" data-acckey="nv.admAcc2">
+    ${accItem('b-brand', { desc: 'Brand name, logo and white label — shown to every client.', title: 'Website name & logo', icon: '<svg class="i" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M8 12h8M12 8v8"/></svg>', color: '#EC4899', dot: 'ok', status: `${esc(b.brandName)}${logo ? ' · logo added' : ' · default logo'}`, open: open === 'b-brand',
       body: `<div class="adm-brand"><span class="brand-logo">${logo ? `<img src="${esc(logo)}" alt="">` : LOGO_DEFAULT}</span><div class="grow"><b>${esc(b.brandName)}</b><small class="muted">Shown in the top bar, login page and browser tab for every client.</small></div><button class="btn" data-admbrand>Change name & logo</button></div>
         <div class="adm-brand" style="margin-top:10px"><span class="brand-logo" style="background:var(--blue-soft);color:var(--blue-2)">🎨</span><div class="grow"><b>White label</b><small class="muted">Colours, login page text, “Powered by”, your own domain.</small></div><button class="btn" data-admwl>Open white label</button></div>` })}
-    ${accItem('b-home', { title: 'Home page header & pricing', icon: '<svg class="i" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="m3 15 5-5 4 4 3-3 6 6"/></svg>', color: '#3B82F6', dot: 'ok', status: 'Banner image, text, buttons and the pricing cards', open: open === 'b-home',
+    ${accItem('b-home', { desc: 'Home page banner, buttons and the pricing cards.', title: 'Home page header & pricing', icon: '<svg class="i" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="m3 15 5-5 4 4 3-3 6 6"/></svg>', color: '#3B82F6', dot: 'ok', status: 'Banner image, text, buttons and the pricing cards', open: open === 'b-home',
       body: `<div class="cf-foot" style="margin:0;border:0;padding:0"><span class="muted">Edit the banner, its buttons and the pricing section with a live preview.</span><div class="grow"></div><button class="btn primary" data-admtab="home">Open Home page editor</button></div>` })}
-    ${accItem('b-trial', { title: 'Free trial & expiry', icon: '<svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2M9 2h6"/></svg>', color: '#F59E0B', dot: 'ok', status: `${esc(s.trialDays || 14)} days trial · ${esc(s.graceDays || 3)} grace days`, open: open === 'b-trial',
+    ${accItem('b-trial', { desc: 'Trial length, plan for new sign-ups and grace days.', title: 'Free trial & expiry', icon: '<svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2M9 2h6"/></svg>', color: '#F59E0B', dot: 'ok', status: `${esc(s.trialDays || 14)} days trial · ${esc(s.graceDays || 3)} grace days`, open: open === 'b-trial',
       body: `<div class="form" style="grid-template-columns:repeat(3,1fr)">${f('psTrial', 'Free trial (days)', s.trialDays || 14, 'type="number" min="0" max="90"')}
         <div class="field"><label>Plan for new sign-ups</label><select class="input" id="psPlan">${(ADM2.plans || []).filter(p => p.active).map(p => `<option value="${esc(p.id)}" ${p.id === s.defaultPlan ? 'selected' : ''}>${esc(p.name)}</option>`).join('')}</select></div>
         ${f('psGrace', 'Grace days after a paid plan ends', s.graceDays || 3, 'type="number" min="0" max="30"')}</div>
         <p class="help">New businesses start on this plan as a free trial. When a trial ends — or a paid period ends plus the grace days — their workspace becomes view-only until you record a payment.</p>` })}
-    ${accItem('b-ai', { title: 'AI for the whole website', icon: '<svg class="i" viewBox="0 0 24 24"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/><circle cx="12" cy="12" r="3"/></svg>', color: '#8B5CF6', dot: 'ok', status: `In use: ${esc((AI_PROVIDERS.find(x => x[0] === (s.aiProvider || 'gemini')) || AI_PROVIDERS[0])[1])}${(s.aiProvider || 'gemini') === 'gemini' ? ' (free)' : ''} · Inbox AI, Guide, Automation AI steps`, open: open === 'b-ai', body: admAiBody() })}
-    ${accItem('b-advisor', { title: 'AI Advisor defaults', icon: '<svg class="i" viewBox="0 0 24 24"><path d="M12 3l1.8 4.7L18.5 9l-4.7 1.8L12 15.5l-1.8-4.7L5.5 9l4.7-1.3z"/><path d="M19 15l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z"/></svg>', color: '#0EA5E9', dot: 'ok', status: (() => { const c = Object.assign({}, ADV_DEF, (() => { try { return JSON.parse(s.advisorJson || '{}'); } catch (e) { return {}; } })()); return `Target ROAS ${c.roas} · stock warning ${c.stockDays} days · ad tips after ₹${c.minSpend}`; })(), open: open === 'b-advisor',
+    ${accItem('b-ai', { desc: 'Which AI runs Inbox replies, the Guide and Automation steps.', title: 'AI for the whole website', icon: '<svg class="i" viewBox="0 0 24 24"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/><circle cx="12" cy="12" r="3"/></svg>', color: '#8B5CF6', dot: 'ok', status: `In use: ${esc((AI_PROVIDERS.find(x => x[0] === (s.aiProvider || 'gemini')) || AI_PROVIDERS[0])[1])}${(s.aiProvider || 'gemini') === 'gemini' ? ' (free)' : ''} · Inbox AI, Guide, Automation AI steps`, open: open === 'b-ai', body: admAiBody() })}
+    ${accItem('b-advisor', { desc: "Starting numbers for every client's AI Advisor tips.", title: 'AI Advisor defaults', icon: '<svg class="i" viewBox="0 0 24 24"><path d="M12 3l1.8 4.7L18.5 9l-4.7 1.8L12 15.5l-1.8-4.7L5.5 9l4.7-1.3z"/><path d="M19 15l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z"/></svg>', color: '#0EA5E9', dot: 'ok', status: (() => { const c = Object.assign({}, ADV_DEF, (() => { try { return JSON.parse(s.advisorJson || '{}'); } catch (e) { return {}; } })()); return `Target ROAS ${c.roas} · stock warning ${c.stockDays} days · ad tips after ₹${c.minSpend}`; })(), open: open === 'b-advisor',
       body: `<p class="help" style="margin-top:0">The numbers every client's AI Advisor starts with (target ROAS, when a lead counts as untouched, low-stock warning, returns limit, minimum ad spend before ad tips). Clients can change them for their own business. Switch the Advisor on / off per plan in Plans & pricing → Sections.</p><div class="cf-foot" style="margin:0;border:0;padding:0"><div class="grow"></div><button class="btn primary" data-advcfgp>Edit defaults</button></div>` })}
-    ${accItem('b-connect', { title: 'Connect methods (WhatsApp, Shopify, Amazon, Meta Ads)', icon: '<svg class="i" viewBox="0 0 24 24"><path d="M9 7V3M15 7V3M7 7h10v4a5 5 0 0 1-10 0V7ZM12 16v5"/></svg>', color: '#25D366', dot: 'ok', status: (() => { const on = Object.keys(CONNM_DEF).map(k => { const M = connModes(k, true); return `${CONNM_DEF[k].label}: ${M.a.on && M.b.on ? 'A + B' : M.a.on ? 'A' : M.b.on ? 'B' : 'off'}`; }); return on.join(' · '); })(), open: open === 'b-connect', body: admConnBody() })}
-    ${accItem('b-support', { title: 'Support contact & renew link', icon: '<svg class="i" viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3.5-7.1L21 4v5h-5"/></svg>', color: '#10B981', dot: s.supportPhone || s.supportEmail ? 'ok' : 'wait', status: s.supportPhone || s.supportEmail ? [s.supportPhone ? '+' + s.supportPhone : '', s.supportEmail].filter(Boolean).join(' · ') : 'Not set — clients can not contact you to renew', open: open === 'b-support',
+    ${accItem('b-connect', { desc: 'Option A / B for WhatsApp, Shopify, Amazon and Meta Ads.', title: 'Connect methods', icon: '<svg class="i" viewBox="0 0 24 24"><path d="M9 7V3M15 7V3M7 7h10v4a5 5 0 0 1-10 0V7ZM12 16v5"/></svg>', color: '#25D366', dot: 'ok', status: (() => { const on = Object.keys(CONNM_DEF).map(k => { const M = connModes(k, true); return `${CONNM_DEF[k].label}: ${M.a.on && M.b.on ? 'A + B' : M.a.on ? 'A' : M.b.on ? 'B' : 'off'}`; }); return on.join(' · '); })(), open: open === 'b-connect', body: admConnBody() })}
+    ${accItem('b-support', { desc: 'WhatsApp, email and renew link clients use to reach you.', title: 'Support contact & renew link', icon: '<svg class="i" viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3.5-7.1L21 4v5h-5"/></svg>', color: '#10B981', dot: s.supportPhone || s.supportEmail ? 'ok' : 'wait', status: s.supportPhone || s.supportEmail ? [s.supportPhone ? '+' + s.supportPhone : '', s.supportEmail].filter(Boolean).join(' · ') : 'Not set — clients can not contact you to renew', open: open === 'b-support',
       body: `<div class="form" style="grid-template-columns:repeat(3,1fr)">${f('psPhone', 'Support WhatsApp (with country code)', s.supportPhone, 'placeholder="91 98…"')}${f('psMail', 'Support email', s.supportEmail)}${f('psLink', 'Renew / payment link (optional)', s.renewLink, 'placeholder="https://rzp.io/…"')}</div>
         <p class="help">Used by the pricing buttons, the expiry banner and Settings → Plan & billing.</p>` })}
     </div>
@@ -9545,9 +9762,9 @@ function admHome() {
   setTimeout(() => { admHeroBtns(); admHeroPrev(); }, 0);
   return `<div class="ah-prev-h"><b>Live preview</b><span class="muted">This is exactly what appears at the top of Home. Changes show here as you type — press Save to publish. Pricing opens from the “Pricing” button next to the search box.</span></div>
     <div id="admHeroPrev"></div>
-    <div class="acc-list" style="margin-top:14px">${accItem('h-hero', { title: 'Header (top banner)', icon: '<svg class="i" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="m3 15 5-5 4 4 3-3 6 6"/></svg>', color: '#3B82F6', dot: c.on !== false ? 'ok' : 'off', status: c.on !== false ? `On · ${c.image ? 'your image' : 'built-in artwork'} · ${(c.buttons || []).filter(b => b.on !== false).length} buttons` : 'Hidden', open: open === 'h-hero', body: heroBody })}
-      ${accItem('h-price', { title: 'Pricing pop-up', icon: '<svg class="i" viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>', color: '#F97316', dot: p.show !== 'off' ? 'ok' : 'off', status: (PRICING_SHOW.find(x => x[0] === p.show) || PRICING_SHOW[0])[1], open: open === 'h-price', body: prBody })}
-      ${accItem('h-layout', { title: 'Client Home layout (default)', icon: '<svg class="i" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="18" height="7" rx="1.5"/></svg>', color: '#10B981', dot: hlParse(PLAT.s.homeLayoutJson) ? 'ok' : '', status: hlParse(PLAT.s.homeLayoutJson) ? 'Your own default layout' : 'Built-in layout', open: open === 'h-layout',
+    <div class="acc-list acc-grid" style="margin-top:14px">${accItem('h-hero', { desc: 'Banner image, headline, text and buttons on the Home page.', title: 'Header (top banner)', icon: '<svg class="i" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="m3 15 5-5 4 4 3-3 6 6"/></svg>', color: '#3B82F6', dot: c.on !== false ? 'ok' : 'off', status: c.on !== false ? `On · ${c.image ? 'your image' : 'built-in artwork'} · ${(c.buttons || []).filter(b => b.on !== false).length} buttons` : 'Hidden', open: open === 'h-hero', body: heroBody })}
+      ${accItem('h-price', { desc: 'Pricing pop-up: plans, intro offer and trial box.', title: 'Pricing pop-up', icon: '<svg class="i" viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>', color: '#F97316', dot: p.show !== 'off' ? 'ok' : 'off', status: (PRICING_SHOW.find(x => x[0] === p.show) || PRICING_SHOW[0])[1], open: open === 'h-price', body: prBody })}
+      ${accItem('h-layout', { desc: "Default card order for every client's Home.", title: 'Client Home layout (default)', icon: '<svg class="i" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="18" height="7" rx="1.5"/></svg>', color: '#10B981', dot: hlParse(PLAT.s.homeLayoutJson) ? 'ok' : '', status: hlParse(PLAT.s.homeLayoutJson) ? 'Your own default layout' : 'Built-in layout', open: open === 'h-layout',
         body: `<p class="help" style="margin-top:0">The Home cards every client sees until they press <b>✎ Customize</b> on their own Home: which cards, in which order, and your own blocks (a welcome note, a training video, a link to support). Clients who already changed their Home keep their layout.</p>
           <div class="cf-foot" style="margin:0;border:0;padding:0"><button class="btn danger sm" data-hlresetall title="Every client goes back to your default layout">Apply to all clients</button><div class="grow"></div><button class="btn primary" data-hldefault>Edit default layout</button></div>` })}</div>
     <div class="ah-prev-h" style="margin-top:18px"><b>Pricing pop-up preview</b><span class="muted">Opens when someone clicks “Pricing” in the top bar. Cards come from Plans & pricing.</span></div><div id="admPrPrev">${pricingHTML({ admin: true })}</div>`;
@@ -9902,6 +10119,10 @@ const HELP_PLAYBOOKS = [
     need: ['WhatsApp connected'],
     steps: ['Go to **Campaigns → Templates → New template**.', 'Name: small letters and _ only (e.g. **welcome_offer**). Category: **Marketing** for offers, **Utility** for order / account updates. Language: English / Hindi.', 'Write the message. Use **+ Variable** for personal parts — {{1}} becomes the customer’s first name when you send.', 'Fill **Sample values** for every variable (Meta checks them). Add a footer and buttons if you want.', 'Press **Submit to Meta for approval**. Status shows **Pending** — usually approved in minutes, sometimes a few hours.', 'Press **⟳ Sync from WhatsApp** to refresh. When it shows **Approved** you can use it in Broadcast, Auto welcome and Automation.'],
     tips: ['Rejected? Open the card to see the reason — usually too salesy wording in Utility, or a missing sample.', 'No ALL CAPS, no misleading claims, don’t start or end with a variable.'] },
+  { id: 'wa-flow', g: 'wa', title: 'Build a WhatsApp chatbot with the Flow builder', kw: 'flow builder chatbot node canvas template button next template chain multi step bot actions wire', open: ['Open Templates', 'templates'],
+    need: ['WhatsApp connected', 'Templates with reply buttons (Quick reply) — approved by Meta'],
+    steps: ['Go to **Templates → Flow builder**.', 'Press **+ Node** (or the Tab key) → **WhatsApp template** → pick your first template (e.g. a welcome menu). Its reply buttons appear as outputs on the right side of the node.', 'Drag from a button’s dot to an empty spot → choose the next **WhatsApp template**, or an **action** — reply with text, add tag, change stage, assign, create order, create task, AI reply, webhook…', 'Click any node to open its settings on the right (texts, stage, tag, amount, links). Actions can be chained one after another; end a chain with the next template.', 'Press **▶ Preview chat** and tap the buttons like a customer to check the flow.', 'Press **Apply to WhatsApp**. From now on, when a customer taps that button, Nodevers runs the wired steps automatically.'],
+    tips: ['The canvas is saved as you go, but customers only get it after **Apply to WhatsApp** (the bar says “Not live yet” until then).', 'Up to 8 steps run per button tap.', 'Changed buttons inside a template? Press **⟳ Rebuild from templates** to redraw the canvas from what is saved.'] },
   { id: 'wa-payment', g: 'wa', title: 'Add a payment method in WhatsApp (needed for templates)', kw: 'payment method card billing 131042 template failed whatsapp manager credit line', open: ['Open Inbox', 'whatsapp'],
     need: ['A debit / credit card'],
     steps: ['Open **business.facebook.com** → **WhatsApp Manager** (or business.facebook.com/wa/manage).', 'Left menu **Payment settings** (or ⚙ **Settings → Payment methods**).', '**Add payment method** → choose your business country / currency (INR) → add the card → save.', 'Wait 5–10 minutes, then send the template again from Nodevers.'],

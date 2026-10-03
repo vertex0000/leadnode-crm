@@ -10,7 +10,7 @@ const firstKey = (json?: string) => { try { return Object.values(JSON.parse(json
 const SERVICE = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') || firstKey(Deno.env.get('SUPABASE_SECRET_KEYS')) || '';
 const SB_URL = Deno.env.get('SUPABASE_URL')!;
 const db = createClient(SB_URL, SERVICE, { auth: { persistSession: false } });
-const GRAPH = Deno.env.get('WA_GRAPH_URL') ?? 'https://graph.facebook.com/v21.0';
+const GRAPH = Deno.env.get('WA_GRAPH_URL') ?? 'https://graph.facebook.com/v25.0';
 const ALLOW_HTTP = Deno.env.get('AUTO_ALLOW_HTTP') === '1';
 const MAX_STEPS = 40;
 const cors = { 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-cron-secret', 'Access-Control-Allow-Methods': 'POST, OPTIONS' };

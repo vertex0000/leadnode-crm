@@ -6,7 +6,7 @@
 // This function also answers the Admin Console "Check Supabase secrets" button (yes / no only).
 import { createClient } from 'npm:@supabase/supabase-js@2';
 
-const GRAPH = (Deno.env.get('WA_GRAPH_URL') ?? 'https://graph.facebook.com/v21.0').replace(/\/+$/, '');
+const GRAPH = (Deno.env.get('WA_GRAPH_URL') ?? 'https://graph.facebook.com/v25.0').replace(/\/+$/, '');
 const firstKey = (json?: string) => { try { return Object.values(JSON.parse(json ?? '{}'))[0] as string | undefined; } catch { return undefined; } };
 const SERVICE = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') || firstKey(Deno.env.get('SUPABASE_SECRET_KEYS')) || '';
 const db = createClient(Deno.env.get('SUPABASE_URL')!, SERVICE, { auth: { persistSession: false } });

@@ -53,7 +53,7 @@ async function findOrCreateLead(ws: string, phone: string, name: string) {
 
 
 // ================= Button actions: a customer taps a quick-reply button on one of our templates =================
-const GRAPH = Deno.env.get('WA_GRAPH_URL') ?? 'https://graph.facebook.com/v21.0';
+const GRAPH = Deno.env.get('WA_GRAPH_URL') ?? 'https://graph.facebook.com/v25.0';
 const GEMINI = Deno.env.get('GEMINI_URL') ?? 'https://generativelanguage.googleapis.com/v1beta';
 const BREVO = Deno.env.get('BREVO_URL') ?? 'https://api.brevo.com/v3';
 const inr = (n: unknown) => (n === null || n === undefined || n === '') ? '' : '₹' + Number(n).toLocaleString('en-IN');

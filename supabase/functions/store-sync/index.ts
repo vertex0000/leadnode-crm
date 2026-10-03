@@ -62,7 +62,7 @@ function findList(d: any, want = ''): { list: any[]; path: string } {
 // ---------------- platform adapters → rows for public.orders / public.products ----------------
 type Ctx = { cfg: any; sec: any; since: string | null; ws?: string };
 type Got = { orders: any[]; products: any[]; updates?: { id: string; status: string }[]; ads?: any[]; insights?: any[] };
-const shopBase = (cfg: any) => `https://${String(cfg.store_url).replace(/^https?:\/\//, '').replace(/\/.*$/, '')}/admin/api/2024-10`;
+const shopBase = (cfg: any) => `https://${String(cfg.store_url).replace(/^https?:\/\//, '').replace(/\/.*$/, '')}/admin/api/2026-07`;
 const SHOP_BASE_OVERRIDE = Deno.env.get('SHOPIFY_BASE');                 // local tests
 const SHOP_OAUTH_OVERRIDE = Deno.env.get('SHOPIFY_OAUTH_BASE');          // local tests
 const shopOauth = (shop: string) => `${SHOP_OAUTH_OVERRIDE || 'https://' + shop}/admin/oauth/access_token`;
@@ -231,7 +231,7 @@ async function amazon(ctx: Ctx) {
 }
 
 // ---------------- Meta Ads: daily spend per campaign → ad_spend (net profit, ROAS, Ads Manager) ----------------
-const GRAPH = (Deno.env.get('META_GRAPH_URL') ?? 'https://graph.facebook.com/v21.0').replace(/\/+$/, '');
+const GRAPH = (Deno.env.get('META_GRAPH_URL') ?? 'https://graph.facebook.com/v25.0').replace(/\/+$/, '');
 const LEAD_ACT = ['lead', 'onsite_conversion.lead_grouped', 'leadgen_grouped', 'offsite_conversion.fb_pixel_lead'], BUY_ACT = ['purchase', 'omni_purchase', 'offsite_conversion.fb_pixel_purchase', 'onsite_web_purchase'];
 const actSum = (arr: any[] | undefined, types: string[]) => { const hit = (arr ?? []).filter((a) => types.includes(a.action_type)); if (!hit.length) return null; return Math.max(...types.map((t) => hit.filter((a) => a.action_type === t).reduce((s, a) => s + Number(a.value || 0), 0))); };
 async function metaGet(url: string, token: string) {
@@ -361,7 +361,7 @@ async function oauthStart(ws: string, uid: string, platform: string, b: any) {
     url = `${SC_HOST[mk]}/apps/authorize/consent?` + new URLSearchParams({ application_id: appId, state, redirect_uri: redirect, ...(M.b.beta ? { version: 'beta' } : {}) }); extra = { marketplace: mk, fba: b.fba !== false };
   } else {
     const appId = await metaAppId(M), cfgId = String(M.b.configId ?? '').trim(); if (!appId || !env('META_APP_SECRET')) return notReady('META_APP_ID / META_APP_SECRET');
-    url = `https://www.facebook.com/v21.0/dialog/oauth?` + new URLSearchParams({ client_id: appId, redirect_uri: redirect, state, response_type: 'code', ...(cfgId ? { config_id: cfgId } : { scope: 'ads_read' }) });
+    url = `https://www.facebook.com/v25.0/dialog/oauth?` + new URLSearchParams({ client_id: appId, redirect_uri: redirect, state, response_type: 'code', ...(cfgId ? { config_id: cfgId } : { scope: 'ads_read' }) });
   }
   await db.from('oauth_states').delete().lt('created_at', new Date(Date.now() - 864e5).toISOString());
   const { error } = await db.from('oauth_states').insert({ state, workspace_id: ws, user_id: uid, platform, redirect_uri: redirect, extra });
