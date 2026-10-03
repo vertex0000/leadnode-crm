@@ -1121,11 +1121,14 @@ body.no-sales [data-go="tasks"],body.no-sales [data-go="calls"],body.no-orders [
 .tf-chat{display:flex;flex-direction:column;gap:8px;max-height:56vh;overflow:auto;padding:12px;border-radius:14px;background:color-mix(in srgb,#25A55F 8%,var(--glass-2,var(--card)));border:1px solid var(--line)}
 .tf-b{display:flex;flex-direction:column;gap:4px;max-width:82%}.tf-b.in{align-self:flex-start}.tf-b.out{align-self:flex-end}.tf-b.out .tf-bub{background:color-mix(in srgb,#25A55F 22%,var(--glass-3));border-radius:10px 10px 3px 10px}
 .tf-btns{display:flex;flex-direction:column;gap:4px}.tf-cb{border:1px solid var(--line);background:var(--glass-3);color:#1E88E5;font:inherit;font-weight:700;font-size:13px;padding:8px;border-radius:10px;cursor:pointer}.tf-cb:disabled{opacity:.55;cursor:default}.tf-cb:not(:disabled):hover{background:color-mix(in srgb,#1E88E5 10%,var(--glass-3))}
+.tf-choice{align-self:stretch;display:flex;flex-direction:column;gap:6px;padding:10px;border-radius:12px;border:1px dashed color-mix(in srgb,#8B5CF6 55%,var(--line));background:color-mix(in srgb,#8B5CF6 8%,var(--glass-3))}.tf-choice>span{font-size:12.5px;font-weight:700;color:#7C3AED}.tf-choice>div{display:flex;gap:6px;flex-wrap:wrap}.tf-choice .tf-cb{flex:1 1 140px;color:#7C3AED}.tf-choice small{font-size:11.5px;color:var(--muted)}
+.tf-ask{display:flex;gap:6px;align-self:stretch}.tf-ask .input{flex:1}.tf-lh{font-size:11.5px;font-weight:700;color:var(--muted);padding:2px 4px}
+.ut-rs{display:flex;align-items:center;margin-top:12px}
 .tf-sys{align-self:center;font-size:11.5px;color:var(--muted);background:var(--glass-3);border:1px dashed var(--line-2);padding:4px 10px;border-radius:999px;text-align:center;max-width:90%}
 @media(max-width:640px){.tf-steps{display:none}.tp-seg button{padding:7px 10px}}
 /* ---- card popup (Settings-style) ---- */
 html.accm-lock{overflow:hidden}
-.accm{position:fixed;inset:0;z-index:55;display:grid;place-items:center;padding:24px}
+.accm{position:fixed;inset:0;z-index:64;display:grid;place-items:center;padding:24px}
 .accm-bg{position:absolute;inset:0;background:rgba(15,23,42,.42);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);opacity:0;transition:opacity .2s}
 .accm-box{position:relative;width:min(1120px,100%);height:min(780px,calc(100vh - 48px));display:flex;flex-direction:column;border-radius:20px;background:var(--bg1,var(--card));border:1px solid var(--line-2);box-shadow:0 30px 90px -20px rgba(0,0,0,.45);overflow:hidden;opacity:0;transform:translateY(10px) scale(.985);transition:opacity .2s,transform .22s cubic-bezier(.2,.8,.2,1)}
 .accm.show .accm-bg{opacity:1}.accm.show .accm-box{opacity:1;transform:none}
@@ -1163,10 +1166,10 @@ html.accm-lock{overflow:hidden}
 .tps-sec{border:1px solid var(--line);border-radius:14px;padding:12px;background:var(--glass-2,var(--card));display:flex;flex-direction:column;gap:10px}
 .tps-st{display:flex;align-items:center;gap:8px;font-weight:800;font-size:13.5px}.tps-st span{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:11.5px;background:color-mix(in srgb,#25A55F 16%,transparent);color:#25A55F}.tps-st small{font-weight:500;font-size:11.5px}
 .tps-sec .field{margin:0;min-width:0}.tps-2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px}.tps-top .grow{flex:1}
-.tps-sec .tb-cts{grid-template-columns:repeat(3,1fr)!important}
+.tps-sec .tb-cts{grid-template-columns:repeat(3,minmax(0,1fr))!important}.tps-sec .tb-cts>*{min-width:0}
 .tps-wire{font-size:11.5px;font-weight:700;color:#B45309;padding:4px 2px 0}.tps-wire.on{color:var(--green)}
 .tps-cv{position:relative;min-width:0;display:flex;flex-direction:column;min-height:0}
-.tps-cvh{position:absolute;left:190px;right:14px;top:12px;z-index:4;pointer-events:none;display:flex;justify-content:flex-end}.tps-cvh>div{pointer-events:auto;max-width:560px;font-size:12px;color:var(--muted);background:var(--glass-3);border:1px solid var(--line);border-radius:999px;padding:6px 14px;display:flex;gap:8px;align-items:center;box-shadow:var(--shadow)}.tps-cvh b{color:var(--text)}
+.tps-cvh{position:absolute;left:14px;bottom:14px;right:330px;z-index:4;pointer-events:none;display:flex;justify-content:flex-start}.tps-cvh>div{pointer-events:auto;max-width:560px;font-size:12px;color:var(--muted);background:var(--glass-3);border:1px solid var(--line);border-radius:999px;padding:6px 14px;display:flex;gap:8px;align-items:center;box-shadow:var(--shadow)}.tps-cvh b{color:var(--text)}
 #tsCanvas{flex:1;height:100%!important;min-height:0!important;border-radius:0}
 #tsCanvas .hint,#tsCanvas [data-fx="preset"]{display:none}
 .tps-prev{overflow:auto;border-left:1px solid var(--line);padding:0 14px 16px;background:color-mix(in srgb,var(--text) 2.5%,transparent)}.tps-prev .tps-ph{padding-left:0}
@@ -1339,7 +1342,7 @@ body.ro [data-cmw],body.np-commerce [data-cmw]{display:none!important}
 .ell{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
 
 /* ---------- modal ---------- */
-.modal{position:fixed;inset:0;display:grid;grid-template-columns:minmax(0,1fr);place-items:center;z-index:60;padding:16px;opacity:0;pointer-events:none;transition:.2s}
+.modal{position:fixed;inset:0;display:grid;grid-template-columns:minmax(0,1fr);place-items:center;z-index:66;padding:16px;opacity:0;pointer-events:none;transition:.2s}
 .modal.show{opacity:1;pointer-events:auto}
 .modal .box{width:min(680px,100%);max-width:100%;max-height:calc(100vh - 32px);overflow:auto;background:var(--glass-3);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid var(--stroke);border-radius:14px;box-shadow:var(--shadow-2);padding:20px}
 .modal .box.narrow{width:min(480px,100%)}
@@ -3752,7 +3755,7 @@ function parseNodeDef(o, quiet) {
   }
   return { ok: true, def: { desc: cleanName(o.description).slice(0, 140), color: color || undefined, ins, outs: outs.map(cleanName), fields: out, sum: p => { const f = out[0]; return f ? `${f.label}: ${p[f.k] ?? f.def ?? '–'}` : (cleanName(o.description) || 'Custom node'); } } };
 }
-const outsOf = (t, n) => { if (t.noOut) return []; if (t.outsFn && n) { const o = t.outsFn(n.p || {}); return o.length ? o : ['—']; } return t.outs && t.outs.length ? t.outs : ['out']; };   // outsFn: ports that depend on the node's settings (template buttons)
+const outsOf = (t, n) => { if (t.noOut) return []; if (t.outsFn && n) { const o = t.outsFn(n.p || {}); return o.length ? o : t.emptyNoPort ? [] : ['—']; } return t.outs && t.outs.length ? t.outs : ['out']; };   // outsFn: ports that depend on the node's settings (template buttons)
 const multiOut = (t, outs) => outs.length > 1 || (!!t.outsFn && outs.length > 0);
 const insOf = t => (t.ins === 0 ? 0 : 1);
 const colorOf = t => t.color || SECTIONS[t.section].color;
@@ -4045,6 +4048,7 @@ class FlowCanvas {
       if (a === 'zin') this.zoomAt(R.clientWidth / 2, R.clientHeight / 2, this.view.k * 1.2);
       if (a === 'zout') this.zoomAt(R.clientWidth / 2, R.clientHeight / 2, this.view.k / 1.2);
       if (a === 'fit') this.fit();
+      if (a === 'tidy') { botLayout(this.flow.nodes, this.flow.links, 300); this.render(); this.fit(); this.save(); }
     });
     this.insp.addEventListener('input', e => {
       const f = e.target.closest('[data-fp]'); if (!f) return; const n = this.node([...this.sel][0]); if (!n) return;
@@ -6799,7 +6803,7 @@ const TB_ACT = {
   assign_member: ['Assign team member', [['member', 'Member', 'member']]], add_tag: ['Add tag', [['tag', 'Tag', 'tag']]], change_stage: ['Change pipeline stage', [['stage', 'Stage', 'stage']]],
   create_task: ['Create task', [['title', 'Task', 'text'], ['days', 'Due in days', 'num'], ['priority', 'Priority', 'prio']]],
   send_media: ['Send image / video / PDF', [['kind', 'Type', 'mediakind'], ['url', 'File link (https)', 'url'], ['text', 'Caption (optional)', 'text']]], send_location: ['Send location (map pin)', [['lat', 'Latitude', 'text'], ['lng', 'Longitude', 'text'], ['name', 'Place name', 'text'], ['address', 'Address', 'text']]],
-  add_note: ['Add note to the lead', [['text', 'Note', 'area']]], set_followup: ['Set follow-up date', [['days', 'In how many days', 'num']]], update_lead: ['Update a lead field', [['field', 'Field', 'leadfield'], ['value', 'New value', 'text']]], stop_messages: ['Stop marketing messages (opt-out)', []],
+  add_note: ['Add note to the lead', [['text', 'Note', 'area']]], set_followup: ['Set follow-up date', [['days', 'In how many days', 'num']]], update_lead: ['Update a lead field', [['field', 'Field', 'leadfield'], ['value', 'New value', 'text']]], stop_messages: ['Stop marketing messages (opt-out)', []], handover: ['Hand over to a person', [['member', 'Assign to', 'member'], ['title', 'Task for the team', 'text'], ['text', 'Message to the customer (optional)', 'text']]],
   trigger_workflow: ['Trigger workflow (n8n webhook)', [['url', 'Webhook URL (https)', 'url']]], run_ai_agent: ['Run AI agent (Gemini reply)', [['prompt', 'Instructions for the AI', 'area']]], custom_api: ['Custom API request (POST)', [['url', 'URL (https)', 'url']]],
 };
 const tbActNew = type => { const a = { type }; ((TB_ACT[type] || [0, []])[1]).forEach(([k, , kind]) => { if (kind === 'mediakind') a[k] = 'image'; else if (kind === 'leadfield') a[k] = 'city'; else if (kind === 'tag') a[k] = ((S.lists && S.lists.tags) || ['Hot'])[0]; else if (kind === 'stage') a[k] = stages()[0]; else if (kind === 'prio') a[k] = 'High'; else if (kind === 'ostatus') a[k] = 'New'; }); return a; };
@@ -6864,7 +6868,7 @@ function tbPreview(e) {
 function tbFlowSummary(e) {
   const qr = e.buttons.filter(b => b.type === 'QUICK_REPLY');
   if (!qr.length) return '';
-  return `<div class="tb-flow"><div class="bc-rh">What happens when tapped</div>${qr.map(b => `<div class="tb-fr"><span class="tb-fb">↩ ${esc(b.text || '…')}</span><span class="tb-fa">${(b.actions || []).map(a => a.type === 'send_template' ? `<b>→ ${esc(a.template || '?')}</b>` : esc((TB_ACT[a.type] || [a.type])[0])).join(' · ') || '<span class="muted">lands in Inbox</span>'}</span></div>`).join('')}</div>`;
+  return `<div class="tb-flow"><div class="bc-rh">What happens when tapped</div>${qr.map(b => `<div class="tb-fr"><span class="tb-fb">↩ ${esc(b.text || '…')}</span><span class="tb-fa">${(b.actions || []).map(a => a.type === 'send_template' ? `<b>→ ${esc(a.template || '?')}</b>` : esc(botLabel(a))).join(' · ') || '<span class="muted">lands in Inbox</span>'}</span></div>`).join('')}</div>`;
 }
 /* buttons & actions for an existing (e.g. Meta-approved) template — no new Meta review needed */
 function openTplActions(name) {
@@ -6925,7 +6929,7 @@ SECTIONS.tflow = { name: 'WhatsApp templates', color: '#25A55F', ic: 'T' };
 SECTIONS.tact = { name: 'Actions when tapped', color: '#F29A5C', ic: '↯' };
 const tfTpl = name => (S.templates || []).find(t => t.templateName === name);
 const tfQR = t => t ? tbFromTemplate(t).buttons.map((b, i) => ({ b, i })).filter(x => x.b.type === 'QUICK_REPLY') : [];
-const TF_ICON = { send_media: '🖼', send_location: '📍', add_note: '🗒', set_followup: '📅', update_lead: '✎', stop_messages: '⛔', send_text: '💬', open_link: '🔗', open_form: '📝', open_product: '🛍', send_email: '✉', send_payment_link: '₹', create_order: '🧾', update_order: '🔄', cancel_order: '✖', track_order: '🚚', generate_invoice: '📄', assign_member: '👤', add_tag: '🏷', change_stage: '➜', create_task: '✓', trigger_workflow: 'n', run_ai_agent: '✦', custom_api: '⇄' };
+const TF_ICON = { handover: '🙋', send_media: '🖼', send_location: '📍', add_note: '🗒', set_followup: '📅', update_lead: '✎', stop_messages: '⛔', send_text: '💬', open_link: '🔗', open_form: '📝', open_product: '🛍', send_email: '✉', send_payment_link: '₹', create_order: '🧾', update_order: '🔄', cancel_order: '✖', track_order: '🚚', generate_invoice: '📄', assign_member: '👤', add_tag: '🏷', change_stage: '➜', create_task: '✓', trigger_workflow: 'n', run_ai_agent: '✦', custom_api: '⇄' };
 const tfField = ([k, label, kind]) => {
   const sel = options => F(k, label, 'select', { options });
   if (kind === 'stage') return sel(stageOpts); if (kind === 'tag') return sel(() => (S.lists.tags || ['Hot', 'Warm', 'Cold']).concat(['Happy', 'Cart']).filter((x, i, a) => a.indexOf(x) === i));
@@ -6949,55 +6953,168 @@ NODE_TYPES.push({ type: 'tf.template', section: 'tflow', name: 'WhatsApp templat
 Object.entries(TB_ACT).filter(([k]) => k !== 'send_template').forEach(([k, [name, fields]]) => NODE_TYPES.push({ type: 'tf.' + k, section: 'tact', name, color: k === 'run_ai_agent' ? '#B08CEB' : /order|invoice|payment/.test(k) ? '#E8707E' : /tag|stage|member|task/.test(k) ? '#3CB4A0' : /workflow|api/.test(k) ? '#EA4B71' : undefined,
   fields: fields.map(tfField), sum: p => { const f = fields[0]; const v = f ? p[f[0]] : ''; return `${TF_ICON[k] || ''} ${v && v !== 'https://' ? String(v).slice(0, 60) : f ? f[1] : name}`.trim(); } }));
 
-/** canvas from the templates' current button actions (first open, or "Rebuild from templates") */
+/* ================= Chatbot logic nodes — shared by the template studio and the Flow builder =================
+   Branch steps (If, Business hours, A/B, Wait, Ask, Menu) end their list and hold their own lists, exactly what wa-webhook runs. */
+SECTIONS.tlogic = { name: 'Chatbot logic', color: '#8B5CF6', ic: '◇' };
+const BOT_FIELDS = ['Tag', 'Stage', 'City', 'Source', 'Budget', 'Business type', 'Has an order', 'Order status', 'Last message', 'Opted out'];
+const BOT_OPS = ['is', 'is not', 'contains', 'above', 'below', 'is empty', 'is not empty'];
+const BOT_ASK = ['City', 'Name', 'Email', 'Budget', 'Business name', 'Business type', 'Notes'];
+const botOpts = p => String((p && p.options) || '').split('\n').map(x => x.trim()).filter(Boolean).slice(0, 10).map(x => x.slice(0, 24));
+const BOT_CTRL = {
+  if: { name: 'If / else', icon: '◇', outs: ['yes', 'no'], kids: ['then', 'else'], labels: ['Yes path', 'No path'], desc: 'Checks the lead — tag, stage, city, budget, order, last message — and goes down the yes or the no path.',
+    fields: [F('field', 'Check', 'select', { options: BOT_FIELDS, def: 'Tag' }), F('op', 'Condition', 'select', { options: BOT_OPS, def: 'is' }), F('value', 'Value', 'text', { def: 'Hot', help: 'For “Has an order” and “Opted out” type yes or no. Not case-sensitive.' })],
+    sum: p => `${p.field || 'Tag'} ${p.op || 'is'}${/empty/.test(p.op || '') ? '' : ' “' + (p.value ?? 'Hot') + '”'}` },
+  hours: { name: 'Business hours', icon: '🕘', outs: ['open', 'closed'], kids: ['then', 'else'], labels: ['Open (working hours)', 'Closed'], desc: 'Open path during your working hours (India time), closed path at night, on Sundays and holidays.',
+    fields: [F('from', 'Opens at (24h)', 'text', { def: '10:00' }), F('to', 'Closes at (24h)', 'text', { def: '19:00' }), F('days', 'Working days', 'select', { options: ['Mon–Sat', 'Mon–Fri', 'Every day'], def: 'Mon–Sat' })],
+    sum: p => `${p.days || 'Mon–Sat'} · ${p.from || '10:00'}–${p.to || '19:00'}` },
+  split: { name: 'A/B split', icon: '⑂', outs: ['A', 'B'], kids: ['then', 'else'], labels: ['Path A', 'Path B'], desc: 'Sends a share of customers down path A and the rest down B — compare which message works better.',
+    fields: [F('pct', 'Path A gets (%)', 'number', { def: 50 })], sum: p => `A ${p.pct ?? 50}% · B ${100 - (+(p.pct ?? 50) || 0)}%` },
+  wait: { name: 'Wait', icon: '⏳', outs: ['then'], kids: ['then'], desc: 'Pauses, then continues. After 24 hours without a customer message WhatsApp allows only templates — use “Send next template” after long waits.',
+    fields: [F('amount', 'Wait', 'number', { def: 2 }), F('unit', 'Unit', 'select', { options: ['minutes', 'hours', 'days'], def: 'hours' })], sum: p => `⏳ ${p.amount ?? 2} ${p.unit || 'hours'}` },
+  ask: { name: 'Ask a question', icon: '❓', outs: ['answered'], kids: ['then'], desc: 'Sends a question and saves the customer’s next message in the lead (city, email, budget…), then continues.',
+    fields: [F('text', 'Question', 'textarea', { def: 'Which city are you from?' }), F('field', 'Save the answer as', 'select', { options: BOT_ASK, def: 'City' })], sum: p => `❓ ${String(p.text ?? 'Which city are you from?').slice(0, 46)} → ${p.field || 'City'}` },
+  menu: { name: 'Reply buttons / list', icon: '☰', desc: 'A free message with up to 3 buttons, or a list of up to 10 choices — no Meta approval needed (inside the 24-hour chat window). Every choice is an output.',
+    outsFn: p => botOpts(p).length ? botOpts(p) : ['Add choices'], fields: [F('text', 'Message', 'textarea', { def: 'What would you like to do?' }), F('options', 'Choices — one per line (max 10, 24 letters each)', 'textarea', { def: 'Price list\nTalk to our team\nVisit the store' }), F('button', 'List button text (shown when 4+ choices)', 'text', { def: 'Choose' })],
+    sum: p => { const n = botOpts(p.options === undefined ? { options: 'a\nb\nc' } : p).length; return `☰ ${n} choice${n === 1 ? '' : 's'} · ${n > 3 ? 'list menu' : 'buttons'}`; } },
+};
+Object.entries(BOT_CTRL).forEach(([k, c]) => NODE_TYPES.push({ type: 'tf.' + k, section: 'tlogic', name: c.name, desc: c.desc, outs: c.outs, outsFn: c.outsFn, fields: c.fields, sum: c.sum, color: '#8B5CF6' }));
+const botLabel = a => !a ? '' : a.type === 'send_template' ? '→ ' + (a.template || '?') : BOT_CTRL[a.type] ? `${BOT_CTRL[a.type].icon} ${BOT_CTRL[a.type].name}` : (TB_ACT[a.type] || [a.type])[0];
+const botCount = list => (list || []).reduce((s, a) => s + 1 + botCount(a.then) + botCount(a.else) + (a.options || []).reduce((t, o) => t + botCount(o.then), 0), 0);
+/** one canvas node → one step (without its children) */
+function botActOf(n) {
+  const type = n.type.slice(3), p = n.p || {}, a = { type };
+  if (BOT_CTRL[type]) { BOT_CTRL[type].fields.forEach(f => { const v = p[f.k] ?? f.def; if (v !== undefined && v !== '' && f.k !== 'options') a[f.k] = f.kind === 'number' ? Number(v) : v; }); return a; }
+  (TB_ACT[type] ? TB_ACT[type][1] : []).forEach(([fk, , kind]) => { let v = p[fk]; if (kind === 'member' && v === 'Lead owner') v = ''; if (kind === 'url' && v === 'https://') v = ''; if (v !== undefined && v !== '') a[fk] = kind === 'num' ? Number(v) : v; });
+  return a;
+}
+/** wiring after one output of a node → list of steps. terminal(n) → a step that ends the list (next template), null to skip, undefined = not terminal */
+function botTree(flow, from, k, terminal, seen = new Set(), depth = 0) {
+  const out = []; flow.links.filter(l => l[0] === from && l[1] === k).forEach(l => out.push(...botFrom(flow, l[2], terminal, seen, depth))); return out;
+}
+function botFrom(flow, id, terminal, seen, depth) {
+  if (seen.has(id) || depth > 30) return []; const n = flow.nodes.find(x => x.id === id); if (!n) return [];
+  const s2 = new Set(seen).add(id), term = terminal(n); if (term !== undefined) return term ? [term] : [];
+  const type = n.type.slice(3); if (!BOT_CTRL[type] && !TB_ACT[type]) return [];
+  const a = botActOf(n);
+  if (BOT_CTRL[type]) {
+    if (type === 'menu') a.options = botOpts(n.p || {}).map((title, i) => ({ title, then: botTree(flow, id, i, terminal, s2, depth + 1) }));
+    else BOT_CTRL[type].kids.forEach((kid, i) => { a[kid] = botTree(flow, id, i, terminal, s2, depth + 1); });
+    return [a];
+  }
+  return [a, ...botTree(flow, id, 0, terminal, s2, depth + 1)];
+}
+/** steps → canvas nodes (add(type, p) → id, link(from[id,port], id), tplNode(step) → id of the "next template" node) */
+function botNodes(acts, from, add, link, tplNode) {
+  let prev = from; const tpls = [];
+  for (const a of acts || []) {
+    if (!a || !a.type) continue;
+    if (a.type === 'send_template') { tpls.push(a); continue; }
+    if (BOT_CTRL[a.type]) {
+      const p = {}; BOT_CTRL[a.type].fields.forEach(f => { if (a[f.k] !== undefined) p[f.k] = a[f.k]; }); if (a.type === 'menu') p.options = (a.options || []).map(o => o.title).join('\n');
+      const id = add('tf.' + a.type, p); link(prev, id);
+      if (a.type === 'menu') (a.options || []).forEach((o, i) => botNodes(o.then, [id, i], add, link, tplNode)); else BOT_CTRL[a.type].kids.forEach((kid, i) => botNodes(a[kid], [id, i], add, link, tplNode));
+      prev = null; break;
+    }
+    if (!TB_ACT[a.type]) continue;
+    const p = {}; TB_ACT[a.type][1].forEach(([fk, , kind]) => { if (a[fk] !== undefined) p[fk] = kind === 'member' && !a[fk] ? 'Lead owner' : a[fk]; });
+    const id = add('tf.' + a.type, p); link(prev, id); prev = [id, 0];
+  }
+  tpls.forEach(a => { const id = tplNode(a); if (id) link(prev || from, id); });
+}
+/** tidy left-to-right layout: column = depth, rows keep each branch together */
+function botLayout(nodes, links, W = 300, x0 = 40) {
+  const byId = Object.fromEntries(nodes.map(n => [n.id, n])), incoming = new Set(links.map(l => l[2])), placed = new Set(); let cursor = 30;
+  const h = n => { const t = nodeType(n.type), o = outsOf(t, n); return (multiOut(t, o) ? 74 + o.length * 24 : 66) + 34; };
+  const visit = (id, d) => { if (placed.has(id) || !byId[id]) return null; placed.add(id); const n = byId[id]; n.x = x0 + d * W;
+    let first = null; links.filter(l => l[0] === id).sort((a, b) => a[1] - b[1]).forEach(l => { const y = visit(l[2], d + 1); if (first === null && y !== null) first = y; });
+    if (first === null) { n.y = cursor; cursor += h(n); } else { n.y = first; cursor = Math.max(cursor, n.y + h(n)); } return n.y; };
+  nodes.filter(n => !incoming.has(n.id)).forEach(n => visit(n.id, 0)); nodes.forEach(n => visit(n.id, 0));
+}
+/** warnings for a list of steps */
+function botWarn(list, where, out) {
+  (list || []).forEach(a => {
+    if ((a.type === 'trigger_workflow' || a.type === 'custom_api') && !/^https:\/\//.test(a.url || '')) out.push(`${where}: “${botLabel(a)}” needs a link starting with https://`);
+    if (a.type === 'send_media' && !/^https:\/\//.test(a.url || '')) out.push(`${where}: “Send image / video / PDF” needs a file link starting with https://`);
+    if (a.type === 'menu' && !(a.options || []).length) out.push(`${where}: a menu has no choices.`);
+    if (a.type === 'send_template' && !a.template) out.push(`${where}: a “next template” node has no template chosen.`);
+    botWarn(a.then, where, out); botWarn(a.else, where, out); (a.options || []).forEach(o => botWarn(o.then, where, out));
+  });
+  if (botCount(list) > 30) out.push(`${where}: more than 30 steps — only the first 30 run per tap.`);
+  return out;
+}
+/** ▶ Preview chat: tap like a customer, choose branches, answer questions. o = { first: { h, b, f, btns, acts(bi) }, tplActs(name, bi) } */
+function botPreview(o) {
+  const log = [], fill = s => String(s || '').replace(/\{\{\s*first_name\s*\}\}/gi, 'Riya').replace(/\{\{\s*name\s*\}\}/gi, 'Riya Shah').replace(/\{\{\s*order_id\s*\}\}/gi, 'O123').replace(/\{\{\s*amount\s*\}\}/gi, '₹1,499').replace(/\{\{\s*status\s*\}\}/gi, 'Confirmed').replace(/\{\{\s*city\s*\}\}/gi, 'Pune').replace(/\{\{1\}\}/g, 'Riya').replace(/\{\{\d+\}\}/g, '…');
+  const tplEntry = (t, acts) => ({ kind: 'tpl', h: t.header && !/^\[/.test(t.header) ? t.header : '', b: t.body, f: t.footer, btns: tbFromTemplate(t).buttons, acts });
+  const run = list => {
+    for (const a of list || []) {
+      const p = a || {};
+      if (p.type === 'send_template') { const t = tfTpl(p.template); log.push(t ? tplEntry(t, bi => o.tplActs(p.template, bi)) : { kind: 'sys', text: '→ next template not chosen' }); continue; }
+      if (p.type === 'if' || p.type === 'hours' || p.type === 'split') { log.push({ kind: 'choice', a: p }); return; }
+      if (p.type === 'wait') { log.push({ kind: 'sys', text: `⏳ Waits ${p.amount ?? 2} ${p.unit || 'hours'}, then continues` }); return run(p.then); }
+      if (p.type === 'ask') { log.push({ kind: 'bot', text: fill(p.text || 'Please reply with your answer.') }, { kind: 'ask', a: p }); return; }
+      if (p.type === 'menu') { log.push({ kind: 'menu', a: p }); return; }
+      const say = [p.text, p.url && p.url !== 'https://' && p.type !== 'send_media' ? p.url : ''].filter(Boolean).join('\n');
+      if (['send_text', 'open_link', 'open_form', 'open_product', 'send_payment_link', 'track_order', 'cancel_order'].includes(p.type) && say) log.push({ kind: 'bot', text: fill(say) });
+      else if (p.type === 'send_media') log.push({ kind: 'bot', text: `${p.kind === 'video' ? '🎬' : p.kind === 'document' ? '📄' : '🖼'} ${fill(p.text || (p.kind === 'document' ? 'PDF' : p.kind || 'image'))}` });
+      else if (p.type === 'send_location') log.push({ kind: 'bot', text: `📍 ${p.name || 'Location'}${p.address ? '\n' + p.address : ''}` });
+      else if (p.type === 'run_ai_agent') log.push({ kind: 'bot', text: '✦ The AI writes a reply here' });
+      else if (p.type === 'handover') { log.push({ kind: 'sys', text: `🙋 Handed over to ${p.member || 'the team'} — task created` }); if (p.text) log.push({ kind: 'bot', text: fill(p.text) }); }
+      else log.push({ kind: 'sys', text: `${TF_ICON[p.type] || '•'} ${botLabel(p)}${p.stage ? ' → ' + p.stage : p.tag ? ' → ' + p.tag : p.member ? ' → ' + p.member : p.title ? ': ' + fill(p.title) : p.status ? ' → ' + p.status : p.field ? ' → ' + p.field : ''}` });
+    }
+  };
+  const ch = m => { const c = BOT_CTRL[m.a.type]; return `<div class="tf-choice"><span>${c.icon} ${esc(c.name)} · ${esc(c.sum(m.a))}</span>${m.done === undefined ? `<div>${c.labels.map((l, k) => `<button type="button" class="tf-cb" data-bpc="${k}">${esc(l)}</button>`).join('')}</div><small>In the real chat Nodevers decides — pick a path to preview it.</small>` : `<small>→ ${esc(c.labels[m.done])}</small>`}</div>`; };
+  const draw = () => {
+    $('#stageBox').innerHTML = `<div class="m-head"><h2>Preview chat</h2><button class="ibtn" data-close>${I.x}</button></div><p class="help" style="margin-top:0">Tap the buttons like a customer. Nothing is sent — this only shows what your flow does.</p>
+      <div class="tf-chat">${log.map((m, i) => m.kind === 'tpl' ? `<div class="tf-b in"><div class="tf-bub">${m.h ? `<b>${esc(m.h)}</b>` : ''}<span>${esc(fill(m.b))}</span>${m.f ? `<small>${esc(m.f)}</small>` : ''}</div><div class="tf-btns">${m.btns.map((b, bi) => `<button type="button" class="tf-cb" ${b.type === 'QUICK_REPLY' && !m.done ? `data-bpt="${i}|${bi}"` : 'disabled'}>${b.type === 'URL' ? '🔗 ' : b.type === 'PHONE_NUMBER' ? '📞 ' : '↩ '}${esc(b.text || 'Button')}</button>`).join('')}</div></div>`
+        : m.kind === 'me' ? `<div class="tf-b out"><div class="tf-bub">${esc(m.text)}</div></div>` : m.kind === 'bot' ? `<div class="tf-b in"><div class="tf-bub">${esc(m.text)}</div></div>`
+        : m.kind === 'choice' ? `<div data-bi="${i}">${ch(m)}</div>`
+        : m.kind === 'menu' ? `<div class="tf-b in" data-bi="${i}"><div class="tf-bub">${esc(fill(m.a.text || 'Please choose:'))}</div><div class="tf-btns">${(m.a.options || []).length > 3 ? `<div class="tf-lh">☰ ${esc(m.a.button || 'Choose')}</div>` : ''}${(m.a.options || []).map((x, k) => `<button type="button" class="tf-cb" ${m.done ? 'disabled' : `data-bpm="${k}"`}>${esc(x.title)}</button>`).join('')}</div></div>`
+        : m.kind === 'ask' ? (m.done ? '' : `<div class="tf-ask" data-bi="${i}"><input class="input sm" placeholder="Type the customer’s answer…" data-bpai><button type="button" class="btn sm primary" data-bpa>Send</button></div>`)
+        : `<div class="tf-sys">${esc(m.text)}</div>`).join('')}</div>
+      <div class="m-foot"><button class="btn" data-bpreset>Start again</button><div class="grow"></div><button class="btn primary" data-close>Done</button></div>`;
+    const c = $('#stageBox .tf-chat'); c.scrollTop = c.scrollHeight; const inp = $('#stageBox [data-bpai]'); if (inp) { inp.focus(); inp.onkeydown = e => { if (e.key === 'Enter') { e.preventDefault(); $('#stageBox [data-bpa]').click(); } }; }
+  };
+  const start = () => { log.length = 0; log.push({ kind: 'tpl', h: o.first.h, b: o.first.b, f: o.first.f, btns: o.first.btns, acts: o.first.acts }); draw(); };
+  $('#stageBox').onclick = ev => {
+    if (ev.target.closest('[data-bpreset]')) return start();
+    const t = ev.target.closest('[data-bpt]'); if (t) { const [i, bi] = t.dataset.bpt.split('|').map(Number), m = log[i]; m.done = true; log.push({ kind: 'me', text: m.btns[bi].text || 'Button' }); const acts = m.acts(bi) || []; if (!acts.length) log.push({ kind: 'sys', text: 'Nothing wired — the reply lands in your Inbox for the team.' }); run(acts); return draw(); }
+    const box = ev.target.closest('[data-bi]'), m = box && log[+box.dataset.bi]; if (!m) return;
+    const c = ev.target.closest('[data-bpc]'); if (c && m.kind === 'choice' && m.done === undefined) { m.done = +c.dataset.bpc; run(m.done === 0 ? m.a.then : m.a.else); return draw(); }
+    const mn = ev.target.closest('[data-bpm]'); if (mn && m.kind === 'menu' && !m.done) { m.done = true; const opt = m.a.options[+mn.dataset.bpm]; log.push({ kind: 'me', text: opt.title }); if (!(opt.then || []).length) log.push({ kind: 'sys', text: 'Nothing wired for this choice — it lands in your Inbox.' }); run(opt.then); return draw(); }
+    if (ev.target.closest('[data-bpa]') && m.kind === 'ask') { const v = (box.querySelector('[data-bpai]').value || '').trim(); if (!v) return; m.done = true; log.push({ kind: 'me', text: v }, { kind: 'sys', text: `✎ Saved in the lead as ${m.a.field || 'City'}` }); run(m.a.then); return draw(); }
+  };
+  start(); showModal('#stageModal');
+}
+
+/** Flow builder canvas from the templates' saved button steps (first open, or "Rebuild from templates") */
 function tfSeed() {
   const T = (S.templates || []).filter(t => t.templateName), nodes = [], links = [], idOf = {}; let c = 0;
-  const id = () => 'n' + (++c);
-  const tplNode = name => idOf[name] || (nodes.push({ id: idOf[name] = id(), type: 'tf.template', x: 0, y: 0, p: { template: name, params: '' } }), idOf[name]);
-  const withFlow = T.filter(t => tfQR(t).some(x => (x.b.actions || []).length));
-  (withFlow.length ? withFlow : T.filter(t => tfQR(t).length).slice(0, 3)).forEach(t => {
-    const me = tplNode(t.templateName);
-    tfQR(t).forEach((x, k) => {
-      let prev = [me, k]; const acts = x.b.actions || [];
-      acts.filter(a => a.type !== 'send_template' && TB_ACT[a.type]).forEach(a => { const n = id(), p = {}; (TB_ACT[a.type][1]).forEach(([fk, , kind]) => { if (a[fk] !== undefined) p[fk] = kind === 'member' && !a[fk] ? 'Lead owner' : a[fk]; }); nodes.push({ id: n, type: 'tf.' + a.type, x: 0, y: 0, p }); links.push([prev[0], prev[1], n]); prev = [n, 0]; });
-      acts.filter(a => a.type === 'send_template' && a.template).forEach(a => { const to = tplNode(a.template); const tn = nodes.find(m => m.id === to); if (a.params && !tn.p.params) tn.p.params = a.params; links.push([prev[0], prev[1], to]); });
-    });
-  });
-  // layered layout: column = longest path from a start, rows in order
-  const depth = {}, incoming = new Set(links.map(l => l[2])), roots = nodes.filter(n => !incoming.has(n.id));
-  const walk = (nid, d, seen) => { if (seen.has(nid) || d > 40) return; if ((depth[nid] ?? -1) >= d) return; depth[nid] = d; const s2 = new Set(seen).add(nid); links.filter(l => l[0] === nid).forEach(l => walk(l[2], d + 1, s2)); };
-  (roots.length ? roots : nodes.slice(0, 1)).forEach(r => walk(r.id, 0, new Set())); nodes.forEach(n => { if (depth[n.id] === undefined) depth[n.id] = 0; });
-  const rows = {}; nodes.forEach(n => { const d = depth[n.id], r = rows[d] = (rows[d] || 0); n.x = 60 + d * 330; n.y = 40 + r; rows[d] = r + (n.type === 'tf.template' ? 74 + Math.max(1, outsOf(nodeType('tf.template'), n).length) * 24 + 50 : 120); });
-  return { nodes, links };
+  const add = (type, p) => { const id = 'n' + (++c); nodes.push({ id, type, x: 0, y: 0, p }); return id; };
+  const tplNode = name => idOf[name] || (idOf[name] = add('tf.template', { template: name, params: '' }));
+  const link = (prev, id) => { if (prev) links.push([prev[0], prev[1], id]); };
+  const withFlow = T.filter(t => tfQR(t).some(x => (x.b.actions || []).length)), queue = (withFlow.length ? withFlow : T.filter(t => tfQR(t).length).slice(0, 3)).map(t => t.templateName), done = new Set();
+  while (queue.length) { const name = queue.shift(); if (done.has(name)) continue; done.add(name); const t = tfTpl(name), me = tplNode(name); if (!t) continue;
+    tfQR(t).forEach((x, k) => botNodes(x.b.actions, [me, k], add, link, a => { if (!a.template) return null; if (tfTpl(a.template) && !done.has(a.template)) queue.push(a.template); const id = tplNode(a.template), tn = nodes.find(m => m.id === id); if (a.params && !tn.p.params) tn.p.params = a.params; return id; })); }
+  botLayout(nodes, links, 320); return { nodes, links };
 }
-/** canvas → { templateName: { buttonIndex: actions[] } } */
+/** Flow builder canvas → { templateName: { buttonIndex: steps[] } } */
 function tfCompile(flow) {
-  const out = {}, warn = [], node = i => flow.nodes.find(n => n.id === i);
+  const out = {}, warn = [], term = n => n.type === 'tf.template' ? (n.p && n.p.template && tfTpl(n.p.template) ? Object.assign({ type: 'send_template', template: n.p.template }, n.p.params ? { params: n.p.params } : {}) : null) : undefined;
   flow.nodes.filter(n => n.type === 'tf.template').forEach(T => {
-    const t = tfTpl(T.p && T.p.template); if (!t) { if (T.p && T.p.template) warn.push(`“${T.p.template}” no longer exists — that node is skipped.`); else warn.push('A template node has no template chosen — it is skipped.'); return; }
+    const t = tfTpl(T.p && T.p.template); if (!t) { warn.push(T.p && T.p.template ? `“${T.p.template}” no longer exists — that node is skipped.` : 'A template node has no template chosen — it is skipped.'); return; }
     const res = out[t.templateName] = out[t.templateName] || {};
-    tfQR(t).forEach((x, k) => {
-      const acts = res[x.i] = res[x.i] || [];
-      const walk = (nid, d, seen) => { if (d > 20 || seen.has(nid)) return; seen.add(nid); const n = node(nid); if (!n) return;
-        if (n.type === 'tf.template') { if (n.p && n.p.template && tfTpl(n.p.template)) acts.push(Object.assign({ type: 'send_template', template: n.p.template }, n.p.params ? { params: n.p.params } : {})); return; }
-        const type = n.type.slice(3); if (!TB_ACT[type]) return; const a = { type };
-        (TB_ACT[type][1]).forEach(([fk, , kind]) => { let v = (n.p || {})[fk]; if (kind === 'member' && v === 'Lead owner') v = ''; if (kind === 'url' && v === 'https://') v = ''; if (v !== undefined && v !== '') a[fk] = kind === 'num' ? Number(v) : v; });
-        if ((type === 'trigger_workflow' || type === 'custom_api') && !/^https:\/\//.test(a.url || '')) warn.push(`${n.title || TB_ACT[type][0]}: the URL must start with https://`);
-        acts.push(a); flow.links.filter(l => l[0] === nid).forEach(l => walk(l[2], d + 1, seen)); };
-      flow.links.filter(l => l[0] === T.id && l[1] === k).forEach(l => walk(l[2], 0, new Set()));
-      if (acts.length > 8) warn.push(`${t.templateName} → “${x.b.text}”: only the first 8 steps run (${acts.length} wired).`);
-    });
+    tfQR(t).forEach((x, k) => { res[x.i] = (res[x.i] || []).concat(botTree(flow, T.id, k, term)); botWarn(res[x.i], `${t.templateName} → “${x.b.text}”`, warn); });
   });
-  Object.values(out).forEach(r => Object.keys(r).forEach(i => { r[i] = r[i].slice(0, 8); }));
-  return { out, warn };
+  return { out, warn: [...new Set(warn)] };
 }
 const tfCurrent = t => Object.fromEntries(tfQR(t).map(x => [x.i, x.b.actions || []]));
 const tfCanon = v => Array.isArray(v) ? '[' + v.map(tfCanon).join(',') + ']' : v && typeof v === 'object' ? '{' + Object.keys(v).filter(k => v[k] !== '' && v[k] != null).sort().map(k => JSON.stringify(k) + ':' + tfCanon(v[k])).join(',') + '}' : JSON.stringify(typeof v === 'number' ? String(v) : v);
 function tfDiff(flow) { const { out } = tfCompile(flow); return Object.keys(out).filter(name => tfCanon(out[name]) !== tfCanon(tfCurrent(tfTpl(name)))); }
 function tfCanvas() {
   if (CANVASES.tpl) return CANVASES.tpl;
-  const cv = CANVASES.tpl = new FlowCanvas({ root: $('#tfCanvas'), key: 'TPL-FLOW', title: 'Template flows', sections: ['tflow', 'tact'], seed: tfSeed, status: '',
-    bar: '<span class="tf-sync" id="tfSync"></span><span class="grow"></span><button class="btn sm" data-tfprev>▶ Preview chat</button><button class="btn sm" data-tfrebuild>⟳ Rebuild from templates</button><button class="btn sm primary" data-tfapply>Apply to WhatsApp</button>',
+  const cv = CANVASES.tpl = new FlowCanvas({ root: $('#tfCanvas'), key: 'TPL-FLOW', title: 'Template flows', sections: ['tflow', 'tact', 'tlogic'], seed: tfSeed, status: '',
+    bar: '<span class="tf-sync" id="tfSync"></span><span class="grow"></span><button class="btn sm" data-fx="tidy" title="Arrange the nodes neatly">⇢ Tidy up</button><button class="btn sm" data-tfprev>▶ Preview chat</button><button class="btn sm" data-tfrebuild>⟳ Rebuild from templates</button><button class="btn sm primary" data-tfapply>Apply to WhatsApp</button>',
     onChange: () => tfSyncState() });
   cv.root.addEventListener('click', e => {
     if (e.target.closest('[data-tfapply]')) return tfApply(e.target.closest('[data-tfapply]'));
@@ -7031,29 +7148,9 @@ function tfPreview() {
   const cv = tfCanvas(), sel = cv.sel.size === 1 ? cv.node([...cv.sel][0]) : null, starts = cv.flow.nodes.filter(n => n.type === 'tf.template' && tfTpl(n.p.template));
   const incoming = new Set(cv.flow.links.map(l => l[2])), first = sel && sel.type === 'tf.template' && tfTpl(sel.p.template) ? sel : starts.find(n => !incoming.has(n.id)) || starts[0];
   if (!first) return toast('Add a template node first', true);
-  const log = [], fill = s => String(s || '').replace(/\{\{\s*first_name\s*\}\}/gi, 'Riya').replace(/\{\{\s*name\s*\}\}/gi, 'Riya Shah').replace(/\{\{\s*order_id\s*\}\}/gi, 'O123').replace(/\{\{\s*amount\s*\}\}/gi, '₹1,499').replace(/\{\{\s*status\s*\}\}/gi, 'Confirmed').replace(/\{\{1\}\}/g, 'Riya');
-  const sendTpl = n => { const t = tfTpl(n.p.template); log.push({ kind: 'tpl', n, t }); };
-  const tap = (n, k) => {
-    const t = tfTpl(n.p.template), x = tfQR(t)[k]; log.forEach(m => { if (m.kind === 'tpl') m.done = true; }); log.push({ kind: 'me', text: x ? x.b.text : 'Button' });
-    const run = (nid, seen) => { if (seen.has(nid)) return; seen.add(nid); const m = cv.node(nid); if (!m) return;
-      if (m.type === 'tf.template') { if (tfTpl(m.p.template)) sendTpl(m); return; }
-      const type = m.type.slice(3), p = m.p || {}, say = [p.text, p.url && p.url !== 'https://' ? p.url : ''].filter(Boolean).join('\n');
-      if (['send_text', 'open_link', 'open_form', 'open_product', 'send_payment_link', 'track_order', 'cancel_order'].includes(type) && say) log.push({ kind: 'bot', text: fill(say) });
-      else if (type === 'run_ai_agent') log.push({ kind: 'bot', text: '✦ AI writes a reply here (Gemini)' });
-      else log.push({ kind: 'sys', text: `${TF_ICON[type] || '•'} ${TB_ACT[type] ? TB_ACT[type][0] : type}${p.stage ? ' → ' + p.stage : p.tag ? ' → ' + p.tag : p.member ? ' → ' + p.member : p.title ? ': ' + fill(p.title) : p.status ? ' → ' + p.status : ''}` });
-      cv.flow.links.filter(l => l[0] === nid).forEach(l => run(l[2], seen)); };
-    const outs = cv.flow.links.filter(l => l[0] === n.id && l[1] === k); if (!outs.length) log.push({ kind: 'sys', text: 'Nothing wired — the reply lands in your Inbox for the team.' }); outs.forEach(l => run(l[2], new Set()));
-    draw();
-  };
-  const draw = () => {
-    $('#stageBox').innerHTML = `<div class="m-head"><h2>Preview chat</h2><button class="ibtn" data-close>${I.x}</button></div><p class="help" style="margin-top:0">Tap the buttons like a customer. Nothing is sent — this only shows what your flow does.</p>
-      <div class="tf-chat">${log.map((m, i) => m.kind === 'tpl' ? `<div class="tf-b in"><div class="tf-bub">${m.t.header && !/^\[/.test(m.t.header) ? `<b>${esc(m.t.header)}</b>` : ''}<span>${esc(fill(m.t.body))}</span>${m.t.footer ? `<small>${esc(m.t.footer)}</small>` : ''}</div><div class="tf-btns">${tbFromTemplate(m.t).buttons.map((b, bi) => { const k = tfQR(m.t).findIndex(x => x.i === bi); return `<button type="button" class="tf-cb" ${k < 0 || m.done ? 'disabled' : `data-tfpt="${i}|${k}"`}>${b.type === 'URL' ? '🔗 ' : b.type === 'PHONE_NUMBER' ? '📞 ' : ''}${esc(b.text || 'Button')}</button>`; }).join('')}</div></div>`
-        : m.kind === 'me' ? `<div class="tf-b out"><div class="tf-bub">${esc(m.text)}</div></div>` : m.kind === 'bot' ? `<div class="tf-b in"><div class="tf-bub">${esc(m.text)}</div></div>` : `<div class="tf-sys">${esc(m.text)}</div>`).join('')}</div>
-      <div class="m-foot"><button class="btn" data-tfreset>Start again</button><div class="grow"></div><button class="btn primary" data-close>Done</button></div>`;
-    const box = $('#stageBox .tf-chat'); box.scrollTop = box.scrollHeight;
-    $('#stageBox').onclick = e => { const b = e.target.closest('[data-tfpt]'); if (b) { const [i, k] = b.dataset.tfpt.split('|').map(Number); tap(log[i].n, k); } if (e.target.closest('[data-tfreset]')) { log.length = 0; sendTpl(first); draw(); } };
-  };
-  sendTpl(first); draw(); showModal('#stageModal');
+  const { out } = tfCompile(cv.flow), t = tfTpl(first.p.template), saved = (name, bi) => ((tbFromTemplate(tfTpl(name) || {}).buttons || [])[bi] || {}).actions || [];
+  const actsOf = (name, bi) => out[name] && out[name][bi] !== undefined ? out[name][bi] : saved(name, bi);
+  botPreview({ first: { h: t.header && !/^\[/.test(t.header) ? t.header : '', b: t.body, f: t.footer, btns: tbFromTemplate(t).buttons, acts: bi => actsOf(t.templateName, bi) }, tplActs: actsOf });
 }
 
 const USE_CASES = ['Welcome', 'Follow-up', 'Offer / promotion', 'Reminder', 'Quotation / price', 'Order / payment update', 'Re-engage', 'Thank you / review', 'Other'];
@@ -7098,7 +7195,7 @@ function openTplEditor(base) {
 SECTIONS.tnext = { name: 'Next message', color: '#25A55F', ic: '→' };
 SECTIONS.tsroot = { name: 'This template', color: '#25A55F', ic: 'T' };
 const tsQR = () => (TPL.edit ? TPL.edit.buttons.map((b, i) => ({ b, i })).filter(x => x.b.type === 'QUICK_REPLY') : []);
-NODE_TYPES.push({ type: 'ts.root', section: 'tsroot', name: 'This template', ins: 0, fixed: true, fields: [], head: () => (TPL.edit && TPL.edit.name) || 'New template',
+NODE_TYPES.push({ type: 'ts.root', section: 'tsroot', name: 'This template', ins: 0, fixed: true, emptyNoPort: true, fields: [], head: () => (TPL.edit && TPL.edit.name) || 'New template',
   desc: 'Your message. Each reply button is a dot on the right side — drag from it to add what happens when a customer taps it.',
   outsFn: () => tsQR().map(x => String(x.b.text || 'Button').slice(0, 18)),
   sum: () => { const n = tsQR().length; return n ? `${n} reply button${n > 1 ? 's' : ''} · drag from a dot →` : 'Add a reply button on the left'; },
@@ -7109,37 +7206,27 @@ NODE_TYPES.push({ type: 'ts.next', section: 'tnext', name: 'Send next template',
   info: p => { const t = tfTpl(p.template); return t ? `<div class="tf-prev"><div class="tf-bub">${t.header && !/^\[/.test(t.header) ? `<b>${esc(t.header)}</b>` : ''}<span>${esc(String(t.body || '').slice(0, 300))}</span></div>${tbFromTemplate(t).buttons.map(b => `<div class="tf-pb ext"><span>${esc(b.text || 'Button')}</span></div>`).join('')}</div><div class="tf-st"><span class="pill ${/approved/i.test(t.metaStatus || '') ? 'ok' : ''}">${esc(t.metaStatus || 'Draft')}</span><span class="muted" style="font-size:11.5px">Its own buttons follow its own flow</span></div>` : ''; } });
 
 const tsP = a => { const p = {}; ((TB_ACT[a.type] || [0, []])[1]).forEach(([fk, , kind]) => { if (a[fk] !== undefined) p[fk] = kind === 'member' && !a[fk] ? 'Lead owner' : a[fk]; }); return p; };
-/** canvas from the template's buttons */
+/** studio canvas from the template's buttons */
 function tsSeed() {
   const nodes = [{ id: 'root', type: 'ts.root', x: 40, y: 40, p: {} }], links = []; let c = 0;
-  tsQR().forEach((x, k) => {
-    let prev = ['root', k], col = 1; const y = 20 + k * 130, acts = x.b.actions || [];
-    acts.filter(a => a.type !== 'send_template' && TB_ACT[a.type]).forEach(a => { const id = 'n' + (++c); nodes.push({ id, type: 'tf.' + a.type, x: 40 + col * 280, y, p: tsP(a) }); links.push([prev[0], prev[1], id]); prev = [id, 0]; col++; });
-    acts.filter(a => a.type === 'send_template').forEach(a => { const id = 'n' + (++c); nodes.push({ id, type: 'ts.next', x: 40 + col * 280, y, p: { template: a.template || '', params: a.params || '' } }); links.push([prev[0], prev[1], id]); });
-  });
-  return { nodes, links };
+  const add = (type, p) => { const id = 'n' + (++c); nodes.push({ id, type, x: 0, y: 0, p }); return id; };
+  const link = (prev, id) => { if (prev) links.push([prev[0], prev[1], id]); };
+  tsQR().forEach((x, k) => botNodes(x.b.actions, ['root', k], add, link, a => add('ts.next', { template: a.template || '', params: a.params || '' })));
+  botLayout(nodes, links, 290); return { nodes, links };
 }
-/** canvas → each reply button's actions (what wa-webhook runs) */
+/** studio canvas → each reply button's steps (what wa-webhook runs) */
 function tsCompile() {
   const cv = TPL.cv, e = TPL.edit; if (!cv || !cv.flow || !e) return;
-  tsQR().forEach((x, k) => {
-    const acts = [];
-    const walk = (id, seen) => { if (seen.has(id) || seen.size > 30) return; seen.add(id); const n = cv.node(id); if (!n) return;
-      if (n.type === 'ts.next') { acts.push(Object.assign({ type: 'send_template', template: (n.p || {}).template || '' }, (n.p || {}).params ? { params: n.p.params } : {})); return; }
-      const type = n.type.slice(3); if (!TB_ACT[type]) return; const a = { type };
-      (TB_ACT[type][1]).forEach(([fk, , kind]) => { let v = (n.p || {})[fk]; if (kind === 'member' && v === 'Lead owner') v = ''; if (kind === 'url' && v === 'https://') v = ''; if (v !== undefined && v !== '') a[fk] = kind === 'num' ? Number(v) : v; });
-      acts.push(a); cv.flow.links.filter(l => l[0] === id).forEach(l => walk(l[2], seen)); };
-    cv.flow.links.filter(l => l[0] === 'root' && l[1] === k).forEach(l => walk(l[2], new Set()));
-    x.b.actions = acts.slice(0, 8);
-  });
+  const term = n => n.type === 'ts.next' ? Object.assign({ type: 'send_template', template: (n.p || {}).template || '' }, (n.p || {}).params ? { params: n.p.params } : {}) : undefined;
+  tsQR().forEach((x, k) => { x.b.actions = botTree(cv.flow, 'root', k, term); });
 }
-const tpsWireText = b => (b.actions || []).length ? `● ${(b.actions || []).length} step${(b.actions || []).length > 1 ? 's' : ''} on the canvas` : '○ Not wired — drag from its dot on the canvas →';
-const tpsWireDraw = () => $$('#leadBox [data-tpsw]').forEach(el => { const b = (TPL.edit || { buttons: [] }).buttons[+el.dataset.tpsw]; if (!b) return; el.textContent = tpsWireText(b); el.classList.toggle('on', !!(b.actions || []).length); });
+const tpsWireText = b => { const n = botCount(b.actions); return n ? `● ${n} step${n > 1 ? 's' : ''} on the canvas` : '○ Not wired — drag from its dot on the canvas →'; };
+const tpsWireDraw = () => $$('#leadBox [data-tpsl]').forEach(el => { const b = (TPL.edit || { buttons: [] }).buttons[+el.dataset.tpsl]; if (!b || b.type !== 'QUICK_REPLY') return; const n = botCount(b.actions); el.textContent = n ? n + ' step' + (n > 1 ? 's' : '') : 'not wired yet'; el.parentElement.classList.toggle('on', !!n); }) || $$('#leadBox [data-tpsw]').forEach(el => { const b = (TPL.edit || { buttons: [] }).buttons[+el.dataset.tpsw]; if (!b) return; el.textContent = tpsWireText(b); el.classList.toggle('on', !!(b.actions || []).length); });
 const tsSig = () => tsQR().map(x => x.i).join(',');
 function tsSync() {
   if (!TPL.cv) {
     setTimeout(() => { const root = $('#tsCanvas'); if (!root || TPL.cv || !TPL.edit) return;
-      TPL.cv = new FlowCanvas({ root, key: 'TPL-ED', title: 'Button flow', sections: ['tnext', 'tact'], seed: tsSeed, local: true, onChange: () => { tsCompile(); tpsPrevDraw(); tpsWireDraw(); } });
+      TPL.cv = new FlowCanvas({ root, key: 'TPL-ED', title: 'Button flow', sections: ['tnext', 'tact', 'tlogic'], seed: tsSeed, local: true, bar: '<span class="grow"></span><button class="btn sm" data-fx="tidy" title="Arrange the nodes neatly">⇢ Tidy up</button>', onChange: () => { tsCompile(); tpsPrevDraw(); tpsWireDraw(); } });
       TPL.sig = tsSig(); TPL.cv.load(); }, 60);
     return;
   }
@@ -7175,7 +7262,7 @@ function tpsLockedHTML(e) {
     <div class="tps-lock"><b>✓ ${esc(t.metaStatus || 'Approved')} by Meta</b><span>The message itself can't change without a new review — duplicate the template to edit its words. The button flow on the canvas can change any time.</span></div>
     ${media ? `<div class="field"><label>${e.content === 'pdf' ? 'PDF' : esc(e.content)} link sent with every message (required)</label><input class="input" id="tbMedia" value="${esc(e.mediaUrl || '')}" placeholder="https://…"></div>` : ''}
     <div class="tps-sec"><div class="tps-st"><span>✓</span>Message</div><div class="tps-msg">${e.header ? `<b>${esc(e.header)}</b>` : ''}<span>${esc(e.body)}</span>${e.footer ? `<small>${esc(e.footer)}</small>` : ''}</div></div>
-    <div class="tps-sec"><div class="tps-st"><span>✓</span>Buttons</div>${e.buttons.map((b, i) => `<div class="tps-bl ${b.type === 'QUICK_REPLY' ? 'qr' : ''}"><span class="tb-bi">${i + 1}</span><b>${esc(b.text || 'Button')}</b><small>${b.type === 'QUICK_REPLY' ? ((b.actions || []).length ? (b.actions || []).length + ' step' + ((b.actions || []).length > 1 ? 's' : '') : 'not wired yet') : esc(TB_META[b.type] || '')}</small></div>`).join('') || '<p class="muted">No buttons.</p>'}</div>
+    <div class="tps-sec"><div class="tps-st"><span>✓</span>Buttons</div>${e.buttons.map((b, i) => `<div class="tps-bl ${b.type === 'QUICK_REPLY' ? 'qr' : ''}"><span class="tb-bi">${i + 1}</span><b>${esc(b.text || 'Button')}</b><small data-tpsl="${i}">${b.type === 'QUICK_REPLY' ? (botCount(b.actions) ? botCount(b.actions) + ' step' + (botCount(b.actions) > 1 ? 's' : '') : 'not wired yet') : esc(TB_META[b.type] || '')}</small></div>`).join('') || '<p class="muted">No buttons.</p>'}</div>
   </div></div>`;
 }
 function tpsTopHTML(e) {
@@ -7201,34 +7288,9 @@ function drawTplEditor() {
 const drawTplActions = drawTplEditor;
 /** ▶ Preview chat for the template being edited */
 function tsPreview() {
-  const e = TPL.edit, cv = TPL.cv; if (!e) return; if (cv) tsCompile();
-  const log = [], fill = s => String(s || '').replace(/\{\{\s*first_name\s*\}\}/gi, 'Riya').replace(/\{\{\s*name\s*\}\}/gi, 'Riya Shah').replace(/\{\{\s*order_id\s*\}\}/gi, 'O123').replace(/\{\{\s*amount\s*\}\}/gi, '₹1,499').replace(/\{\{\s*status\s*\}\}/gi, 'Confirmed').replace(/\{\{1\}\}/g, 'Riya').replace(/\{\{\d+\}\}/g, '…');
-  const bubble = (h, b, f) => `<div class="tf-bub">${h ? `<b>${esc(h)}</b>` : ''}<span>${esc(fill(b))}</span>${f ? `<small>${esc(f)}</small>` : ''}</div>`;
-  const draw = () => {
-    $('#stageBox').innerHTML = `<div class="m-head"><h2>Preview chat</h2><button class="ibtn" data-close>${I.x}</button></div><p class="help" style="margin-top:0">Tap the buttons like a customer. Nothing is sent.</p>
-      <div class="tf-chat">${log.map((m, i) => m.kind === 'me' ? `<div class="tf-b out"><div class="tf-bub">${esc(m.text)}</div></div>` : m.kind === 'bot' ? `<div class="tf-b in"><div class="tf-bub">${esc(m.text)}</div></div>` : m.kind === 'sys' ? `<div class="tf-sys">${esc(m.text)}</div>`
-        : `<div class="tf-b in">${bubble(m.h, m.b, m.f)}<div class="tf-btns">${m.btns.map((b, bi) => `<button type="button" class="tf-cb" ${m.root && b.type === 'QUICK_REPLY' && !m.done ? `data-tspt="${i}|${bi}"` : 'disabled'}>${b.type === 'URL' ? '🔗 ' : b.type === 'PHONE_NUMBER' ? '📞 ' : ''}${esc(b.text || 'Button')}</button>`).join('')}</div></div>`).join('')}</div>
-      <div class="m-foot"><button class="btn" data-tsreset>Start again</button><div class="grow"></div><button class="btn primary" data-close>Done</button></div>`;
-    const c = $('#stageBox .tf-chat'); c.scrollTop = c.scrollHeight;
-  };
-  const start = () => { log.length = 0; log.push({ kind: 'tpl', root: true, h: e.header, b: e.body, f: e.footer, btns: e.buttons }); draw(); };
-  $('#stageBox').onclick = ev => {
-    if (ev.target.closest('[data-tsreset]')) return start();
-    const b = ev.target.closest('[data-tspt]'); if (!b) return; const [i, bi] = b.dataset.tspt.split('|').map(Number), btn = e.buttons[bi];
-    log[i].done = true; log.push({ kind: 'me', text: btn.text || 'Button' });
-    const acts = btn.actions || []; if (!acts.length) log.push({ kind: 'sys', text: 'Nothing wired — the reply lands in your Inbox for the team.' });
-    acts.forEach(a => { const p = a;
-      if (a.type === 'send_template') { const t = tfTpl(a.template); if (t) log.push({ kind: 'tpl', h: t.header && !/^\[/.test(t.header) ? t.header : '', b: t.body, f: t.footer, btns: tbFromTemplate(t).buttons }); else log.push({ kind: 'sys', text: '→ next template not chosen' }); return; }
-      const say = [p.text, p.url && p.url !== 'https://' && a.type !== 'send_media' ? p.url : ''].filter(Boolean).join('\n');
-      if (['send_text', 'open_link', 'open_form', 'open_product', 'send_payment_link', 'track_order', 'cancel_order'].includes(a.type) && say) log.push({ kind: 'bot', text: fill(say) });
-      else if (a.type === 'send_media') log.push({ kind: 'bot', text: `${p.kind === 'video' ? '🎬' : p.kind === 'document' ? '📄' : '🖼'} ${fill(p.text || (p.kind === 'document' ? 'PDF' : p.kind || 'image'))}` });
-      else if (a.type === 'send_location') log.push({ kind: 'bot', text: `📍 ${p.name || 'Location'}${p.address ? '\n' + p.address : ''}` });
-      else if (a.type === 'run_ai_agent') log.push({ kind: 'bot', text: '✦ AI writes a reply here' });
-      else log.push({ kind: 'sys', text: `${TF_ICON[a.type] || '•'} ${(TB_ACT[a.type] || [a.type])[0]}${p.stage ? ' → ' + p.stage : p.tag ? ' → ' + p.tag : p.member ? ' → ' + p.member : p.title ? ': ' + fill(p.title) : p.status ? ' → ' + p.status : p.field ? ' → ' + p.field : ''}` });
-    });
-    draw();
-  };
-  start(); showModal('#stageModal');
+  const e = TPL.edit; if (!e) return; if (TPL.cv) tsCompile();
+  const saved = (name, bi) => ((tbFromTemplate(tfTpl(name) || {}).buttons || [])[bi] || {}).actions || [];
+  botPreview({ first: { h: e.header, b: e.body, f: e.footer, btns: e.buttons, acts: bi => (e.buttons[bi] || {}).actions || [] }, tplActs: saved });
 }
 document.addEventListener('click', ev => { if (ev.target.closest('#leadBox [data-tsprev]')) tsPreview(); });
 
@@ -8744,12 +8806,13 @@ function accmHead(item) {
 }
 function accmPut(item) {
   // put the real card into the panel and leave a look-alike in the grid
+  const extra = [...((item.parentElement || {}).classList || [])].filter(c => !/^(acc-list|acc-grid|conn-grid)$/.test(c));   // e.g. ut-wrap: the view's own handlers look for it
   const ph = item.cloneNode(false); ph.classList.add('acc-ph'); ph.classList.remove('open'); ph.removeAttribute('id');
   const h = item.querySelector('.acc-h'); if (h) ph.appendChild(h.cloneNode(true));
   item.replaceWith(ph); ACCM.item = item; ACCM.ph = ph;
   item.classList.add('open'); if (h) h.setAttribute('aria-expanded', 'true');
   const box = ACCM.el; box.querySelector('.accm-mh').innerHTML = accmHead(item);
-  const slot = box.querySelector('.accm-slot'); slot.innerHTML = ''; slot.appendChild(item); slot.scrollTop = 0;
+  const slot = box.querySelector('.accm-slot'); slot.className = ['accm-slot'].concat(extra).join(' '); slot.innerHTML = ''; slot.appendChild(item); slot.scrollTop = 0;
   ACCM.extras = (item.dataset.accwith || '').split(',').filter(Boolean).map(sel => { const x = ACCM.view.querySelector(sel); if (!x) return null; const mark = document.createComment('accm'); x.replaceWith(mark); slot.insertBefore(x, item); return [x, mark]; }).filter(Boolean);
   const sv = item.dataset.accsave, ft = box.querySelector('.accm-ft'); ft.hidden = !sv; if (sv) ft.querySelector('[data-accmsave]').dataset.accmsave = sv;
   box.querySelector('.accm-nav').innerHTML = ACCM.nav = accmNav(ACCM.scope);
@@ -8780,7 +8843,7 @@ function accmOpen(item) {
     requestAnimationFrame(() => ACCM.el && ACCM.el.classList.add('show'));
   }
   ACCM.scope = item.closest('#connBody') || item.parentElement;
-  ACCM.key = (item.parentElement.dataset.acckey) || '';
+  ACCM.key = (item.parentElement.dataset.acckey) || (item.closest('#v-admin') ? 'nv.admAcc' : '');
   accmPut(item); return true;
 }
 function accmClose() {
@@ -9683,7 +9746,7 @@ function admTeam() {
 const UT = { c: null };
 const UT_IC = '<svg class="i" viewBox="0 0 24 24"><path d="M4 5h16v11H8l-4 4z"/><path d="M8 9h8M8 12h5"/></svg>';
 function admTexts() {
-  const c = UT.c || (UT.c = JSON.parse(JSON.stringify(uiCfg()))), open = store.get('nv.admAcc3') || 'ut-lock';
+  const c = UT.c || (UT.c = JSON.parse(JSON.stringify(uiCfg()))), open = store.get('nv.admAcc3') || '';
   return `<div class="adm-ph2 glass"><div><b>Messages & buttons</b><p class="muted">The words and buttons clients see on these screens. Change them here — no code needed. Leave a box empty to use the default (shown in grey). Words in {curly brackets} are filled in automatically, **two stars** make text bold.</p></div></div>
     <div class="acc-list acc-grid ut-wrap" data-acckey="nv.admAcc3" data-accmtitle="Messages & buttons" style="margin-top:14px">${UI_TEXTS.map(g => { const n = g.items.filter(([k]) => String(c[k] || '').trim()).length + (g.btns && Array.isArray(c[g.btns]) ? 1 : 0);
       const look = { lock: ['#8B5CF6', '<svg class="i" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>', 'Screen shown when a section is not in the client\'s plan.'], sub: ['#F59E0B', '<svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2M9 2h6"/></svg>', 'Banner when a plan is ending or has expired.'], ro: ['#64748B', '<svg class="i" viewBox="0 0 24 24"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg>', 'Bar shown to people with view-only access.'], trial: ['#10B981', '<svg class="i" viewBox="0 0 24 24"><path d="M20 12v9H4v-9M2 7h20v5H2zM12 22V7M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7ZM12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7Z"/></svg>', 'Free-trial box on the pricing cards.'] }[g.id] || ['#0EA5E9', UT_IC, ''];
@@ -9692,7 +9755,7 @@ function admTexts() {
           ${g.items.map(([k, l, d]) => `<div class="field"><label>${esc(l)}</label><input class="input" data-ut="${k}" maxlength="300" placeholder="${esc(d)}" value="${esc(c[k] || '')}"></div>`).join('')}
           ${g.btns ? `<div class="ah-sec">Buttons</div><div class="ut-btns" data-utbtns="${g.btns}">${utBtnRows(g.btns)}</div><div class="cf-foot" style="border:0;padding:0;margin-top:8px"><button type="button" class="btn sm" data-utadd="${g.btns}">+ Add button</button><button type="button" class="btn sm" data-utbdef="${g.btns}">Default buttons</button></div>` : ''}</div>
           ${g.id === 'lock' ? `<div class="ut-pv"><div class="ah-prev-h"><b>Live preview</b><select class="input sm" id="utAs" style="width:auto"><option value="owner">As owner / admin</option><option value="staff">As team member</option></select></div><div class="ut-prev" id="utPrev"></div></div>` : ''}</div>
-          <div class="cf-foot" style="border:0;padding:0;margin-top:10px"><div class="grow"></div><button type="button" class="btn sm" data-utreset="${g.id}">Reset this group to default</button></div>` }); }).join('')}</div>
+          <div class="ut-rs"><div class="grow"></div><button type="button" class="btn sm" data-utreset="${g.id}">Reset this group to default</button></div>` }); }).join('')}</div>
     <div class="cf-foot"><span class="cf-safe">Clients and the login page can read these words — never put passwords or API keys here.</span><div class="grow"></div><button class="btn primary" id="utSave">Save messages</button></div>`;
 }
 function utBtnRows(key) {
@@ -10004,7 +10067,7 @@ document.addEventListener('click', e => {
 /* ---- Admin Console → Home page (header + pricing section editors) ---- */
 const HERO_ED = { c: null };
 function admHome() {
-  const c = HERO_ED.c = JSON.parse(JSON.stringify(HERO_ED.next || heroCfg())), p = pricingCfg(); HERO_ED.next = null; const open = store.get('nv.admAcc') || 'h-hero';
+  const c = HERO_ED.c = JSON.parse(JSON.stringify(HERO_ED.next || heroCfg())), p = pricingCfg(); HERO_ED.next = null; const open = store.get('nv.admAcc') || '';
   upStore.hero = { image: c.image || '', imageMobile: c.imageMobile || '' };
   const sel = (id, opts, v) => `<select class="input" id="${id}">${opts.map(([k, n]) => `<option value="${k}" ${k === v ? 'selected' : ''}>${esc(n)}</option>`).join('')}</select>`;
   const sw = (id, on, label, help) => `<label class="mod-row adm-sw"><div><b>${label}</b>${help ? `<small class="muted">${help}</small>` : ''}</div><span class="sw"><input type="checkbox" id="${id}" ${on ? 'checked' : ''}><i></i></span></label>`;
@@ -10399,10 +10462,10 @@ const HELP_PLAYBOOKS = [
     need: ['WhatsApp connected'],
     steps: ['Go to **Campaigns → Templates → New template**.', 'Name: small letters and _ only (e.g. **welcome_offer**). Category: **Marketing** for offers, **Utility** for order / account updates. Language: English / Hindi.', 'Write the message. Use **+ Variable** for personal parts — {{1}} becomes the customer’s first name when you send.', 'Fill **Sample values** for every variable (Meta checks them). Add a footer and buttons if you want.', 'Press **Submit to Meta for approval**. Status shows **Pending** — usually approved in minutes, sometimes a few hours.', 'Press **⟳ Sync from WhatsApp** to refresh. When it shows **Approved** you can use it in Broadcast, Auto welcome and Automation.'],
     tips: ['Rejected? Open the card to see the reason — usually too salesy wording in Utility, or a missing sample.', 'No ALL CAPS, no misleading claims, don’t start or end with a variable.'] },
-  { id: 'wa-flow', g: 'wa', title: 'Build a WhatsApp chatbot with the Flow builder', kw: 'flow builder chatbot node canvas template button next template chain multi step bot actions wire', open: ['Open Templates', 'templates'],
-    need: ['WhatsApp connected', 'Templates with reply buttons (Quick reply) — approved by Meta'],
-    steps: ['Go to **Templates → Flow builder**.', 'Press **+ Node** (or the Tab key) → **WhatsApp template** → pick your first template (e.g. a welcome menu). Its reply buttons appear as outputs on the right side of the node.', 'Drag from a button’s dot to an empty spot → choose the next **WhatsApp template**, or an **action** — reply with text, add tag, change stage, assign, create order, create task, AI reply, webhook…', 'Click any node to open its settings on the right (texts, stage, tag, amount, links). Actions can be chained one after another; end a chain with the next template.', 'Press **▶ Preview chat** and tap the buttons like a customer to check the flow.', 'Press **Apply to WhatsApp**. From now on, when a customer taps that button, Nodevers runs the wired steps automatically.'],
-    tips: ['The canvas is saved as you go, but customers only get it after **Apply to WhatsApp** (the bar says “Not live yet” until then).', 'Up to 8 steps run per button tap.', 'Changed buttons inside a template? Press **⟳ Rebuild from templates** to redraw the canvas from what is saved.'] },
+  { id: 'wa-flow', g: 'wa', title: 'Build a WhatsApp chatbot (template studio & Flow builder)', kw: 'flow builder chatbot bot node canvas template studio button next template chain multi step actions wire if else condition business hours wait delay ask question menu list reply buttons hand over a/b split', open: ['Open Templates', 'templates'],
+    need: ['WhatsApp connected', 'A template with reply buttons (Quick reply)'],
+    steps: ['Open **Templates** → press **Edit** (or **Buttons & actions**) on a template. The **template studio** opens: your message on the left, the **button flow** canvas in the middle, the WhatsApp preview on the right.', 'Every reply button is a **dot** on the template node. Drag from a dot to an empty spot (or press **+ Node**) and pick what happens: **Send next template**, a reply, tag, stage, order, task, AI reply, image / PDF / location, follow-up date, lead field…', 'Use **Chatbot logic** nodes for smart flows: **If / else** (tag, stage, city, budget, order, last message), **Business hours** (open / closed), **A/B split**, **Wait**, **Ask a question** (the customer’s answer is saved in the lead — city, email, budget…), **Reply buttons / list** (up to 10 choices, no Meta approval) and **Hand over to a person**.', 'Click any node to change its settings on the right. **⇢ Tidy up** arranges the nodes neatly.', 'Press **▶ Preview chat** — tap buttons, pick paths and type answers like a customer.', 'Press **Save button flow** (approved templates) or **Save draft / Submit to Meta** (new ones). It works on WhatsApp right away.', 'Want to see all templates together? **Templates → Flow builder** shows every flow on one map — change things there and press **Apply to WhatsApp**.'],
+    tips: ['Free messages, menus and questions work inside the 24-hour chat window (after the customer tapped or wrote). After a long Wait, send a template instead.', 'Up to 30 steps run per tap. A new tap cancels an open question.', 'Waits continue within about 2 minutes of their time (needs the 21_chatbot.sql update).'] },
   { id: 'wa-payment', g: 'wa', title: 'Add a payment method in WhatsApp (needed for templates)', kw: 'payment method card billing 131042 template failed whatsapp manager credit line', open: ['Open Inbox', 'whatsapp'],
     need: ['A debit / credit card'],
     steps: ['Open **business.facebook.com** → **WhatsApp Manager** (or business.facebook.com/wa/manage).', 'Left menu **Payment settings** (or ⚙ **Settings → Payment methods**).', '**Add payment method** → choose your business country / currency (INR) → add the card → save.', 'Wait 5–10 minutes, then send the template again from Nodevers.'],
