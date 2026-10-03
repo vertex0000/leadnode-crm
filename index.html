@@ -1190,6 +1190,10 @@ body.no-sales [data-go="tasks"],body.no-sales [data-go="calls"],body.no-orders [
   .tped-form{padding-bottom:90px}.tpe-sec{padding:14px;border-radius:16px}.tpe-sec .tb-cts{grid-template-columns:repeat(3,minmax(0,1fr))!important}.tpe-sf{grid-template-columns:minmax(0,1fr)}.tpe-bh select{max-width:40%}.tpe-when{margin-left:6px;padding-left:20px}.tpe-step::before{left:-21px;width:18px}.tpe-sn{left:-31px}.tpe-2{grid-template-columns:minmax(0,1fr)}.tpe-sth h2{font-size:20px}.tpe-btag{display:none}.tpe-tcm{display:flex!important}}
 .tpe-tcm{display:none!important;justify-content:center}
 @media(max-width:900px){.tped-top>.tpe-tabs{order:5}.tped-top>[data-tesave],.tped-top>[data-tesubmit],.tped-top>[data-tbsaveflow]{order:6}}
+.dg-more{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;padding:8px 0 4px}
+.lpager{display:flex;align-items:center;justify-content:flex-end;gap:8px;margin-top:12px;font-size:13px;color:var(--muted)}.lpager[hidden]{display:none}.lpager span{margin-right:auto}.lpager b{color:var(--text)}
+#ltable.loading tbody{opacity:.45;transition:opacity .2s}
+.big-note{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--muted);padding:8px 12px;border-radius:12px;background:var(--glass-2,var(--card));border:1px dashed var(--line-2);margin:0 0 12px}.big-note b{color:var(--text)}
 /* ---- card popup (Settings-style) ---- */
 html.accm-lock{overflow:hidden}
 .accm{position:fixed;inset:0;z-index:64;display:grid;place-items:center;padding:24px}
@@ -1742,7 +1746,7 @@ body.ro [data-cmw],body.np-commerce [data-cmw]{display:none!important}
         <select class="input" id="lfSource" style="width:auto"></select>
         <select class="input" id="lfArea" style="width:auto"></select>
       </div>
-      <div class="table-wrap glass"><table class="tbl" id="ltable"></table></div>
+      <div class="table-wrap glass"><table class="tbl" id="ltable"></table></div><div class="lpager" id="lpager" hidden></div>
     </section>
 
     <!-- ADMIN CONSOLE (platform owner only) -->
@@ -2073,7 +2077,7 @@ const I = {
   chat: '<svg class="i" viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"/></svg>',
 };
 function toast(msg, err) { const t = document.createElement('div'); t.className = 'toast' + (err ? ' err' : ''); t.textContent = msg; $('#toasts').appendChild(t); setTimeout(() => t.remove(), err ? 4500 : 2600); }
-const store = { get(k) { try { return JSON.parse(localStorage.getItem(k)); } catch (e) { return null; } }, set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { } }, del(k) { try { localStorage.removeItem(k); } catch (e) { } } };
+const store = { get(k) { try { return JSON.parse(localStorage.getItem(k)); } catch (e) { return null; } }, set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { try { localStorage.removeItem(k); } catch (e2) { } } }, del(k) { try { localStorage.removeItem(k); } catch (e) { } } };
 
 /* ================= state ================= */
 const DEFAULT_LISTS = { stages: ['New Lead', 'Contacted', 'Interested', 'Quotation Sent', 'Negotiation', 'Won', 'Lost'], businessTypes: ['Cafe', 'Restaurant', 'Hotel', 'Office', 'Lounge / Bar', 'Co-working Space', 'Home', 'Other'], sources: ['Instagram', 'Meta Ad', 'WhatsApp', 'Website', 'Referral', 'Walk-in', 'Call'], tags: ['Hot', 'Warm', 'Cold'], activityTypes: ['Lead Added', 'WhatsApp Sent', 'Call', 'Meeting', 'Sample Sent', 'Quotation Sent', 'Note', 'Stage Changed'] };
@@ -2201,7 +2205,7 @@ function demoTasks() {
 function nextId(arr, key, prefix) { let m = 0; arr.forEach(o => { const x = String(o[key] || '').match(new RegExp('^' + prefix + '(\\d+)$')); if (x) m = Math.max(m, +x[1]); }); return prefix + String(m + 1).padStart(3, '0'); }
 function demoApi(action, d) {
   const log = (leadId, type, details, by) => { const a = { activityId: nextId(S.activities, 'activityId', 'A'), leadId, dateTime: nowStr(), type, details: details || '', doneBy: by || '' }; S.activities.push(a); return a; };
-  const find = id => { const l = S.leads.find(x => x.leadId === id); if (!l) throw new Error('Lead not found'); return l; };
+  const find = id => { const l = leadById(id); if (!l) throw new Error('Lead not found'); return l; };
   switch (action) {
     case 'ping': return 'pong';
     case 'getAll': return S;
@@ -2268,8 +2272,18 @@ const stages = () => stageDefs().map(d => d.name);
 const openStages = () => stages().filter(s => s !== 'Won' && s !== 'Lost');
 const isClosed = l => l.stage === 'Won' || l.stage === 'Lost';
 const progress = l => { if (l.stage === 'Won') return 100; if (l.stage === 'Lost') return 0; const o = openStages(); const i = o.indexOf(l.stage); return i < 0 ? 0 : Math.round((i + 1) / (o.length + 1) * 100); };
-const actsOf = id => S.activities.filter(a => a.leadId === id).sort((a, b) => String(a.dateTime).localeCompare(String(b.dateTime)));
-const touchCount = id => actsOf(id).filter(a => a.type !== 'Lead Added' && a.type !== 'Stage Changed').length;
+/* ---- fast lookups: rebuilt only when the lists change (big workspaces stay fast) ---- */
+const IDX = {};
+function leadMap() { const L = S.leads || []; if (IDX.l !== L || IDX.ln !== L.length) { IDX.lm = new Map(); L.forEach(l => IDX.lm.set(String(l.leadId), l)); IDX.l = L; IDX.ln = L.length; } return IDX.lm; }
+const leadById = id => id == null || id === '' ? undefined : leadMap().get(String(id));
+function actsMap() {
+  const A = S.activities || [];
+  if (IDX.a !== A || IDX.an !== A.length) { const m = new Map(); A.forEach(a => { const k = String(a.leadId); let v = m.get(k); if (!v) m.set(k, v = []); v.push(a); }); m.forEach(v => v.sort((a, b) => String(a.dateTime).localeCompare(String(b.dateTime)))); IDX.am = m; IDX.a = A; IDX.an = A.length; IDX.won = new Map(); }
+  return IDX.am;
+}
+const actsOf = id => (actsMap().get(String(id)) || []).slice();
+const actsCount = id => (actsMap().get(String(id)) || []).length;
+const touchCount = id => (actsMap().get(String(id)) || []).reduce((n, a) => n + (a.type !== 'Lead Added' && a.type !== 'Stage Changed' ? 1 : 0), 0);
 const isDue = l => !isClosed(l) && l.followUpDate && dOnly(l.followUpDate) <= todayStr();
 const stageColor = s => { const d = stageDefs().find(x => x.name === s); return (d && /^#[0-9a-f]{6}$/i.test(d.color) ? d.color : '') || autoColor(String(s || '')); };
 const tagCls = t => ({ Hot: 'hot', Warm: 'warm', Cold: 'cold' }[t] || 'stage');
@@ -2287,6 +2301,7 @@ function applyData(d) {
   S.lists = Object.assign({}, DEFAULT_LISTS, d.lists || {});
   stageSig = (d.lists && d.lists.stages || []).join('|');
   S.leads.forEach(l => { l.leadId = String(l.leadId); l.phone = String(l.phone || ''); });
+  try { if (typeof BC === 'object') BC.big = null; } catch (e) { }
 }
 /** Instant start: show the last saved copy right away, then refresh from the Sheet in the background */
 async function load(silent) {
@@ -2302,7 +2317,7 @@ async function load(silent) {
     return;
   }
   applyData(d);
-  if (!demo) store.set('leadnode.cache', { url: cacheKey(), at: Date.now(), data: d });
+  if (!demo) { if (d.big) store.del('leadnode.cache'); else store.set('leadnode.cache', { url: cacheKey(), at: Date.now(), data: d }); }   // big workspaces: too large for the browser cache
   layout = loadLayout(!!silent || (cached && !!saveTimer));
   finishLoad(!silent && !cached);
 }
@@ -2342,16 +2357,18 @@ function renderDashboard(anim) {
   const L = S.leads, open = L.filter(l => !isClosed(l));
   const hot = open.filter(l => l.tag === 'Hot'), won = L.filter(l => l.stage === 'Won'), due = L.filter(isDue);
   const weekNew = L.filter(l => l.createdOn && daysBetween(l.createdOn, todayStr()) <= 7).length;
-  const wonVal = won.reduce((s, l) => s + (+l.budget || 0), 0), pipeVal = open.reduce((s, l) => s + (+l.budget || 0), 0);
+  let wonVal = won.reduce((s, l) => s + (+l.budget || 0), 0), pipeVal = open.reduce((s, l) => s + (+l.budget || 0), 0);
+  const bs = bigStats(), N = { total: L.length, week: weekNew, hot: hot.length, due: due.length, won: won.length, open: open.length };
+  if (bs) { const sg = bs.stages || {}, g = k => sg[k] || { n: 0, sum: 0 }; N.total = +bs.total; N.week = +bs.new7; N.hot = +bs.hotOpen || 0; N.due = +bs.followDue; N.won = +g('Won').n; wonVal = +g('Won').sum; N.open = N.total - N.won - +g('Lost').n; pipeVal = Object.entries(sg).reduce((a, [k, v]) => a + (k === 'Won' || k === 'Lost' ? 0 : +v.sum || 0), 0); }
   let si = 0; const stat = (ic, bg, fg, v, lbl, sub) => `<div class="stat glass" style="--i:${si++}"><div class="ic" style="background:${bg};color:${fg}">${ic}</div><div><b data-count>${v}</b><span>${lbl}${sub ? ' · ' + sub : ''}</span></div></div>`;
   $('#stats').innerHTML =
-    stat(I.users, 'var(--blue-soft)', 'var(--blue-2)', L.length, 'Total Leads', weekNew + ' this week') +
-    stat(I.fire, 'var(--coral-soft)', 'var(--coral)', hot.length, 'Hot Leads', due.length + ' follow-up due') +
-    stat(I.trophy, 'var(--green-soft)', 'var(--green)', won.length, 'Won Deals', inrShort(wonVal)) +
-    stat(I.rupee, 'var(--yellow-soft)', '#B7861A', inrShort(pipeVal), 'Open Pipeline', open.length + ' open');
+    stat(I.users, 'var(--blue-soft)', 'var(--blue-2)', N.total, 'Total Leads', N.week + ' this week') +
+    stat(I.fire, 'var(--coral-soft)', 'var(--coral)', N.hot, 'Hot Leads', N.due + ' follow-up due') +
+    stat(I.trophy, 'var(--green-soft)', 'var(--green)', N.won, 'Won Deals', inrShort(wonVal)) +
+    stat(I.rupee, 'var(--yellow-soft)', '#B7861A', inrShort(pipeVal), 'Open Pipeline', N.open + ' open');
   stagger($('#stats'), anim);
-  if (anim) { const b = $$('#stats [data-count]'); countUp(b[0], L.length, Math.round); countUp(b[1], hot.length, Math.round); countUp(b[2], won.length, Math.round); countUp(b[3], pipeVal, inrShort); }
-  const tabs = [['all', 'All Leads', L.length], ['hot', 'Hot Leads', hot.length], ['due', 'Follow-up Due', due.length], ['won', 'Won Deals', won.length]];
+  if (anim) { const b = $$('#stats [data-count]'); countUp(b[0], N.total, Math.round); countUp(b[1], N.hot, Math.round); countUp(b[2], N.won, Math.round); countUp(b[3], pipeVal, inrShort); }
+  const tabs = [['all', 'All Leads', N.total], ['hot', 'Hot Leads', N.hot], ['due', 'Follow-up Due', N.due], ['won', 'Won Deals', N.won]];
   $('#dtabs').innerHTML = tabs.map(([k, n, c]) => `<button class="tab ${ui.tab === k ? 'active' : ''}" data-tab="${k}">${n}<span class="n">${c}</span></button>`).join('');
   let list = L.filter(l => matchQ(l, ui.q));
   if (ui.tab === 'hot') list = list.filter(l => l.tag === 'Hot' && !isClosed(l));
@@ -2360,7 +2377,8 @@ function renderDashboard(anim) {
   if (ui.stage) list = list.filter(l => l.stage === ui.stage);
   list.sort((a, b) => (isDue(b) - isDue(a)) || String(b.createdOn).localeCompare(String(a.createdOn)));
   stagger($('#lgrid'), anim);
-  $('#lgrid').innerHTML = list.length ? list.map((l, i) => leadCard(l, i)).join('') : `<div class="empty glass" style="grid-column:1/-1">No leads found.<br><br><button class="btn primary" data-add>+ Add Lead</button></div>`;
+  const lim = ui.dlim || 60, more = list.length - lim;   // cards are heavy: show 60, then "Show more"
+  $('#lgrid').innerHTML = list.length ? list.slice(0, lim).map((l, i) => leadCard(l, i)).join('') + (more > 0 || bs ? `<div class="dg-more" style="grid-column:1/-1">${more > 0 ? `<button class="btn" data-dmore>Show ${Math.min(more, 60)} more</button>` : ''}${bs ? `<button class="btn" data-go="leads">Search all ${N.total.toLocaleString('en-IN')} leads in the table →</button>` : ''}</div>` : '') : `<div class="empty glass" style="grid-column:1/-1">No leads found.<br><br><button class="btn primary" data-add>+ Add Lead</button></div>`;
 }
 function leadCard(l, i = 0) {
   const tc = touchCount(l.leadId), p = progress(l);
@@ -2375,7 +2393,7 @@ function leadCard(l, i = 0) {
     <div class="lc-mid"><div><small>Budget</small><b>${inr(l.budget)}</b></div><span class="pill stage"><span class="sdot" style="background:${stageColor(l.stage)}"></span>${esc(l.stage)}</span></div>
     <div class="rings">${ring(p, 'Deal Progress', p + '%', pcol)}${ring(Math.min(tc, 5) / 5 * 100, 'Follow-ups', Math.min(tc, 5) + '/5', 'var(--yellow)')}</div>
     <div class="lc-foot"><div class="lc">${I.cal}<div><small>${isDue(l) ? '<span style="color:var(--coral);font-weight:700">Follow-up due</span>' : 'Last contact'}</small><b>${esc(isDue(l) ? fmtDate(l.followUpDate) : relDay(l.lastContact))}</b></div></div>
-      <div style="display:flex;align-items:center;gap:8px"><div class="stack">${people.map(n => avatar(n, 'sm', memberPhoto(n))).join('')}</div><span class="lc">${I.chat}${actsOf(l.leadId).length}</span></div></div>
+      <div style="display:flex;align-items:center;gap:8px"><div class="stack">${people.map(n => avatar(n, 'sm', memberPhoto(n))).join('')}</div><span class="lc">${I.chat}${actsCount(l.leadId)}</span></div></div>
     </div>
   </article>`;
 }
@@ -2443,7 +2461,8 @@ function renderPipeline(anim) {
   if (!layout) layout = loadLayout();
   const st = stages(), who = ui.pfilter === '__me' ? me() : ui.pfilter;
   const leads = S.leads.filter(l => !who || l.assignedTo === who).filter(l => matchQ(l, ui.q));
-  const chip = $('#pchip'), hidden = S.leads.length - leads.length;
+  const bs = bigStats(who, renderPipeline), big = !!bs && !ui.q;   // big workspace: counts and ₹ come from the server
+  const chip = $('#pchip'), hidden = big ? Math.max(0, S.big.total - bs.total) : S.leads.length - leads.length;
   chip.hidden = !(ui.q || who);
   if (!chip.hidden) chip.innerHTML = `${ui.q ? `Search: <b>${esc(ui.q)}</b>` : `Owner: <b>${esc(who)}</b>`}${hidden ? ` · ${hidden} hidden` : ''}<button data-clearfilter title="Clear filter">${I.x}</button>`;
   const incoming = new Set(layout.links.map(([, b]) => b));
@@ -2452,15 +2471,17 @@ function renderPipeline(anim) {
   $('#world').classList.toggle('stagger-nodes', !!anim);
   $('#cols').innerHTML = st.map((s, i) => {
     const items = leads.filter(l => l.stage === s).sort(byPriority), p = layout.pos[s];
-    const total = items.reduce((a, l) => a + (+l.budget || 0), 0), lost = s === 'Lost';
-    const open = ui.expanded.has(s), shown = open ? items : items.slice(0, CARD_LIMIT), extra = items.length - shown.length;
-    const more = extra > 0 ? `<button class="more" data-expand="${esc(s)}">Show ${extra} more lead${extra > 1 ? 's' : ''}</button>`
+    const sv = big ? ((bs.stages || {})[s] || { n: 0, sum: 0 }) : null, cnt = sv ? +sv.n || 0 : items.length;
+    const total = sv ? +sv.sum || 0 : items.reduce((a, l) => a + (+l.budget || 0), 0), lost = s === 'Lost';
+    const open = ui.expanded.has(s), shown = open ? items.slice(0, 50) : items.slice(0, CARD_LIMIT), extra = cnt - shown.length;
+    const more = extra > 0 && !open && items.length > shown.length ? `<button class="more" data-expand="${esc(s)}">Show ${Math.min(extra, 50 - shown.length)} more</button>${cnt > 50 ? `<button class="more" data-stagelist="${esc(s)}">All ${cnt.toLocaleString('en-IN')} in table</button>` : ''}`
+      : extra > 0 ? `<div class="more-row">${open ? `<button class="more" data-expand="${esc(s)}">Show less</button>` : ''}<button class="more" data-stagelist="${esc(s)}">All ${cnt.toLocaleString('en-IN')} in table</button></div>`
       : open && items.length > CARD_LIMIT ? `<div class="more-row"><button class="more" data-expand="${esc(s)}">Show less</button><button class="more" data-stagelist="${esc(s)}">Open in table</button></div>` : '';
     return `<div class="col ${shown.length ? '' : 'emptycol'} ${selNodes.has(s) ? 'sel' : ''} ${bornNodes.has(s) ? 'born' : ''}" data-stage="${esc(s)}" style="left:${p.x}px;top:${p.y}px;--i:${i}">
       <div class="col-head" data-node="${esc(s)}" title="Drag to move the node">
         <span class="port l in ${lost ? 'coral' : ''} ${incoming.has(s) ? 'on' : ''}" data-in="${esc(s)}" title="Input: drop a wire here / drag out to remove"></span>
         <span class="port r out" data-out="${esc(s)}" title="Output: drag to connect a wire"></span>
-        <div class="r1"><span class="sdot" style="background:${stageColor(s)}"></span><span class="nm">${esc(s)}</span><span class="n">${items.length}</span><button class="nmenu" data-nmenu="${esc(s)}" title="Node options">${I.dots || '⋯'}</button></div>
+        <div class="r1"><span class="sdot" style="background:${stageColor(s)}"></span><span class="nm">${esc(s)}</span><span class="n">${cnt.toLocaleString('en-IN')}</span><button class="nmenu" data-nmenu="${esc(s)}" title="Node options">${I.dots || '⋯'}</button></div>
         <div class="r2">${inr(total)}</div></div>
       <div class="col-body">${shown.map(pCard).join('')}${more}
         <button class="addcard" data-add="${esc(s)}">+ Add Lead</button></div></div>`;
@@ -3318,7 +3339,7 @@ function validateActions(acts, scope) {
   const ok = [], bad = [], seen = new Set();
   for (const a of acts.slice(0, 500)) {
     if (!a || !ACTION_LABEL[a.type]) { bad.push('Unknown action'); continue; }
-    const l = S.leads.find(x => x.leadId === String(a.id));
+    const l = leadById(String(a.id));
     if (!l) { bad.push(`${ACTION_LABEL[a.type]}: lead "${String(a.id).slice(0, 20)}" not found`); continue; }
     if (scope && !scope.has(l.leadId)) { bad.push(`${l.name}: outside the chosen "Run on" scope`); continue; }
     let from = '', to = '';
@@ -5520,18 +5541,18 @@ const SCOPES = { all: ['All leads', 'Sees every lead in the business'], area: ['
 const can = k => !cloud || /^(owner|admin)$/.test(AUTH.role || '') || (AUTH.role === 'member' && !(AUTH.access && AUTH.access.perms && AUTH.access.perms[k] === false));
 function applyAccess() { document.body.classList.toggle('brand-ro', !canBrand()); document.body.classList.toggle('is-platform', !!(cloud && AUTH.platform)); document.body.classList.toggle('cl-tenant', !!(cloud && !AUTH.platform)); PERMS.forEach(([k]) => document.body.classList.toggle('np-' + k, !can(k))); document.body.classList.toggle('no-sales', !(demo || (cloud && AUTH.v7))); document.body.classList.toggle('no-orders', !(demo || (cloud && AUTH.v8))); }
 async function moveStage(id, stage) {
-  const l = S.leads.find(x => x.leadId === id); if (!l || l.stage === stage) return;
+  const l = leadById(id); if (!l || l.stage === stage) return;
   flashId = id; setTimeout(() => { flashId = null; }, 1500);
   if (demo) { demoApi('moveStage', { id, stage, by: me() }); renderAll(); toast(`${l.name}: ${stage}`); return; }
   const old = l.stage; l.stage = stage; l.lastContact = todayStr();
   S.activities.push({ activityId: 'tmp' + Date.now(), leadId: id, dateTime: nowStr(), type: 'Stage Changed', details: old + ' → ' + stage, doneBy: me() });
   renderAll();
-  try { await api('moveStage', { id, stage, by: me() }); toast(`${l.name}: ${stage}`); if (!demo) load(true); }
+  try { await api('moveStage', { id, stage, by: me() }); toast(`${l.name}: ${stage}`); if (!demo) refreshLead(id); }
   catch (e) { l.stage = old; toast('Could not save stage: ' + e.message, true); load(true); }
 }
 async function addNote(id, type, details) {
   if (!details.trim()) return toast('Write what happened first', true);
-  try { await api('addActivity', { leadId: id, type, details, doneBy: me() }); toast('Added to journey'); if (demo) renderAll(); else await load(true); }
+  try { await api('addActivity', { leadId: id, type, details, doneBy: me() }); toast('Added to journey'); await refreshLead(id); }
   catch (e) { toast('Could not save: ' + e.message, true); }
 }
 
@@ -5541,16 +5562,51 @@ async function sendWa(id) {
   if (!text) return toast('Type a message', true);
   if (demo) return toast('WhatsApp is not sent in demo mode. Connect your Sheet in Settings.', true);
   btn.disabled = true; btn.textContent = 'Sending…';
-  try { await api('sendText', { leadId: id, text, by: me() }); toast('WhatsApp message sent ✓'); box.value = ''; await load(true); }
+  try { await api('sendText', { leadId: id, text, by: me() }); toast('WhatsApp message sent ✓'); box.value = ''; await refreshLead(id); }
   catch (e) { toast(e.message, true); }
   finally { const b = $('#wasend'); if (b) { b.disabled = false; b.innerHTML = I.wa + 'Send'; } }
 }
 
 /* ================= lead panel ================= */
-function openPanel(id) { ui.openId = id; renderPanel(id); $('#panel').classList.add('show'); $('#scrim').classList.add('show'); }
+function openPanel(id) {
+  if (!leadById(id) && S.big && cloud) { sbLeadsByIds([id]).then(r => { keepLeads(r); if (leadById(id)) openPanel(id); else toast('Lead not found', true); }).catch(e => toast(e.message, true)); return; }   // big workspace: a lead that is not loaded yet
+  ui.openId = id; renderPanel(id); $('#panel').classList.add('show'); $('#scrim').classList.add('show');
+  if (cloud && (S.big || S.actsCut || (S.messages || []).length >= 1500)) bigLeadHistory(id);
+}
+/** after a change to one lead: fetch just that lead (row, timeline, tasks, chat) instead of reloading everything */
+async function refreshLead(id) {
+  if (demo || !cloud) return renderAll();
+  try {
+    const cl = AUTH.client, ws = AUTH.ws;
+    const [lr, acts, tks, ms] = await Promise.all([sbq(cl.from('leads').select('*').eq('workspace_id', ws).eq('lead_id', id).maybeSingle()),
+      sbq(cl.from('activities').select('*').eq('workspace_id', ws).eq('lead_id', id).order('date_time', { ascending: false }).limit(300)),
+      AUTH.v7 ? sbq(cl.from('tasks').select('*').eq('workspace_id', ws).eq('lead_id', id)) : Promise.resolve(null),
+      sbq(cl.from('messages').select('*').eq('workspace_id', ws).eq('lead_id', id).order('time', { ascending: false }).limit(300))]);
+    if (lr) keepLeads([lr]); else S.leads = S.leads.filter(l => l.leadId !== id);
+    const A = acts.map(fromRow), ka = new Set(A.map(a => a.activityId));
+    S.activities = S.activities.filter(a => a.leadId !== id || (!ka.has(a.activityId) && !String(a.activityId).startsWith('tmp'))).concat(A.reverse());
+    if (tks) S.tasks = (S.tasks || []).filter(t => t.leadId !== id).concat(tks.map(fromRow));
+    const M = ms.map(fromRow), km = new Set(M.map(m => m.messageId));
+    S.messages = (S.messages || []).filter(m => m.leadId !== id || (!km.has(m.messageId) && !String(m.messageId).startsWith('tmp'))).concat(M).sort((a, b) => String(a.time).localeCompare(String(b.time)));
+    if (S.big) { try { S.big.stats = await sbq(cl.rpc('lead_stats', { p_ws: ws })); S.big.at = Date.now(); S.big.owners = {}; } catch (e) { } }
+    renderAll(false);
+  } catch (e) { load(true); }
+}
+/** big workspace: the whole timeline + chat of one lead, fetched when it is opened */
+async function bigLeadHistory(id) {
+  const seen = S._hist || (S._hist = new Set()); if (seen.has(id)) return; seen.add(id);
+  try {
+    const cl = AUTH.client, [acts, msgsRows] = await Promise.all([sbq(cl.from('activities').select('*').eq('workspace_id', AUTH.ws).eq('lead_id', id).order('date_time', { ascending: false }).limit(300)), sbq(cl.from('messages').select('*').eq('workspace_id', AUTH.ws).eq('lead_id', id).order('time', { ascending: false }).limit(300))]);
+    const ha = new Set(S.activities.map(a => a.activityId)), hm = new Set((S.messages || []).map(m => m.messageId));
+    const na = acts.map(fromRow).filter(a => !ha.has(a.activityId)), nm = msgsRows.map(fromRow).filter(m => !hm.has(m.messageId)).reverse();
+    if (na.length) S.activities.push(...na); if (nm.length) { S.messages.push(...nm); S.messages.sort((a, b) => String(a.time).localeCompare(String(b.time))); }
+    if ((na.length || nm.length) && ui.openId === id) renderPanel(id);
+    if (nm.length && $('#v-whatsapp').classList.contains('active')) renderInbox();
+  } catch (e) { seen.delete(id); }
+}
 function closePanel() { ui.openId = null; $('#panel').classList.remove('show'); $('#scrim').classList.remove('show'); }
 function renderPanel(id) {
-  const l = S.leads.find(x => x.leadId === id); if (!l) return closePanel();
+  const l = leadById(id); if (!l) return closePanel();
   const st = stages(), op = openStages(), ci = st.indexOf(l.stage);
   const bar = op.concat(['Won']).map((s, i, arr) => {
     const idx = st.indexOf(s), done = l.stage !== 'Lost' && idx < ci, cur = s === l.stage;
@@ -5678,11 +5734,11 @@ async function saveLead(lead) {
       if (stageChanged) await api('moveStage', { id: lead.leadId, stage: newStage, by: me() });
       toast('Lead updated');
     } else {
-      const saved = await api('addLead', Object.assign({ by: me() }, data));
+      var saved = await api('addLead', Object.assign({ by: me() }, data));
       toast('New lead saved: ' + (saved.leadId || ''));
     }
     hideModal('#leadModal');
-    if (demo) renderAll(); else await load(true);
+    if (demo) renderAll(); else { const id = lead ? lead.leadId : saved && saved.leadId; if (id) { if (!lead && S.big) S.big.total++; await refreshLead(String(id)); } else await load(true); }
   } catch (e) { toast('Could not save: ' + e.message, true); }
   finally { btn.disabled = false; btn.textContent = lead ? 'Save Changes' : 'Save Lead'; }
 }
@@ -5789,12 +5845,40 @@ function toRow(table, obj) {
 }
 const cleanPhone = p => { let d = String(p || '').replace(/\D/g, ''); if (d.length === 10) d = '91' + d; return d; };
 async function sbq(p) { const { data, error } = await p; if (error) throw new Error(/(email|opt_out|channel|sent_at|broadcast_id|subject)[\s\S]*(does not exist|schema cache)|column .* of relation .* does not exist/i.test(error.message) ? 'Your database needs an update — run 03_broadcast_email.sql in Supabase → SQL Editor.' : error.message); return data; }
-async function sbAll(table, order) {
-  const cl = AUTH.client, out = [];
-  for (let from = 0; ; from += 1000) {
-    const rows = await sbq(cl.from(table).select('*').eq('workspace_id', AUTH.ws).order(order).range(from, from + 999));
-    out.push(...rows); if (rows.length < 1000) return out;
-  }
+/** every row of a table (or the first opt.max), 1000 per request, 6 requests at a time. opt: { desc, max, where(q) } */
+const SB_TIE = { leads: 'lead_id', activities: 'activity_id', calls: 'call_id', tasks: 'task_id', orders: 'order_id', products: 'sku', team: 'member_id', templates: 'template_name', broadcasts: 'broadcast_id', flows: 'flow_id' };
+async function sbAll(table, order, opt = {}) {
+  const cl = AUTH.client, tie = SB_TIE[table];
+  const mk = cnt => { let x = cl.from(table).select('*', cnt ? { count: 'exact' } : undefined).eq('workspace_id', AUTH.ws); if (opt.where) x = opt.where(x); x = x.order(order, { ascending: !opt.desc }); return tie && tie !== order ? x.order(tie, { ascending: !opt.desc }) : x; };
+  const max = opt.max || Infinity, r = await mk(true).range(0, Math.min(999, max - 1));
+  const out = await sbq(Promise.resolve(r)), total = Math.min(r.count == null ? Infinity : r.count, max);
+  if (out.length < 1000 || total <= out.length) return out;
+  if (!isFinite(total)) { for (let from = 1000; from < max; from += 1000) { const rows = await sbq(mk(false).range(from, Math.min(from + 999, max - 1))); out.push(...rows); if (rows.length < 1000) break; } return out; }
+  const pages = []; for (let from = 1000; from < total; from += 1000) pages.push(from);
+  for (let i = 0; i < pages.length; i += 6) (await Promise.all(pages.slice(i, i + 6).map(f => sbq(mk(false).range(f, Math.min(f + 999, total - 1)))))).forEach(rows => out.push(...rows));
+  return out;
+}
+/* ---- big workspaces: more than BIG_AT leads → the browser keeps only the leads people work with now ---- */
+const BIG_AT = 3000, BIG_KEEP = 2000;
+/** big workspace numbers (all leads, or one owner's) from lead_stats(); null in normal workspaces. Fetches an owner's numbers once, then redraws. */
+function bigStats(owner, redraw) {
+  if (!S.big || !cloud) return null; if (!owner) return S.big.stats;
+  const c = (S.big.owners = S.big.owners || {})[owner]; if (c && c.stats) return c.stats;
+  if (!c) { S.big.owners[owner] = { loading: true }; sbq(AUTH.client.rpc('lead_stats', { p_ws: AUTH.ws, p_owner: owner })).then(st => { S.big.owners[owner] = { stats: st }; if (redraw) redraw(); }).catch(() => { delete S.big.owners[owner]; }); }
+  return null;
+}
+async function sbLeadsByIds(ids) {
+  const out = [], u = [...new Set(ids.filter(Boolean).map(String))].slice(0, 3000);
+  for (let i = 0; i < u.length; i += 150) out.push(...await sbq(AUTH.client.from('leads').select('*').eq('workspace_id', AUTH.ws).in('lead_id', u.slice(i, i + 150))));
+  return out;
+}
+async function sbBigLeads() {
+  const cl = AUTH.client, soon = ymd(new Date(Date.now() + 7 * 864e5));
+  const [recent, due] = await Promise.all([sbAll('leads', 'created_at', { desc: true, max: BIG_KEEP }),
+    sbq(cl.from('leads').select('*').eq('workspace_id', AUTH.ws).not('follow_up_date', 'is', null).lte('follow_up_date', soon).not('stage', 'in', '("Won","Lost")').order('follow_up_date').limit(1000))]);
+  const seen = new Set(), out = [];
+  recent.reverse().concat(due).forEach(r => { if (!seen.has(r.lead_id)) { seen.add(r.lead_id); out.push(r); } });
+  return out;
 }
 async function sbSettings() { const rows = await sbq(AUTH.client.from('settings').select('key,value').eq('workspace_id', AUTH.ws)); const o = {}; rows.forEach(r => o[r.key] = r.value); return o; }
 async function sbLog(leadId, type, details, by) {
@@ -5811,19 +5895,27 @@ async function sbApi(action, d = {}) {
     case 'ping': return 'pong';
     case 'getAll': {
       const acc = await cl.rpc('my_access', { p_ws: ws }); AUTH.access = acc.error ? null : acc.data; AUTH.v7 = !acc.error;
-      const [leads, activities, team, templates, broadcasts, flows, settings, messages, calls, tasks, cstats, orders, products, adSpend, moves, adIns, advDis] = await Promise.all([
-        sbAll('leads', 'created_at'), sbAll('activities', 'date_time'), sbAll('team', 'member_id'), sbAll('templates', 'template_name'),
+      const nLeads = ((await cl.from('leads').select('lead_id', { count: 'exact', head: true }).eq('workspace_id', ws)) || {}).count || 0, big = nLeads > BIG_AT;
+      const recentFirst = (t, o, max) => sbAll(t, o, { desc: true, max }).then(r => r.reverse());
+      const [leads, activities, team, templates, broadcasts, flows, settings, messages, calls, tasks, cstats, orders, products, adSpend, moves, adIns, advDis, stats] = await Promise.all([
+        big ? sbBigLeads() : sbAll('leads', 'created_at'), recentFirst('activities', 'date_time', big ? 3000 : 20000), sbAll('team', 'member_id'), sbAll('templates', 'template_name'),
         sbAll('broadcasts', 'broadcast_id'), sbAll('flows', 'flow_id'), sbSettings(),
         sbq(T('messages').select('*').eq('workspace_id', ws).order('time', { ascending: false }).limit(1500)),
-        AUTH.v7 ? sbAll('calls', 'called_at') : [], AUTH.v7 ? sbAll('tasks', 'due_at') : [], AUTH.v7 ? sbq(T('campaign_stats').select('*').eq('workspace_id', ws)).catch(() => []) : [],
-        sbAll('orders', 'created_at').then(r => { AUTH.v8 = true; return r; }, () => { AUTH.v8 = false; return []; }),
+        AUTH.v7 ? (big ? recentFirst('calls', 'called_at', 3000) : sbAll('calls', 'called_at')) : [],
+        AUTH.v7 ? (big ? Promise.all([sbAll('tasks', 'due_at', { where: x => x.eq('status', 'Open'), max: 5000 }), recentFirst('tasks', 'due_at', 1000).then(r => r.filter(t => t.status !== 'Open'))]).then(([a, b]) => a.concat(b)) : sbAll('tasks', 'due_at')) : [], AUTH.v7 ? sbq(T('campaign_stats').select('*').eq('workspace_id', ws)).catch(() => []) : [],
+        recentFirst('orders', 'created_at', 30000).then(r => { AUTH.v8 = true; return r; }, () => { AUTH.v8 = false; return []; }),
         sbAll('products', 'sku').then(r => { AUTH.v9 = true; return r; }, () => { AUTH.v9 = false; return []; }),
         sbq(T('ad_spend').select('*').eq('workspace_id', ws).order('day', { ascending: false }).limit(5000)).catch(() => []),
         sbq(T('stock_moves').select('*').eq('workspace_id', ws).order('at', { ascending: false }).limit(3000)).then(r => { AUTH.v16 = true; return r; }, () => { AUTH.v16 = false; return []; }),
         sbq(T('ad_insights').select('*').eq('workspace_id', ws).gte('day', ymd(new Date(Date.now() - 35 * 864e5))).order('day', { ascending: false }).limit(8000)).then(r => { AUTH.v18 = true; return r; }, () => { AUTH.v18 = false; return []; }),
-        sbq(T('advisor_dismiss').select('*').eq('workspace_id', ws)).catch(() => [])]);
+        sbq(T('advisor_dismiss').select('*').eq('workspace_id', ws)).catch(() => []),
+        big ? sbq(cl.rpc('lead_stats', { p_ws: ws })).catch(() => null) : null]);
+      if (big) {   // leads that messages, tasks, calls or the timeline point to, but are not among the newest
+        const have = new Set(leads.map(l => l.lead_id)), want = [].concat(messages, tasks, calls, activities).map(x => x.lead_id).filter(id => id && !have.has(id));
+        if (want.length) leads.push(...await sbLeadsByIds(want).catch(() => []));
+      }
       let stages = null; try { stages = JSON.parse(settings.stagesJson || 'null'); } catch (e) { }
-      return { adInsights: adIns.map(fromRow), advDismiss: advDis.map(fromRow), stockMoves: moves.map(fromRow), products: products.map(fromRow), adSpend: adSpend.map(r => Object.assign(fromRow(r), { id: r.id })), orders: orders.map(fromRow), calls: calls.map(fromRow), tasks: tasks.map(fromRow), campaignStats: cstats.map(fromRow), leads: leads.map(fromRow), activities: activities.map(fromRow), team: team.map(fromRow), templates: templates.map(fromRow), broadcasts: broadcasts.map(fromRow), flows: flows.map(fromRow), messages: messages.reverse().map(fromRow), lists: Array.isArray(stages) && stages.length ? { stages } : {}, settings };
+      return { actsCut: activities.length >= (big ? 3000 : 20000), big: big ? { on: true, total: nLeads, stats: stats || null, at: Date.now() } : null, adInsights: adIns.map(fromRow), advDismiss: advDis.map(fromRow), stockMoves: moves.map(fromRow), products: products.map(fromRow), adSpend: adSpend.map(r => Object.assign(fromRow(r), { id: r.id })), orders: orders.map(fromRow), calls: calls.map(fromRow), tasks: tasks.map(fromRow), campaignStats: cstats.map(fromRow), leads: leads.map(fromRow), activities: activities.map(fromRow), team: team.map(fromRow), templates: templates.map(fromRow), broadcasts: broadcasts.map(fromRow), flows: flows.map(fromRow), messages: messages.reverse().map(fromRow), lists: Array.isArray(stages) && stages.length ? { stages } : {}, settings };
     }
     case 'addLead': {
       if (!String(d.name || '').trim()) throw new Error('Name is required');
@@ -6136,12 +6228,37 @@ function liveStart() {
   liveStop(); if (!cloud || !AUTH.client || !AUTH.ws) return;
   try {
     const ch = AUTH.client.channel('ws-' + AUTH.ws);
-    ['leads', 'activities', 'messages'].forEach(t => ch.on('postgres_changes', { event: '*', schema: 'public', table: t, filter: 'workspace_id=eq.' + AUTH.ws }, () => liveKick()));
+    ['leads', 'activities', 'messages'].forEach(t => ch.on('postgres_changes', { event: '*', schema: 'public', table: t, filter: 'workspace_id=eq.' + AUTH.ws }, p => liveApply(t, p)));
     ch.subscribe(); AUTH.live = ch;
   } catch (e) { /* live updates are a bonus — the app works without them */ }
 }
 function liveStop() { if (AUTH.live) { try { AUTH.client.removeChannel(AUTH.live); } catch (e) { } AUTH.live = null; } }
 const typingNow = () => { const a = document.activeElement; return !!(a && /^(INPUT|TEXTAREA)$/.test(a.tagName) && a.value && a.id !== 'ibText' && a.closest('#panel, .modal.show')); };
+/** one changed row → update the data in place and redraw the open page (no full reload — big workspaces stay fast) */
+const LIVE = { q: [], t: null, stats: 0 };
+function liveApply(t, p) {
+  try {
+    const ev = p && p.eventType, nw = p && p.new && Object.keys(p.new).length ? fromRow(p.new) : null, old = p && p.old && Object.keys(p.old).length ? fromRow(p.old) : null;
+    if (!ev || (ev !== 'DELETE' && !nw)) return liveKick();
+    if (t === 'leads') {
+      if (ev === 'DELETE') { const id = String((old || {}).leadId || ''); if (id) S.leads = S.leads.filter(l => l.leadId !== id); }
+      else { nw.leadId = String(nw.leadId); nw.phone = String(nw.phone || ''); const ex = leadById(nw.leadId); if (ex) Object.assign(ex, nw); else S.leads.push(nw); }
+      if (S.big) LIVE.stats = 1;
+    } else if (t === 'activities') {
+      if (ev === 'DELETE') { const id = (old || {}).activityId; if (id) S.activities = S.activities.filter(a => a.activityId !== id); }
+      else { const ex = S.activities.find(a => a.activityId === nw.activityId); if (ex) Object.assign(ex, nw); else S.activities.push(nw); }
+    } else if (t === 'messages') {
+      if (ev === 'DELETE') { const id = (old || {}).messageId; if (id) S.messages = S.messages.filter(m => m.messageId !== id); }
+      else { const ex = S.messages.find(m => m.messageId === nw.messageId); if (ex) Object.assign(ex, nw); else S.messages.push(nw); }
+    }
+  } catch (e) { return liveKick(); }
+  clearTimeout(LIVE.t); LIVE.t = setTimeout(liveRedraw, 500);
+}
+async function liveRedraw() {
+  if (document.hidden) { liveDirty = true; return; } if (typingNow() || TPL.edit) { LIVE.t = setTimeout(liveRedraw, 1200); return; }
+  if (LIVE.stats && S.big && Date.now() - (S.big.at || 0) > 8000) { LIVE.stats = 0; try { S.big.stats = await sbq(AUTH.client.rpc('lead_stats', { p_ws: AUTH.ws })); S.big.at = Date.now(); S.big.owners = {}; } catch (e) { } }
+  renderAll(false);
+}
 function liveKick() { clearTimeout(liveT); liveT = setTimeout(() => { if (document.hidden) { liveDirty = true; return; } if (typingNow()) return liveKick(); if (cloud) load(true); }, 900); }
 document.addEventListener('visibilitychange', () => { if (!document.hidden && liveDirty) { liveDirty = false; if (cloud) load(true); } });
 
@@ -6165,7 +6282,7 @@ function convos() {
   const by = new Map();
   msgs().forEach(m => { const k = m.leadId || ('p:' + m.phone); const c = by.get(k) || { key: k, leadId: m.leadId, phone: m.phone, list: [] }; c.list.push(m); by.set(k, c); });
   const seen = store.get('leadnode.waSeen') || {};
-  return [...by.values()].map(c => { c.list.sort((a, b) => String(a.time).localeCompare(String(b.time))); c.last = c.list[c.list.length - 1]; c.lead = S.leads.find(l => l.leadId === c.leadId); c.name = c.lead ? c.lead.name : '+' + c.phone; c.unread = c.list.filter(m => m.direction === 'in' && String(m.time) > String(seen[c.key] || '')).length; return c; })
+  return [...by.values()].map(c => { c.list.sort((a, b) => String(a.time).localeCompare(String(b.time))); c.last = c.list[c.list.length - 1]; c.lead = leadById(c.leadId); c.name = c.lead ? c.lead.name : '+' + c.phone; c.unread = c.list.filter(m => m.direction === 'in' && String(m.time) > String(seen[c.key] || '')).length; return c; })
     .sort((a, b) => String(b.last.time).localeCompare(String(a.last.time)));
 }
 const WA_ERR = { 131042: 'Payment problem — add a payment method in WhatsApp Manager (Meta → Billing).', 131049: 'Meta held back this marketing message to protect the customer (too many marketing messages). Try a Utility template or later.', 131026: 'This number cannot receive it — not on WhatsApp, or an old WhatsApp version.', 131047: 'More than 24 hours since the customer last wrote — send an approved template instead.', 131056: 'Too many messages to this number too fast — wait a bit.', 130472: "Meta is running a test on this customer's number — the message was not delivered.", 132001: 'Template not found or not approved in this language.', 132000: 'Template variables do not match the template.', 131053: 'Media file could not be sent.', 131050: 'The customer has stopped marketing messages from your business.' };
@@ -6233,7 +6350,7 @@ async function renderInbox() {
 }
 function renderThread() {
   const box = $('#ibThread'), all = convos(); let c = all.find(x => x.key === WA.open);
-  if (!c && WA.open && WA.open.startsWith('new:')) { const l = S.leads.find(x => x.leadId === WA.open.slice(4)); if (l) c = { key: WA.open, leadId: l.leadId, phone: l.phone, list: [], lead: l, name: l.name }; }
+  if (!c && WA.open && WA.open.startsWith('new:')) { const l = leadById(WA.open.slice(4)); if (l) c = { key: WA.open, leadId: l.leadId, phone: l.phone, list: [], lead: l, name: l.name }; }
   if (!c) { box.innerHTML = `<div class="ib-empty big">${I.chat}<b>Select a chat</b><span>Replies go out from your business WhatsApp number and are saved in the lead's journey.</span></div>`; return; }
   const seen = store.get('leadnode.waSeen') || {}; if (c.last) { seen[c.key] = c.last.time; store.set('leadnode.waSeen', seen); }
   const lastIn = [...c.list].reverse().find(m => m.direction === 'in'), open24 = demo || (lastIn && (Date.now() - new Date(String(lastIn.time).replace(' ', 'T')).getTime()) < 24 * 36e5);
@@ -6328,7 +6445,7 @@ async function waEmbeddedSignup(btn) {
   $('#v-whatsapp').addEventListener('click', async e => {
     const t = e.target;
     const ff = t.closest('[data-ibf]'); if (ff) { WA.filter = ff.dataset.ibf; return renderInbox(); }
-    const o = t.closest('[data-ibopen]'); if (o) { WA.open = o.dataset.ibopen; WA.mobileThread = true; return renderInbox(); }
+    const o = t.closest('[data-ibopen]'); if (o) { WA.open = o.dataset.ibopen; WA.mobileThread = true; const c = convos().find(x => x.key === WA.open); if (c && c.leadId && (S.big || (S.messages || []).length >= 1500)) bigLeadHistory(c.leadId); return renderInbox(); }
     const n = t.closest('[data-ibnew]'); if (n) { WA.open = 'new:' + n.dataset.ibnew; WA.mobileThread = true; WA.q = ''; $('#ibQ').value = ''; return renderInbox(); }
     if (t.closest('[data-ibback]')) { WA.mobileThread = false; return renderInbox(); }
     const ol = t.closest('[data-ibl]'); if (ol) return openPanel(ol.dataset.ibl);
@@ -6497,8 +6614,32 @@ function recentlyContacted(ch, days) {
   if (!days) return new Set(); const d = new Date(); d.setDate(d.getDate() - days); const since = `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
   return ch === 'email' ? new Set(S.activities.filter(a => a.type === 'Email Sent' && dOnly(a.dateTime) >= since).map(a => a.leadId)) : new Set(msgs().filter(m => m.direction === 'out' && dOnly(m.time) >= since).map(m => m.leadId));
 }
+/** big workspace: the audience comes from the server (up to 20,000 people), then the screen redraws */
+function bigAudience(a) {
+  const key = JSON.stringify([a.src, a.past, a.pastMode, a.ids, a.stages, a.tag, a.source, a.city, a.assigned]);
+  if (BC.big && BC.big.key === key) return BC.big.rows;
+  BC.big = { key, rows: [], loading: true };
+  (async () => {
+    let rows;
+    if (a.src === 'past' && a.past) rows = keepLeads(await sbLeadsByIds([...pastLeads(a.past, a.pastMode)]));
+    else if (a.src === 'ids' && Array.isArray(a.ids)) rows = keepLeads(await sbLeadsByIds(a.ids));
+    else {
+      const mk = cnt => { let q = AUTH.client.from('leads').select('lead_id,name,phone,email,city,state,district,business_name,business_type,stage,tag,source,assigned_to,email_opt_out,wa_opt_out,budget,created_on', cnt ? { count: 'exact' } : undefined).eq('workspace_id', AUTH.ws);
+        if (a.stages.length) q = q.in('stage', a.stages); if (a.tag) q = q.eq('tag', a.tag); if (a.source) q = q.eq('source', a.source); if (a.assigned) q = q.eq('assigned_to', a.assigned);
+        if (a.city) q = q.ilike('city', a.city.replace(/[%_\\]/g, '')); return q.order('created_at', { ascending: false }).order('lead_id'); };
+      const first = await mk(true).range(0, 999); if (first.error) throw new Error(first.error.message);
+      rows = first.data || []; const total = Math.min(first.count || 0, 20000), pages = []; for (let f = 1000; f < total; f += 1000) pages.push(f);
+      for (let i = 0; i < pages.length; i += 6) (await Promise.all(pages.slice(i, i + 6).map(f => sbq(mk(false).range(f, Math.min(f + 999, total - 1)))))).forEach(r => rows.push(...r));
+      rows = rows.map(r => { const l = fromRow(r); l.leadId = String(l.leadId); l.phone = String(l.phone || ''); return l; });
+    }
+    if (!BC.big || BC.big.key !== key) return; BC.big = { key, rows, loading: false };
+    if ($('#v-broadcast').classList.contains('active')) renderBroadcast();
+  })().catch(e => { if (BC.big && BC.big.key === key) BC.big.loading = false; toast(e.message, true); });
+  return BC.big.rows;
+}
 function audience() {
   const a = BC.aud;
+  if (S.big && cloud) return bigAudience(a);
   if (a.src === 'past' && a.past) { const ids = pastLeads(a.past, a.pastMode); return S.leads.filter(l => ids.has(l.leadId)); }
   if (a.src === 'ids' && Array.isArray(a.ids)) { const ids = new Set(a.ids); return S.leads.filter(l => ids.has(l.leadId)); }   // a list picked by the AI Advisor
   return S.leads.filter(l => (!a.stages.length || a.stages.includes(l.stage)) && (!a.tag || l.tag === a.tag) && (!a.source || l.source === a.source) && (!a.city || String(l.city || '').toLowerCase() === a.city.toLowerCase()) && (!a.assigned || l.assignedTo === a.assigned));
@@ -7403,19 +7544,22 @@ $('#sShow').onclick = () => { const k = $('#sKey'); k.type = k.type === 'passwor
 ui.sort = { k: 'createdOn', d: -1 }; ui.lf = { q: '', stage: '', tag: '', source: '' };
 const LCOLS = [['name', 'Lead'], ['businessName', 'Business'], ['phone', 'Phone'], ['city', 'City'], ['source', 'Source'], ['budget', 'Budget', 'num'], ['stage', 'Stage'], ['tag', 'Tag'], ['followUpDate', 'Follow-up'], ['assignedTo', 'Owner'], ['createdOn', 'Added']];
 function fillFilter(sel, label, arr, cur) { $(sel).innerHTML = `<option value="">${label}</option>` + arr.map(x => `<option ${x === cur ? 'selected' : ''}>${esc(x)}</option>`).join(''); }
-function renderLeads(anim) {
-  fillFilter('#lfStage', 'All stages', stages(), ui.lf.stage);
-  fillFilter('#lfTag', 'All tags', S.lists.tags || [], ui.lf.tag);
-  fillFilter('#lfSource', 'All sources', S.lists.sources || [], ui.lf.source);
-  fillFilter('#lfArea', 'All areas', areaValues('state').concat(areaValues('district')).filter((v, i, a) => a.indexOf(v) === i), ui.lf.area);
-  const f = ui.lf;
-  let list = S.leads.filter(l => matchQ(l, f.q) && (!f.stage || l.stage === f.stage) && (!f.tag || l.tag === f.tag) && (!f.source || l.source === f.source) && (!f.area || l.state === f.area || l.district === f.area));
-  ui.leadList = list;
-  const { k, d } = ui.sort;
-  list.sort((a, b) => k === 'budget' ? ((+a.budget || 0) - (+b.budget || 0)) * d : String(a[k] || '').localeCompare(String(b[k] || '')) * d);
-  $('#leadsCount').textContent = `Showing ${list.length} of ${S.leads.length} leads`;
-  const head = '<thead><tr>' + LCOLS.map(([key, lab, cls]) => `<th data-sort="${key}" class="${cls || ''} ${k === key ? 'on' : ''}">${lab}<span class="ar">${k === key ? (d > 0 ? '↑' : '↓') : '↕'}</span></th>`).join('') + '</tr></thead>';
-  const body = list.map((l, i) => `<tr data-open="${esc(l.leadId)}" style="--i:${anim ? Math.min(i, 25) : 0}">
+const LPAGE = 100; ui.lpage = 0; ui.lseq = 0;
+const LCOL_DB = { name: 'name', businessName: 'business_name', phone: 'phone', city: 'city', source: 'source', budget: 'budget', stage: 'stage', tag: 'tag', followUpDate: 'follow_up_date', assignedTo: 'assigned_to', createdOn: 'created_at' };
+const pgq = v => '"' + String(v).replace(/["\\]/g, '') + '"';   // a value inside a PostgREST or(...) filter
+/** big workspaces: the leads query for the current filters (server-side search, filter and sort) */
+function bigLeadQuery(f, opt = {}) {
+  let q = AUTH.client.from('leads').select(opt.cols || '*', opt.count ? { count: 'exact' } : undefined).eq('workspace_id', AUTH.ws);
+  if (f.stage) q = q.eq('stage', f.stage); if (f.tag) q = q.eq('tag', f.tag); if (f.source) q = q.eq('source', f.source);
+  if (f.area) q = q.or(`state.eq.${pgq(f.area)},district.eq.${pgq(f.area)}`);
+  const s = String(f.q || '').replace(/[%*,()"\\:]/g, ' ').trim();
+  if (s) { const d = /^[\d\s+\-]+$/.test(s) ? s.replace(/\D/g, '') : ''; q = q.or(['name', 'business_name', 'city', 'email', 'state', 'district', 'business_type', 'lead_id'].map(c => `${c}.ilike.*${s}*`).concat(d.length >= 3 ? [`phone.ilike.*${d}*`] : []).join(',')); }   // digits only → phone search too
+  const { k, d } = ui.sort; return q.order(LCOL_DB[k] || 'created_at', { ascending: d > 0, nullsFirst: false }).order('lead_id', { ascending: d > 0 });
+}
+/** server rows → kept in S.leads so the lead panel, edits and WhatsApp work on them */
+function keepLeads(rows) { return rows.map(r => { const l = fromRow(r); l.leadId = String(l.leadId); l.phone = String(l.phone || ''); const ex = leadById(l.leadId); if (ex) return Object.assign(ex, l); S.leads.push(l); return l; }); }
+function leadRowsHTML(list, anim) {
+  return list.map((l, i) => `<tr data-open="${esc(l.leadId)}" style="--i:${anim ? Math.min(i, 25) : 0}">
     <td><div class="who">${avatar(l.name, 'sm', l.clientPhoto)}${esc(l.name)}</div></td>
     <td>${esc(l.businessName || '-')}</td><td>${l.phone ? '+' + esc(l.phone) : '-'}</td><td>${esc([l.city, l.state].filter(Boolean).join(', ') || '-')}</td><td>${esc(l.source || '-')}</td>
     <td class="num">${inr(l.budget)}</td>
@@ -7423,23 +7567,67 @@ function renderLeads(anim) {
     <td>${l.tag ? `<span class="pill ${tagCls(l.tag)}">${esc(l.tag)}</span>` : '-'}</td>
     <td style="${isDue(l) ? 'color:var(--coral);font-weight:700' : ''}">${l.followUpDate ? esc(fmtDate(l.followUpDate)) : '-'}</td>
     <td>${esc(l.assignedTo || '-')}</td><td class="muted">${esc(fmtDate(l.createdOn))}</td></tr>`).join('');
-  $('#ltable').innerHTML = head + '<tbody>' + (body || `<tr><td colspan="${LCOLS.length}" class="empty">No leads found.</td></tr>`) + '</tbody>';
 }
-$('#lsearch').oninput = e => { ui.lf.q = e.target.value; renderLeads(); };
-$('#lfStage').onchange = e => { ui.lf.stage = e.target.value; renderLeads(); };
-$('#lfTag').onchange = e => { ui.lf.tag = e.target.value; renderLeads(); };
-$('#lfSource').onchange = e => { ui.lf.source = e.target.value; renderLeads(); };
-$('#lfArea').onchange = e => { ui.lf.area = e.target.value; renderLeads(); };
+function leadsTableHTML(page, total, from, anim, note) {
+  const { k, d } = ui.sort, n = page.length;
+  const head = '<thead><tr>' + LCOLS.map(([key, lab, cls]) => `<th data-sort="${key}" class="${cls || ''} ${k === key ? 'on' : ''}">${lab}<span class="ar">${k === key ? (d > 0 ? '↑' : '↓') : '↕'}</span></th>`).join('') + '</tr></thead>';
+  $('#ltable').innerHTML = head + '<tbody>' + (leadRowsHTML(page, anim) || `<tr><td colspan="${LCOLS.length}" class="empty">${note || 'No leads found.'}</td></tr>`) + '</tbody>';
+  const pg = $('#lpager'); pg.hidden = total <= LPAGE;
+  if (!pg.hidden) pg.innerHTML = `<span>${(from + 1).toLocaleString('en-IN')}–${(from + n).toLocaleString('en-IN')} of <b>${total.toLocaleString('en-IN')}</b></span><button class="btn sm" data-lpg="-1" ${from ? '' : 'disabled'}>‹ Previous</button><button class="btn sm" data-lpg="1" ${from + n < total ? '' : 'disabled'}>Next ›</button>`;
+}
+function renderLeads(anim) {
+  fillFilter('#lfStage', 'All stages', stages(), ui.lf.stage);
+  fillFilter('#lfTag', 'All tags', S.lists.tags || [], ui.lf.tag);
+  fillFilter('#lfSource', 'All sources', S.lists.sources || [], ui.lf.source);
+  fillFilter('#lfArea', 'All areas', areaValues('state').concat(areaValues('district')).filter((v, i, a) => a.indexOf(v) === i), ui.lf.area);
+  if (S.big && cloud) return renderLeadsBig(anim);
+  const f = ui.lf;
+  let list = S.leads.filter(l => matchQ(l, f.q) && (!f.stage || l.stage === f.stage) && (!f.tag || l.tag === f.tag) && (!f.source || l.source === f.source) && (!f.area || l.state === f.area || l.district === f.area));
+  ui.leadList = list;
+  const { k, d } = ui.sort;
+  list.sort((a, b) => k === 'budget' ? ((+a.budget || 0) - (+b.budget || 0)) * d : String(a[k] || '').localeCompare(String(b[k] || '')) * d);
+  const from = Math.min(ui.lpage * LPAGE, Math.max(0, Math.floor((list.length - 1) / LPAGE) * LPAGE)); ui.lpage = from / LPAGE;
+  $('#leadsCount').textContent = `Showing ${list.length.toLocaleString('en-IN')} of ${S.leads.length.toLocaleString('en-IN')} leads`;
+  leadsTableHTML(list.slice(from, from + LPAGE), list.length, from, anim);
+}
+async function renderLeadsBig(anim) {
+  const seq = ++ui.lseq, from = ui.lpage * LPAGE, f = ui.lf;
+  if (!$('#ltable tbody')) leadsTableHTML([], 0, 0, false, 'Loading…');
+  $('#ltable').classList.add('loading');
+  const r = await bigLeadQuery(f, { count: true }).range(from, from + LPAGE - 1);
+  if (seq !== ui.lseq) return; $('#ltable').classList.remove('loading');
+  if (r.error) { toast(r.error.message, true); return; }
+  const page = keepLeads(r.data || []), total = r.count || 0; ui.leadList = null;
+  $('#leadsCount').textContent = `${(f.q || f.stage || f.tag || f.source || f.area) ? total.toLocaleString('en-IN') + ' match · ' : ''}${S.big.total.toLocaleString('en-IN')} leads in total`;
+  leadsTableHTML(page, total, from, anim);
+}
+const lfChange = () => { ui.lpage = 0; renderLeads(); };
+let lsT = null; $('#lsearch').oninput = e => { ui.lf.q = e.target.value; clearTimeout(lsT); if (S.big && cloud) lsT = setTimeout(lfChange, 280); else lfChange(); };
+$('#lfStage').onchange = e => { ui.lf.stage = e.target.value; lfChange(); };
+$('#lfTag').onchange = e => { ui.lf.tag = e.target.value; lfChange(); };
+$('#lfSource').onchange = e => { ui.lf.source = e.target.value; lfChange(); };
+$('#lfArea').onchange = e => { ui.lf.area = e.target.value; lfChange(); };
+document.addEventListener('click', e => { const b = e.target.closest('#lpager [data-lpg]'); if (!b || b.disabled) return; ui.lpage = Math.max(0, ui.lpage + +b.dataset.lpg); renderLeads(); $('#v-leads .table-wrap').scrollIntoView({ block: 'start', behavior: 'smooth' }); });
 
 /* ---- CSV export / import ---- */
 const CSV_COLS = [['leadId', 'Lead ID'], ['createdOn', 'Created On'], ['name', 'Name'], ['phone', 'Phone'], ['email', 'Email'], ['businessName', 'Business Name'], ['businessType', 'Business Type'], ['city', 'City'], ['source', 'Source'], ['budget', 'Budget'], ['stage', 'Stage'], ['tag', 'Tag'], ['assignedTo', 'Assigned To'], ['followUpDate', 'Follow-up Date'], ['lastContact', 'Last Contact'], ['notes', 'Notes']];
-function exportCSV() {
+async function bigLeadsAll(f, max = 100000) {   // every lead matching the filters (big workspaces), 1000 per request
+  const first = await bigLeadQuery(f, { count: true }).range(0, 999); if (first.error) throw new Error(first.error.message);
+  const out = first.data || [], total = Math.min(first.count || 0, max), pages = [];
+  for (let from = 1000; from < total; from += 1000) pages.push(from);
+  for (let i = 0; i < pages.length; i += 6) (await Promise.all(pages.slice(i, i + 6).map(fr => sbq(bigLeadQuery(f).range(fr, Math.min(fr + 999, total - 1)))))).forEach(r => out.push(...r));
+  return out.map(fromRow);
+}
+async function exportCSV() {
+  if (S.big && cloud && $('#v-leads').classList.contains('active')) { toast('Preparing your file…'); try { return exportCSVRows(await bigLeadsAll(ui.lf), true); } catch (e) { return toast(e.message, true); } }
+  exportCSVRows(ui.leadList && $('#v-leads').classList.contains('active') ? ui.leadList : S.leads);
+}
+function exportCSVRows(src, all) {
   const q = v => { v = String(v ?? ''); if (/^[=+\-@]/.test(v) && !/^\+?\d+$/.test(v)) v = "'" + v; return /[",\n\r]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; };
-  const src = ui.leadList && $('#v-leads').classList.contains('active') ? ui.leadList : S.leads;
   const rows = [CSV_COLS.map(c => c[1])].concat(src.map(l => CSV_COLS.map(([k]) => k === 'phone' && l.phone ? '+' + l.phone : l[k])));
   const blob = new Blob(['﻿' + rows.map(r => r.map(q).join(',')).join('\r\n')], { type: 'text/csv;charset=utf-8' });
   const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `leads-${todayStr()}.csv`; document.body.appendChild(a); a.click(); a.remove();
-  setTimeout(() => URL.revokeObjectURL(a.href), 2000); toast(src.length + ' leads exported' + (src.length < S.leads.length ? ' (filtered view)' : ''));
+  setTimeout(() => URL.revokeObjectURL(a.href), 2000); toast(src.length.toLocaleString('en-IN') + ' leads exported' + (!all && src.length < S.leads.length ? ' (filtered view)' : ''));
 }
 function parseCSV(text) {
   const rows = []; let row = [], f = '', q = false;
@@ -7623,7 +7811,7 @@ function renderOrders(anim) {
   stagger(box, anim);
 }
 function openOrder(o, leadId) {
-  const x = o || { leadId: leadId || '', items: '', amount: '', status: 'New', payment: '', trackingUrl: '', notes: '', channel: leadId ? 'WhatsApp' : (CM.ch && activeView() === 'commerce' ? CM.ch : CM.tab === 'amazon' && activeView() === 'commerce' ? 'Amazon' : CM.tab === 'website' && activeView() === 'commerce' ? 'Website' : 'Direct'), orderDate: todayStr(), qty: 1 }, ln = x.leadId && S.leads.find(l => l.leadId === x.leadId);
+  const x = o || { leadId: leadId || '', items: '', amount: '', status: 'New', payment: '', trackingUrl: '', notes: '', channel: leadId ? 'WhatsApp' : (CM.ch && activeView() === 'commerce' ? CM.ch : CM.tab === 'amazon' && activeView() === 'commerce' ? 'Amazon' : CM.tab === 'website' && activeView() === 'commerce' ? 'Website' : 'Direct'), orderDate: todayStr(), qty: 1 }, ln = x.leadId && leadById(x.leadId);
   const v9 = demo || AUTH.v9, ro = document.body.classList.contains('ro'), num = (id, lab, val) => `<div class="field"><label>${lab}</label><input class="input" id="${id}" type="number" min="0" step="0.01" value="${esc(val == null ? '' : val)}"></div>`;
   $('#stageBox').innerHTML = `<div class="m-head"><h2>${o ? 'Order ' + esc(o.extId || o.orderId) : 'New order'}</h2><button class="ibtn" data-close>${I.x}</button></div>
     <div class="form" style="grid-template-columns:1fr 1fr">
@@ -8241,7 +8429,7 @@ function insKpi(k, i) {
   return `<div class="ins-k glass" style="--c:${k.color};--i:${i}" ${k.go ? `data-go="${k.go}" role="link" tabindex="0"` : ''}><div class="ins-kh"><span class="ins-ki">${k.ic}</span><span>${esc(k.label)}</span></div>
     <div class="ins-kv"><b>${k.value}</b>${k.delta || ''}</div><small>${k.sub || ''}</small>${insSpark(k.spark || [], k.color)}</div>`;
 }
-const wonDate = l => { const a = (S.activities || []).filter(x => x.leadId === l.leadId && x.type === 'Stage Changed' && /→\s*Won$/.test(x.details || '')).map(x => dOnly(x.dateTime)).sort().pop(); return a || dOnly(l.lastContact || l.createdOn); };
+const wonDate = l => { actsMap(); if (IDX.won.has(l.leadId)) return IDX.won.get(l.leadId); const a = (actsMap().get(String(l.leadId)) || []).filter(x => x.type === 'Stage Changed' && /→\s*Won$/.test(x.details || '')).map(x => dOnly(x.dateTime)).sort().pop(), v = a || dOnly(l.lastContact || l.createdOn); IDX.won.set(l.leadId, v); return v; };
 function insData() {
   const P = insPeriod(), O = (S.orders || []).filter(o => o.status !== 'Cart'), L = S.leads || [];
   const ordIn = (a, b) => O.filter(o => inRange(cmDate(o), a, b)), cur = ordIn(P.from, P.to), prev = ordIn(P.pfrom, P.pto);
@@ -8264,7 +8452,9 @@ function insKpis(d) {
     { label: 'Revenue', ic: INS_IC.rev, color: 'var(--blue-2)', value: inrShort(rev), delta: insDelta(rev, prevRev), sub: 'vs previous ' + INS.range + ' days', spark: day(dd => cmSum(ordDay(dd), cmRev)), go: 'insales' },
     { label: 'Net profit', ic: INS_IC.profit, color: 'var(--green)', value: inrShort(pr - campC), delta: insDelta(pr - campC, prevPr - campP), sub: campC ? `after ${inrShort(campC)} ad spend · ${cmPct(pr - campC, rev)}% margin` : `${cmPct(pr, rev)}% margin`, spark: day(dd => cmSum(ordDay(dd), cmProfit)), go: 'insales' },
     { label: 'Orders', ic: INS_IC.orders, color: '#64748B', value: cur.length, delta: insDelta(cur.length, prev.length), sub: `${cmSum(cur, cmUnits)} units`, spark: day(dd => ordDay(dd).length), go: 'orders' });
-  K.push({ label: 'New leads', ic: INS_IC.leads, color: '#A78BFA', value: nl.length, delta: insDelta(nl.length, nlP.length), sub: 'vs previous ' + INS.range + ' days', spark: day(dd => d.L.filter(l => dOnly(l.createdOn) === dd).length), go: 'leads' });
+  { const bs = bigStats(), dm = bs && bs.days, sumD = (f, t) => Object.entries(dm).reduce((n, [k, v]) => n + (k >= f && k <= t ? +v : 0), 0);   // big workspace: new leads per day come from the server
+    const nlN = dm ? sumD(P.from, P.to) : nl.length, nlPN = dm ? sumD(P.pfrom, P.pto) : nlP.length, perDay = dm ? null : (() => { const m = {}; d.L.forEach(l => { const k = dOnly(l.createdOn); m[k] = (m[k] || 0) + 1; }); return m; })();
+    K.push({ label: 'New leads', ic: INS_IC.leads, color: '#A78BFA', value: nlN, delta: insDelta(nlN, nlPN), sub: 'vs previous ' + INS.range + ' days', spark: day(dd => +((dm || perDay)[dd] || 0)), go: 'leads' }); }
   if (!d.store || wc.length) K.push({ label: 'Deals won', ic: INS_IC.won, color: '#F59E0B', value: wc.length, delta: insDelta(wc.length, wp.length), sub: inrShort(cmSum(wc, l => cmN(l.budget))) + ' value', spark: day(dd => d.won.filter(l => wonDate(l) === dd).length), go: 'analytics' });
   K.push({ label: 'Ad spend', ic: INS_IC.ads, color: '#F59E0B', value: inrShort(adsC), delta: insDelta(adsC, adsP, { lowGood: true }), sub: adsC && rev ? `ROAS ${(rev / adsC).toFixed(1)}×` : 'Add in Ads Manager', spark: day(dd => (S.adSpend || []).filter(x => dOnly(x.day) === dd).reduce((s2, x) => s2 + cmN(x.spend), 0)), go: 'inmarketing' });
   K.push({ label: 'WhatsApp reply rate', ic: INS_IC.wa, color: 'var(--wa)', value: Math.round(rr) + '%', delta: insDelta(rr, rrP, { pp: true }), sub: `${d.out(P.from, P.to).length} messages sent`, spark: day(dd => (S.messages || []).filter(m => m.direction === 'in' && dOnly(m.time) === dd).length), go: 'inmarketing' });
@@ -8282,7 +8472,7 @@ function renderInsights(anim) {
   if (stale) ins.push(['bad', `${stale} lead${stale > 1 ? 's' : ''} going cold`, 'No contact for 3+ days. A quick WhatsApp today can save them.']);
   const cr = typeof campaignRows === 'function' ? campaignRows().filter(r => r.wa && r.sent >= 5 && r.readR != null && r.readR < 0.4) : []; if (cr.length) ins.push(['warn', `${cr.length} broadcast${cr.length > 1 ? 's' : ''} with low reads`, 'Retarget non-readers from Campaigns → History.']);
   const icon = { good: '▲', warn: '!', bad: '●' };
-  box.innerHTML = `<div class="ins-ks" style="--n:${K.length};--c:${K.length <= 5 ? K.length : K.length === 6 ? 3 : 4}">${K.map(insKpi).join('')}</div>
+  box.innerHTML = `${bigStats() ? `<div class="big-note">⚡ <span>Big workspace — <b>${(+S.big.total).toLocaleString('en-IN')} leads</b>. Totals and new-lead counts come from the server; lead charts below use the ${S.leads.length.toLocaleString('en-IN')} newest and due leads.</span></div>` : ''}<div class="ins-ks" style="--n:${K.length};--c:${K.length <= 5 ? K.length : K.length === 6 ? 3 : 4}">${K.map(insKpi).join('')}</div>
     <div class="ins-g">
       ${d.store ? `<div class="rcard glass ins-wide"><div class="cm-ch-h"><div><h3>Revenue & profit</h3><p class="sub muted">${esc(fmtDate(P.from))} – ${esc(fmtDate(P.to))}</p></div><div class="cm-seg">${[['day', 'Daily'], ['week', 'Weekly'], ['month', 'Monthly']].map(([k, n]) => `<button class="${INS.grain === k ? 'on' : ''}" data-insgrain="${k}">${n}</button>`).join('')}</div></div>
         <div class="ins-big"><div><b>${inr(rev)}</b><span><i style="background:var(--blue-2)"></i>Revenue</span></div><div><b>${inr(cmSum(cur, cmProfit))}</b><span><i style="background:var(--green)"></i>Net profit (${cmPct(cmSum(cur, cmProfit), rev)}%)</span></div></div>${cmTrend(cmSeries(cur, INS.grain), INS.grain)}</div>
@@ -9449,8 +9639,12 @@ function cmdkDraw() {
 function cmdkOpen(q = '') {
   if (!$('#cmdk')) { const d = document.createElement('div'); d.id = 'cmdk'; d.className = 'cmdk'; d.innerHTML = `<div class="cmdk-box glass" role="dialog" aria-label="Search"><div class="cmdk-in"><svg class="i" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="cmdkQ" placeholder="Search leads, orders, products, pages, actions…" autocomplete="off" spellcheck="false" data-native><kbd>Esc</kbd></div><div class="cmdk-l" id="cmdkList"></div><div class="cmdk-f"><span><kbd>↑</kbd><kbd>↓</kbd> move</span><span><kbd>↵</kbd> open</span><span><kbd>Ctrl</kbd>+<kbd>K</kbd> anywhere</span></div></div>`;
     document.body.appendChild(d); d.addEventListener('click', e => { if (e.target === d) cmdkClose(); const b = e.target.closest('[data-cmdki]'); if (b) cmdkRun(+b.dataset.cmdki); });
-    $('#cmdkQ').addEventListener('input', e => { PAL.items = cmdkItems(e.target.value); PAL.i = 0; cmdkDraw(); }); }
-  PAL.open = true; $('#cmdk').classList.add('show'); $('#cmdkQ').value = q; PAL.items = cmdkItems(q); PAL.i = 0; cmdkDraw(); setTimeout(() => $('#cmdkQ').focus(), 30);
+    $('#cmdkQ').addEventListener('input', e => { const v = e.target.value; PAL.items = cmdkItems(v); PAL.i = 0; cmdkDraw(); cmdkBig(v); }); }
+  PAL.open = true; $('#cmdk').classList.add('show'); $('#cmdkQ').value = q; PAL.items = cmdkItems(q); PAL.i = 0; cmdkDraw(); cmdkBig(q); setTimeout(() => $('#cmdkQ').focus(), 30);
+}
+function cmdkBig(v) {   // big workspace: also look for leads that are not loaded in the browser
+  if (!(S.big && cloud) || v.trim().length < 2) return;
+  clearTimeout(PAL.t); PAL.t = setTimeout(async () => { const r = await bigLeadQuery({ q: v.trim() }).range(0, 5); if (!$('#cmdkQ') || $('#cmdkQ').value !== v || r.error) return; keepLeads(r.data || []); PAL.items = cmdkItems(v); cmdkDraw(); }, 250);
 }
 function cmdkClose() { PAL.open = false; const p = $('#cmdk'); if (p) p.classList.remove('show'); }
 function cmdkRun(i) { const x = PAL.items[i]; if (!x) return; cmdkClose(); try { x.run(); } catch (e) { toast(e.message, true); } }
@@ -10117,14 +10311,14 @@ const callKind = o => (CALL_OUT.find(x => x[0] === o) || [0, 'none'])[1];
 const PRIO = ['High', 'Medium', 'Low'];
 const tsOf = v => { if (!v) return 0; const d = new Date(String(v).length === 16 ? String(v).replace(' ', 'T') : v); return isNaN(d) ? 0 : d.getTime(); };
 const fmtWhen = v => { const t = tsOf(v); if (!t) return '-'; const d = new Date(t); return fmtDate(d.toISOString().slice(0, 10)) + ' ' + String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0'); };
-const leadName = id => { const l = S.leads.find(x => x.leadId === id); return l ? l.name : ''; };
+const leadName = id => { const l = leadById(id); return l ? l.name : ''; };
 const teamNames = () => [...new Set(S.team.filter(t => t.active !== false && t.name).map(t => t.name))];
 const SALES = { taskTab: 'open', taskWho: '', callP: 30, callWho: '', callOut: '', perfP: 30, perfTeam: '', perfWho: '', perfState: '', tlFilter: '' };
 
 /* ---------- call logging ---------- */
 function openCallLog(leadId) {
   if (!salesReady()) return toast('Calls need the Nodevers cloud with database update 07.', true);
-  const l = leadId && S.leads.find(x => x.leadId === leadId); let out = '';
+  const l = leadId && leadById(leadId); let out = '';
   $('#stageBox').innerHTML = `<div class="m-head"><h2>Log a call</h2><button class="ibtn" data-close>${I.x}</button></div>
     ${l ? `<p class="help" style="margin-bottom:10px">${avatar(l.name, 'sm', l.clientPhoto)} <b>${esc(l.name)}</b> · ${l.phone ? '+' + esc(l.phone) : 'no phone'}${l.phone ? ` · <a href="tel:+${esc(l.phone)}">Call again</a>` : ''}</p>`
       : `<div class="field"><label>Lead</label><input class="input" id="clLead" list="dlLeadsAll" placeholder="Type a name or number"><datalist id="dlLeadsAll">${S.leads.slice(0, 800).map(x => `<option value="${esc(x.name + ' · ' + (x.phone ? '+' + x.phone : x.leadId))}">`).join('')}</datalist></div>`}
@@ -10155,9 +10349,9 @@ const taskState = t => t.status !== 'Open' ? 'done' : tsOf(t.dueAt) < Date.now()
 const myTasks = list => list.filter(t => !SALES.taskWho ? true : SALES.taskWho === '__me' ? (t.assignedTo || '') === me() : t.assignedTo === SALES.taskWho);
 function openTask(t, leadId) {
   if (!salesReady()) return toast('Tasks need the Nodevers cloud with database update 07.', true);
-  const x = t || { title: '', leadId: leadId || '', dueAt: '', priority: 'Medium', assignedTo: (leadId && (S.leads.find(l => l.leadId === leadId) || {}).assignedTo) || me(), notes: '', remind: true };
+  const x = t || { title: '', leadId: leadId || '', dueAt: '', priority: 'Medium', assignedTo: (leadId && (leadById(leadId) || {}).assignedTo) || me(), notes: '', remind: true };
   const due = new Date(tsOf(x.dueAt) || Date.now() + 864e5), local = new Date(due.getTime() - due.getTimezoneOffset() * 6e4).toISOString().slice(0, 16);
-  const ln = x.leadId ? S.leads.find(l => l.leadId === x.leadId) : null;
+  const ln = x.leadId ? leadById(x.leadId) : null;
   $('#stageBox').innerHTML = `<div class="m-head"><h2>${t ? 'Edit task' : 'New task'}</h2><button class="ibtn" data-close>${I.x}</button></div>
     <div class="form" style="grid-template-columns:1fr 1fr">
       <div class="field full"><label>Task</label><input class="input" id="tkTitle" maxlength="200" value="${esc(x.title)}" placeholder="e.g. Send quotation for 30 chairs"></div>
@@ -10184,7 +10378,7 @@ async function doneTask(id, done) {
   try { await api('saveTask', { taskId: id, status: done ? 'Done' : 'Open', doneAt: done ? new Date().toISOString() : '', doneBy: done ? me() : '' }); if (done && t.leadId) await api('addActivity', { leadId: t.leadId, type: 'Task Done', details: t.title, doneBy: me() }).catch(() => { }); toast(done ? '✓ Task done' : 'Task re-opened'); await refreshData(); if (ui.openId) renderPanel(ui.openId); }
   catch (e) { toast(e.message, true); }
 }
-const taskRow = t => { const s = taskState(t), l = t.leadId && S.leads.find(x => x.leadId === t.leadId); return `<div class="tk-r ${s}">
+const taskRow = t => { const s = taskState(t), l = t.leadId && leadById(t.leadId); return `<div class="tk-r ${s}">
   <button class="tk-c ${t.status !== 'Open' ? 'on' : ''}" data-tkdone="${esc(t.taskId)}" title="${t.status === 'Open' ? 'Mark done' : 'Re-open'}">${t.status !== 'Open' ? '✓' : ''}</button>
   <div class="grow"><b data-tkedit="${esc(t.taskId)}">${esc(t.title)}</b><small class="muted">${l ? `<a data-open="${esc(l.leadId)}">${esc(l.name)}</a> · ` : ''}${s === 'overdue' ? '<span class="tk-late">Overdue · </span>' : ''}${t.status === 'Open' ? 'Due ' + esc(fmtWhen(t.dueAt)) : esc(t.status) + (t.doneBy ? ' · ' + esc(t.doneBy) : '')}${t.source === 'auto' ? ' · <span class="tk-auto">auto</span>' : ''}</small></div>
   <span class="pill tk-p ${String(t.priority || '').toLowerCase()}">${esc(t.priority || 'Medium')}</span><span class="tk-who">${avatar(t.assignedTo || '?', 'sm')}<small>${esc(t.assignedTo || '—')}</small></span></div>`; };
@@ -10199,7 +10393,7 @@ function renderTasks(anim) {
   box.innerHTML = `<div class="tk-ks">${kpi('open', groups.open.length, 'All open')}${kpi('overdue', groups.overdue.length, 'Overdue', groups.overdue.length ? 'var(--coral)' : '')}${kpi('today', groups.today.length, 'Due today', 'var(--blue-2)')}${kpi('upcoming', groups.upcoming.length, 'Upcoming')}${kpi('done', groups.done.length, 'Done')}</div>
     <div class="toolbar glass" style="margin-top:14px"><select class="input" id="tkWhoF" style="width:auto"><option value="__me" ${SALES.taskWho === '__me' ? 'selected' : ''}>My tasks</option><option value="" ${SALES.taskWho === '' ? 'selected' : ''}>Everyone</option>${teamNames().map(n => `<option ${SALES.taskWho === n ? 'selected' : ''}>${esc(n)}</option>`).join('')}</select><div class="grow"></div>
       ${canAdmin() || demo ? '<button class="btn" data-tkrules>⚙ Auto-task rules</button>' : ''}</div>
-    <div class="tk-list glass">${list.map(taskRow).join('') || `<p class="muted" style="padding:16px">${SALES.taskTab === 'overdue' ? 'Nothing overdue 🎉' : 'No tasks here.'}</p>`}</div>`;
+    <div class="tk-list glass">${list.slice(0, SALES.tkLim || 150).map(taskRow).join('') || `<p class="muted" style="padding:16px">${SALES.taskTab === 'overdue' ? 'Nothing overdue 🎉' : 'No tasks here.'}</p>`}${list.length > (SALES.tkLim || 150) ? `<div class="dg-more"><button class="btn" data-tkmore>Show ${Math.min(150, list.length - (SALES.tkLim || 150))} more of ${list.length.toLocaleString('en-IN')}</button></div>` : ''}</div>`;
   stagger(box, anim);
 }
 function openTaskRules() {
@@ -10328,7 +10522,8 @@ document.addEventListener('click', e => {
   const tk = t.closest('[data-tkdone]'); if (tk) { const x = S.tasks.find(y => y.taskId === tk.dataset.tkdone); if (x) doneTask(x.taskId, x.status === 'Open'); return; }
   const te = t.closest('[data-tkedit]'); if (te) return openTask(S.tasks.find(y => y.taskId === te.dataset.tkedit));
   const tn = t.closest('[data-tknew]'); if (tn) return openTask(null, tn.dataset.tknew || '');
-  const tt = t.closest('[data-tktab]'); if (tt) { SALES.taskTab = tt.dataset.tktab; return renderTasks(); }
+  const tt = t.closest('[data-tktab]'); if (tt) { SALES.taskTab = tt.dataset.tktab; SALES.tkLim = 150; return renderTasks(); }
+  if (t.closest('[data-tkmore]')) { SALES.tkLim = (SALES.tkLim || 150) + 150; return renderTasks(); }
   const gt = t.closest('[data-gotasks]'); if (gt) { SALES.taskTab = gt.dataset.gotasks; go('tasks'); return; }
   if (t.closest('[data-tkrules]')) return openTaskRules();
   const pt = t.closest('[data-pfteam]'); if (pt) { SALES.perfTeam = pt.dataset.pfteam; SALES.perfWho = ''; return renderPerformance(); }
@@ -10556,27 +10751,28 @@ document.addEventListener('click', e => {
   if (!t.closest('.pop,[data-nmenu]')) closePops();
   if (t.closest('[data-stop]')) return;
   const goEl = t.closest('[data-go]'); if (goEl) { e.preventDefault(); go(goEl.dataset.go); return; }
-  const tab = t.closest('[data-tab]'); if (tab) { ui.tab = tab.dataset.tab; renderDashboard(true); return; }
+  const tab = t.closest('[data-tab]'); if (tab) { ui.tab = tab.dataset.tab; ui.dlim = 60; renderDashboard(true); return; }
+  if (t.closest('[data-dmore]')) { ui.dlim = (ui.dlim || 60) + 60; renderDashboard(false); return; }
   const add = t.closest('[data-add]'); if (add) { openLeadModal(null, add.dataset.add || ''); return; }
   if (t.closest('[data-close-panel]')) { closePanel(); return; }
   if (t.closest('[data-close]')) { $$('.modal.show').forEach(m => hideModal('#' + m.id)); return; }
   const mv = t.closest('[data-move]'); if (mv && ui.openId) { moveStage(ui.openId, mv.dataset.move); return; }
   const sb = t.closest('#panel .sb[data-stage]'); if (sb && ui.openId) { moveStage(ui.openId, sb.dataset.stage); return; }
-  const ed = t.closest('[data-edit]'); if (ed) { openLeadModal(S.leads.find(l => l.leadId === ed.dataset.edit)); return; }
-  const del = t.closest('[data-delete]'); if (del) { if (confirm('Delete this lead permanently?')) api('deleteLead', { id: del.dataset.delete }).then(() => { toast('Lead deleted'); closePanel(); demo ? renderAll() : load(true); }).catch(er => toast(er.message, true)); return; }
+  const ed = t.closest('[data-edit]'); if (ed) { openLeadModal(leadById(ed.dataset.edit)); return; }
+  const del = t.closest('[data-delete]'); if (del) { if (confirm('Delete this lead permanently?')) api('deleteLead', { id: del.dataset.delete }).then(() => { toast('Lead deleted'); closePanel(); if (demo) return renderAll(); if (S.big) S.big.total = Math.max(0, S.big.total - 1); refreshLead(del.dataset.delete); }).catch(er => toast(er.message, true)); return; }
   if (t.closest('[data-focus-note]')) { $('#ntext').focus(); return; }
   const upx = t.closest('[data-upclear]'); if (upx) { e.stopPropagation(); const u = upx.closest('.uploader'), d = { scope: u.dataset.scope, key: u.dataset.up }; upStore[d.scope][d.key] = ''; refreshUploader(u); document.dispatchEvent(new CustomEvent('nv-uploaded', { detail: d })); return; }
   const up = t.closest('.uploader'); if (up) { if (up.classList.contains('busy')) return; pendingUp = { scope: up.dataset.scope, key: up.dataset.up }; $('#fileIn').value = ''; $('#fileIn').click(); return; }
   const stab = t.closest('.segb[data-stab]'); if (stab) { setSTab(stab.dataset.stab); return; }
-  const th = t.closest('th[data-sort]'); if (th) { const k = th.dataset.sort; ui.sort = { k, d: ui.sort.k === k ? -ui.sort.d : 1 }; renderLeads(); return; }
+  const th = t.closest('th[data-sort]'); if (th) { const k = th.dataset.sort; ui.sort = { k, d: ui.sort.k === k ? -ui.sort.d : 1 }; ui.lpage = 0; renderLeads(); return; }
   const mem = t.closest('[data-mem]'); if (mem) { openMemberModal(S.team.find(m => String(m.memberId) === mem.dataset.mem)); return; }
   const mtog = t.closest('[data-memtoggle]'); if (mtog) { toggleMember(mtog.dataset.memtoggle); return; }
-  const afu = t.closest('[data-aifu]'); if (afu && ui.openId) { const d = new Date(); d.setDate(d.getDate() + (+afu.dataset.aifu)); const ds = d.toISOString().slice(0, 10), l = S.leads.find(x => x.leadId === ui.openId); l.followUpDate = ds; (demo ? Promise.resolve(demoApi('updateLead', { id: l.leadId, followUpDate: ds })) : api('updateLead', { id: l.leadId, followUpDate: ds })).then(() => { toast('Follow-up set for ' + fmtDate(ds)); renderAll(); }).catch(er => toast(er.message, true)); return; }
+  const afu = t.closest('[data-aifu]'); if (afu && ui.openId) { const d = new Date(); d.setDate(d.getDate() + (+afu.dataset.aifu)); const ds = d.toISOString().slice(0, 10), l = leadById(ui.openId); l.followUpDate = ds; (demo ? Promise.resolve(demoApi('updateLead', { id: l.leadId, followUpDate: ds })) : api('updateLead', { id: l.leadId, followUpDate: ds })).then(() => { toast('Follow-up set for ' + fmtDate(ds)); renderAll(); }).catch(er => toast(er.message, true)); return; }
   if (t.closest('[data-aimeet]') && ui.openId) { const ty = $('#ntype'); if (ty && [...ty.options].some(o => o.value === 'Meeting')) ty.value = 'Meeting'; const nt = $('#ntext'); nt.value = 'Meeting scheduled for '; nt.focus(); nt.scrollIntoView({ block: 'center', behavior: 'smooth' }); return; }
   if (t.closest('[data-clearfilter]')) { ui.q = ''; ui.pfilter = ''; $('#gsearch').value = $('#dsearch').value = ''; fillSelects(); renderDashboard(); renderPipeline(); toast('Filter cleared — showing all leads'); return; }
   if (t.closest('#pImport')) { go('leads'); setTimeout(() => $('#csvImportBtn').click(), 200); return; }
   const ex = t.closest('[data-expand]'); if (ex) { const s = ex.dataset.expand; ui.expanded.has(s) ? ui.expanded.delete(s) : ui.expanded.add(s); renderPipeline(); return; }
-  const sl = t.closest('[data-stagelist]'); if (sl) { ui.lf.stage = sl.dataset.stagelist; go('leads'); return; }
+  const sl = t.closest('[data-stagelist]'); if (sl) { ui.lf.stage = sl.dataset.stagelist; ui.lpage = 0; go('leads'); return; }
   const op = t.closest('[data-open]'); if (op) { openPanel(op.dataset.open); return; }
   if (t.id === 'scrim') { if ($('.modal.show')) $$('.modal.show').forEach(m => hideModal('#' + m.id)); else closePanel(); }
   if (t.classList.contains('modal')) hideModal('#' + t.id);
