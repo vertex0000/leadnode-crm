@@ -1020,10 +1020,15 @@ body.no-sales [data-go="tasks"],body.no-sales [data-go="calls"],body.no-orders [
 /* home */
 .home-hi{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;margin:4px 0 16px}
 .adv{padding:14px 16px;border-radius:16px}.adv.flat{box-shadow:none}.adv-h{display:flex;align-items:center;gap:10px;margin-bottom:10px}.adv-h b{display:block;font-size:15px}.adv-h small{font-size:12px}.adv-logo{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:linear-gradient(135deg,#8B5CF6,#0EA5E9);color:#fff;font-size:16px;flex:none}
-.adv-tip>.grow{flex:1;min-width:0}.adv-list{display:flex;flex-direction:column;gap:8px}.adv-tip{display:flex;gap:10px;align-items:flex-start;padding:11px 12px;border-radius:12px;border:1px solid var(--line);background:var(--glass-2)}.adv-tip b{display:block;font-size:13.5px}.adv-tip p{margin:3px 0 0;font-size:12.5px;color:var(--muted);line-height:1.45}
-.adv-ic{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:11px;font-weight:800;flex:none;margin-top:1px;color:#fff;background:var(--blue-2)}.adv-tip.bad .adv-ic{background:var(--coral)}.adv-tip.warn .adv-ic{background:#D97706}.adv-tip.good .adv-ic{background:var(--green)}
-.adv-acts{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}.adv-x{flex:none;width:26px;height:26px;opacity:.6}.adv-x:hover{opacity:1}.adv-sum{padding:10px 12px;border-radius:12px;background:color-mix(in srgb,#8B5CF6 8%,transparent);border:1px solid color-mix(in srgb,#8B5CF6 25%,transparent);margin-bottom:10px;font-size:13.5px}.adv-sum ul{margin:0;padding-left:18px}.adv-sum p{margin:0 0 4px}
-.adv.compact{margin:10px 0 4px}.adv.compact .adv-tip p{display:none}#bcAdvisor:empty{display:none}.bc-ids{border-color:color-mix(in srgb,var(--blue-2) 50%,var(--line-2))!important}
+.adv-tip>.grow{flex:1;min-width:0}.adv-list{display:flex;flex-direction:column;gap:6px;margin-top:10px}
+.adv-h[data-advtoggle]{cursor:pointer;margin:-4px -6px;padding:4px 6px;border-radius:12px}.adv-h[data-advtoggle]:hover{background:var(--glass-2)}.adv-h{margin-bottom:0;flex-wrap:wrap}.adv-h>.grow{flex:1 1 160px;min-width:0}.adv-chips{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}.adv-chip{font-size:11.5px;font-weight:700;padding:3px 9px;border-radius:999px;white-space:nowrap}
+.adv-chip.adv-bad{background:color-mix(in srgb,var(--coral) 14%,transparent);color:var(--coral)}.adv-chip.adv-warn{background:color-mix(in srgb,#F59E0B 16%,transparent);color:#D97706}.adv-chip.adv-info{background:var(--blue-soft);color:var(--blue-2)}.adv-chip.adv-good{background:color-mix(in srgb,var(--green) 14%,transparent);color:var(--green)}
+.adv-tg{width:28px;height:28px;display:grid;place-items:center;border-radius:8px;color:var(--muted);transition:transform .2s;flex:none}.adv-tg.on{transform:rotate(180deg)}
+.adv-tip{display:block;border-radius:12px;border:1px solid var(--line);background:var(--glass-2);overflow:hidden}.adv-tip>summary{display:flex;align-items:center;gap:10px;padding:10px 12px;cursor:pointer;list-style:none;min-width:0}.adv-tip>summary::-webkit-details-marker{display:none}.adv-tip>summary b{font-size:13.5px;min-width:0;flex:1 1 auto}
+.adv-chev{color:var(--muted);transition:transform .2s;flex:none;font-size:12px}.adv-tip[open] .adv-chev{transform:rotate(180deg)}.adv-body{padding:0 12px 12px 44px}.adv-body p{margin:0;font-size:12.5px;color:var(--muted);line-height:1.5}
+.adv-ic{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:11px;font-weight:800;flex:none;color:#fff;background:var(--blue-2)}.adv-tip.adv-bad .adv-ic{background:var(--coral)}.adv-tip.adv-warn .adv-ic{background:#D97706}.adv-tip.adv-good .adv-ic{background:var(--green)}
+.adv-acts{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}.adv-x{flex:none;width:26px;height:26px;opacity:.55}.adv-x:hover{opacity:1}.adv-sum{padding:10px 12px;border-radius:12px;background:color-mix(in srgb,#8B5CF6 8%,transparent);border:1px solid color-mix(in srgb,#8B5CF6 25%,transparent);margin-top:10px;font-size:13.5px}.adv-sum ul{margin:0;padding-left:18px}.adv-sum p{margin:0 0 4px}
+.adv.compact{margin:10px 0 4px}@media (max-width:640px){.adv-chips{display:none}.adv-body{padding-left:12px}}#bcAdvisor:empty{display:none}.bc-ids{border-color:color-mix(in srgb,var(--blue-2) 50%,var(--line-2))!important}
 .hl-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;align-items:stretch}.hl-w{min-width:0;display:flex;flex-direction:column}.hl-w>.adv,.hl-in>.adv,.hl-w>.home-c,.hl-w>.rcard,.hl-w>.home-setup,.hl-in>.home-c,.hl-in>.rcard{flex:1;margin:0}
 .hl-small{grid-column:span 1}.hl-half{grid-column:span 2}.hl-full{grid-column:1/-1}.hl-w .home-setup,.hl-w .home-chats{margin:0}
 .hl-top{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:12px 16px;border-radius:14px;margin-bottom:14px;border:1px dashed color-mix(in srgb,var(--blue-2) 50%,var(--line-2))}.hl-top b{display:block}.hl-top small{font-size:12px}
@@ -3411,7 +3416,7 @@ function renderAds(anim) {
   $('#adsRange').value = String(ADS.range);
   const isCv = ADS.tab === 'canvas'; $('#adsCanvas').hidden = !isCv; $('#adsBody').hidden = isCv;
   if (isCv) { adsCanvas().sync(); return; }
-  const body = $('#adsBody'), f = { advisor: () => advBlock('ads', 40, { title: 'AI Advisor — ads', cls: 'flat' }), spend: () => cmOk() ? cmAdsTab() : `<div class="tp-empty glass"><b>Spend & ROAS needs the 09 database update</b><p class="muted">Run <code>09_commerce.sql</code> in Supabase → SQL Editor, then refresh.</p></div>`, overview: adsOverview, campaigns: adsCampaigns, adsets: adsAdsets, ads: adsAds, audiences: adsAudiences, creatives: adsCreatives, forms: adsForms, funnel: adsFunnel, connect: adsConnect }[ADS.tab] || adsOverview;
+  const body = $('#adsBody'), f = { advisor: () => advBlock('ads', 40, { title: 'AI Advisor — ads', cls: 'flat', open: true }), spend: () => cmOk() ? cmAdsTab() : `<div class="tp-empty glass"><b>Spend & ROAS needs the 09 database update</b><p class="muted">Run <code>09_commerce.sql</code> in Supabase → SQL Editor, then refresh.</p></div>`, overview: adsOverview, campaigns: adsCampaigns, adsets: adsAdsets, ads: adsAds, audiences: adsAudiences, creatives: adsCreatives, forms: adsForms, funnel: adsFunnel, connect: adsConnect }[ADS.tab] || adsOverview;
   body.innerHTML = f();
   stagger(body, anim);
   if (ADS.tab === 'funnel') drawFunnelWires();
@@ -7301,7 +7306,7 @@ function renderCommerce(anim) {
   if (!CM_TABS.some(x => x[0] === CM.tab)) { const old = CM.tab; CM.tab = 'overview'; if (old === 'analytics' || old === 'reports') return go('insales'); if (old === 'ads') { ADS.tab = 'spend'; return go('ads'); } if (old === 'channels') return go('connections'); }
   const box = $('#cmBody');
   if (!cmOk()) { box.innerHTML = `<div class="tp-empty glass"><b>Commerce needs the 09 database update</b><p class="muted">Run <code>08_platform_flows.sql</code> and <code>09_commerce.sql</code> in Supabase → SQL Editor, then refresh.</p></div>`; return; }
-  const f = { advisor: () => advBlock('store', 40, { title: 'AI Advisor — store', cls: 'flat' }), overview: cmOverview, products: cmProducts, inventory: cmInventory, amazon: () => cmChannel('Amazon'), website: () => cmChannel('Website'), analytics: cmAnalytics, reports: cmReports, ads: cmAdsTab, channels: cmChannels }[CM.tab] || cmOverview;
+  const f = { advisor: () => advBlock('store', 40, { title: 'AI Advisor — store', cls: 'flat', open: true }), overview: cmOverview, products: cmProducts, inventory: cmInventory, amazon: () => cmChannel('Amazon'), website: () => cmChannel('Website'), analytics: cmAnalytics, reports: cmReports, ads: cmAdsTab, channels: cmChannels }[CM.tab] || cmOverview;
   box.innerHTML = f(); stagger(box, anim);
   box.querySelectorAll('.cm-ks').forEach(k => { const n = k.children.length; k.style.setProperty('--c', n === 6 ? 3 : n === 8 ? 4 : Math.min(n, 5)); });
 }
@@ -7931,7 +7936,7 @@ function renderHome(anim) {
     recent: () => `<div class="rcard glass"><div class="cm-ch-h"><h3>${ord.length ? 'Recent orders' : 'Newest leads'}</h3><a class="bc-link" data-go="${ord.length ? 'orders' : 'leads'}">View all →</a></div>
         ${ord.length ? `<div class="home-list">${ord.slice().sort((a, b) => cmDate(b).localeCompare(cmDate(a)) || String(b.orderId).localeCompare(String(a.orderId), undefined, { numeric: true })).slice(0, 6).map(o => `<div class="home-li" data-ordedit="${esc(o.orderId)}">${cmChTag(o.channel || 'WhatsApp')}<div class="grow"><b>${esc(o.productName || o.items || o.orderId)}</b><small class="muted">${esc(o.extId || o.orderId)} · ${esc(fmtDate(cmDate(o)))}</small></div><b>${inr(cmRev(o) || o.amount)}</b>${cmStBadge(o.status)}</div>`).join('')}</div>`
         : `<div class="home-list">${S.leads.slice().sort((a, b) => String(b.createdOn).localeCompare(String(a.createdOn))).slice(0, 6).map(l => `<div class="home-li" data-open="${esc(l.leadId)}">${avatar(l.name)}<div class="grow"><b>${esc(l.name)}</b><small class="muted">${esc(l.source || '')} · ${esc(fmtDate(l.createdOn))}</small></div><span class="pill stage">${esc(l.stage)}</span></div>`).join('') || '<div class="cm-empty">No leads yet</div>'}</div>`}</div>`,
-    advisor: () => advBlock('all', 4, { more: true }),
+    advisor: () => advBlock('all', 5, { more: true, key: 'home' }),
     chats: () => unread.length ? `<div class="rcard glass home-chats"><div class="cm-ch-h"><h3>Unread WhatsApp chats</h3><a class="bc-link" data-go="whatsapp">Open inbox →</a></div><div class="home-av">${unread.map(c => `<button class="home-chat" data-homechat="${esc(c.key)}">${avatar(c.name || '')}<b>${esc(String(c.name || '').split(' ')[0])}</b><small>${esc(String((c.last && c.last.text) || '').slice(0, 28))}</small></button>`).join('')}</div></div>` : '',
   };
   const canHL = !document.body.classList.contains('ro') && (demo || (cloud && canAdmin()));
@@ -8040,24 +8045,29 @@ function advTips() {
   return out.filter(t => !dis.has(t.key)).sort((a, b) => b.score - a.score);
 }
 /* ---------- UI ---------- */
-function advTipHTML(t, i) {
-  return `<div class="adv-tip ${t.lvl}" data-advkey="${esc(t.key)}"><span class="adv-ic">${ADV_IC[t.lvl] || 'i'}</span><div class="grow"><b>${esc(t.title)}</b><p>${esc(t.why)}</p>${t.acts.length ? `<div class="adv-acts">${t.acts.map((a, j) => `<button type="button" class="btn sm ${j ? '' : 'primary'}" data-advact="${i}|${j}">${esc(a.label)}${a.k === 'url' ? ' ↗' : ''}</button>`).join('')}</div>` : ''}</div><button type="button" class="ibtn adv-x" data-advdis="${esc(t.key)}" title="Ignore for 7 days">${I.x}</button></div>`;
+function advTipHTML(t, i, open) {
+  return `<details class="adv-tip adv-${t.lvl}" data-advkey="${esc(t.key)}" ${open ? 'open' : ''}><summary><span class="adv-ic">${ADV_IC[t.lvl] || 'i'}</span><b class="grow">${esc(t.title)}</b><span class="adv-chev" aria-hidden="true">▾</span><button type="button" class="ibtn adv-x" data-advdis="${esc(t.key)}" title="Ignore for 7 days">${I.x}</button></summary>
+    <div class="adv-body"><p>${esc(t.why)}</p>${t.acts.length ? `<div class="adv-acts">${t.acts.map((a, j) => `<button type="button" class="btn sm ${j ? '' : 'primary'}" data-advact="${i}|${j}">${esc(a.label)}${a.k === 'url' ? ' ↗' : ''}</button>`).join('')}</div>` : ''}</div></details>`;
 }
 /** a tip list for one area (or all); limit = how many */
 function advBlock(area, limit, opts) {
   opts = opts || {}; if (!advOn()) return '';
   ADV.tips = advTips(); const list = ADV.tips.filter(t => area === 'all' || t.area === area), can = demo || (cloud && canAdmin()), ro = document.body.classList.contains('ro');
-  const head = `<div class="adv-h"><span class="adv-logo">✦</span><div class="grow"><b>${opts.title || 'AI Advisor'}</b><small class="muted">${list.length ? `${list.length} tip${list.length > 1 ? 's' : ''} from your own numbers` : 'Nothing urgent — all good for now'}</small></div>${list.length && !opts.noAi ? '<button type="button" class="btn sm" data-advsum>✨ AI summary</button>' : ''}${can && !opts.noCfg ? '<button type="button" class="ibtn" data-advcfg title="Advisor settings">⚙</button>' : ''}${opts.more && list.length > limit ? `<button type="button" class="btn sm" data-advall="${area}">See all ${list.length}</button>` : ''}</div>`;
+  const sk = 'nv.advOpen.' + (opts.key || area), open = opts.open !== undefined ? opts.open : (store.get(sk) ?? false);
+  const n = k => list.filter(t => t.lvl === k).length, chips = [['bad', 'urgent'], ['warn', 'to do'], ['info', 'ideas'], ['good', 'going well']].filter(([k]) => n(k)).map(([k, l]) => `<span class="adv-chip adv-${k}">${n(k)} ${l}</span>`).join('');
+  const head = `<div class="adv-h" ${opts.open === undefined ? `data-advtoggle="${esc(sk)}" role="button" tabindex="0" aria-expanded="${open}"` : ''}><span class="adv-logo">✦</span><div class="grow"><b>${opts.title || 'AI Advisor'}</b><small class="muted">${list.length ? `${list.length} tip${list.length > 1 ? 's' : ''} from your own numbers` : 'Nothing urgent — all good for now'}</small></div>
+    <div class="adv-chips">${chips}</div>${open && list.length && !opts.noAi ? '<button type="button" class="btn sm" data-advsum>✨ AI summary</button>' : ''}${open && can && !opts.noCfg ? '<button type="button" class="ibtn" data-advcfg title="Advisor settings">⚙</button>' : ''}${open && opts.more && list.length > limit ? `<button type="button" class="btn sm" data-advall="${area}">See all ${list.length}</button>` : ''}${opts.open === undefined ? `<span class="adv-tg ${open ? 'on' : ''}" aria-hidden="true">▾</span>` : ''}</div>`;
   const sum = ADV.sum && !opts.noAi ? `<div class="adv-sum">${ADV.sum}</div>` : '';
-  return `<div class="adv glass ${opts.cls || ''}" data-advarea="${area}">${head}${sum}<div class="adv-list">${list.slice(0, limit || 99).map(t => advTipHTML(t, ADV.tips.indexOf(t))).join('') || `<div class="cm-empty">${area === 'ads' ? 'No ad tips yet — they appear after at least 3 days and ₹' + advCfg().minSpend + ' of spend.' : 'No tips right now. Check back later.'}</div>`}</div>${ro ? '<p class="help" style="margin:8px 0 0">View only — you can read the tips but not run the actions.</p>' : ''}</div>`;
+  const body = open ? `${sum}<div class="adv-list">${list.slice(0, limit || 99).map((t, k) => advTipHTML(t, ADV.tips.indexOf(t), k === 0)).join('') || `<div class="cm-empty">${area === 'ads' ? 'No ad tips yet — they appear after at least 3 days and ₹' + advCfg().minSpend + ' of spend.' : 'No tips right now. Check back later.'}</div>`}</div>${ro ? '<p class="help" style="margin:8px 0 0">View only — you can read the tips but not run the actions.</p>' : ''}` : '';
+  return `<div class="adv glass ${opts.cls || ''} ${open ? 'open' : ''}" data-advarea="${area}" data-advopts="${esc(JSON.stringify({ limit, title: opts.title || '', more: !!opts.more, cls: opts.cls || '', noCfg: !!opts.noCfg, noAi: !!opts.noAi, key: opts.key || '', open: opts.open }))}">${head}${body}</div>`;
 }
 function openAdvisor(area) {
   ADV.area = area || 'all';
-  const draw = () => { $('#stageBox').innerHTML = `<div class="m-head"><h2>✦ AI Advisor</h2><button class="ibtn" data-close>${I.x}</button></div><div class="tabs" style="margin-bottom:10px">${ADV_AREAS.map(([k, n]) => `<button class="tab ${ADV.area === k ? 'active' : ''}" data-advtab="${k}">${n}</button>`).join('')}</div>${advBlock(ADV.area, 99, { cls: 'flat' })}`;
+  const draw = () => { $('#stageBox').innerHTML = `<div class="m-head"><h2>✦ AI Advisor</h2><button class="ibtn" data-close>${I.x}</button></div><div class="tabs" style="margin-bottom:10px">${ADV_AREAS.map(([k, n]) => `<button class="tab ${ADV.area === k ? 'active' : ''}" data-advtab="${k}">${n}</button>`).join('')}</div>${advBlock(ADV.area, 99, { cls: 'flat', open: true })}`;
     $$('#stageBox [data-advtab]').forEach(b => b.onclick = () => { ADV.area = b.dataset.advtab; draw(); }); };
   $('#stageBox').classList.add('pl-ed-box'); draw(); showModal('#stageModal');
 }
-function advRefresh() { const v = activeView(); if ($('#stageModal.show') && $('#stageBox .adv')) { const a = $('#stageBox .adv').dataset.advarea; $('#stageBox .adv').outerHTML = advBlock(a, 99, { cls: 'flat' }); } (VIEW_RENDER[v] || (() => { }))(); if (v === 'broadcast') advBcStrip(); }
+function advRefresh() { const v = activeView(); if ($('#stageModal.show') && $('#stageBox .adv')) { const a = $('#stageBox .adv').dataset.advarea; $('#stageBox .adv').outerHTML = advBlock(a, 99, { cls: 'flat', open: true }); } (VIEW_RENDER[v] || (() => { }))(); if (v === 'broadcast') advBcStrip(); }
 async function advDismiss(key, days) {
   const until = new Date(Date.now() + (days || 7) * 864e5).toISOString();
   if (demo) { const l = (store.get('nv.advDis') || []).filter(d => d.tipKey !== key); l.push({ tipKey: key, until }); store.set('nv.advDis', l); }
@@ -8105,11 +8115,12 @@ function openAdvSettings(platform) {
     try { if (platform) await platSave('advisorJson', val); else if (demo) S.settings = Object.assign({}, S.settings, { advisorJson: val }); else S.settings = Object.assign({}, S.settings, await api('saveSettings', { advisorJson: val })); hideModal('#stageModal'); toast('✓ Advisor settings saved'); advRefresh(); } catch (e) { toast(e.message, true); } };
   showModal('#stageModal');
 }
-function advBcStrip() { const b = $('#bcAdvisor'); if (!b) return; const ok = advOn() && advTips().some(t => t.area === 'email'); b.innerHTML = ok ? advBlock('email', 2, { title: 'AI Advisor — WhatsApp & email', more: true, cls: 'compact', noCfg: true }) : ''; }
+function advBcStrip() { const b = $('#bcAdvisor'); if (!b) return; const ok = advOn() && advTips().some(t => t.area === 'email'); b.innerHTML = ok ? advBlock('email', 3, { title: 'AI Advisor — WhatsApp & email', more: true, cls: 'compact', noCfg: true, key: 'bc' }) : ''; }
 document.addEventListener('click', e => {
   const t = e.target;
+  const tg = t.closest('[data-advtoggle]'); if (tg && !t.closest('button')) { const sk = tg.dataset.advtoggle, box = tg.closest('.adv'); store.set(sk, !box.classList.contains('open')); const o = JSON.parse(box.dataset.advopts || '{}'); box.outerHTML = advBlock(box.dataset.advarea, o.limit, Object.assign(o, { open: undefined })); return; }
   const ac = t.closest('[data-advact]'); if (ac) { const [i, j] = ac.dataset.advact.split('|').map(Number), tip = ADV.tips[i]; if (tip && tip.acts[j]) advRun(tip, tip.acts[j]); return; }
-  const dx = t.closest('[data-advdis]'); if (dx) { advDismiss(dx.dataset.advdis, 7).then(() => { toast('Hidden for 7 days'); advRefresh(); }); return; }
+  const dx = t.closest('[data-advdis]'); if (dx) { e.preventDefault(); advDismiss(dx.dataset.advdis, 7).then(() => { toast('Hidden for 7 days'); advRefresh(); }); return; }
   const al = t.closest('[data-advall]'); if (al) return openAdvisor(al.dataset.advall);
   const sm = t.closest('[data-advsum]'); if (sm) return advSummary(sm);
   if (t.closest('[data-advcfg]')) return openAdvSettings(false);
