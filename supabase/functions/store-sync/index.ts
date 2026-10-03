@@ -4,7 +4,11 @@
 //   Meta Ads (ad account id + access token with ads_read — daily spend per campaign → ad_spend, used for net profit).
 //   Actions (signed-in owner / admin): list · test · save · sync · delete.   Every 15 min (pg_cron, header x-cron-secret): cron.
 // Deploy: Supabase → Edge Functions → Deploy a new function → Via Editor → name "store-sync" → paste → Deploy → turn OFF "Enforce JWT verification".
-// No secrets to add. Needs 10_connections_alerts.sql.
+// Two ways to connect (Admin Console → Settings → Connect methods, SQL 19):
+//   A "own"  — the client's own app keys (Shopify Dev Dashboard client ID + secret, or an old shpat_ token; Amazon private app; Meta system user token).
+//   B "app"  — one click "Connect with Shopify / Amazon / Facebook" through the platform's approved app (off until approved). Secrets for B only:
+//              SHOPIFY_CLIENT_ID + SHOPIFY_CLIENT_SECRET · AMAZON_LWA_CLIENT_ID + AMAZON_LWA_CLIENT_SECRET (+ AMAZON_APP_ID) · META_APP_ID + META_APP_SECRET.
+// No secrets are needed for option A. Needs 10_connections_alerts.sql (19_connect_methods.sql for option B).
 import { createClient } from 'npm:@supabase/supabase-js@2';
 
 const firstKey = (json?: string) => { try { return Object.values(JSON.parse(json ?? '{}'))[0] as string | undefined; } catch { return undefined; } };
@@ -60,9 +64,20 @@ type Ctx = { cfg: any; sec: any; since: string | null; ws?: string };
 type Got = { orders: any[]; products: any[]; updates?: { id: string; status: string }[]; ads?: any[]; insights?: any[] };
 const shopBase = (cfg: any) => `https://${String(cfg.store_url).replace(/^https?:\/\//, '').replace(/\/.*$/, '')}/admin/api/2024-10`;
 const SHOP_BASE_OVERRIDE = Deno.env.get('SHOPIFY_BASE');                 // local tests
+const SHOP_OAUTH_OVERRIDE = Deno.env.get('SHOPIFY_OAUTH_BASE');          // local tests
+const shopOauth = (shop: string) => `${SHOP_OAUTH_OVERRIDE || 'https://' + shop}/admin/oauth/access_token`;
+/** Shopify apps made in the Dev Dashboard (since 2026 the only way): client ID + secret → a 24-hour token (client credentials grant) */
+async function shopifyToken(cfg: any, sec: any) {
+  if (sec.token) return String(sec.token);                               // old custom app (shpat_…) or "Connect with Shopify"
+  if (!sec.client_id || !sec.client_secret) throw new Error('Paste the Client ID and Client secret of your Shopify app.');
+  const r = await fetch(shopOauth(String(cfg.store_url)), { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded', Accept: 'application/json' }, body: new URLSearchParams({ grant_type: 'client_credentials', client_id: sec.client_id, client_secret: sec.client_secret }), signal: AbortSignal.timeout(20000) }).catch(() => null);
+  const j: any = r ? await r.json().catch(() => ({})) : {};
+  if (!r?.ok || !j.access_token) throw new Error('Shopify did not accept the Client ID / secret' + (j.error_description ? ` (${j.error_description})` : '') + ' — check them, and that the app is installed on this store (Dev Dashboard → your app → Install).');
+  return String(j.access_token);
+}
 async function shopify(ctx: Ctx, limitPages = 8) {
   if (!/^[a-z0-9][a-z0-9-]*\.myshopify\.com$/i.test(String(ctx.cfg.store_url || '')) && !SHOP_BASE_OVERRIDE) throw new Error('Store link should look like yourstore.myshopify.com');
-  const base = SHOP_BASE_OVERRIDE || shopBase(ctx.cfg), H = { 'X-Shopify-Access-Token': String(ctx.sec.token || '') };
+  const base = SHOP_BASE_OVERRIDE || shopBase(ctx.cfg), H = { 'X-Shopify-Access-Token': await shopifyToken(ctx.cfg, ctx.sec) };
   const orders: any[] = [], products: any[] = [];
   let url: string | null = `${base}/orders.json?status=any&limit=250${ctx.since ? '&updated_at_min=' + encodeURIComponent(ctx.since) : '&created_at_min=' + encodeURIComponent(new Date(Date.now() - 90 * 864e5).toISOString())}`;
   for (let i = 0; url && i < limitPages; i++) {
@@ -150,7 +165,10 @@ const AMZ_HOST = { na: 'https://sellingpartnerapi-na.amazon.com', eu: 'https://s
 const AMZ_BASE = Deno.env.get('AMAZON_SP_BASE');                                  // local tests
 const LWA_URL = Deno.env.get('AMAZON_LWA_URL') ?? 'https://api.amazon.com/auth/o2/token';
 const AMZ_ST: Record<string, string> = { Pending: 'New', PendingAvailability: 'New', Unshipped: 'Confirmed', InvoiceUnconfirmed: 'Confirmed', PartiallyShipped: 'Shipped', Shipped: 'Shipped', Canceled: 'Cancelled', Unfulfillable: 'Cancelled' };
-async function amzToken(sec: any) {
+const AMZ_PLAT = { id: Deno.env.get('AMAZON_LWA_CLIENT_ID') ?? '', secret: Deno.env.get('AMAZON_LWA_CLIENT_SECRET') ?? '' };   // "Connect with Amazon" (option B)
+async function amzToken(sec0: any) {
+  const sec = sec0.app && !sec0.client_id ? { ...sec0, client_id: AMZ_PLAT.id, client_secret: AMZ_PLAT.secret } : sec0;
+  if (sec0.app && (!sec.client_id || !sec.client_secret)) throw new Error('Connect with Amazon is not set up on the server (AMAZON_LWA_CLIENT_ID / SECRET). Please tell the Nodevers team.');
   if (!sec.client_id || !sec.client_secret || !sec.refresh_token) throw new Error('Paste the LWA client ID, client secret and refresh token.');
   const r = await fetch(LWA_URL, { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams({ grant_type: 'refresh_token', refresh_token: sec.refresh_token, client_id: sec.client_id, client_secret: sec.client_secret }), signal: AbortSignal.timeout(20000) }).catch(() => null);
   const j: any = r ? await r.json().catch(() => ({})) : {};
@@ -304,6 +322,105 @@ async function syncOne(row: any) {
     throw e;
   }
 }
+// ---------------- two ways to connect (Admin Console → Settings → Connect methods) ----------------
+const CONN_KEY: Record<string, string> = { shopify: 'shopify', amazon: 'amazon', meta_ads: 'ads' };
+const METHOD_DEF: Record<string, any> = { shopify: { a: { on: true, name: 'Own Shopify app' }, b: { on: false, name: 'Connect with Shopify' } }, amazon: { a: { on: true, name: 'Own Amazon developer app' }, b: { on: false, name: 'Connect with Amazon' } }, ads: { a: { on: true, name: 'Access token' }, b: { on: false, name: 'Connect with Facebook' } }, wa: { a: { on: true }, b: { on: false } } };
+async function methods(k: string) {
+  const { data } = await db.from('platform_settings').select('value').eq('key', 'connectModesJson').maybeSingle();
+  let c: any = {}; try { c = JSON.parse(data?.value ?? '{}') ?? {}; } catch { /* default */ }
+  const d = METHOD_DEF[k] ?? { a: { on: true, name: 'Own app' }, b: { on: false, name: 'One click' } }, x = c?.[k] ?? {};
+  return { a: { ...d.a, ...(x.a ?? {}) }, b: { ...d.b, ...(x.b ?? {}) } };
+}
+const env = (k: string) => (Deno.env.get(k) ?? '').trim();
+const randomState = () => 'st' + crypto.randomUUID().replace(/-/g, '') + crypto.randomUUID().replace(/-/g, '');
+const SC_HOST: Record<string, string> = { A21TBJUM6AAA2I: 'https://sellercentral.amazon.in', A2VIGQ35RCS4UG: 'https://sellercentral.amazon.ae', A17E79C6D8DWNP: 'https://sellercentral.amazon.sa', A1F83G8C2ARO7P: 'https://sellercentral.amazon.co.uk',
+  A1PA6795UKMFR9: 'https://sellercentral.amazon.de', ATVPDKIKX0DER: 'https://sellercentral.amazon.com', A2EUQ1WTGCTBG2: 'https://sellercentral.amazon.ca', A39IBJ37TRP1C6: 'https://sellercentral.amazon.com.au', A19VAU5U5O7RUS: 'https://sellercentral.amazon.sg' };
+const SHOP_RE = /^[a-z0-9][a-z0-9-]*\.myshopify\.com$/;
+const shopOf = (v: unknown) => String(v ?? '').trim().toLowerCase().replace(/^https?:\/\//, '').replace(/\/.*$/, '');
+async function hmacHex(secret: string, text: string) {
+  const key = await crypto.subtle.importKey('raw', new TextEncoder().encode(secret), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
+  return Array.from(new Uint8Array(await crypto.subtle.sign('HMAC', key, new TextEncoder().encode(text)))).map((x) => x.toString(16).padStart(2, '0')).join('');
+}
+const metaAppId = async (M: any) => env('META_APP_ID') || String(M.b.appId ?? '').trim() || String((await methods('wa')).b.appId ?? '').trim();
+
+/** option B, step 1: where to send the client to approve (Shopify / Amazon / Facebook), with a one-time state */
+async function oauthStart(ws: string, uid: string, platform: string, b: any) {
+  const key = CONN_KEY[platform]; if (!key) return json({ error: 'This connection has no one-click option.' }, 400);
+  const M = await methods(key); if (!M.b.on) return json({ error: `“${M.b.name}” is switched off. Use “${M.a.name}” instead.` }, 403);
+  const redirect = String(b.redirect_uri ?? '').split('#')[0].split('?')[0];
+  if (!/^https:\/\/[^\s]+$/.test(redirect) && !(ALLOW_HTTP && /^http:\/\/[^\s]+$/.test(redirect))) return json({ error: 'Open Nodevers from its https:// address and try again.' }, 400);
+  const state = randomState(), notReady = (what: string) => json({ error: `${M.b.name} is not set up on the server yet (${what}). Please tell the Nodevers team.` }, 500);
+  let url = '', extra: any = {};
+  if (platform === 'shopify') {
+    const shop = shopOf(b.shop); if (!SHOP_RE.test(shop)) return json({ error: 'Type your store link like yourstore.myshopify.com' }, 400);
+    const cid = env('SHOPIFY_CLIENT_ID') || String(M.b.clientId ?? '').trim(); if (!cid || !env('SHOPIFY_CLIENT_SECRET')) return notReady('SHOPIFY_CLIENT_ID / SHOPIFY_CLIENT_SECRET');
+    url = `https://${shop}/admin/oauth/authorize?` + new URLSearchParams({ client_id: cid, scope: 'read_orders,read_products,read_inventory', redirect_uri: redirect, state }); extra = { shop };
+  } else if (platform === 'amazon') {
+    const mk = AMZ_MKT[b.marketplace] ? String(b.marketplace) : 'A21TBJUM6AAA2I', appId = env('AMAZON_APP_ID') || String(M.b.appId ?? '').trim();
+    if (!appId || !AMZ_PLAT.id || !AMZ_PLAT.secret) return notReady('AMAZON_APP_ID / AMAZON_LWA_CLIENT_ID / AMAZON_LWA_CLIENT_SECRET');
+    url = `${SC_HOST[mk]}/apps/authorize/consent?` + new URLSearchParams({ application_id: appId, state, redirect_uri: redirect, ...(M.b.beta ? { version: 'beta' } : {}) }); extra = { marketplace: mk, fba: b.fba !== false };
+  } else {
+    const appId = await metaAppId(M), cfgId = String(M.b.configId ?? '').trim(); if (!appId || !env('META_APP_SECRET')) return notReady('META_APP_ID / META_APP_SECRET');
+    url = `https://www.facebook.com/v21.0/dialog/oauth?` + new URLSearchParams({ client_id: appId, redirect_uri: redirect, state, response_type: 'code', ...(cfgId ? { config_id: cfgId } : { scope: 'ads_read' }) });
+  }
+  await db.from('oauth_states').delete().lt('created_at', new Date(Date.now() - 864e5).toISOString());
+  const { error } = await db.from('oauth_states').insert({ state, workspace_id: ws, user_id: uid, platform, redirect_uri: redirect, extra });
+  if (error) return json({ error: 'Run 19_connect_methods.sql in Supabase first (' + error.message + ').' }, 500);
+  return json({ ok: true, url });
+}
+
+/** option B, step 2: the client comes back with a code → keys are fetched and saved on the server, then the first sync runs */
+async function oauthFinish(user: any, b: any) {
+  const state = String(b.state ?? ''), P = b.params && typeof b.params === 'object' ? b.params : {};
+  if (state.length < 20) return json({ error: 'The login link is not complete — press Connect again.' }, 400);
+  const { data: st } = await db.from('oauth_states').select('*').eq('state', state).maybeSingle();
+  if (!st) return json({ error: 'This login link was already used or has expired — press Connect again.' }, 400);
+  await db.from('oauth_states').delete().eq('state', state);
+  if (st.user_id !== user.id) return json({ error: 'Please finish the connection with the same Nodevers login you started it with.' }, 403);
+  if (Date.now() - new Date(st.created_at).getTime() > 30 * 6e4) return json({ error: 'The login took too long — press Connect again.' }, 400);
+  const ws = st.workspace_id, platform = st.platform;
+  const { data: m } = await db.from('workspace_members').select('role').eq('workspace_id', ws).eq('user_id', user.id).maybeSingle();
+  if (!m || !['owner', 'admin'].includes(m.role)) return json({ error: 'Only the owner or an admin can change store connections.' }, 403);
+  const M = await methods(CONN_KEY[platform]); if (!M.b.on) return json({ error: `“${M.b.name}” is switched off.` }, 403);
+  if (P.error || P.error_description) return json({ error: 'Not connected — ' + cut(P.error_description || P.error_reason || P.error, 200) }, 400);
+  const config: any = { method: 'app', sync_minutes: platform === 'meta_ads' ? 360 : platform === 'amazon' ? 60 : 15 }, secret: any = {};
+  let accounts: any[] | undefined;
+  if (platform === 'shopify') {
+    const shop = shopOf(P.shop), csec = env('SHOPIFY_CLIENT_SECRET'), cid = env('SHOPIFY_CLIENT_ID') || String(M.b.clientId ?? '').trim();
+    if (!SHOP_RE.test(shop) || shop !== st.extra?.shop) return json({ error: 'Shopify sent back a different store — press Connect again.' }, 400);
+    const msg = Object.keys(P).filter((k) => k !== 'hmac' && k !== 'signature').sort().map((k) => `${k}=${P[k]}`).join('&');
+    if (!P.hmac || (await hmacHex(csec, msg)) !== String(P.hmac).toLowerCase()) return json({ error: 'Shopify’s answer could not be checked — press Connect again.' }, 400);
+    const r = await fetch(shopOauth(shop), { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded', Accept: 'application/json' }, body: new URLSearchParams({ client_id: cid, client_secret: csec, code: String(P.code ?? '') }), signal: AbortSignal.timeout(20000) }).catch(() => null);
+    const j: any = r ? await r.json().catch(() => ({})) : {};
+    if (!r?.ok || !j.access_token) return json({ error: 'Shopify did not give access' + (j.error_description ? ` (${j.error_description})` : '') + ' — press Connect again.' }, 400);
+    config.store_url = shop; config.shop_auth = 'token'; secret.token = String(j.access_token);
+  } else if (platform === 'amazon') {
+    const r = await fetch(LWA_URL, { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams({ grant_type: 'authorization_code', code: String(P.spapi_oauth_code ?? ''), client_id: AMZ_PLAT.id, client_secret: AMZ_PLAT.secret, redirect_uri: st.redirect_uri }), signal: AbortSignal.timeout(20000) }).catch(() => null);
+    const j: any = r ? await r.json().catch(() => ({})) : {};
+    if (!r?.ok || !j.refresh_token) return json({ error: 'Amazon did not give access' + (j.error_description ? ` (${j.error_description})` : '') + ' — press Connect again.' }, 400);
+    const mk = AMZ_MKT[st.extra?.marketplace] ? st.extra.marketplace : 'A21TBJUM6AAA2I';
+    Object.assign(config, { marketplace: mk, marketplace_name: AMZ_MKT[mk][0], fba: st.extra?.fba !== false, seller_id: cut(String(P.selling_partner_id ?? '').replace(/[^A-Za-z0-9]/g, ''), 30) });
+    secret.refresh_token = String(j.refresh_token); secret.app = '1';
+  } else {
+    const appId = await metaAppId(M);
+    const r = await fetch(`${GRAPH}/oauth/access_token?` + new URLSearchParams({ client_id: appId, client_secret: env('META_APP_SECRET'), redirect_uri: st.redirect_uri, code: String(P.code ?? '') }), { signal: AbortSignal.timeout(20000) }).catch(() => null);
+    const j: any = r ? await r.json().catch(() => ({})) : {};
+    if (!r?.ok || !j.access_token) return json({ error: 'Facebook did not give access' + (j?.error?.message ? ` (${j.error.message})` : '') + ' — press Connect again.' }, 400);
+    secret.token = String(j.access_token);
+    const a = await metaGet(`${GRAPH}/me/adaccounts?fields=account_id,name&limit=100`, secret.token).catch(() => ({ data: [] }));
+    accounts = (a.data ?? []).map((x: any) => ({ id: cut(String(x.account_id ?? '').replace(/\D/g, ''), 25), name: cut(x.name, 120) })).filter((x: any) => x.id).slice(0, 50);
+    if (!accounts!.length) return json({ error: 'No ad account was shared — press Connect again and tick your ad account.' }, 400);
+    config.ad_account = accounts![0].id; config.accounts = accounts;
+  }
+  const { data: on } = await db.rpc('ws_feature', { ws, k: featureOf(platform) }); if (on === false) return json({ error: (platform === 'meta_ads' ? 'Ads Manager is' : 'The Store is') + ' not part of your plan.' }, 402);
+  const now = new Date().toISOString();
+  const { data: cur } = await db.from('store_connections').select('workspace_id').eq('workspace_id', ws).eq('platform', platform).maybeSingle();
+  const { error } = await db.from('store_connections').upsert({ workspace_id: ws, platform, config, secret, updated_at: now, ...(cur ? {} : { created_at: now, sync_cursor: null }) }, { onConflict: 'workspace_id,platform' });
+  if (error) return json({ error: error.message }, 500);
+  const { data: row } = await db.from('store_connections').select('*').eq('workspace_id', ws).eq('platform', platform).single();
+  try { const r = await syncOne(row); return json({ ok: true, platform, workspace_id: ws, accounts, ...r }); } catch (e) { return json({ ok: true, platform, workspace_id: ws, accounts, warning: (e as Error).message }); }
+}
+
 function publicRow(r: any) { const cfg = { ...(r.config ?? {}) }; return { connected: true, config: cfg, last_sync_at: r.last_sync_at, last_status: r.last_status, last_error: r.last_error, last_count: r.last_count }; }
 async function rememberUrl() { await db.from('app_config').upsert({ key: 'functions_url', value: `${SB_URL.replace(/\/+$/, '')}/functions/v1` }, { onConflict: 'key' }); }
 
@@ -325,6 +442,7 @@ Deno.serve(async (req) => {
     const jwt = (req.headers.get('Authorization') ?? '').replace(/^Bearer\s+/i, '');
     const { data: u } = await db.auth.getUser(jwt);
     if (!u?.user) return json({ error: 'Please sign in again.' }, 401);
+    if (b.action === 'oauth_finish') return await oauthFinish(u.user, b);
     const ws = String(b.workspace_id ?? '');
     const { data: m } = await db.from('workspace_members').select('role').eq('workspace_id', ws).eq('user_id', u.user.id).maybeSingle();
     if (!m) return json({ error: 'Not a member of this workspace.' }, 403);
@@ -335,6 +453,7 @@ Deno.serve(async (req) => {
     { const { data: on } = await db.rpc('ws_feature', { ws, k: featureOf(platform) }); if (on === false) return json({ error: (platform === 'meta_ads' ? 'Ads Manager is' : 'The Store is') + ' not part of your plan. Upgrade in Settings → Plan & billing.' }, 402); }
     const { data: cur } = await db.from('store_connections').select('*').eq('workspace_id', ws).eq('platform', platform).maybeSingle();
     if (b.action === 'delete') { await db.from('store_connections').delete().eq('workspace_id', ws).eq('platform', platform); return json({ ok: true }); }
+    if (b.action === 'oauth_start') return await oauthStart(ws, u.user.id, platform, b);
     if (b.action === 'sync') { if (!cur) return json({ error: 'Connect it first.' }, 400); const { data: wst } = await db.rpc('ws_state', { ws }); if (wst === 'locked') return json({ error: 'Your plan has ended — this workspace is view-only. Renew it in Settings → Plan & billing.' }, 402);  return json({ ok: true, ...(await syncOne(cur)) }); }
     const cfgIn = (b.config && typeof b.config === 'object') ? b.config : {};
     const config: any = { sync_minutes: [0, 15, 60, 360, 1440].includes(Number(cfgIn.sync_minutes)) ? Number(cfgIn.sync_minutes) : 15 };
@@ -346,11 +465,20 @@ Deno.serve(async (req) => {
       for (const k of ['map', 'pmap']) config[k] = Object.fromEntries(Object.entries(cfgIn[k] ?? {}).filter(([, v]) => typeof v === 'string' && (v as string).length <= 200).slice(0, 40));
       for (const k of ['keys', 'pkeys']) config[k] = (Array.isArray(cfgIn[k]) ? cfgIn[k] : []).map(String).slice(0, 200); config.list_path = cut(cfgIn.list_path, 120); config.plist_path = cut(cfgIn.plist_path, 120); }
     const secIn = b.secret && typeof b.secret === 'object' ? b.secret : null;
-    const secret = secIn ? { ...(cur?.secret ?? {}), ...Object.fromEntries(Object.entries(secIn).filter(([, v]) => typeof v === 'string' && v).map(([k, v]) => [k, cut(v, 1500)])) } : (cur?.secret ?? {});   // paste one key to change just that one
-    if (platform === 'shopify' && !secret.token) return json({ error: 'Paste the Admin API access token.' }, 400);
+    const pasted = Object.fromEntries(Object.entries(secIn ?? {}).filter(([, v]) => typeof v === 'string' && v).map(([k, v]) => [k, cut(v, 1500)]));
+    // own keys pasted (or a new connection) → option A; otherwise keep how it was connected (A or B)
+    const curMethod = cur ? String(cur.config?.method || 'own') : '', method = Object.keys(pasted).length || !cur ? 'own' : curMethod;
+    if (CONN_KEY[platform] && method === 'own' && curMethod !== 'own') { const M = await methods(CONN_KEY[platform]); if (!M.a.on) return json({ error: `“${M.a.name}” is switched off. Use “${M.b.name}” instead.` }, 403); }
+    config.method = method;
+    if (platform === 'meta_ads' && method === 'app' && Array.isArray(cur?.config?.accounts)) config.accounts = cur.config.accounts;
+    const secret: any = { ...(cur && curMethod === method ? (cur.secret ?? {}) : {}), ...pasted };   // paste one key to change just that one
+    if (platform === 'shopify' && pasted.client_id) delete secret.token;                             // moved to a Dev Dashboard app
+    if (platform === 'shopify' && pasted.token) { delete secret.client_id; delete secret.client_secret; }
+    if (platform === 'shopify' && !secret.token && !(secret.client_id && secret.client_secret)) return json({ error: 'Paste the Client ID and Client secret of your Shopify app.' }, 400);
+    if (platform === 'shopify') config.shop_auth = secret.token ? 'token' : 'client';
     if (platform === 'woocommerce' && (!secret.key || !secret.secret)) return json({ error: 'Paste the consumer key and consumer secret.' }, 400);
     if (platform === 'custom' && !config.orders_url) return json({ error: 'Paste the orders API link.' }, 400);
-    if (platform === 'amazon' && (!secret.client_id || !secret.client_secret || !secret.refresh_token)) return json({ error: 'Paste the LWA client ID, client secret and refresh token.' }, 400);
+    if (platform === 'amazon' && method !== 'app' && (!secret.client_id || !secret.client_secret || !secret.refresh_token)) return json({ error: 'Paste the LWA client ID, client secret and refresh token.' }, 400);
     if (platform === 'meta_ads' && !config.ad_account) return json({ error: 'Paste your ad account ID.' }, 400);
     if (platform === 'meta_ads' && !secret.token) return json({ error: 'Paste the access token.' }, 400);
     if (platform === 'custom' && config.auth !== 'none' && !secret.key) return json({ error: 'Paste the API key (or choose “No key”).' }, 400);

@@ -1,6 +1,8 @@
 // Nodevers — wa-webhook: Meta sends incoming WhatsApp messages + delivery ticks here.
 // Deploy: Supabase → Edge Functions → wa-webhook → Code → replace all → Deploy. "Enforce JWT verification" stays OFF.
 // Secrets (Edge Functions → Secrets): WA_VERIFY_TOKEN (any long random text, same as in Meta), META_APP_SECRET (Meta app → Basic → App secret).
+// Clients who use their OWN Meta app (Option A) get their own verify token and their App secret is kept in wa_hooks (SQL 19) —
+// a message is accepted when Meta's signature matches the platform's App secret OR that client's own App secret.
 import { createClient } from 'npm:@supabase/supabase-js@2';
 
 const firstKey = (json?: string) => { try { return Object.values(JSON.parse(json ?? '{}'))[0] as string | undefined; } catch { return undefined; } };
@@ -10,14 +12,15 @@ const VERIFY = Deno.env.get('WA_VERIFY_TOKEN') ?? '';
 const APP_SECRET = Deno.env.get('META_APP_SECRET') ?? '';
 const today = () => new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Kolkata' }).format(new Date());
 
-async function validSignature(raw: string, header: string | null) {
-  if (!APP_SECRET) return true;                       // not set yet → accept (set it before going live)
-  if (!header?.startsWith('sha256=')) return false;
-  const key = await crypto.subtle.importKey('raw', new TextEncoder().encode(APP_SECRET), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
-  const sig = new Uint8Array(await crypto.subtle.sign('HMAC', key, new TextEncoder().encode(raw)));
-  const hex = Array.from(sig).map(x => x.toString(16).padStart(2, '0')).join('');
-  const a = hex, b = header.slice(7); if (a.length !== b.length) return false;
-  let diff = 0; for (let i = 0; i < a.length; i++) diff |= a.charCodeAt(i) ^ b.charCodeAt(i); return diff === 0;
+async function hmacHex(secret: string, raw: string) {
+  const key = await crypto.subtle.importKey('raw', new TextEncoder().encode(secret), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
+  return Array.from(new Uint8Array(await crypto.subtle.sign('HMAC', key, new TextEncoder().encode(raw)))).map(x => x.toString(16).padStart(2, '0')).join('');
+}
+function sameText(a: string, b: string) { if (a.length !== b.length) return false; let d = 0; for (let i = 0; i < a.length; i++) d |= a.charCodeAt(i) ^ b.charCodeAt(i); return d === 0; }
+/** checks Meta's X-Hub-Signature-256 against one App secret (results remembered for this request) */
+function signatureChecker(raw: string, header: string | null) {
+  const got = header?.startsWith('sha256=') ? header.slice(7).toLowerCase() : '', seen = new Map<string, boolean>();
+  return async (secret: string) => { if (!secret || !got) return false; if (!seen.has(secret)) seen.set(secret, sameText(await hmacHex(secret, raw), got)); return seen.get(secret)!; };
 }
 
 function textOf(m: any): string {
@@ -165,11 +168,18 @@ async function runButton(ws: string, acc: any, leadId: string, phone: string, pa
 Deno.serve(async (req) => {
   const url = new URL(req.url);
   if (req.method === 'GET') {
-    const ok = url.searchParams.get('hub.mode') === 'subscribe' && VERIFY && url.searchParams.get('hub.verify_token') === VERIFY;
+    const tok = url.searchParams.get('hub.verify_token') ?? '';
+    let ok = url.searchParams.get('hub.mode') === 'subscribe' && tok.length > 0 && !!VERIFY && sameText(tok, VERIFY);
+    if (!ok && url.searchParams.get('hub.mode') === 'subscribe' && tok.length >= 20) {      // a client's own verify token (Option A)
+      const { data: h } = await db.from('wa_hooks').select('workspace_id').eq('verify_token', tok).maybeSingle();
+      if (h) { ok = true; await db.from('wa_hooks').update({ verified_at: new Date().toISOString() }).eq('workspace_id', h.workspace_id); }
+    }
     return ok ? new Response(url.searchParams.get('hub.challenge') ?? '', { status: 200 }) : new Response('Forbidden', { status: 403 });
   }
   const raw = await req.text();
-  if (!(await validSignature(raw, req.headers.get('X-Hub-Signature-256')))) return new Response('Bad signature', { status: 401 });
+  const check = signatureChecker(raw, req.headers.get('X-Hub-Signature-256'));
+  const platformOk = APP_SECRET ? await check(APP_SECRET) : false;
+  let accepted = 0, rejected = 0;
   try {
     const body = JSON.parse(raw || '{}');
     for (const entry of body.entry ?? []) for (const ch of entry.changes ?? []) {
@@ -178,6 +188,12 @@ Deno.serve(async (req) => {
       const { data: acc } = await db.from('wa_accounts').select('*').eq('phone_number_id', String(pid)).maybeSingle();
       if (!acc) continue;
       const ws = acc.workspace_id, names: Record<string, string> = {};
+      // signed by the platform's Meta app, or by this client's own Meta app (its App secret) — nothing set anywhere yet → accepted (set one before going live)
+      const { data: hook } = await db.from('wa_hooks').select('app_secret').eq('workspace_id', ws).maybeSingle();
+      const own = String(hook?.app_secret ?? '');
+      const ok = platformOk || (own ? await check(own) : !APP_SECRET);
+      if (!ok) { rejected++; if (hook) await db.from('wa_hooks').update({ last_bad_sig_at: new Date().toISOString() }).eq('workspace_id', ws); console.log('bad signature for', pid); continue; }
+      accepted++; if (hook) await db.from('wa_hooks').update({ last_event_at: new Date().toISOString() }).eq('workspace_id', ws);
       for (const c of v.contacts ?? []) names[c.wa_id] = c.profile?.name ?? '';
       for (const m of v.messages ?? []) {
         const phone = String(m.from ?? '').replace(/\D/g, ''); if (!phone) continue;
@@ -205,5 +221,6 @@ Deno.serve(async (req) => {
   } catch (e) {
     console.error('webhook error', e);           // still answer 200 so Meta does not retry forever
   }
+  if (rejected && !accepted) return new Response('Bad signature', { status: 401 });
   return new Response('ok', { status: 200 });
 });
