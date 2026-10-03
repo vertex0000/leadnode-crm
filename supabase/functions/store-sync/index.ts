@@ -57,7 +57,7 @@ function findList(d: any, want = ''): { list: any[]; path: string } {
 
 // ---------------- platform adapters → rows for public.orders / public.products ----------------
 type Ctx = { cfg: any; sec: any; since: string | null; ws?: string };
-type Got = { orders: any[]; products: any[]; updates?: { id: string; status: string }[]; ads?: any[] };
+type Got = { orders: any[]; products: any[]; updates?: { id: string; status: string }[]; ads?: any[]; insights?: any[] };
 const shopBase = (cfg: any) => `https://${String(cfg.store_url).replace(/^https?:\/\//, '').replace(/\/.*$/, '')}/admin/api/2024-10`;
 const SHOP_BASE_OVERRIDE = Deno.env.get('SHOPIFY_BASE');                 // local tests
 async function shopify(ctx: Ctx, limitPages = 8) {
@@ -216,24 +216,35 @@ async function amazon(ctx: Ctx) {
 const GRAPH = (Deno.env.get('META_GRAPH_URL') ?? 'https://graph.facebook.com/v21.0').replace(/\/+$/, '');
 const LEAD_ACT = ['lead', 'onsite_conversion.lead_grouped', 'leadgen_grouped', 'offsite_conversion.fb_pixel_lead'], BUY_ACT = ['purchase', 'omni_purchase', 'offsite_conversion.fb_pixel_purchase', 'onsite_web_purchase'];
 const actSum = (arr: any[] | undefined, types: string[]) => { const hit = (arr ?? []).filter((a) => types.includes(a.action_type)); if (!hit.length) return null; return Math.max(...types.map((t) => hit.filter((a) => a.action_type === t).reduce((s, a) => s + Number(a.value || 0), 0))); };
+async function metaGet(url: string, token: string) {
+  const r = await fetch(safeUrl(url), { headers: { Authorization: 'Bearer ' + token, Accept: 'application/json' }, signal: AbortSignal.timeout(25000) }).catch(() => null);
+  if (!r) throw new Error('Meta did not answer — try again in a minute.');
+  const j: any = await r.json().catch(() => ({}));
+  if (!r.ok) { const e = j?.error ?? {}; throw new Error(e.code === 190 ? 'Meta did not accept the access token — make a new one with ads_read.' : e.code === 100 || e.code === 803 ? 'Meta could not find that ad account — check the ID and that the token has access to it.' : e.code === 10 || e.code === 200 ? 'The token has no permission to read ads (ads_read).' : 'Meta: ' + (e.message ?? r.status)); }
+  return j;
+}
 async function metaAds(ctx: Ctx) {
   const acct = String(ctx.cfg.ad_account || '').replace(/^act_/i, '').trim();
   if (!/^\d{5,25}$/.test(acct)) throw new Error('The ad account ID is the number in Ads Manager (e.g. 1234567890), with or without act_.');
   if (!ctx.sec.token) throw new Error('Paste the access token (System user token with ads_read).');
   const d = (t: number) => new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Kolkata' }).format(new Date(t));
-  const since = d(ctx.since ? new Date(ctx.since).getTime() - 3 * 864e5 : Date.now() - 90 * 864e5), until = d(Date.now());
-  let url: string | null = `${GRAPH}/act_${acct}/insights?level=campaign&time_increment=1&limit=500&fields=campaign_name,spend,impressions,clicks,actions,action_values&time_range=${encodeURIComponent(JSON.stringify({ since, until }))}`;
-  const ads: any[] = [];
-  for (let page = 0; url && page < 20; page++) {
-    const r = await fetch(safeUrl(url), { headers: { Authorization: 'Bearer ' + ctx.sec.token, Accept: 'application/json' }, signal: AbortSignal.timeout(25000) }).catch(() => null);
-    if (!r) throw new Error('Meta did not answer — try again in a minute.');
-    const j: any = await r.json().catch(() => ({}));
-    if (!r.ok) { const e = j?.error ?? {}; throw new Error(e.code === 190 ? 'Meta did not accept the access token — make a new one with ads_read.' : e.code === 100 || e.code === 803 ? 'Meta could not find that ad account — check the ID and that the token has access to it.' : e.code === 10 || e.code === 200 ? 'The token has no permission to read ads (ads_read).' : 'Meta: ' + (e.message ?? r.status)); }
-    for (const x of j.data ?? []) ads.push({ day: String(x.date_start).slice(0, 10), campaign: cut(x.campaign_name || 'Campaign', 200), spend: Number(x.spend || 0), impressions: x.impressions != null ? Math.round(Number(x.impressions)) : null, clicks: x.clicks != null ? Math.round(Number(x.clicks)) : null,
-      leads: actSum(x.actions, LEAD_ACT), purchases: actSum(x.actions, BUY_ACT), revenue: actSum(x.action_values, BUY_ACT) });
-    url = j.paging?.next ?? null;
+  const since = d(ctx.since ? new Date(ctx.since).getTime() - 3 * 864e5 : Date.now() - 90 * 864e5), until = d(Date.now()), range = encodeURIComponent(JSON.stringify({ since, until }));
+  const nums = (x: any) => ({ spend: Number(x.spend || 0), impressions: x.impressions != null ? Math.round(Number(x.impressions)) : null, clicks: x.clicks != null ? Math.round(Number(x.clicks)) : null, leads: actSum(x.actions, LEAD_ACT), purchases: actSum(x.actions, BUY_ACT), revenue: actSum(x.action_values, BUY_ACT) });
+  const ads: any[] = [], insights: any[] = [];
+  let url: string | null = `${GRAPH}/act_${acct}/insights?level=campaign&time_increment=1&limit=500&fields=campaign_name,campaign_id,spend,impressions,clicks,actions,action_values&time_range=${range}`;
+  for (let page = 0; url && page < 20; page++) { const j = await metaGet(url, ctx.sec.token); for (const x of j.data ?? []) ads.push({ day: String(x.date_start).slice(0, 10), campaign: cut(x.campaign_name || 'Campaign', 200), campaign_id: cut(x.campaign_id, 40), ...nums(x) }); url = j.paging?.next ?? null; }
+  // ad sets and ads (creatives) — for the AI Advisor; the last 30 days are enough, and a failure here never stops the spend sync
+  const since30 = d(Math.max(new Date(since).getTime(), Date.now() - 30 * 864e5)), r30 = encodeURIComponent(JSON.stringify({ since: since30, until }));
+  for (const level of ['adset', 'ad'] as const) {
+    try {
+      let u: string | null = `${GRAPH}/act_${acct}/insights?level=${level}&time_increment=1&limit=500&fields=campaign_name,campaign_id,adset_name,adset_id${level === 'ad' ? ',ad_name,ad_id' : ''},spend,impressions,clicks,actions,action_values&time_range=${r30}`;
+      for (let page = 0; u && page < 20; page++) { const j = await metaGet(u, ctx.sec.token);
+        for (const x of j.data ?? []) { const id = level === 'ad' ? x.ad_id : x.adset_id; if (!id) continue;
+          insights.push({ day: String(x.date_start).slice(0, 10), level, ext_id: cut(id, 40), name: cut(level === 'ad' ? x.ad_name : x.adset_name, 300), campaign: cut(x.campaign_name, 300), campaign_id: cut(x.campaign_id, 40), adset: cut(x.adset_name, 300), adset_id: cut(x.adset_id, 40), ...nums(x) }); }
+        u = j.paging?.next ?? null; }
+    } catch (e) { console.error('meta ' + level + ' insights', (e as Error).message); }
   }
-  return { orders: [], products: [], ads };
+  return { orders: [], products: [], ads, insights };
 }
 
 const ADAPT: Record<string, (c: Ctx) => Promise<Got>> = { shopify, woocommerce, custom, amazon, meta_ads: metaAds };
@@ -266,8 +277,16 @@ async function store(ws: string, platform: string, got: Got, cfg: any = {}) {
     no += count ?? 0;
   }
   if (got.ads?.length) {                                        // Meta Ads spend → the same table as imported / typed spend, so profit and ROAS just work
-    const rows = got.ads.map((a) => ({ workspace_id: ws, day: a.day, platform: 'Meta', campaign: a.campaign, spend: Math.round(a.spend * 100) / 100, impressions: a.impressions, clicks: a.clicks, leads: a.leads, purchases: a.purchases, revenue: a.revenue, source: 'Meta API' }));
-    for (let i = 0; i < rows.length; i += 500) { const { error, count } = await db.from('ad_spend').upsert(rows.slice(i, i + 500), { onConflict: 'workspace_id,day,platform,campaign', count: 'exact' }); if (error) throw new Error('Saving ad spend: ' + error.message); na += count ?? 0; }
+    let rows: any[] = got.ads.map((a) => ({ workspace_id: ws, day: a.day, platform: 'Meta', campaign: a.campaign, campaign_id: a.campaign_id ?? '', spend: Math.round(a.spend * 100) / 100, impressions: a.impressions, clicks: a.clicks, leads: a.leads, purchases: a.purchases, revenue: a.revenue, source: 'Meta API' }));
+    for (let i = 0; i < rows.length; i += 500) {
+      let { error, count } = await db.from('ad_spend').upsert(rows.slice(i, i + 500), { onConflict: 'workspace_id,day,platform,campaign', count: 'exact' });
+      if (error && /campaign_id/.test(error.message)) { rows = rows.map(({ campaign_id: _c, ...r }) => r); ({ error, count } = await db.from('ad_spend').upsert(rows.slice(i, i + 500), { onConflict: 'workspace_id,day,platform,campaign', count: 'exact' })); }   // before the 18 update
+      if (error) throw new Error('Saving ad spend: ' + error.message); na += count ?? 0;
+    }
+  }
+  if (got.insights?.length) {                                   // ad sets / ads for the AI Advisor (needs 18_ai_advisor.sql — skipped quietly before it)
+    const rows = got.insights.map((x) => ({ workspace_id: ws, ...x, spend: Math.round(x.spend * 100) / 100, updated_at: new Date().toISOString() }));
+    for (let i = 0; i < rows.length; i += 500) { const { error } = await db.from('ad_insights').upsert(rows.slice(i, i + 500), { onConflict: 'workspace_id,day,level,ext_id' }); if (error) { console.error('ad_insights', error.message); break; } }
   }
   return { orders: no, products: np, ads: na };
 }

@@ -122,6 +122,19 @@ Deno.serve(async (req) => {
     const { data: m } = await db.from('workspace_members').select('role').eq('workspace_id', ws).eq('user_id', u.user.id).maybeSingle();
     if (!m || m.role === 'client') return json({ error: 'You do not have permission here.' }, 403);
 
+    // ---- AI Advisor: turn the day's tips (already calculated from the client's own numbers) into a short summary ----
+    if (b.mode === 'advisor') {
+      const tips = (Array.isArray(b.tips) ? b.tips : []).slice(0, 12).map((t: any, i: number) => `${i + 1}. [${cut(t.area, 12)}] ${cut(t.title, 160)} — ${cut(t.why, 300)}`).join('\n');
+      if (!tips) return json({ error: 'Nothing to summarise yet.' }, 400);
+      const system = [
+        'You are the AI Advisor inside Nodevers, a CRM + WhatsApp + store + ads tool for small businesses in India.',
+        'Write a short daily briefing for the business owner from the TIPS below: 3 to 5 bullet points, most important first, each one line with the action to take.',
+        'Use ONLY the numbers and names in the tips. Never invent numbers, campaigns, products or results. Do not promise outcomes.',
+        `Language: ${b.lang === 'en' ? 'simple English' : 'simple Hinglish (Roman Hindi mixed with English words)'}. No greeting, no sign-off. Markdown bullets only.`,
+      ].join('\n');
+      return await ask(key, system, `Business: ${cut(b.business, 80)}\nTIPS:\n${tips}`, 0.3, false);
+    }
+
     const mode = TASK[b.mode] ? String(b.mode) : 'reply';
     const draft = cut(b.draft, 1500).trim();
     if (mode !== 'reply' && !draft) return json({ error: 'Type something first, then ask AI to improve it.' }, 400);

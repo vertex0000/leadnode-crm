@@ -1019,7 +1019,12 @@ body.no-sales [data-go="tasks"],body.no-sales [data-go="calls"],body.no-orders [
 .ins-sec{margin:22px 0 10px}.ins-sec h3{margin:0}
 /* home */
 .home-hi{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;margin:4px 0 16px}
-.hl-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;align-items:stretch}.hl-w{min-width:0;display:flex;flex-direction:column}.hl-w>.home-c,.hl-w>.rcard,.hl-w>.home-setup,.hl-in>.home-c,.hl-in>.rcard{flex:1;margin:0}
+.adv{padding:14px 16px;border-radius:16px}.adv.flat{box-shadow:none}.adv-h{display:flex;align-items:center;gap:10px;margin-bottom:10px}.adv-h b{display:block;font-size:15px}.adv-h small{font-size:12px}.adv-logo{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:linear-gradient(135deg,#8B5CF6,#0EA5E9);color:#fff;font-size:16px;flex:none}
+.adv-tip>.grow{flex:1;min-width:0}.adv-list{display:flex;flex-direction:column;gap:8px}.adv-tip{display:flex;gap:10px;align-items:flex-start;padding:11px 12px;border-radius:12px;border:1px solid var(--line);background:var(--glass-2)}.adv-tip b{display:block;font-size:13.5px}.adv-tip p{margin:3px 0 0;font-size:12.5px;color:var(--muted);line-height:1.45}
+.adv-ic{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:11px;font-weight:800;flex:none;margin-top:1px;color:#fff;background:var(--blue-2)}.adv-tip.bad .adv-ic{background:var(--coral)}.adv-tip.warn .adv-ic{background:#D97706}.adv-tip.good .adv-ic{background:var(--green)}
+.adv-acts{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}.adv-x{flex:none;width:26px;height:26px;opacity:.6}.adv-x:hover{opacity:1}.adv-sum{padding:10px 12px;border-radius:12px;background:color-mix(in srgb,#8B5CF6 8%,transparent);border:1px solid color-mix(in srgb,#8B5CF6 25%,transparent);margin-bottom:10px;font-size:13.5px}.adv-sum ul{margin:0;padding-left:18px}.adv-sum p{margin:0 0 4px}
+.adv.compact{margin:10px 0 4px}.adv.compact .adv-tip p{display:none}#bcAdvisor:empty{display:none}.bc-ids{border-color:color-mix(in srgb,var(--blue-2) 50%,var(--line-2))!important}
+.hl-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;align-items:stretch}.hl-w{min-width:0;display:flex;flex-direction:column}.hl-w>.adv,.hl-in>.adv,.hl-w>.home-c,.hl-w>.rcard,.hl-w>.home-setup,.hl-in>.home-c,.hl-in>.rcard{flex:1;margin:0}
 .hl-small{grid-column:span 1}.hl-half{grid-column:span 2}.hl-full{grid-column:1/-1}.hl-w .home-setup,.hl-w .home-chats{margin:0}
 .hl-top{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:12px 16px;border-radius:14px;margin-bottom:14px;border:1px dashed color-mix(in srgb,var(--blue-2) 50%,var(--line-2))}.hl-top b{display:block}.hl-top small{font-size:12px}
 .hl-ed{border:1.5px dashed var(--line-2);border-radius:18px;padding:6px;background:color-mix(in srgb,var(--blue-2) 3%,transparent);cursor:grab}.hl-ed.off{opacity:.5}.hl-ed.lock{opacity:.6}.hl-ed.drag{opacity:.35}.hl-ed.over{border-color:var(--blue-2);box-shadow:0 0 0 3px var(--blue-soft)}
@@ -1734,6 +1739,7 @@ body.ro [data-cmw],body.np-commerce [data-cmw]{display:none!important}
     <section class="view" id="v-broadcast">
       <div class="head"><div><div class="eyebrow">Messaging</div><h1>Broadcast</h1><p class="sub">Send a WhatsApp template or an email to many leads at once — each one personalised.</p></div></div>
       <div class="tabs" id="bcTabs"><button class="tab active" data-bctab="whatsapp">WhatsApp</button><button class="tab" data-bctab="email">Email</button><button class="tab" data-bctab="history">History</button></div>
+      <div id="bcAdvisor"></div>
       <div id="bcBodyWrap"></div>
     </section>
     <section class="view" id="v-automation">
@@ -2123,7 +2129,7 @@ function ring(pct, label, val, color) {
 
 /* ================= load ================= */
 function applyData(d) {
-  S = Object.assign({ leads: [], activities: [], team: [], templates: [], flows: [], messages: [], calls: [], tasks: [], campaignStats: [], orders: [], products: [], adSpend: [], stockMoves: [] }, d);
+  S = Object.assign({ leads: [], activities: [], team: [], templates: [], flows: [], messages: [], calls: [], tasks: [], campaignStats: [], orders: [], products: [], adSpend: [], stockMoves: [], adInsights: [], advDismiss: [] }, d);
   S.lists = Object.assign({}, DEFAULT_LISTS, d.lists || {});
   stageSig = (d.lists && d.lists.stages || []).join('|');
   S.leads.forEach(l => { l.leadId = String(l.leadId); l.phone = String(l.phone || ''); });
@@ -3280,7 +3286,7 @@ async function applyRun() {
 
 /* ================= Performance Marketing · Meta Ads ================= */
 const ADS = { tab: 'overview', range: 30, camp: '', data: null };
-const ADS_TABS = [['overview', 'Overview'], ['spend', 'Spend & ROAS'], ['canvas', 'Canvas'], ['campaigns', 'Campaigns'], ['adsets', 'Ad sets'], ['ads', 'Ads'], ['audiences', 'Audiences'], ['creatives', 'Creatives'], ['forms', 'Lead forms'], ['funnel', 'Funnel'], ['connect', 'Connect']];
+const ADS_TABS = [['overview', 'Overview'], ['advisor', '✦ AI Advisor'], ['spend', 'Spend & ROAS'], ['canvas', 'Canvas'], ['campaigns', 'Campaigns'], ['adsets', 'Ad sets'], ['ads', 'Ads'], ['audiences', 'Audiences'], ['creatives', 'Creatives'], ['forms', 'Lead forms'], ['funnel', 'Funnel'], ['connect', 'Connect']];
 const AD_SOURCES = ['Meta Ad', 'Instagram', 'Facebook'];
 const cmp = n => { n = Number(n) || 0; if (n >= 1e7) return (n / 1e7).toFixed(1) + ' Cr'; if (n >= 1e5) return (n / 1e5).toFixed(1) + 'L'; if (n >= 1e3) return (n / 1e3).toFixed(1) + 'K'; return String(Math.round(n)); };
 const pct = (a, b) => b ? (a / b * 100) : 0;
@@ -3290,14 +3296,21 @@ function mulberry32(a) { return () => { a |= 0; a = a + 0x6D2B79F5 | 0; let t = 
 function adsReal() {
   const R = (S.adSpend || []).filter(a => /meta|facebook|instagram/i.test(a.platform || 'Meta') && a.day);
   if (demo || !R.length) return null;
-  const key = R.length + '|' + R.reduce((x, a) => x + (+a.spend || 0), 0); if (ADS.real && ADS.real.key === key) return ADS.real.d;
+  const key = R.length + '|' + R.reduce((x, a) => x + (+a.spend || 0), 0) + '|' + (S.adInsights || []).length; if (ADS.real && ADS.real.key === key) return ADS.real.d;
   const days = []; for (let d = 59; d >= 0; d--) { const dt = new Date(); dt.setDate(dt.getDate() - d); days.push(dt.getFullYear() + '-' + pad(dt.getMonth() + 1) + '-' + pad(dt.getDate())); }
   const names = [...new Set(R.map(a => a.campaign || 'Campaign'))], last3 = days[days.length - 3], last7 = days[days.length - 7];
   const campaigns = names.map((n, i) => { const rr = R.filter(a => (a.campaign || 'Campaign') === n), sp7 = rr.filter(a => dOnly(a.day) >= last7).reduce((x, a) => x + (+a.spend || 0), 0);
     return { id: 'R' + (i + 1), name: n, objective: rr.some(a => +a.leads) ? 'Leads' : rr.some(a => +a.purchases) ? 'Sales' : 'Traffic', dest: '—', status: rr.some(a => dOnly(a.day) >= last3 && +a.spend) ? 'Active' : 'Paused', budget: Math.round(sp7 / 7) }; });
-  const adsets = campaigns.map(c => ({ id: c.id + 'S1', campaignId: c.id, name: 'All ad sets', audience: '—', placement: '—', budget: c.budget }));
-  const ads = campaigns.map(c => ({ id: c.id + 'S1A1', adsetId: c.id + 'S1', campaignId: c.id, name: 'All ads · ' + c.name, format: '—', headline: '', text: '', q: 1, freqBase: 0 }));
-  const rows = R.map(a => ({ day: dOnly(a.day), adId: campaigns[names.indexOf(a.campaign || 'Campaign')].id + 'S1A1', spend: +a.spend || 0, impressions: +a.impressions || 0, clicks: +a.clicks || 0, leads: +a.leads || 0 }));
+  let adsets = campaigns.map(c => ({ id: c.id + 'S1', campaignId: c.id, name: 'All ad sets', audience: '—', placement: '—', budget: c.budget }));
+  let ads = campaigns.map(c => ({ id: c.id + 'S1A1', adsetId: c.id + 'S1', campaignId: c.id, name: 'All ads · ' + c.name, format: '—', headline: '', text: '', q: 1, freqBase: 0 }));
+  let rows = R.map(a => ({ day: dOnly(a.day), adId: campaigns[names.indexOf(a.campaign || 'Campaign')].id + 'S1A1', spend: +a.spend || 0, impressions: +a.impressions || 0, clicks: +a.clicks || 0, leads: +a.leads || 0 }));
+  const AI = S.adInsights || [], adRows = AI.filter(x => x.level === 'ad');
+  if (adRows.length) {          // real ad sets and ads (creatives) from Meta — synced by Connections → Meta Ads (18 update)
+    const cid = n => { let c = campaigns.find(x => x.name === n); if (!c) { c = { id: 'R' + (campaigns.length + 1), name: n, objective: 'Leads', dest: '—', status: 'Active', budget: 0 }; campaigns.push(c); } return c.id; }, sets = {}, am = {};
+    AI.forEach(x => { const sid = x.level === 'adset' ? x.extId : x.adsetId; if (sid && !sets[sid]) sets[sid] = { id: 'S' + sid, campaignId: cid(x.campaign || 'Campaign'), name: x.level === 'adset' ? x.name : (x.adset || 'Ad set'), audience: '—', placement: '—', budget: 0 }; });
+    adRows.forEach(x => { if (!am[x.extId]) am[x.extId] = { id: 'A' + x.extId, adsetId: 'S' + x.adsetId, campaignId: cid(x.campaign || 'Campaign'), name: x.name || 'Ad', format: '—', headline: '', text: '', q: 1, freqBase: 0 }; });
+    adsets = Object.values(sets); ads = Object.values(am); rows = adRows.map(x => ({ day: dOnly(x.day), adId: 'A' + x.extId, spend: +x.spend || 0, impressions: +x.impressions || 0, clicks: +x.clicks || 0, leads: +x.leads || 0 }));
+  }
   const d = { campaigns, adsets, ads, rows, days, audiences: [], forms: [], real: true }; ADS.real = { key, d }; return d;
 }
 function adsSample() { return adsReal() || adsSampleData(); }
@@ -3393,11 +3406,12 @@ function renderAds(anim) {
   { const real = !!adsReal(), meta = ((CONN.list || {}).meta_ads || {}).connected, mb = $('#adsMode'), bn = $('#adsBanner .grow');
     if (mb) mb.textContent = real ? (meta ? 'Live from Meta' : 'Your spend data') : 'Sample data';
     if (bn) bn.innerHTML = real ? `Showing <b>your real ad spend</b>${meta ? ' synced from Meta' : ' (added by hand or imported)'} — it is also counted in <b>Store → Overview</b> net profit. Audiences, creatives and lead forms appear here in a later update.` : 'Showing <b>sample ad data</b>. CRM numbers (leads, won deals, ROAS) are real. Connect Meta Ads (or add spend in Spend & ROAS) to see your own numbers — they also go into your net profit.'; }
-  $('#adsTabs').innerHTML = ADS_TABS.map(([k, n]) => `<button class="tab ${ADS.tab === k ? 'active' : ''}" data-adtab="${k}">${n}</button>`).join('');
+  if (ADS.tab === 'advisor' && !advOn()) ADS.tab = 'overview';
+  $('#adsTabs').innerHTML = ADS_TABS.filter(([k]) => k !== 'advisor' || advOn()).map(([k, n]) => `<button class="tab ${ADS.tab === k ? 'active' : ''}" data-adtab="${k}">${n}</button>`).join('');
   $('#adsRange').value = String(ADS.range);
   const isCv = ADS.tab === 'canvas'; $('#adsCanvas').hidden = !isCv; $('#adsBody').hidden = isCv;
   if (isCv) { adsCanvas().sync(); return; }
-  const body = $('#adsBody'), f = { spend: () => cmOk() ? cmAdsTab() : `<div class="tp-empty glass"><b>Spend & ROAS needs the 09 database update</b><p class="muted">Run <code>09_commerce.sql</code> in Supabase → SQL Editor, then refresh.</p></div>`, overview: adsOverview, campaigns: adsCampaigns, adsets: adsAdsets, ads: adsAds, audiences: adsAudiences, creatives: adsCreatives, forms: adsForms, funnel: adsFunnel, connect: adsConnect }[ADS.tab] || adsOverview;
+  const body = $('#adsBody'), f = { advisor: () => advBlock('ads', 40, { title: 'AI Advisor — ads', cls: 'flat' }), spend: () => cmOk() ? cmAdsTab() : `<div class="tp-empty glass"><b>Spend & ROAS needs the 09 database update</b><p class="muted">Run <code>09_commerce.sql</code> in Supabase → SQL Editor, then refresh.</p></div>`, overview: adsOverview, campaigns: adsCampaigns, adsets: adsAdsets, ads: adsAds, audiences: adsAudiences, creatives: adsCreatives, forms: adsForms, funnel: adsFunnel, connect: adsConnect }[ADS.tab] || adsOverview;
   body.innerHTML = f();
   stagger(body, anim);
   if (ADS.tab === 'funnel') drawFunnelWires();
@@ -5633,7 +5647,7 @@ async function sbApi(action, d = {}) {
     case 'ping': return 'pong';
     case 'getAll': {
       const acc = await cl.rpc('my_access', { p_ws: ws }); AUTH.access = acc.error ? null : acc.data; AUTH.v7 = !acc.error;
-      const [leads, activities, team, templates, broadcasts, flows, settings, messages, calls, tasks, cstats, orders, products, adSpend, moves] = await Promise.all([
+      const [leads, activities, team, templates, broadcasts, flows, settings, messages, calls, tasks, cstats, orders, products, adSpend, moves, adIns, advDis] = await Promise.all([
         sbAll('leads', 'created_at'), sbAll('activities', 'date_time'), sbAll('team', 'member_id'), sbAll('templates', 'template_name'),
         sbAll('broadcasts', 'broadcast_id'), sbAll('flows', 'flow_id'), sbSettings(),
         sbq(T('messages').select('*').eq('workspace_id', ws).order('time', { ascending: false }).limit(1500)),
@@ -5641,9 +5655,11 @@ async function sbApi(action, d = {}) {
         sbAll('orders', 'created_at').then(r => { AUTH.v8 = true; return r; }, () => { AUTH.v8 = false; return []; }),
         sbAll('products', 'sku').then(r => { AUTH.v9 = true; return r; }, () => { AUTH.v9 = false; return []; }),
         sbq(T('ad_spend').select('*').eq('workspace_id', ws).order('day', { ascending: false }).limit(5000)).catch(() => []),
-        sbq(T('stock_moves').select('*').eq('workspace_id', ws).order('at', { ascending: false }).limit(3000)).then(r => { AUTH.v16 = true; return r; }, () => { AUTH.v16 = false; return []; })]);
+        sbq(T('stock_moves').select('*').eq('workspace_id', ws).order('at', { ascending: false }).limit(3000)).then(r => { AUTH.v16 = true; return r; }, () => { AUTH.v16 = false; return []; }),
+        sbq(T('ad_insights').select('*').eq('workspace_id', ws).gte('day', ymd(new Date(Date.now() - 35 * 864e5))).order('day', { ascending: false }).limit(8000)).then(r => { AUTH.v18 = true; return r; }, () => { AUTH.v18 = false; return []; }),
+        sbq(T('advisor_dismiss').select('*').eq('workspace_id', ws)).catch(() => [])]);
       let stages = null; try { stages = JSON.parse(settings.stagesJson || 'null'); } catch (e) { }
-      return { stockMoves: moves.map(fromRow), products: products.map(fromRow), adSpend: adSpend.map(r => Object.assign(fromRow(r), { id: r.id })), orders: orders.map(fromRow), calls: calls.map(fromRow), tasks: tasks.map(fromRow), campaignStats: cstats.map(fromRow), leads: leads.map(fromRow), activities: activities.map(fromRow), team: team.map(fromRow), templates: templates.map(fromRow), broadcasts: broadcasts.map(fromRow), flows: flows.map(fromRow), messages: messages.reverse().map(fromRow), lists: Array.isArray(stages) && stages.length ? { stages } : {}, settings };
+      return { adInsights: adIns.map(fromRow), advDismiss: advDis.map(fromRow), stockMoves: moves.map(fromRow), products: products.map(fromRow), adSpend: adSpend.map(r => Object.assign(fromRow(r), { id: r.id })), orders: orders.map(fromRow), calls: calls.map(fromRow), tasks: tasks.map(fromRow), campaignStats: cstats.map(fromRow), leads: leads.map(fromRow), activities: activities.map(fromRow), team: team.map(fromRow), templates: templates.map(fromRow), broadcasts: broadcasts.map(fromRow), flows: flows.map(fromRow), messages: messages.reverse().map(fromRow), lists: Array.isArray(stages) && stages.length ? { stages } : {}, settings };
     }
     case 'addLead': {
       if (!String(d.name || '').trim()) throw new Error('Name is required');
@@ -6219,6 +6235,12 @@ document.addEventListener('click', e => { const am = $('#ibAiMenu'); if (am && !
 document.addEventListener('click', e => { if (e.target.closest('[data-impsample]')) downloadSample();
   const b = e.target.closest('[data-impbc]'); if (!b || !IMP.batch) return;
   hideModal('#leadModal'); bcUseBatch(b.dataset.impbc, IMP.batch); });
+/** open Broadcast with exactly these leads (AI Advisor one-click actions) */
+function bcUseIds(ch, ids, label) {
+  BC.tab = ch; BC.node = 'aud'; BC.excluded = new Set(); BC.showList = false;
+  BC.aud = Object.assign({}, BC.aud, { src: 'ids', ids: ids.slice(0, 5000), idsLabel: label || 'Picked by the AI Advisor', stages: [], tag: '', source: '', city: '', assigned: '', past: '', cap: 0 });
+  if (location.hash === '#broadcast') renderBroadcast(); else go('broadcast');
+}
 function bcUseBatch(ch, batch) {
   BC.tab = ch; BC.node = 'msg'; BC.excluded = new Set(); BC.showList = false;
   BC.aud = Object.assign({}, BC.aud, { src: 'filters', stages: [], tag: '', source: batch, city: '', assigned: '', past: '', cap: 0 });
@@ -6252,6 +6274,7 @@ function recentlyContacted(ch, days) {
 function audience() {
   const a = BC.aud;
   if (a.src === 'past' && a.past) { const ids = pastLeads(a.past, a.pastMode); return S.leads.filter(l => ids.has(l.leadId)); }
+  if (a.src === 'ids' && Array.isArray(a.ids)) { const ids = new Set(a.ids); return S.leads.filter(l => ids.has(l.leadId)); }   // a list picked by the AI Advisor
   return S.leads.filter(l => (!a.stages.length || a.stages.includes(l.stage)) && (!a.tag || l.tag === a.tag) && (!a.source || l.source === a.source) && (!a.city || String(l.city || '').toLowerCase() === a.city.toLowerCase()) && (!a.assigned || l.assignedTo === a.assigned));
 }
 function reach(ch) {
@@ -6283,7 +6306,7 @@ function flowHTML(ch) {
 function inspAud(ch) {
   const a = BC.aud, uniq = k => [...new Set(S.leads.map(l => l[k]).filter(Boolean))].sort(), r = reach(ch), segs = segments(), past = bcList().filter(b => (b.channel || 'whatsapp') === ch);
   const sel = (id, label, list, v) => `<label class="bc-f"><span>${label}</span><select class="input sm" data-bcaud="${id}"><option value="">All</option>${list.map(x => `<option ${x === v ? 'selected' : ''}>${esc(x)}</option>`).join('')}</select></label>`;
-  return `${AUTH.role === 'client' ? '' : `<div class="bc-imp"><span class="bc-imp-ic">⇪</span><div class="grow"><b>Numbers in an Excel / CSV file?</b><small>Import them — they are saved as leads and selected here automatically.</small></div><button class="btn sm" data-bcimport>Import Excel / CSV</button></div>`}<div class="bc-seg"><button class="${a.src !== 'past' ? 'on' : ''}" data-bcsrc="filters">By filters</button><button class="${a.src === 'past' ? 'on' : ''}" data-bcsrc="past">Retarget a past campaign</button></div>
+  return `${a.src === 'ids' ? `<div class="bc-imp bc-ids"><span class="bc-imp-ic">✦</span><div class="grow"><b>${esc(a.idsLabel || 'Picked by the AI Advisor')}</b><small>${(a.ids || []).length} people picked by the AI Advisor — untick anyone in “See list”.</small></div><button class="btn sm" data-bcsrc="filters">Use filters instead</button></div>` : ''}${AUTH.role === 'client' ? '' : `<div class="bc-imp"><span class="bc-imp-ic">⇪</span><div class="grow"><b>Numbers in an Excel / CSV file?</b><small>Import them — they are saved as leads and selected here automatically.</small></div><button class="btn sm" data-bcimport>Import Excel / CSV</button></div>`}<div class="bc-seg"><button class="${a.src !== 'past' ? 'on' : ''}" data-bcsrc="filters">By filters</button><button class="${a.src === 'past' ? 'on' : ''}" data-bcsrc="past">Retarget a past campaign</button></div>
     ${a.src === 'past' ? `<div class="bc-fs two"><label class="bc-f"><span>Campaign</span><select class="input sm" data-bcaud="past"><option value="">Choose…</option>${past.map(b => `<option value="${esc(b.broadcastId)}" ${b.broadcastId === a.past ? 'selected' : ''}>${esc(b.name || b.broadcastId)}</option>`).join('')}</select></label>
       <label class="bc-f"><span>People who</span><select class="input sm" data-bcaud="pastMode">${(ch === 'email' ? [['all', 'got it']] : [['unread', "didn't read it"], ['noreply', "didn't reply"], ['replied', 'replied'], ['all', 'got it']]).map(([k, n]) => `<option value="${k}" ${a.pastMode === k ? 'selected' : ''}>${n}</option>`).join('')}</select></label></div>${!past.length ? '<p class="help">No past campaigns on this channel yet.</p>' : ''}`
     : `${segs.length ? `<div class="bc-chips"><span class="muted">Saved:</span>${segs.map((g, i) => `<button class="chip" data-bcseg="${i}">${esc(g.name)}</button>`).join('')}</div>` : ''}
@@ -6437,7 +6460,7 @@ async function renderBroadcast() {
   }
   if (BC.tab === 'whatsapp' && !WA.status) { await waLoadStatus(); }
   if (BC.tab === 'history' && cloud && AUTH.v7 && !BC.statsAt) { BC.statsAt = Date.now(); api('refreshCampaigns').then(cs => { if (cs && cs.length) { S.campaignStats = cs; if (BC.tab === 'history') renderBroadcast(); } }).catch(() => { }); }
-  $$('#bcTabs .tab').forEach(t => t.classList.toggle('active', t.dataset.bctab === BC.tab));
+  $$('#bcTabs .tab').forEach(t => t.classList.toggle('active', t.dataset.bctab === BC.tab)); try { advBcStrip(); } catch (e) { }
   const ae = document.activeElement, keep = ae && ae.closest && ae.closest('#v-broadcast') && /^(INPUT|TEXTAREA)$/.test(ae.tagName) ? { sel: ae.id ? '#' + ae.id : ae.dataset.bcvtext != null ? `[data-bcvtext="${ae.dataset.bcvtext}"]` : '', s: ae.selectionStart, e: ae.selectionEnd } : null;
   $('#bcBodyWrap').innerHTML = (!cloud && !demo && BC.tab !== 'history') ? `<div class="bc-card glass"><b>Broadcasts run on the Nodevers cloud.</b><p class="muted">Sign in (Settings → Accounts) to send WhatsApp and email campaigns.</p></div>`
     : BC.tab === 'history' ? bcHistoryHTML() : composerHTML(BC.tab);
@@ -7184,7 +7207,7 @@ document.addEventListener('click', e => { const t = e.target; if (t.closest('[da
 document.addEventListener('input', e => { if (e.target.id === 'ordQ') { ORD.q = e.target.value; const pos = e.target.selectionStart; renderOrders(); const q = $('#ordQ'); if (q) { q.focus(); q.setSelectionRange(pos, pos); } } });
 
 /* ================= Commerce: store overview, products, inventory, Amazon, Website, analytics, reports, ad spend, channels ================= */
-const CM_TABS = [['overview', 'Overview'], ['amazon', 'Amazon'], ['website', 'Website'], ['products', 'Products'], ['inventory', 'Inventory']];
+const CM_TABS = [['overview', 'Overview'], ['amazon', 'Amazon'], ['website', 'Website'], ['products', 'Products'], ['inventory', 'Inventory'], ['advisor', '✦ Advisor']];
 const CM_CH = ['Amazon', 'Website', 'WhatsApp', 'Direct', 'Flipkart', 'Meesho', 'Other'];
 const CM_CHC = { Amazon: '#F59E0B', Website: 'var(--blue-2)', WhatsApp: 'var(--wa)', Direct: 'var(--green)', Flipkart: '#A78BFA', Meesho: 'var(--coral)', Other: 'var(--faint)' };
 const CM_DEAD = ['Cart', 'Cancelled', 'Refunded', 'RTO', 'Returned'], CM_RET = ['RTO', 'Returned', 'Refunded'];
@@ -7273,11 +7296,12 @@ function cmAlerts() {
 function renderCommerce(anim) {
   const v = $('#v-commerce'); if (!v || !v.classList.contains('active')) return;
   $$('[data-cm]').forEach(b => b.classList.toggle('active', b.dataset.cm === CM.tab));
-  $('#cmTabs').innerHTML = CM_TABS.map(([k, n]) => `<button class="tab ${CM.tab === k ? 'active' : ''}" data-cmtab="${k}">${n}</button>`).join('');
+  if (CM.tab === 'advisor' && !advOn()) CM.tab = 'overview';
+  $('#cmTabs').innerHTML = CM_TABS.filter(([k]) => k !== 'advisor' || advOn()).map(([k, n]) => `<button class="tab ${CM.tab === k ? 'active' : ''}" data-cmtab="${k}">${n}</button>`).join('');
   if (!CM_TABS.some(x => x[0] === CM.tab)) { const old = CM.tab; CM.tab = 'overview'; if (old === 'analytics' || old === 'reports') return go('insales'); if (old === 'ads') { ADS.tab = 'spend'; return go('ads'); } if (old === 'channels') return go('connections'); }
   const box = $('#cmBody');
   if (!cmOk()) { box.innerHTML = `<div class="tp-empty glass"><b>Commerce needs the 09 database update</b><p class="muted">Run <code>08_platform_flows.sql</code> and <code>09_commerce.sql</code> in Supabase → SQL Editor, then refresh.</p></div>`; return; }
-  const f = { overview: cmOverview, products: cmProducts, inventory: cmInventory, amazon: () => cmChannel('Amazon'), website: () => cmChannel('Website'), analytics: cmAnalytics, reports: cmReports, ads: cmAdsTab, channels: cmChannels }[CM.tab] || cmOverview;
+  const f = { advisor: () => advBlock('store', 40, { title: 'AI Advisor — store', cls: 'flat' }), overview: cmOverview, products: cmProducts, inventory: cmInventory, amazon: () => cmChannel('Amazon'), website: () => cmChannel('Website'), analytics: cmAnalytics, reports: cmReports, ads: cmAdsTab, channels: cmChannels }[CM.tab] || cmOverview;
   box.innerHTML = f(); stagger(box, anim);
   box.querySelectorAll('.cm-ks').forEach(k => { const n = k.children.length; k.style.setProperty('--c', n === 6 ? 3 : n === 8 ? 4 : Math.min(n, 5)); });
 }
@@ -7907,15 +7931,194 @@ function renderHome(anim) {
     recent: () => `<div class="rcard glass"><div class="cm-ch-h"><h3>${ord.length ? 'Recent orders' : 'Newest leads'}</h3><a class="bc-link" data-go="${ord.length ? 'orders' : 'leads'}">View all →</a></div>
         ${ord.length ? `<div class="home-list">${ord.slice().sort((a, b) => cmDate(b).localeCompare(cmDate(a)) || String(b.orderId).localeCompare(String(a.orderId), undefined, { numeric: true })).slice(0, 6).map(o => `<div class="home-li" data-ordedit="${esc(o.orderId)}">${cmChTag(o.channel || 'WhatsApp')}<div class="grow"><b>${esc(o.productName || o.items || o.orderId)}</b><small class="muted">${esc(o.extId || o.orderId)} · ${esc(fmtDate(cmDate(o)))}</small></div><b>${inr(cmRev(o) || o.amount)}</b>${cmStBadge(o.status)}</div>`).join('')}</div>`
         : `<div class="home-list">${S.leads.slice().sort((a, b) => String(b.createdOn).localeCompare(String(a.createdOn))).slice(0, 6).map(l => `<div class="home-li" data-open="${esc(l.leadId)}">${avatar(l.name)}<div class="grow"><b>${esc(l.name)}</b><small class="muted">${esc(l.source || '')} · ${esc(fmtDate(l.createdOn))}</small></div><span class="pill stage">${esc(l.stage)}</span></div>`).join('') || '<div class="cm-empty">No leads yet</div>'}</div>`}</div>`,
+    advisor: () => advBlock('all', 4, { more: true }),
     chats: () => unread.length ? `<div class="rcard glass home-chats"><div class="cm-ch-h"><h3>Unread WhatsApp chats</h3><a class="bc-link" data-go="whatsapp">Open inbox →</a></div><div class="home-av">${unread.map(c => `<button class="home-chat" data-homechat="${esc(c.key)}">${avatar(c.name || '')}<b>${esc(String(c.name || '').split(' ')[0])}</b><small>${esc(String((c.last && c.last.text) || '').slice(0, 28))}</small></button>`).join('')}</div></div>` : '',
   };
   const canHL = !document.body.classList.contains('ro') && (demo || (cloud && canAdmin()));
   box.innerHTML = `${homeHero()}<div class="home-hi"><div><h1>${greet}${who ? ', ' + esc(String(who).split(' ')[0]) : ''} 👋</h1><p class="muted">${now.toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'long' })} — here is what needs you today.</p></div>${canHL && !HL.edit ? '<button class="btn sm" data-hlstart title="Move, hide and add cards on this page">✎ Customize</button>' : ''}</div>${homeGrid(W)}`;
   stagger(box, anim);
 }
+/* ================= AI Advisor: daily tips from the business's own numbers + one-click actions =================
+   Rules decide (numbers never come from the AI); free Gemini only writes the optional summary. Nothing changes without a click. */
+const ADV_DEF = { roas: 3, maxCpl: 0, untouched: 2, stuck: 5, stockDays: 7, minSpend: 1000, rto: 15 };
+const ADV_AREAS = [['all', 'All'], ['leads', 'Leads & tasks'], ['email', 'WhatsApp & email'], ['store', 'Store'], ['ads', 'Ads']];
+const ADV_IC = { bad: '●', warn: '!', good: '▲', info: 'i' };
+const ADV = { tips: [], at: 0, sum: '', sumBusy: false, area: 'all' };
+function advCfg() { const p = (() => { try { return JSON.parse((PLAT.s || {}).advisorJson || '{}') || {}; } catch (e) { return {}; } })(), w = (() => { try { return JSON.parse((S.settings || {}).advisorJson || '{}') || {}; } catch (e) { return {}; } })(); return Object.assign({}, ADV_DEF, p, w); }
+const advOn = () => !featOff('advisor') && modulesCfg().advisor !== false;
+function advDismissed() { const now = new Date().toISOString(), list = demo ? (store.get('nv.advDis') || []) : (S.advDismiss || []); return new Set(list.filter(d => String(d.until) > now).map(d => d.tipKey)); }
+const daysAgo = n => ymd(new Date(Date.now() - n * 864e5));
+const advInr = n => inr(Math.round(n));
+function advMetaUrl(level, id) {
+  const act = (((CONN.list || {}).meta_ads || {}).config || {}).ad_account || '';
+  const base = 'https://adsmanager.facebook.com/adsmanager/manage/' + (level === 'ad' ? 'ads' : level === 'adset' ? 'adsets' : 'campaigns');
+  return base + '?' + [act ? 'act=' + encodeURIComponent(act) : '', id ? `selected_${level === 'ad' ? 'ad' : level === 'adset' ? 'adset' : 'campaign'}_ids=${encodeURIComponent(id)}` : ''].filter(Boolean).join('&');
+}
+/** all tips for today, most important first */
+function advTips() {
+  if (!advOn()) return [];
+  const c = advCfg(), out = [], today = todayStr(), mods = modulesCfg(), on = k => !featOff(k) && mods[k] !== false, L = S.leads || [], open = L.filter(l => !isClosed(l));
+  const team = (S.team || []).filter(t => t.active !== false && t.active !== 'false' && t.name).map(t => t.name), first = stages()[0];
+  const touch = new Map(), bump = (id, d) => { if (!id || !d) return; const v = String(d).slice(0, 10); if (!touch.has(id) || touch.get(id) < v) touch.set(id, v); };
+  (S.activities || []).forEach(a => { if (!/^Lead Added|Form Submitted|Message Received|Stage$/i.test(a.type || '')) bump(a.leadId, a.dateTime); });
+  msgs().forEach(m => { if (m.direction === 'out') bump(m.leadId, m.time); }); (S.calls || []).forEach(x => bump(x.leadId, x.calledAt));
+  const lastT = l => touch.get(l.leadId) || '', idle = (l, d) => { const t = lastT(l); return !t || t <= daysAgo(d); }, names = arr => arr.slice(0, 3).map(l => l.name).join(', ') + (arr.length > 3 ? ` +${arr.length - 3}` : '');
+  const bc = (ch, ids) => on('campaigns') ? [{ label: ch === 'email' ? 'Send an email' : 'Send WhatsApp template', k: 'bc', ch, ids }] : [];
+  const tk = (ids, title) => on('tasks') ? [{ label: 'Create follow-up tasks', k: 'tasks', ids, title }] : [];
+  // ---------- leads & tasks ----------
+  const waNew = open.filter(l => /whatsapp/i.test(l.source || '') && dOnly(l.createdOn) >= daysAgo(7) && l.stage === first && (!lastT(l) || lastT(l) <= dOnly(l.createdOn)));
+  if (waNew.length) out.push({ key: 'wa_new', area: 'leads', lvl: waNew.length >= 5 ? 'bad' : 'warn', score: 90 + waNew.length, title: `${waNew.length} WhatsApp lead${waNew.length > 1 ? 's are' : ' is'} waiting for a follow-up`, why: `New in the last 7 days and nobody has replied or called yet (${names(waNew)}). Fast replies win most deals.`, acts: [...bc('whatsapp', waNew.map(l => l.leadId)), ...tk(waNew.map(l => l.leadId), 'Follow up')] });
+  const hot = open.filter(l => (l.tag === 'Hot' || (l.followUpDate && l.followUpDate < today)) && idle(l, c.untouched) && !waNew.includes(l));
+  if (hot.length) out.push({ key: 'hot_idle', area: 'leads', lvl: 'warn', score: 80 + hot.length, title: `${hot.length} hot / follow-up lead${hot.length > 1 ? 's' : ''} not touched for ${c.untouched}+ days`, why: `Tagged Hot or follow-up date passed, but no call, message or note since then (${names(hot)}).`, acts: [...tk(hot.map(l => l.leadId), 'Call back'), ...bc('whatsapp', hot.map(l => l.leadId))] });
+  const late = stages().slice(2).filter(s2 => !/won|lost/i.test(s2)), stuck = open.filter(l => late.includes(l.stage) && idle(l, c.stuck));
+  if (stuck.length) out.push({ key: 'stuck', area: 'leads', lvl: 'warn', score: 70 + stuck.length, title: `${stuck.length} deal${stuck.length > 1 ? 's are' : ' is'} stuck at ${[...new Set(stuck.map(l => l.stage))].slice(0, 2).join(' / ')}`, why: `No contact for ${c.stuck}+ days. Worth ${advInr(cmSum(stuck, l => cmN(l.budget)))} in budget. A short reminder often restarts the talk.`, acts: [...bc('whatsapp', stuck.map(l => l.leadId)), ...tk(stuck.map(l => l.leadId), 'Push the deal')] });
+  const unas = open.filter(l => !l.assignedTo);
+  if (team.length >= 2 && unas.length >= 3) out.push({ key: 'unassigned', area: 'leads', lvl: 'info', score: 50 + unas.length, title: `${unas.length} open leads have no owner`, why: `Leads without an owner are easy to forget. Share them between your ${team.length} team members.`, acts: [{ label: 'Assign round-robin', k: 'assign', ids: unas.map(l => l.leadId) }] });
+  if (on('tasks')) { const od = (S.tasks || []).filter(t => t.status !== 'Done' && t.dueAt && dOnly(t.dueAt) < today);
+    if (od.length) out.push({ key: 'overdue', area: 'leads', lvl: od.length >= 5 ? 'bad' : 'warn', score: 75 + od.length, title: `${od.length} task${od.length > 1 ? 's are' : ' is'} overdue`, why: `Oldest from ${fmtDate(dOnly(od.map(t => t.dueAt).sort()[0]))}. Move them to today or close the ones that are done.`, acts: [{ label: 'Move all to today', k: 'shift', ids: od.map(t => t.taskId) }, { label: 'Open tasks', k: 'go', view: 'tasks' }] }); }
+  const wonW = L.filter(l => l.stage === 'Won' && dOnly(l.updatedAt || l.createdOn) >= daysAgo(7));
+  if (wonW.length) out.push({ key: 'won_week', area: 'leads', lvl: 'good', score: 10, title: `${wonW.length} deal${wonW.length > 1 ? 's' : ''} won this week`, why: `Worth ${advInr(cmSum(wonW, l => cmN(l.budget)))}. Ask happy customers for a review or a referral.`, acts: [] });
+  // ---------- WhatsApp & email ----------
+  const okE = e => /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(String(e || '')), mailed = new Set((S.activities || []).filter(a => a.type === 'Email Sent').map(a => a.leadId));
+  const neverMail = L.filter(l => okE(l.email) && !l.emailOptOut && l.emailOptOut !== 'true' && !mailed.has(l.leadId));
+  if (neverMail.length >= 10) out.push({ key: 'email_never', area: 'email', lvl: 'info', score: 40 + Math.min(30, neverMail.length / 10), title: `${neverMail.length} leads have an email but never got one`, why: (BC.email && BC.email.connected === false) ? 'Connect your email first (Connections → Email), then send them an offer or a catalogue.' : 'An email with your catalogue or offer is free and reaches people who do not read WhatsApp.', acts: (BC.email && BC.email.connected === false) ? [{ label: 'Connect email', k: 'go', view: 'connections', conn: 'email' }] : bc('email', neverMail.map(l => l.leadId)) });
+  const optE = L.filter(l => l.emailOptOut === true || l.emailOptOut === 'true').length;
+  if (mailed.size >= 50 && optE / mailed.size > 0.05) out.push({ key: 'email_unsub', area: 'email', lvl: 'warn', score: 45, title: `${Math.round(optE / mailed.size * 100)}% of emailed people unsubscribed`, why: `${optE} of ${mailed.size}. Send fewer, more useful emails and only to people who asked for them.`, acts: [] });
+  const camps = (S.campaignStats || []).filter(x => (x.channel || 'whatsapp') === 'whatsapp' && +x.sent >= 20).sort((a, b) => String(b.sentAt).localeCompare(String(a.sentAt)));
+  if (camps[0] && +camps[0].read / +camps[0].sent < 0.4) out.push({ key: 'wa_lowread_' + camps[0].broadcastId, area: 'email', lvl: 'warn', score: 55, title: `Only ${Math.round(+camps[0].read / +camps[0].sent * 100)}% read “${camps[0].name || camps[0].template}”`, why: `${camps[0].read} of ${camps[0].sent} read it. Send a short follow-up to the people who did not read it.`, acts: on('campaigns') ? [{ label: 'Retarget non-readers', k: 'go', view: 'broadcast', bctab: 'history' }] : [] });
+  const best = camps.filter(x => +x.delivered).sort((a, b) => (+b.replied / +b.delivered) - (+a.replied / +a.delivered))[0];
+  if (best && +best.replied >= 3) out.push({ key: 'wa_best_' + best.broadcastId, area: 'email', lvl: 'good', score: 12, title: `“${best.template || best.name}” gets the most replies`, why: `${Math.round(+best.replied / +best.delivered * 100)}% of people replied. Reuse this template for your next campaign.`, acts: [] });
+  const fail = msgs().filter(m => m.direction === 'out' && m.status === 'failed' && dOnly(m.time) >= daysAgo(7)), pay = fail.filter(m => /131042|payment/i.test(m.error || ''));
+  if (pay.length) out.push({ key: 'wa_payment', area: 'email', lvl: 'bad', score: 99, title: `${pay.length} WhatsApp message${pay.length > 1 ? 's' : ''} failed — add a payment method`, why: 'WhatsApp blocks business-started messages until a payment method is added in WhatsApp Manager → Payment settings.', acts: [{ label: 'Open WhatsApp Manager', k: 'url', url: 'https://business.facebook.com/wa/manage/home/' }] });
+  else if (fail.length >= 5) out.push({ key: 'wa_failed', area: 'email', lvl: 'warn', score: 60, title: `${fail.length} WhatsApp messages failed this week`, why: 'Open Inbox — the red line under each failed message says why (wrong number, 24-hour rule, template paused).', acts: [{ label: 'Open Inbox', k: 'go', view: 'whatsapp' }] });
+  // ---------- store ----------
+  const P = S.products || [];
+  if (on('store') && P.length) {
+    const o30 = (S.orders || []).filter(o => cmDate(o) >= daysAgo(29)), by30 = new Map(cmBySku(o30).map(r => [r.sku, r])), o60 = new Set((S.orders || []).filter(o => cmDate(o) >= daysAgo(59) && !CM_DEAD.includes(o.status)).map(o => o.sku));
+    const soon = P.filter(p => { const u = (by30.get(p.sku) || {}).units || 0; return u > 0 && cmN(p.stock) > 0 && cmN(p.stock) / (u / 30) < c.stockDays; }), outSell = P.filter(p => cmN(p.stock) <= 0 && ((by30.get(p.sku) || {}).units || 0) > 0);
+    if (outSell.length) out.push({ key: 'out_selling', area: 'store', lvl: 'bad', score: 95, title: `${outSell.length} selling product${outSell.length > 1 ? 's are' : ' is'} out of stock`, why: `${outSell.slice(0, 3).map(p => p.name || p.sku).join(', ')} sold ${(n => n + ' unit' + (n === 1 ? '' : 's'))(outSell.reduce((a, p) => a + ((by30.get(p.sku) || {}).units || 0), 0))} in 30 days. Every day out of stock is lost sales.`, acts: [{ label: 'Create reorder tasks', k: 'reorder', skus: outSell.map(p => p.sku) }] });
+    if (soon.length) out.push({ key: 'stock_soon', area: 'store', lvl: 'warn', score: 85, title: `${soon.length} product${soon.length > 1 ? 's' : ''} will run out in less than ${c.stockDays} days`, why: soon.slice(0, 3).map(p => `${p.name || p.sku}: ${cmN(p.stock)} left (~${Math.floor(cmN(p.stock) / (((by30.get(p.sku) || {}).units || 1) / 30))} days)`).join(' · '), acts: [{ label: 'Create reorder tasks', k: 'reorder', skus: soon.map(p => p.sku) }] });
+    const dead = P.filter(p => cmN(p.stock) > 0 && !o60.has(p.sku) && dOnly(p.createdAt || '') <= daysAgo(60)), deadVal = cmSum(dead, p => cmN(p.stock) * cmN(p.cost));
+    if (dead.length && deadVal > 0) out.push({ key: 'dead_stock', area: 'store', lvl: 'info', score: 35, title: `${advInr(deadVal)} is stuck in ${dead.length} product${dead.length > 1 ? 's' : ''} with no sale in 60 days`, why: `${dead.slice(0, 3).map(p => p.name || p.sku).join(', ')}. A combo offer or a WhatsApp offer to past buyers frees this cash.`, acts: [{ label: 'Plan an offer (task)', k: 'task1', title: `Plan an offer for slow products: ${dead.slice(0, 5).map(p => p.name || p.sku).join(', ')}` }, { label: 'Open inventory', k: 'go', view: 'commerce', cm: 'inventory' }] });
+    const live30 = o30.filter(o => o.status !== 'Cart'), back = live30.filter(o => CM_RET.includes(o.status));
+    if (live30.length >= 10 && back.length / live30.length * 100 > c.rto) { const st = {}; back.forEach(o => { if (o.customerState) st[o.customerState] = (st[o.customerState] || 0) + 1; }); const top = Object.entries(st).sort((a, b) => b[1] - a[1])[0], cod = back.filter(o => /cod/i.test(o.payment || o.status)).length;
+      out.push({ key: 'rto_high', area: 'store', lvl: 'bad', score: 88, title: `${Math.round(back.length / live30.length * 100)}% of orders came back (RTO / return)`, why: `${back.length} of ${live30.length} in 30 days${top ? `, most from ${top[0]} (${top[1]})` : ''}${cod ? `, ${cod} were COD` : ''}. Confirm COD orders on WhatsApp before shipping, or give a small prepaid discount.`, acts: [{ label: 'See returned orders', k: 'go', view: 'orders', ordst: 'RTO' }, { label: 'Create a task', k: 'task1', title: 'Confirm COD orders on WhatsApp before shipping' }] }); }
+    const loss = cmBySku(o30).filter(r => r.units >= 2 && r.profit < 0);
+    if (loss.length) out.push({ key: 'loss_products', area: 'store', lvl: 'bad', score: 82, title: `${loss.length} product${loss.length > 1 ? 's sell' : ' sells'} at a loss`, why: `${loss.slice(0, 3).map(r => `${r.name || r.sku} (${advInr(r.profit)})`).join(' · ')} after fees, shipping and cost. Raise the price or cut a cost.`, acts: [{ label: 'Open products', k: 'go', view: 'commerce', cm: 'products' }] });
+    const noCost = P.filter(p => p.cost === '' && by30.has(p.sku));
+    if (noCost.length) out.push({ key: 'no_cost', area: 'store', lvl: 'info', score: 30, title: `${noCost.length} selling product${noCost.length > 1 ? 's have' : ' has'} no cost price`, why: 'Without the cost, profit looks higher than it is. Add the cost per unit in Products.', acts: [{ label: 'Open products', k: 'go', view: 'commerce', cm: 'products' }] });
+    const wait = (S.orders || []).filter(o => ['New', 'Confirmed', 'COD', 'Processing', 'Paid'].includes(o.status) && cmDate(o) <= daysAgo(2));
+    if (wait.length) out.push({ key: 'orders_wait', area: 'store', lvl: 'warn', score: 78, title: `${wait.length} order${wait.length > 1 ? 's are' : ' is'} not shipped after 2+ days`, why: 'Late shipping brings cancellations and bad reviews. Ship them or tell the customer the date.', acts: [{ label: 'Open orders', k: 'go', view: 'orders', ordst: '' }] });
+    const topP = cmBySku(o30).sort((a, b) => b.rev - a.rev)[0];
+    if (topP && topP.rev > 0) out.push({ key: 'top_product', area: 'store', lvl: 'good', score: 8, title: `${topP.name || topP.sku} is your best seller`, why: `${topP.units} units, ${advInr(topP.rev)} revenue in 30 days. Keep it in stock and use it in your ads.`, acts: [] });
+  }
+  // ---------- ads ----------
+  if (on('ads')) {
+    const A7 = (S.adSpend || []).filter(a => dOnly(a.day) >= daysAgo(6)), Ap = (S.adSpend || []).filter(a => dOnly(a.day) >= daysAgo(13) && dOnly(a.day) < daysAgo(6));
+    const spend = cmSum(A7, a => cmN(a.spend)), leads = cmSum(A7, a => cmN(a.leads)), days = Math.max(new Set(A7.map(a => dOnly(a.day))).size, new Set((S.adInsights || []).filter(x => dOnly(x.day) >= daysAgo(6)).map(x => dOnly(x.day))).size), cpl = leads ? spend / leads : 0, maxCpl = +c.maxCpl || cpl * 1.5;
+    if (!(S.adSpend || []).length && !((CONN.list || {}).meta_ads || {}).connected) { if (L.some(l => /facebook|instagram|meta/i.test(l.source || ''))) out.push({ key: 'ads_connect', area: 'ads', lvl: 'info', score: 20, title: 'Connect Meta Ads to get ad tips', why: 'You get leads from Facebook / Instagram. Connect the ad account to see which campaign brings customers, not just clicks.', acts: [{ label: 'Connect Meta Ads', k: 'go', view: 'connections', conn: 'meta_ads' }] }); }
+    else if (spend >= c.minSpend && days >= 3) {
+      const byC = {}; A7.forEach(a => { const k = a.campaign || 'Campaign', x = byC[k] = byC[k] || { name: k, id: a.campaignId || '', spend: 0, leads: 0, rev: 0, buy: 0 }; x.spend += cmN(a.spend); x.leads += cmN(a.leads); x.rev += cmN(a.revenue); x.buy += cmN(a.purchases); if (a.campaignId) x.id = a.campaignId; });
+      Object.values(byC).forEach(x => { const roas = x.spend ? x.rev / x.spend : 0;
+        if (roas >= +c.roas && x.spend >= c.minSpend * 0.3) out.push({ key: 'scale_' + x.name, area: 'ads', lvl: 'good', score: 70, title: `“${x.name}” ROAS ${roas.toFixed(1)} — raise its budget by about 20%`, why: `${advInr(x.spend)} spent → ${advInr(x.rev)} sales in 7 days (target ROAS ${c.roas}). Increase slowly (max 20% a day) so Meta keeps learning.`, acts: [{ label: 'Open in Meta Ads Manager', k: 'url', url: advMetaUrl('campaign', x.id) }] });
+        if (x.leads && x.leads >= 3 && cpl && x.spend / x.leads > maxCpl && Object.keys(byC).length > 1) out.push({ key: 'cpl_camp_' + x.name, area: 'ads', lvl: 'warn', score: 66, title: `“${x.name}” leads cost ${advInr(x.spend / x.leads)} (average ${advInr(cpl)})`, why: `${x.leads} leads for ${advInr(x.spend)} in 7 days. Test a new creative or a tighter audience before spending more.`, acts: [{ label: 'Open in Meta Ads Manager', k: 'url', url: advMetaUrl('campaign', x.id) }] }); });
+      const I7 = (S.adInsights || []).filter(x => dOnly(x.day) >= daysAgo(6)), agg = lvl => { const m = {}; I7.filter(x => x.level === lvl).forEach(x => { const r = m[x.extId] = m[x.extId] || { id: x.extId, name: x.name, campaign: x.campaign, spend: 0, leads: 0 }; r.spend += cmN(x.spend); r.leads += cmN(x.leads); }); return Object.values(m); };
+      agg('adset').forEach(x => { if (cpl && ((x.leads && x.spend / x.leads > maxCpl && x.spend >= cpl * 2) || (!x.leads && x.spend >= Math.max(cpl * 2, c.minSpend * 0.2)))) out.push({ key: 'adset_' + x.id, area: 'ads', lvl: 'bad', score: 77, title: `Ad set “${x.name}” — ${x.leads ? 'leads cost ' + advInr(x.spend / x.leads) : 'no leads yet'}, pause it`, why: `${advInr(x.spend)} spent in 7 days for ${x.leads} lead${x.leads === 1 ? '' : 's'} (account average ${advInr(cpl)} per lead). Campaign: ${x.campaign}.`, acts: [{ label: 'Pause in Meta Ads Manager', k: 'url', url: advMetaUrl('adset', x.id) }] }); });
+      const ads = agg('ad').filter(x => x.leads >= 3).sort((a, b) => a.spend / a.leads - b.spend / b.leads);
+      if (ads[0] && cpl && ads[0].spend / ads[0].leads < cpl * 0.8) out.push({ key: 'best_ad_' + ads[0].id, area: 'ads', lvl: 'good', score: 60, title: `Creative “${ads[0].name}” brings the cheapest leads`, why: `${advInr(ads[0].spend / ads[0].leads)} per lead vs ${advInr(cpl)} average (${ads[0].leads} leads in 7 days). Make 2–3 new ads in the same style.`, acts: [{ label: 'Open the ad in Meta', k: 'url', url: advMetaUrl('ad', ads[0].id) }] });
+      const sp0 = cmSum(Ap, a => cmN(a.spend)), le0 = cmSum(Ap, a => cmN(a.leads));
+      if (sp0 && le0 && spend > sp0 * 1.2 && leads < le0 * 0.8) out.push({ key: 'ads_worse', area: 'ads', lvl: 'warn', score: 64, title: `Spend up ${Math.round((spend / sp0 - 1) * 100)}% but leads down ${Math.round((1 - leads / le0) * 100)}% this week`, why: `${advInr(spend)} → ${leads} leads, last week ${advInr(sp0)} → ${le0} leads. Check which ad set got the extra money.`, acts: [{ label: 'Open Ads Manager', k: 'go', view: 'ads' }] });
+    }
+    // CRM quality: which campaign's leads actually buy (Madgicx can not see this)
+    const camp = l => { const m = String(l.notes || '').match(/Campaign:\s*([^·\n]+)/); return m ? m[1].trim() : ''; }, cl = L.filter(l => dOnly(l.createdOn) >= daysAgo(60) && camp(l)), byQ = {};
+    cl.forEach(l => { const k = camp(l), x = byQ[k] = byQ[k] || { name: k, n: 0, won: 0 }; x.n++; if (l.stage === 'Won') x.won++; });
+    const q = Object.values(byQ).filter(x => x.n >= 5).sort((a, b) => b.won / b.n - a.won / a.n);
+    if (q.length >= 2 && q[0].won && q[0].won / q[0].n >= 2 * (q[q.length - 1].won / q[q.length - 1].n || 0.0001)) { const a = q[0], b = q[q.length - 1];
+      out.push({ key: 'crm_quality', area: 'ads', lvl: 'good', score: 74, title: `“${a.name}” leads buy ${Math.round(a.won / a.n * 100)}% of the time, “${b.name}” only ${Math.round(b.won / b.n * 100)}%`, why: `From your CRM: ${a.won} of ${a.n} vs ${b.won} of ${b.n} leads became customers (60 days). Move budget towards “${a.name}”.`, acts: [{ label: 'Open in Meta Ads Manager', k: 'url', url: advMetaUrl('campaign', '') }] }); }
+  }
+  const dis = advDismissed();
+  return out.filter(t => !dis.has(t.key)).sort((a, b) => b.score - a.score);
+}
+/* ---------- UI ---------- */
+function advTipHTML(t, i) {
+  return `<div class="adv-tip ${t.lvl}" data-advkey="${esc(t.key)}"><span class="adv-ic">${ADV_IC[t.lvl] || 'i'}</span><div class="grow"><b>${esc(t.title)}</b><p>${esc(t.why)}</p>${t.acts.length ? `<div class="adv-acts">${t.acts.map((a, j) => `<button type="button" class="btn sm ${j ? '' : 'primary'}" data-advact="${i}|${j}">${esc(a.label)}${a.k === 'url' ? ' ↗' : ''}</button>`).join('')}</div>` : ''}</div><button type="button" class="ibtn adv-x" data-advdis="${esc(t.key)}" title="Ignore for 7 days">${I.x}</button></div>`;
+}
+/** a tip list for one area (or all); limit = how many */
+function advBlock(area, limit, opts) {
+  opts = opts || {}; if (!advOn()) return '';
+  ADV.tips = advTips(); const list = ADV.tips.filter(t => area === 'all' || t.area === area), can = demo || (cloud && canAdmin()), ro = document.body.classList.contains('ro');
+  const head = `<div class="adv-h"><span class="adv-logo">✦</span><div class="grow"><b>${opts.title || 'AI Advisor'}</b><small class="muted">${list.length ? `${list.length} tip${list.length > 1 ? 's' : ''} from your own numbers` : 'Nothing urgent — all good for now'}</small></div>${list.length && !opts.noAi ? '<button type="button" class="btn sm" data-advsum>✨ AI summary</button>' : ''}${can && !opts.noCfg ? '<button type="button" class="ibtn" data-advcfg title="Advisor settings">⚙</button>' : ''}${opts.more && list.length > limit ? `<button type="button" class="btn sm" data-advall="${area}">See all ${list.length}</button>` : ''}</div>`;
+  const sum = ADV.sum && !opts.noAi ? `<div class="adv-sum">${ADV.sum}</div>` : '';
+  return `<div class="adv glass ${opts.cls || ''}" data-advarea="${area}">${head}${sum}<div class="adv-list">${list.slice(0, limit || 99).map(t => advTipHTML(t, ADV.tips.indexOf(t))).join('') || `<div class="cm-empty">${area === 'ads' ? 'No ad tips yet — they appear after at least 3 days and ₹' + advCfg().minSpend + ' of spend.' : 'No tips right now. Check back later.'}</div>`}</div>${ro ? '<p class="help" style="margin:8px 0 0">View only — you can read the tips but not run the actions.</p>' : ''}</div>`;
+}
+function openAdvisor(area) {
+  ADV.area = area || 'all';
+  const draw = () => { $('#stageBox').innerHTML = `<div class="m-head"><h2>✦ AI Advisor</h2><button class="ibtn" data-close>${I.x}</button></div><div class="tabs" style="margin-bottom:10px">${ADV_AREAS.map(([k, n]) => `<button class="tab ${ADV.area === k ? 'active' : ''}" data-advtab="${k}">${n}</button>`).join('')}</div>${advBlock(ADV.area, 99, { cls: 'flat' })}`;
+    $$('#stageBox [data-advtab]').forEach(b => b.onclick = () => { ADV.area = b.dataset.advtab; draw(); }); };
+  $('#stageBox').classList.add('pl-ed-box'); draw(); showModal('#stageModal');
+}
+function advRefresh() { const v = activeView(); if ($('#stageModal.show') && $('#stageBox .adv')) { const a = $('#stageBox .adv').dataset.advarea; $('#stageBox .adv').outerHTML = advBlock(a, 99, { cls: 'flat' }); } (VIEW_RENDER[v] || (() => { }))(); if (v === 'broadcast') advBcStrip(); }
+async function advDismiss(key, days) {
+  const until = new Date(Date.now() + (days || 7) * 864e5).toISOString();
+  if (demo) { const l = (store.get('nv.advDis') || []).filter(d => d.tipKey !== key); l.push({ tipKey: key, until }); store.set('nv.advDis', l); }
+  else { S.advDismiss = (S.advDismiss || []).filter(d => d.tipKey !== key).concat({ tipKey: key, until }); try { await sbq(AUTH.client.from('advisor_dismiss').upsert({ workspace_id: AUTH.ws, tip_key: key.slice(0, 120), until, by_name: me() || '' }, { onConflict: 'workspace_id,tip_key' })); } catch (e) { /* before the 18 update it is only hidden on this device */ } }
+}
+async function advRun(t, a) {
+  if (document.body.classList.contains('ro')) return toast('View only — ask the owner', true);
+  const leads = (a.ids || []).map(id => (S.leads || []).find(l => l.leadId === id)).filter(Boolean), at = (d => `${d} 18:00`)(todayStr());
+  try {
+    if (a.k === 'bc') { if (!leads.length) return toast('Nobody left in this list', true); hideModal('#stageModal'); bcUseIds(a.ch, leads.map(l => l.leadId), t.title); toast(`${leads.length} people picked — choose the ${a.ch === 'email' ? 'email' : 'template'} and send`); return; }
+    if (a.k === 'url') { window.open(a.url, '_blank', 'noopener'); return; }
+    if (a.k === 'go') { hideModal('#stageModal'); if (a.cm) { CM.tab = a.cm; store.set('nv.cmTab', a.cm); } if (a.ordst !== undefined && typeof ORD !== 'undefined') ORD.st = a.ordst; if (a.bctab) BC.tab = a.bctab; if (a.conn) { CONN.open = a.conn; store.set('nv.connOpen', a.conn); } return go(a.view); }
+    if (a.k === 'tasks') { const L2 = leads.slice(0, 50); if (!L2.length) return toast('Nobody left in this list', true); if (!confirm(`Create ${L2.length} follow-up task${L2.length > 1 ? 's' : ''} for today?`)) return;
+      for (const l of L2) await api('saveTask', { title: `${a.title || 'Follow up'}: ${l.name}`, leadId: l.leadId, dueAt: at, priority: l.tag === 'Hot' ? 'High' : 'Medium', assignedTo: l.assignedTo || me(), status: 'Open', source: 'advisor', notes: t.title });
+      toast(`✓ ${L2.length} task${L2.length > 1 ? 's' : ''} created — see Tasks`); }
+    else if (a.k === 'assign') { const team = (S.team || []).filter(x => x.active !== false && x.active !== 'false' && x.name).map(x => x.name); if (team.length < 2) return toast('Add team members first (Team → Add Member)', true); const L2 = leads.filter(l => !l.assignedTo).slice(0, 100); if (!confirm(`Share ${L2.length} leads between ${team.join(', ')}?`)) return;
+      let i = 0; for (const l of L2) { await api('updateLead', { id: l.leadId, assignedTo: team[i++ % team.length] }); } toast(`✓ ${L2.length} leads assigned`); }
+    else if (a.k === 'shift') { const T2 = (a.ids || []).map(id => (S.tasks || []).find(x => x.taskId === id)).filter(Boolean).slice(0, 100); if (!confirm(`Move ${T2.length} overdue task${T2.length > 1 ? 's' : ''} to today?`)) return;
+      for (const x of T2) await api('saveTask', Object.assign({}, x, { dueAt: `${todayStr()} ${String(x.dueAt || '').slice(11, 16) || '18:00'}` })); toast(`✓ ${T2.length} task${T2.length > 1 ? 's' : ''} moved to today`); }
+    else if (a.k === 'reorder') { const P2 = (a.skus || []).map(cmProd).filter(Boolean).slice(0, 50); if (!confirm(`Create ${P2.length} reorder task${P2.length > 1 ? 's' : ''}?`)) return;
+      const due = ymd(new Date(Date.now() + 864e5)) + ' 11:00'; for (const p of P2) await api('saveTask', { title: `Reorder ${p.name || p.sku} (${cmN(p.stock)} left)`, notes: `SKU ${p.sku} · AI Advisor`, dueAt: due, priority: cmN(p.stock) <= 0 ? 'High' : 'Medium', assignedTo: me(), status: 'Open', source: 'stock', leadId: '' }); toast(`✓ ${P2.length} reorder task${P2.length > 1 ? 's' : ''} created`); }
+    else if (a.k === 'task1') { await api('saveTask', { title: a.title.slice(0, 200), notes: t.why.slice(0, 500), dueAt: at, priority: 'Medium', assignedTo: me(), status: 'Open', source: 'advisor', leadId: '' }); toast('✓ Task created — see Tasks'); }
+    await advDismiss(t.key, 1); await refreshData(); advRefresh();
+  } catch (e) { toast(e.message, true); }
+}
+async function advSummary(btn) {
+  const tips = (ADV.tips.length ? ADV.tips : advTips()).slice(0, 8); if (!tips.length) return;
+  if (!cloud) { ADV.sum = '<ul>' + tips.slice(0, 4).map(t => `<li><b>${esc(t.title)}</b></li>`).join('') + '</ul><small class="muted">Demo — sign in for the AI-written summary.</small>'; return advRefresh(); }
+  btn.disabled = true; btn.textContent = 'Thinking…';
+  try { const r = await fnCall('ai-write', { mode: 'advisor', tips: tips.map(t => ({ area: t.area, title: t.title, why: t.why })), lang: /hi|hinglish/i.test(navigator.language) ? 'hi' : (store.get('nv.advLang') || 'hi'), business: AUTH.wsName || '' });
+    ADV.sum = esc(r.text || '').replace(/\*\*([^*]+)\*\*/g, '<b>$1</b>').split('\n').filter(Boolean).map(x => /^[-*•]\s/.test(x) ? `<li>${x.replace(/^[-*•]\s*/, '')}</li>` : `<p>${x}</p>`).join('').replace(/(<li>.*<\/li>)/s, '<ul>$1</ul>'); advRefresh(); }
+  catch (e) { toast(/advisor|unknown|mode/i.test(e.message) ? 'AI summary needs the ai-write update in Supabase' : e.message, true); btn.disabled = false; btn.textContent = '✨ AI summary'; }
+}
+function openAdvSettings(platform) {
+  const c = platform ? Object.assign({}, ADV_DEF, (() => { try { return JSON.parse(PLAT.s.advisorJson || '{}'); } catch (e) { return {}; } })()) : advCfg();
+  const f = (id, label, v, help) => `<div class="field"><label>${label}</label><input class="input" type="number" min="0" id="${id}" value="${esc(v)}">${help ? `<small class="muted">${help}</small>` : ''}</div>`;
+  $('#stageBox').classList.remove('pl-ed-box');
+  $('#stageBox').innerHTML = `<div class="m-head"><h2>${platform ? 'AI Advisor — defaults for every client' : 'AI Advisor settings'}</h2><button class="ibtn" data-close>${I.x}</button></div>
+    <p class="help" style="margin-top:0">${platform ? 'Clients start with these numbers and can change them for their own business.' : 'Tell the Advisor what “good” means for your business. Only owners and admins can change this.'}</p>
+    <div class="form" style="grid-template-columns:1fr 1fr">${f('avRoas', 'Target ROAS (sales ÷ ad spend)', c.roas, 'Above this, the Advisor says “raise the budget”.')}${f('avCpl', 'Highest OK cost per lead (₹)', c.maxCpl, '0 = automatic (1.5 × your average).')}
+      ${f('avUnt', 'Hot lead untouched for (days)', c.untouched)}${f('avStk', 'Deal stuck after (days)', c.stuck)}${f('avDays', 'Warn when stock lasts less than (days)', c.stockDays)}${f('avRto', 'Warn when returns are above (%)', c.rto)}
+      ${f('avMin', 'Ad tips only after this spend in 7 days (₹)', c.minSpend, 'So the Advisor never judges an ad on too little data.')}</div>
+    <div class="m-foot"><div class="grow"></div><button class="btn" data-close>Cancel</button><button class="btn primary" id="avSave">Save</button></div>`;
+  $('#avSave').onclick = async () => { const v = id => Math.max(0, +$('#' + id).value || 0), val = JSON.stringify({ roas: v('avRoas') || 3, maxCpl: v('avCpl'), untouched: v('avUnt') || 2, stuck: v('avStk') || 5, stockDays: v('avDays') || 7, rto: v('avRto') || 15, minSpend: v('avMin') });
+    try { if (platform) await platSave('advisorJson', val); else if (demo) S.settings = Object.assign({}, S.settings, { advisorJson: val }); else S.settings = Object.assign({}, S.settings, await api('saveSettings', { advisorJson: val })); hideModal('#stageModal'); toast('✓ Advisor settings saved'); advRefresh(); } catch (e) { toast(e.message, true); } };
+  showModal('#stageModal');
+}
+function advBcStrip() { const b = $('#bcAdvisor'); if (!b) return; const ok = advOn() && advTips().some(t => t.area === 'email'); b.innerHTML = ok ? advBlock('email', 2, { title: 'AI Advisor — WhatsApp & email', more: true, cls: 'compact', noCfg: true }) : ''; }
+document.addEventListener('click', e => {
+  const t = e.target;
+  const ac = t.closest('[data-advact]'); if (ac) { const [i, j] = ac.dataset.advact.split('|').map(Number), tip = ADV.tips[i]; if (tip && tip.acts[j]) advRun(tip, tip.acts[j]); return; }
+  const dx = t.closest('[data-advdis]'); if (dx) { advDismiss(dx.dataset.advdis, 7).then(() => { toast('Hidden for 7 days'); advRefresh(); }); return; }
+  const al = t.closest('[data-advall]'); if (al) return openAdvisor(al.dataset.advall);
+  const sm = t.closest('[data-advsum]'); if (sm) return advSummary(sm);
+  if (t.closest('[data-advcfg]')) return openAdvSettings(false);
+  if (t.closest('[data-advcfgp]')) return openAdvSettings(true);
+});
+
 /* ================= Home layout: drag cards, hide / show, own blocks (owner & admins); default layout from the platform team ================= */
 // [id, name, size, section that must be in the plan]
-const HOME_W = [['setup', 'Set up your business', 'full'], ['tasks', 'Overdue tasks', 'small', 'tasks'], ['hot', 'Hot leads', 'small'], ['orders', 'New orders', 'small', 'orders'], ['stock', 'Low stock', 'small', 'store'],
+const HOME_W = [['setup', 'Set up your business', 'full'], ['advisor', 'AI Advisor', 'full', 'advisor'], ['tasks', 'Overdue tasks', 'small', 'tasks'], ['hot', 'Hot leads', 'small'], ['orders', 'New orders', 'small', 'orders'], ['stock', 'Low stock', 'small', 'store'],
   ['unreadc', 'Unread chats', 'small'], ['calls', 'Calls today', 'small', 'tasks'], ['todo', 'Do this now', 'half', 'tasks'], ['recent', 'Recent orders / newest leads', 'half'], ['chats', 'Unread WhatsApp chats', 'full']];
 const HL_TYPES = [['note', 'Note', 'A message for your team — targets, offers, rules'], ['link', 'Link / button', 'Open a website, form, price list or a page in Nodevers'], ['image', 'Image', 'A banner, poster or price list picture (https link)'], ['video', 'YouTube video', 'Training or product video']];
 const HL_SIZES = [['small', 'Small (¼)'], ['half', 'Half (½)'], ['full', 'Full width']];
@@ -7926,7 +8129,7 @@ function homeLayout(target) {
   const own = target === 'platform' ? null : hlParse((S.settings || {}).homeLayoutJson), plat = hlParse((PLAT.s || {}).homeLayoutJson), base = own || plat;
   const store = (S.products || []).length > 0 || (S.orders || []).some(o => o.channel && o.channel !== 'WhatsApp');
   const L = base ? { order: base.order.slice(), hidden: (base.hidden || []).slice(), blocks: Object.assign({}, base.blocks || {}) } : { order: HOME_W.map(w => w[0]), hidden: store ? ['unreadc', 'calls'] : ['orders', 'stock'], blocks: {} };
-  HOME_W.forEach(([id]) => { if (!L.order.includes(id)) { L.order.push(id); if (base) L.hidden.push(id); } });           // cards added in a later update
+  HOME_W.forEach(([id]) => { if (!L.order.includes(id)) { if (id === 'advisor') L.order.splice(L.order.indexOf('setup') + 1, 0, id); else { L.order.push(id); if (base) L.hidden.push(id); } } });           // cards added in a later update (the Advisor shows near the top)
   L.order = L.order.filter((id, i, a) => a.indexOf(id) === i && (HOME_W.some(w => w[0] === id) || L.blocks[id]));
   L.src = own ? 'ws' : plat ? 'platform' : 'default'; return L;
 }
@@ -8465,6 +8668,7 @@ const FEATURES = [
   ['automation', 'Automation', 'Automation flows, n8n services, scripts', ['automation', 'n8n', 'scripts']],
   ['ads', 'Ads Manager', 'Meta / Google ads, spend and ROAS', ['ads', 'inmarketing']],
   ['insights', 'Insights', 'Analytics, team performance and reports', ['insights', 'insales', 'analytics', 'inmarketing', 'performance', 'reports']],
+  ['advisor', 'AI Advisor', 'Daily tips with one-click actions — leads, WhatsApp, email, store, ads', []],
 ];
 const MODULES = FEATURES;
 const CORE_SECTIONS = 'Home, Leads, Inbox, Connections, Team and Settings';
@@ -8845,6 +9049,8 @@ function admBrand() {
         ${f('psGrace', 'Grace days after a paid plan ends', s.graceDays || 3, 'type="number" min="0" max="30"')}</div>
         <p class="help">New businesses start on this plan as a free trial. When a trial ends — or a paid period ends plus the grace days — their workspace becomes view-only until you record a payment.</p>` })}
     ${accItem('b-ai', { title: 'AI for the whole website', icon: '<svg class="i" viewBox="0 0 24 24"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/><circle cx="12" cy="12" r="3"/></svg>', color: '#8B5CF6', dot: 'ok', status: `In use: ${esc((AI_PROVIDERS.find(x => x[0] === (s.aiProvider || 'gemini')) || AI_PROVIDERS[0])[1])}${(s.aiProvider || 'gemini') === 'gemini' ? ' (free)' : ''} · Inbox AI, Guide, Automation AI steps`, open: open === 'b-ai', body: admAiBody() })}
+    ${accItem('b-advisor', { title: 'AI Advisor defaults', icon: '<svg class="i" viewBox="0 0 24 24"><path d="M12 3l1.8 4.7L18.5 9l-4.7 1.8L12 15.5l-1.8-4.7L5.5 9l4.7-1.3z"/><path d="M19 15l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z"/></svg>', color: '#0EA5E9', dot: 'ok', status: (() => { const c = Object.assign({}, ADV_DEF, (() => { try { return JSON.parse(s.advisorJson || '{}'); } catch (e) { return {}; } })()); return `Target ROAS ${c.roas} · stock warning ${c.stockDays} days · ad tips after ₹${c.minSpend}`; })(), open: open === 'b-advisor',
+      body: `<p class="help" style="margin-top:0">The numbers every client's AI Advisor starts with (target ROAS, when a lead counts as untouched, low-stock warning, returns limit, minimum ad spend before ad tips). Clients can change them for their own business. Switch the Advisor on / off per plan in Plans & pricing → Sections.</p><div class="cf-foot" style="margin:0;border:0;padding:0"><div class="grow"></div><button class="btn primary" data-advcfgp>Edit defaults</button></div>` })}
     ${accItem('b-support', { title: 'Support contact & renew link', icon: '<svg class="i" viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3.5-7.1L21 4v5h-5"/></svg>', color: '#10B981', dot: s.supportPhone || s.supportEmail ? 'ok' : 'wait', status: s.supportPhone || s.supportEmail ? [s.supportPhone ? '+' + s.supportPhone : '', s.supportEmail].filter(Boolean).join(' · ') : 'Not set — clients can not contact you to renew', open: open === 'b-support',
       body: `<div class="form" style="grid-template-columns:repeat(3,1fr)">${f('psPhone', 'Support WhatsApp (with country code)', s.supportPhone, 'placeholder="91 98…"')}${f('psMail', 'Support email', s.supportEmail)}${f('psLink', 'Renew / payment link (optional)', s.renewLink, 'placeholder="https://rzp.io/…"')}</div>
         <p class="help">Used by the pricing buttons, the expiry banner and Settings → Plan & billing.</p>` })}
@@ -9479,6 +9685,7 @@ const HELP_GUIDE = [
   ['capture', 'Website form and Facebook lead ads → leads', 'website form lead ads facebook instagram meta zapier make n8n google form capture link webhook', '**Connections → Lead capture link**: copy your private link. **Website**: copy the ready form code into WordPress / Wix / Shopify. **Facebook / Instagram Lead Ads**: in Zapier, Make or n8n use trigger "Facebook Lead Ads → New lead" and send it with a Webhook POST (JSON) to your link. New leads appear in Leads at once and get your auto welcome; repeated people are added to their existing lead. Press **Send a test lead** to check.'],
   ['pricing', 'Pricing plans on Home', 'pricing price plans monthly yearly upgrade choose plan get started cost', 'The **Pricing Plans** section on **Home** shows every plan with its price, limits and features. Switch **Monthly / Yearly** to see yearly prices. Press the button on a plan to start (new visitors create an account; clients are taken to WhatsApp / the renew link to upgrade). Your current plan is marked.'],
   ['plan', 'Plan, trial and billing', 'plan billing subscription trial expire expired renew payment upgrade limit days left invoice paused view only', '**Settings → Plan & billing** shows your plan, days left, usage (team, leads, WhatsApp this month, stores) and your payments. A banner appears 7 days before the end. When a trial or plan ends the workspace becomes **view-only** — nothing is deleted. Use **Renew** or **WhatsApp us** on the banner to renew; it opens again as soon as the payment is recorded.'],
+  ['advisor', 'AI Advisor — daily tips', 'ai advisor tips suggestion recommend roas cpa budget pause ad set creative follow up stock reorder rto email whatsapp action one click', 'The **AI Advisor** card on **Home** (and the **✦ Advisor** tabs in Store and Ads Manager, and the strip on Broadcast) reads your own numbers every time you open the page: leads waiting for a reply, hot leads not touched, deals stuck, overdue tasks, products running out, returns, products sold at a loss, WhatsApp / email campaigns, and — with Meta Ads connected — campaigns to scale, ad sets to pause and the best creative. Each tip has one-click buttons (create tasks, send a WhatsApp template or email to exactly those people, assign, reorder, open in Meta). **×** hides a tip for 7 days. **✨ AI summary** writes a short briefing. **⚙** (owner / admin) sets your target ROAS, days and limits. Nothing changes in Meta by itself — ad changes open Meta Ads Manager.'],
   ['homelayout', 'Customize the Home page', 'home customize layout drag move hide show cards block note video link image reset dashboard', 'On **Home** the owner or an admin presses **✎ Customize**: drag cards (or use ↑ ↓) to change the order, **Hide** / **Show** cards, and **+ Add block** — a Note, a Link / button, an Image or a YouTube video, in small, half or full width. Press **Save** — everyone in the workspace sees the same Home. **Reset to default** brings back the standard layout. Team members and view-only people can not change it.'],
   ['locked', 'A section shows a 🔒 lock', 'lock locked padlock not in your plan upgrade section hidden missing ads automation store campaigns tasks orders pipeline insights modules', 'A **🔒** next to a menu item means that section is **not in your plan**. Opening it shows which plans include it, with **See plans** and **Ask on WhatsApp**. Nothing is deleted — your data comes back as soon as the section is switched on. **Settings → Plan & billing** lists the sections in your plan. Always included: Home, Leads, Inbox, Connections, Team and Settings. A section that is simply **missing** (no lock) was hidden by your owner in **Settings → Modules** — they can switch it back on.'],
   ['ro', 'View-only / missing buttons', 'view only cannot edit button missing permission hidden not allowed', 'If buttons are missing or you see "View-only access", your owner limited your access (role **Client**, an area limit or a switched-off action). Ask the owner to open **Team → Access** for you.'],
