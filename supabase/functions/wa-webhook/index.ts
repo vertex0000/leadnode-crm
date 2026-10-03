@@ -93,19 +93,111 @@ async function lastOrder(ws: string, leadId: string) {
   const { data } = await db.from('orders').select('*').eq('workspace_id', ws).eq('lead_id', leadId).neq('status', 'Cancelled').order('created_at', { ascending: false }).limit(1).maybeSingle();
   return data;
 }
+// ================= Chatbot engine: the button's steps can branch (if / hours / A-B), wait, ask a question or show a menu =================
+// A step list is plain JSON saved in the template (flow.buttons[i].actions). Branch steps end their list and hold their own lists:
+//   if / hours / split → then (yes / open / A) + else (no / closed / B) · wait / ask → then · menu → options[k].then
+// A step is addressed by a path from the button's list: "2" = 3rd step, "2.t.0" = first step of its then-list, "2.e.1", "2.o3.0" (choice 4).
+type Env = { ws: string; acc: any; leadId: string; phone: string; label: string; tplName: string; bi: number; lead: any; ctx: any; steps: number; root: any[] };
+const IST = () => { const d = new Date(Date.now() + 5.5 * 3600e3); return { day: d.getUTCDay(), min: d.getUTCHours() * 60 + d.getUTCMinutes() }; };
+const hm = (v: unknown, def: number) => { const m = String(v ?? '').match(/^(\d{1,2})(?::(\d{2}))?/); return m ? Math.min(24 * 60, Number(m[1]) * 60 + Number(m[2] ?? 0)) : def; };
+function botAt(root: any[], path: string): any {
+  let list: any[] = root, node: any = null;
+  for (const tok of String(path).split('.')) {
+    if (/^\d+$/.test(tok)) { node = Array.isArray(list) ? list[Number(tok)] : null; if (!node) return null; }
+    else if (tok === 't') list = node?.then; else if (tok === 'e') list = node?.else;
+    else if (/^o\d+$/.test(tok)) list = node?.options?.[Number(tok.slice(1))]?.then; else return null;
+  }
+  return node;
+}
+const ASK_COL: Record<string, string> = { Name: 'name', City: 'city', Email: 'email', Budget: 'budget', 'Business name': 'business_name', 'Business type': 'business_type', Notes: 'notes' };
+async function saveField(env: Env, field: string, raw: string) {
+  const col = ASK_COL[field]; if (!col) return false;
+  let v: any = String(raw ?? '').trim().slice(0, 500); if (!v) return false;
+  if (col === 'budget') { v = Number(String(v).replace(/[^\d.]/g, '')); if (!isFinite(v) || !v) return false; }
+  if (col === 'email' && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v)) return false;
+  if (col === 'notes') v = [String(env.lead?.notes ?? '').trim(), v].filter(Boolean).join('\n').slice(0, 4000);
+  await db.from('leads').update({ [col]: v }).eq('workspace_id', env.ws).eq('lead_id', env.leadId); if (env.lead) env.lead[col] = v; return true;
+}
+function botCheck(a: any, env: Env): boolean {
+  const l = env.lead ?? {}, o = env.ctx.order, f = String(a.field || 'Tag'), op = String(a.op || 'is'), want = String(a.value ?? '').trim().toLowerCase();
+  const val = f === 'Tag' ? l.tag : f === 'Stage' ? l.stage : f === 'City' ? l.city : f === 'Source' ? l.source : f === 'Budget' ? l.budget : f === 'Business type' ? l.business_type
+    : f === 'Has an order' ? (o ? 'yes' : 'no') : f === 'Order status' ? o?.status : f === 'Last message' ? env.label : f === 'Opted out' ? (l.wa_opt_out ? 'yes' : 'no') : '';
+  const s = String(val ?? '').trim().toLowerCase(), n = Number(val), w = Number(want.replace(/[^\d.-]/g, ''));
+  switch (op) { case 'is': return s === want; case 'is not': return s !== want; case 'contains': return !!want && s.includes(want); case 'above': return isFinite(n) && n > w; case 'below': return isFinite(n) && n < w;
+    case 'is empty': return !s; case 'is not empty': return !!s; default: return false; }
+}
 async function runButton(ws: string, acc: any, leadId: string, phone: string, payload: string, label: string) {
-  const [, tplName, idxS] = payload.split('|'); const idx = Number(idxS);
+  const parts = payload.split('|'), tplName = parts[1], bi = Number(parts[2]);
   const { data: t } = await db.from('templates').select('template_name, flow').eq('workspace_id', ws).eq('template_name', tplName).maybeSingle();
-  const btn = (t?.flow?.buttons ?? []).find((b: any, i: number) => (Number.isInteger(b.index) ? b.index : i) === idx);
+  const btn = (t?.flow?.buttons ?? []).find((b: any, i: number) => (Number.isInteger(b.index) ? b.index : i) === bi);
   if (!btn) return;
+  const root = Array.isArray(btn.actions) ? btn.actions : [];
   const { data: lead } = await db.from('leads').select('*').eq('workspace_id', ws).eq('lead_id', leadId).maybeSingle();
-  const ctx: any = { lead, order: await lastOrder(ws, leadId) };
+  const env: Env = { ws, acc, leadId, phone, label, tplName, bi, lead, ctx: { lead, order: await lastOrder(ws, leadId) }, steps: 0, root };
+  if (parts[0] === 'nvm') {                       // a choice on one of our reply-button / list menus
+    const node = botAt(root, parts[3]); const k = Number(parts[4]); if (!node || node.type !== 'menu' || !node.options?.[k]) return;
+    await db.from('activities').insert({ workspace_id: ws, lead_id: leadId, type: 'Button Tapped', details: `${label || node.options[k].title} · menu`, done_by: 'Customer' });
+    await db.from('bot_waits').update({ done_at: new Date().toISOString() }).eq('workspace_id', ws).eq('lead_id', leadId).eq('kind', 'ask').is('done_at', null);
+    return runList(env, node.options[k].then ?? [], `${parts[3]}.o${k}`);
+  }
   await db.from('activities').insert({ workspace_id: ws, lead_id: leadId, type: 'Button Tapped', details: `${label || btn.label} · ${tplName}`, done_by: 'Customer' });
+  await db.from('bot_waits').update({ done_at: new Date().toISOString() }).eq('workspace_id', ws).eq('lead_id', leadId).eq('kind', 'ask').is('done_at', null);   // a new tap replaces an open question
+  await runList(env, root, '');
+}
+/** continue a saved wait / question (path = the wait or ask step) */
+async function resume(w: any, answer?: string) {
+  const { data: acc } = await db.from('wa_accounts').select('*').eq('workspace_id', w.workspace_id).maybeSingle(); if (!acc) return;
+  const { data: t } = await db.from('templates').select('template_name, flow').eq('workspace_id', w.workspace_id).eq('template_name', w.template).maybeSingle();
+  const btn = (t?.flow?.buttons ?? []).find((b: any, i: number) => (Number.isInteger(b.index) ? b.index : i) === Number(w.button));
+  const root = Array.isArray(btn?.actions) ? btn.actions : [], node = botAt(root, w.path); if (!node || node.type !== w.kind) return;
+  const { data: lead } = await db.from('leads').select('*').eq('workspace_id', w.workspace_id).eq('lead_id', w.lead_id).maybeSingle(); if (!lead) return;
+  const env: Env = { ws: w.workspace_id, acc, leadId: w.lead_id, phone: w.phone, label: answer ?? '', tplName: w.template, bi: Number(w.button), lead, ctx: { lead, order: await lastOrder(w.workspace_id, w.lead_id) }, steps: 0, root };
+  if (w.kind === 'ask') { const ok = await saveField(env, String(node.field || 'City'), answer ?? ''); await db.from('activities').insert({ workspace_id: env.ws, lead_id: env.leadId, type: 'Bot', details: `${node.field || 'Answer'}: ${String(answer ?? '').slice(0, 200)}${ok ? ' (saved)' : ' (not saved — did not look valid)'}`, done_by: 'Automation' }); }
+  await runList(env, node.then ?? [], `${w.path}.t`);
+}
+async function runList(env: Env, list: any[], prefix: string): Promise<void> {
+  const { ws, acc, leadId, phone, label, tplName, lead, ctx } = env;
   const say = async (text: string) => { const body = fillVars(text, ctx).trim(); if (!body) return; const r = await graph(acc, { messaging_product: 'whatsapp', to: phone, type: 'text', text: { body: body.slice(0, 4096), preview_url: true } }); if (r.ok) await logOut(ws, leadId, phone, 'text', body, r.id, body); };
-  for (const a of (Array.isArray(btn.actions) ? btn.actions : []).slice(0, 8)) {
+  const items = Array.isArray(list) ? list : [];
+  for (let i = 0; i < items.length; i++) {
+    const a = items[i], here = prefix ? `${prefix}.${i}` : String(i);
+    if (++env.steps > 30) { console.log('bot: step limit'); return; }
     try {
       const p = a ?? {};
       switch (p.type) {
+        // ---- branches & waits (they end this list) ----
+        case 'if': return await runList(env, botCheck(p, env) ? p.then ?? [] : p.else ?? [], `${here}.${botCheck(p, env) ? 't' : 'e'}`);
+        case 'hours': { const { day, min } = IST(), days = p.days === 'Mon–Fri' ? [1, 2, 3, 4, 5] : p.days === 'Every day' ? [0, 1, 2, 3, 4, 5, 6] : [1, 2, 3, 4, 5, 6];
+          const open = days.includes(day) && min >= hm(p.from, 600) && min < hm(p.to, 1140); return await runList(env, open ? p.then ?? [] : p.else ?? [], `${here}.${open ? 't' : 'e'}`); }
+        case 'split': { const a1 = Math.random() * 100 < Math.max(0, Math.min(100, Number(p.pct ?? 50))); return await runList(env, a1 ? p.then ?? [] : p.else ?? [], `${here}.${a1 ? 't' : 'e'}`); }
+        case 'wait': {
+          const mins = Math.max(1, Math.min(30 * 1440, (Number(p.amount) || 1) * (p.unit === 'days' ? 1440 : p.unit === 'minutes' ? 1 : 60)));
+          await db.from('bot_waits').insert({ workspace_id: ws, lead_id: leadId, phone, kind: 'wait', template: tplName, button: env.bi, path: here, run_at: new Date(Date.now() + mins * 6e4).toISOString() });
+          return;
+        }
+        case 'ask': {
+          await say(String(p.text || 'Please reply with your answer.'));
+          await db.from('bot_waits').update({ done_at: new Date().toISOString() }).eq('workspace_id', ws).eq('lead_id', leadId).eq('kind', 'ask').is('done_at', null);
+          await db.from('bot_waits').insert({ workspace_id: ws, lead_id: leadId, phone, kind: 'ask', field: String(p.field || 'City'), template: tplName, button: env.bi, path: here, run_at: new Date(Date.now() + 24 * 3600e3).toISOString() });
+          return;
+        }
+        case 'menu': {
+          const opts = (Array.isArray(p.options) ? p.options : []).slice(0, 10), text = fillVars(String(p.text || 'Please choose:'), ctx).slice(0, 1024) || 'Please choose:';
+          const id = (k: number) => `nvm|${tplName}|${env.bi}|${here}|${k}`;
+          if (!opts.length || id(9).length > 256) return;
+          const interactive = opts.length <= 3
+            ? { type: 'button', body: { text }, action: { buttons: opts.map((o: any, k: number) => ({ type: 'reply', reply: { id: id(k), title: String(o.title || 'Option').slice(0, 20) } })) } }
+            : { type: 'list', body: { text }, action: { button: String(p.button || 'Choose').slice(0, 20), sections: [{ title: 'Choose one', rows: opts.map((o: any, k: number) => ({ id: id(k), title: String(o.title || 'Option').slice(0, 24) })) }] } };
+          const r = await graph(acc, { messaging_product: 'whatsapp', to: phone, type: 'interactive', interactive });
+          if (r.ok) await logOut(ws, leadId, phone, 'interactive', `${text}\n${opts.map((o: any) => '• ' + o.title).join('\n')}`, r.id, 'Menu sent'); else console.log('menu failed', r.error);
+          return;
+        }
+        case 'handover': {
+          if (p.member) await db.from('leads').update({ assigned_to: String(p.member).slice(0, 60) }).eq('workspace_id', ws).eq('lead_id', leadId);
+          await db.from('tasks').insert({ workspace_id: ws, lead_id: leadId, title: fillVars(String(p.title || '{{name}} wants to talk to a person'), ctx).slice(0, 200), due_at: new Date(Date.now() + 1800e3).toISOString(), priority: 'High', assigned_to: String(p.member || lead?.assigned_to || ''), source: 'button' });
+          await db.from('activities').insert({ workspace_id: ws, lead_id: leadId, type: 'Bot', details: `Handed over to ${p.member || lead?.assigned_to || 'the team'}`, done_by: 'Automation' });
+          if (p.text) await say(String(p.text)); break;
+        }
         case 'send_template': {
           const { data: nt } = await db.from('templates').select('*').eq('workspace_id', ws).eq('template_name', String(p.template ?? '')).maybeSingle(); if (!nt) break;
           // {{1}}, {{2}}… → the values typed on the action (may use {{first_name}}, {{order_id}}…); otherwise sensible defaults
@@ -148,6 +240,29 @@ async function runButton(ws: string, acc: any, leadId: string, phone: string, pa
           if (ea && /@/.test(String(lead?.email ?? ''))) await fetch(`${BREVO}/smtp/email`, { method: 'POST', headers: { 'api-key': ea.api_key, 'Content-Type': 'application/json', accept: 'application/json' }, body: JSON.stringify({ sender: { email: ea.from_email, name: ea.from_name || undefined }, to: [{ email: lead.email, name: lead.name || '' }], subject: fillVars(String(p.subject || 'Thank you'), ctx), htmlContent: `<p>${fillVars(String(p.body || ''), ctx).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/\n/g, '<br>')}</p>` }) });
           break;
         }
+        case 'send_media': {
+          const kind = ['image', 'video', 'document'].includes(p.kind) ? p.kind : 'image', u = String(p.url ?? '').trim(); if (!/^https:\/\/\S+\.\S+/.test(u)) break;
+          const media: any = { link: u }; if (p.text) media.caption = fillVars(String(p.text), ctx).slice(0, 1024);
+          if (kind === 'document') media.filename = (decodeURIComponent(u.split('?')[0].split('/').pop() || '') || 'document.pdf').slice(0, 80);
+          const r = await graph(acc, { messaging_product: 'whatsapp', to: phone, type: kind, [kind]: media });
+          if (r.ok) await logOut(ws, leadId, phone, kind, media.caption || `[${kind}]`, r.id, `Sent ${kind === 'document' ? 'PDF' : kind}`); break;
+        }
+        case 'send_location': {
+          const lat = Number(p.lat), lng = Number(p.lng); if (!isFinite(lat) || !isFinite(lng) || (!lat && !lng)) break;
+          const r = await graph(acc, { messaging_product: 'whatsapp', to: phone, type: 'location', location: { latitude: lat, longitude: lng, name: String(p.name ?? '').slice(0, 100), address: String(p.address ?? '').slice(0, 200) } });
+          if (r.ok) await logOut(ws, leadId, phone, 'location', `[location] ${String(p.name ?? '')}`.trim(), r.id, 'Sent location'); break;
+        }
+        case 'add_note': if (p.text) await db.from('activities').insert({ workspace_id: ws, lead_id: leadId, type: 'Note', details: fillVars(String(p.text), ctx).slice(0, 1000), done_by: 'Automation' }); break;
+        case 'set_followup': { const d = new Date(Date.now() + Math.max(0, Math.min(365, Number(p.days) || 0)) * 864e5); await db.from('leads').update({ follow_up_date: new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Kolkata' }).format(d) }).eq('workspace_id', ws).eq('lead_id', leadId); break; }
+        case 'update_lead': {
+          const col = ({ city: 'city', budget: 'budget', business: 'business_name', business_type: 'business_type', email: 'email', source: 'source', notes: 'notes' } as Record<string, string>)[String(p.field)]; if (!col) break;
+          let v: any = fillVars(String(p.value ?? ''), ctx).trim().slice(0, 500);
+          if (col === 'budget') { v = Number(String(v).replace(/[^\d.]/g, '')); if (!isFinite(v) || !v) break; }
+          if (col === 'email' && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v)) break;
+          if (col === 'notes') v = [String(lead?.notes ?? '').trim(), v].filter(Boolean).join('\n').slice(0, 4000);
+          await db.from('leads').update({ [col]: v }).eq('workspace_id', ws).eq('lead_id', leadId); break;
+        }
+        case 'stop_messages': await db.from('leads').update({ wa_opt_out: true }).eq('workspace_id', ws).eq('lead_id', leadId); await db.from('activities').insert({ workspace_id: ws, lead_id: leadId, type: 'Opt-out', details: `Tapped “${label}” — no more broadcasts`, done_by: 'Customer' }); break;
         case 'trigger_workflow': case 'custom_api': {
           const u = String(p.url ?? ''); if (!/^https:\/\//i.test(u)) break;
           await fetch(u, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ source: 'nodevers', event: 'button', template: tplName, button: label, lead, order: ctx.order ?? null }), signal: AbortSignal.timeout(10000) }).catch(() => null); break;
@@ -161,7 +276,7 @@ async function runButton(ws: string, acc: any, leadId: string, phone: string, pa
           if (text) await say(text); break;
         }
       }
-    } catch (e) { console.error('action failed', a?.type, e); }
+    } catch (e) { console.error('step failed', a?.type, e); }
   }
 }
 
@@ -177,6 +292,16 @@ Deno.serve(async (req) => {
     return ok ? new Response(url.searchParams.get('hub.challenge') ?? '', { status: 200 }) : new Response('Forbidden', { status: 403 });
   }
   const raw = await req.text();
+  // every 2 minutes (pg_cron → x-cron-secret): continue chatbot waits that are due, close old questions
+  if (req.headers.get('x-cron-secret')) {
+    const { data: sec } = await db.from('app_config').select('value').eq('key', 'cron_secret').maybeSingle();
+    if (!sec?.value || req.headers.get('x-cron-secret') !== sec.value) return new Response('Forbidden', { status: 403 });
+    const now = new Date().toISOString(); let n = 0;
+    await db.from('bot_waits').update({ done_at: now }).eq('kind', 'ask').is('done_at', null).lte('run_at', now);
+    const { data: due } = await db.from('bot_waits').select('*').eq('kind', 'wait').is('done_at', null).lte('run_at', now).order('run_at').limit(50);
+    for (const w of due ?? []) { const { data: claimed } = await db.from('bot_waits').update({ done_at: now }).eq('id', w.id).is('done_at', null).select('id'); if (!claimed?.length) continue; try { await resume(w); n++; } catch (e) { console.error('wait resume', e); } }
+    return new Response(JSON.stringify({ ok: true, resumed: n }), { status: 200, headers: { 'Content-Type': 'application/json' } });
+  }
   const check = signatureChecker(raw, req.headers.get('X-Hub-Signature-256'));
   const platformOk = APP_SECRET ? await check(APP_SECRET) : false;
   let accepted = 0, rejected = 0;
@@ -206,8 +331,13 @@ Deno.serve(async (req) => {
           if (/^\s*(stop|unsubscribe|stop all|band karo)\s*[.!]?\s*$/i.test(text)) await db.from('leads').update({ wa_opt_out: true }).eq('workspace_id', ws).eq('lead_id', lead.id);
           else if (/^\s*start\s*$/i.test(text)) await db.from('leads').update({ wa_opt_out: false }).eq('workspace_id', ws).eq('lead_id', lead.id);
           // quick-reply button on one of our templates → run its actions
-          const payload = m.type === 'button' ? String(m.button?.payload ?? '') : m.type === 'interactive' ? String(m.interactive?.button_reply?.id ?? '') : '';
-          if (payload.startsWith('nv|')) await runButton(ws, acc, lead.id, phone, payload, text);
+          const payload = m.type === 'button' ? String(m.button?.payload ?? '') : m.type === 'interactive' ? String(m.interactive?.button_reply?.id ?? m.interactive?.list_reply?.id ?? '') : '';
+          if (payload.startsWith('nv|') || payload.startsWith('nvm|')) await runButton(ws, acc, lead.id, phone, payload, text);
+          else if (m.type === 'text' && !/^\s*(stop|unsubscribe|stop all|band karo|start)\s*[.!]?\s*$/i.test(text)) {
+            // the customer answered a chatbot question → save it in the lead and continue the flow
+            const { data: w } = await db.from('bot_waits').select('*').eq('workspace_id', ws).eq('lead_id', lead.id).eq('kind', 'ask').is('done_at', null).gt('run_at', new Date().toISOString()).order('id', { ascending: false }).limit(1).maybeSingle();
+            if (w) { const { data: claimed } = await db.from('bot_waits').update({ done_at: new Date().toISOString() }).eq('id', w.id).is('done_at', null).select('id'); if (claimed?.length) await resume(w, text).catch((e) => console.error('ask resume', e)); }
+          }
         }
       }
       for (const s of v.statuses ?? []) {
