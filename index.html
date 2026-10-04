@@ -709,7 +709,7 @@ body.brand-ro #brandRowSite,body.brand-ro #setModal .acc[data-acc="s-wl"]{displa
 .cu-sg:hover{transform:translateY(-2px);box-shadow:var(--shadow-2)}.cu-sg.on{border-color:var(--c);background:color-mix(in srgb,var(--c) 9%,var(--card));box-shadow:0 0 0 1px var(--c) inset,0 10px 24px -14px var(--c)}.cu-sg.on b{color:var(--c)}
 @media (max-width:1300px){.cu-segs{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:minmax(150px,1fr);overflow-x:auto;scrollbar-width:none;padding-bottom:2px}.cu-segs::-webkit-scrollbar{display:none}}
 .cu-tools .search{flex:1 1 220px;min-width:200px}.cu-tools select.input{width:auto;max-width:200px;flex:0 1 auto}
-@media (max-width:760px){.cu-tools select.input{flex:1 1 45%;max-width:none}}
+@media (max-width:760px){.cu-tools select.input{flex:1 1 45%;max-width:none}.cu-tools .search{order:-1!important;flex:1 1 100%!important}}
 .cu-bulk{position:sticky;top:8px;z-index:5;display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:10px 12px;border-radius:14px;margin-bottom:12px;border:1px solid color-mix(in srgb,var(--blue-2) 35%,var(--line));animation:tpeBorn .22s ease}
 .cu-bulk>b{font-size:13.5px}.cu-bulk .grow{flex:1}
 .cu-tbl td{vertical-align:middle}.cu-tbl tr.sel td{background:color-mix(in srgb,var(--blue-2) 7%,transparent)}
@@ -728,6 +728,8 @@ td.ph{white-space:nowrap}
 .cu-step{display:flex;gap:12px;align-items:flex-start;text-align:left;border:1px solid var(--line);background:var(--glass-2,var(--card));border-radius:14px;padding:14px;cursor:pointer;color:var(--text);transition:transform .18s,box-shadow .18s,border-color .18s}.cu-step:hover{transform:translateY(-2px);box-shadow:var(--shadow-2);border-color:var(--blue-2)}
 .cu-step>b{flex:none;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:var(--blue-soft);color:var(--blue-2);font-size:13px}.cu-step span{display:flex;flex-direction:column;gap:2px}.cu-step strong{font-size:14px}.cu-step small{color:var(--muted);font-size:12px}
 @media (max-width:760px){.cu-steps{grid-template-columns:1fr}}
+.ck-ks{grid-template-columns:repeat(5,minmax(0,1fr))}@media (max-width:1200px){.ck-ks{grid-template-columns:repeat(3,minmax(0,1fr))}}@media (max-width:640px){.ck-ks{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.ck-segs{grid-template-columns:repeat(4,minmax(0,1fr))}@media (max-width:1300px){.ck-segs{grid-template-columns:none}}
 .ck-auto{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:12px 16px;border-radius:14px;margin-bottom:14px}.ck-auto .grow{display:flex;flex-direction:column;gap:2px;min-width:220px}.ck-auto small{font-size:12.5px}
 .ck-act{white-space:nowrap;text-align:right;width:1%}.ck-actw{display:flex;gap:6px;justify-content:flex-end;align-items:center}.ck-act .ibtn{width:30px;height:30px}
 /* auto messages */
@@ -2472,6 +2474,7 @@ function finishLoad(anim) {
   $('#demoBanner').hidden = !demo; sizeCanvas();
   if (demo) { const sb = !!sbConf().url; $('#demoBanner .grow').innerHTML = sb ? '<b>Demo:</b> you\'re exploring sample data. Create your free account to add your own leads.' : '<b>Demo mode:</b> you\'re looking at sample data. To connect your Google Sheet, add the Web App URL and API key in Settings.'; $('#bannerSettings').textContent = sb ? 'Create free account' : 'Open Settings'; }
   if (demo) S.settings = store.get('leadnode.branding') || {};
+  if (demo) try { demoCustRefresh(); } catch (e) { }   // customer numbers on the demo leads (the database keeps them in the cloud)
   mergeSavedLists();
   applyBranding();
   applyAccess(); platformBar();
@@ -7892,7 +7895,7 @@ const DAY_MS = 864e5;
 const v23 = () => demo || (cloud && !!AUTH.v23);
 const needSql23 = what => `<div class="tp-empty glass"><b>${esc(what)} needs one database update</b><p class="muted">Run <code>23_customers_remarketing.sql</code> in Supabase → SQL Editor, then refresh this page.</p></div>`;
 const CU = { seg: '', wa: '', mkt: '', yes: '', no: '', rec: '', q: '', page: 0, sort: 'last', sel: new Set(), all: false, big: null, seq: 0, stats: null, statsAt: 0, statsWs: '' };
-const CK = { st: 'open', q: '', sel: new Set() };
+const CK = { st: 'open', q: '', wa: '', mkt: '', prod: '', buyer: '', age: '', sort: 'new', sel: new Set() };
 const CU_SEGS = [
   ['champions', 'Champions', '3+ orders, last one in the past 30 days', '#16A34A'],
   ['loyal', 'Loyal', '2+ orders in the past 90 days', '#2563EB'],
@@ -8110,13 +8113,17 @@ function renderCheckouts(anim) {
   if (!v23()) { box.innerHTML = needSql23('Checkouts'); return; }
   const all = ckList(), d30 = Date.now() - 30 * DAY_MS, recent = all.filter(c => tsOf(c.createdAt) >= d30), q = CK.q.trim().toLowerCase();
   const open = all.filter(c => c.status === 'open'), rec = recent.filter(c => c.status === 'recovered'), cfg = rmCfg(), a1 = cfg.auto.abandon1 || {}, a2 = cfg.auto.abandon2 || {};
-  const list = all.filter(c => (CK.st === 'all' || c.status === CK.st) && (!q || [c.name, c.phone, c.email, c.items].some(x => String(x || '').toLowerCase().includes(q))));
+  const base = all.filter(c => ckMatch(c, q)), list = base.filter(c => CK.st === 'all' || c.status === CK.st);
+  const key = { new: c => -tsOf(c.createdAt), value: c => -(+c.amount || 0), rem: c => -(+c.reminders || 0), name: c => String(c.name || '').toLowerCase() }[CK.sort] || (c => -tsOf(c.createdAt));
+  list.sort((a, b) => { const x = key(a), y = key(b); return x < y ? -1 : x > y ? 1 : 0; });
+  const stN = k => k === 'all' ? base.length : base.filter(c => c.status === k).length, stV = k => base.filter(c => k === 'all' || c.status === k).reduce((t, c) => t + (+c.amount || 0), 0);
   const tile = (n, l, sub, c) => `<div class="n8l-k glass cu-k"><b style="${c ? 'color:' + c : ''}">${n}</b><small class="muted">${l}</small>${sub ? `<em>${sub}</em>` : ''}</div>`;
   const auto = a1.on || a2.on ? `<span class="tp-st ok"><i></i>Auto reminder on${a1.on ? ` · after ${+a1.mins || 30} min` : ''}${a2.on ? ` · 2nd after ${+a2.hours || 24} h` : ''}</span>` : `<span class="tp-st wait"><i></i>Auto reminder off</span>`;
-  box.innerHTML = `<div class="adm-ks cu-ks">${tile(open.length.toLocaleString('en-IN'), 'Waiting to pay', 'left at checkout', 'var(--coral)')}${tile(inrShort(open.reduce((s, c) => s + (+c.amount || 0), 0)), 'Value waiting', '', '#B7861A')}${tile(rec.length.toLocaleString('en-IN'), 'Recovered', 'last 30 days', 'var(--green)')}${tile(pctTxt(rec.length, recent.length), 'Recovery rate', 'last 30 days', 'var(--blue-2)')}${tile(inrShort(rec.reduce((s, c) => s + (+c.amount || 0), 0)), 'Recovered revenue', 'last 30 days', 'var(--green)')}</div>
+  box.innerHTML = `<div class="adm-ks cu-ks ck-ks">${tile(open.length.toLocaleString('en-IN'), 'Waiting to pay', 'left at checkout', 'var(--coral)')}${tile(inrShort(open.reduce((s, c) => s + (+c.amount || 0), 0)), 'Value waiting', '', '#B7861A')}${tile(rec.length.toLocaleString('en-IN'), 'Recovered', 'last 30 days', 'var(--green)')}${tile(pctTxt(rec.length, recent.length), 'Recovery rate', 'last 30 days', 'var(--blue-2)')}${tile(inrShort(rec.reduce((s, c) => s + (+c.amount || 0), 0)), 'Recovered revenue', 'last 30 days', 'var(--green)')}</div>
     <div class="ck-auto glass"><div class="grow"><b>Bring them back automatically</b><small class="muted">A WhatsApp reminder (email if they are not on WhatsApp) goes out when someone leaves without paying — it stops the moment they order.</small></div>${auto}<button class="btn sm" data-go="remarket">${a1.on ? 'Change' : 'Turn on'}</button></div>
     ${!all.length ? `<div class="cu-empty glass"><div class="cu-empty-ic">🛒</div><h3>No abandoned checkouts yet</h3><p class="muted">They come from the website tracking code (any website) or your Shopify connection — as soon as a shopper types a phone number or email and leaves without paying.</p><div class="row" style="justify-content:center;gap:8px"><button class="btn primary" data-cutrack>Set up the tracking code</button><button class="btn" data-go="connections">Connect Shopify</button></div></div>` : `
-    <div class="toolbar glass"><div class="tp-chips">${[['open', 'Waiting'], ['recovered', 'Recovered'], ['lost', 'Lost'], ['all', 'All']].map(([k, n]) => `<button class="chip ${CK.st === k ? 'on' : ''}" data-ckst="${k}">${n} <span class="n">${k === 'all' ? all.length : all.filter(c => c.status === k).length}</span></button>`).join('')}</div><div class="grow"></div><input class="input sm" id="ckQ" type="search" placeholder="Search name or phone" value="${esc(CK.q)}" style="max-width:240px"></div>
+    <div class="cu-segs ck-segs" role="tablist">${[['open', 'Waiting to pay', 'Left at checkout — remind them', 'var(--coral)'], ['recovered', 'Recovered', 'Ordered after leaving', 'var(--green)'], ['lost', 'Lost', 'Marked lost — no more reminders', 'var(--muted)'], ['all', 'All checkouts', 'Everything the tracking caught', 'var(--blue-2)']].map(([k, n, d, c]) => `<button class="cu-sg ${CK.st === k ? 'on' : ''}" data-ckst="${k}" style="--c:${c}"><b>${stN(k).toLocaleString('en-IN')}</b><span>${n}</span><small>${stV(k) ? inrShort(stV(k)) + ' · ' : ''}${d}</small></button>`).join('')}</div>
+    ${ckToolsHTML()}
     ${CK.sel.size ? `<div class="cu-bulk glass"><b>${CK.sel.size} selected</b><span class="grow"></span><button class="btn sm wa" data-ckbulk="whatsapp">${I.wa}Send a reminder</button><button class="btn sm" data-ckbulk="email">✉ Email them</button><button class="btn sm" data-ckbulk="lost">Mark lost</button><button class="ibtn" data-ckbulk="clear" title="Clear selection">${I.x}</button></div>` : ''}
     <div class="table-wrap glass"><table class="tbl cu-tbl"><thead><tr><th class="cu-ck"><input type="checkbox" data-ckselall aria-label="Select all"></th><th>Shopper</th><th>WhatsApp</th><th>Cart</th><th class="num">Value</th><th>Started</th><th>Reminders</th><th>Status</th><th></th></tr></thead><tbody>
     ${list.slice(0, 300).map((c, i) => { const l = c.leadId ? leadById(c.leadId) : null, st = CK_ST[c.status] || CK_ST.open; return `<tr ${c.leadId ? `data-open="${esc(c.leadId)}"` : ''} style="--i:${anim ? Math.min(i, 25) : 0}">
@@ -8127,6 +8134,27 @@ function renderCheckouts(anim) {
       <td class="ck-act"><div class="ck-actw">${c.url ? `<button class="ibtn" data-ckcopy="${esc(c.url)}" title="Copy the cart link">🔗</button>` : ''}${c.status === 'open' ? `<button class="btn sm" data-ckmark="lost" data-ck="${esc(c.checkoutId)}">Mark lost</button>` : c.status === 'lost' ? `<button class="btn sm" data-ckmark="open" data-ck="${esc(c.checkoutId)}">Re-open</button>` : ''}</div></td></tr>`; }).join('') || `<tr><td colspan="9" class="empty">Nothing here.</td></tr>`}</tbody></table></div>`}`;
   if (anim) stagger(box, anim);
 }
+/** the same filter bar as Customers: search · WhatsApp · offers · product in the cart · shopper · started · sort */
+function ckMatch(c, q) {
+  const l = c.leadId ? leadById(c.leadId) : null, w = l ? waStOf(l) : '', m = l ? mktOf(l) : c.consent === true ? 'yes' : '', age = (Date.now() - tsOf(c.createdAt)) / DAY_MS;
+  if (q && ![c.name, c.phone, c.email, c.items, l && l.name].some(x => String(x || '').toLowerCase().includes(q))) return false;
+  if (CK.wa === 'on' && w !== 'on') return false; if (CK.wa === 'off' && w !== 'off' && w !== 'invalid') return false; if (CK.wa === 'unk' && w !== '') return false;
+  if (CK.mkt === 'yes' && m !== 'yes' && c.consent !== true) return false; if (CK.mkt === 'no' && m !== 'no') return false; if (CK.mkt === 'na' && (m !== '' || c.consent === true)) return false;
+  if (CK.prod) { const nm = String((cuProducts().find(([k]) => k === CK.prod) || [0, CK.prod])[1]).toLowerCase(); if (!(Array.isArray(c.skus) && c.skus.includes(CK.prod)) && !String(c.items || '').toLowerCase().includes(nm)) return false; }
+  if (CK.buyer === 'yes' && !(l && +l.ordersCount > 0)) return false; if (CK.buyer === 'no' && l && +l.ordersCount > 0) return false;
+  if (CK.age === '1' && age > 1) return false; if (CK.age === '7' && age > 7) return false; if (CK.age === 'old' && age <= 7) return false;
+  return true;
+}
+function ckToolsHTML() {
+  const sel = (id, v, opts, label) => `<select class="input sm" data-ckf="${id}" aria-label="${label}">${opts.map(([k, n]) => `<option value="${k}" ${v === k ? 'selected' : ''}>${n}</option>`).join('')}</select>`, P = cuProducts();
+  return `<div class="toolbar glass cu-tools"><label class="search"><svg class="i" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="ckQ" type="search" autocomplete="off" placeholder="Name, phone, email, product…" value="${esc(CK.q)}"></label>
+    ${sel('wa', CK.wa, [['', 'WhatsApp: any'], ['on', '🟢 On WhatsApp'], ['unk', '⚪ Not checked'], ['off', '🔴 Not on WhatsApp']], 'WhatsApp')}
+    ${sel('mkt', CK.mkt, [['', 'Offers: any'], ['yes', 'Said yes to offers'], ['na', 'Not asked yet'], ['no', 'Said no']], 'Offers')}
+    <select class="input sm" data-ckf="prod" aria-label="Product in the cart"><option value="">In cart: any product</option>${P.map(([k, n]) => `<option value="${esc(k)}" ${CK.prod === k ? 'selected' : ''}>${esc(n)}</option>`).join('')}</select>
+    ${sel('buyer', CK.buyer, [['', 'Shopper: anyone'], ['yes', 'Bought before'], ['no', 'First-time shopper']], 'Shopper')}
+    ${sel('age', CK.age, [['', 'Started: any time'], ['1', 'Last 24 hours'], ['7', 'Last 7 days'], ['old', 'More than 7 days ago']], 'Started')}
+    ${sel('sort', CK.sort, [['new', 'Sort: newest'], ['value', 'Sort: highest value'], ['rem', 'Sort: most reminders'], ['name', 'Sort: name']], 'Sort')}</div>`;
+}
 async function ckSetStatus(ids, status) {
   try {
     if (demo) (S.checkouts || []).forEach(c => { if (ids.includes(c.checkoutId)) c.status = status; });
@@ -8136,7 +8164,9 @@ async function ckSetStatus(ids, status) {
 }
 (function ckEvents() {
   const v = $('#v-checkouts'); if (!v) return;
-  v.addEventListener('input', e => { if (e.target.id === 'ckQ') { CK.q = e.target.value; const p = e.target.selectionStart; renderCheckouts(); const q = $('#ckQ'); if (q) { q.focus(); try { q.setSelectionRange(p, p); } catch (er) { } } } });
+  let qT = null;
+  v.addEventListener('input', e => { if (e.target.id === 'ckQ') { CK.q = e.target.value; clearTimeout(qT); qT = setTimeout(() => { const p = ($('#ckQ') || {}).selectionStart; renderCheckouts(); const q = $('#ckQ'); if (q) { q.focus(); try { q.setSelectionRange(p, p); } catch (er) { } } }, 120); } });
+  v.addEventListener('change', e => { const f = e.target.closest('[data-ckf]'); if (f) { CK[f.dataset.ckf] = f.value; CK.sel.clear(); renderCheckouts(); } });
   v.addEventListener('click', e => {
     const t = e.target;
     const ck = t.closest('.cu-ck'); if (ck) { e.stopPropagation(); const b = ck.querySelector('input'); if (!b || b.disabled) return; if (t !== b) b.checked = !b.checked;
@@ -8504,6 +8534,7 @@ function go(name) {
   if (name !== 'pipeline' && typeof selWire !== 'undefined') { selWire = null; }
   $$('.view').forEach(v => v.classList.toggle('active', v.id === 'v-' + name));
   $$('[data-go]').forEach(a => a.classList.toggle('active', a.dataset.go === want));
+  { const ft = document.querySelector(`#v-${name} > .fam-strip .fam-t.active`), bar = ft && ft.parentElement; if (bar && bar.scrollWidth > bar.clientWidth) bar.scrollLeft = ft.offsetLeft - (bar.clientWidth - ft.offsetWidth) / 2; }   // phones: the open tab is always in view
   if (location.hash !== '#' + want && !authInUrl()) history.replaceState(null, '', '#' + want);   // keep login/reset tokens until Supabase reads them
   const stale = staleViews.delete(name);
   if (name === 'pipeline') requestAnimationFrame(() => { sizeCanvas(); if (!view.fitted || stale) { renderPipeline(!view.fitted); } else applyView(); });
