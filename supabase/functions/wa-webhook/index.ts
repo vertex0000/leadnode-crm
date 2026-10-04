@@ -221,12 +221,14 @@ async function runList(env: Env, list: any[], prefix: string): Promise<void> {
         case 'update_order': {
           const status = String(p.status || 'Confirmed');
           if (!ctx.order) { const { data: o } = await db.from('orders').insert({ workspace_id: ws, lead_id: leadId, items: String(label ?? ''), status, payment: status === 'COD' ? 'COD' : '', source: `WhatsApp · ${tplName}` }).select().single(); ctx.order = o; }
-          else { const { data: o } = await db.from('orders').update({ status, ...(status === 'COD' ? { payment: 'COD' } : {}) }).eq('workspace_id', ws).eq('order_id', ctx.order.order_id).select().single(); ctx.order = o; }
+          else {   // every line of the same store order (SQL 23: order_ref) changes together
+            if (ctx.order.order_ref) await db.from('orders').update({ status, ...(status === 'COD' ? { payment: 'COD' } : {}) }).eq('workspace_id', ws).eq('lead_id', leadId).eq('order_ref', ctx.order.order_ref).neq('order_id', ctx.order.order_id);
+            const { data: o } = await db.from('orders').update({ status, ...(status === 'COD' ? { payment: 'COD' } : {}) }).eq('workspace_id', ws).eq('order_id', ctx.order.order_id).select().single(); ctx.order = o; }
           await db.from('activities').insert({ workspace_id: ws, lead_id: leadId, type: 'Order', details: `${ctx.order?.order_id} → ${status}`, done_by: 'Automation' });
           if (p.text) await say(p.text); break;
         }
         case 'cancel_order': {
-          if (ctx.order) { await db.from('orders').update({ status: 'Cancelled' }).eq('workspace_id', ws).eq('order_id', ctx.order.order_id); await db.from('activities').insert({ workspace_id: ws, lead_id: leadId, type: 'Order', details: `${ctx.order.order_id} cancelled by customer`, done_by: 'Customer' }); }
+          if (ctx.order) { await db.from('orders').update({ status: 'Cancelled' }).eq('workspace_id', ws).eq('order_id', ctx.order.order_id); if (ctx.order.order_ref) await db.from('orders').update({ status: 'Cancelled' }).eq('workspace_id', ws).eq('lead_id', leadId).eq('order_ref', ctx.order.order_ref); await db.from('activities').insert({ workspace_id: ws, lead_id: leadId, type: 'Order', details: `${ctx.order.order_id} cancelled by customer`, done_by: 'Customer' }); }
           await say(p.text || (ctx.order ? 'Your order {{order_id}} is cancelled.' : 'We could not find an open order for you.')); break;
         }
         case 'track_order': await say(p.text || (ctx.order ? 'Order {{order_id}}: *{{status}}*' + (ctx.order.tracking_url ? '\nTrack it here: {{tracking_url}}' : '') : 'We could not find an open order for you — reply here and our team will help.')); break;
@@ -261,6 +263,13 @@ async function runList(env: Env, list: any[], prefix: string): Promise<void> {
           if (col === 'email' && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v)) break;
           if (col === 'notes') v = [String(lead?.notes ?? '').trim(), v].filter(Boolean).join('\n').slice(0, 4000);
           await db.from('leads').update({ [col]: v }).eq('workspace_id', ws).eq('lead_id', leadId); break;
+        }
+        // marketing permission (SQL 23): "Yes, send me offers" / "No offers" — order updates keep coming either way
+        case 'mkt_optin': case 'mkt_optout': {
+          const yes = p.type === 'mkt_optin';
+          await db.from('leads').update({ mkt_ok: yes, mkt_src: 'button' }).eq('workspace_id', ws).eq('lead_id', leadId);
+          await db.from('activities').insert({ workspace_id: ws, lead_id: leadId, type: yes ? 'Opt-in' : 'Opt-out', details: `Tapped “${label}” — ${yes ? 'wants offers on WhatsApp' : 'no offers (order updates still sent)'}`, done_by: 'Customer' });
+          await say(String(p.text || (yes ? 'Done ✅ You will get our offers here. Reply STOP any time.' : 'Done — no offers. You will still get updates about your orders.'))); break;
         }
         case 'stop_messages': await db.from('leads').update({ wa_opt_out: true }).eq('workspace_id', ws).eq('lead_id', leadId); await db.from('activities').insert({ workspace_id: ws, lead_id: leadId, type: 'Opt-out', details: `Tapped “${label}” — no more broadcasts`, done_by: 'Customer' }); break;
         case 'trigger_workflow': case 'custom_api': {
@@ -329,7 +338,7 @@ Deno.serve(async (req) => {
           await db.from('leads').update({ last_contact: today() }).eq('workspace_id', ws).eq('lead_id', lead.id);
           // "STOP" → no more broadcasts to this number; "START" → back in
           if (/^\s*(stop|unsubscribe|stop all|band karo)\s*[.!]?\s*$/i.test(text)) await db.from('leads').update({ wa_opt_out: true }).eq('workspace_id', ws).eq('lead_id', lead.id);
-          else if (/^\s*start\s*$/i.test(text)) await db.from('leads').update({ wa_opt_out: false }).eq('workspace_id', ws).eq('lead_id', lead.id);
+          else if (/^\s*start\s*$/i.test(text)) { await db.from('leads').update({ wa_opt_out: false }).eq('workspace_id', ws).eq('lead_id', lead.id); await db.from('leads').update({ mkt_ok: true, mkt_src: 'start' }).eq('workspace_id', ws).eq('lead_id', lead.id).then(() => null, () => null); }   // START = wants messages again (SQL 23)
           // quick-reply button on one of our templates → run its actions
           const payload = m.type === 'button' ? String(m.button?.payload ?? '') : m.type === 'interactive' ? String(m.interactive?.button_reply?.id ?? m.interactive?.list_reply?.id ?? '') : '';
           if (payload.startsWith('nv|') || payload.startsWith('nvm|')) await runButton(ws, acc, lead.id, phone, payload, text);

@@ -61,7 +61,10 @@ function findList(d: any, want = ''): { list: any[]; path: string } {
 
 // ---------------- platform adapters → rows for public.orders / public.products ----------------
 type Ctx = { cfg: any; sec: any; since: string | null; ws?: string };
-type Got = { orders: any[]; products: any[]; updates?: { id: string; status: string }[]; ads?: any[]; insights?: any[] };
+type Got = { orders: any[]; products: any[]; updates?: { id: string; status: string }[]; ads?: any[]; insights?: any[]; checkouts?: any[] };
+/** the buyer's phone / email (SQL 23: one customer profile per phone or email, WhatsApp / email remarketing) */
+const phoneOf = (...v: unknown[]) => { for (const x of v) { const d = String(x ?? '').replace(/\D/g, ''); if (d.length >= 10) return cut(d, 20); } return ''; };
+const emailOf = (...v: unknown[]) => { for (const x of v) { const e = String(x ?? '').trim().toLowerCase(); if (/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(e)) return cut(e, 160); } return ''; };
 const shopBase = (cfg: any) => `https://${String(cfg.store_url).replace(/^https?:\/\//, '').replace(/\/.*$/, '')}/admin/api/2026-07`;
 const SHOP_BASE_OVERRIDE = Deno.env.get('SHOPIFY_BASE');                 // local tests
 const SHOP_OAUTH_OVERRIDE = Deno.env.get('SHOPIFY_OAUTH_BASE');          // local tests
@@ -84,13 +87,15 @@ async function shopify(ctx: Ctx, limitPages = 8) {
     const { data, headers } = await getJSON(url, H);
     for (const o of data.orders ?? []) {
       const items = o.line_items ?? [], ship = num(o.total_shipping_price_set?.shop_money?.amount ?? o.shipping_lines?.reduce?.((a: number, s: any) => a + Number(s.price || 0), 0)), gw = (o.payment_gateway_names ?? []).join(', ');
-      const st = o.cancelled_at ? 'Cancelled' : /refunded/.test(o.financial_status) ? 'Refunded' : o.fulfillment_status === 'fulfilled' ? 'Shipped' : o.financial_status === 'paid' ? 'Paid' : /cash|cod/i.test(gw) ? 'COD' : 'New';
+      const delivered = (o.fulfillments ?? []).some((f: any) => f.shipment_status === 'delivered');
+      const st = o.cancelled_at ? 'Cancelled' : /refunded/.test(o.financial_status) ? 'Refunded' : delivered ? 'Delivered' : o.fulfillment_status === 'fulfilled' ? 'Shipped' : o.financial_status === 'paid' ? 'Paid' : /cash|cod/i.test(gw) ? 'COD' : 'New';
+      const who = { customer_phone: phoneOf(o.phone, o.shipping_address?.phone, o.billing_address?.phone, o.customer?.phone, o.customer?.default_address?.phone), customer_email: emailOf(o.email, o.contact_email, o.customer?.email), order_ref: cut(o.name || o.id, 80), coupon: cut(o.discount_codes?.[0]?.code, 60) };
       items.forEach((li: any, k: number) => {
         const disc = (li.discount_allocations ?? []).reduce((a: number, d: any) => a + Number(d.amount || 0), 0), qty = Number(li.quantity || 1), unit = num(li.price);
         orders.push({ ext_id: cut(items.length > 1 ? `${o.name || o.id}-${k + 1}` : (o.name || o.id), 80), order_date: dateOf(o.created_at), sku: cut(li.sku, 80), product_name: cut(li.title + (li.variant_title ? ' · ' + li.variant_title : ''), 200), qty,
           unit_price: unit, amount: unit != null ? Math.max(0, unit * qty - disc) : null, shipping_fee: k === 0 ? ship : null, status: st, payment: cut(gw, 40),
           customer_name: cut([o.shipping_address?.first_name, o.shipping_address?.last_name].filter(Boolean).join(' ') || o.customer?.first_name || '', 120), customer_state: cut(o.shipping_address?.province, 60), customer_city: cut(o.shipping_address?.city, 60),
-          tracking_url: cut(o.fulfillments?.[0]?.tracking_url, 500), courier: cut(o.fulfillments?.[0]?.tracking_company, 60) });
+          tracking_url: cut(o.fulfillments?.[0]?.tracking_url, 500), courier: cut(o.fulfillments?.[0]?.tracking_company, 60), ...who });
       });
     }
     const link = headers.get('link') ?? ''; const m = link.match(/<([^>]+)>;\s*rel="next"/); url = m ? m[1] : null;
@@ -104,7 +109,24 @@ async function shopify(ctx: Ctx, limitPages = 8) {
     }
     const link = headers.get('link') ?? ''; const m = link.match(/<([^>]+)>;\s*rel="next"/); url = m ? m[1] : null;
   }
-  return { orders, products };
+  // abandoned checkouts of the last 7 days (people who gave their phone / email but did not pay) — skipped quietly if the app can not read them
+  const checkouts: any[] = [];
+  try {
+    url = `${base}/checkouts.json?limit=250&updated_at_min=${encodeURIComponent(new Date(Date.now() - 7 * 864e5).toISOString())}`;
+    for (let i = 0; url && i < 4; i++) {
+      const { data, headers } = await getJSON(url, H);
+      for (const c of data.checkouts ?? []) {
+        const phone = phoneOf(c.phone, c.shipping_address?.phone, c.billing_address?.phone, c.customer?.phone), email = emailOf(c.email, c.customer?.email);
+        if (!c.token || (!phone && !email)) continue;
+        const li = c.line_items ?? [];
+        checkouts.push({ checkout_id: cut('shopify:' + c.token, 120), name: cut([c.shipping_address?.first_name || c.customer?.first_name, c.shipping_address?.last_name || c.customer?.last_name].filter(Boolean).join(' '), 120), phone, email,
+          items: cut(li.map((l: any) => `${Number(l.quantity || 1) > 1 ? l.quantity + ' × ' : ''}${l.title}${l.variant_title ? ' · ' + l.variant_title : ''}`).join(', '), 2000), skus: li.map((l: any) => cut(l.sku, 80)).filter(Boolean).slice(0, 30),
+          amount: num(c.total_price), url: /^https:\/\//.test(String(c.abandoned_checkout_url ?? '')) ? cut(c.abandoned_checkout_url, 1000) : '', completed: !!c.completed_at, created_at: c.created_at });
+      }
+      const link = headers.get('link') ?? ''; const m = link.match(/<([^>]+)>;\s*rel="next"/); url = m ? m[1] : null;
+    }
+  } catch (e) { console.log('shopify checkouts skipped:', (e as Error).message); }
+  return { orders, products, checkouts };
 }
 const WOO_ST: Record<string, string> = { pending: 'New', processing: 'Processing', 'on-hold': 'New', completed: 'Delivered', cancelled: 'Cancelled', refunded: 'Refunded', failed: 'Cancelled', shipped: 'Shipped' };
 async function woocommerce(ctx: Ctx, limitPages = 10) {
@@ -119,7 +141,8 @@ async function woocommerce(ctx: Ctx, limitPages = 10) {
       const items = o.line_items ?? [], cod = /cod|cash/i.test(o.payment_method || '') && o.status === 'processing';
       items.forEach((li: any, k: number) => orders.push({ ext_id: cut(items.length > 1 ? `${o.number || o.id}-${k + 1}` : String(o.number || o.id), 80), order_date: dateOf(o.date_created_gmt ? o.date_created_gmt + 'Z' : o.date_created), sku: cut(li.sku, 80), product_name: cut(li.name, 200),
         qty: Number(li.quantity || 1), unit_price: num(li.price), amount: num(li.total), shipping_fee: k === 0 ? num(o.shipping_total) : null, status: cod ? 'COD' : (WOO_ST[o.status] ?? statusOf(o.status)), payment: cut(o.payment_method_title, 40),
-        customer_name: cut([o.shipping?.first_name || o.billing?.first_name, o.shipping?.last_name || o.billing?.last_name].filter(Boolean).join(' '), 120), customer_state: cut(o.shipping?.state || o.billing?.state, 60), customer_city: cut(o.shipping?.city || o.billing?.city, 60) }));
+        customer_name: cut([o.shipping?.first_name || o.billing?.first_name, o.shipping?.last_name || o.billing?.last_name].filter(Boolean).join(' '), 120), customer_state: cut(o.shipping?.state || o.billing?.state, 60), customer_city: cut(o.shipping?.city || o.billing?.city, 60),
+        customer_phone: phoneOf(o.billing?.phone, o.shipping?.phone), customer_email: emailOf(o.billing?.email), order_ref: cut(o.number || o.id, 80), coupon: cut(o.coupon_lines?.[0]?.code, 60) }));
     }
     if (data.length < 100) break;
   }
@@ -146,7 +169,8 @@ async function custom(ctx: Ctx) {
     const g = (f: string) => m[f] ? pick(o, m[f]) : undefined;
     return { ext_id: cut(g('extId'), 80), order_date: dateOf(g('orderDate')), sku: cut(g('sku'), 80), product_name: cut(g('productName'), 200), qty: Math.max(1, Math.round(Number(num(g('qty')) ?? 1) || 1)), unit_price: num(g('unitPrice')), amount: num(g('amount')),
       status: statusOf(g('status'), 'Delivered'), payment: cut(g('payment'), 40), customer_name: cut(g('customerName'), 120), customer_state: cut(g('customerState'), 60), customer_city: cut(g('customerCity'), 60),
-      shipping_fee: num(g('shippingFee')), marketplace_fee: num(g('marketplaceFee')), courier: cut(g('courier'), 60), tracking_url: /^https?:\/\//.test(String(g('trackingUrl') ?? '')) ? cut(g('trackingUrl'), 500) : '' };
+      shipping_fee: num(g('shippingFee')), marketplace_fee: num(g('marketplaceFee')), courier: cut(g('courier'), 60), tracking_url: /^https?:\/\//.test(String(g('trackingUrl') ?? '')) ? cut(g('trackingUrl'), 500) : '',
+      customer_phone: phoneOf(g('customerPhone')), customer_email: emailOf(g('customerEmail')), coupon: cut(g('coupon'), 60) };
   }).filter((o: any) => o.ext_id);
   let products: any[] = [];
   if (cfg.products_url && pm.sku) {
@@ -285,10 +309,23 @@ async function store(ws: string, platform: string, got: Got, cfg: any = {}) {
     for (const g of groups.values()) for (let i = 0; i < g.length; i += 500) { const { error, count } = await db.from('products').upsert(g.slice(i, i + 500), { onConflict: 'workspace_id,sku', count: 'exact' }); if (error) throw new Error('Saving products: ' + error.message); np += count ?? 0; }
   }
   if (got.orders.length) {
-    const seen = new Set<string>(), rows = got.orders.filter((o) => o.ext_id && !seen.has(o.ext_id) && seen.add(o.ext_id)).map((o) => { const r: any = { workspace_id: ws, channel: CHANNEL[platform] ?? 'Website', source: SOURCE[platform], lead_id: null, stock_skip: stockSkip(platform, cfg) }; for (const [k, v] of Object.entries(o)) if (v !== undefined) r[k] = v === '' && !['sku', 'product_name', 'payment', 'customer_name', 'customer_state', 'customer_city', 'courier', 'tracking_url'].includes(k) ? null : v; return r; });
-    const cols = ['workspace_id', 'channel', 'source', 'lead_id', 'stock_skip', 'ext_id', 'order_date', 'sku', 'product_name', 'qty', 'unit_price', 'amount', 'shipping_fee', 'marketplace_fee', 'status', 'payment', 'customer_name', 'customer_state', 'customer_city', 'courier', 'tracking_url'];
-    const norm = rows.map((r) => Object.fromEntries(cols.map((c) => [c, r[c] ?? (['qty'].includes(c) ? 1 : ['sku', 'product_name', 'payment', 'customer_name', 'customer_state', 'customer_city', 'courier', 'tracking_url'].includes(c) ? '' : c === 'status' ? 'New' : null)])));
-    for (let i = 0; i < norm.length; i += 500) { const { error, count } = await db.from('orders').upsert(norm.slice(i, i + 500), { onConflict: 'workspace_id,channel,ext_id', count: 'exact' }); if (error) throw new Error('Saving orders: ' + error.message); no += count ?? 0; }
+    const TXT = ['sku', 'product_name', 'payment', 'customer_name', 'customer_state', 'customer_city', 'courier', 'tracking_url', 'customer_phone', 'customer_email', 'order_ref', 'coupon'];
+    const seen = new Set<string>(), rows = got.orders.filter((o) => o.ext_id && !seen.has(o.ext_id) && seen.add(o.ext_id)).map((o) => { const r: any = { workspace_id: ws, channel: CHANNEL[platform] ?? 'Website', source: SOURCE[platform], stock_skip: stockSkip(platform, cfg) }; for (const [k, v] of Object.entries(o)) if (v !== undefined) r[k] = v === '' && !TXT.includes(k) ? null : v; return r; });
+    // lead_id is not sent: the database links each order to its customer (by phone / email) and a sync never unlinks it
+    let cols = ['workspace_id', 'channel', 'source', 'stock_skip', 'ext_id', 'order_date', 'sku', 'product_name', 'qty', 'unit_price', 'amount', 'shipping_fee', 'marketplace_fee', 'status', 'payment', 'customer_name', 'customer_state', 'customer_city', 'courier', 'tracking_url', 'customer_phone', 'customer_email', 'order_ref', 'coupon'];
+    const normOf = () => rows.map((r) => Object.fromEntries(cols.map((c) => [c, r[c] ?? (['qty'].includes(c) ? 1 : TXT.includes(c) ? '' : c === 'status' ? 'New' : null)])));
+    let norm = normOf();
+    for (let i = 0; i < norm.length; i += 500) {
+      let { error, count } = await db.from('orders').upsert(norm.slice(i, i + 500), { onConflict: 'workspace_id,channel,ext_id', count: 'exact' });
+      if (error && /customer_phone|customer_email|order_ref|coupon/.test(error.message)) { cols = cols.filter((c) => !['customer_phone', 'customer_email', 'order_ref', 'coupon'].includes(c)); norm = normOf(); ({ error, count } = await db.from('orders').upsert(norm.slice(i, i + 500), { onConflict: 'workspace_id,channel,ext_id', count: 'exact' })); }   // before the 23 update
+      if (error) throw new Error('Saving orders: ' + error.message); no += count ?? 0;
+    }
+  }
+  if (got.checkouts?.length) {                                  // abandoned checkouts (SQL 23) — the status (open / recovered) is never overwritten
+    const open = got.checkouts.filter((c) => !c.completed), done = got.checkouts.filter((c) => c.completed).map((c) => c.checkout_id);
+    const rows = open.map(({ completed: _c, created_at, ...c }) => ({ workspace_id: ws, ...c, channel: 'Website', source: SOURCE[platform] ?? 'Website', created_at: created_at && !isNaN(+new Date(created_at)) ? new Date(created_at).toISOString() : new Date().toISOString() }));
+    for (let i = 0; i < rows.length; i += 200) { const { error } = await db.from('checkouts').upsert(rows.slice(i, i + 200), { onConflict: 'workspace_id,checkout_id' }); if (error) { console.log('checkouts', error.message); break; } }
+    if (done.length) await db.from('checkouts').update({ status: 'recovered' }).eq('workspace_id', ws).eq('status', 'open').in('checkout_id', done.slice(0, 500)).then(() => null, () => null);
   }
   for (const u of got.updates ?? []) {                          // status changes of orders we already have (Amazon)
     const { count } = await db.from('orders').update({ status: u.status }, { count: 'exact' }).eq('workspace_id', ws).eq('channel', CHANNEL[platform] ?? 'Website').neq('status', u.status).or(`ext_id.eq.${u.id},ext_id.like.${u.id}-*`);

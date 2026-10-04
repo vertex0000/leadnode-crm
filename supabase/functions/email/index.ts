@@ -123,7 +123,8 @@ async function systemSend(req: Request, b: any) {
   if (!body.trim()) return json({ ok: false, error: 'Empty email' });
   const fromLabel = acc.from_name || acc.from_email, t = await unsubToken(ws, l.lead_id), page = `${SITE}/unsubscribe.html?u=${encodeURIComponent(t)}`, oneClick = `${FN_URL}?u=${encodeURIComponent(t)}`;
   const r = await brevoSend(acc, { email: l.email, name: l.name || '' }, subject, wrap(toHtml(body), fromLabel, page), page, oneClick);
-  if (r.ok) await db.from('activities').insert({ workspace_id: ws, lead_id: l.lead_id, type: 'Email Sent', details: 'Welcome: ' + subject, done_by: 'Auto welcome' });
+  const by = ['Auto message', 'Remarketing'].includes(String(b.by)) ? String(b.by) : 'Auto welcome', label = String(b.label || 'Welcome').slice(0, 40);   // auto messages (remarket) say which one
+  if (r.ok) await db.from('activities').insert({ workspace_id: ws, lead_id: l.lead_id, type: 'Email Sent', details: label + ': ' + subject, done_by: by });
   return json(r.ok ? { ok: true } : { ok: false, error: r.error });
 }
 

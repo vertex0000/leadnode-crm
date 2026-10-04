@@ -63,7 +63,7 @@ async function logSent(ws: string, leadId: string | null, to: string, type: stri
   }
 }
 
-/** Auto welcome / auto-reply to one lead. Only the server can call this (header x-cron-secret). */
+/** Auto welcome / auto-reply / auto messages (remarket) to one lead. Only the server can call this (header x-cron-secret). */
 async function systemSend(req: Request, b: any) {
   const { data: sec } = await db.from('app_config').select('value').eq('key', 'cron_secret').maybeSingle();
   if (!sec?.value || req.headers.get('x-cron-secret') !== sec.value) return json({ error: 'Forbidden' }, 403);
@@ -79,8 +79,13 @@ async function systemSend(req: Request, b: any) {
   else { if (!b.template) return json({ ok: false, error: 'No template' }); const params = (Array.isArray(b.params) ? b.params : []).map((x: unknown) => fill(String(x)) || '-'); const trow = await tplRow(ws, String(b.template));
     r = await graphSend(acc, trow ? templatePayloadFor(to, { ...trow, language: String(b.language || trow.language || 'en') }, params) : templatePayload(to, String(b.template), String(b.language || 'en'), params));
     type = 'template'; text = fill(String(b.preview || `Template: ${b.template}`)); }
-  if (!r.ok) return json({ ok: false, error: r.error });
-  await logSent(ws, leadId, to, type, text, r.id, 'Auto welcome', null, (type === 'text' ? 'Auto-reply: ' : 'Welcome: ') + text, 'Auto welcome');
+  if (!r.ok) {
+    if (r.code === '131026') await db.from('leads').update({ wa_status: 'off', wa_checked_at: new Date().toISOString() }).eq('workspace_id', ws).eq('lead_id', leadId).then(() => null, () => null);   // SQL 23
+    return json({ ok: false, error: r.error, code: r.code });
+  }
+  // by: who sent it ('Auto welcome' · 'Auto message' · 'Remarketing' — remarketing counts for the weekly limit), label: shown in the lead's journey
+  const by = ['Auto message', 'Remarketing'].includes(String(b.by)) ? String(b.by) : 'Auto welcome', label = String(b.label || '').slice(0, 40);
+  await logSent(ws, leadId, to, type, text, r.id, by, null, (label ? label + ': ' : type === 'text' ? 'Auto-reply: ' : 'Welcome: ') + text, by);
   return json({ ok: true, id: r.id });
 }
 
