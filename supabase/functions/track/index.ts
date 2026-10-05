@@ -1,11 +1,13 @@
 // Nodevers — track: the website tracking code (t.js), the Shopify customer-events pixel and any website / app send shoppers here.
 //   POST /functions/v1/track   body (JSON, sent as text/plain so browsers need no pre-check):
-//     { k: <lead capture key>, e: "checkout" | "purchase", id: <checkout / cart id>, phone, email, name, items: [{ sku, name, qty, price }],
-//       value, url (link back to the cart), consent (true when the shopper ticked "send me offers"), src ("shopify" for the pixel),
-//       order: { id, payment, status } (purchase) }
+//     { k: <lead capture key>, e: "checkout" | "purchase" | "view", id: <checkout / cart id>, phone, email, name, items: [{ sku, name, qty, price }],
+//       value, url (link back to the cart / product), consent (true when the shopper ticked "send me offers"), src ("shopify" for the pixel),
+//       ref (a customer's referral code from a ?ref= link), pincode, order: { id, payment, status, pincode } (purchase),
+//       product: { sku, name, price } (view — only for shoppers the CRM already knows by phone / email) }
 //   GET  /functions/v1/track?k=<key>&cfg=1  →  { consent: { on, text } }  (the tracking code asks once per page)
 // checkout → an abandoned-checkout row (+ the customer profile); purchase → the checkout is recovered and, when the workspace has no store
-// connection (Shopify / WooCommerce / own API), the order itself is saved. One profile per phone / email. Speed limit per workspace.
+// connection (Shopify / WooCommerce / own API), the order itself is saved; view → "viewed, not bought" reminder (SQL 24).
+// ref → the friend is linked to the customer who shared the link (Referrals). One profile per phone / email. Speed limit per workspace.
 // Deploy: Supabase → Edge Functions → Deploy a new function → Via Editor → name "track" → paste → Deploy → turn OFF "Enforce JWT verification".
 import { createClient } from 'npm:@supabase/supabase-js@2';
 
@@ -58,6 +60,19 @@ Deno.serve(async (req) => {
     const items = itemsOf(b), value = money(b.value) ?? (items.reduce((a: number, x: any) => a + (x.price ?? 0) * x.qty, 0) || null);
     const consent = b.consent === true ? true : b.consent === false ? false : undefined;
     const link = /^https:\/\/\S+$/.test(String(b.url ?? '')) ? cut(b.url, 1000) : '';
+    const refCode = /^[A-Za-z0-9]{4,16}$/.test(String(b.ref ?? '')) ? String(b.ref).toUpperCase() : '';
+    const join = async (lid: string | null) => { if (lid && refCode) await db.rpc('referral_join', { p_ws: ws, p_friend: lid, p_code: refCode }).then(() => null, () => null); };
+
+    if (e === 'view') {                               // a product page — only people we already know (phone / email remembered by the tracking code)
+      if (!phone && !email) return json({ ok: true, waiting: 'phone or email' });
+      const p = b.product ?? items[0] ?? {}, sku = cut(p.sku ?? p.id ?? '', 80), pname = cut(p.name ?? p.title ?? '', 200);
+      if (!sku && !pname) return json({ error: 'Missing product' }, 400);
+      const { data: lid } = await db.rpc('lead_find', { p_ws: ws, p_phone: phone, p_email: email });
+      if (!lid) return json({ ok: true, waiting: 'not a known shopper' });
+      const { error } = await db.rpc('product_view', { p_ws: ws, p_lead: lid, p_sku: sku, p_name: pname, p_url: link, p_price: money(p.price) });
+      if (error) { console.error('track view', error.message); return json({ error: 'Could not save' }, 500); }
+      return json({ ok: true });
+    }
 
     if (e === 'checkout') {
       if (!id) return json({ error: 'Missing checkout id' }, 400);
@@ -65,30 +80,34 @@ Deno.serve(async (req) => {
       const row: any = { workspace_id: ws, checkout_id: id, phone, email, channel: 'Website', source: b.src === 'shopify' ? 'Shopify pixel' : 'Website tracking' };
       if (name) row.name = name; if (items.length) { row.items = cut(items.map((x: any) => `${x.qty > 1 ? x.qty + ' × ' : ''}${x.name || x.sku}`).join(', '), 2000); row.skus = items.map((x: any) => x.sku).filter(Boolean); }
       if (value != null) row.amount = value; if (link) row.url = link; if (consent !== undefined) row.consent = consent;
-      const { error } = await db.from('checkouts').upsert(row, { onConflict: 'workspace_id,checkout_id' });
+      const { data: saved, error } = await db.from('checkouts').upsert(row, { onConflict: 'workspace_id,checkout_id' }).select('lead_id').maybeSingle();
       if (error) { console.error('track checkout', error.message); return json({ error: 'Could not save' }, 500); }
+      await join(saved?.lead_id ?? null);
       return json({ ok: true });
     }
     if (e === 'purchase') {
       const o = b.order ?? {}, orderId = cut(String(o.id ?? b.order_id ?? b.transaction_id ?? '').replace(/[^\w#.\-\/]/g, ''), 60);
       if (id) await db.from('checkouts').update({ status: 'recovered', order_ref: orderId }).eq('workspace_id', ws).eq('checkout_id', id).eq('status', 'open');
-      if (consent === true && (phone || email)) {                                     // ticked "send me offers"
+      if ((consent === true || refCode) && (phone || email)) {                        // ticked "send me offers" / came through a friend's link
         const { data: lid } = await db.rpc('customer_lead', { p_ws: ws, p_phone: phone, p_email: email, p_name: name, p_city: '', p_state: '', p_source: 'Website', p_stage: 'Won', p_day: today() });
-        if (lid) await db.from('leads').update({ mkt_ok: true, mkt_src: 'checkout' }).eq('workspace_id', ws).eq('lead_id', lid).is('mkt_ok', null);
+        if (lid && consent === true) await db.from('leads').update({ mkt_ok: true, mkt_src: 'checkout' }).eq('workspace_id', ws).eq('lead_id', lid).is('mkt_ok', null);
+        await join(lid);                                                             // before the order is saved, so the order counts for the referral
       }
       // the store's own sync brings the order (with its real number) — only websites without a store connection save it from here
       const { data: conn } = await db.from('store_connections').select('platform').eq('workspace_id', ws).in('platform', ['shopify', 'woocommerce', 'custom']).limit(1);
       if (conn?.length || !orderId || (!phone && !email)) return json({ ok: true });
+      const pin = cut(String(o.pincode ?? b.pincode ?? '').replace(/[^A-Za-z0-9-]/g, ''), 12);
       const pay = cut(o.payment ?? b.payment, 40), status = /cod|cash/i.test(pay) ? 'COD' : /pending|unpaid/i.test(String(o.status ?? '')) ? 'New' : 'Paid';
       const lines = items.length ? items : [{ sku: '', name: 'Website order', qty: 1, price: value }];
       const rows = lines.map((x: any, i: number) => ({ workspace_id: ws, channel: 'Website', source: 'Website tracking', ext_id: cut(lines.length > 1 ? `T-${orderId}-${i + 1}` : `T-${orderId}`, 80), order_ref: orderId,
         order_date: today(), sku: x.sku, product_name: x.name, qty: x.qty, unit_price: x.price, amount: lines.length > 1 ? (x.price != null ? x.price * x.qty : null) : value, status, payment: pay,
-        customer_name: name, customer_phone: phone, customer_email: email, items: cut(`${x.qty} × ${x.name || x.sku || 'item'}`, 2000) }));
-      const { error } = await db.from('orders').upsert(rows, { onConflict: 'workspace_id,channel,ext_id', ignoreDuplicates: true });
+        customer_name: name, customer_phone: phone, customer_email: email, items: cut(`${x.qty} × ${x.name || x.sku || 'item'}`, 2000), pincode: pin, coupon: cut(o.coupon ?? b.coupon ?? '', 40) }));
+      let { error } = await db.from('orders').upsert(rows, { onConflict: 'workspace_id,channel,ext_id', ignoreDuplicates: true });
+      if (error && /pincode/.test(error.message)) ({ error } = await db.from('orders').upsert(rows.map(({ pincode: _p, ...r }: any) => r), { onConflict: 'workspace_id,channel,ext_id', ignoreDuplicates: true }));   // before SQL 24
       if (error) { console.error('track purchase', error.message); return json({ error: 'Could not save the order' }, 500); }
       return json({ ok: true, saved: rows.length });
     }
-    return json({ error: 'Unknown event — use "checkout" or "purchase".' }, 400);
+    return json({ error: 'Unknown event — use "checkout", "purchase" or "view".' }, 400);
   } catch (err) {
     console.error('track', err);
     return json({ error: 'Something went wrong' }, 500);

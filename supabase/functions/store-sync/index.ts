@@ -64,6 +64,7 @@ type Ctx = { cfg: any; sec: any; since: string | null; ws?: string };
 type Got = { orders: any[]; products: any[]; updates?: { id: string; status: string }[]; ads?: any[]; insights?: any[]; checkouts?: any[] };
 /** the buyer's phone / email (SQL 23: one customer profile per phone or email, WhatsApp / email remarketing) */
 const phoneOf = (...v: unknown[]) => { for (const x of v) { const d = String(x ?? '').replace(/\D/g, ''); if (d.length >= 10) return cut(d, 20); } return ''; };
+const pinOf = (...v: unknown[]) => cut(String(v.find((x) => x !== undefined && x !== null && String(x).trim() !== '') ?? '').replace(/[^A-Za-z0-9-]/g, ''), 12);
 const emailOf = (...v: unknown[]) => { for (const x of v) { const e = String(x ?? '').trim().toLowerCase(); if (/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(e)) return cut(e, 160); } return ''; };
 const shopBase = (cfg: any) => `https://${String(cfg.store_url).replace(/^https?:\/\//, '').replace(/\/.*$/, '')}/admin/api/2026-07`;
 const SHOP_BASE_OVERRIDE = Deno.env.get('SHOPIFY_BASE');                 // local tests
@@ -89,7 +90,7 @@ async function shopify(ctx: Ctx, limitPages = 8) {
       const items = o.line_items ?? [], ship = num(o.total_shipping_price_set?.shop_money?.amount ?? o.shipping_lines?.reduce?.((a: number, s: any) => a + Number(s.price || 0), 0)), gw = (o.payment_gateway_names ?? []).join(', ');
       const delivered = (o.fulfillments ?? []).some((f: any) => f.shipment_status === 'delivered');
       const st = o.cancelled_at ? 'Cancelled' : /refunded/.test(o.financial_status) ? 'Refunded' : delivered ? 'Delivered' : o.fulfillment_status === 'fulfilled' ? 'Shipped' : o.financial_status === 'paid' ? 'Paid' : /cash|cod/i.test(gw) ? 'COD' : 'New';
-      const who = { customer_phone: phoneOf(o.phone, o.shipping_address?.phone, o.billing_address?.phone, o.customer?.phone, o.customer?.default_address?.phone), customer_email: emailOf(o.email, o.contact_email, o.customer?.email), order_ref: cut(o.name || o.id, 80), coupon: cut(o.discount_codes?.[0]?.code, 60) };
+      const who = { customer_phone: phoneOf(o.phone, o.shipping_address?.phone, o.billing_address?.phone, o.customer?.phone, o.customer?.default_address?.phone), customer_email: emailOf(o.email, o.contact_email, o.customer?.email), order_ref: cut(o.name || o.id, 80), coupon: cut(o.discount_codes?.[0]?.code, 60), pincode: pinOf(o.shipping_address?.zip, o.billing_address?.zip) };
       items.forEach((li: any, k: number) => {
         const disc = (li.discount_allocations ?? []).reduce((a: number, d: any) => a + Number(d.amount || 0), 0), qty = Number(li.quantity || 1), unit = num(li.price);
         orders.push({ ext_id: cut(items.length > 1 ? `${o.name || o.id}-${k + 1}` : (o.name || o.id), 80), order_date: dateOf(o.created_at), sku: cut(li.sku, 80), product_name: cut(li.title + (li.variant_title ? ' · ' + li.variant_title : ''), 200), qty,
@@ -142,7 +143,7 @@ async function woocommerce(ctx: Ctx, limitPages = 10) {
       items.forEach((li: any, k: number) => orders.push({ ext_id: cut(items.length > 1 ? `${o.number || o.id}-${k + 1}` : String(o.number || o.id), 80), order_date: dateOf(o.date_created_gmt ? o.date_created_gmt + 'Z' : o.date_created), sku: cut(li.sku, 80), product_name: cut(li.name, 200),
         qty: Number(li.quantity || 1), unit_price: num(li.price), amount: num(li.total), shipping_fee: k === 0 ? num(o.shipping_total) : null, status: cod ? 'COD' : (WOO_ST[o.status] ?? statusOf(o.status)), payment: cut(o.payment_method_title, 40),
         customer_name: cut([o.shipping?.first_name || o.billing?.first_name, o.shipping?.last_name || o.billing?.last_name].filter(Boolean).join(' '), 120), customer_state: cut(o.shipping?.state || o.billing?.state, 60), customer_city: cut(o.shipping?.city || o.billing?.city, 60),
-        customer_phone: phoneOf(o.billing?.phone, o.shipping?.phone), customer_email: emailOf(o.billing?.email), order_ref: cut(o.number || o.id, 80), coupon: cut(o.coupon_lines?.[0]?.code, 60) }));
+        customer_phone: phoneOf(o.billing?.phone, o.shipping?.phone), customer_email: emailOf(o.billing?.email), order_ref: cut(o.number || o.id, 80), coupon: cut(o.coupon_lines?.[0]?.code, 60), pincode: pinOf(o.shipping?.postcode, o.billing?.postcode) }));
     }
     if (data.length < 100) break;
   }
@@ -170,7 +171,7 @@ async function custom(ctx: Ctx) {
     return { ext_id: cut(g('extId'), 80), order_date: dateOf(g('orderDate')), sku: cut(g('sku'), 80), product_name: cut(g('productName'), 200), qty: Math.max(1, Math.round(Number(num(g('qty')) ?? 1) || 1)), unit_price: num(g('unitPrice')), amount: num(g('amount')),
       status: statusOf(g('status'), 'Delivered'), payment: cut(g('payment'), 40), customer_name: cut(g('customerName'), 120), customer_state: cut(g('customerState'), 60), customer_city: cut(g('customerCity'), 60),
       shipping_fee: num(g('shippingFee')), marketplace_fee: num(g('marketplaceFee')), courier: cut(g('courier'), 60), tracking_url: /^https?:\/\//.test(String(g('trackingUrl') ?? '')) ? cut(g('trackingUrl'), 500) : '',
-      customer_phone: phoneOf(g('customerPhone')), customer_email: emailOf(g('customerEmail')), coupon: cut(g('coupon'), 60) };
+      customer_phone: phoneOf(g('customerPhone')), customer_email: emailOf(g('customerEmail')), coupon: cut(g('coupon'), 60), pincode: pinOf(g('pincode')) };
   }).filter((o: any) => o.ext_id);
   let products: any[] = [];
   if (cfg.products_url && pm.sku) {
@@ -309,14 +310,15 @@ async function store(ws: string, platform: string, got: Got, cfg: any = {}) {
     for (const g of groups.values()) for (let i = 0; i < g.length; i += 500) { const { error, count } = await db.from('products').upsert(g.slice(i, i + 500), { onConflict: 'workspace_id,sku', count: 'exact' }); if (error) throw new Error('Saving products: ' + error.message); np += count ?? 0; }
   }
   if (got.orders.length) {
-    const TXT = ['sku', 'product_name', 'payment', 'customer_name', 'customer_state', 'customer_city', 'courier', 'tracking_url', 'customer_phone', 'customer_email', 'order_ref', 'coupon'];
+    const TXT = ['sku', 'product_name', 'payment', 'customer_name', 'customer_state', 'customer_city', 'courier', 'tracking_url', 'customer_phone', 'customer_email', 'order_ref', 'coupon', 'pincode'];
     const seen = new Set<string>(), rows = got.orders.filter((o) => o.ext_id && !seen.has(o.ext_id) && seen.add(o.ext_id)).map((o) => { const r: any = { workspace_id: ws, channel: CHANNEL[platform] ?? 'Website', source: SOURCE[platform], stock_skip: stockSkip(platform, cfg) }; for (const [k, v] of Object.entries(o)) if (v !== undefined) r[k] = v === '' && !TXT.includes(k) ? null : v; return r; });
     // lead_id is not sent: the database links each order to its customer (by phone / email) and a sync never unlinks it
-    let cols = ['workspace_id', 'channel', 'source', 'stock_skip', 'ext_id', 'order_date', 'sku', 'product_name', 'qty', 'unit_price', 'amount', 'shipping_fee', 'marketplace_fee', 'status', 'payment', 'customer_name', 'customer_state', 'customer_city', 'courier', 'tracking_url', 'customer_phone', 'customer_email', 'order_ref', 'coupon'];
+    let cols = ['workspace_id', 'channel', 'source', 'stock_skip', 'ext_id', 'order_date', 'sku', 'product_name', 'qty', 'unit_price', 'amount', 'shipping_fee', 'marketplace_fee', 'status', 'payment', 'customer_name', 'customer_state', 'customer_city', 'courier', 'tracking_url', 'customer_phone', 'customer_email', 'order_ref', 'coupon', 'pincode'];
     const normOf = () => rows.map((r) => Object.fromEntries(cols.map((c) => [c, r[c] ?? (['qty'].includes(c) ? 1 : TXT.includes(c) ? '' : c === 'status' ? 'New' : null)])));
     let norm = normOf();
     for (let i = 0; i < norm.length; i += 500) {
       let { error, count } = await db.from('orders').upsert(norm.slice(i, i + 500), { onConflict: 'workspace_id,channel,ext_id', count: 'exact' });
+      if (error && /pincode/.test(error.message)) { cols = cols.filter((c) => c !== 'pincode'); norm = normOf(); ({ error, count } = await db.from('orders').upsert(norm.slice(i, i + 500), { onConflict: 'workspace_id,channel,ext_id', count: 'exact' })); }   // before the 24 update
       if (error && /customer_phone|customer_email|order_ref|coupon/.test(error.message)) { cols = cols.filter((c) => !['customer_phone', 'customer_email', 'order_ref', 'coupon'].includes(c)); norm = normOf(); ({ error, count } = await db.from('orders').upsert(norm.slice(i, i + 500), { onConflict: 'workspace_id,channel,ext_id', count: 'exact' })); }   // before the 23 update
       if (error) throw new Error('Saving orders: ' + error.message); no += count ?? 0;
     }

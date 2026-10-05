@@ -147,6 +147,7 @@ async function runButton(ws: string, acc: any, leadId: string, phone: string, pa
 /** continue a saved wait / question (path = the wait or ask step) */
 async function resume(w: any, answer?: string) {
   const { data: acc } = await db.from('wa_accounts').select('*').eq('workspace_id', w.workspace_id).maybeSingle(); if (!acc) return;
+  if (w.kind === 'ask' && w.field === 'Feedback') return await feedbackComment(w, acc, String(answer ?? ''));
   const { data: t } = await db.from('templates').select('template_name, flow').eq('workspace_id', w.workspace_id).eq('template_name', w.template).maybeSingle();
   const btn = (t?.flow?.buttons ?? []).find((b: any, i: number) => (Number.isInteger(b.index) ? b.index : i) === Number(w.button));
   const root = Array.isArray(btn?.actions) ? btn.actions : [], node = botAt(root, w.path); if (!node || node.type !== w.kind) return;
@@ -154,6 +155,44 @@ async function resume(w: any, answer?: string) {
   const env: Env = { ws: w.workspace_id, acc, leadId: w.lead_id, phone: w.phone, label: answer ?? '', tplName: w.template, bi: Number(w.button), lead, ctx: { lead, order: await lastOrder(w.workspace_id, w.lead_id) }, steps: 0, root };
   if (w.kind === 'ask') { const ok = await saveField(env, String(node.field || 'City'), answer ?? ''); await db.from('activities').insert({ workspace_id: env.ws, lead_id: env.leadId, type: 'Bot', details: `${node.field || 'Answer'}: ${String(answer ?? '').slice(0, 200)}${ok ? ' (saved)' : ' (not saved — did not look valid)'}`, done_by: 'Automation' }); }
   await runList(env, node.then ?? [], `${w.path}.t`);
+}
+/** ratings (SQL 24): the "Rating request" template has 5 buttons (1–5 ⭐) with the action "rate" */
+async function fbCfg(ws: string) {
+  const { data } = await db.from('settings').select('value').eq('workspace_id', ws).eq('key', 'remarketJson').maybeSingle();
+  try { return (JSON.parse(data?.value || '{}') ?? {}).feedback ?? {}; } catch { return {}; }
+}
+async function rate(env: Env, p: any, here: string, say: (t: string) => Promise<void>) {
+  const { ws, leadId, phone, label, lead, ctx } = env;
+  const stars = (String(label).match(/⭐|★/g) ?? []).length, digit = Number((String(label).match(/[1-5]/) ?? [])[0] ?? 0);
+  const n = Math.max(0, Math.min(5, Math.round(Number(p.rating) || digit || stars))); if (!n) return;
+  const fb = await fbCfg(ws), low = Math.max(1, Math.min(4, Number(fb.low) || 3)), ref = String(ctx.order?.order_ref || ctx.order?.order_id || '');
+  // tapped again within 30 minutes → change the rating instead of adding a new one
+  const { data: prev } = await db.from('feedback').select('id, rating').eq('workspace_id', ws).eq('lead_id', leadId).gte('created_at', new Date(Date.now() - 30 * 60e3).toISOString()).order('id', { ascending: false }).limit(1).maybeSingle();
+  if (prev) await db.from('feedback').update({ rating: n }).eq('id', prev.id);
+  else await db.from('feedback').insert({ workspace_id: ws, lead_id: leadId, order_ref: ref.slice(0, 80), rating: n, source: 'whatsapp' });
+  await db.from('activities').insert({ workspace_id: ws, lead_id: leadId, type: 'Rating', details: `Rated ${n}/5 ${'⭐'.repeat(n)}${ref ? ' · order ' + ref : ''}`, done_by: 'Customer' });
+  if (n <= low) {
+    if (!prev || prev.rating > low) {           // the team hears about it once: a call task + a store alert
+      await db.from('tasks').insert({ workspace_id: ws, lead_id: leadId, title: `Unhappy customer — ${lead?.name || phone} rated ${n}/5${ref ? ' (order ' + ref + ')' : ''}`.slice(0, 200), notes: 'Call them, say sorry and fix it. Their reply (if any) is saved in Feedback.', due_at: new Date(Date.now() + 2 * 3600e3).toISOString(), priority: 'High', assigned_to: String(lead?.assigned_to ?? ''), source: 'feedback' });
+      await db.from('alert_queue').insert({ workspace_id: ws, kind: 'feedback', ref: `${leadId}:${Date.now()}`, payload: { rating: n, customer: lead?.name || '', phone, order: ref } }).then(() => null, () => null);
+    }
+    await say(String(fb.lowText || 'We are really sorry, {{first_name}} 😔 What went wrong? Please reply here — our team will call you and fix it.'));
+    await db.from('bot_waits').update({ done_at: new Date().toISOString() }).eq('workspace_id', ws).eq('lead_id', leadId).eq('kind', 'ask').is('done_at', null);
+    await db.from('bot_waits').insert({ workspace_id: ws, lead_id: leadId, phone, kind: 'ask', field: 'Feedback', template: env.tplName, button: env.bi, path: here, run_at: new Date(Date.now() + 48 * 3600e3).toISOString() });
+  } else {
+    const url = String(fb.url ?? '').trim();
+    await say(String(fb.highText || 'Thank you so much, {{first_name}} 💛') + (url && n >= 4 ? `\n${String(fb.askReview || 'Would you share it in a quick review? It helps us a lot:')} ${url}` : ''));
+  }
+}
+/** the customer's reply after a low rating → saved with the rating, the team sees it in Feedback */
+async function feedbackComment(w: any, acc: any, text: string) {
+  const t = text.trim().slice(0, 1000); if (!t) return;
+  const { data: f } = await db.from('feedback').select('id, comment').eq('workspace_id', w.workspace_id).eq('lead_id', w.lead_id).order('id', { ascending: false }).limit(1).maybeSingle(); if (!f) return;
+  await db.from('feedback').update({ comment: [String(f.comment ?? '').trim(), t].filter(Boolean).join('\n').slice(0, 1000) }).eq('id', f.id);
+  await db.from('activities').insert({ workspace_id: w.workspace_id, lead_id: w.lead_id, type: 'Feedback', details: t.slice(0, 300), done_by: 'Customer' });
+  await db.from('tasks').update({ notes: `What they said: ${t}`.slice(0, 2000) }).eq('workspace_id', w.workspace_id).eq('lead_id', w.lead_id).eq('source', 'feedback').eq('status', 'Open').then(() => null, () => null);
+  const r = await graph(acc, { messaging_product: 'whatsapp', to: w.phone, type: 'text', text: { body: 'Thank you for telling us 🙏 Our team will get back to you soon.' } });
+  if (r.ok) await logOut(w.workspace_id, w.lead_id, w.phone, 'text', 'Thank you for telling us 🙏 Our team will get back to you soon.', r.id, 'Feedback: thank you');
 }
 async function runList(env: Env, list: any[], prefix: string): Promise<void> {
   const { ws, acc, leadId, phone, label, tplName, lead, ctx } = env;
@@ -271,6 +310,7 @@ async function runList(env: Env, list: any[], prefix: string): Promise<void> {
           await db.from('activities').insert({ workspace_id: ws, lead_id: leadId, type: yes ? 'Opt-in' : 'Opt-out', details: `Tapped “${label}” — ${yes ? 'wants offers on WhatsApp' : 'no offers (order updates still sent)'}`, done_by: 'Customer' });
           await say(String(p.text || (yes ? 'Done ✅ You will get our offers here. Reply STOP any time.' : 'Done — no offers. You will still get updates about your orders.'))); break;
         }
+        case 'rate': await rate(env, p, here, say); break;        // 1–5 ⭐ (SQL 24)
         case 'stop_messages': await db.from('leads').update({ wa_opt_out: true }).eq('workspace_id', ws).eq('lead_id', leadId); await db.from('activities').insert({ workspace_id: ws, lead_id: leadId, type: 'Opt-out', details: `Tapped “${label}” — no more broadcasts`, done_by: 'Customer' }); break;
         case 'trigger_workflow': case 'custom_api': {
           const u = String(p.url ?? ''); if (!/^https:\/\//i.test(u)) break;

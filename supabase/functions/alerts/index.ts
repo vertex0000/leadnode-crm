@@ -1,4 +1,4 @@
-// Nodevers — alerts: sends store alerts (new order, cancelled / RTO, low stock, out of stock, daily summary) by email and / or WhatsApp,
+// Nodevers — alerts: sends store alerts (new order, cancelled / RTO, low stock, out of stock, low rating from a customer, daily summary) by email and / or WhatsApp,
 // to the numbers and emails the client saved in Connections → Store alerts.
 //   flush / cron (called by the database, header x-cron-secret) · test (signed-in member).
 // Email goes through the workspace's own Brevo sender; WhatsApp through its own number with the approved template "nodevers_alert".
@@ -17,7 +17,7 @@ const inr = (n: unknown) => '₹' + Math.round(Number(n) || 0).toLocaleString('e
 const istDate = (d = new Date()) => new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Kolkata' }).format(d);
 const istHour = () => Number(new Intl.DateTimeFormat('en-GB', { timeZone: 'Asia/Kolkata', hour: '2-digit', hour12: false }).format(new Date()));
 const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-const DEF: Record<string, string> = { new_order: 'both', cancel: 'both', low_stock: 'email', out_stock: 'both', daily: 'email' };
+const DEF: Record<string, string> = { new_order: 'both', cancel: 'both', low_stock: 'email', out_stock: 'both', daily: 'email', feedback: 'both' };
 
 async function cfgOf(ws: string) {
   const { data } = await db.from('settings').select('key,value').eq('workspace_id', ws).in('key', ['storeAlertsJson', 'brandName']);
@@ -107,6 +107,10 @@ async function flush(onlyWs?: string, secret = '') {
       const res = await deliver(ws, cfg, kind, kind === 'out_stock' ? `⛔ Out of stock: ${st.map((r) => r.payload.name || r.payload.sku).slice(0, 3).join(', ')}` : `📦 Low stock: ${st.length} product${st.length > 1 ? 's' : ''}`,
         [kind === 'out_stock' ? `⛔ Out of stock at ${cfg.brand}:` : `📦 Low stock at ${cfg.brand}:`, ...st.slice(0, 10).map((r) => `${r.payload.name || r.payload.sku} (${r.payload.sku}) — ${r.payload.stock} left${r.payload.reorder != null ? `, reorder at ${r.payload.reorder}` : ''}`), 'Reorder now from Nodevers → Inventory.']);
       st.forEach((r) => results.set(r.id, res)); sent += st.length; }
+    for (const r of L.filter((x) => x.kind === 'feedback')) {     // a low rating (SQL 24): the team hears about it at once
+      const p = r.payload ?? {}, who = String(p.customer || 'A customer');
+      results.set(r.id, await deliver(ws, cfg, 'feedback', `⚠️ ${p.rating}/5 rating from ${who}`, [`⚠️ Unhappy customer at ${cfg.brand}`, `${who}${p.phone ? ' (' + p.phone + ')' : ''} rated ${p.rating}/5${p.order ? ' for order ' + p.order : ''}`, p.comment ? `“${String(p.comment).slice(0, 300)}”` : '', 'A call task was made for the team — see Nodevers → Feedback.'].filter(Boolean))); sent++;
+    }
     for (const r of L) await db.from('alert_queue').update({ result: (results.get(r.id) ?? 'skipped').slice(0, 300) }).eq('id', r.id);
   }
   return { sent };

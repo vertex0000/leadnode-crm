@@ -83,9 +83,12 @@ async function systemSend(req: Request, b: any) {
     if (r.code === '131026') await db.from('leads').update({ wa_status: 'off', wa_checked_at: new Date().toISOString() }).eq('workspace_id', ws).eq('lead_id', leadId).then(() => null, () => null);   // SQL 23
     return json({ ok: false, error: r.error, code: r.code });
   }
-  // by: who sent it ('Auto welcome' · 'Auto message' · 'Remarketing' — remarketing counts for the weekly limit), label: shown in the lead's journey
-  const by = ['Auto message', 'Remarketing'].includes(String(b.by)) ? String(b.by) : 'Auto welcome', label = String(b.label || '').slice(0, 40);
-  await logSent(ws, leadId, to, type, text, r.id, by, null, (label ? label + ': ' : type === 'text' ? 'Auto-reply: ' : 'Welcome: ') + text, by);
+  // by: who sent it ('Auto welcome' · 'Auto message' · 'Remarketing' — remarketing counts for the weekly limit; by_name: a team member's own message), label: shown in the lead's journey
+  const person = String(b.by_name ?? '').replace(/[\u0000-\u001f]/g, '').trim().slice(0, 60);
+  const by = ['Auto message', 'Remarketing'].includes(String(b.by)) ? String(b.by) : person || 'Auto welcome', label = String(b.label || '').slice(0, 120);
+  let bid: string | null = /^[A-Za-z0-9_.:-]{1,64}$/.test(String(b.broadcast_id ?? '')) ? String(b.broadcast_id) : null;     // a scheduled campaign (Broadcast → History numbers)
+  if (bid) { const { data: bc } = await db.from('broadcasts').select('broadcast_id').eq('workspace_id', ws).eq('broadcast_id', bid).maybeSingle(); if (!bc) bid = null; }
+  await logSent(ws, leadId, to, type, text, r.id, by, bid, (label ? label + ': ' : type === 'text' ? 'Auto-reply: ' : 'Welcome: ') + text, by);
   return json({ ok: true, id: r.id });
 }
 
