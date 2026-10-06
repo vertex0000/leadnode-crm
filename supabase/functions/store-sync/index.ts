@@ -1,6 +1,7 @@
 // Nodevers — store-sync: the client pastes THEIR website's API key in Nodevers → Connections; this function pulls orders, products and stock.
 //   Shopify (Admin API access token), WooCommerce (consumer key + secret), any website (custom JSON API + field matching),
 //   Amazon Seller Central (SP-API: LWA client id + secret + refresh token — orders, items, FBA stock),
+//   Flipkart Seller Hub (self-access app: Application ID + secret — orders, shipments, returns; optional stock push to listings, SQL 26),
 //   Meta Ads (ad account id + access token with ads_read — daily spend per campaign → ad_spend, used for net profit).
 //   Actions (signed-in owner / admin): list · test · save · sync · delete.   Every 15 min (pg_cron, header x-cron-secret): cron.
 // Deploy: Supabase → Edge Functions → Deploy a new function → Via Editor → name "store-sync" → paste → Deploy → turn OFF "Enforce JWT verification".
@@ -255,6 +256,97 @@ async function amazon(ctx: Ctx) {
   return { orders, products, updates };
 }
 
+// ---------------- Flipkart Seller Hub (Marketplace Seller API v3) ----------------
+// The seller makes a "self access" app in Seller Hub (Manage profile → Developer access → Create new access) and pastes its
+// Application ID + Application secret. A client_credentials token is made on the server each sync; nothing is shown again.
+// Orders = one row per order item (Flipkart's orderItemId); status, shipments, customer & courier returns; optional stock push to listings.
+const FK_BASE = (Deno.env.get('FLIPKART_API_BASE') ?? 'https://api.flipkart.net').replace(/\/+$/, '');
+const FK_ST: Record<string, string> = { APPROVED: 'Confirmed', PACKING_IN_PROGRESS: 'Processing', FORM_FAILED: 'Processing', PACKED: 'Processing', READY_TO_DISPATCH: 'Processing', PICKUP_COMPLETE: 'Shipped', SHIPPED: 'Shipped', DELIVERED: 'Delivered', CANCELLED: 'Cancelled', RETURN_REQUESTED: 'Delivered', RETURNED: 'Returned' };
+const sleep = (ms: number) => new Promise((ok) => setTimeout(ok, ms));
+async function fkToken(sec: any) {
+  if (!sec.app_id || !sec.app_secret) throw new Error('Paste the Application ID and Application secret from Seller Hub → Manage profile → Developer access.');
+  const r = await fetch(`${FK_BASE}/oauth-service/oauth/token?grant_type=client_credentials&scope=Seller_Api,Default`, { headers: { Authorization: 'Basic ' + btoa(`${sec.app_id}:${sec.app_secret}`), Accept: 'application/json' }, signal: AbortSignal.timeout(20000) }).catch(() => null);
+  const j: any = r ? await r.json().catch(() => ({})) : {};
+  if (!r) throw new Error('Flipkart did not answer — try again in a minute.');
+  if (!r.ok || !j.access_token) throw new Error('Flipkart did not accept the Application ID / secret' + (j.error_description ? ` (${cut(j.error_description, 120)})` : '') + ' — check you copied the self-access app of this seller account.');
+  return String(j.access_token);
+}
+async function fkCall(path: string, tok: string, body?: unknown, soft = false): Promise<any> {
+  for (let i = 0; i < 3; i++) {
+    const r = await fetch(FK_BASE + path, { method: body ? 'POST' : 'GET', headers: { Authorization: 'Bearer ' + tok, Accept: 'application/json', ...(body ? { 'Content-Type': 'application/json' } : {}) }, body: body ? JSON.stringify(body) : undefined, signal: AbortSignal.timeout(25000) }).catch(() => null);
+    if (!r) { if (soft) return null; throw new Error('Flipkart did not answer — try again in a minute.'); }
+    if (r.status === 429) { await sleep(1500 * (i + 1)); continue; }
+    const j: any = await r.json().catch(() => ({}));
+    if (r.ok) return j;
+    if (soft) return null;
+    if (r.status === 401 || r.status === 403) throw new Error(`Flipkart refused access (${r.status}) — the app must be a self-access app of this seller account with Seller API access.`);
+    throw new Error('Flipkart: ' + cut(j?.errors?.[0]?.description ?? j?.errors?.[0]?.message ?? j?.message ?? r.status, 200));
+  }
+  if (soft) return null; throw new Error('Flipkart is busy (too many requests) — the next sync will continue.');
+}
+const fkNext = (u: unknown) => { const s = String(u ?? ''); if (!s) return ''; if (/^https?:\/\//.test(s)) { try { const x = new URL(s); return x.pathname + x.search; } catch { return ''; } } return s.startsWith('/sellers') ? s : '/sellers' + (s.startsWith('/') ? '' : '/') + s; };
+async function flipkart(ctx: Ctx) {
+  const tok = await fkToken(ctx.sec), from = new Date(ctx.since ? new Date(ctx.since).getTime() - 864e5 : Date.now() - 30 * 864e5).toISOString(), to = new Date().toISOString();
+  const items: { it: any; sh: any }[] = [];
+  const filters: any[] = [
+    { type: 'preDispatch', states: ['APPROVED', 'PACKING_IN_PROGRESS', 'FORM_FAILED', 'PACKED', 'READY_TO_DISPATCH'], orderDate: { from, to } },
+    { type: 'postDispatch', states: ['SHIPPED', 'DELIVERED'], modifiedDate: { from, to } },
+    { type: 'cancelled', states: ['CANCELLED'], cancellationDate: { from, to } }];
+  for (const f of filters) {
+    let j = await fkCall('/sellers/v3/shipments/filter/', tok, { filter: f, pagination: { pageSize: 20 } }, f.type !== 'preDispatch');
+    for (let page = 0; j && page < 15; page++) {
+      for (const sh of j.shipments ?? []) for (const it of sh.orderItems ?? []) items.push({ it, sh });
+      const nx = j.hasMore ? fkNext(j.nextPageUrl) : ''; if (!nx) break;
+      j = await fkCall(nx, tok, undefined, true);
+    }
+  }
+  // returns: customer returns → Returned, courier returns → RTO (with the reason)
+  const ret = new Map<string, { st: string; why: string }>();
+  for (const src of ['customer_return', 'courier_return']) {
+    let j = await fkCall(`/sellers/v2/returns?source=${src}&modifiedAfter=${encodeURIComponent(from)}`, tok, undefined, true);
+    for (let page = 0; j && page < 10; page++) {
+      for (const r of j.returnItems ?? []) if (r.orderItemId) ret.set(String(r.orderItemId), { st: src === 'courier_return' ? 'RTO' : 'Returned', why: cut([r.reason, r.subReason].filter(Boolean).join(' — '), 120) });
+      const nx = j.hasMore ? fkNext(j.nextUrl ?? j.nextPageUrl) : ''; if (!nx) break;
+      j = await fkCall(nx, tok, undefined, true);
+    }
+  }
+  const ids = [...new Set([...items.map((x) => String(x.it.orderItemId ?? '')), ...ret.keys()].filter(Boolean))], known = new Set<string>();
+  for (let i = 0; i < ids.length && ctx.ws; i += 100) {
+    const { data } = await db.from('orders').select('ext_id').eq('workspace_id', ctx.ws).eq('channel', 'Flipkart').in('ext_id', ids.slice(i, i + 100));
+    (data ?? []).forEach((r: any) => known.add(String(r.ext_id)));
+  }
+  // buyer state / city / pincode for new shipments (25 per call)
+  const newShip = [...new Set(items.filter((x) => !known.has(String(x.it.orderItemId))).map((x) => String(x.sh.shipmentId ?? '')).filter(Boolean))].slice(0, 150), addr = new Map<string, any>();
+  for (let i = 0; i < newShip.length; i += 25) { const j = await fkCall(`/sellers/v3/shipments?shipmentIds=${newShip.slice(i, i + 25).map(encodeURIComponent).join(',')}`, tok, undefined, true); for (const s of j?.shipments ?? []) addr.set(String(s.shipmentId), s.deliveryAddress ?? s.buyerDetails ?? {}); }
+  const orders: any[] = [], updates: { id: string; status: string }[] = [], seen = new Set<string>(), fee = Math.max(0, Math.min(60, Number(ctx.cfg.fee_pct) || 0));
+  for (const { it, sh } of items) {
+    const id = String(it.orderItemId ?? ''); if (!id || seen.has(id)) continue; seen.add(id);
+    const cod = /cod/i.test(String(it.paymentType ?? sh.paymentType ?? '')), r = ret.get(id), st0 = r?.st ?? FK_ST[String(it.status ?? '').toUpperCase()] ?? statusOf(it.status), status = cod && (st0 === 'Confirmed' || st0 === 'New') ? 'COD' : st0;
+    if (known.has(id)) { updates.push({ id, status }); continue; }
+    const qty = Math.max(1, Number(it.quantity || 1)), pc = it.priceComponents ?? {}, sp = num(pc.sellingPrice), amt = num(pc.totalPrice) ?? (sp != null ? sp * qty : null), a = addr.get(String(sh.shipmentId)) ?? {};
+    orders.push({ ext_id: cut(id, 80), order_ref: cut(it.orderId, 80), order_date: dateOf(it.orderDate ?? sh.orderDate), sku: cut(it.sku, 80), product_name: cut(it.title ?? it.productTitle ?? it.fsn, 200), qty,
+      unit_price: amt != null ? Math.round(amt / qty * 100) / 100 : null, amount: amt, shipping_fee: num(pc.shippingCharge), marketplace_fee: amt != null && fee ? Math.round(amt * fee) / 100 : null, status, payment: cod ? 'COD' : 'Prepaid',
+      customer_name: cut([a.firstName, a.lastName].filter(Boolean).join(' ') || a.name || '', 120), customer_state: cut(a.state, 60), customer_city: cut(a.city, 60), pincode: pinOf(a.pinCode, a.pincode), courier: cut(sh.courierName ?? sh.logisticsPartner ?? 'Ekart', 60), return_reason: r?.why ?? '' });
+  }
+  for (const [id, r] of ret) if (!seen.has(id) && known.has(id)) updates.push({ id, status: r.st });     // returned items whose shipment is older than the window
+  return { orders, products: [], updates };
+}
+/** stock → Flipkart listings (optional): products whose stock moved since the last sync, first location of each listing */
+async function fkPushStock(row: any, since: string | null) {
+  if (!since || !row.config?.push_stock) return 0;
+  const { data: mv } = await db.from('stock_moves').select('sku').eq('workspace_id', row.workspace_id).gt('at', since).limit(2000);
+  const skus = [...new Set((mv ?? []).map((m: any) => String(m.sku)))].slice(0, 60); if (!skus.length) return 0;
+  const { data: P } = await db.from('products').select('sku,stock').eq('workspace_id', row.workspace_id).in('sku', skus);
+  const tok = await fkToken(row.secret ?? {}), buf = Math.max(0, Math.min(1000, Number(row.config?.stock_buffer ?? 0))); let n = 0;
+  for (let i = 0; i < (P ?? []).length; i += 10) {
+    const part = P!.slice(i, i + 10), j = await fkCall(`/sellers/listings/v3/${part.map((p: any) => encodeURIComponent(p.sku)).join(',')}`, tok, undefined, true), av = j?.available ?? {};
+    const body: any = {};
+    for (const p of part) { const l = av[p.sku]; const loc = (l?.locations ?? []).map((x: any) => x.id).filter(Boolean)[0]; if (!l?.product_id || !loc) continue; body[p.sku] = { product_id: l.product_id, locations: [{ id: loc, inventory: Math.max(0, Number(p.stock || 0) - buf) }] }; }
+    if (Object.keys(body).length && await fkCall('/sellers/listings/v3/update/inventory', tok, body, true)) n += Object.keys(body).length;
+  }
+  return n;
+}
+
 // ---------------- Meta Ads: daily spend per campaign → ad_spend (net profit, ROAS, Ads Manager) ----------------
 const GRAPH = (Deno.env.get('META_GRAPH_URL') ?? 'https://graph.facebook.com/v25.0').replace(/\/+$/, '');
 const LEAD_ACT = ['lead', 'onsite_conversion.lead_grouped', 'leadgen_grouped', 'offsite_conversion.fb_pixel_lead'], BUY_ACT = ['purchase', 'omni_purchase', 'offsite_conversion.fb_pixel_purchase', 'onsite_web_purchase'];
@@ -290,9 +382,9 @@ async function metaAds(ctx: Ctx) {
   return { orders: [], products: [], ads, insights };
 }
 
-const ADAPT: Record<string, (c: Ctx) => Promise<Got>> = { shopify, woocommerce, custom, amazon, meta_ads: metaAds };
-const SOURCE: Record<string, string> = { shopify: 'Shopify', woocommerce: 'WooCommerce', custom: 'Website API', amazon: 'Amazon SP-API' };
-const CHANNEL: Record<string, string> = { amazon: 'Amazon' };
+const ADAPT: Record<string, (c: Ctx) => Promise<Got>> = { shopify, woocommerce, custom, amazon, flipkart, meta_ads: metaAds };
+const SOURCE: Record<string, string> = { shopify: 'Shopify', woocommerce: 'WooCommerce', custom: 'Website API', amazon: 'Amazon SP-API', flipkart: 'Flipkart API' };
+const CHANNEL: Record<string, string> = { amazon: 'Amazon', flipkart: 'Flipkart' };
 const featureOf = (platform: string) => platform === 'meta_ads' ? 'ads' : 'store';
 
 async function store(ws: string, platform: string, got: Got, cfg: any = {}) {
@@ -310,10 +402,10 @@ async function store(ws: string, platform: string, got: Got, cfg: any = {}) {
     for (const g of groups.values()) for (let i = 0; i < g.length; i += 500) { const { error, count } = await db.from('products').upsert(g.slice(i, i + 500), { onConflict: 'workspace_id,sku', count: 'exact' }); if (error) throw new Error('Saving products: ' + error.message); np += count ?? 0; }
   }
   if (got.orders.length) {
-    const TXT = ['sku', 'product_name', 'payment', 'customer_name', 'customer_state', 'customer_city', 'courier', 'tracking_url', 'customer_phone', 'customer_email', 'order_ref', 'coupon', 'pincode'];
+    const TXT = ['sku', 'product_name', 'payment', 'customer_name', 'customer_state', 'customer_city', 'courier', 'tracking_url', 'customer_phone', 'customer_email', 'order_ref', 'coupon', 'pincode', 'return_reason'];
     const seen = new Set<string>(), rows = got.orders.filter((o) => o.ext_id && !seen.has(o.ext_id) && seen.add(o.ext_id)).map((o) => { const r: any = { workspace_id: ws, channel: CHANNEL[platform] ?? 'Website', source: SOURCE[platform], stock_skip: stockSkip(platform, cfg) }; for (const [k, v] of Object.entries(o)) if (v !== undefined) r[k] = v === '' && !TXT.includes(k) ? null : v; return r; });
     // lead_id is not sent: the database links each order to its customer (by phone / email) and a sync never unlinks it
-    let cols = ['workspace_id', 'channel', 'source', 'stock_skip', 'ext_id', 'order_date', 'sku', 'product_name', 'qty', 'unit_price', 'amount', 'shipping_fee', 'marketplace_fee', 'status', 'payment', 'customer_name', 'customer_state', 'customer_city', 'courier', 'tracking_url', 'customer_phone', 'customer_email', 'order_ref', 'coupon', 'pincode'];
+    let cols = ['workspace_id', 'channel', 'source', 'stock_skip', 'ext_id', 'order_date', 'sku', 'product_name', 'qty', 'unit_price', 'amount', 'shipping_fee', 'marketplace_fee', 'status', 'payment', 'customer_name', 'customer_state', 'customer_city', 'courier', 'tracking_url', 'customer_phone', 'customer_email', 'order_ref', 'coupon', 'pincode', ...(platform === 'flipkart' ? ['return_reason'] : [])];
     const normOf = () => rows.map((r) => Object.fromEntries(cols.map((c) => [c, r[c] ?? (['qty'].includes(c) ? 1 : TXT.includes(c) ? '' : c === 'status' ? 'New' : null)])));
     let norm = normOf();
     for (let i = 0; i < norm.length; i += 500) {
@@ -353,7 +445,8 @@ async function syncOne(row: any) {
   const startedAt = new Date().toISOString();
   try {
     const got = await ADAPT[row.platform]({ cfg: row.config ?? {}, sec: row.secret ?? {}, since: row.sync_cursor ? new Date(new Date(row.sync_cursor).getTime() - 3600e3).toISOString() : null, ws: row.workspace_id });
-    const r = await store(row.workspace_id, row.platform, got, row.config ?? {});
+    const r: any = await store(row.workspace_id, row.platform, got, row.config ?? {});
+    if (row.platform === 'flipkart' && row.config?.push_stock) r.pushed = await fkPushStock(row, row.sync_cursor).catch((e) => { console.error('flipkart stock push', (e as Error).message); return 0; });
     await db.from('store_connections').update({ last_sync_at: startedAt, sync_cursor: startedAt, last_status: 'ok', last_error: '', last_count: r.orders + r.products + r.ads, updated_at: startedAt }).eq('workspace_id', row.workspace_id).eq('platform', row.platform);
     return r;
   } catch (e) {
@@ -499,6 +592,7 @@ Deno.serve(async (req) => {
     if (platform === 'shopify') config.store_url = cut(String(cfgIn.store_url ?? '').toLowerCase().replace(/^https?:\/\//, '').replace(/\/.*$/, ''), 120);
     if (platform === 'woocommerce') config.site_url = cut(String(cfgIn.site_url ?? '').replace(/\/+$/, ''), 300);
     if (platform === 'amazon') { config.marketplace = AMZ_MKT[cfgIn.marketplace] ? String(cfgIn.marketplace) : 'A21TBJUM6AAA2I'; config.marketplace_name = AMZ_MKT[config.marketplace][0]; config.fba = cfgIn.fba !== false; config.seller_id = cut(String(cfgIn.seller_id ?? '').replace(/[^A-Za-z0-9]/g, ''), 30); }
+    if (platform === 'flipkart') { config.fee_pct = Math.max(0, Math.min(60, Number(cfgIn.fee_pct) || 0)); config.push_stock = cfgIn.push_stock === true; config.stock_buffer = Math.max(0, Math.min(1000, Math.round(Number(cfgIn.stock_buffer) || 0))); config.app_hint = cut(String(cfgIn.app_hint ?? ''), 8); }
     if (platform === 'meta_ads') { config.ad_account = cut(String(cfgIn.ad_account ?? '').replace(/^act_/i, '').replace(/\D/g, ''), 25); if (![0, 15, 60, 360, 1440].includes(Number(cfgIn.sync_minutes))) config.sync_minutes = 360; }
     if (platform === 'custom') { for (const k of ['orders_url', 'products_url']) config[k] = cut(cfgIn[k], 500); config.auth = ['bearer', 'header', 'query', 'none'].includes(cfgIn.auth) ? cfgIn.auth : 'bearer'; config.auth_name = cut(cfgIn.auth_name, 60);
       for (const k of ['map', 'pmap']) config[k] = Object.fromEntries(Object.entries(cfgIn[k] ?? {}).filter(([, v]) => typeof v === 'string' && (v as string).length <= 200).slice(0, 40));
@@ -518,6 +612,8 @@ Deno.serve(async (req) => {
     if (platform === 'woocommerce' && (!secret.key || !secret.secret)) return json({ error: 'Paste the consumer key and consumer secret.' }, 400);
     if (platform === 'custom' && !config.orders_url) return json({ error: 'Paste the orders API link.' }, 400);
     if (platform === 'amazon' && method !== 'app' && (!secret.client_id || !secret.client_secret || !secret.refresh_token)) return json({ error: 'Paste the LWA client ID, client secret and refresh token.' }, 400);
+    if (platform === 'flipkart' && (!secret.app_id || !secret.app_secret)) return json({ error: 'Paste the Application ID and the Application secret.' }, 400);
+    if (platform === 'flipkart') config.app_hint = '…' + String(secret.app_id).slice(-4);
     if (platform === 'meta_ads' && !config.ad_account) return json({ error: 'Paste your ad account ID.' }, 400);
     if (platform === 'meta_ads' && !secret.token) return json({ error: 'Paste the access token.' }, 400);
     if (platform === 'custom' && config.auth !== 'none' && !secret.key) return json({ error: 'Paste the API key (or choose “No key”).' }, 400);
@@ -532,13 +628,14 @@ Deno.serve(async (req) => {
       }
       const got = await ADAPT[platform]({ cfg: config, sec: secret, since: new Date(Date.now() - 30 * 864e5).toISOString(), ws });
       if (platform === 'meta_ads') { const spend = (got.ads ?? []).reduce((s2, a) => s2 + a.spend, 0), camps = new Set((got.ads ?? []).map((a) => a.campaign)).size; return json({ ok: true, message: `Connected — ${camps} campaigns, ₹${Math.round(spend).toLocaleString('en-IN')} spent in the last 30 days.` }); }
+      if (platform === 'flipkart') return json({ ok: true, message: `Connected to Flipkart — ${got.orders.length} new order items and ${(got.updates ?? []).length} updates in the last 30 days.` });
       if (platform === 'amazon') return json({ ok: true, message: `Connected to ${AMZ_MKT[config.marketplace][0]} — ${got.orders.length} new order lines and ${(got.updates ?? []).length} order updates (last 30 days), ${got.products.length} FBA products.` });
       return json({ ok: true, message: `Connected — ${got.orders.length} order lines (last 30 days) and ${got.products.length} products found.` });
     }
     // ---- save + first sync ----
     const now = new Date().toISOString();
     const { error } = await db.from('store_connections').upsert({ workspace_id: ws, platform, config, secret, updated_at: now, ...(cur ? {} : { created_at: now, sync_cursor: null }) }, { onConflict: 'workspace_id,platform' });
-    if (error) return json({ error: error.message }, 500);
+    if (error) return json({ error: /platform_check/.test(error.message) ? 'Run the database update 26_flipkart_meesho.sql in Supabase first.' : error.message }, 500);
     const { data: row } = await db.from('store_connections').select('*').eq('workspace_id', ws).eq('platform', platform).single();
     try { const r = await syncOne(row); return json({ ok: true, ...r }); } catch (e) { return json({ ok: true, warning: (e as Error).message }); }
   } catch (e) {

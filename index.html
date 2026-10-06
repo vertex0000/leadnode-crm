@@ -6,7 +6,7 @@
 <title>Nodevers</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg1:#E6E9F0; --bg2:#D3D9E6; --glass:rgba(255,255,255,.55); --glass-2:rgba(255,255,255,.78); --glass-3:rgba(255,255,255,.92);
@@ -32,7 +32,7 @@
 *{box-sizing:border-box}
 [hidden]{display:none!important}
 html,body{margin:0;height:100%}
-body{font-family:"Plus Jakarta Sans",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--text);
+body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Inter","Segoe UI",Roboto,sans-serif;color:var(--text);
   background:radial-gradient(1200px 700px at 15% -10%,rgba(255,255,255,.55),transparent 60%),linear-gradient(135deg,var(--bg1),var(--bg2));
   background-attachment:fixed;font-size:14px;-webkit-font-smoothing:antialiased}
 :root[data-theme="dark"] body{background:radial-gradient(900px 500px at 12% -10%,rgba(255,255,255,.035),transparent 60%),#09090B}
@@ -43,14 +43,9 @@ svg.i{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8;stro
 
 /* ---------- layout ---------- */
 .app{min-height:100vh}
-.side{position:fixed;left:0;top:0;bottom:0;width:72px;z-index:45;display:flex;flex-direction:column;gap:3px;padding:16px 14px;overflow:hidden auto;scrollbar-width:none;transition:width .25s cubic-bezier(.2,.7,.2,1),background .25s,box-shadow .25s}
-.side::-webkit-scrollbar{display:none}
-.side:hover{width:228px;background:var(--side-bg);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);box-shadow:var(--shadow-2);border-right:1px solid var(--stroke)}
 .side-brand{display:flex;align-items:center;gap:12px;margin-bottom:12px;min-height:44px;font-weight:800;font-size:16px;white-space:nowrap}
 .sgrp{font-size:10.5px;font-weight:700;letter-spacing:.12em;color:var(--faint);text-transform:uppercase;padding:8px 12px 2px;white-space:nowrap;opacity:0;min-height:24px;transition:opacity .2s}
-.side:hover .sgrp{opacity:1}
 .lbl{opacity:0;transition:opacity .15s;white-space:nowrap}
-.side:hover .lbl{opacity:1;transition-delay:.06s}
 .logo{width:44px;height:44px;border-radius:10px;background:var(--primary);color:var(--on-primary);display:grid;place-items:center;flex:none;overflow:hidden}
 .logo img{width:100%;height:100%;object-fit:cover;display:block}
 .side .logo svg{width:22px;height:22px}
@@ -60,7 +55,105 @@ svg.i{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8;stro
 .side .spacer{flex:1}
 .sbtn .tip{position:absolute;left:54px;white-space:nowrap;background:var(--primary);color:var(--on-primary);font-size:12px;padding:4px 8px;border-radius:6px;opacity:0;pointer-events:none;transition:.15s}
 .sbtn:hover .tip{opacity:1}
-.main{padding:16px 22px 28px 90px;min-width:0}
+/* ---------- sidebar v2 (4 spaces) ---------- */
+:root{--sw:252px;--ease:cubic-bezier(.2,.8,.2,1)}
+.side{position:fixed;left:0;top:0;bottom:0;width:var(--sw);z-index:45;display:flex;flex-direction:column;background:var(--side-bg);border-right:1px solid var(--line);transition:width .2s var(--ease);--acc:#4F6BED;contain:layout style}
+.side .i{width:18px;height:18px}
+.nv-top{padding:12px 10px 6px;display:flex;flex-direction:column;gap:4px;flex:none}
+.nv-scroll{flex:1;min-height:0;overflow:hidden auto;padding:2px 10px 10px;scrollbar-width:thin;scrollbar-color:transparent transparent;overscroll-behavior:contain}
+.nv-scroll:hover{scrollbar-color:var(--line-2) transparent}
+.nv-foot{flex:none;padding:8px 10px 10px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:1px}
+.nv-it{display:flex;align-items:center;gap:10px;width:100%;height:34px;padding:0 10px;border:0;border-radius:8px;background:transparent;color:var(--muted);font-size:13.5px;font-weight:500;text-decoration:none;white-space:nowrap;position:relative;flex:none;transition:background .15s,color .15s;text-align:left}
+.nv-it:hover,.nv-k:hover{background:color-mix(in srgb,var(--text) 5%,transparent);color:var(--text)}
+.nv-it .i{color:var(--faint);transition:color .15s}.nv-it:hover .i{color:var(--text)}
+.nv-l{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis}
+.nv-it.nv-on,.nv-k.nv-on{background:color-mix(in srgb,var(--acc) 11%,transparent);color:var(--text);font-weight:600}
+.nv-it.nv-on .i,.nv-ph.nv-pon .i:not(.nv-chev){color:var(--acc)}
+.nv-ph.nv-pon{color:var(--text);font-weight:600}
+.nv-g{font-size:11.5px;font-weight:600;color:var(--faint);padding:16px 10px 5px;letter-spacing:0;white-space:nowrap}
+.nv-g:first-child{padding-top:6px}
+.nv-chev{width:14px!important;height:14px!important;margin-left:auto;transition:transform .2s var(--ease)}
+.nv-p.open>.nv-ph .nv-chev{transform:rotate(90deg)}
+.nv-kids{display:grid;grid-template-rows:0fr;transition:grid-template-rows .22s var(--ease)}
+.nv-p.open>.nv-kids{grid-template-rows:1fr}
+.nv-kin{overflow:hidden;min-height:0;display:flex;flex-direction:column;gap:1px;padding-top:1px}
+.nv-p.open>.nv-kids>.nv-kin{padding-bottom:4px}
+.nv-k{display:flex;align-items:center;gap:8px;height:30px;padding:0 10px 0 38px;border-radius:8px;color:var(--muted);font-size:13px;font-weight:500;text-decoration:none;white-space:nowrap;transition:background .15s,color .15s;flex:none}
+.nv-kl{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis}
+.nv-kh{font-size:11px;font-weight:600;color:var(--faint);padding:8px 10px 3px 38px}
+.nv-bd{margin-left:auto;min-width:20px;height:19px;padding:0 6px;border-radius:999px;display:inline-grid;place-items:center;font-size:11px;font-weight:600;font-variant-numeric:tabular-nums;background:color-mix(in srgb,var(--acc) 13%,transparent);color:color-mix(in srgb,var(--acc) 80%,var(--text));flex:none}
+.nv-chev~.nv-bd,.nv-bd+.nv-chev{margin-left:0}.nv-ph .nv-bd{margin-left:auto}.nv-ph .nv-bd:not([hidden])+.nv-chev{margin-left:6px}
+.nv-it.locked,.nv-k.locked{opacity:.62}
+.nv-lk{display:inline-grid;place-items:center;color:var(--faint);flex:none}.nv-k .nv-lk{margin-left:auto}.nv-lk svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+.nv-ph>.nv-bd{order:1}.nv-ph>.nv-lk{order:2;margin-left:auto}.nv-ph>.nv-chev{order:3;margin-left:6px}.nv-ph>.nv-bd~.nv-lk{margin-left:6px}.nv-it>.nv-lk{margin-left:auto}
+.nv-dot{width:7px;height:7px;border-radius:50%;background:var(--faint);flex:none;opacity:.6}.nv-dot[data-st="ok"]{background:var(--green);opacity:1}
+.nv-ws-row{display:flex}
+.nv-ws{display:flex;align-items:center;gap:10px;width:100%;padding:6px;border:0;border-radius:10px;background:transparent;color:var(--text);text-align:left;transition:background .15s}
+.nv-ws:hover{background:color-mix(in srgb,var(--text) 5%,transparent)}
+.nv-logo{width:32px;height:32px;border-radius:9px;background:var(--primary);color:var(--on-primary);display:grid;place-items:center;flex:none;overflow:hidden}
+.nv-logo img{width:100%;height:100%;object-fit:cover}.nv-logo svg{width:18px!important;height:18px!important}
+.nv-wst{display:flex;flex-direction:column;min-width:0;flex:1;line-height:1.25}
+.nv-wst b{font-size:13.5px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;letter-spacing:-.01em}
+.nv-wst small{font-size:11.5px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#nvWsPlan{align-self:flex-start;margin-top:2px;padding:1px 7px;border-radius:999px;background:color-mix(in srgb,var(--text) 6%,transparent);font-size:11px;font-weight:600}
+#nvWsPlan:empty{display:none}#nvWsPlan.wait{background:var(--yellow-soft);color:#8A6100}#nvWsPlan.bad{background:var(--coral-soft);color:#B3263A}
+.nv-ud{width:15px!important;height:15px!important;color:var(--faint);flex:none}
+.nv-search kbd{font:600 10.5px/1 inherit;color:var(--faint);border:1px solid var(--line-2);border-radius:5px;padding:3px 5px;margin-left:auto}
+.nv-back{color:var(--muted)}
+.nv-sp{display:flex;align-items:center;gap:10px;padding:10px 10px 6px;font-size:17px;letter-spacing:-.02em;white-space:nowrap}
+.nv-sp b{font-weight:700}.nv-spi{width:28px;height:28px;border-radius:8px;display:grid;place-items:center;background:color-mix(in srgb,var(--acc) 14%,transparent);color:var(--acc);flex:none}.nv-spi .i{width:16px!important;height:16px!important}
+.nv-role{font-style:normal;font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px;background:color-mix(in srgb,var(--acc) 14%,transparent);color:var(--acc);flex:none!important}
+.nv-find{display:flex;align-items:center;gap:8px;margin:4px 0 2px;padding:0 10px;height:34px;border-radius:8px;background:color-mix(in srgb,var(--text) 5%,transparent);color:var(--faint)}
+.nv-find input{border:0;background:transparent;outline:0;flex:1;min-width:0;font-size:13px;color:var(--text)}
+.nv-find:focus-within{background:var(--glass-3);box-shadow:0 0 0 1px var(--line-2)}
+.nv-miss{display:none!important}
+.nv-me-row{display:flex;align-items:center;gap:4px;margin-top:6px}
+.nv-me{display:flex;align-items:center;gap:10px;flex:1;min-width:0;padding:6px;border:0;border-radius:10px;background:transparent;color:var(--text);text-align:left;transition:background .15s}
+.nv-me:hover{background:color-mix(in srgb,var(--text) 5%,transparent)}
+.nv-av .avatar{width:30px;height:30px;font-size:12px}
+.nv-col{width:32px;height:32px;border:0;border-radius:8px;background:transparent;color:var(--faint);display:grid;place-items:center;flex:none;transition:background .15s,color .15s}
+.nv-col:hover{background:color-mix(in srgb,var(--text) 6%,transparent);color:var(--text)}
+body.nav-mini .nv-col svg{transform:scaleX(-1)}
+/* collapsed rail (desktop only) */
+@media (min-width:821px){
+body.nav-mini{--sw:68px}
+body.nav-mini .side .nv-l,body.nav-mini .side .nv-chev,body.nav-mini .side .nv-kids,body.nav-mini .side .nv-kh,body.nav-mini .side kbd,body.nav-mini .side .nv-wst,body.nav-mini .side .nv-ud,body.nav-mini .side .nv-find,body.nav-mini .side .nv-dot,body.nav-mini .side .nv-lk{display:none!important}
+body.nav-mini .side .nv-it,body.nav-mini .side .nv-ws,body.nav-mini .side .nv-me{justify-content:center;padding:0}
+body.nav-mini .side .nv-it{height:38px}
+body.nav-mini .side .nv-g{font-size:0;padding:0;height:1px;margin:10px 12px;background:var(--line)}
+body.nav-mini .side .nv-g:first-child{display:none}
+body.nav-mini .side .nv-bd{position:absolute;top:4px;right:8px;min-width:8px;width:8px;height:8px;padding:0;font-size:0;background:var(--acc)}
+body.nav-mini .side .nv-sp{justify-content:center;padding:8px 0}
+body.nav-mini .nv-me-row{flex-direction:column}
+}
+.nv-fly{position:fixed;z-index:90;pointer-events:none;opacity:0;transform:translateX(-4px);transition:opacity .15s var(--ease),transform .15s var(--ease)}
+.nv-fly.show{opacity:1;transform:none;pointer-events:auto}
+.nv-fly.tip{background:var(--primary);color:var(--on-primary);font-size:12px;font-weight:600;padding:6px 9px;border-radius:7px;pointer-events:none;white-space:nowrap}
+.nv-fly.menu{min-width:210px;padding:6px;border-radius:12px;background:var(--glass-3);border:1px solid var(--line-2);box-shadow:var(--shadow-2);display:flex;flex-direction:column;gap:1px}
+.nv-fly .nv-fh{font-size:12.5px;font-weight:700;padding:6px 10px 6px}
+.nv-fly .nv-k{padding-left:10px}.nv-fly .nv-kh{padding-left:10px}
+.nv-menu{position:fixed;z-index:95;padding:6px;border-radius:12px;background:var(--glass-3);border:1px solid var(--line-2);box-shadow:var(--shadow-2);display:flex;flex-direction:column;gap:1px;opacity:0;transform:translateY(4px) scale(.98);pointer-events:none;transition:opacity .15s var(--ease),transform .15s var(--ease)}
+.nv-menu.show{opacity:1;transform:none;pointer-events:auto}
+.nv-mh{font-size:11.5px;font-weight:600;color:var(--faint);padding:6px 10px 4px}
+.nv-mi{display:flex;align-items:center;gap:10px;width:100%;padding:8px 10px;border:0;border-radius:8px;background:transparent;color:var(--text);font-size:13px;text-align:left}
+.nv-mi:hover{background:color-mix(in srgb,var(--text) 6%,transparent)}.nv-mi.static:hover{background:transparent}
+.nv-mi .i{width:16px;height:16px;color:var(--muted)}.nv-mi.danger,.nv-mi.danger .i{color:var(--coral)}
+.nv-mi b{display:block;font-weight:600;font-size:13px}.nv-mi small{display:block;font-size:11.5px;color:var(--muted)}
+.nv-mav{width:26px;height:26px;border-radius:7px;background:var(--primary);color:var(--on-primary);display:grid;place-items:center;font-size:12px;font-weight:700;flex:none}
+.nv-msep{height:1px;background:var(--line);margin:5px 4px}
+.main{padding:16px 24px 28px calc(var(--sw) + 24px);min-width:0;transition:padding-left .2s var(--ease)}
+#navBurger{display:none}
+#navScrim{position:fixed;inset:0;z-index:69;background:rgba(15,18,28,.32);opacity:0;pointer-events:none;transition:opacity .2s}
+@media (max-width:820px){
+  .side{width:min(300px,86vw)!important;transform:translateX(-102%);transition:transform .25s var(--ease);z-index:70;box-shadow:none}
+  body.nav-open .side{transform:none;box-shadow:var(--shadow-2)}
+  body.nav-open #navScrim{opacity:1;pointer-events:auto}
+  .nv-col{display:none}
+  .main{padding:10px 12px 24px!important}
+  #navBurger{display:grid!important}
+  #mThemeBtn,#mSetBtn{display:none!important}
+  .nv-scroll{padding-bottom:20px}
+}
 .top{display:flex;align-items:center;gap:16px;padding:10px 14px;margin-bottom:18px}
 .brand{font-weight:800;font-size:20px;letter-spacing:-.02em;display:flex;align-items:center;gap:8px}
 .brand small{font-weight:600;color:var(--muted);font-size:12px}
@@ -1822,8 +1915,6 @@ body.ro [data-cmw],body.np-commerce [data-cmw]{display:none!important}
 /* ---------- responsive ---------- */
 @media (max-width:1100px){.stats{grid-template-columns:repeat(2,1fr)}.head{flex-direction:column;align-items:stretch}}
 @media (max-width:820px){
-  .side{display:none}
-  .main{padding:10px 12px 24px}
   .top{flex-wrap:wrap;gap:10px}
   .nav{order:3;width:100%;margin-left:0}
   .top .search{display:none}
@@ -1852,48 +1943,121 @@ body.ro [data-cmw],body.np-commerce [data-cmw]{display:none!important}
   .nav{mask-image:linear-gradient(90deg,#000 calc(100% - 32px),transparent);-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 32px),transparent);padding-right:24px}
   .p-foot .btn{min-width:0;overflow:hidden;text-overflow:ellipsis}
 }
+/* ---------- polish: Apple-style type, calm selected states, light & smooth ---------- */
+body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Inter","Segoe UI",Roboto,sans-serif;letter-spacing:-.006em;text-rendering:optimizeLegibility}
+h1{font-weight:700;letter-spacing:-.03em;line-height:1.1}
+h2,h3,.brand,.m-head h2{letter-spacing:-.02em;line-height:1.2}
+h2,h3{font-weight:650}
+.brand{font-weight:700}
+.tbl td,.tbl th.num,.num,.cm-ks b,.n8l-k b,.adm-k b,.adm-ks2 b,.stat b,.stats b,.rm-big,.cu-k b,.kpi b,.inv-gt,.nav-badge,.nbadge,.acc-bd,.tp-st{font-variant-numeric:tabular-nums}
+/* labels in normal case */
+.eyebrow,.pop .ttl,.scr-list .fold,.fhead,.hero-eb,.gr-mi small,.inv-ab,.inv-sst span,.inv-main,.pb-g>b,.ah-sec,.cmx-l,.ib-sep,.bc-nt small,.bc-rh,.n8l-sec-t,.tr-h,.tpe-pt span,.tpe-pg small,.accm-g,.conn-gt,.cmdk-g,.cm-k>span,.cm-need small,.aisum-rec b{text-transform:none!important;letter-spacing:0!important}
+.eyebrow{font-size:12.5px;font-weight:600;color:var(--muted)}
+/* only the bars, the side panel, pop-ups and the phone bar keep the frosted blur — cards are flat (much faster scrolling) */
+.glass{backdrop-filter:none;-webkit-backdrop-filter:none}
+:root:not([data-theme="dark"]){--glass:rgba(255,255,255,.66)}
+.top.glass,.mbar.glass,.cmdk-box.glass{backdrop-filter:blur(18px) saturate(140%);-webkit-backdrop-filter:blur(18px) saturate(140%)}
+/* selected = soft background, never a coloured outline, bracket or side line */
+.tab.active,.fam-t.active{border-color:transparent!important;box-shadow:none!important}
+.n8card.on,.indcard.on,.cu-sg.on,.rm-mode.on,.rm-send label.on,.inv-kc.on,.ai-p.on,.em-p.on,.cmo.on,.acc-opt.on,.cl-o.on,.tk-k.on,.tb-ct.on,.mod-type.on,.lg-r:has(input:checked){border-color:transparent!important;box-shadow:none!important;outline:0!important;background:color-mix(in srgb,var(--blue-2) 10%,var(--glass-3))!important}
+.adm-k.on{box-shadow:none!important;background:color-mix(in srgb,var(--blue-2) 10%,var(--glass-3))!important}
+.sc-days button.on{background:color-mix(in srgb,var(--blue-2) 14%,var(--glass-3));border-color:transparent;color:var(--text)}
+.acc.open{border-color:var(--line);box-shadow:0 10px 30px -18px rgba(0,0,0,.28)}
+.accm-it.on{box-shadow:none!important;background:color-mix(in srgb,var(--c,var(--blue-2)) 11%,transparent)!important}
+#setModal .set-acc .acc.open .acc-h{box-shadow:none!important;background:color-mix(in srgb,var(--blue-2) 10%,transparent)!important}
+.inv-rt tr.inv-need td:first-child{box-shadow:none}.inv-rt tr.inv-need td{background:color-mix(in srgb,#F59E0B 6%,transparent)}
+.cu-sg::before,.fx-node::before,.rm-card::after,.ib-c.on::before{display:none}
+.fb-c.low,.fb-c.hi{border-left-color:var(--stroke)!important}
+.rm-card.on{background:color-mix(in srgb,var(--c) 5%,var(--glass))}
+.gr-bk{border-top:1px solid var(--line)!important}.sc-card{border-top-width:1px!important}.fb-c{border-left-width:1px!important}.tpe-sb{border-left:1px solid var(--line)!important}
+.nav a.active{box-shadow:none}
+/* Products & Stock: headings sit clear of their tables, same left edge */
+.inv-grp>.inv-gh{margin:0}
+.rcard:not(.inv-grp)>.inv-gh{margin:-18px -18px 16px;padding:14px 18px}
+.inv-grp+.inv-grp{margin-top:16px}
+.inv-h{margin:28px 0 12px;padding:0}
+.inv-h+.inv-mks,.inv-h+.inv-sups{margin-top:0}
+.inv-intro+.inv-h{margin-top:24px}
+/* Connections cards: full title (max 2 lines), status pill under it */
+.conn-grid>.acc:not(.open) .acc-tr{flex-direction:column;align-items:flex-start;flex-wrap:nowrap;gap:5px;min-width:0}
+.conn-grid>.acc:not(.open) .acc-tr b{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;line-height:1.3;max-width:100%}
+.conn-grid>.acc:not(.open) .acc-pill{flex:none}
+/* Settings page (was a pop-up) */
+#v-settings #setModal{position:static;inset:auto;display:block;opacity:1;pointer-events:auto;padding:0;z-index:auto;transition:none}
+#v-settings #setModal .box{width:100%!important;max-width:880px;max-height:none;height:auto;overflow:visible;background:transparent;backdrop-filter:none;-webkit-backdrop-filter:none;border:0;box-shadow:none;padding:0;transform:none!important;display:block}
+#v-settings #setModal .m-head{display:none}
+.acc-list.pm{display:block!important}
+.acc-list.pm>.acc:not(.pm-on){display:none!important}
+.acc-list.pm>.acc.pm-on{display:block!important;min-height:0!important;border:1px solid var(--line)!important;border-radius:16px;background:var(--glass-2,var(--card))!important;box-shadow:0 1px 2px rgba(15,23,42,.04)!important;transform:none!important}
+.acc-list.pm>.acc.pm-on>.acc-h{display:none!important}
+.acc-list.pm>.acc.pm-on>.acc-b{display:grid!important;grid-template-rows:1fr!important;transition:none!important;border:0!important}
+.acc-list.pm>.acc.pm-on .acc-in{overflow:visible}
+.acc-list.pm>.acc.pm-on .acc-pad{opacity:1!important;transform:none!important;padding:22px 24px!important}
+.acc-list.pm .set-pt{display:none!important}
+#adminBody .acc-list.pm{max-width:880px}
+#adminBody .pm-nofoot~.cf-foot{display:none}
+.set-pg{max-width:880px}
+@media (prefers-reduced-motion:no-preference){.set-pg.set-in,#adminBody .acc-list.pm>.acc.pm-on{animation:nvIn .22s var(--ease) both}}
+/* broadcast: the WhatsApp / Email chooser stays, Scheduled and History are in the sidebar */
+#bcTabs [data-bctab="scheduled"],#bcTabs [data-bctab="history"]{display:none}
+/* page tabs moved into the sidebar */
+.fam-strip:not(.fam-shared){display:none}
+.fam-shared .fam-tabs,#cmTabs,#admTabs,#adsTabs,.inv-seg.inv-ptseg{display:none!important}
+#v-connections[data-only] .cg-panel{display:none}
+#v-connections[data-only="msg"] .cg-panel[data-cg="msg"],#v-connections[data-only="leads"] .cg-panel[data-cg="leads"],#v-connections[data-only="store"] .cg-panel[data-cg="store"],#v-connections[data-only="other"] .cg-panel[data-cg="other"]{display:block}
+/* admin overview */
+.ao-ks{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.ao-k{padding:16px 18px;border-radius:16px;display:flex;flex-direction:column;gap:4px;text-align:left;border:1px solid var(--line);background:var(--glass-2);color:var(--text);font:inherit;cursor:pointer;transition:transform .2s var(--ease),box-shadow .2s var(--ease)}
+.ao-k:hover{transform:translateY(-2px);box-shadow:0 14px 30px -20px rgba(0,0,0,.4)}
+.ao-k small{color:var(--muted);font-size:12.5px;font-weight:500}.ao-k b{font-size:26px;font-weight:700;letter-spacing:-.03em;font-variant-numeric:tabular-nums}.ao-k em{font-style:normal;font-size:12px;color:var(--muted)}
+.ao-g{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:14px}
+.ao-l{display:flex;flex-direction:column}
+.ao-r{display:flex;align-items:center;gap:12px;padding:10px 0;border-top:1px solid var(--line)}.ao-r:first-of-type{border-top:0}
+.ao-r .grow{min-width:0}.ao-r b{display:block;font-size:13.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.ao-r small{display:block;color:var(--muted);font-size:12px}
+.ao-h{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px}.ao-h h3{margin:0;font-size:15px}
+@media (max-width:1000px){.ao-ks{grid-template-columns:repeat(2,minmax(0,1fr))}.ao-g{grid-template-columns:minmax(0,1fr)}}
+/* marketplace pages + Flipkart / Meesho connection cards */
+.cm-conn{padding:14px 16px;gap:14px}
+.cm-conn-t{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:2px}.cm-conn-t b{font-size:14.5px}
+.cm-conn .cm-ci{width:40px;height:40px;border-radius:11px;font-size:17px}
+.cf-steps{margin:10px 0;padding-left:20px;display:flex;flex-direction:column;gap:6px;font-size:13px;line-height:1.5}
+.cf-soon{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:12px 0 4px;padding:12px 14px;border-radius:12px;background:color-mix(in srgb,var(--text) 4%,transparent)}
+.cf-soon b{font-size:13.5px}.cf-soon small{flex:1 1 260px;font-size:12.5px;line-height:1.45}
+/* remarket split into 3 pages */
+.rm-onepage .rm-top{grid-template-columns:minmax(0,1fr) 320px}
+/* smooth & light motion: transform / opacity only, short, one easing, only the first items stagger */
+@keyframes nvIn{from{opacity:0;transform:translateY(6px)}}
+@keyframes nvCard{from{opacity:0;transform:translateY(8px)}}
+@media (prefers-reduced-motion:no-preference){
+  .view.active{animation:nvIn .2s var(--ease)}
+  .stagger>*{animation:nvCard .3s var(--ease) both;animation-delay:calc(min(var(--i,0),8) * 28ms)}
+  .stagger>:nth-child(n+9){animation-delay:220ms}
+  .stats.stagger>*{animation-delay:calc(min(var(--i,0),8) * 28ms)}
+  .toolbar,.pipe-head,.head{animation:none}
+  .tbl tbody tr{animation:nvCard .25s var(--ease) both;animation-delay:calc(min(var(--i,0),8) * 16ms)}
+  .tbl tbody tr:nth-child(n+12){animation:none}
+  .modal .box{transform:translateY(8px) scale(.985);transition:transform .2s var(--ease)}
+  .acc-b{transition-duration:.22s}
+}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
 </style>
 </head>
 <body>
 <div class="app">
-  <aside class="side" id="side">
-    <div class="side-brand"><div class="logo brand-logo"><svg class="i" viewBox="0 0 24 24" style="width:22px;height:22px"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="12" r="2.5"/><circle cx="6" cy="18" r="2.5"/><path d="M8.3 7.2 15.7 11M8.3 16.8 15.7 13"/></svg></div><span class="lbl brandTxt">Nodevers</span></div>
-    <div class="sgrp plat-only">Platform</div>
-    <button class="sbtn plat-only" data-go="admin"><svg class="i" viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 4.5 3.4 8.3 8 9 4.6-.7 8-4.5 8-9V6Z"/><path d="m9 12 2 2 4-4"/></svg><span class="lbl">Admin Console</span></button>
-    <button class="sbtn sb-home" data-go="home"><svg class="i" viewBox="0 0 24 24"><path d="m3 11 9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg><span class="lbl">Home</span></button>
-    <div class="sgrp">CRM</div>
-    <button class="sbtn" data-gofam="leads"><svg class="i" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4.5a3.5 3.5 0 0 1 0 7M18 14a6 6 0 0 1 3.5 6"/></svg><span class="lbl">Leads</span></button>
-    <button class="sbtn" data-gofam="tasks"><svg class="i" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg><span class="lbl">Tasks & Calls</span><span class="nbadge" id="tasksBadge" hidden></span></button>
-    <button class="sbtn" data-go="orders"><svg class="i" viewBox="0 0 24 24"><path d="M6 7h12l-1 13H7Z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg><span class="lbl">Orders</span></button>
-    <div class="sgrp mod-store">Store</div>
-    <button class="sbtn" data-go="commerce" data-cm="overview"><svg class="i" viewBox="0 0 24 24"><path d="M4 9h16l-1.2-4.2A1 1 0 0 0 17.8 4H6.2a1 1 0 0 0-1 .8Z"/><path d="M5 9v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9M9 20v-6h6v6"/></svg><span class="lbl">Store</span></button>
-    <button class="sbtn" data-go="commerce" data-cm="products"><svg class="i" viewBox="0 0 24 24"><path d="m12 3 8 4.5v9L12 21l-8-4.5v-9Z"/><path d="m4 7.5 8 4.5 8-4.5M12 12v9"/></svg><span class="lbl">Products & Stock</span></button>
-    <div class="sgrp">Messaging</div>
-    <button class="sbtn" data-go="whatsapp"><svg class="i" viewBox="0 0 24 24"><path d="M3.5 20.5 5 16a8.5 8.5 0 1 1 3.2 3.2Z"/><path d="M9 9.5c0 3 2.5 5.5 5.5 5.5l1.2-1.4-1.9-1-1 .8a4 4 0 0 1-2.2-2.2l.8-1-1-1.9Z"/></svg><span class="lbl">Inbox</span></button>
-    <button class="sbtn" data-gofam="campaigns"><svg class="i" viewBox="0 0 24 24"><path d="m3 11 18-8-8 18-2-8Z"/></svg><span class="lbl">Campaigns</span></button>
-    <button class="sbtn" data-gofam="automation"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="4" width="6" height="5" rx="1.2"/><rect x="15" y="4" width="6" height="5" rx="1.2"/><rect x="9" y="15" width="6" height="5" rx="1.2"/><path d="M6 9v2a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V9M12 13v2"/></svg><span class="lbl">Automation</span></button>
-    <div class="sgrp mod-ads">Marketing</div>
-    <button class="sbtn" data-go="ads"><svg class="i" viewBox="0 0 24 24"><path d="M3 11v2a1 1 0 0 0 1 1h2l5 4V6L6 10H4a1 1 0 0 0-1 1Z"/><path d="M15 8.5a4.5 4.5 0 0 1 0 7M18 5.5a8.5 8.5 0 0 1 0 13"/></svg><span class="lbl">Ads Manager</span></button>
-    <div class="sgrp mod-insights">Insights</div>
-    <button class="sbtn" data-gofam="insights"><svg class="i" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="m7 15 4-5 3 3 5-6"/></svg><span class="lbl">Insights</span></button>
-    <div class="sgrp">Setup</div>
-    <button class="sbtn" data-go="connections"><svg class="i" viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg><span class="lbl">Connections</span></button>
-    <button class="sbtn" data-go="team"><svg class="i" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4.5a3.5 3.5 0 0 1 0 7M18 14a6 6 0 0 1 3.5 6"/></svg><span class="lbl">Team</span></button>
-    <div class="spacer" style="flex:1;min-height:12px"></div>
-    <div class="powered lbl">Powered by <b>Nodevers</b></div>
-    <button class="sbtn" id="themeBtn"><svg class="i" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 1 1 9.5 4 6.5 6.5 0 0 0 20 14.5Z"/></svg><span class="lbl">Dark / Light</span></button>
-    <button class="sbtn" id="sideSettings"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z"/></svg><span class="lbl">Settings</span></button>
-  </aside>
+  <aside class="side" id="side"><div hidden id="sideCompat"><button id="themeBtn"></button><button id="sideSettings"></button><span id="tasksBadge"></span></div></aside>
+  <div id="navScrim"></div>
 
   <main class="main">
     <header class="top glass">
+      <button class="ibtn" id="navBurger" type="button" title="Menu" aria-label="Open menu"><svg class="i" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
       <div class="brand" id="brandBox" data-go="home"><span id="brandName">Nodevers</span></div>
       <nav class="nav" id="nav">
         <a href="#home" data-go="home">Home</a>
         <a href="#leads" data-gofam="leads" data-navfam="leads">Leads</a>
         <a href="#commerce" data-go="commerce" class="mod-store">Store</a>
         <a href="#whatsapp" data-go="whatsapp">Inbox<span class="nav-badge" id="waBadge" hidden></span></a>
-        <a href="#insights" data-gofam="insights">Insights</a>
+        <a href="#insights" data-nvspace="insights">Insights</a>
+        <a href="#admin/overview" data-nvspace="admin" class="plat-only nav-adm"><svg class="i" viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M12 3 4 6v6c0 4.5 3.4 8.3 8 9 4.6-.7 8-4.5 8-9V6Z"/><path d="m9 12 2 2 4-4"/></svg>Admin</a>
       </nav>
       <div class="grow"></div>
       <button class="pr-top" id="pricingBtn" type="button" data-pricing hidden title="See plans and prices"><svg class="i" viewBox="0 0 24 24"><path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8Z"/><circle cx="7.5" cy="7.5" r="1.5"/></svg><span>Pricing</span></button>
@@ -1942,6 +2106,12 @@ body.ro [data-cmw],body.np-commerce [data-cmw]{display:none!important}
     <section class="view" id="v-insales"><div id="insalesBody"></div></section>
     <section class="view" id="v-inmarketing"><div id="inmBody"></div></section>
     <section class="view" id="v-feedback"><div id="fbBody"></div></section>
+
+    <!-- SETTINGS (own page; the Settings pop-up moves in here) -->
+    <section class="view" id="v-settings">
+      <div class="head"><div><div class="eyebrow">Settings</div><h1>Settings</h1><p class="sub"></p></div></div>
+      <div class="set-pg" id="setHost"></div>
+    </section>
 
     <!-- CONNECTIONS -->
     <section class="view" id="v-connections">
@@ -2470,10 +2640,10 @@ function demoCommerce() {
   const names = ['Aarav Shah', 'Isha Kapoor', 'Rohan Iyer', 'Neha Gupta', 'Kabir Singh', 'Ananya Rao', 'Vihaan Joshi', 'Diya Menon', 'Arjun Nair', 'Sara Khan', 'Kunal Desai', 'Meera Pillai', 'Dev Malhotra', 'Pooja Reddy', 'Yash Patil', 'Tara Bose'];
   const orders = []; let n = 4;
   for (let i = 0; i < 150; i++) {
-    const ch = w([['Amazon', 55], ['Website', 32], ['Direct', 8], ['Flipkart', 5]]), p = w(P.map((x, j) => [x, [26, 18, 9, 12, 7, 3, 8, 17][j]])), qty = p.price < 2000 ? pick([1, 1, 2, 4]) : pick([1, 1, 1, 2]), st = w([['Delivered', 70], ['Shipped', 8], ['Processing', 6], ['Cancelled', 5], ['RTO', 6], ['Returned', 3], ['New', 2]]), rev = p.price * qty, k = Math.floor(rnd() * rnd() * 118);
-    orders.push({ orderId: 'O' + String(n++).padStart(3, '0'), leadId: '', channel: ch, extId: ch === 'Amazon' ? `402-${1000000 + i * 7919 % 9000000}-${String(1000 + i).slice(-4)}` : ch === 'Website' ? 'W' + (2100 + i) : ch === 'Flipkart' ? 'OD' + (33000 + i) : '', orderDate: day(k), sku: p.sku, productName: p.name, qty, unitPrice: p.price, amount: rev, productCost: p.cost * qty,
-      marketplaceFee: ch === 'Amazon' ? Math.round(rev * 0.15 + 60) : ch === 'Flipkart' ? Math.round(rev * 0.17 + 50) : ch === 'Website' ? Math.round(rev * 0.02) : '', shippingFee: ch === 'Direct' ? '' : 90 + Math.round(rnd() * 90) + (p.price > 5000 ? 250 : 0), packagingCost: ch === 'Website' || ch === 'Direct' ? 35 * qty : '', rtoCharges: st === 'RTO' ? 160 : st === 'Returned' ? 120 : '', adSpend: '', otherCost: '',
-      status: st, payment: ch === 'Amazon' ? 'Amazon Pay' : pick(['Prepaid', 'Prepaid', 'COD']), customerName: ch === 'Amazon' ? '' : pick(names), customerState: w(states), customerCity: '', courier: ch === 'Amazon' ? 'Amazon Shipping' : ch === 'Direct' ? 'Own delivery' : pick(['Delhivery', 'Blue Dart', 'Xpressbees', 'Ekart']), returnReason: st === 'RTO' ? pick(['Customer not available', 'Refused at door', 'Wrong address']) : st === 'Returned' ? pick(['Damaged in transit', 'Colour different from photo', 'Size not suitable']) : '',
+    const ch = w([['Amazon', 55], ['Website', 14], ['Flipkart', 10], ['Meesho', 8], ['Direct', 8], ['Flipkart', 5]]), p = w(P.map((x, j) => [x, [26, 18, 9, 12, 7, 3, 8, 17][j]])), qty = p.price < 2000 ? pick([1, 1, 2, 4]) : pick([1, 1, 1, 2]), st = w([['Delivered', 70], ['Shipped', 8], ['Processing', 6], ['Cancelled', 5], ['RTO', 6], ['Returned', 3], ['New', 2]]), rev = p.price * qty, k = Math.floor(rnd() * rnd() * 118);
+    orders.push({ orderId: 'O' + String(n++).padStart(3, '0'), leadId: '', channel: ch, extId: ch === 'Amazon' ? `402-${1000000 + i * 7919 % 9000000}-${String(1000 + i).slice(-4)}` : ch === 'Website' ? 'W' + (2100 + i) : ch === 'Flipkart' ? String(1230000000000 + i * 7919) : ch === 'Meesho' ? `${118000000 + i * 3571}_1` : '', orderRef: ch === 'Flipkart' ? 'OD' + (433000000000 + i * 37) : '', orderDate: day(k), sku: p.sku, productName: p.name, qty, unitPrice: p.price, amount: rev, productCost: p.cost * qty,
+      marketplaceFee: ch === 'Amazon' ? Math.round(rev * 0.15 + 60) : ch === 'Flipkart' ? Math.round(rev * 0.17 + 50) : ch === 'Meesho' ? Math.round(rev * 0.03 + 15) : ch === 'Website' ? Math.round(rev * 0.02) : '', shippingFee: ch === 'Direct' ? '' : 90 + Math.round(rnd() * 90) + (p.price > 5000 ? 250 : 0), packagingCost: ch === 'Website' || ch === 'Direct' ? 35 * qty : '', rtoCharges: st === 'RTO' ? 160 : st === 'Returned' ? 120 : '', adSpend: '', otherCost: '',
+      status: st, payment: ch === 'Amazon' ? 'Amazon Pay' : pick(['Prepaid', 'Prepaid', 'COD']), customerName: ch === 'Amazon' ? '' : pick(names), customerState: w(states), customerCity: '', courier: ch === 'Amazon' ? 'Amazon Shipping' : ch === 'Direct' ? 'Own delivery' : pick(ch === 'Flipkart' ? ['Ekart', 'Ekart', 'Ekart', 'Delhivery'] : ch === 'Meesho' ? ['Valmo', 'Delhivery', 'Xpressbees', 'Shadowfax'] : ['Delhivery', 'Blue Dart', 'Xpressbees', 'Ekart']), returnReason: st === 'RTO' ? pick(['Customer not available', 'Refused at door', 'Wrong address']) : st === 'Returned' ? pick(['Damaged in transit', 'Colour different from photo', 'Size not suitable']) : '',
       items: `${qty} × ${p.name}`, trackingUrl: '', notes: '', source: ch === 'Direct' ? 'Team' : 'Import · ' + ch, createdAt: day(k) + 'T10:00:00' });
   }
   const adSpend = []; let id = 1;
@@ -2659,7 +2829,7 @@ function finishLoad(anim) {
   taskReminders(); { const b = $('#tasksBadge'), n = salesReady() ? (S.tasks || []).filter(t => t.status === 'Open' && taskState(t) === 'overdue' && (AUTH.role !== 'member' || t.assignedTo === me())).length : 0; if (b) { b.hidden = !n; b.textContent = n; } }
 }
 /** Render only the screen you're looking at; the others re-render when you open them */
-const VIEW_RENDER = { results: a => renderResults(a), referrals: a => renderReferrals(a), feedback: a => renderFeedback(a), customers: a => renderCustomers(a), checkouts: a => renderCheckouts(a), remarket: a => renderRemarket(a), home: a => renderHome(a), insights: a => renderInsights(a), insales: a => renderInSales(a), inmarketing: a => renderInMarketing(a), connections: a => renderConnections(a), commerce: a => renderCommerce(a), orders: a => renderOrders(a), admin: a => renderAdmin(a), tasks: a => renderTasks(a), calls: a => renderCalls(a), performance: a => renderPerformance(a), analytics: a => renderAnalytics(a), industry: a => renderIndustry(a), n8n: a => renderN8n(a), automation: () => { autoCanvas().sync(); renderAutoBar(); }, dashboard: a => renderDashboard(a), pipeline: a => renderPipeline(a), leads: a => renderLeads(a), team: a => { renderTeam(a); renderLogins(); }, broadcast: () => renderBroadcast(), whatsapp: () => renderInbox(), reports: a => renderReports(a), templates: () => renderTemplates(), scripts: () => renderScripts(true), ads: a => renderAds(a) };
+const VIEW_RENDER = { settings: () => renderSettingsPage(), results: a => renderResults(a), referrals: a => renderReferrals(a), feedback: a => renderFeedback(a), customers: a => renderCustomers(a), checkouts: a => renderCheckouts(a), remarket: a => renderRemarket(a), home: a => renderHome(a), insights: a => renderInsights(a), insales: a => renderInSales(a), inmarketing: a => renderInMarketing(a), connections: a => renderConnections(a), commerce: a => renderCommerce(a), orders: a => renderOrders(a), admin: a => renderAdmin(a), tasks: a => renderTasks(a), calls: a => renderCalls(a), performance: a => renderPerformance(a), analytics: a => renderAnalytics(a), industry: a => renderIndustry(a), n8n: a => renderN8n(a), automation: () => { autoCanvas().sync(); renderAutoBar(); }, dashboard: a => renderDashboard(a), pipeline: a => renderPipeline(a), leads: a => renderLeads(a), team: a => { renderTeam(a); renderLogins(); }, broadcast: () => renderBroadcast(), whatsapp: () => renderInbox(), reports: a => renderReports(a), templates: () => renderTemplates(), scripts: () => renderScripts(true), ads: a => renderAds(a) };
 const staleViews = new Set();
 const activeView = () => { const v = $('.view.active'); return v ? v.id.slice(2) : 'dashboard'; };
 function renderAll(anim) {
@@ -2669,6 +2839,7 @@ function renderAll(anim) {
   if (ui.openId) renderPanel(ui.openId);
   try { applyModules(); notifBadge(); pricingBtnSync(); } catch (e) { }
   try { const n = convos().reduce((s, c) => s + c.unread, 0), bd = $('#waBadge'); bd.hidden = !n; bd.textContent = n > 99 ? '99+' : n; } catch (e) { }
+  try { navBadgeCalc(); } catch (e) { }
 }
 function fillSelects() {
   const opts = ['<option value="">All stages</option>'].concat(stages().map(s => `<option ${ui.stage === s ? 'selected' : ''}>${esc(s)}</option>`)).join('');
@@ -5865,7 +6036,7 @@ const areaValues = k => [...new Set((S.leads || []).map(l => String(l[k] || '').
 const PERMS = [['add', 'Add leads'], ['edit', 'Edit leads & move stages'], ['delete', 'Delete leads'], ['import', 'Import Excel / CSV'], ['export', 'Export leads'], ['whatsapp', 'WhatsApp chats'], ['email', 'Send emails'], ['broadcast', 'Bulk broadcasts'], ['calls', 'Log calls'], ['tasks', 'Tasks'], ['analytics', 'See team analytics'], ['automation', 'Automation & n8n'], ['commerce', 'Store: products, stock & orders']];
 const SCOPES = { all: ['All leads', 'Sees every lead in the business'], area: ['Only their area', 'Leads whose State, District or City is in their areas — plus leads assigned to them'], own: ['Only assigned to them', 'Just the leads where “Assign to” is this person'] };
 const can = k => !cloud || /^(owner|admin)$/.test(AUTH.role || '') || (AUTH.role === 'member' && !(AUTH.access && AUTH.access.perms && AUTH.access.perms[k] === false));
-function applyAccess() { document.body.classList.toggle('brand-ro', !canBrand()); document.body.classList.toggle('is-platform', !!(cloud && AUTH.platform)); document.body.classList.toggle('cl-tenant', !!(cloud && !AUTH.platform)); PERMS.forEach(([k]) => document.body.classList.toggle('np-' + k, !can(k))); document.body.classList.toggle('no-sales', !(demo || (cloud && AUTH.v7))); document.body.classList.toggle('no-orders', !(demo || (cloud && AUTH.v8))); }
+function applyAccess() { document.body.classList.toggle('brand-ro', !canBrand()); document.body.classList.toggle('is-platform', !!(cloud && AUTH.platform)); document.body.classList.toggle('cl-tenant', !!(cloud && !AUTH.platform)); PERMS.forEach(([k]) => document.body.classList.toggle('np-' + k, !can(k))); document.body.classList.toggle('no-sales', !(demo || (cloud && AUTH.v7))); document.body.classList.toggle('no-orders', !(demo || (cloud && AUTH.v8))); if (typeof navVisReset === 'function') navVisReset(); }
 async function moveStage(id, stage) {
   const l = leadById(id); if (!l || l.stage === stage) return;
   flashId = id; setTimeout(() => { flashId = null; }, 1500);
@@ -7227,7 +7398,7 @@ async function renderBroadcast() {
   }
   if ((BC.tab === 'whatsapp' || BC.tab === 'scheduled') && !WA.status) { await waLoadStatus(); }
   if (BC.tab === 'history' && cloud && AUTH.v7 && !BC.statsAt) { BC.statsAt = Date.now(); api('refreshCampaigns').then(cs => { if (cs && cs.length) { S.campaignStats = cs; if (BC.tab === 'history') renderBroadcast(); } }).catch(() => { }); }
-  $$('#bcTabs .tab').forEach(t => t.classList.toggle('active', t.dataset.bctab === BC.tab)); try { advBcStrip(); } catch (e) { }
+  $$('#bcTabs .tab').forEach(t => t.classList.toggle('active', t.dataset.bctab === BC.tab)); $('#bcTabs').hidden = BC.tab === 'scheduled' || BC.tab === 'history'; try { advBcStrip(); } catch (e) { }
   const ae = document.activeElement, keep = ae && ae.closest && ae.closest('#v-broadcast') && /^(INPUT|TEXTAREA)$/.test(ae.tagName) ? { sel: ae.id ? '#' + ae.id : ae.dataset.bcvtext != null ? `[data-bcvtext="${ae.dataset.bcvtext}"]` : '', s: ae.selectionStart, e: ae.selectionEnd } : null;
   $('#bcBodyWrap').innerHTML = (!cloud && !demo && BC.tab !== 'history') ? `<div class="bc-card glass"><b>Broadcasts run on the Nodevers cloud.</b><p class="muted">Sign in (Settings → Accounts) to send WhatsApp and email campaigns.</p></div>`
     : BC.tab === 'history' ? bcHistoryHTML() : BC.tab === 'scheduled' ? bcSchedHTML() : composerHTML(BC.tab);
@@ -7942,7 +8113,9 @@ function applyBranding() {
 function setSTab(t) {
   if ($('#setModal .acc-list')) { ['brand', 'conn', 'acct', 'wl'].forEach(k => { const s = $('#stab-' + k); if (s) s.hidden = false; }); if (t === 'acct') fillAcct(); if (t === 'wl') fillWL(); if (t === 'plan') { const pb = $('#planBody'); if (pb) pb.innerHTML = planBody(); } return; }
   $$('#setModal .segb').forEach(b => b.classList.toggle('active', b.dataset.stab === t)); $('#stab-brand').hidden = t !== 'brand'; $('#stab-conn').hidden = t !== 'conn'; $('#stab-acct').hidden = t !== 'acct'; $('#stab-wl').hidden = t !== 'wl'; if (t === 'acct') fillAcct(); if (t === 'wl') fillWL(); }
-function openSettings(tab) {
+/** Settings is a page now: openSettings('plan') = go('settings/plan') */
+function openSettings(tab) { const sec = SET_OF_TAB[tab] || (SET_ACC[tab] ? tab : 'profile'); if (NAVS.dirty && !navLeaveOk('settings/' + sec)) return; go('settings/' + sec); }
+function setFill(tab) {
   const b = brand();
   upStore.brand = { logoUrl: b.logoUrl, userPhoto: b.userPhoto };
   $('#bName').value = b.brandName; $('#pName').value = b.userName;
@@ -7951,10 +8124,6 @@ function openSettings(tab) {
   $('#brandHelp').textContent = cloud ? (canBrand() ? 'Website name and logo apply to the whole platform — every client sees them. Your name and photo are your profile.' : 'Your name and photo show on your profile, notes and messages.') : demo ? 'Demo mode: saved in this browser only.' : 'Pick a logo and photo from your gallery. They are saved to your Google Sheet (Settings tab) and Drive, so every device shows the same.';
   $('#sUrl').value = settings.url || ''; $('#sKey').value = settings.key || ''; $('#sStatus').textContent = ''; $('#sStatus').className = 'status';
   setSTab(tab || (demo ? 'conn' : 'brand')); fillAcct(); fillWL(); { const pb = $('#planBody'); if (pb) pb.innerHTML = planBody(); const hb = $('#helpSetBody'); if (hb) hb.innerHTML = helpSetBody(); } try { settingsStatus(); } catch (e) { }
-  if (!tab && setTwoPane() && !$('#setModal .acc.open')) { const it = $(`#setModal .acc[data-acc="${store.get('nv.setOpen') || 's-brand'}"]`) || $('#setModal .acc'); if (it && getComputedStyle(it.querySelector('.acc-h')).display !== 'none') accToggle(it, 'nv.setOpen'); }
-  if (tab) { const it = $(`#setModal .acc[data-acc="s-${tab}"]`); if (it && !it.classList.contains('open') && getComputedStyle(it).display !== 'none') accToggle(it, 'nv.setOpen'); }
-  showModal('#setModal');
-  if (cloud && tab === 'plan') subLoad().then(() => { const pb = $('#planBody'); if (pb) pb.innerHTML = planBody(); });
 }
 $('#bSave').onclick = async () => {
   if (upBusy) return toast('Photo is still uploading, wait 2 seconds…', true);
@@ -8427,7 +8596,7 @@ const RM_VARS_X = { cod_prepaid: [['discount', 'Discount'], ['pay_amount', 'Amou
 const RM_VARS_OF = k => { const x = RM_VARS_X[k] || [], keys = new Set(x.map(v => v[0])); return (k === 'browse' ? [['first_name', 'First name'], ['shop', 'Shop name'], ['coupon', 'Coupon']] : k === 'ref_ask' || k === 'ref_reward' ? [['first_name', 'First name'], ['shop', 'Shop name']] : RM_VARS.filter(v => !keys.has(v[0]))).concat(x); };
 const RM_SAMPLE = r => ({ first_name: 'Riya', name: 'Riya Sharma', order_id: '#1043', amount: '₹1,499', items: '1 × Gold ring', product: 'Gold ring', tracking_url: 'https://track.example.com/1043', checkout_url: (r && r.url) || 'https://yourshop.com/cart', coupon: (r && r.coupon) || 'SAVE10', link: (r && r.url) || 'https://yourshop.com', shop: brand().brandName, courier: 'Delhivery', discount: r && +r.off ? (r.offType === 'pct' ? +r.off + '%' : '₹' + (+r.off)) : '₹50', pay_amount: '₹1,449', pay_link: String((r && r.url) || 'https://yourshop.com/pay/1043').replace(/\{\{\s*amount\s*\}\}/gi, '1449').replace(/\{\{\s*order_id\s*\}\}/gi, '1043'), ref_code: 'RIYA7KX', ref_link: refLinkOf('RIYA7KX'), friend_offer: (rmCfg().referral || {}).friendOffer || '10% off your first order', reward: (rmCfg().referral || {}).reward || '₹100 off your next order', reward_code: (rmCfg().referral || {}).rewardCode || 'THANKS100', friend: 'Aisha' });
 const rmFill = (s, v) => String(s || '').replace(/\{\{\s*([a-z_]+)\s*\}\}/gi, (m, k) => (k.toLowerCase() in v ? v[k.toLowerCase()] : m));
-const RM = { sum: null, sumAt: 0, sumWs: '', jobs: null, ed: null };
+const RM = { sum: null, sumAt: 0, sumWs: '', jobs: null, ed: null, view: 'cards' };
 function rmSummaryLoad() {
   if (!cloud || !AUTH.v23 || (RM.sumWs === AUTH.ws && Date.now() - RM.sumAt < 60000)) return;
   RM.sumWs = AUTH.ws; RM.sumAt = Date.now();
@@ -8464,7 +8633,9 @@ function renderRemarket(anim) {
   const totSent = Object.values(sum || {}).reduce((a, x) => a + (+x.sent || 0), 0), on = RM_KINDS.filter(k => (cfg.auto[k[0]] || {}).on).length;
   const grp = (g, title, sub, extra) => `<div class="rm-g"><div class="rm-gh"><b>${title}</b><small class="muted">${sub}</small></div><div class="rm-grid">${RM_KINDS.filter(k => k[3] === g).map(k => rmCardHTML(k, cfg, sum)).join('')}${extra || ''}</div></div>`;
   const jobs = demo ? [] : (RM.jobs || []), on24 = v24();
-  box.innerHTML = `<div class="rm-top">
+  const rv = RM.view || 'cards';
+  if (rv === 'waiting') { box.innerHTML = (cfg.paused ? `<div class="rm-paused">⏸ <b>All auto messages are paused.</b> Nothing is sent — messages wait and go out when you switch this off.</div>` : '') + (on24 ? (rmHeld().length ? rmHeldHTML() : `<div class="tp-empty glass"><b>Nothing is waiting for you</b><p class="muted">Messages you chose to approve first (“You approve” in an auto message) wait here until you send or skip them.</p><button class="btn sm" data-nvgo="remarket/cards">Open auto messages</button></div>`) : needSql24('Waiting for you')); if (anim) stagger(box, anim); return; }
+  const topHTML = `<div class="rm-top">
       <div class="rm-perm glass"><div class="rm-ph"><b>Who gets marketing messages?</b><small class="muted">Checkout reminders, reorder, win-back and back-in-stock. Order updates always go to the buyer — they are about their own order.</small></div>
         <div class="rm-modes"><label class="rm-mode ${mode === 'optin' ? 'on' : ''}"><input type="radio" name="rmMode" value="optin" ${mode === 'optin' ? 'checked' : ''} ${can ? '' : 'disabled'}><span><b>Only people who said yes</b><small>Safest — Meta’s rule. “Yes” comes from the Send-me-offers button, the checkout tick box, START, or you.</small></span></label>
           <label class="rm-mode ${mode === 'buyers' ? 'on' : ''}"><input type="radio" name="rmMode" value="buyers" ${mode === 'buyers' ? 'checked' : ''} ${can ? '' : 'disabled'}><span><b>Every buyer who has not said no</b><small>More reach. Use it only if your checkout tells buyers you may message them. STOP and “No offers” are always respected.</small></span></label></div>
@@ -8473,8 +8644,10 @@ function renderRemarket(anim) {
         <div class="rm-prow"><label class="rm-shop">Your shop link <input class="input sm" id="rmShop" value="${esc(cfg.shopUrl || '')}" placeholder="https://yourshop.com" ${can ? '' : 'disabled'}></label><span class="muted">Used in messages when there is no cart or product link, and for referral links.</span></div></div>
       <div class="rm-stat glass"><span class="rm-big">${totSent.toLocaleString('en-IN')}</span><small class="muted">auto messages sent · last 30 days</small><div class="rm-mini"><span><b>${on}</b> of ${RM_KINDS.length} on</span><span><b>${(S.checkouts || []).filter(c => c.status === 'recovered' && tsOf(c.createdAt) > Date.now() - 30 * DAY_MS).length}</b> checkouts recovered</span></div><button class="btn sm" data-cutrack>Website tracking code →</button>
         <label class="rm-pause ${cfg.paused ? 'on' : ''}"><span><b>${cfg.paused ? '⏸ Paused' : 'Pause all'}</b><small class="muted">${cfg.paused ? 'Nothing goes out — messages wait' : 'Stops every auto message at once'}</small></span><span class="sw"><input type="checkbox" id="rmPause" ${cfg.paused ? 'checked' : ''} ${can ? '' : 'disabled'}><i></i></span></label></div></div>
-    ${cfg.paused ? `<div class="rm-paused">⏸ <b>All auto messages are paused.</b> Nothing is sent — messages wait and go out when you switch this off (order updates older than 3 days are skipped).</div>` : ''}
-    ${on24 ? rmHeldHTML() : ''}
+`;
+  if (rv === 'rules') { box.innerHTML = topHTML; if (anim) stagger(box, anim); return; }
+  box.innerHTML = `${cfg.paused ? `<div class="rm-paused">⏸ <b>All auto messages are paused.</b> Nothing is sent — messages wait and go out when you switch this off (order updates older than 3 days are skipped).</div>` : ''}
+    ${on24 && rmHeld().length ? `<div class="rm-paused rm-wait-n">✋ <b>${rmHeld().length} message${rmHeld().length === 1 ? ' is' : 's are'} waiting for you.</b> <a class="bc-link" data-nvgo="remarket/waiting">Review them →</a></div>` : ''}
     ${grp('order', 'After an order', 'Keep buyers informed — fewer “where is my order?” chats and fewer returns.')}
     ${grp('cod', 'Cash on Delivery', 'Fewer fake orders and returns — confirm, offer to pay online, call the risky ones.', on24 ? rmCodCard() : '')}
     ${grp('back', 'Bring them back', 'Turn one-time buyers into repeat customers.')}
@@ -9339,16 +9512,19 @@ function hideModal(sel) { if (sel === '#stageModal' && typeof scanStop === 'func
 /* ================= routing ================= */
 const authInUrl = () => /access_token=|refresh_token=|error_description=|type=recovery|[?&]code=/.test(location.hash + location.search);
 const GO_ALIAS = { channels: 'connections', storeanalytics: 'insales', dash: 'home' };
-function go(name) {
+function go(name, pop) {
+  name = String(name == null ? '' : name); let sub = null;
+  { const i = name.indexOf('/'); if (i > 0) { sub = name.slice(i + 1); name = name.slice(0, i); } }
   name = GO_ALIAS[name] || name; const bgm = document.getElementById('ibBgMenu'); if (bgm) bgm.remove();
-  if (!document.getElementById('v-' + name) || name === 'locked') name = name === 'locked' && LOCK.v ? LOCK.v : 'home';
+  if (!document.getElementById('v-' + name) || name === 'locked') { name = name === 'locked' && LOCK.v ? LOCK.v : 'home'; sub = null; }
+  if (NAVS.dirty && !navLeaveOk(sub ? name + '/' + sub : name)) { if (pop) history.pushState(null, '', '#' + NAVS.cur); return; }
+  navApply(name, sub);
   const want = name; if (featLocked(name)) { LOCK.v = name; renderLocked(name); name = 'locked'; }   // section not in the plan → upgrade screen
   if (FAM_OF[name] === 'insights') insSyncRanges();
   if (name !== 'pipeline' && typeof selWire !== 'undefined') { selWire = null; }
   $$('.view').forEach(v => v.classList.toggle('active', v.id === 'v-' + name));
   $$('[data-go]').forEach(a => a.classList.toggle('active', a.dataset.go === want));
   { const ft = document.querySelector(`#v-${name} > .fam-strip .fam-t.active`), bar = ft && ft.parentElement; if (bar && bar.scrollWidth > bar.clientWidth) bar.scrollLeft = ft.offsetLeft - (bar.clientWidth - ft.offsetWidth) / 2; }   // phones: the open tab is always in view
-  if (location.hash !== '#' + want && !authInUrl()) history.replaceState(null, '', '#' + want);   // keep login/reset tokens until Supabase reads them
   const stale = staleViews.delete(name);
   if (name === 'pipeline') requestAnimationFrame(() => { sizeCanvas(); if (!view.fitted || stale) { renderPipeline(!view.fitted); } else applyView(); });
   if (name === 'dashboard' && (S.leads.length || stale)) renderDashboard(true);
@@ -9378,7 +9554,9 @@ function go(name) {
   if (name === 'inmarketing') renderInMarketing(true);
   if (name === 'connections') renderConnections(true);
   if (name === 'reports') renderReportsStore();
+  if (name === 'settings') renderSettingsPage();
   navAfterGo(want);
+  navDone(want, pop);   // sidebar, breadcrumb and the address (#view/sub) — keeps login/reset tokens until Supabase reads them
   if (name === 'tasks') renderTasks(true);
   if (name === 'calls') renderCalls(true);
   if (name === 'performance') renderPerformance(true);
@@ -9387,7 +9565,7 @@ function go(name) {
   closePops();
   window.scrollTo(0, 0);
 }
-window.addEventListener('hashchange', () => go(location.hash.slice(1)));
+window.addEventListener('hashchange', () => navPop());
 
 /* ================= orders ================= */
 const ORD_ST = ['Cart', 'New', 'Processing', 'Confirmed', 'Paid', 'COD', 'Shipped', 'Delivered', 'Cancelled', 'Refunded', 'RTO', 'Returned', 'Exchange'], ORD = { st: '', q: '', ch: '', risk: '' };
@@ -9455,9 +9633,9 @@ document.addEventListener('click', e => { const t = e.target; if (t.closest('[da
 document.addEventListener('input', e => { if (e.target.id === 'ordQ') { ORD.q = e.target.value; const pos = e.target.selectionStart; renderOrders(); const q = $('#ordQ'); if (q) { q.focus(); q.setSelectionRange(pos, pos); } } });
 
 /* ================= Commerce: store overview, products, inventory, Amazon, Website, analytics, reports, ad spend, channels ================= */
-const CM_TABS = [['overview', 'Overview'], ['amazon', 'Amazon'], ['website', 'Website'], ['advisor', '✦ Advisor'], ['products', 'Products'], ['inventory', 'Inventory'], ['reorder', 'Reorder'], ['purchases', 'Purchases'], ['places', 'Warehouses'], ['make', 'Sets & making']];
+const CM_TABS = [['overview', 'Overview'], ['amazon', 'Amazon'], ['flipkart', 'Flipkart'], ['meesho', 'Meesho'], ['website', 'Website'], ['advisor', '✦ Advisor'], ['products', 'Products'], ['inventory', 'Inventory'], ['reorder', 'Reorder'], ['purchases', 'Purchases'], ['places', 'Warehouses'], ['make', 'Sets & making']];
 const CM_CH = ['Amazon', 'Website', 'WhatsApp', 'Direct', 'Flipkart', 'Meesho', 'Other'];
-const CM_CHC = { Amazon: '#F59E0B', Website: 'var(--blue-2)', WhatsApp: 'var(--wa)', Direct: 'var(--green)', Flipkart: '#A78BFA', Meesho: 'var(--coral)', Other: 'var(--faint)' };
+const CM_CHC = { Amazon: '#F59E0B', Website: 'var(--blue-2)', WhatsApp: 'var(--wa)', Direct: 'var(--green)', Flipkart: '#2F5BEA', Meesho: '#D6338A', Other: 'var(--faint)' };
 const CM_DEAD = ['Cart', 'Cancelled', 'Refunded', 'RTO', 'Returned'], CM_RET = ['RTO', 'Returned', 'Refunded'];
 const CM_COSTS = [['productCost', 'Product cost'], ['marketplaceFee', 'Marketplace / gateway fees'], ['shippingFee', 'Shipping'], ['packagingCost', 'Packaging'], ['rtoCharges', 'RTO / return charges'], ['adSpend', 'Ad spend on order'], ['otherCost', 'Other costs']];
 const CM = Object.assign({ tab: 'overview', range: 30, ch: '', state: '', st: '', pq: '', cat: '', inv: 'all', mvsku: '', mvr: '', an: 'sales', grain: 'day', oq: '', aq: '' }, { tab: store.get('nv.cmTab') || 'overview' });
@@ -9546,13 +9724,13 @@ function renderCommerce(anim) {
   $$('[data-cm]').forEach(b => b.classList.toggle('active', b.dataset.cm === CM.tab));
   if (CM.tab === 'advisor' && !advOn()) CM.tab = 'overview';
   const grp = STORE_GRP[CM.tab] || 'overview', hd = $('#v-commerce > .head');
-  if (hd) { hd.querySelector('h1').textContent = grp === 'products' ? 'Products & Stock' : 'Store'; hd.querySelector('.sub').textContent = grp === 'products' ? 'Products, stock in every place, buying from suppliers, sets and making — all linked to your orders.' : 'Amazon and website sales, profit after every fee and ad — for your own business.'; const sc = $('#cmScanBtn'); if (sc) sc.hidden = grp !== 'products' || !v25(); }
+  if (hd) { hd.querySelector('h1').textContent = grp === 'products' ? 'Products & Stock' : 'Store'; hd.querySelector('.sub').textContent = grp === 'products' ? 'Products, stock in every place, buying from suppliers, sets and making — all linked to your orders.' : 'Amazon, Flipkart, Meesho and website sales — profit after every fee and ad.'; const sc = $('#cmScanBtn'); if (sc) sc.hidden = grp !== 'products' || !v25(); }
   $('#cmTabs').innerHTML = CM_TABS.filter(([k]) => (k !== 'advisor' || advOn()) && (STORE_GRP[k] || 'overview') === grp).map(([k, n]) => `<button class="tab ${CM.tab === k ? 'active' : ''}" data-cmtab="${k}">${n}</button>`).join('');
   INV.c = null;
   if (!CM_TABS.some(x => x[0] === CM.tab)) { const old = CM.tab; CM.tab = 'overview'; if (old === 'analytics' || old === 'reports') return go('insales'); if (old === 'ads') { ADS.tab = 'spend'; return go('ads'); } if (old === 'channels') return go('connections'); }
   const box = $('#cmBody');
   if (!cmOk()) { box.innerHTML = `<div class="tp-empty glass"><b>Commerce needs the 09 database update</b><p class="muted">Run <code>08_platform_flows.sql</code> and <code>09_commerce.sql</code> in Supabase → SQL Editor, then refresh.</p></div>`; return; }
-  const f = { advisor: () => advBlock('store', 40, { title: 'AI Advisor — store', cls: 'flat', open: true }), overview: cmOverview, products: cmProducts, inventory: cmInventory, reorder: cmReorder, purchases: cmPurchases, places: cmPlaces, make: cmMake, amazon: () => cmChannel('Amazon'), website: () => cmChannel('Website'), analytics: cmAnalytics, reports: cmReports, ads: cmAdsTab, channels: cmChannels }[CM.tab] || cmOverview;
+  const f = { advisor: () => advBlock('store', 40, { title: 'AI Advisor — store', cls: 'flat', open: true }), overview: cmOverview, products: cmProducts, inventory: cmInventory, reorder: cmReorder, purchases: cmPurchases, places: cmPlaces, make: cmMake, amazon: () => cmChannel('Amazon'), flipkart: () => cmChannel('Flipkart'), meesho: () => cmChannel('Meesho'), website: () => cmChannel('Website'), analytics: cmAnalytics, reports: cmReports, ads: cmAdsTab, channels: cmChannels }[CM.tab] || cmOverview;
   box.innerHTML = f(); stagger(box, anim);
   box.querySelectorAll('.cm-ks').forEach(k => { const n = k.children.length; k.style.setProperty('--c', n === 6 ? 3 : n === 8 ? 4 : Math.min(n, 5)); });
 }
@@ -9577,7 +9755,7 @@ function cmOverview() {
       ${cmK('Orders', o.length, `${live.length} active · ${o.length - live.length} cancelled/returned`)}
       ${cmK('Units sold', units, `Avg order <b>${inr(live.length ? rev / live.length : 0)}</b>`)}
       ${cmK('Ad spend', inrShort(ads), ads ? `ROAS <b>${(rev / ads).toFixed(1)}×</b> · profit before ads <b>${inrShort(profit)}</b>` : ((CONN.list || {}).meta_ads || {}).connected ? 'Meta connected — no spend in this period' : 'Connect Meta Ads or add spend in Ads Manager')}
-      ${cmK('Return / RTO rate', cmPct(ret, o.length) + '%', `${ret} orders came back`, cmPct(ret, o.length) > 10 ? 'var(--coral)' : '')}
+      ${cmK('Return / RTO rate', cmPct(ret, o.length) + '%', `${ret} order${ret === 1 ? '' : 's'} came back`, cmPct(ret, o.length) > 10 ? 'var(--coral)' : '')}
       ${cmK('Inventory value', inrShort(invVal), `${P.length} products · at cost`)}
       ${cmK('Stock alerts', low, low ? 'Low or out of stock' : 'All good', low ? '#D97706' : 'var(--green)')}
     </div>
@@ -9697,14 +9875,31 @@ function cmMoney(o, rev) {
   return `<div class="cm-stack">${all.map(p => `<i style="width:${(p.value / tot * 100).toFixed(2)}%;background:${p.color}" title="${esc(p.label)}: ${inr(p.value)}"></i>`).join('')}</div>
     <div class="cm-dl cm-dl2">${all.map(p => `<div><i style="background:${p.color}"></i><span>${esc(p.label)}</span><b>${inr(p.value)}</b><small>${cmPct(p.value, rev)}%</small></div>`).join('')}${profit <= 0 ? `<div><i style="background:var(--coral)"></i><span>Loss</span><b style="color:var(--coral)">${inr(profit)}</b><small></small></div>` : ''}</div>`;
 }
+/** what each sales channel page says at the top (connection state + the right buttons) */
+const CM_CHI = {
+  Amazon: { ic: 'a', name: 'Amazon Seller Central', conn: 'amazon', fee: 'Amazon fees', how: 'Orders, status and FBA stock sync from Amazon (SP-API). Fees: import the Amazon payment report.' },
+  Flipkart: { ic: 'F', name: 'Flipkart Seller Hub', conn: 'flipkart', fee: 'Flipkart fees', how: 'Orders, shipments and returns sync from Flipkart every 15 minutes. Or import the Seller Hub orders report.' },
+  Meesho: { ic: 'M', name: 'Meesho Supplier Panel', conn: 'meesho', fee: 'Meesho fees', how: 'Import the Orders or Payments report from the Supplier Panel — columns are found for you and repeats are skipped.' },
+  Website: { ic: '🌐', name: 'Your website store', conn: 'website', fee: 'Payment / platform fees', how: 'Shopify, WooCommerce or any website sync by themselves. Or import website orders (Excel / CSV / Google Sheet).' },
+};
+function cmChHead(ch) {
+  const I2 = CM_CHI[ch] || CM_CHI.Website, L = CONN.list || {}, c = I2.conn === 'website' ? ['shopify', 'woocommerce', 'custom'].map(k => L[k]).find(x => x && x.connected) : L[I2.conn], on = !!(c && c.connected);
+  const n = (S.orders || []).filter(x => x.channel === ch).length, bad = on && c.last_status === 'error';
+  const st = on ? (bad ? `<span class="tp-st bad"><i></i>Sync failed</span>` : `<span class="tp-st ok"><i></i>Connected${c.last_sync_at ? ' · synced ' + ago(c.last_sync_at) : ''}</span>`) : ch === 'Meesho' ? (n ? `<span class="tp-st ok"><i></i>${n} orders imported</span>` : '<span class="tp-st"><i></i>Import your first report</span>') : '<span class="tp-st"><i></i>Not connected</span>';
+  const btn = ch === 'Meesho' ? '' : `<button class="btn sm" data-cmconn="${I2.conn}">${on ? 'Manage' : 'Connect'}</button>`;
+  return `<div class="cm-conn glass"><span class="cm-ci" style="--c:${CM_CHC[ch]}">${esc(I2.ic)}</span><div class="grow"><div class="cm-conn-t"><b>${esc(I2.name)}</b>${st}</div><small class="muted">${esc(bad ? c.last_error || I2.how : I2.how)}</small></div>${btn}<button class="btn sm primary" data-cmimport="orders" data-cmch="${ch}" data-cmw>⇪ Import ${ch} ${ch === 'Meesho' ? 'report' : 'orders'}</button></div>`;
+}
+document.addEventListener('click', e => { const b = e.target.closest('[data-cmconn]'); if (!b) return; const k = b.dataset.cmconn; if (k !== 'website') { CONN.open = k; store.set('nv.connOpen', k); } go('connections/store'); });
 function cmChannel(ch) {
   const o = cmOrders(x => (x.channel || 'WhatsApp') === ch, true), rev = cmSum(o, cmRev), profit = cmSum(o, cmProfit), live = o.filter(x => !CM_DEAD.includes(x.status)), ret = o.filter(x => CM_RET.includes(x.status)).length;
-  const fees = cmSum(o, x => cmN(x.marketplaceFee)), ship = cmSum(o, x => cmN(x.shippingFee)), fee = ch === 'Amazon' ? 'Amazon fees' : 'Payment / platform fees';
+  const fees = cmSum(o, x => cmN(x.marketplaceFee)), ship = cmSum(o, x => cmN(x.shippingFee)), fee = (CM_CHI[ch] || CM_CHI.Website).fee;
   const reasons = {}; o.filter(x => x.returnReason).forEach(x => { reasons[x.returnReason] = (reasons[x.returnReason] || 0) + 1; });
   const couriers = {}; o.filter(x => x.courier).forEach(x => { couriers[x.courier] = (couriers[x.courier] || 0) + 1; });
-  return `<div class="cm-conn glass"><span class="cm-ci" style="--c:${CM_CHC[ch]}">${ch === 'Amazon' ? 'a' : '🌐'}</span><div><b>${ch === 'Amazon' ? 'Amazon Seller Central' : 'Your website store'}</b><small class="muted">${ch === 'Amazon' ? 'Today: import your Amazon order report (Excel / CSV). Automatic sync with Amazon SP-API is coming soon.' : 'Today: import website orders (Excel / CSV / Google Sheet). Automatic sync with Shopify / WooCommerce is coming soon.'}</small></div><div class="grow"></div><button class="btn sm" data-go="connections">${ch === 'Amazon' ? 'Connect (soon)' : 'Connect website'}</button><button class="btn sm primary" data-cmimport="orders" data-cmch="${ch}" data-cmw>⇪ Import ${ch} orders</button></div>
+  if (!CONN.list && !CONN.loading && (cloud || demo)) connLoad().then(() => { if (activeView() === 'commerce' && CM.tab === ch.toLowerCase()) renderCommerce(); }).catch(() => { });
+  return `${cmChHead(ch)}
+    ${!o.length ? `<div class="tp-empty glass"><b>No ${esc(ch)} orders yet${CM.range ? ' in this period' : ''}</b><p class="muted">${esc((CM_CHI[ch] || CM_CHI.Website).how)}</p></div>` : ''}
     ${cmFilterBar({ noCh: true })}
-    <div class="cm-ks">${cmK(ch + ' revenue', inrShort(rev), `${live.length} orders · avg <b>${inr(live.length ? rev / live.length : 0)}</b>`)}${cmK('Net profit', inrShort(profit), `Margin <b>${cmPct(profit, rev)}%</b>`, profit < 0 ? 'var(--coral)' : 'var(--green)')}${cmK('Units sold', cmSum(o, cmUnits), `${o.length} orders in total`)}${cmK(fee, inrShort(fees), `${cmPct(fees, rev)}% of revenue`)}${cmK('Shipping', inrShort(ship), `${inr(live.length ? ship / live.length : 0)} per order`)}${cmK('Returns / RTO', cmPct(ret, o.length) + '%', `${ret} orders came back`, cmPct(ret, o.length) > 10 ? 'var(--coral)' : '')}</div>
+    <div class="cm-ks">${cmK(ch + ' revenue', inrShort(rev), `${live.length} orders · avg <b>${inr(live.length ? rev / live.length : 0)}</b>`)}${cmK('Net profit', inrShort(profit), `Margin <b>${cmPct(profit, rev)}%</b>`, profit < 0 ? 'var(--coral)' : 'var(--green)')}${cmK('Units sold', cmSum(o, cmUnits), `${o.length} orders in total`)}${cmK(fee, inrShort(fees), `${cmPct(fees, rev)}% of revenue`)}${cmK('Shipping', inrShort(ship), `${inr(live.length ? ship / live.length : 0)} per order`)}${cmK('Returns / RTO', cmPct(ret, o.length) + '%', `${ret} order${ret === 1 ? '' : 's'} came back`, cmPct(ret, o.length) > 10 ? 'var(--coral)' : '')}</div>
     <div class="rgrid">
       <div class="rcard glass span2"><div class="cm-ch-h"><div><h3>${ch} revenue & profit</h3><p class="sub muted">${CM.range ? 'Last ' + CM.range + ' days' : 'All time'}</p></div><div class="cm-seg">${[['day', 'Daily'], ['week', 'Weekly'], ['month', 'Monthly']].map(([k, n]) => `<button class="${CM.grain === k ? 'on' : ''}" data-cmgrain="${k}">${n}</button>`).join('')}</div></div>${cmTrend(cmSeries(o, CM.grain), CM.grain)}</div>
       <div class="rcard glass span2"><h3>Where every ₹ of ${ch} revenue goes</h3><p class="sub muted">Product cost, ${fee.toLowerCase()}, shipping, packaging, returns — and what you keep</p>${cmMoney(o, rev)}</div>
@@ -9855,7 +10050,7 @@ const CMI_FIELDS = {
 };
 const CMI_GUESS = {
   products: { sku: 'sku', skucode: 'sku', productcode: 'sku', itemcode: 'sku', productname: 'name', product: 'name', name: 'name', title: 'name', item: 'name', category: 'category', type: 'category', sellingprice: 'price', price: 'price', mrp: 'price', saleprice: 'price', costprice: 'cost', cost: 'cost', unitcost: 'cost', perunitcost: 'cost', productcost: 'cost', purchaseprice: 'cost', currentstock: 'stock', stock: 'stock', quantity: 'stock', qty: 'stock', inventory: 'stock', available: 'stock', reorderlevel: 'reorderLevel', reorderalert: 'reorderLevel', reorderpoint: 'reorderLevel', minstock: 'reorderLevel', image: 'imageUrl', imageurl: 'imageUrl', imagelink: 'imageUrl', asin: 'amazonAsin', amazonasin: 'amazonAsin', url: 'websiteUrl', link: 'websiteUrl', producturl: 'websiteUrl', notes: 'notes', barcode: 'barcode', ean: 'barcode', upc: 'barcode', gtin: 'barcode', barcodeno: 'barcode', unit: 'unit', uom: 'unit', moq: 'moq', minimumorder: 'moq', minorderqty: 'moq' },
-  orders: { orderid: 'extId', orderno: 'extId', ordernumber: 'extId', amazonorderid: 'extId', id: 'extId', orderdate: 'orderDate', date: 'orderDate', purchasedate: 'orderDate', channel: 'channel', saleschannel: 'channel', platform: 'channel', sku: 'sku', productname: 'productName', product: 'productName', item: 'productName', title: 'productName', qty: 'qty', quantity: 'qty', units: 'qty', sellingprice: 'unitPrice', price: 'unitPrice', unitprice: 'unitPrice', revenue: 'amount', total: 'amount', ordertotal: 'amount', amount: 'amount', sales: 'amount', totalproductcost: 'productCost', productcost: 'productCost', perunitcost: 'unitCost', unitcost: 'unitCost', costprice: 'unitCost', amazonfee: 'marketplaceFee', amazonfees: 'marketplaceFee', marketplacefee: 'marketplaceFee', commission: 'marketplaceFee', fees: 'marketplaceFee', referralfee: 'marketplaceFee', gatewayfee: 'marketplaceFee', shippingfee: 'shippingFee', shipping: 'shippingFee', shippingcost: 'shippingFee', deliverycharges: 'shippingFee', packagingcost: 'packagingCost', packaging: 'packagingCost', rtocharges: 'rtoCharges', rtocharge: 'rtoCharges', returncharges: 'rtoCharges', adspend: 'adSpend', othercost: 'otherCost', orderstatus: 'status', status: 'status', paymentstatus: 'payment', payment: 'payment', paymentmode: 'payment', paymentmethod: 'payment', customername: 'customerName', customer: 'customerName', buyername: 'customerName', name: 'customerName', phone: 'customerPhone', mobile: 'customerPhone', phonenumber: 'customerPhone', customerphone: 'customerPhone', contact: 'customerPhone', whatsapp: 'customerPhone', billingphone: 'customerPhone', email: 'customerEmail', customeremail: 'customerEmail', emailaddress: 'customerEmail', coupon: 'coupon', couponcode: 'coupon', discountcode: 'coupon', pincode: 'pincode', pin: 'pincode', zip: 'pincode', zipcode: 'pincode', postcode: 'pincode', postalcode: 'pincode', shippingzip: 'pincode', customerstate: 'customerState', state: 'customerState', shipstate: 'customerState', customercity: 'customerCity', city: 'customerCity', shipcity: 'customerCity', courierpartner: 'courier', courier: 'courier', carrier: 'courier', returnreason: 'returnReason', reason: 'returnReason', trackingurl: 'trackingUrl', trackinglink: 'trackingUrl', tracking: 'trackingUrl', notes: 'notes' },
+  orders: { orderitemid: 'extId', suborderno: 'extId', suborderid: 'extId', orderid: 'extId', orderno: 'extId', ordernumber: 'extId', amazonorderid: 'extId', liveorderstatus: 'status', orderitemstatus: 'status', reasonforcreditentry: 'status', suppliersku: 'sku', sellersku: 'sku', producttitledescription: 'productName', producttitle: 'productName', sellingpriceperitem: 'unitPrice', supplierdiscountedpriceinclgstandcommision: 'unitPrice', supplierdiscountedpriceinclgstandcommission: 'unitPrice', totalsaleamountinclshippinggst: 'amount', invoiceamount: 'amount', meeshocommissioninclgst: 'marketplaceFee', meeshocommission: 'marketplaceFee', fixedfeeinclgst: 'otherCost', forwardshippingcharges: 'shippingFee', shippingchargeperitem: 'shippingFee', returnshippingchargeinclgst: 'rtoCharges', paymenttype: 'payment', customerstate: 'customerState', buyerstate: 'customerState', id: 'extId', orderdate: 'orderDate', date: 'orderDate', purchasedate: 'orderDate', channel: 'channel', saleschannel: 'channel', platform: 'channel', sku: 'sku', productname: 'productName', product: 'productName', item: 'productName', title: 'productName', qty: 'qty', quantity: 'qty', units: 'qty', sellingprice: 'unitPrice', price: 'unitPrice', unitprice: 'unitPrice', revenue: 'amount', total: 'amount', ordertotal: 'amount', amount: 'amount', sales: 'amount', totalproductcost: 'productCost', productcost: 'productCost', perunitcost: 'unitCost', unitcost: 'unitCost', costprice: 'unitCost', amazonfee: 'marketplaceFee', amazonfees: 'marketplaceFee', marketplacefee: 'marketplaceFee', commission: 'marketplaceFee', fees: 'marketplaceFee', referralfee: 'marketplaceFee', gatewayfee: 'marketplaceFee', shippingfee: 'shippingFee', shipping: 'shippingFee', shippingcost: 'shippingFee', deliverycharges: 'shippingFee', packagingcost: 'packagingCost', packaging: 'packagingCost', rtocharges: 'rtoCharges', rtocharge: 'rtoCharges', returncharges: 'rtoCharges', adspend: 'adSpend', othercost: 'otherCost', orderstatus: 'status', status: 'status', paymentstatus: 'payment', payment: 'payment', paymentmode: 'payment', paymentmethod: 'payment', customername: 'customerName', customer: 'customerName', buyername: 'customerName', name: 'customerName', phone: 'customerPhone', mobile: 'customerPhone', phonenumber: 'customerPhone', customerphone: 'customerPhone', contact: 'customerPhone', whatsapp: 'customerPhone', billingphone: 'customerPhone', email: 'customerEmail', customeremail: 'customerEmail', emailaddress: 'customerEmail', coupon: 'coupon', couponcode: 'coupon', discountcode: 'coupon', pincode: 'pincode', pin: 'pincode', zip: 'pincode', zipcode: 'pincode', postcode: 'pincode', postalcode: 'pincode', shippingzip: 'pincode', customerstate: 'customerState', state: 'customerState', shipstate: 'customerState', customercity: 'customerCity', city: 'customerCity', shipcity: 'customerCity', courierpartner: 'courier', courier: 'courier', carrier: 'courier', returnreason: 'returnReason', reason: 'returnReason', trackingurl: 'trackingUrl', trackinglink: 'trackingUrl', tracking: 'trackingUrl', notes: 'notes' },
   ads: { date: 'day', day: 'day', reportingstarts: 'day', platform: 'platform', campaign: 'campaign', campaignname: 'campaign', adsetname: 'campaign', impressions: 'impressions', clicks: 'clicks', linkclicks: 'clicks', clicksall: 'clicks', amountspent: 'spend', amountspentinr: 'spend', spend: 'spend', cost: 'spend', adspend: 'spend', purchases: 'purchases', results: 'purchases', conversions: 'purchases', purchasesconversionvalue: 'revenue', revenue: 'revenue', conversionvalue: 'revenue', purchasevalue: 'revenue' },
 };
 const CMI = { sheets: [], src: '' };
@@ -9863,13 +10058,14 @@ const cmiKey = h => String(h || '').toLowerCase().replace(/[^a-z]/g, '');
 function cmiDetect(name, head) {
   const k = head.map(cmiKey), has = x => k.includes(x), nm = String(name || '').toLowerCase();
   if (has('campaign') || has('campaignname') || has('amountspent') || (has('impressions') && !has('sku'))) return { type: 'ads' };
-  const orderish = has('orderid') || has('orderdate') || has('amazonorderid') || has('ordernumber');
-  if (orderish) return { type: 'orders', channel: /amazon/.test(nm) || has('amazonfee') || has('amazonorderid') ? 'Amazon' : /flipkart/.test(nm) ? 'Flipkart' : /meesho/.test(nm) ? 'Meesho' : /whatsapp/.test(nm) ? 'WhatsApp' : has('channel') ? '' : 'Website' };
+  const orderish = has('orderid') || has('orderdate') || has('amazonorderid') || has('ordernumber') || has('suborderno') || has('orderitemid');
+  if (orderish) return { type: 'orders', channel: /amazon/.test(nm) || has('amazonfee') || has('amazonorderid') ? 'Amazon' : /flipkart/.test(nm) || has('orderitemid') || has('fsn') ? 'Flipkart' : /meesho/.test(nm) || has('suborderno') || has('reasonforcreditentry') || has('meeshocommissioninclgst') ? 'Meesho' : /whatsapp/.test(nm) ? 'WhatsApp' : has('channel') ? '' : 'Website' };
   if (has('sku') && (has('sellingprice') || has('price') || has('currentstock') || has('stock') || has('mrp') || has('productname'))) return { type: 'products' };
   if (/dashboard|summary|readme|instructions/.test(nm)) return { type: '' };
   return { type: '' };
 }
-function cmiMap(type, head) { const used = new Set(), g = CMI_GUESS[type] || {}; return head.map(h => { const f = g[cmiKey(h)] || ''; if (!f || used.has(f)) return ''; used.add(f); return f; }); }
+const CMI_FIRST = new Set(['orderitemid', 'suborderno', 'suborderid']);   // marketplace item ids win over the order id
+function cmiMap(type, head) { const used = new Set(), g = CMI_GUESS[type] || {}, pri = type === 'orders' ? head.map(cmiKey).find(k => CMI_FIRST.has(k)) : ''; if (pri) used.add('extId'); return head.map(h => { const k = cmiKey(h); if (pri && k === pri) return 'extId'; const f = g[k] || ''; if (!f || used.has(f)) return ''; used.add(f); return f; }); }
 function cmiSheet(name, rows) {
   rows = rows.filter(r => r.some(c => String(c).trim()));
   const hi = Math.max(0, rows.findIndex(r => r.filter(c => String(c).trim()).length >= 2));
@@ -9882,7 +10078,7 @@ async function cmiFromFile(file) {
 }
 function cmiFromWorkbook(wb) { return wb.SheetNames.map(n => cmiSheet(n, window.XLSX.utils.sheet_to_json(wb.Sheets[n], { header: 1, raw: false, dateNF: 'yyyy-mm-dd', defval: '' }).map(r => r.map(c => String(c ?? ''))))).filter(s2 => s2.head.length); }
 const cmiNum = v => { const s2 = String(v == null ? '' : v).replace(/[₹,\s]|rs\.?|inr/gi, ''); if (s2 === '' || s2 === '-') return ''; const n = Number(s2.replace(/[^\d.-]/g, '')); return isFinite(n) && /\d/.test(s2) ? n : ''; };
-const CMI_ST = [[/deliver|complete|fulfil/i, 'Delivered'], [/rto|return.?to.?origin|undeliver/i, 'RTO'], [/refund/i, 'Refunded'], [/return/i, 'Returned'], [/exchang/i, 'Exchange'], [/cancel/i, 'Cancelled'], [/ship|transit|dispatch|out for/i, 'Shipped'], [/process|pending|unshipped|placed|packed/i, 'Processing'], [/confirm/i, 'Confirmed'], [/cod/i, 'COD'], [/paid/i, 'Paid'], [/new/i, 'New']];
+const CMI_ST = [[/rto|return.?to.?origin|undeliver/i, 'RTO'], [/ready.?to.?ship|approved|packed|pending/i, 'Processing'], [/deliver|complete|fulfil/i, 'Delivered'], [/refund/i, 'Refunded'], [/return/i, 'Returned'], [/exchang/i, 'Exchange'], [/cancel/i, 'Cancelled'], [/ship|transit|dispatch|out for/i, 'Shipped'], [/process|pending|unshipped|placed|packed/i, 'Processing'], [/confirm/i, 'Confirmed'], [/cod/i, 'COD'], [/paid/i, 'Paid'], [/new/i, 'New']];
 function cmiRows(sh) {
   const out = [], bad = []; const val = (r, f) => { const i = sh.map.indexOf(f); return i < 0 ? '' : String(r[i] == null ? '' : r[i]).trim(); };
   sh.rows.forEach((r, ri) => {
@@ -9908,6 +10104,11 @@ function cmiRows(sh) {
       out.push(d);
     }
   });
+  if (sh.type === 'orders' && (sh.channel === 'Meesho' || sh.channel === 'Flipkart')) {   // payment files have several rows per sub order (sale, return, fees) → one order, money added up
+    out.forEach(d => ['marketplaceFee', 'shippingFee', 'rtoCharges', 'otherCost'].forEach(f => { if (d[f] !== '' && d[f] != null) d[f] = Math.abs(cmN(d[f])); }));   // reports show fees as minus (deducted)
+    const m = new Map(), keep = []; out.forEach(d => { if (!d.extId) return keep.push(d); const x = m.get(d.extId); if (!x) { m.set(d.extId, d); keep.push(d); return; } ['marketplaceFee', 'shippingFee', 'rtoCharges', 'otherCost'].forEach(f => { if (d[f] !== '' && d[f] != null) x[f] = (cmN(x[f]) || 0) + cmN(d[f]); }); if (d.status && d.status !== 'Delivered') x.status = d.status; ['sku', 'productName', 'customerState'].forEach(f => { if (!x[f] && d[f]) x[f] = d[f]; }); });
+    out.length = 0; out.push(...keep);
+  }
   if (sh.type === 'orders') { const seen = new Map(); out.forEach(d => { if (!d.extId) return; const k = d.channel + '|' + d.extId; seen.set(k, (seen.get(k) || 0) + 1); }); const n = new Map(); out.forEach(d => { if (!d.extId) return; const k = d.channel + '|' + d.extId; if (seen.get(k) > 1) { const i = (n.get(k) || 0) + 1; n.set(k, i); d.extId = (d.extId + '-' + i).slice(0, 80); } }); }   // one row per item: keep each line
   if (sh.type === 'ads') { const m = new Map(); out.forEach(d => { const k = d.day + '|' + d.platform + '|' + d.campaign; const x = m.get(k); if (x) { x.spend += d.spend; ['impressions', 'clicks', 'purchases', 'revenue'].forEach(f => { if (d[f] !== '' && d[f] != null) x[f] = (cmN(x[f]) || 0) + d[f]; }); } else m.set(k, d); }); return { rows: [...m.values()], bad: bad.length }; }
   return { rows: out, bad: bad.length };
@@ -10339,7 +10540,7 @@ function cmPurchases() {
   if (!v25()) return invNeed();
   invPrep(); const canW = invW(), pos = (S.pos || []).slice().sort((a, b) => String(b.createdAt || b.orderDate).localeCompare(String(a.createdAt || a.orderDate)) || (+b.id - +a.id));
   const open = pos.filter(p => ['sent', 'partial'].includes(p.status)), month = todayStr().slice(0, 7), boughtM = cmSum((S.grns || []).filter(g => String(g.at).slice(0, 7) === month), g => cmN(g.value));
-  const pills = `<div class="inv-seg">${[['orders', 'Purchase orders', pos.length], ['suppliers', 'Suppliers', (S.suppliers || []).length], ['grn', 'Goods received', (S.grns || []).length]].map(([k, l, n]) => `<button class="${INV.pt === k ? 'on' : ''}" data-ipt="${k}">${l} <span class="n">${n}</span></button>`).join('')}</div>`;
+  const pills = `<div class="inv-seg inv-ptseg">${[['orders', 'Purchase orders', pos.length], ['suppliers', 'Suppliers', (S.suppliers || []).length], ['grn', 'Goods received', (S.grns || []).length]].map(([k, l, n]) => `<button class="${INV.pt === k ? 'on' : ''}" data-ipt="${k}">${l} <span class="n">${n}</span></button>`).join('')}</div>`;
   const tiles = `<div class="cm-ks">${cmK('Open orders', open.length, inr(cmSum(open, p => cmN(p.total))) + ' ordered')}${cmK('Coming in', cmSum([...invC().inc.values()], x => x), 'units still to arrive')}${cmK('Late', open.filter(invLate).length, 'past the expected date', open.filter(invLate).length ? 'var(--coral)' : '')}${cmK('Received this month', inrShort(boughtM), `${(S.grns || []).filter(g => String(g.at).slice(0, 7) === month).length} deliveries`)}</div>`;
   if (INV.pt === 'suppliers') return tiles + pills + invSuppliers(canW);
   if (INV.pt === 'grn') return tiles + pills + invGrnList();
@@ -10818,7 +11019,7 @@ const FAMS = {
 };
 const FAM_OF = {}; Object.entries(FAMS).forEach(([k, f]) => f.views.forEach(([v]) => { FAM_OF[v] = k; }));
 const FAM_LAST = store.get('nv.famLast') || {};
-const STORE_GRP = { overview: 'overview', amazon: 'overview', website: 'overview', advisor: 'overview', products: 'products', inventory: 'products', reorder: 'products', purchases: 'products', places: 'products', make: 'products' };
+const STORE_GRP = { overview: 'overview', amazon: 'overview', flipkart: 'overview', meesho: 'overview', website: 'overview', advisor: 'overview', products: 'products', inventory: 'products', reorder: 'products', purchases: 'products', places: 'products', make: 'products' };
 const INS = { range: +(store.get('nv.insRange') || 30), grain: 'day' };
 function famAllowed(v) {
   const p = $('#famProbe'); let b = p.querySelector(`[data-go="${v}"]`);
@@ -10826,7 +11027,7 @@ function famAllowed(v) {
   return getComputedStyle(b).display !== 'none';
 }
 function famGo(k) { const f = FAMS[k], ok = f.views.map(x => x[0]).filter(famAllowed), last = FAM_LAST[k]; go(ok.includes(last) ? last : ok[0] || f.views[0][0]); }
-function famSync() { $$('[data-gofam]').forEach(b => { b.hidden = !FAMS[b.dataset.gofam].views.some(([v]) => famAllowed(v)); }); }
+function famSync() { $$('[data-gofam]').forEach(b => { b.hidden = !FAMS[b.dataset.gofam].views.some(([v]) => famAllowed(v)); }); if (typeof navVisReset === 'function') navVisReset(); }
 function famInit() {
   Object.entries(FAMS).forEach(([k, f]) => f.views.forEach(([v]) => {
     const el = $('#v-' + v); if (!el || el.querySelector(':scope > .fam-strip')) return;
@@ -11548,10 +11749,16 @@ async function connLoad(force) {
   catch (e) { CONN.list = {}; CONN.err = e.message; }
   CONN.loading = false;
 }
+function connMeeshoBody(n) {
+  return `<p class="help" style="margin-top:0">Meesho does not give sellers their own API keys yet, so orders come in from the <b>Supplier Panel</b> reports. Nodevers finds the columns by itself (Sub Order No, SKU, status, price, commission, shipping) and never adds the same order twice — import the newest report whenever you like.</p>
+    <ol class="cf-steps"><li>Supplier Panel → <b>Orders</b> → <b>Download</b> (or <b>Payments</b> → <b>Download payment file</b> for commission and shipping).</li><li>Press <b>Import report</b> below and pick the file.</li><li>Check the columns, press <b>Import</b>. Stock goes down for new orders, returns and RTO put it back.</li></ol>
+    <div class="cf-soon"><b>Meesho API</b><small class="muted">When Meesho turns on API access for your account (ask Meesho Supplier Support for “API access for my order data”), it will connect here and sync every 15 minutes — no change on your side.</small><button class="btn sm" disabled>Connect with API · soon</button></div>
+    <div class="cf-foot"><span class="cf-safe">${n ? n + ' Meesho orders in your Store.' : 'No Meesho orders yet.'}</span><div class="grow"></div><button class="btn sm" data-go="commerce/meesho">Open Meesho page</button><button class="btn sm primary" data-cmimport="orders" data-cmch="Meesho">⇪ Import report</button></div>`;
+}
 function connStatus(c) {
   if (!c || !c.connected) return ['off', 'Not connected'];
   if (c.last_status === 'error') return ['bad', `Sync failed · ${esc(c.last_error || 'check the key')}`];
-  return ['ok', `Connected · ${esc(c.config && (c.config.marketplace_name || (c.config.ad_account ? 'act_' + c.config.ad_account : '') || c.config.store_url || c.config.site_url || c.config.orders_url || '').replace(/^https?:\/\//, '').slice(0, 40))}${c.last_sync_at ? ` · synced ${ago(c.last_sync_at)}${c.last_count != null ? ` (${c.last_count} updates)` : ''}` : ''}`];
+  return ['ok', `Connected · ${esc(c.config && (c.config.marketplace_name || (c.config.ad_account ? 'act_' + c.config.ad_account : '') || (c.config.app_hint ? 'app ' + c.config.app_hint : '') || c.config.store_url || c.config.site_url || c.config.orders_url || '').replace(/^https?:\/\//, '').slice(0, 40))}${c.last_sync_at ? ` · synced ${ago(c.last_sync_at)}${c.last_count != null ? ` (${c.last_count} updates)` : ''}` : ''}`];
 }
 const connField = (id, label, val, opt = {}) => `<div class="field ${opt.full ? 'full' : ''}"><label>${label}</label><div class="cf-in">${opt.ic || ''}<input class="input" id="${id}" ${opt.type ? `type="${opt.type}"` : ''} value="${esc(val || '')}" placeholder="${esc(opt.ph || '')}" autocomplete="off" data-lpignore="true" data-1p-ignore spellcheck="false">${opt.type === 'password' ? `<button type="button" class="cf-eye" data-cfeye="${id}" title="Show / hide">👁</button>` : ''}</div>${opt.help ? `<small class="muted">${opt.help}</small>` : ''}</div>`;
 const cfSyncSel = (id, v) => `<div class="field"><label>Sync every</label><select class="input" id="${id}">${SYNC_OPTS.map(([m, l]) => `<option value="${m}" ${+v === m ? 'selected' : ''}>${l}</option>`).join('')}</select></div>`;
@@ -11688,6 +11895,18 @@ function connStoreBodyA(k, c) {
       <li>Press <b>Authorize</b> (arrow next to Edit App) → copy the <b>Refresh token</b> (starts with Atzr|).</li>
       <li>Paste the three here, pick your marketplace → <b>Test connection</b> → <b>Connect</b>.</li></ol>
       <p class="help">Amazon hides buyer names and full addresses unless your app is approved for personal data — state and city usually still come through. Amazon fees: import the payment report from Seller Central (Reports → Payments) in Store → Import, it fills the fee of each order.</p></details>${foot}`;
+  if (k === 'flipkart') return `<p class="help" style="margin-top:0">New orders, status changes (packed, shipped, delivered, cancelled), customer returns and RTO from Flipkart — every 15 minutes. Each order item is one order in Nodevers; selling takes units out of your stock and returns put them back.</p>
+    ${cloud && AUTH.v26 === false ? '<p class="cf-warn">Run the database update <code>26_flipkart_meesho.sql</code> in Supabase first.</p>' : ''}
+    <div class="form cf-grid">${connField('cfFkId', 'Application ID', '', { type: 'password', ph: on ? '•••••••• saved — paste only to change' : 'From Seller Hub → Developer access' })}${connField('cfFkSec', 'Application secret', '', { type: 'password', ph: on ? '•••••••• saved' : 'Shown once when you create the app' })}
+      ${connField('cfFkFee', 'Flipkart fees <span class="muted">(% of order value, estimate)</span>', cf.fee_pct || '', { ph: 'e.g. 18' })}${cfSyncSel('cfFkSync', cf.sync_minutes ?? 15)}
+      <div class="field"><label>Send my stock to Flipkart</label><select class="input" id="cfFkPush"><option value="0" ${cf.push_stock ? '' : 'selected'}>Off — I update stock in Seller Hub</option><option value="1" ${cf.push_stock ? 'selected' : ''}>On — keep listings in step with Nodevers</option></select></div>
+      ${connField('cfFkBuf', 'Keep back <span class="muted">(units not shown on Flipkart)</span>', cf.stock_buffer || '', { ph: '0' })}</div>
+    <details class="cf-how"><summary>Where do I get these? (5 minutes)</summary><ol>
+      <li>Open <b>Seller Hub</b> → your name at the top right → <b>Manage profile</b> → <b>Developer access</b>.</li>
+      <li><b>Create new access</b> → choose <b>Self access application</b> → name it “Nodevers” → Create.</li>
+      <li>Copy the <b>Application ID</b> and the <b>Application secret</b> (the secret is shown only once — create a new one if you lost it).</li>
+      <li>Paste both here → <b>Test connection</b> → <b>Connect</b>. The last 30 days come in at once.</li></ol>
+      <p class="help">Flipkart fees: the API does not send the commission of each order, so Nodevers uses your % above until you import the Seller Hub <b>settlement / payments report</b> in Store → Import, which fills the real fee of every order. Stock sync sends your Nodevers stock to the first location of each listing whose SKU matches.</p></details>${foot}`;
   if (k === 'meta_ads') return `<p class="help" style="margin-top:0">Daily spend, impressions, clicks, leads and purchases of every campaign. They are saved as your ad spend, so <b>Store → Overview</b> net profit, ROAS and the <b>Ads Manager</b> use your real numbers.</p>
     <div class="form cf-grid">${connField('cfMetaAct', 'Ad account ID', cf.ad_account, { ph: '1234567890' })}${connField('cfMetaTok', 'Access token (ads_read)', '', { type: 'password', ph: on ? '•••••••• saved — paste only to change' : 'EAAB…' })}${cfSyncSel('cfMetaSync', cf.sync_minutes ?? 360)}</div>
     <details class="cf-how"><summary>Where do I get these?</summary><ol>
@@ -11794,6 +12013,7 @@ function renderConnections(anim) {
   if (!BC.email && !CONN.emTry) { CONN.emTry = true; BC.email = demo ? { connected: true, demo: true, from_email: 'hello@yourbusiness.com' } : !cloud ? { connected: false } : null; if (cloud && !BC.email) sbq(AUTH.client.rpc('email_status', { p_ws: AUTH.ws })).then(r => { BC.email = r || { connected: false }; if (activeView() === 'connections') renderConnections(); }, () => { BC.email = { connected: false }; }); }
   if (cloud && canAdmin() && CAPTURE.ws !== AUTH.ws && !CAPTURE.loading) captureLoad().then(() => { if (activeView() === 'connections') renderConnections(); });
   if (!CONN.list) return;
+  if (cloud && AUTH.v26 === undefined) { AUTH.v26 = null; sbq(AUTH.client.rpc('v26_ready')).then(() => { AUTH.v26 = true; }, () => { AUTH.v26 = false; if (activeView() === 'connections') renderConnections(); }); }
   const wc = welcomeCfg(), wcOn = wc.wa.on || wc.reply.on || wc.email.on;
   const L = CONN.list || {}, wa = WA.status || {}, em = BC.email || {}, al = alertsCfg(), alOn = al.emails.length || al.phones.length, open = CONN.open, n8 = N8L.st;
   const GI = { msg: ['#22C55E', '<svg class="i" viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"/></svg>'], leads: ['#8B5CF6', '<svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/></svg>'], store: ['#F43F5E', '<svg class="i" viewBox="0 0 24 24"><path d="M4 9h16l-1-5H5L4 9Zm0 0v11h16V9M9 20v-6h6v6"/></svg>'], other: ['#F97316', '<svg class="i" viewBox="0 0 24 24"><path d="m12 3 9 5-9 5-9-5 9-5Z"/><path d="m3 13 9 5 9-5"/></svg>'] };
@@ -11827,9 +12047,9 @@ function renderConnections(anim) {
     ci('woocommerce', { title: 'WooCommerce (WordPress)', icon: CONN_IC.woo, color: '#A78BFA', open: open === 'woocommerce', keywords: 'wordpress woo website orders sync', dot: wd, status: wsx, body: connStoreBody('woocommerce', L.woocommerce) }),
     ci('custom', { title: 'Custom website (API)', icon: CONN_IC.code, color: '#64748B', open: open === 'custom', keywords: 'api custom website wix webflow magento opencart json developer', dot: cd, status: cs, body: connStoreBody('custom', L.custom) }),
     ci('amazon', { title: 'Amazon Seller Central', icon: CONN_IC.amazon, color: '#F59E0B', open: open === 'amazon', keywords: 'amazon seller central sp-api fba orders marketplace', dot: ad, status: L.amazon && L.amazon.connected ? as : 'Not connected — orders, status and FBA stock (SP-API)', body: connStoreBody('amazon', L.amazon) }),
-    soon('flipkart', 'Flipkart Seller Hub', CONN_IC.flipkart, '#3B82F6', 'Orders, commission, returns and payouts from Flipkart.'),
-    soon('meesho', 'Meesho Supplier', CONN_IC.meesho, '#EC4899', 'Orders, returns and payouts from Meesho.'),
-  ], 3)}
+    (() => { const [fd, fs] = connStatus(L.flipkart); return ci('flipkart', { title: 'Flipkart Seller Hub', icon: CONN_IC.flipkart, color: '#2F5BEA', open: open === 'flipkart', keywords: 'flipkart seller hub marketplace orders returns api ekart', dot: fd, status: L.flipkart && L.flipkart.connected ? fs : 'Not connected — orders, shipments and returns (Seller API)', body: connStoreBody('flipkart', L.flipkart) }); })(),
+    (() => { const n = (S.orders || []).filter(x => x.channel === 'Meesho').length; return ci('meesho', { title: 'Meesho Supplier Panel', icon: CONN_IC.meesho, color: '#D6338A', open: open === 'meesho', keywords: 'meesho supplier panel marketplace orders payments report import', dot: n ? 'ok' : 'off', pill: n ? n + ' orders' : 'Import report', cta: 'Import', status: n ? 'Imported from the Supplier Panel report' : 'Orders and payments from the Supplier Panel report', desc: 'Orders and payments report — columns found for you, repeats skipped.', body: connMeeshoBody(n) }); })(),
+  ], 6)}
   ${grp('other', 'Other integrations', 'Imports, alerts, automation and ad spend.', [
     ci('sheet', { title: 'Products & orders import', icon: CONN_IC.sheet, color: '#16A34A', open: open === 'sheet', keywords: 'excel csv google sheet import upload', dot: (S.products || []).length ? 'ok' : 'off', pill: (S.products || []).length ? 'Imported' : 'Not used', cta: 'Import', status: (S.products || []).length ? `${(S.products || []).length} products · ${(S.orders || []).filter(o => /^Import/.test(o.source || '')).length} imported orders` : 'Any sheet — products, orders, ad spend',
       body: `<p class="help" style="margin-top:0">Upload an Excel file (all tabs) or paste a Google Sheet link. Re-importing updates rows instead of duplicating.</p><div class="cf-foot"><div class="grow"></div><button class="btn sm primary" data-cmimport>⇪ Import Excel / Google Sheet</button></div>` }),
@@ -11848,6 +12068,7 @@ function connRead(k) {
   if (k === 'shopify') { const sec = { client_id: v('cfShopCid').trim(), client_secret: v('cfShopCsec').trim(), token: v('cfShopTok').trim() }; return { config: { store_url: v('cfShopUrl').trim().replace(/^https?:\/\//, '').replace(/\/.*$/, ''), sync_minutes: +v('cfShopSync') }, secret: Object.values(sec).some(Boolean) ? Object.fromEntries(Object.entries(sec).filter(([, x]) => x)) : null }; }
   if (k === 'amazon') { const sec = { client_id: v('cfAmzCid').trim(), client_secret: v('cfAmzSec').trim(), refresh_token: v('cfAmzRt').trim() }; return { config: { marketplace: v('cfAmzMkt'), seller_id: v('cfAmzSeller').trim(), fba: v('cfAmzFba') !== '0', sync_minutes: +v('cfAmzSync') }, secret: Object.values(sec).some(Boolean) ? Object.fromEntries(Object.entries(sec).filter(([, x]) => x)) : null }; }
   if (k === 'meta_ads') return { config: { ad_account: v('cfMetaAct').trim().replace(/^act_/i, ''), sync_minutes: +v('cfMetaSync') }, secret: v('cfMetaTok').trim() ? { token: v('cfMetaTok').trim() } : null };
+  if (k === 'flipkart') { const sec = { app_id: v('cfFkId').trim(), app_secret: v('cfFkSec').trim() }; return { config: { fee_pct: Math.max(0, Math.min(60, +v('cfFkFee') || 0)), push_stock: v('cfFkPush') === '1', stock_buffer: Math.max(0, Math.round(+v('cfFkBuf') || 0)), sync_minutes: +v('cfFkSync') }, secret: Object.values(sec).some(Boolean) ? Object.fromEntries(Object.entries(sec).filter(([, x]) => x)) : null }; }
   if (k === 'woocommerce') return { config: { site_url: v('cfWooUrl').trim().replace(/\/+$/, ''), sync_minutes: +v('cfWooSync') }, secret: v('cfWooKey').trim() || v('cfWooSec').trim() ? { key: v('cfWooKey').trim(), secret: v('cfWooSec').trim() } : null };
   const cur = ((CONN.list || {}).custom || {}).config || {}, map = Object.assign({}, cur.map || {}, CONN.draft.map || {}), pmap = Object.assign({}, cur.pmap || {}, CONN.draft.pmap || {});
   return { config: { orders_url: v('cfCusUrl').trim(), products_url: v('cfCusPUrl').trim(), auth: v('cfCusAuth') || 'bearer', auth_name: v('cfCusName').trim(), sync_minutes: +v('cfCusSync'), map, pmap, keys: CONN.draft.customKeys || cur.keys || [], pkeys: CONN.draft.customPKeys || cur.pkeys || [], list_path: CONN.draft.listPath ?? cur.list_path ?? '', plist_path: CONN.draft.plistPath ?? cur.plist_path ?? '' }, secret: v('cfCusKey').trim() ? { key: v('cfCusKey').trim() } : null };
@@ -11933,7 +12154,7 @@ function settingsAccordion() {
     item.querySelector('.acc-pad').insertAdjacentHTML('afterbegin', `<div class="set-pt"><b>${esc(t)}</b><small>${esc(sub)}</small></div>`);
     if (k !== 'plan' && k !== 'help') { const st = $('#stab-' + k); if (!st) return; item.querySelector('.acc-pad').appendChild(st); st.hidden = false; st.classList.add('stab-in'); }
     list.appendChild(item); });
-  const extra = document.createElement('div'); extra.innerHTML = accItem('s-more', { title: 'Connections, modules & setup', icon: CONN_IC.n8n, color: '#F59E0B', dot: 'off', status: 'WhatsApp, email, stores, alerts, Industry Kits', body: `<div class="cf-foot" style="margin:0"><button class="btn sm" data-setgo="industry">Industry Kits</button><button class="btn sm" data-setgo="modules">Modules</button><div class="grow"></div><button class="btn sm primary" data-setgo="connections">Open Connections</button></div>` });
+  const extra = document.createElement('div'); extra.innerHTML = accItem('s-more', { title: 'Connections, modules & setup', icon: CONN_IC.n8n, color: '#F59E0B', dot: 'off', status: 'WhatsApp, email, stores, alerts, Industry Kits', body: `<div id="modPage"></div><div class="cf-foot"><span class="cf-safe">Ready-made pipelines and templates for your industry, and every connection, have their own pages.</span><div class="grow"></div><button class="btn sm" data-setgo="industry">Industry Kits</button><button class="btn sm" data-setgo="connections">All connections</button></div>` });
   list.appendChild(extra.firstElementChild);
   if (seg) seg.replaceWith(list); else box.appendChild(list);
   box.classList.remove('narrow'); box.classList.add('set-acc');
@@ -12035,6 +12256,7 @@ function featSync() {
     if (on && !b.querySelector(':scope > .locked-i')) b.insertAdjacentHTML('beforeend', `<span class="locked-i" title="Not in your plan">${LOCK_IC}</span>`);
     b.classList.toggle('locked', on);
   });
+  if (typeof navVisReset === 'function') navVisReset();
 }
 function featApply() {
   featSync(); const v = activeView();
@@ -12053,21 +12275,21 @@ function lockedHTML(v, c, as) {
     <div class="lk-safe">${uiH('lockSafe', vars, c)}</div></div>`;
 }
 function renderLocked(v) { UIB.list = []; $('#lockedBody').innerHTML = lockedHTML(v); }
-function openModules() {
-  const m = modulesCfg(), can = demo || (cloud && canAdmin());
-  $('#stageBox').innerHTML = `<div class="m-head"><h2>Modules</h2><button class="ibtn" data-close>${I.x}</button></div>
+function openModules(host) {
+  const m = modulesCfg(), can = demo || (cloud && canAdmin()), inPage = !!host;
+  (host || $('#stageBox')).innerHTML = `${inPage ? '' : `<div class="m-head"><h2>Modules</h2><button class="ibtn" data-close>${I.x}</button></div>`}
     <p class="help" style="margin-top:0">Pick what kind of business this is — ${esc(brand().brandName)} shows only the sections your team needs. You can switch any section back on later. Nothing is deleted. Always on: ${CORE_SECTIONS}.</p>
     <div class="mod-types">${BIZ_TYPES.map(([k, n, d]) => `<button type="button" class="mod-type ${m.type === k ? 'on' : ''}" data-modtype="${k}" ${can ? '' : 'disabled'}><b>${n}</b><small>${d}</small></button>`).join('')}</div>
     <div class="mod-list">${FEATURES.map(([k, n, d]) => featOff(k) ? `<div class="mod-row is-lock"><div><b>${n}</b><small class="muted">${d}</small></div><span class="mod-lk">${esc(uiT('lockMod'))}</span></div>`
       : `<label class="mod-row"><div><b>${n}</b><small class="muted">${d}</small></div><span class="sw"><input type="checkbox" data-mod="${k}" ${m[k] !== false ? 'checked' : ''} ${can ? '' : 'disabled'}><i></i></span></label>`).join('')}</div>
-    <div class="m-foot"><div class="grow"></div><button class="btn" data-close>${can ? 'Cancel' : 'Close'}</button>${can ? '<button class="btn primary" id="modSave">Save</button>' : ''}</div>`;
-  const box = $('#stageBox');
+    <div class="m-foot"><div class="grow"></div>${inPage ? '' : `<button class="btn" data-close>${can ? 'Cancel' : 'Close'}</button>`}${can ? '<button class="btn primary" id="modSave">Save</button>' : ''}</div>`;
+  const box = host || $('#stageBox');
   box.querySelectorAll('[data-modtype]').forEach(b => b.onclick = () => { const p = BIZ_TYPES.find(x => x[0] === b.dataset.modtype)[3]; box.querySelectorAll('[data-modtype]').forEach(x => x.classList.toggle('on', x === b)); box.querySelectorAll('[data-mod]').forEach(i => { i.checked = p[i.dataset.mod] !== false; }); });
-  if (can) $('#modSave').onclick = async () => {
+  if (can) box.querySelector('#modSave').onclick = async () => {
     const t = box.querySelector('.mod-type.on'), c = Object.assign({}, m, { type: t ? t.dataset.modtype : m.type }); box.querySelectorAll('[data-mod]').forEach(i => { c[i.dataset.mod] = i.checked; });
     try { if (demo) { store.set('nv.demoModules', JSON.stringify(c)); S.settings = Object.assign({}, S.settings, { modulesJson: JSON.stringify(c) }); } else S.settings = Object.assign({}, S.settings, await api('saveSettings', { modulesJson: JSON.stringify(c) }));
-      applyModules(); hideModal('#stageModal'); toast('✓ Modules saved'); const v = activeView(); if ((VIEW_FEATS[v] || []).some(k => c[k] === false)) go('home'); else (VIEW_RENDER[v] || (() => { }))(true); } catch (e) { toast(e.message, true); } };
-  showModal('#stageModal');
+      applyModules(); if (!inPage) hideModal('#stageModal'); toast('✓ Modules saved'); if (inPage) return openModules(host); const v = activeView(); if ((VIEW_FEATS[v] || []).some(k => c[k] === false)) go('home'); else (VIEW_RENDER[v] || (() => { }))(true); } catch (e) { toast(e.message, true); } };
+  if (!inPage) showModal('#stageModal');
 }
 
 /* ================= Ctrl + K: search anything ================= */
@@ -12077,6 +12299,7 @@ const PAL_ACTS = [['Add lead', 'new lead contact', () => openLeadModal(null, '')
 function cmdkItems(q) {
   q = q.trim().toLowerCase(); const hit = s => !q || s.toLowerCase().includes(q), out = [];
   PAL_PAGES.forEach(([v, n, kw]) => { const [view] = v.split(':'); if (!document.getElementById('v-' + view) || !famAllowedPal(view)) return; if (hit(n + ' ' + kw)) out.push({ g: 'Pages', t: n, run: () => { const [vv, tab] = v.split(':'); if (tab) { CM.tab = tab; store.set('nv.cmTab', tab); } go(vv); } }); });
+  { const seen = new Set(out.map(x => x.t.toLowerCase())); NAV_ORDER.forEach(sp => navLeaves(sp).forEach(x => { if (!navOk(x)) return; const t = (x.p ? x.p.l + ' › ' : sp === 'work' ? '' : NAV[sp].name + ' › ') + x.l.replace(/^✦ /, ''); if (seen.has(t.toLowerCase()) || seen.has(x.l.toLowerCase())) return; if (hit(t + ' ' + (x.kw || '') + ' ' + x.r.replace(/[/-]/g, ' '))) { seen.add(t.toLowerCase()); out.push({ g: 'Pages', t, run: () => go(x.r) }); } })); }
   PAL_ACTS.forEach(([n, kw, f]) => { if (hit(n + ' ' + kw)) out.push({ g: 'Actions', t: n, run: f }); });
   if (q.length >= 2) {
     S.leads.filter(l => [l.name, l.phone, l.email, l.businessName, l.city].some(x => String(x || '').toLowerCase().includes(q))).slice(0, 6).forEach(l => out.push({ g: 'Leads', t: l.name, s: [l.businessName, l.phone ? '+' + l.phone : '', l.stage].filter(Boolean).join(' · '), run: () => openPanel(l.leadId) }));
@@ -12142,7 +12365,7 @@ function mobileBar() {
   const ic = (p) => `<svg class="i" viewBox="0 0 24 24">${p}</svg>`, items = [['home', 'Home', ic('<path d="m3 11 9-8 9 8"/><path d="M5 10v10h14V10"/>')], ['whatsapp', 'Inbox', ic('<path d="M3.5 20.5 5 16a8.5 8.5 0 1 1 3.2 3.2Z"/>')], ['leads', 'Leads', ic('<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4.5a3.5 3.5 0 0 1 0 7"/>')], ['commerce', 'Store', ic('<path d="M4 9h16l-1.2-4.2A1 1 0 0 0 17.8 4H6.2a1 1 0 0 0-1 .8Z"/><path d="M5 9v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9"/>')], ['more', 'More', ic('<circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/>')]];
   const nav = document.createElement('nav'); nav.id = 'mbar'; nav.className = 'mbar glass'; nav.setAttribute('aria-label', 'Main');
   nav.innerHTML = items.map(([k, n, svg]) => `<button type="button" data-mb="${k}">${svg}<span>${n}</span></button>`).join(''); document.body.appendChild(nav);
-  nav.addEventListener('click', e => { const b = e.target.closest('[data-mb]'); if (!b) return; const k = b.dataset.mb; if (k === 'more') return moreSheet(); if (k === 'leads') return famGo('leads'); if (k === 'commerce') { CM.tab = 'overview'; } go(k); });
+  nav.addEventListener('click', e => { const b = e.target.closest('[data-mb]'); if (!b) return; const k = b.dataset.mb; if (k === 'more') return document.body.classList.add('nav-open'); if (k === 'leads') return famGo('leads'); if (k === 'commerce') { CM.tab = 'overview'; } go(k); });
 }
 function moreSheet() {
   let s = $('#moreSheet'); if (!s) { s = document.createElement('div'); s.id = 'moreSheet'; s.className = 'more-sheet'; document.body.appendChild(s); s.addEventListener('click', e => { if (e.target === s || e.target.closest('[data-go],[data-gofam],[data-cm],#sideSettings2')) s.classList.remove('show'); if (e.target.closest('#sideSettings2')) openSettings(); }); }
@@ -12153,7 +12376,7 @@ function moreSheet() {
 /* ================= platform admin console ================= */
 /* ================= platform owner: Admin Console v2 (clients, plans, payments, team, brand, audit) ================= */
 const ADM2 = { tab: store.get('nv.admTab') || 'clients', rows: null, at: 0, q: '', f: '', plans: null, pays: null, team: null, audit: null, err: '' };
-const ADM_TABS = [['clients', 'Clients', ['super', 'admin', 'support', 'finance']], ['plans', 'Plans & pricing', ['super', 'admin', 'finance']], ['payments', 'Payments', ['super', 'admin', 'finance']], ['home', 'Home page', ['super', 'admin']], ['team', 'Platform team', ['super', 'admin']], ['texts', 'Messages & buttons', ['super', 'admin']], ['brand', 'Settings', ['super', 'admin']], ['audit', 'Audit log', ['super', 'admin']]];
+const ADM_TABS = [['overview', 'Overview', ['super', 'admin']], ['clients', 'Clients', ['super', 'admin', 'support', 'finance']], ['plans', 'Plans & pricing', ['super', 'admin', 'finance']], ['payments', 'Payments', ['super', 'admin', 'finance']], ['home', 'Home page', ['super', 'admin']], ['team', 'Platform team', ['super', 'admin']], ['texts', 'Messages & buttons', ['super', 'admin']], ['brand', 'Settings', ['super', 'admin']], ['audit', 'Audit log', ['super', 'admin']]];
 const PLAT_ROLES = [['super', 'Super admin', 'Everything, including the platform team'], ['admin', 'Admin', 'Clients, plans, payments, brand'], ['support', 'Support', 'See clients and open their data (read-only)'], ['finance', 'Finance', 'Subscriptions and payments']];
 const SUB_ST = { trial: ['Trial', 'wait'], active: ['Active', 'ok'], past_due: ['Payment due', 'wait'], suspended: ['Suspended', 'bad'], cancelled: ['Cancelled', 'bad'], free: ['Free', ''] };
 const admCan = (...roles) => cloud && roles.includes(AUTH.platRole);
@@ -12162,9 +12385,9 @@ const monthly = r => !r.price || ['free', 'suspended', 'cancelled', 'trial'].inc
 async function admLoad(force) {
   const rpc = (n, a) => sbq(AUTH.client.rpc(n, a || {}));
   try {
-    if ((ADM2.tab === 'clients' || ADM2.tab === 'plans') && (force || !ADM2.rows || Date.now() - ADM2.at > 120000)) { ADM2.rows = await rpc('admin_overview2'); ADM2.at = Date.now(); }
+    if ((ADM2.tab === 'clients' || ADM2.tab === 'plans' || ADM2.tab === 'overview') && (force || !ADM2.rows || Date.now() - ADM2.at > 120000)) { ADM2.rows = await rpc('admin_overview2'); ADM2.at = Date.now(); try { navBadgeCalc(); } catch (e) { } }
     if (force || !ADM2.plans) { ADM2.plans = await sbq(AUTH.client.from('plans').select('*').order('sort')); PLAT.plans = ADM2.plans; }
-    if (ADM2.tab === 'payments' && (force || !ADM2.pays)) ADM2.pays = await rpc('admin_payments');
+    if ((ADM2.tab === 'payments' || ADM2.tab === 'overview') && (force || !ADM2.pays)) ADM2.pays = await rpc('admin_payments');
     if (ADM2.tab === 'team' && (force || !ADM2.team)) ADM2.team = await rpc('admin_team');
     if (ADM2.tab === 'brand' && (force || !ADM2.ai)) { try { ADM2.ai = await rpc('admin_ai_status'); ADM2.aiErr = ''; } catch (e) { ADM2.ai = []; ADM2.aiErr = /admin_ai_status|function|does not exist/i.test(e.message) ? 'Run the database update 14_ai_providers.sql first.' : e.message; } }
     if (ADM2.tab === 'audit') ADM2.audit = await rpc('admin_audit', { p_limit: 300 });
@@ -12179,9 +12402,27 @@ async function renderAdmin(anim) {
   box.innerHTML = '<div class="rcard glass"><div class="loader"><div class="spin"></div>Loading…</div></div>';
   await admLoad();
   if (ADM2.err) { box.innerHTML = `<div class="tp-empty glass"><b>Could not load</b><p class="muted">${esc(ADM2.err)}</p></div>`; return; }
-  box.innerHTML = ({ clients: admClients, plans: admPlans, payments: admPayments, home: admHome, team: admTeam, texts: admTexts, brand: admBrand, audit: admAudit }[ADM2.tab] || admClients)();
+  if (ADM2.tab === 'brand') store.set('nv.admAcc2', '');   // settings open as their own page, not as a pop-up
+  box.innerHTML = ({ overview: admOverview, clients: admClients, plans: admPlans, payments: admPayments, home: admHome, team: admTeam, texts: admTexts, brand: admBrand, audit: admAudit }[ADM2.tab] || admClients)();
+  if (ADM2.tab === 'brand') { const L = box.querySelector('.acc-list'); if (L) { const pm = ADM2.pm || 'b-brand'; L.classList.add('pm'); L.querySelectorAll(':scope > .acc').forEach(a => { a.classList.remove('open'); a.classList.toggle('pm-on', a.dataset.acc === pm); }); const on = L.querySelector('.acc.pm-on'); L.classList.toggle('pm-nofoot', !(on && on.dataset.accsave)); } }
   if (ADM2.tab === 'texts') utPrev();
   stagger(box, anim);
+}
+/** Admin → Overview: money, new sign-ups, trials ending, payments due — with the next action for each */
+function admOverview() {
+  const R = ADM2.rows || [], P = ADM2.pays || [], now = Date.now(), d30 = 30 * 864e5;
+  const mrr = R.reduce((a, r) => a + monthly(r), 0), fresh = R.filter(r => r.created_at && now - new Date(r.created_at).getTime() < d30);
+  const trials = R.filter(r => r.status === 'trial' && r.state === 'ok' && dLeft(r.ends_at) !== null && dLeft(r.ends_at) <= 7).sort((a, b) => dLeft(a.ends_at) - dLeft(b.ends_at));
+  const due = R.filter(r => r.status === 'past_due' || (r.state === 'locked' && !['suspended', 'cancelled', 'free'].includes(r.status)) || (r.status === 'active' && r.state === 'ok' && dLeft(r.ends_at) !== null && dLeft(r.ends_at) <= 7)).sort((a, b) => (dLeft(a.ends_at) || 0) - (dLeft(b.ends_at) || 0));
+  const got = P.filter(p => now - new Date(p.paid_at).getTime() < d30).reduce((a, p) => a + (+p.amount || 0), 0), can = admCan('super', 'admin', 'finance');
+  const k = (v, l, sub, col, go) => `<button type="button" class="ao-k glass" ${go ? `data-nvgo="${go}"` : ''}><small>${l}</small><b style="${col ? 'color:' + col : ''}">${v}</b><em>${sub}</em></button>`;
+  const left = r => { const d = dLeft(r.ends_at); return d === null ? '' : d < 0 ? `ended ${Math.abs(d)} d ago` : d === 0 ? 'ends today' : `${d} day${d === 1 ? '' : 's'} left`; };
+  const row = (r, extra) => `<div class="ao-r">${avatar(r.name, 'sm')}<div class="grow"><b>${esc(r.name)}</b><small>${esc([r.plan_name || (SUB_ST[r.status] || [r.status])[0], extra(r)].filter(Boolean).join(' · '))}</small></div>${can ? `<button class="btn sm" data-admsub="${esc(r.workspace_id)}">Manage</button>` : ''}${r.workspace_id === AUTH.ws ? '' : `<button class="btn sm" data-admopen="${esc(r.workspace_id)}">View</button>`}</div>`;
+  const list = (title, sub, L, extra, empty, go) => `<div class="rcard glass ao-l"><div class="ao-h"><div><h3>${title}</h3><small class="muted">${sub}</small></div>${go ? `<button class="btn sm" data-nvgo="${go}">See all</button>` : ''}</div>${L.slice(0, 6).map(r => row(r, extra)).join('') || `<p class="muted" style="margin:6px 0 0">${empty}</p>`}</div>`;
+  return `<div class="ao-ks">${k(inr(mrr), 'Monthly revenue (MRR)', `${inr(got)} received in the last 30 days`, 'var(--green)', 'admin/payments')}${k(fresh.length, 'New sign-ups', 'last 30 days · ' + R.length + ' clients in total', '', 'admin/clients')}${k(trials.length, 'Trials ending in 7 days', trials.length ? 'Talk to them before the trial ends' : 'Nothing ending this week', trials.length ? '#D97706' : '', 'admin/clients')}${k(due.length, 'Payments due', due.length ? 'Expired, unpaid or ending in 7 days' : 'Everyone is paid up', due.length ? 'var(--coral)' : '', 'admin/clients')}</div>
+    <div class="ao-g">${list('Payments due', 'Renew or record a payment', due, left, 'Everyone is paid up.', 'admin/payments')}${list('Trials ending soon', 'Help them pick a plan', trials, left, 'No trial ends in the next 7 days.', 'admin/clients')}
+    ${list('Newest sign-ups', 'Last 30 days', fresh.slice().sort((a, b) => String(b.created_at).localeCompare(String(a.created_at))), r => 'joined ' + fmtDate(String(r.created_at).slice(0, 10)), 'No new businesses in the last 30 days.', 'admin/clients')}
+    <div class="rcard glass ao-l"><div class="ao-h"><div><h3>Latest payments</h3><small class="muted">Recorded by your team</small></div><button class="btn sm" data-nvgo="admin/payments">See all</button></div>${P.slice(0, 6).map(x => `<div class="ao-r"><span class="avatar sm" style="background:var(--green-soft);color:var(--green)">₹</span><div class="grow"><b>${esc(x.workspace_name || '')}</b><small>${esc(fmtDate(String(x.paid_at).slice(0, 10)))}${x.method ? ' · ' + esc(x.method) : ''}${x.months ? ' · ' + x.months + ' mo' : ''}</small></div><b style="font-variant-numeric:tabular-nums">${inr(x.amount)}</b></div>`).join('') || '<p class="muted" style="margin:6px 0 0">No payments yet.</p>'}</div></div>`;
 }
 function admClients() {
   const all = ADM2.rows || [], q = ADM2.q.toLowerCase(), f = ADM2.f;
@@ -13029,7 +13270,10 @@ const HELP_GUIDE = [
   ['connect', 'Connect WhatsApp', 'connect whatsapp number meta business token phone number id waba webhook setup app secret verify token callback url connect with facebook', 'Owner/Admin: **Inbox → Connect WhatsApp**. If **Connect with Facebook** is shown, press it, log in and pick your number — nothing to copy. Otherwise use your own Meta app: paste the **Phone number ID**, **WhatsApp Business Account ID**, a **permanent system-user token** and the **App secret** (Meta app → App settings → Basic). Then copy the **Callback URL** and **your own Verify token** from the Webhook box into Meta app → WhatsApp → Configuration → Webhook → **Verify and save**, and subscribe to **messages**. Paste keys only into that form (never into chat). Full steps: Guide → “Connect your WhatsApp number”.'],
   ['templates', 'WhatsApp templates', 'template templates create approve meta pending rejected sync draft submit', '**Templates**: **⟳ Sync from WhatsApp** brings your approved templates. **New template**: name (lowercase_with_underscores), category (Marketing / Utility), language, use case, header, body with {{1}} variables, footer, buttons → **Submit to Meta for approval** (minutes to 24 h). Drafts show **Edit & submit to Meta**. **Library** sets use case, best segment, tags and notes so your team picks the right one.'],
   ['builder', 'Template builder: content, buttons, actions, flows', 'builder button buttons action flow next template image video pdf catalog payment order cart call website map multi step', 'In **Templates → + New template** pick a ready-made template or start blank. Choose a **Message type** (Text, Image, Video, PDF, Location, Payment link; Catalog / Product card need a Meta catalog — contact cards are not allowed in templates). Add up to 10 **buttons** (max 1 Call, max 2 link buttons, keep reply buttons together). Under each reply button, **⚡ When a customer taps → + Add step**: Reply with text, Send next template, image / PDF, link, payment link, tag, stage, assign, task, order, Ask a question, Wait, hand over, AI reply. Chaining templates with **Send next template** builds a multi-step chatbot.\n\nFor an already-approved template just click its card (or **Edit**) — change the auto-replies and press **Save changes**; no new Meta review needed. **▶ Test chat** lets you tap the buttons like a customer.'],
-  ['store', 'Store: overview, Amazon, Website', 'store commerce ecommerce amazon website flipkart meesho revenue profit margin rto return fees overview channel sales dashboard', '**Store** (sidebar) shows revenue, net profit and margin, orders, units, ad spend (ROAS, profit after ads), return / RTO rate, inventory value and stock alerts — filter by period, channel, state and status. The **Amazon** and **Website** tabs show the same for one channel plus fees, shipping, “where every ₹ goes”, top products and return reasons. Detailed analytics are in **Insights → Sales & Store**. Net profit = revenue − product cost − fees − shipping − packaging − RTO − ad spend.'],
+  ['nav-spaces', 'Finding your way: sidebar, Insights, Settings, Admin', 'sidebar menu navigation collapse expand insights settings admin back workspace switch profile sign out dark mode breadcrumb link', 'The **left sidebar** is your workspace: Home, Inbox, Tasks & Calls, then **Sales**, **Commerce** and **Marketing**. Items with an arrow open their pages underneath (e.g. **Products & Stock → Reorder**). **Insights** and **Settings** at the bottom open their own menus — press **← Back to workspace** to return. Platform team: **🛡 Admin**. The small line above every page title shows where you are. Press the panel button at the bottom (or **Ctrl + \\**) to shrink the sidebar to icons — hover an icon to see its pages. Your name at the bottom: profile, dark / light mode, sign out. The workspace name at the top: switch workspace and plan. On a phone, press **☰** (or **More**). Every page has its own link (e.g. …#commerce/reorder) and the browser Back button works.'],
+  ['flipkart', 'Connect Flipkart Seller Hub', 'flipkart seller hub api connect orders returns rto ekart application id secret self access stock sync', '**Settings → Connections → Store channels → Flipkart Seller Hub**. In Seller Hub open your name → **Manage profile → Developer access → Create new access → Self access application**, copy the **Application ID** and **Application secret**, paste them, press **Test connection** → **Connect**. Orders, packed / shipped / delivered / cancelled status, customer returns and RTO come in every 15 minutes; each order item is one order. Selling takes stock out, returns put it back. Optional: **Send my stock to Flipkart** keeps your listings in step (with “Keep back” units). Fees: type an estimate %, or import the settlement report for the real fee of each order. See it all in **Store → Flipkart**.'],
+  ['meesho', 'Meesho orders (Supplier Panel report)', 'meesho supplier panel import orders payments report sub order commission', 'Meesho does not give API keys to sellers yet, so use its reports: Supplier Panel → **Orders → Download** (or **Payments → Download payment file** for commission and shipping). In Nodevers: **Store → Meesho → Import Meesho report** (or Settings → Connections → Meesho). Columns like Sub Order No, SKU, status, price, commission and shipping are found by themselves; the same order is never added twice, so import the newest report any time. RTO and returns put stock back. When Meesho opens API access for your account, the same card will connect directly.'],
+  ['store', 'Store: overview, Amazon, Flipkart, Meesho, Website', 'store commerce ecommerce amazon website flipkart meesho revenue profit margin rto return fees overview channel sales dashboard', '**Store** (sidebar) shows revenue, net profit and margin, orders, units, ad spend (ROAS, profit after ads), return / RTO rate, inventory value and stock alerts — filter by period, channel, state and status. The **Amazon**, **Flipkart**, **Meesho** and **Website** pages show the same for one channel plus fees, shipping, “where every ₹ goes”, top products and return reasons. Detailed analytics are in **Insights → Sales & Store**. Net profit = revenue − product cost − fees − shipping − packaging − RTO − ad spend.'],
   ['products', 'Products and inventory', 'product products sku stock inventory reorder low stock out of stock price cost margin category', '**Commerce → Products**: add a product with **SKU**, name, category, selling price, cost per unit, stock and reorder level — margin is shown live. **Inventory** lists stock status (In stock / Low / Out), units sold in 30 days and **days left**; type a new number and press **Save** to update stock, or **Order N** to make a purchase order (see **Reorder planner**). Before the 25 database update the button is **Reorder task** (creates a task). Orders with a SKU pick up the product name, price and cost automatically.'],
   ['storeimport', 'Import store data (Excel / Google Sheet)', 'import excel sheet google sheet upload amazon report website orders products ad spend meta ads tabs workbook', 'Press **⇪ Import Excel / Sheet** in Commerce. Choose an .xlsx / .csv file, or paste a Google Sheet link (first set Share → “Anyone with the link” → Viewer) and press **Load**. Every tab is detected by its column names — Products, Orders (pick the channel: Amazon, Website…) or Ad spend; use **Edit columns** to fix any match, then **Import**. Importing the same file again updates rows with the same SKU / order ID instead of duplicating. **Download sample file** shows the expected columns.'],
   ['channels', 'Connect your website (Shopify, WooCommerce, any website)', 'connect website shopify woocommerce wordpress api key token custom developer sync amazon flipkart meesho channel integration', 'Go to **Setup → Connections → Store channels**. **Shopify**: paste your store link (yourstore.myshopify.com) and the **Client ID + Client secret** of your own Shopify app (dev.shopify.com/dashboard → Create app “Nodevers” → version with scopes read_orders, read_products, read_inventory → Release → Install on your store → Settings → copy both). An old shpat_ token from before 2026 also works. If you see **Connect with Shopify**, just press it and approve. **WooCommerce**: website link + **Consumer key** and **Consumer secret** (WooCommerce → Settings → Advanced → REST API → Read). **Custom website**: paste the orders API link (and products link) and the key from your developer → **Test connection** → match the fields → **Connect**. Orders, products and stock then sync automatically (every 15 min by default) — or press **⟳ Sync now**. Your key stays on the server. Amazon, Flipkart and Meesho are coming soon — import their reports meanwhile.'],
@@ -13271,12 +13515,374 @@ $('#themeBtn').onclick = $('#mThemeBtn').onclick = () => setTheme(document.docum
 $('#mSetBtn').onclick = () => openSettings();
 setTheme(store.get('leadnode.theme') || 'light');
 
+/* ================= navigation v2: four spaces — Workspace, Insights, Settings, Admin =================
+   Every page has a route "view" or "view/sub" (#commerce/reorder, #admin/plans, #settings/plan …). go(route) sets the page's own state
+   (navApply), shows the view, then navDone() picks the space, highlights the sidebar item and writes the address (Back button works).
+   The sidebar is built once per space (navBuild); navSync() only flips classes, badges and the breadcrumb. */
+const NIC = {
+  home: '<path d="m3 11 9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/>',
+  inbox: '<path d="M3.5 20.5 5 16a8.5 8.5 0 1 1 3.2 3.2Z"/><path d="M9 9.5c0 3 2.5 5.5 5.5 5.5l1.2-1.4-1.9-1-1 .8a4 4 0 0 1-2.2-2.2l.8-1-1-1.9Z"/>',
+  tasks: '<rect x="4" y="4" width="16" height="16" rx="3"/><path d="m8.5 12 2.5 2.5 4.5-5"/>',
+  leads: '<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4.5a3.5 3.5 0 0 1 0 7M18 14a6 6 0 0 1 3.5 6"/>',
+  orders: '<path d="M6 7h12l-1 13H7Z"/><path d="M9 7a3 3 0 0 1 6 0"/>',
+  store: '<path d="M4 9h16l-1.2-4.2A1 1 0 0 0 17.8 4H6.2a1 1 0 0 0-1 .8Z"/><path d="M5 9v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9M9 20v-6h6v6"/>',
+  box: '<path d="m12 3 8 4.5v9L12 21l-8-4.5v-9Z"/><path d="m4 7.5 8 4.5 8-4.5M12 12v9"/>',
+  send: '<path d="m3 11 18-8-8 18-2-8Z"/>',
+  auto: '<rect x="3" y="4" width="6" height="5" rx="1.2"/><rect x="15" y="4" width="6" height="5" rx="1.2"/><rect x="9" y="15" width="6" height="5" rx="1.2"/><path d="M6 9v2a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V9M12 13v2"/>',
+  ads: '<path d="M3 11v2a1 1 0 0 0 1 1h2l5 4V6L6 10H4a1 1 0 0 0-1 1Z"/><path d="M15 8.5a4.5 4.5 0 0 1 0 7M18 5.5a8.5 8.5 0 0 1 0 13"/>',
+  chart: '<path d="M3 3v18h18"/><path d="m7 15 4-5 3 3 5-6"/>',
+  gear: '<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-2.8 1.2V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-2.9-1.2l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0-1.2-2.9H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.2-2.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 2.9-1.2V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 2.9 1.2l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0 1.2 2.9H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z"/>',
+  shield: '<path d="M12 3 4 6v6c0 4.5 3.4 8.3 8 9 4.6-.7 8-4.5 8-9V6Z"/><path d="m9 12 2 2 4-4"/>',
+  help: '<path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/>',
+  link: '<path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/>',
+  team: '<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4.5a3.5 3.5 0 0 1 0 7M18 14a6 6 0 0 1 3.5 6"/>',
+  user: '<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>',
+  key: '<rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>',
+  card: '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18M7 15h3"/>',
+  grid: '<rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/>',
+  kit: '<path d="M4 8h16v11a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1Z"/><path d="M9 8V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3M4 13h16"/>',
+  sheet: '<rect x="4" y="3" width="16" height="18" rx="2"/><path d="M4 9h16M4 15h16M10 3v18"/>',
+  msg: '<path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"/>',
+  target: '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/>',
+  bell: '<path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10.3 21a1.9 1.9 0 0 0 3.4 0"/>',
+  palette: '<circle cx="13.5" cy="6.5" r="1.5"/><circle cx="17.5" cy="10.5" r="1.5"/><circle cx="8.5" cy="7.5" r="1.5"/><circle cx="6.5" cy="12.5" r="1.5"/><path d="M12 2a10 10 0 1 0 0 20c1.1 0 1.7-.9 1.4-1.8-.3-.9.3-1.8 1.3-1.8H17a5 5 0 0 0 5-5C22 6.6 17.5 2 12 2Z"/>',
+  money: '<rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/><path d="M6 12h.01M18 12h.01"/>',
+  tag: '<path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8Z"/><circle cx="7.5" cy="7.5" r="1.5"/>',
+  page: '<rect x="3" y="4" width="18" height="16" rx="2"/><path d="m3 15 5-5 4 4 3-3 6 6"/>',
+  text: '<path d="M4 7V5h16v2M9 19h6M12 5v14"/>',
+  clock: '<circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2M9 2h6"/>',
+  phone: '<path d="M21 12a9 9 0 1 1-3.5-7.1L21 4v5h-5"/>',
+  spark: '<path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/><circle cx="12" cy="12" r="3"/>',
+  plug: '<path d="M9 7V3M15 7V3M7 7h10v4a5 5 0 0 1-10 0V7ZM12 16v5"/>',
+  star: '<path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9Z"/>',
+  list: '<path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/>',
+  file: '<path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9Z"/><path d="M14 3v6h6M8 13h8M8 17h5"/>',
+  funnel: '<path d="M3 4h18l-7 9v6l-4 2v-8Z"/>',
+  overview: '<rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><path d="M3 16h7v5H3z"/>',
+  audit: '<path d="M9 4h6M9 4a2 2 0 0 0-2 2h10a2 2 0 0 0-2-2M7 6H5v15h14V6h-2"/><path d="m9 14 2 2 4-4"/>',
+  back: '<path d="M15 18l-6-6 6-6"/>', chev: '<path d="m9 6 6 6-6 6"/>', updown: '<path d="m7 9 5-5 5 5M7 15l5 5 5-5"/>', search: '<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>',
+  moon: '<path d="M20 14.5A8 8 0 1 1 9.5 4 6.5 6.5 0 0 0 20 14.5Z"/>', out: '<path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3M10 17l5-5-5-5M15 12H4"/>', collapse: '<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16M15 10l-2 2 2 2"/>',
+  menu: '<path d="M4 7h16M4 12h16M4 17h16"/>', x: '<path d="M6 6l12 12M18 6 6 18"/>', check: '<path d="m5 12 5 5 9-10"/>'
+};
+const nic = (k, cls) => `<svg class="i ${cls || ''}" viewBox="0 0 24 24" aria-hidden="true">${NIC[k] || NIC.list}</svg>`;
+const ADM_ROLES = k => ((ADM_TABS.find(t => t[0] === (k.startsWith('set/') ? 'brand' : k)) || [0, 0, ['super', 'admin']])[2]);
+const NAV = {
+  work: { name: 'Workspace', acc: '#4F6BED', items: [
+    { r: 'home', l: 'Home', ic: 'home' },
+    { r: 'whatsapp', l: 'Inbox', ic: 'inbox', bd: 'inbox' },
+    { id: 'tasks', l: 'Tasks & Calls', ic: 'tasks', bd: 'tasks', kids: [{ r: 'tasks', l: 'Tasks', bd: 'tasks' }, { r: 'calls', l: 'Calls' }] },
+    { g: 'Sales' },
+    { id: 'leads', l: 'Leads', ic: 'leads', kids: [{ r: 'leads', l: 'List' }, { r: 'dashboard', l: 'Cards' }, { r: 'pipeline', l: 'Pipeline' }, { r: 'customers', l: 'Customers' }, { r: 'checkouts', l: 'Checkouts' }] },
+    { r: 'orders', l: 'Orders', ic: 'orders', bd: 'orders' },
+    { g: 'Commerce' },
+    { id: 'store', l: 'Store', ic: 'store', kids: [{ r: 'commerce/overview', l: 'Overview' }, { r: 'commerce/amazon', l: 'Amazon' }, { r: 'commerce/flipkart', l: 'Flipkart' }, { r: 'commerce/meesho', l: 'Meesho' }, { r: 'commerce/website', l: 'Website' }, { r: 'commerce/advisor', l: '✦ Advisor', when: () => advOn() }] },
+    { id: 'stock', l: 'Products & Stock', ic: 'box', kids: [{ r: 'commerce/products', l: 'Products' }, { r: 'commerce/inventory', l: 'Inventory' }, { r: 'commerce/reorder', l: 'Reorder' }, { r: 'commerce/purchases/orders', l: 'Purchase orders' }, { r: 'commerce/purchases/suppliers', l: 'Suppliers' }, { r: 'commerce/purchases/grn', l: 'Goods received' }, { r: 'commerce/places', l: 'Warehouses' }, { r: 'commerce/make', l: 'Sets & making' }] },
+    { g: 'Marketing' },
+    { id: 'campaigns', l: 'Campaigns', ic: 'send', kids: [{ h: 'Send now' }, { r: 'broadcast/new', l: 'New broadcast' }, { r: 'broadcast/scheduled', l: 'Scheduled' }, { r: 'broadcast/history', l: 'History & compare' },
+      { h: 'Automatic' }, { r: 'remarket/cards', l: 'Auto messages' }, { r: 'remarket/waiting', l: 'Waiting for you', bd: 'held' }, { r: 'remarket/rules', l: 'Marketing rules' },
+      { h: 'Content' }, { r: 'templates', l: 'Templates' }, { h: 'Growth' }, { r: 'referrals', l: 'Referrals' }, { r: 'results', l: 'Results' }] },
+    { id: 'automation', l: 'Automation', ic: 'auto', kids: [{ r: 'automation', l: 'Flows' }, { r: 'n8n', l: 'n8n Services' }, { r: 'scripts', l: 'Scripts & Presets' }] },
+    { id: 'ads', l: 'Ads Manager', ic: 'ads', kids: ADS_TABS.map(([k, n]) => ({ r: 'ads/' + k, l: n })) },
+  ] },
+  insights: { name: 'Insights', acc: '#0A84FF', back: true, items: [
+    { r: 'insights', l: 'Overview', ic: 'overview' }, { r: 'insales', l: 'Sales & Store', ic: 'store' }, { r: 'analytics', l: 'Pipeline', ic: 'funnel' }, { r: 'inmarketing', l: 'Marketing', ic: 'ads' },
+    { r: 'results', l: 'Remarketing results', ic: 'money' }, { r: 'feedback', l: 'Feedback & ratings', ic: 'star', bd: 'fb' }, { r: 'performance', l: 'Team performance', ic: 'team' }, { r: 'reports', l: 'Reports', ic: 'file' },
+  ] },
+  settings: { name: 'Settings', acc: '#636366', back: true, find: true, items: [
+    { g: 'Account' }, { r: 'settings/profile', l: 'My profile', ic: 'user', kw: 'name photo logo branding website name' }, { r: 'settings/login', l: 'Password & login', ic: 'key', kw: 'password email sign out workspace name switch logins supabase' },
+    { g: 'Workspace' }, { r: 'settings/plan', l: 'Plan & billing', ic: 'card', kw: 'plan billing payment renew trial days left usage' }, { r: 'settings/modules', l: 'Modules & setup', ic: 'grid', kw: 'modules sections business type hide' },
+    { r: 'industry', l: 'Industry Kits', ic: 'kit', kw: 'templates industry starter' }, { r: 'settings/sheet', l: 'Google Sheet (old)', ic: 'sheet', kw: 'apps script sheet web app url', when: () => !!settings.url || !cloud },
+    { r: 'settings/wl', l: 'White label', ic: 'palette', kw: 'colours colors domain login page powered by', when: () => !cloud },
+    { g: 'Team' }, { r: 'team', l: 'Team & access', ic: 'team', kw: 'members invite roles permissions territories' },
+    { g: 'Connections' }, { r: 'connections', l: 'All connections', ic: 'link', kw: 'integrations' }, { r: 'connections/msg', l: 'Messaging', ic: 'msg', dot: 'msg', kw: 'whatsapp email welcome' },
+    { r: 'connections/leads', l: 'Lead sources', ic: 'target', dot: 'leads', kw: 'forms capture tracking facebook lead ads import' }, { r: 'connections/store', l: 'Store channels', ic: 'store', dot: 'store', kw: 'shopify woocommerce amazon flipkart meesho website' },
+    { r: 'connections/other', l: 'Alerts & integrations', ic: 'bell', dot: 'other', kw: 'alerts n8n meta ads google' },
+    { g: 'Help' }, { r: 'settings/help', l: 'Help & learning', ic: 'help', kw: 'guide ai answers learning' },
+  ] },
+  admin: { name: 'Admin', acc: '#8E5CF6', back: true, items: [
+    { r: 'admin/overview', l: 'Overview', ic: 'overview', adm: 'overview' },
+    { g: 'Business' }, { r: 'admin/clients', l: 'Clients', ic: 'team', bd: 'aclients', adm: 'clients' }, { r: 'admin/payments', l: 'Payments', ic: 'money', bd: 'apays', adm: 'payments' }, { r: 'admin/plans', l: 'Plans & pricing', ic: 'tag', adm: 'plans' },
+    { g: 'Website' }, { r: 'admin/home', l: 'Home page', ic: 'page', adm: 'home' }, { r: 'admin/texts', l: 'Messages & buttons', ic: 'text', adm: 'texts' }, { r: 'admin/set/b-brand', l: 'Name & logo', ic: 'palette', adm: 'set/b-brand' }, { r: 'settings/wl', l: 'White label', ic: 'grid', adm: 'set/b-brand' },
+    { g: 'Settings' }, { r: 'admin/set/b-trial', l: 'Free trial & expiry', ic: 'clock', adm: 'set/b-trial' }, { r: 'admin/set/b-support', l: 'Support contact & renew link', ic: 'phone', adm: 'set/b-support' },
+    { r: 'admin/set/b-ai', l: 'AI for the website', ic: 'spark', adm: 'set/b-ai' }, { r: 'admin/set/b-connect', l: 'Connect methods', ic: 'plug', adm: 'set/b-connect' }, { r: 'admin/set/b-advisor', l: 'AI Advisor defaults', ic: 'star', adm: 'set/b-advisor' },
+    { g: 'Team & security' }, { r: 'admin/team', l: 'Platform team', ic: 'shield', adm: 'team' }, { r: 'admin/audit', l: 'Audit log', ic: 'audit', adm: 'audit' },
+  ] },
+};
+const NAV_ORDER = ['work', 'insights', 'settings', 'admin'];
+const NAVS = { space: 'work', cur: '', last: store.get('nv.navLast') || {}, pl: store.get('nv.navPl') || {}, open: '', mini: !!store.get('nv.navMini'), ready: false, dirty: false, vis: null, bd: {}, q: '' };
+const SETP = { sec: 'profile' };
+const SET_ACC = { profile: 's-brand', login: 's-acct', plan: 's-plan', modules: 's-more', sheet: 's-conn', wl: 's-wl', help: 's-help' };
+const SET_OF_TAB = { brand: 'profile', acct: 'login', plan: 'plan', conn: 'sheet', wl: 'wl', help: 'help', more: 'modules' };
+const navLeaves = sp => { const out = []; NAV[sp].items.forEach(it => { if (it.r) out.push(Object.assign({ p: null }, it)); (it.kids || []).forEach(k => { if (k.r) out.push(Object.assign({ p: it }, k)); }); }); return out; };
+const navView = r => String(r || '').split('/')[0];
+
+/** set the page's own state from the part after the slash */
+function navApply(view, sub) {
+  const p = sub ? String(sub).split('/') : [];
+  if (view === 'commerce' && p[0]) { if (CM_TABS.some(x => x[0] === p[0])) { CM.tab = p[0]; store.set('nv.cmTab', p[0]); } if (p[0] === 'purchases' && ['orders', 'suppliers', 'grn'].includes(p[1])) INV.pt = p[1]; }
+  else if (view === 'broadcast' && p[0]) { if (p[0] === 'scheduled' || p[0] === 'history') BC.tab = p[0]; else if (p[0] === 'email' || p[0] === 'whatsapp') BC.tab = p[0]; else if (BC.tab === 'scheduled' || BC.tab === 'history') BC.tab = 'whatsapp'; }
+  else if (view === 'remarket') RM.view = ['waiting', 'rules'].includes(p[0]) ? p[0] : 'cards';   // plain #remarket = the cards
+  else if (view === 'ads' && p[0] && ADS_TABS.some(x => x[0] === p[0])) ADS.tab = p[0];
+  else if (view === 'admin' && !p[0] && ADM2.tab === 'brand' && /^b-/.test(store.get('nv.admAcc2') || '')) ADM2.pm = store.get('nv.admAcc2');   // older links: card id remembered
+  else if (view === 'admin' && p[0]) { if (p[0] === 'set') { ADM2.tab = 'brand'; ADM2.pm = p[1] || 'b-brand'; } else if (p[0] === 'overview' || ADM_TABS.some(x => x[0] === p[0])) { ADM2.tab = p[0]; ADM2.pm = p[0] === 'brand' ? ADM2.pm || 'b-brand' : null; } store.set('nv.admTab', ADM2.tab); }
+  else if (view === 'settings') { if (p[0] && SET_ACC[p[0]]) SETP.sec = p[0]; }
+  else if (view === 'connections') { CONN.only = ['msg', 'leads', 'store', 'other'].includes(p[0]) ? p[0] : ''; const vc = document.getElementById('v-connections'); if (CONN.only) vc.dataset.only = CONN.only; else delete vc.dataset.only; }
+}
+/** the full route of what is on screen now */
+function navCur(view) {
+  view = view || activeView();
+  if (view === 'commerce') return 'commerce/' + CM.tab + (CM.tab === 'purchases' ? '/' + (INV.pt || 'orders') : '');
+  if (view === 'broadcast') return 'broadcast/' + (BC.tab === 'scheduled' || BC.tab === 'history' ? BC.tab : 'new');
+  if (view === 'remarket') return 'remarket/' + (RM.view || 'cards');
+  if (view === 'ads') return 'ads/' + (ADS.tab || 'overview');
+  if (view === 'admin') return ADM2.tab === 'brand' ? 'admin/set/' + (ADM2.pm || 'b-brand') : 'admin/' + ADM2.tab;
+  if (view === 'settings') return 'settings/' + SETP.sec;
+  if (view === 'connections') return CONN.only ? 'connections/' + CONN.only : 'connections';
+  return view;
+}
+function navFind(sp, r) { const L = navLeaves(sp); return L.find(x => x.r === r) || L.find(x => navView(x.r) === navView(r) && !x.r.includes('/') && !r.includes('/')) || null; }
+function navSpaceFor(r) {
+  for (const sp of [NAVS.want, NAVS.space]) if (sp && navFind(sp, r) && navOk(navFind(sp, r))) return sp;
+  for (const sp of NAV_ORDER) { const x = navFind(sp, r); if (x && navOk(x)) return sp; }
+  for (const sp of NAV_ORDER) if (navLeaves(sp).some(x => navView(x.r) === navView(r))) return sp;
+  return 'work';
+}
+/** can this person see this item? (plan / modules / role / platform team) */
+function navOk(x) {
+  if (!x || !x.r) return true;
+  const v = navView(x.r); if (!document.getElementById('v-' + v)) return false;
+  if (x.when && !x.when()) return false;
+  if (x.adm) { if (!(cloud && AUTH.platform)) return false; if (AUTH.platRole && !ADM_ROLES(x.adm).includes(AUTH.platRole)) return false; return true; }
+  const vis = NAVS.vis || (NAVS.vis = {}); if (!(v in vis)) { try { vis[v] = famAllowed(v); } catch (e) { vis[v] = true; } }
+  return vis[v];
+}
+function navVisReset() { NAVS.vis = null; if ($('#side .nv-it')) navSync(true); }
+
+/* ---------- sidebar markup ---------- */
+function navItemHTML(it, sp) {
+  if (it.g) return `<div class="nv-g" data-nvg>${esc(it.g)}</div>`;
+  if (it.kids) {
+    const kids = it.kids.map(k => k.h ? `<div class="nv-kh" data-nvkh>${esc(k.h)}</div>` : `<a class="nv-k" href="#${k.r}" data-nvr="${k.r}" data-nvbd="${k.bd || ''}"><span class="nv-kl">${esc(k.l)}</span><span class="nv-bd" hidden></span></a>`).join('');
+    return `<div class="nv-p" data-nvp="${it.id}"><button type="button" class="nv-it nv-ph" data-nvpar="${it.id}" data-nvtip="${esc(it.l)}">${nic(it.ic)}<span class="nv-l">${esc(it.l)}</span><span class="nv-bd" hidden></span>${nic('chev', 'nv-chev')}</button><div class="nv-kids"><div class="nv-kin">${kids}</div></div></div>`;
+  }
+  return `<a class="nv-it" href="#${it.r}" data-nvr="${it.r}" data-nvbd="${it.bd || ''}" data-nvdot="${it.dot || ''}" data-nvtip="${esc(it.l)}" data-kw="${esc((it.l + ' ' + (it.kw || '')).toLowerCase())}">${nic(it.ic)}<span class="nv-l">${esc(it.l)}</span>${it.dot ? '<i class="nv-dot"></i>' : ''}<span class="nv-bd" hidden></span></a>`;
+}
+function navBuild() {
+  const side = $('#side'); if (!side) return; const sp = NAVS.space, S2 = NAV[sp];
+  side.dataset.space = sp; side.style.setProperty('--acc', S2.acc);
+  const top = sp === 'work' ? `<div class="nv-ws-row"><button type="button" class="nv-ws" id="nvWs" data-nvtip="Switch workspace"><span class="nv-logo brand-logo"></span><span class="nv-wst"><b id="nvWsName">Workspace</b><small id="nvWsPlan"></small></span>${nic('updown', 'nv-ud')}</button></div>
+      <button type="button" class="nv-it nv-search" data-nvsearch data-nvtip="Search (Ctrl K)">${nic('search')}<span class="nv-l">Search</span><kbd>Ctrl K</kbd></button>`
+    : `<button type="button" class="nv-it nv-back" data-nvback data-nvtip="Back to workspace">${nic('back')}<span class="nv-l">Back to workspace</span></button>
+       <div class="nv-sp"><span class="nv-spi">${nic(sp === 'insights' ? 'chart' : sp === 'settings' ? 'gear' : 'shield')}</span><b class="nv-l">${esc(S2.name)}</b>${sp === 'admin' ? `<i class="nv-role nv-l" id="nvRole"></i>` : ''}</div>
+       ${S2.find ? `<label class="nv-find"><svg class="i" viewBox="0 0 24 24">${NIC.search}</svg><input id="nvFind" type="search" placeholder="Find a setting" autocomplete="off" data-native></label>` : ''}`;
+  const foot = [['insights', 'Insights', 'chart'], ['settings', 'Settings', 'gear'], ['admin', 'Admin', 'shield']].map(([k, l, ic]) => `<button type="button" class="nv-it ${k === 'admin' ? 'plat-only' : ''}" data-nvspace="${k}" data-nvtip="${l}">${nic(ic)}<span class="nv-l">${l}</span></button>`).join('')
+    + `<button type="button" class="nv-it" data-nvhelp data-nvtip="Help & guide">${nic('help')}<span class="nv-l">Help & guide</span></button>`;
+  side.innerHTML = `<div class="nv-top">${top}</div><nav class="nv-scroll" aria-label="${esc(S2.name)}">${S2.items.map(it => navItemHTML(it, sp)).join('')}</nav>
+    <div class="nv-foot">${foot}<div class="nv-me-row"><button type="button" class="nv-me" id="nvMe" data-nvtip="Profile"><span class="nv-av" id="nvAv"></span><span class="nv-wst nv-l"><b id="nvMeName"></b><small id="nvMeRole"></small></span></button><button type="button" class="nv-col" id="nvCol" title="Collapse sidebar (Ctrl \\)" aria-label="Collapse sidebar">${nic('collapse')}</button></div></div>
+    <div hidden id="sideCompat"><button id="themeBtn"></button><button id="sideSettings"></button><span id="tasksBadge"></span><span class="powered"></span></div>`;
+  $('#themeBtn').onclick = () => setTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark');
+  $('#sideSettings').onclick = () => openSettings();
+  try { applyBranding(); } catch (e) { }
+  navSync(true);
+}
+/** classes, badges, open section, header — cheap, runs after every page change */
+function navSync(full) {
+  const side = $('#side'); if (!side || !side.querySelector('.nv-scroll')) return;
+  const cur = NAVS.cur || navCur(), sp = NAVS.space, L = navLeaves(sp), hit = L.find(x => x.r === cur) || L.find(x => navView(x.r) === navView(cur) && cur.startsWith(x.r)) || L.find(x => navView(x.r) === navView(cur));
+  if (full) {
+    const lock = (a, on) => { a.classList.toggle('locked', on); const li = a.querySelector(':scope > .nv-lk'); if (on && !li) a.insertAdjacentHTML('beforeend', `<span class="nv-lk" title="Not in your plan">${LOCK_IC}</span>`); else if (!on && li) li.remove(); };
+    side.querySelectorAll('[data-nvr]').forEach(a => { const x = L.find(y => y.r === a.dataset.nvr); const ok = navOk(x); a.hidden = !ok; lock(a, ok && !x.adm && featLocked(navView(x.r))); });
+    side.querySelectorAll('.nv-p').forEach(p => { const ks = [...p.querySelectorAll('.nv-k')].filter(k => !k.hidden), any = ks.length > 0; p.hidden = !any; lock(p.querySelector('.nv-ph'), any && ks.every(k => k.classList.contains('locked'))); p.querySelectorAll('[data-nvkh]').forEach(h => { let n = h.nextElementSibling, vis = false; while (n && !n.matches('[data-nvkh]')) { if (!n.hidden) vis = true; n = n.nextElementSibling; } h.hidden = !vis; }); });
+    side.querySelectorAll('[data-nvg]').forEach(g => { let n = g.nextElementSibling, vis = false; while (n && !n.matches('[data-nvg]')) { if (!n.hidden) vis = true; n = n.nextElementSibling; } g.hidden = !vis; });
+    side.querySelectorAll('[data-nvspace="admin"]').forEach(b => { b.hidden = !(cloud && AUTH.platform); });
+    navHead();
+    if (sp === 'admin' && !(cloud && AUTH.platform) && ((cloud && AUTH.ws) || (NAVS.authed && !cloud))) { setTimeout(() => navSpaceGo('work'), 0); return; }   // not (or no longer) platform team
+  }
+  side.querySelectorAll('.nv-on').forEach(a => a.classList.remove('nv-on'));
+  side.querySelectorAll('.nv-pon').forEach(a => a.classList.remove('nv-pon'));
+  let open = '';
+  if (hit) { const a = side.querySelector(`[data-nvr="${hit.r}"]`); if (a) a.classList.add('nv-on'); if (hit.p) { open = hit.p.id; const ph = side.querySelector(`[data-nvpar="${hit.p.id}"]`); if (ph) ph.classList.add('nv-pon'); NAVS.pl[hit.p.id] = hit.r; store.set('nv.navPl', NAVS.pl); } }
+  if (NAVS.open !== open || full) { NAVS.open = open; side.querySelectorAll('.nv-p').forEach(p => p.classList.toggle('open', p.dataset.nvp === open)); }
+  { const on = side.querySelector('.nv-scroll .nv-on'), pp = on && on.closest('.nv-p'); if (on) setTimeout(() => pp ? navReveal(pp.querySelector('.nv-kids'), pp.querySelector('.nv-ph')) : navReveal(on), 240); }
+  side.querySelectorAll('[data-nvspace]').forEach(b => b.classList.toggle('nv-on', b.dataset.nvspace === sp));
+  navBadges(); navCrumb(hit);
+  $$('#nav [data-nvspace]').forEach(a => a.classList.toggle('active', a.dataset.nvspace === sp));
+  if (sp !== 'work') $$('#nav [data-go],#nav [data-gofam]').forEach(a => a.classList.remove('active'));
+}
+/** keep the open section / active page visible inside the sidebar (it scrolls on its own, the page does not move) */
+function navReveal(el, head) { const sc = $('#side .nv-scroll'); if (!sc || !el || el.hidden) return; const r = el.getBoundingClientRect(), R = sc.getBoundingClientRect(); let d = 0; if (r.bottom > R.bottom - 8) d = r.bottom - R.bottom + 16; else if (r.top < R.top + 8) d = r.top - R.top - 16; if (head && d > 0) d = Math.min(d, head.getBoundingClientRect().top - R.top - 4); if (d) sc.scrollTo({ top: sc.scrollTop + d, behavior: 'smooth' }); }
+function navHead() {
+  const b = brand(), u = authUser(), m = SUB.me;
+  const wn = $('#nvWsName'); if (wn) wn.textContent = cloud ? (AUTH.wsName || 'Workspace') : demo ? b.brandName + ' demo' : b.brandName;
+  const wp = $('#nvWsPlan'); if (wp) { const t = !cloud ? (demo ? 'Demo' : 'Sheet mode') : !m ? (ROLE_LABEL[AUTH.role] || '') : m.state === 'locked' ? 'Expired' : m.status === 'trial' ? `Trial${m.days_left != null ? ' · ' + Math.max(0, m.days_left) + 'd left' : ''}` : m.plan_name || (SUB_ST[m.status] || [m.status])[0]; wp.textContent = t; wp.className = m && m.state === 'locked' ? 'bad' : m && m.status === 'trial' ? 'wait' : ''; }
+  const av = $('#nvAv'); if (av) av.innerHTML = avatar(b.userName, 'sm', b.userPhoto);
+  const mn = $('#nvMeName'); if (mn) mn.textContent = (u && u.name) || b.userName || 'You';
+  const mr = $('#nvMeRole'); if (mr) mr.textContent = cloud ? (AUTH.platform && NAVS.space === 'admin' ? (PLAT_ROLES.find(r => r[0] === AUTH.platRole) || [0, 'Platform team'])[1] : ROLE_LABEL[AUTH.role] || AUTH.role || '') : demo ? 'Demo mode' : 'Owner';
+  const rl = $('#nvRole'); if (rl) rl.textContent = (PLAT_ROLES.find(r => r[0] === AUTH.platRole) || [0, 'Platform'])[1];
+}
+/** badge numbers — worked out when data changes (renderAll), drawn on every navSync */
+function navBadgeCalc() {
+  const bd = {};
+  try { bd.inbox = convos().reduce((s2, c) => s2 + c.unread, 0); } catch (e) { }
+  try { bd.tasks = salesReady() ? (S.tasks || []).filter(t => t.status === 'Open' && taskState(t) === 'overdue' && (AUTH.role !== 'member' || t.assignedTo === me())).length : 0; } catch (e) { }
+  try { const n = (S.orders || []).filter(o => o.status === 'New').length; bd.orders = n ? n + ' new' : ''; } catch (e) { }
+  try { bd.held = v24() ? rmHeld().length : 0; } catch (e) { }
+  try { bd.fb = v24() ? fbList().filter(x => +x.rating <= fbLow() && !(x.handled === true || x.handled === 'true')).length : 0; } catch (e) { }
+  try { const R = ADM2.rows || []; bd.aclients = R.filter(r => r.status !== 'free' && r.state === 'ok' && dLeft(r.ends_at) !== null && dLeft(r.ends_at) <= 7).length; bd.apays = R.filter(r => r.status === 'past_due' || (r.state === 'locked' && r.status === 'active')).length; } catch (e) { }
+  NAVS.bd = bd; navBadges();
+}
+function navBadges() {
+  const side = $('#side'); if (!side) return; const bd = NAVS.bd || {};
+  side.querySelectorAll('[data-nvbd]').forEach(a => { const k = a.dataset.nvbd, s2 = a.querySelector(':scope > .nv-bd'); if (!s2) return; const v = k ? bd[k] : 0; s2.hidden = !v; if (v) s2.textContent = typeof v === 'number' && v > 99 ? '99+' : v; });
+  side.querySelectorAll('.nv-p').forEach(p => { const s2 = p.querySelector('.nv-ph > .nv-bd'); if (!s2) return; const it = Object.values(NAV).flatMap(x => x.items).find(x => x.id === p.dataset.nvp) || {}; let v = it.bd ? bd[it.bd] : 0; if (!v) { const k = [...p.querySelectorAll('.nv-k:not([hidden]) > .nv-bd:not([hidden])')][0]; v = k ? k.textContent : 0; } s2.hidden = !v || p.classList.contains('open'); if (v) s2.textContent = v; });
+  side.querySelectorAll('[data-nvdot]').forEach(a => { const k = a.dataset.nvdot, d = a.querySelector('.nv-dot'); if (!k || !d) return; d.dataset.st = navConnDot(k); });
+  const tb = $('#tasksBadge'); if (tb) { tb.hidden = !bd.tasks; tb.textContent = bd.tasks || ''; }
+}
+function navConnDot(k) {
+  try {
+    const L = CONN.list || {}, on = x => x && x.connected;
+    if (k === 'msg') return (WA.status || {}).connected || (BC.email || {}).connected ? 'ok' : 'off';
+    if (k === 'store') return ['shopify', 'woocommerce', 'custom', 'amazon', 'flipkart', 'meesho'].some(x => on(L[x])) ? 'ok' : 'off';
+    if (k === 'leads') return CAPTURE.uses || (S.checkouts || []).length ? 'ok' : 'off';
+    if (k === 'other') { const a = alertsCfg(); return a.emails.length || a.phones.length || on(L.meta_ads) || (N8L.st && N8L.st.connected) ? 'ok' : 'off'; }
+  } catch (e) { }
+  return 'off';
+}
+/** breadcrumb in the page's small top line, e.g. "Products & Stock › Reorder" */
+function navCrumb(hit) {
+  const v = activeView(), sec = $('#v-' + v); if (!sec) return;
+  const eb = sec.querySelector('.head .eyebrow, .fam-head .eyebrow, .eyebrow'); if (!hit) return;
+  const txt = hit.p ? `${hit.p.l} › ${hit.l.replace(/^✦ /, '')}` : NAVS.space === 'work' ? hit.l : `${NAV[NAVS.space].name} › ${hit.l}`;
+  if (eb && eb.textContent !== txt) eb.textContent = txt;
+  if (v === 'settings' || v === 'admin' || v === 'connections' || (FAM_OF[v] === 'insights')) { const h1 = sec.querySelector('.head h1, .fam-head h1'); if (h1 && h1.textContent !== hit.l) h1.textContent = hit.l; }
+}
+
+/* ---------- going somewhere ---------- */
+function navDone(want, pop) {
+  const r = navCur(want), sp = navSpaceFor(r);
+  if (sp !== NAVS.space || !$('#side .nv-scroll')) { NAVS.space = sp; navBuild(); }
+  NAVS.cur = r; NAVS.last[sp] = r; store.set('nv.navLast', NAVS.last);
+  if (!authInUrl() && location.hash !== '#' + r) { if (pop || !NAVS.ready) history.replaceState(null, '', '#' + r); else history.pushState(null, '', '#' + r); }
+  NAVS.ready = true; navSync(); document.body.classList.remove('nav-open');
+}
+/** in-page tab clicks change the page without go() — keep the sidebar and the address in step */
+function navRefresh() { if (!NAVS.ready) return; const r = navCur(); if (r === NAVS.cur) return; NAVS.cur = r; NAVS.last[NAVS.space] = r; if (!authInUrl()) history.replaceState(null, '', '#' + r); navSync(); }
+function navSpaceGo(sp) {
+  if (sp === 'work') return go(NAVS.last.work || 'home');
+  const L = navLeaves(sp).filter(navOk), last = NAVS.last[sp];
+  NAVS.want = sp; try { go(L.some(x => x.r === last) ? last : (L[0] || {}).r || 'home'); } finally { NAVS.want = null; }
+}
+function navLeaveOk(target) {
+  if (!NAVS.dirty) return true;
+  if (target && target === NAVS.cur) return true;
+  if (!confirm('You have changes that are not saved. Leave this page without saving?')) return false;
+  NAVS.dirty = false; return true;
+}
+function navPop() { const h = decodeURIComponent(location.hash.slice(1)); if (!h || authInUrl() || /^invite=/.test(h) || h === NAVS.cur) return; if (!navLeaveOk(h)) { history.pushState(null, '', '#' + NAVS.cur); return; } go(h, true); }
+
+/* ---------- collapse, fly-outs, menus, drawer ---------- */
+function navMini(on) { NAVS.mini = on; store.set('nv.navMini', on ? 1 : ''); document.body.classList.toggle('nav-mini', on); navFlyHide(); const c = $('#nvCol'); if (c) { c.title = on ? 'Expand sidebar (Ctrl \\)' : 'Collapse sidebar (Ctrl \\)'; c.setAttribute('aria-label', c.title); } }
+let navFlyT = 0;
+function navFly(el) {
+  clearTimeout(navFlyT); let f = $('#nvFly'); if (!f) { f = document.createElement('div'); f.id = 'nvFly'; f.className = 'nv-fly'; document.body.appendChild(f); f.addEventListener('mouseenter', () => clearTimeout(navFlyT)); f.addEventListener('mouseleave', () => { navFlyT = setTimeout(navFlyHide, 120); }); f.addEventListener('click', e => { const a = e.target.closest('[data-nvr]'); if (a) { e.preventDefault(); navFlyHide(); if (navLeaveOk(a.dataset.nvr)) go(a.dataset.nvr); } }); }
+  const p = el.closest('.nv-p'), r = el.getBoundingClientRect();
+  if (p) { const s2 = $('#side'); f.innerHTML = `<div class="nv-fh">${esc(el.dataset.nvtip || '')}</div>` + [...p.querySelectorAll('.nv-kin > *')].filter(x => !x.hidden).map(x => x.matches('[data-nvkh]') ? `<div class="nv-kh">${esc(x.textContent)}</div>` : `<a class="nv-k ${x.classList.contains('nv-on') ? 'nv-on' : ''}" href="#${x.dataset.nvr}" data-nvr="${x.dataset.nvr}">${x.innerHTML}</a>`).join(''); f.style.setProperty('--acc', s2.style.getPropertyValue('--acc')); f.className = 'nv-fly menu'; }
+  else { f.textContent = el.dataset.nvtip || ''; f.className = 'nv-fly tip'; }
+  f.style.left = (r.right + 10) + 'px'; f.style.top = Math.max(8, Math.min(r.top + (p ? -6 : r.height / 2 - 15), innerHeight - (f.offsetHeight || 40) - 8)) + 'px';
+  requestAnimationFrame(() => f.classList.add('show'));
+}
+function navFlyHide() { const f = $('#nvFly'); if (f) f.classList.remove('show'); }
+function navMenu(anchor, html, up) {
+  let m = $('#nvMenu'); if (!m) { m = document.createElement('div'); m.id = 'nvMenu'; m.className = 'nv-menu'; document.body.appendChild(m); }
+  m.innerHTML = html; const r = anchor.getBoundingClientRect(); m.classList.add('show');
+  const w = Math.max(r.width, 240); m.style.width = w + 'px'; m.style.left = Math.min(r.left, innerWidth - w - 8) + 'px';
+  m.style.top = up ? '' : (r.bottom + 6) + 'px'; m.style.bottom = up ? (innerHeight - r.top + 6) + 'px' : '';
+}
+function navMenuHide() { const m = $('#nvMenu'); if (m) m.classList.remove('show'); }
+function navWsMenu(btn) {
+  const wl = cloud ? (AUTH.wsList || []) : [];
+  navMenu(btn, `<div class="nv-mh">${cloud ? 'Your workspaces' : 'Workspace'}</div>${wl.length ? wl.map(w => `<button type="button" class="nv-mi" data-nvws="${esc(w.workspace_id)}"><span class="nv-mav">${esc(String(w.name || '?').slice(0, 1).toUpperCase())}</span><span class="grow"><b>${esc(w.name)}</b><small>${esc(ROLE_LABEL[w.role] || w.role)}</small></span>${w.workspace_id === AUTH.ws ? nic('check') : ''}</button>`).join('') : `<div class="nv-mi static"><span class="nv-mav">${esc((brand().brandName || 'N').slice(0, 1))}</span><span class="grow"><b>${esc($('#nvWsName') ? $('#nvWsName').textContent : '')}</b><small>${demo ? 'Demo — saved in this browser' : 'This workspace'}</small></span></div>`}
+    <div class="nv-msep"></div><button type="button" class="nv-mi" data-nvgo="settings/login">${nic('gear')}<span class="grow">Workspace settings</span></button><button type="button" class="nv-mi" data-nvgo="settings/plan">${nic('card')}<span class="grow">Plan & billing</span></button><button type="button" class="nv-mi" data-nvgo="team">${nic('team')}<span class="grow">Team & access</span></button>`);
+}
+function navMeMenu(btn) {
+  const dark = document.documentElement.dataset.theme === 'dark';
+  navMenu(btn, `<button type="button" class="nv-mi" data-nvgo="settings/profile">${nic('user')}<span class="grow">My profile</span></button><button type="button" class="nv-mi" data-nvgo="settings/login">${nic('key')}<span class="grow">Password & login</span></button>
+    <button type="button" class="nv-mi" data-nvtheme>${nic('moon')}<span class="grow">${dark ? 'Light mode' : 'Dark mode'}</span></button>${cloud ? `<div class="nv-msep"></div><button type="button" class="nv-mi danger" data-nvout>${nic('out')}<span class="grow">Sign out</span></button>` : ''}`, true);
+}
+async function navSignOut() { try { const cl = await authClient(); await cl.auth.signOut(); } catch (err) { } AUTH.session = null; cloudStop(); store.del('leadnode.cache'); showAuth('in'); }
+function navFilter(q) {
+  NAVS.q = q = String(q || '').trim().toLowerCase(); const side = $('#side');
+  side.querySelectorAll('.nv-scroll [data-nvr]').forEach(a => { const x = navLeaves(NAVS.space).find(y => y.r === a.dataset.nvr); a.classList.toggle('nv-miss', !!q && !(a.dataset.kw || '').includes(q)); if (!navOk(x)) a.hidden = true; });
+  side.querySelectorAll('.nv-scroll [data-nvg]').forEach(g => { let n = g.nextElementSibling, vis = false; while (n && !n.matches('[data-nvg]')) { if (!n.hidden && !n.classList.contains('nv-miss')) vis = true; n = n.nextElementSibling; } g.classList.toggle('nv-miss', !!q && !vis); });
+}
+(function navEvents() {
+  const side = $('#side');
+  side.addEventListener('click', e => {
+    const t = e.target;
+    const a = t.closest('[data-nvr]'); if (a) { e.preventDefault(); if (!navLeaveOk(a.dataset.nvr)) return; go(a.dataset.nvr); return; }
+    const ph = t.closest('[data-nvpar]'); if (ph) {
+      const p = ph.closest('.nv-p'), id = ph.dataset.nvpar;
+      if (p.classList.contains('open') && !NAVS.mini) { p.classList.remove('open'); NAVS.open = '__closed'; navBadges(); return; }
+      const kids = [...p.querySelectorAll('.nv-k')].filter(k => !k.hidden), last = NAVS.pl[id], to = kids.find(k => k.dataset.nvr === last) || kids[0];
+      if (p.querySelector('.nv-k.nv-on')) { side.querySelectorAll('.nv-p').forEach(x => x.classList.toggle('open', x === p)); NAVS.open = id; navBadges(); setTimeout(() => navReveal(p.querySelector('.nv-kids'), ph), 240); return; }
+      if (to && navLeaveOk(to.dataset.nvr)) go(to.dataset.nvr); return;
+    }
+    const sp = t.closest('[data-nvspace]'); if (sp) { if (sp.dataset.nvspace === NAVS.space) return; if (navLeaveOk()) navSpaceGo(sp.dataset.nvspace); return; }
+    if (t.closest('[data-nvback]')) { if (navLeaveOk()) navSpaceGo('work'); return; }
+    if (t.closest('[data-nvsearch]')) { cmdkOpen(''); return; }
+    if (t.closest('[data-nvhelp]')) { HELP.open = true; HELP.tab = 'ask'; helpRender(); document.body.classList.remove('nav-open'); return; }
+    if (t.closest('#nvCol')) { navMini(!NAVS.mini); return; }
+    const ws = t.closest('#nvWs'); if (ws) { e.stopPropagation(); return navWsMenu(ws); }
+    const me = t.closest('#nvMe'); if (me) { e.stopPropagation(); return navMeMenu(me); }
+  });
+  side.addEventListener('input', e => { if (e.target.id === 'nvFind') navFilter(e.target.value); });
+  side.addEventListener('keydown', e => { if (e.target.id === 'nvFind' && e.key === 'Enter') { const a = side.querySelector('.nv-scroll [data-nvr]:not([hidden]):not(.nv-miss)'); if (a) go(a.dataset.nvr); } });
+  side.addEventListener('mouseover', e => { if (!NAVS.mini || document.body.classList.contains('nav-open')) return; const el = e.target.closest('.nv-it,.nv-ws,.nv-me'); if (el && !el.contains(e.relatedTarget)) navFly(el); });
+  side.addEventListener('mouseout', e => { if (!NAVS.mini) return; const el = e.target.closest('.nv-it,.nv-ws,.nv-me'); if (el && !el.contains(e.relatedTarget)) { clearTimeout(navFlyT); navFlyT = setTimeout(navFlyHide, 140); } });
+  document.addEventListener('click', e => {
+    const t = e.target, m = $('#nvMenu');
+    if (m && m.classList.contains('show') && !t.closest('#nvMenu')) navMenuHide();
+    const g = t.closest('[data-nvgo]'); if (g) { navMenuHide(); if (navLeaveOk(g.dataset.nvgo)) go(g.dataset.nvgo); return; }
+    const w = t.closest('[data-nvws]'); if (w) { navMenuHide(); if (w.dataset.nvws !== AUTH.ws) switchWorkspace(w.dataset.nvws); return; }
+    if (t.closest('[data-nvtheme]')) { navMenuHide(); setTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'); return; }
+    if (t.closest('[data-nvout]')) { navMenuHide(); navSignOut(); return; }
+    const sp = t.closest('#nav [data-nvspace]'); if (sp) { e.preventDefault(); if (navLeaveOk()) navSpaceGo(sp.dataset.nvspace); return; }
+    if (t.closest('#navBurger')) { document.body.classList.add('nav-open'); return; }
+    if (t.id === 'navScrim') { document.body.classList.remove('nav-open'); return; }
+    if (t.closest('[data-cmtab],[data-bctab],[data-ipt],[data-admtab],[data-adtab],[data-rmview],[data-cgall]')) requestAnimationFrame(navRefresh);
+  });
+  document.addEventListener('keydown', e => { if ((e.ctrlKey || e.metaKey) && e.key === '\\') { e.preventDefault(); navMini(!NAVS.mini); } if (e.key === 'Escape') { navMenuHide(); document.body.classList.remove('nav-open'); } });
+  // unsaved changes: typing in a Settings / Admin form, cleared by any save button
+  document.addEventListener('input', e => { const t = e.target; if (!t.matches || !t.matches('input:not([type=checkbox]):not([type=radio]):not([type=search]):not([type=file]),textarea') || t.id === 'nvFind' || t.id === 'admQ') return; if (t.closest('#v-settings,#v-admin')) NAVS.dirty = true; });
+  document.addEventListener('click', e => { if (NAVS.dirty && e.target.closest('#v-settings .btn.primary,#v-admin .btn.primary,#v-settings [id$="Save"],#v-admin [id$="Save"]')) NAVS.dirty = false; }, true);
+  addEventListener('beforeunload', e => { if (NAVS.dirty) { e.preventDefault(); e.returnValue = ''; } });
+  addEventListener('popstate', navPop);
+  addEventListener('resize', () => { if (innerWidth > 820) document.body.classList.remove('nav-open'); });
+  document.body.classList.toggle('nav-mini', NAVS.mini);
+})();
+
+/* ================= Settings as its own page (the old Settings pop-up now lives here) ================= */
+function renderSettingsPage() {
+  const host = $('#setHost'), m = $('#setModal'); if (!host || !m) return;
+  if (m.parentElement !== host) { host.appendChild(m); m.classList.add('set-page'); m.classList.remove('show'); const bx = m.querySelector('.box'); if (bx) bx.classList.remove('set-acc'); }
+  const sec = SET_ACC[SETP.sec] ? SETP.sec : 'profile', acc = SET_ACC[sec], tab = Object.keys(SET_OF_TAB).find(k => SET_OF_TAB[k] === sec) || 'brand';
+  setFill(tab);
+  const list = m.querySelector('.acc-list'); if (!list) return;
+  list.classList.add('pm');
+  list.querySelectorAll(':scope > .acc').forEach(a => { const on = a.dataset.acc === acc; a.classList.toggle('pm-on', on); a.classList.toggle('open', on); });
+  const it = list.querySelector('.acc.pm-on'), sub = it ? ((it.querySelector('.set-pt small') || it.querySelector('.acc-t small') || {}).textContent || '') : '';
+  const sp = $('#v-settings .head .sub'); if (sp) sp.textContent = sec === 'modules' ? 'Pick the sections your team uses, Industry Kits and the full list of connections.' : sub;
+  if (sec === 'modules') { const mp = $('#modPage'); if (mp) openModules(mp); }
+  if (cloud && sec === 'plan') subLoad().then(() => { const pb = $('#planBody'); if (pb && activeView() === 'settings') pb.innerHTML = planBody(); });
+  const pg = $('#v-settings .set-pg'); if (pg) { pg.classList.remove('set-in'); void pg.offsetWidth; pg.classList.add('set-in'); }
+}
+
 /* ================= start ================= */
 (function grabInvite() { const m = location.hash.match(/^#invite=([a-f0-9]{20,80})$/i); if (m) { store.set('leadnode.invite', { t: m[1], at: Date.now() }); history.replaceState(null, '', location.pathname + '#dashboard'); } })();
 famInit(); settingsAccordion(); mobileBar(); applyModules();
 if (sbConf().url) platLoad();
 go(location.hash.slice(1) || 'home');
-authInit().then(ok => { if (ok) load(); });
+authInit().then(ok => { NAVS.authed = true; if (ok) load(); else navVisReset(); });
 </script>
 </body>
 </html>
