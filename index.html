@@ -553,7 +553,7 @@ textarea.input.code{min-height:320px}
 .auth-x{position:absolute;top:12px;right:12px;font-size:20px}
 #authForm{display:flex;flex-direction:column;gap:12px}
 #authForm label{display:flex;justify-content:space-between;align-items:center}
-.auth-forgot{font-size:12px;color:var(--blue-2);text-decoration:none;font-weight:600}
+.auth-forgot{font-size:12px;color:var(--blue-2);text-decoration:none;font-weight:600}.auth-alt{display:block;text-align:center;margin-top:10px;font-size:13px}.lg-acts{display:flex;gap:6px;justify-content:flex-end;flex-wrap:wrap}tr.lg-paused td{opacity:.72}
 .pw{position:relative}.pw .input{padding-right:64px}
 .pw-eye{position:absolute;right:6px;top:50%;transform:translateY(-50%);border:0;background:var(--line);border-radius:6px;padding:5px 8px;font-size:11.5px;font-weight:700;color:var(--muted)}
 .auth-go{justify-content:center;padding:12px;margin-top:4px}
@@ -2609,6 +2609,7 @@ html.ld-lock,html.ld-lock body{overflow:hidden}
         <div class="field auth-pass"><label>Password <a href="#" class="auth-forgot" id="authForgot">Forgot?</a></label><div class="pw"><input class="input" id="auPass" type="password" autocomplete="current-password" placeholder="At least 8 characters"><button type="button" class="pw-eye" id="auEye" title="Show password">Show</button></div></div>
         <div class="auth-msg" id="authMsg"></div>
         <button class="btn primary auth-go" id="authGo" type="submit">Sign in</button>
+        <a href="#" class="auth-forgot auth-alt" id="authLink">Sign in with an email link instead</a>
       </form>
       <div class="auth-or"><span>or</span></div>
       <button class="btn auth-google" id="authGoogle" type="button"><svg viewBox="0 0 24 24" width="18" height="18"><path fill="#4285F4" d="M22.6 12.2c0-.8-.1-1.5-.2-2.2H12v4.2h5.9a5 5 0 0 1-2.2 3.3v2.7h3.6c2.1-1.9 3.3-4.8 3.3-8Z"/><path fill="#34A853" d="M12 23c3 0 5.5-1 7.3-2.7l-3.6-2.8c-1 .7-2.2 1.1-3.7 1.1-2.9 0-5.3-1.9-6.2-4.5H2.1v2.8A11 11 0 0 0 12 23Z"/><path fill="#FBBC05" d="M5.8 14.1a6.6 6.6 0 0 1 0-4.2V7.1H2.1a11 11 0 0 0 0 9.8l3.7-2.8Z"/><path fill="#EA4335" d="M12 5.4c1.6 0 3.1.6 4.2 1.7l3.2-3.2A11 11 0 0 0 2.1 7.1l3.7 2.8C6.7 7.3 9.1 5.4 12 5.4Z"/></svg>Continue with Google</button>
@@ -2955,6 +2956,7 @@ function finishLoad(anim) {
   applyBranding();
   applyAccess(); platformBar();
   renderAll(anim);
+  if (cloud && AUTH.ws && load.welc !== AUTH.ws) { load.welc = AUTH.ws; setTimeout(() => { try { memberWelcome(); } catch (e) { } }, 900); }
   if (cloud && SUB.ws !== AUTH.ws) subLoad(); else subApply();
   taskReminders(); { const b = $('#tasksBadge'), n = salesReady() ? (S.tasks || []).filter(t => t.status === 'Open' && taskState(t) === 'overdue' && (AUTH.role !== 'member' || t.assignedTo === me())).length : 0; if (b) { b.hidden = !n; b.textContent = n; } }
 }
@@ -5934,7 +5936,7 @@ function aiSummaryHTML(l) {
     : k === 'fu' ? `<button class="btn sm" data-aifu="${v}">${I.cal}${esc(label)}</button>` : `<button class="btn sm" data-aimeet>${I.cal}${esc(label)}</button>`;
   return `<div class="aisum"><div class="aisum-h"><span class="gen-ai">✦</span><b>AI summary</b><span class="pill ${cls}" title="How likely this lead is to buy, based on stage, activity, budget and timing">Score ${x.score}</span></div>
     <p>${esc(x.text)}</p><div class="aisum-rec"><b>Recommended next step</b><span>${esc(x.rec)}</span></div>
-    <div class="aisum-act">${x.act.map(btn).join('')}</div><small class="muted">Smart rules for now · Gemini will also read the WhatsApp chat after go-live</small></div>`;
+    <div class="aisum-act">${x.act.map(btn).join('')}</div></div>`;
 }
 
 /* ================= platform-wide settings (brand, white label, trial, support) ================= */
@@ -6068,21 +6070,22 @@ function showAuth(mode, preview) {
 }
 function hideAuth() { $('#auth').hidden = true; }
 function drawAuth() {
-  const m = AUTH.mode, up = m === 'up', forgot = m === 'forgot', reset = m === 'reset';
-  $('#authTitle').textContent = up ? 'Create your workspace' : forgot ? 'Reset your password' : reset ? 'Set a new password' : 'Welcome back';
-  $('#authSub').textContent = up ? 'Free to start. Your team can join later.' : forgot ? 'We will email you a reset link.' : reset ? 'Choose a new password for your account.' : 'Sign in to your workspace';
+  const m = AUTH.mode, up = m === 'up', link = m === 'link', forgot = m === 'forgot' || link, reset = m === 'reset';
+  $('#authTitle').textContent = up ? 'Create your workspace' : link ? 'Sign in with an email link' : forgot ? 'Reset your password' : reset ? 'Set a new password' : 'Welcome back';
+  $('#authSub').textContent = up ? 'Free to start. Your team can join later.' : link ? 'We will email you a link — open it and you are signed in. No password needed.' : forgot ? 'We will email you a reset link.' : reset ? 'Choose a new password for your account.' : 'Sign in to your workspace';
   $('#authTabs').hidden = forgot || reset;
+  { const a = $('#authLink'); if (a) { a.hidden = up || reset; a.textContent = forgot ? '← Back to sign in' : 'Sign in with an email link instead'; } }
   $$('#authTabs .segb').forEach(x => x.classList.toggle('active', x.dataset.auth === (up ? 'up' : 'in')));
   $$('.auth-up').forEach(x => x.hidden = !up); const invited = !!pendingInvite(); $('#auBiz').closest('.field').hidden = !up || invited;
   if (invited && (up || m === 'in')) $('#authSub').textContent = up ? 'You were invited to a workspace — create your login to join.' : 'You were invited — sign in to join the workspace.';
   $('.auth-mail').hidden = reset; $('.auth-pass').hidden = forgot; $('#authForgot').hidden = up || reset;
   $('#auPass').autocomplete = up || reset ? 'new-password' : 'current-password';
-  $('#authGo').textContent = up ? 'Create account' : forgot ? 'Send reset link' : reset ? 'Save password' : 'Sign in';
+  $('#authGo').textContent = up ? 'Create account' : link ? 'Email me a login link' : forgot ? 'Send reset link' : reset ? 'Save password' : 'Sign in';
   $('#authGoogle').hidden = forgot || reset; $('.auth-or').hidden = forgot || reset;
   authMsg('');
 }
 function authMsg(t, ok) { const e = $('#authMsg'); e.textContent = t || ''; e.className = 'auth-msg' + (t ? (ok ? ' ok' : ' err') : ''); }
-const AUTH_ERR = { 'email rate limit exceeded': 'Too many emails sent in the last hour. Wait about an hour — or sign in and change your password in Settings → Accounts.', 'New password should be different from the old password.': 'The new password must be different from the old one.', 'Invalid login credentials': 'Wrong email or password.', 'Email not confirmed': 'Please confirm your email first — check your inbox.', 'User already registered': 'This email already has an account. Sign in instead.' };
+const AUTH_ERR = { 'Signups not allowed for otp': 'No login with this email yet — create an account first, or ask your team owner for an invite.', 'email rate limit exceeded': 'Too many emails sent in the last hour. Wait about an hour — or sign in and change your password in Settings → Accounts.', 'New password should be different from the old password.': 'The new password must be different from the old one.', 'Invalid login credentials': 'Wrong email or password.', 'Email not confirmed': 'Please confirm your email first — check your inbox.', 'User already registered': 'This email already has an account. Sign in instead.' };
 async function authSubmit(e) {
   e.preventDefault();
   const email = $('#auEmail').value.trim(), pass = $('#auPass').value, m = AUTH.mode;
@@ -6097,6 +6100,7 @@ async function authSubmit(e) {
     if (m === 'in') r = await cl.auth.signInWithPassword({ email, password: pass });
     if (m === 'up') r = await cl.auth.signUp({ email, password: pass, options: { emailRedirectTo: redirectTo, data: { full_name: $('#auName').value.trim(), business_name: $('#auBiz').value.trim() } } });
     if (m === 'forgot') r = await cl.auth.resetPasswordForEmail(email, { redirectTo });
+    if (m === 'link') { const inv = pendingInvite(); r = await cl.auth.signInWithOtp({ email, options: { shouldCreateUser: !!inv, emailRedirectTo: inv ? redirectTo + '?invite=' + inv : redirectTo } }); if (r.error) throw r.error; return authMsg('Check your email — open the link we sent to sign in.', true); }
     if (m === 'reset') r = await cl.auth.updateUser({ password: pass });
     if (r.error) throw r.error;
     if (m === 'forgot') return authMsg('Check your email for the reset link.', true);
@@ -6128,6 +6132,7 @@ function fillAcct() {
   $('#authForm').addEventListener('submit', authSubmit);
   $('#authTabs').addEventListener('click', e => { const b = e.target.closest('[data-auth]'); if (b) { AUTH.mode = b.dataset.auth; drawAuth(); } });
   $('#authForgot').onclick = e => { e.preventDefault(); AUTH.mode = 'forgot'; drawAuth(); };
+  $('#authLink').onclick = e => { e.preventDefault(); AUTH.mode = AUTH.mode === 'forgot' || AUTH.mode === 'link' ? 'in' : 'link'; drawAuth(); };
   $('#auEye').onclick = () => { const p = $('#auPass'), show = p.type === 'password'; p.type = show ? 'text' : 'password'; $('#auEye').textContent = show ? 'Hide' : 'Show'; };
   $('#authGoogle').onclick = authGoogle;
   $('#authExit').onclick = hideAuth;
@@ -6704,7 +6709,7 @@ async function cloudStart() {
   const cl = await authClient(), u = AUTH.session.user, meta = u.user_metadata || {};
   const inv = pendingInvite();
   if (inv) {
-    const r = await cl.rpc('accept_invite', { p_token: inv, p_name: meta.full_name || meta.name || '' }); store.del('leadnode.invite');
+    const r = await cl.rpc('accept_invite', { p_token: inv, p_name: meta.full_name || meta.name || '' }); store.del('leadnode.invite'); store.set('nv.joined', 1);
     if (r.error) toast(r.error.message, true); else { store.set('leadnode.ws', r.data.workspace_id); toast(`✓ You joined ${r.data.name}`); }
   }
   const { data, error } = await cl.rpc('ensure_workspace', { p_business: meta.business_name || '', p_name: meta.full_name || meta.name || '' });
@@ -6769,17 +6774,23 @@ async function renderLogins() {
   if (!cloud) { box.innerHTML = sbConf().url ? `<div class="glass lg-card"><div class="lg-h"><div><h3>Logins & access</h3><p class="muted">Sign in to the Nodevers cloud to invite your team and clients.</p></div><button class="btn" data-lgsign>Sign in</button></div></div>` : ''; return; }
   box.innerHTML = `<div class="glass lg-card"><div class="loader"><div class="spin"></div>Loading people…</div></div>`;
   try {
-    const [mem, inv] = await Promise.all([sbq(AUTH.client.rpc('list_members', { p_ws: AUTH.ws })), canAdmin() ? sbq(AUTH.client.from('invites').select('*').eq('workspace_id', AUTH.ws).is('used_at', null).gt('expires_at', new Date().toISOString()).order('created_at', { ascending: false })) : Promise.resolve([])]);
-    const me = AUTH.session.user.id, admin = canAdmin(); AUTH.members = mem;
+    const people = async () => { try { const r = await sbq(AUTH.client.rpc('list_people', { p_ws: AUTH.ws })); AUTH.v28 = true; return r || []; } catch (e) { AUTH.v28 = false; return sbq(AUTH.client.rpc('list_members', { p_ws: AUTH.ws })); } };
+    const [all, inv] = await Promise.all([people(), canAdmin() ? sbq(AUTH.client.from('invites').select('*').eq('workspace_id', AUTH.ws).is('used_at', null).gt('expires_at', new Date().toISOString()).order('created_at', { ascending: false })) : Promise.resolve([])]);
+    const me = AUTH.session.user.id, admin = canAdmin(), mem = all.filter(m => !m.paused), paused = all.filter(m => m.paused), myRole = (mem.find(m => m.user_id === me) || {}).role; AUTH.members = mem;
+    const lastTxt = m => !AUTH.v28 ? esc(fmtDate(String(m.joined).slice(0, 10))) : m.last_login ? `<span title="${esc(new Date(m.last_login).toLocaleString('en-IN'))}">${esc(n8lAgo(m.last_login))}</span>` : '<span class="muted">Never</span>';
+    const canPause = m => AUTH.v28 && admin && m.role !== 'owner' && m.user_id !== me && (m.role !== 'admin' || myRole === 'owner');
     box.innerHTML = `<div class="glass lg-card"><div class="lg-h"><div><h3>Logins & access</h3><p class="muted">People who can sign in to <b>${esc(AUTH.wsName || 'this workspace')}</b>. Each workspace's data is private.</p></div>${admin ? `<button class="btn primary" data-lginvite>${I.users}Invite</button>` : ''}</div>
-      <div class="tblwrap"><table class="tbl"><thead><tr><th>Person</th><th>Role</th><th>Team & area</th><th>Joined</th><th></th></tr></thead><tbody>
+      <div class="tblwrap"><table class="tbl"><thead><tr><th>Person</th><th>Role</th><th>Team & area</th><th>${AUTH.v28 ? 'Last login' : 'Joined'}</th><th></th></tr></thead><tbody>
       ${mem.map(m => `<tr style="cursor:default"><td><div class="lg-p">${avatar(m.name)}<div><b>${esc(m.name)}${m.user_id === me ? ' <span class="muted">(you)</span>' : ''}</b><small class="muted">${esc(m.email)}</small></div></div></td>
         <td>${admin && m.role !== 'owner' && m.user_id !== me ? `<select class="input sm" data-lgrole="${esc(m.user_id)}">${['admin', 'member', 'client'].map(r => `<option value="${r}" ${r === m.role ? 'selected' : ''}>${ROLE_LABEL[r]}</option>`).join('')}</select>` : `<span class="pill ${m.role === 'owner' ? 'won' : 'stage'}">${ROLE_LABEL[m.role] || esc(m.role)}</span>`}</td>
         <td>${accessCell(m, admin && m.user_id !== me)}</td>
-        <td class="muted">${esc(fmtDate(String(m.joined).slice(0, 10)))}</td>
-        <td class="num">${m.role !== 'owner' && (admin || m.user_id === me) ? `<button class="btn sm danger" data-lgrm="${esc(m.user_id)}" data-lgname="${esc(m.name)}">${m.user_id === me ? 'Leave' : 'Remove'}</button>` : ''}</td></tr>`).join('')}
+        <td class="muted">${lastTxt(m)}</td>
+        <td class="num"><div class="lg-acts">${admin && m.user_id !== me && m.email ? `<button class="btn sm" data-lgreset="${esc(m.email)}" title="Email ${esc(m.email)} a link to set a new password">Reset password</button>` : ''}${canPause(m) ? `<button class="btn sm" data-lgpause="${esc(m.user_id)}" data-lgname="${esc(m.name)}" title="Stop their access for now — nothing is deleted">Pause</button>` : ''}${m.role !== 'owner' && (admin || m.user_id === me) ? `<button class="btn sm danger" data-lgrm="${esc(m.user_id)}" data-lgname="${esc(m.name)}">${m.user_id === me ? 'Leave' : 'Remove'}</button>` : ''}</div></td></tr>`).join('')}
+      ${paused.map(m => `<tr class="lg-paused" style="cursor:default"><td><div class="lg-p">${avatar(m.name)}<div><b>${esc(m.name)}</b><small class="muted">${esc(m.email)}</small></div></div></td>
+        <td><span class="pill lost">Paused</span> <span class="muted">${esc(ROLE_LABEL[m.role] || m.role)}</span></td><td class="muted">Can not sign in to this workspace${m.paused_at ? ' since ' + esc(fmtDate(String(m.paused_at).slice(0, 10))) : ''}</td><td class="muted">${lastTxt(m)}</td>
+        <td class="num"><div class="lg-acts"><button class="btn sm primary" data-lgresume="${esc(m.user_id)}" data-lgname="${esc(m.name)}">Resume</button><button class="btn sm danger" data-lgforget="${esc(m.user_id)}" data-lgname="${esc(m.name)}">Remove</button></div></td></tr>`).join('')}
       </tbody></table></div>
-      ${inv.length ? `<h4 class="lg-sub">Pending invites</h4><div class="lg-inv">${inv.map(i => `<div class="lg-i"><span class="pill stage">${ROLE_LABEL[i.role]}</span><span class="grow">${esc(i.email || i.note || 'Anyone with the link')}<small class="muted"> · expires ${esc(fmtDate(i.expires_at.slice(0, 10)))}</small></span><button class="btn sm" data-lgcopy="${esc(i.token)}">Copy link</button><button class="btn sm" data-lgrevoke="${esc(i.token)}">Revoke</button></div>`).join('')}</div>` : ''}
+      ${inv.length ? `<h4 class="lg-sub">Pending invites</h4><div class="lg-inv">${inv.map(i => `<div class="lg-i"><span class="pill stage">${ROLE_LABEL[i.role]}</span><span class="grow">${esc(i.email || i.note || 'Anyone with the link')}<small class="muted"> · expires ${esc(fmtDate(i.expires_at.slice(0, 10)))}</small></span>${i.email ? `<button class="btn sm" data-lgsend="${esc(i.token)}" data-lgto="${esc(i.email)}">Email</button>` : ''}<button class="btn sm" data-lgcopy="${esc(i.token)}">Copy link</button><button class="btn sm" data-lgrevoke="${esc(i.token)}">Revoke</button></div>`).join('')}</div>` : ''}
     </div>`;
   } catch (e) { box.innerHTML = `<div class="glass lg-card"><p class="muted">Could not load people: ${esc(e.message)}</p></div>`; }
 }
@@ -6831,6 +6842,18 @@ function openAccess(uid) {
   };
   draw(); showModal('#stageModal');
 }
+/** invite email: from the workspace's own sender (email function) — or, when no sender is connected, a login-link email from the login system */
+async function inviteEmail(token, to, btn) {
+  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(to)) return toast('Enter their email first', true);
+  if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
+  const done = (ok, t) => { if (btn) { btn.disabled = false; btn.textContent = ok ? '✓ Sent' : '✉ Send invite email'; } toast(t, !ok); };
+  try { await fnCall('email', { action: 'invite', token, to, link: inviteLink(token), by: (authUser() || {}).name || '' }); return done(true, '✓ Invite email sent to ' + to); }
+  catch (e) {
+    if (!/sender|connect your email|not set up/i.test(e.message || '')) return done(false, e.message);
+    try { const r = await AUTH.client.auth.signInWithOtp({ email: to, options: { shouldCreateUser: true, emailRedirectTo: location.origin + location.pathname + '?invite=' + token } }); if (r.error) throw r.error; done(true, '✓ Login link sent to ' + to + ' — opening it joins them to the workspace'); }
+    catch (e2) { done(false, (AUTH_ERR[e2.message] || e2.message) + ' — copy the link and send it on WhatsApp instead.'); }
+  }
+}
 function openInvite() {
   $('#stageBox').innerHTML = `<div class="m-head"><h2>Invite someone</h2><button class="ibtn" data-close>${I.x}</button></div>
     <p class="help" style="margin-bottom:12px">Create a link and send it on WhatsApp or email. They open it, create a login, and join <b>${esc(AUTH.wsName)}</b> with the role you pick. Links work once and expire in 7 days.</p>
@@ -6847,7 +6870,8 @@ function openInvite() {
       const r = await sbq(AUTH.client.from('invites').insert({ workspace_id: AUTH.ws, role, email, note: $('#lgNote').value.trim() }).select('token').single());
       const link = inviteLink(r.token), msg = `You're invited to join ${AUTH.wsName} on Nodevers. Open this link to create your login: ${link}`;
       $('#lgOut').innerHTML = `<div class="field"><label>Invite link</label><div style="display:flex;gap:8px"><input class="input" readonly value="${esc(link)}"><button class="btn" data-lgcopy="${esc(r.token)}">Copy</button></div></div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:6px"><a class="btn wa" target="_blank" rel="noopener" href="https://wa.me/?text=${encodeURIComponent(msg)}">${I.wa}Send on WhatsApp</a><a class="btn" href="mailto:${esc(email)}?subject=${encodeURIComponent('Invite to ' + AUTH.wsName)}&body=${encodeURIComponent(msg)}">Send email</a></div>`;
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:6px"><a class="btn wa" target="_blank" rel="noopener" href="https://wa.me/?text=${encodeURIComponent(msg)}">${I.wa}Send on WhatsApp</a>${email ? `<button type="button" class="btn primary" data-lgsend="${esc(r.token)}" data-lgto="${esc(email)}">✉ Send invite email</button>` : `<a class="btn" href="mailto:?subject=${encodeURIComponent('Invite to ' + AUTH.wsName)}&body=${encodeURIComponent(msg)}">Open in my email app</a>`}</div>
+        ${email ? '' : '<p class="help">Add their email above to send the invite straight from Nodevers.</p>'}`;
       b.textContent = 'Create another'; renderLogins();
     } catch (e) { toast('Could not create invite: ' + e.message, true); } finally { b.disabled = false; }
   };
@@ -6860,6 +6884,11 @@ function openInvite() {
     if (t.closest('[data-lginvite]')) return openInvite();
     const ac = t.closest('[data-lgacc]'); if (ac) return openAccess(ac.dataset.lgacc);
     const cp = t.closest('[data-lgcopy]'); if (cp) return copyText(inviteLink(cp.dataset.lgcopy));
+    const rs = t.closest('[data-lgreset]'); if (rs) { if (!confirm(`Email ${rs.dataset.lgreset} a link to set a new password?`)) return; rs.disabled = true; try { const r = await AUTH.client.auth.resetPasswordForEmail(rs.dataset.lgreset, { redirectTo: location.origin + location.pathname }); if (r.error) throw r.error; toast('✓ Reset link sent to ' + rs.dataset.lgreset); } catch (err) { toast(AUTH_ERR[err.message] || err.message, true); } rs.disabled = false; return; }
+    const pz = t.closest('[data-lgpause]'); if (pz) { if (!confirm(`Pause ${pz.dataset.lgname}? They can not open this workspace until you press Resume. Their leads, chats and history stay.`)) return; try { await sbq(AUTH.client.rpc('member_pause', { p_ws: AUTH.ws, p_user: pz.dataset.lgpause })); toast(`${pz.dataset.lgname} is paused`); renderLogins(); } catch (err) { toast(err.message, true); } return; }
+    const rz = t.closest('[data-lgresume]'); if (rz) { try { await sbq(AUTH.client.rpc('member_resume', { p_ws: AUTH.ws, p_user: rz.dataset.lgresume })); toast(`✓ ${rz.dataset.lgname} can sign in again`); renderLogins(); } catch (err) { toast(/limit/i.test(err.message) ? 'Your plan has no free team seat — remove someone or upgrade in Settings → Plan & billing.' : err.message, true); } return; }
+    const fg = t.closest('[data-lgforget]'); if (fg) { if (!confirm(`Remove ${fg.dataset.lgname} for good? Their leads and history stay.`)) return; try { await sbq(AUTH.client.rpc('member_forget', { p_ws: AUTH.ws, p_user: fg.dataset.lgforget })); toast('Removed'); renderLogins(); } catch (err) { toast(err.message, true); } return; }
+    const se = t.closest('[data-lgsend]'); if (se) return inviteEmail(se.dataset.lgsend, se.dataset.lgto || '', se);
     const rv = t.closest('[data-lgrevoke]'); if (rv) { try { await sbq(AUTH.client.from('invites').delete().eq('token', rv.dataset.lgrevoke)); toast('Invite revoked'); renderLogins(); } catch (err) { toast(err.message, true); } return; }
     const rm = t.closest('[data-lgrm]'); if (rm) {
       const self = rm.dataset.lgrm === AUTH.session.user.id;
@@ -11372,6 +11401,20 @@ function homeChecklist() {
   ];
   return items;
 }
+/** first sign-in of a team member / client in a workspace: who they are here + their pages (once per workspace and browser) */
+function memberWelcome() {
+  if (!cloud || !AUTH.ws || !AUTH.role || ['owner', 'platform'].includes(AUTH.role) || AUTH.platform) return;
+  const k = 'nv.welc.' + AUTH.ws; if (store.get(k) || !store.get('nv.joined')) return; store.set(k, 1); store.del('nv.joined');   // only right after joining with an invite
+  const pages = $$('#side .nv-scroll [data-nvr], #side .nv-scroll [data-nvpar]').filter(a => a.offsetParent !== null && !a.closest('.nv-kids')).map(a => [a.dataset.nvr || '', a.dataset.nvpar || '', (a.textContent || '').replace(/\s+\d+(\s*new)?$/, '').trim()]).filter(x => x[2]).slice(0, 10);
+  const u = authUser() || {}, noName = !u.name || u.name === String(u.email || '').split('@')[0];
+  $('#stageBox').innerHTML = `<div class="m-head"><h2>Welcome to ${esc(AUTH.wsName || 'the workspace')} 👋</h2><button class="ibtn" data-close>${I.x}</button></div>
+    <p class="help" style="margin-bottom:12px">You joined as <b>${esc(ROLE_LABEL[AUTH.role] || AUTH.role)}</b> — ${esc((ROLE_INFO[AUTH.role] || '').split('— ')[1] || '')}. Your owner decides what you can see and do.</p>
+    <div class="field"><label>Your pages</label><div class="chips">${pages.map(([r, par, l]) => `<button type="button" class="chip" data-welgo="${esc(r)}" data-welpar="${esc(par)}">${esc(l)}</button>`).join('') || '<span class="muted">Home</span>'}</div></div>
+    ${noName ? '<p class="help">Tip: add your name and photo in <b>My profile</b> so your team knows who did what.</p>' : ''}
+    <div class="m-foot"><div class="grow"></div>${noName ? '<button class="btn" data-welgo="settings/profile">My profile</button>' : ''}<button class="btn primary" data-close>Start</button></div>`;
+  $('#stageBox').onclick = e => { const b = e.target.closest('[data-welgo]'); if (!b) return; hideModal('#stageModal'); if (b.dataset.welgo) go(b.dataset.welgo); else { const pr = $(`#side [data-nvpar="${CSS.escape(b.dataset.welpar)}"]`); if (pr) pr.click(); } };
+  showModal('#stageModal');
+}
 function renderHome(anim) {
   const box = $('#homeBody'); if (!box || !$('#v-home').classList.contains('active')) return;
   if (cloud && CONN.homeWs !== AUTH.ws) { CONN.homeWs = AUTH.ws; Promise.all([WA.status ? 0 : waLoadStatus(), BC.email ? 0 : sbq(AUTH.client.rpc('email_status', { p_ws: AUTH.ws })).then(r => { BC.email = r || { connected: false }; }, () => { BC.email = { connected: false }; })]).then(() => { if (activeView() === 'home') renderHome(); }); }
@@ -14862,7 +14905,8 @@ function demoRetCond(o) {
   dApply(o.sku, -d, want ? (o.returnCondition === 'missing' ? 'Return missing' : 'Return damaged') : 'Return condition changed', o.channel || '', o.extId || o.orderId || '', me() || 'You', null, '');
 }
 /* ================= start ================= */
-(function grabInvite() { const m = location.hash.match(/^#invite=([a-f0-9]{20,80})$/i); if (m) { store.set('leadnode.invite', { t: m[1], at: Date.now() }); history.replaceState(null, '', location.pathname + '#dashboard'); } })();
+(function grabInvite() { const m = location.hash.match(/^#invite=([a-f0-9]{20,80})$/i); if (m) { store.set('leadnode.invite', { t: m[1], at: Date.now() }); history.replaceState(null, '', location.pathname + '#dashboard'); return; }
+  const q = (location.search.match(/[?&]invite=([a-f0-9]{20,80})/i) || [])[1]; if (q) { store.set('leadnode.invite', { t: q, at: Date.now() }); history.replaceState(null, '', location.pathname + location.hash); } })();
 famInit(); settingsAccordion(); mobileBar(); applyModules();
 if (sbConf().url) platLoad();
 go(location.hash.slice(1) || 'home');

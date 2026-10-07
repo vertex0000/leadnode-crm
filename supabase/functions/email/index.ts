@@ -163,9 +163,27 @@ Deno.serve(async (req) => {
     if (b.action === 'disconnect') { if (!admin) return json({ error: 'Only the owner or an admin can do this.' }, 403); await db.from('email_accounts').delete().eq('workspace_id', ws); return json({ connected: false }); }
 
     const { data: acc } = await db.from('email_accounts').select('*').eq('workspace_id', ws).maybeSingle();
-    if (!acc) return json({ error: 'Connect your email sender first (Broadcast → Email → Connect).' }, 400);
+    if (!acc) return json({ error: 'Connect your email sender first (Broadcast → Email → Connect).', code: 'no_sender' }, 400);
     const { data: w } = await db.from('workspaces').select('name').eq('id', ws).maybeSingle();
     const fromLabel = acc.from_name || w?.name || acc.from_email;
+
+    // team invite from the workspace's own sender (Team & access → Invite → Send invite email)
+    if (b.action === 'invite') {
+      if (!admin) return json({ error: 'Only the owner or an admin can invite people.' }, 403);
+      const { data: inv } = await db.rpc('invite_for_email', { p_ws: ws, p_token: String(b.token ?? '') });
+      if (!inv) return json({ error: 'This invite has expired or was already used — create a new one.' }, 400);
+      const to = String(b.to || inv.email || '').trim().toLowerCase();
+      if (!okEmail(to)) return json({ error: 'Enter the email of the person you invite.' }, 400);
+      if (inv.email && inv.email !== to) return json({ error: 'This invite is locked to another email.' }, 400);
+      const link = String(b.link ?? ''); if (!/^https:\/\/[^\s"<>]+#invite=[a-f0-9]{20,80}$/i.test(link) && !/^http:\/\/(localhost|127\.0\.0\.1)[^\s"<>]*#invite=[a-f0-9]{20,80}$/i.test(link)) return json({ error: 'Bad invite link.' }, 400);
+      const roleName: Record<string, string> = { admin: 'an admin', member: 'a team member', client: 'a viewer (read only)' };
+      const by = String(b.by ?? '').slice(0, 80) || fromLabel, wsName = String(inv.workspace || w?.name || 'our workspace');
+      const html = `<p style="margin:0 0 14px">Hi,</p><p style="margin:0 0 14px"><b>${esc(by)}</b> invited you to join <b>${esc(wsName)}</b> as ${roleName[inv.role] || 'a team member'}.</p>
+<p style="margin:22px 0"><a href="${esc(link)}" style="background:#16181d;color:#ffffff;text-decoration:none;padding:12px 22px;border-radius:999px;font-weight:bold;display:inline-block">Join ${esc(wsName)}</a></p>
+<p style="margin:0 0 14px;color:#5b6170;font-size:13px">Open the button, create your login with this email (${esc(to)}) and you are in. The link works once and expires in 7 days.</p>`;
+      const r = await brevoSend(acc, { email: to, name: '' }, `You're invited to join ${wsName}`, wrap(html, fromLabel, ''), '', '');
+      return r.ok ? json({ ok: true }) : json({ error: r.error }, 400);
+    }
     const subject = String(b.subject ?? '').trim().slice(0, 200), body = String(b.body ?? '');
     if (!subject || !body.trim()) return json({ error: 'Add a subject and a message.' }, 400);
 
