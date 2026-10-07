@@ -95,7 +95,7 @@ async function shopify(ctx: Ctx, limitPages = 8) {
       items.forEach((li: any, k: number) => {
         const disc = (li.discount_allocations ?? []).reduce((a: number, d: any) => a + Number(d.amount || 0), 0), qty = Number(li.quantity || 1), unit = num(li.price);
         orders.push({ ext_id: cut(items.length > 1 ? `${o.name || o.id}-${k + 1}` : (o.name || o.id), 80), order_date: dateOf(o.created_at), sku: cut(li.sku, 80), product_name: cut(li.title + (li.variant_title ? ' · ' + li.variant_title : ''), 200), qty,
-          unit_price: unit, amount: unit != null ? Math.max(0, unit * qty - disc) : null, shipping_fee: k === 0 ? ship : null, status: st, payment: cut(gw, 40),
+          unit_price: unit, amount: unit != null ? Math.max(0, unit * qty - disc) : null, shipping_income: k === 0 ? ship : null, seller_discount: disc > 0 ? Math.round(disc * 100) / 100 : null, status: st, payment: cut(gw, 40),
           customer_name: cut([o.shipping_address?.first_name, o.shipping_address?.last_name].filter(Boolean).join(' ') || o.customer?.first_name || '', 120), customer_state: cut(o.shipping_address?.province, 60), customer_city: cut(o.shipping_address?.city, 60),
           tracking_url: cut(o.fulfillments?.[0]?.tracking_url, 500), courier: cut(o.fulfillments?.[0]?.tracking_company, 60), ...who });
       });
@@ -142,7 +142,7 @@ async function woocommerce(ctx: Ctx, limitPages = 10) {
     for (const o of data) {
       const items = o.line_items ?? [], cod = /cod|cash/i.test(o.payment_method || '') && o.status === 'processing';
       items.forEach((li: any, k: number) => orders.push({ ext_id: cut(items.length > 1 ? `${o.number || o.id}-${k + 1}` : String(o.number || o.id), 80), order_date: dateOf(o.date_created_gmt ? o.date_created_gmt + 'Z' : o.date_created), sku: cut(li.sku, 80), product_name: cut(li.name, 200),
-        qty: Number(li.quantity || 1), unit_price: num(li.price), amount: num(li.total), shipping_fee: k === 0 ? num(o.shipping_total) : null, status: cod ? 'COD' : (WOO_ST[o.status] ?? statusOf(o.status)), payment: cut(o.payment_method_title, 40),
+        qty: Number(li.quantity || 1), unit_price: num(li.price), amount: num(li.total), shipping_income: k === 0 ? num(o.shipping_total) : null, seller_discount: (() => { const d = (num(li.subtotal) ?? 0) - (num(li.total) ?? 0); return d > 0 ? Math.round(d * 100) / 100 : null; })(), status: cod ? 'COD' : (WOO_ST[o.status] ?? statusOf(o.status)), payment: cut(o.payment_method_title, 40),
         customer_name: cut([o.shipping?.first_name || o.billing?.first_name, o.shipping?.last_name || o.billing?.last_name].filter(Boolean).join(' '), 120), customer_state: cut(o.shipping?.state || o.billing?.state, 60), customer_city: cut(o.shipping?.city || o.billing?.city, 60),
         customer_phone: phoneOf(o.billing?.phone, o.shipping?.phone), customer_email: emailOf(o.billing?.email), order_ref: cut(o.number || o.id, 80), coupon: cut(o.coupon_lines?.[0]?.code, 60), pincode: pinOf(o.shipping?.postcode, o.billing?.postcode) }));
     }
@@ -325,7 +325,7 @@ async function flipkart(ctx: Ctx) {
     if (known.has(id)) { updates.push({ id, status }); continue; }
     const qty = Math.max(1, Number(it.quantity || 1)), pc = it.priceComponents ?? {}, sp = num(pc.sellingPrice), amt = num(pc.totalPrice) ?? (sp != null ? sp * qty : null), a = addr.get(String(sh.shipmentId)) ?? {};
     orders.push({ ext_id: cut(id, 80), order_ref: cut(it.orderId, 80), order_date: dateOf(it.orderDate ?? sh.orderDate), sku: cut(it.sku, 80), product_name: cut(it.title ?? it.productTitle ?? it.fsn, 200), qty,
-      unit_price: amt != null ? Math.round(amt / qty * 100) / 100 : null, amount: amt, shipping_fee: num(pc.shippingCharge), marketplace_fee: amt != null && fee ? Math.round(amt * fee) / 100 : null, status, payment: cod ? 'COD' : 'Prepaid',
+      unit_price: amt != null ? Math.round(amt / qty * 100) / 100 : null, amount: amt, platform_discount: num(pc.flipkartDiscount), _fee_est: amt != null && fee ? Math.round(amt * fee) / 100 : null, status, payment: cod ? 'COD' : 'Prepaid',
       customer_name: cut([a.firstName, a.lastName].filter(Boolean).join(' ') || a.name || '', 120), customer_state: cut(a.state, 60), customer_city: cut(a.city, 60), pincode: pinOf(a.pinCode, a.pincode), courier: cut(sh.courierName ?? sh.logisticsPartner ?? 'Ekart', 60), return_reason: r?.why ?? '' });
   }
   for (const [id, r] of ret) if (!seen.has(id) && known.has(id)) updates.push({ id, status: r.st });     // returned items whose shipment is older than the window
@@ -405,11 +405,16 @@ async function store(ws: string, platform: string, got: Got, cfg: any = {}) {
     const TXT = ['sku', 'product_name', 'payment', 'customer_name', 'customer_state', 'customer_city', 'courier', 'tracking_url', 'customer_phone', 'customer_email', 'order_ref', 'coupon', 'pincode', 'return_reason'];
     const seen = new Set<string>(), rows = got.orders.filter((o) => o.ext_id && !seen.has(o.ext_id) && seen.add(o.ext_id)).map((o) => { const r: any = { workspace_id: ws, channel: CHANNEL[platform] ?? 'Website', source: SOURCE[platform], stock_skip: stockSkip(platform, cfg) }; for (const [k, v] of Object.entries(o)) if (v !== undefined) r[k] = v === '' && !TXT.includes(k) ? null : v; return r; });
     // lead_id is not sent: the database links each order to its customer (by phone / email) and a sync never unlinks it
-    let cols = ['workspace_id', 'channel', 'source', 'stock_skip', 'ext_id', 'order_date', 'sku', 'product_name', 'qty', 'unit_price', 'amount', 'shipping_fee', 'marketplace_fee', 'status', 'payment', 'customer_name', 'customer_state', 'customer_city', 'courier', 'tracking_url', 'customer_phone', 'customer_email', 'order_ref', 'coupon', 'pincode', ...(platform === 'flipkart' ? ['return_reason'] : [])];
+    // 27 update: shipping the customer paid → shipping_income, discounts kept apart; costs a store does not send stay empty (Cost rules fill them, a sync never wipes a real number)
+    let cols = ['workspace_id', 'channel', 'source', 'stock_skip', 'ext_id', 'order_date', 'sku', 'product_name', 'qty', 'unit_price', 'amount', 'shipping_fee', 'marketplace_fee', 'status', 'payment', 'customer_name', 'customer_state', 'customer_city', 'courier', 'tracking_url', 'customer_phone', 'customer_email', 'order_ref', 'coupon', 'pincode', ...(platform === 'flipkart' ? ['return_reason', 'platform_discount'] : []), ...(['shopify', 'woocommerce'].includes(platform) ? ['shipping_income', 'seller_discount'] : [])];
     const normOf = () => rows.map((r) => Object.fromEntries(cols.map((c) => [c, r[c] ?? (['qty'].includes(c) ? 1 : TXT.includes(c) ? '' : c === 'status' ? 'New' : null)])));
     let norm = normOf();
     for (let i = 0; i < norm.length; i += 500) {
       let { error, count } = await db.from('orders').upsert(norm.slice(i, i + 500), { onConflict: 'workspace_id,channel,ext_id', count: 'exact' });
+      if (error && /shipping_income|seller_discount|platform_discount/.test(error.message)) {   // before the 27 update: the old way (customer shipping and the fee estimate in the cost columns)
+        cols = cols.filter((c) => !['shipping_income', 'seller_discount', 'platform_discount'].includes(c)); rows.forEach((r) => { if (r.shipping_income != null && r.shipping_fee == null) r.shipping_fee = r.shipping_income; if (r._fee_est != null && r.marketplace_fee == null) r.marketplace_fee = r._fee_est; }); norm = normOf();
+        ({ error, count } = await db.from('orders').upsert(norm.slice(i, i + 500), { onConflict: 'workspace_id,channel,ext_id', count: 'exact' }));
+      }
       if (error && /pincode/.test(error.message)) { cols = cols.filter((c) => c !== 'pincode'); norm = normOf(); ({ error, count } = await db.from('orders').upsert(norm.slice(i, i + 500), { onConflict: 'workspace_id,channel,ext_id', count: 'exact' })); }   // before the 24 update
       if (error && /customer_phone|customer_email|order_ref|coupon/.test(error.message)) { cols = cols.filter((c) => !['customer_phone', 'customer_email', 'order_ref', 'coupon'].includes(c)); norm = normOf(); ({ error, count } = await db.from('orders').upsert(norm.slice(i, i + 500), { onConflict: 'workspace_id,channel,ext_id', count: 'exact' })); }   // before the 23 update
       if (error) throw new Error('Saving orders: ' + error.message); no += count ?? 0;
