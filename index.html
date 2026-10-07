@@ -2183,6 +2183,8 @@ tr.bk-sel>td{background:color-mix(in srgb,var(--blue-2) 7%,transparent)}
 .bk-bar.busy{opacity:.7;pointer-events:none}
 .bk-bar b{font-size:14px;font-variant-numeric:tabular-nums;white-space:nowrap}.bk-sp{flex:1;min-width:8px}
 .bk-toast{display:flex;align-items:center;gap:12px}
+.pe-strip{display:flex;align-items:center;gap:14px;margin-top:14px;padding:14px 16px}.pe-strip b{display:block;font-size:14px}.pe-strip small{display:block;margin-top:2px}.pe-ic{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;flex:none;font-weight:700;background:color-mix(in srgb,var(--amber,#F59E0B) 18%,transparent);color:var(--amber,#B45309)}
+@media (max-width:600px){.pe-strip{flex-wrap:wrap}.pe-strip .btn{width:100%}}
 @media (max-width:820px){.bk-bar{bottom:84px;left:16px;right:16px;max-width:none;transform:translateY(24px);border-radius:14px}.bk-bar.show{transform:none}.bk-sp{display:none}}
 @media (prefers-reduced-motion:reduce){.bk-bar{transition:none}}
 </style>
@@ -9996,7 +9998,8 @@ function cmProducts() {
   return `<div class="toolbar glass cm-fb"><input class="input sm" id="cmPq" placeholder="Search name, SKU, category" value="${esc(CM.pq)}" style="max-width:260px">
       <select class="input sm" data-cmf="cat"><option value="">All categories</option>${cats.map(c => `<option ${CM.cat === c ? 'selected' : ''}>${esc(c)}</option>`).join('')}</select>
       <select class="input sm" data-cmf="range">${[[30, 'Sales: last 30 days'], [90, 'Sales: last 90 days'], [365, 'Sales: last 12 months'], [0, 'Sales: all time']].map(([v, l]) => `<option value="${v}" ${CM.range === v ? 'selected' : ''}>${l}</option>`).join('')}</select>
-      <div class="grow"></div><button class="btn sm" data-cmimport="products" data-cmw>⇪ Import products</button><button class="btn sm primary" data-cmprod="" data-cmw>+ Add product</button></div>
+      <div class="grow"></div><button class="btn sm" data-pedexp title="All products in Excel with the columns to fill — import the same file back">⬇ Export for editing</button><button class="btn sm" data-cmimport="products" data-cmw>⇪ Import products</button><button class="btn sm primary" data-cmprod="" data-cmw>+ Add product</button></div>
+    ${(() => { const miss = P.filter(p => p.kind !== 'bundle' && peditMissing(p).includes('cost')).length; return miss ? `<div class="pe-strip glass"><span class="pe-ic">!</span><div class="grow"><b>${miss} product${miss > 1 ? 's have' : ' has'} no cost price</b><small class="muted">Profit is not right without it. Fill cost, packaging and GST % in one Excel file and import it back.</small></div><button class="btn sm primary" data-pedexp>Export &amp; fill</button></div>` : ''; })()}
     ${P.length ? `<div class="table-wrap glass" style="margin-top:14px"><table class="tbl cm-tbl"><thead><tr><th>Product</th><th>Category</th><th class="num">Price</th><th class="num">Cost</th><th class="num">Margin</th><th>Stock</th><th class="num">Sold</th><th class="num">Revenue</th><th class="num">Profit</th></tr></thead><tbody>
       ${list.map(p => { const s2 = sold.get(p.sku) || { units: 0, rev: 0, profit: 0 }, [, lbl, c] = cmStock(p), m = cmN(p.price) ? cmPct(cmN(p.price) - cmN(p.cost), cmN(p.price)) : 0;
         return `<tr data-cmprod="${esc(p.sku)}"><td><div class="cm-pn">${p.imageUrl ? `<span class="cm-pi" style="background-image:url('${esc(safeUrl(p.imageUrl))}')"></span>` : `<span class="cm-pi ph">${esc((p.name || p.sku).slice(0, 1).toUpperCase())}</span>`}<div><b>${esc(p.name || p.sku)}</b> ${invTag(p)}<small>${esc(p.sku)}${p.active === false || p.active === 'false' ? ' · hidden' : ''}</small></div></div></td><td>${esc(p.category || '-')}</td><td class="num">${p.price !== '' ? inr(p.price) : '-'}</td><td class="num">${p.cost !== '' ? inr(p.cost) : '-'}</td><td class="num">${p.price !== '' && p.cost !== '' ? m + '%' : '-'}</td><td><span class="cm-sb" style="--c:${c}">${p.kind === 'bundle' ? invSetQty(p.sku) : cmN(p.stock)} · ${lbl}</span></td><td class="num">${s2.units}</td><td class="num">${inr(s2.rev)}</td><td class="num" style="color:${s2.profit < 0 ? 'var(--coral)' : ''}">${inr(s2.profit)}</td></tr>`; }).join('') || '<tr><td colspan="9" class="muted" style="text-align:center;padding:20px">No product matches</td></tr>'}
@@ -10289,6 +10292,7 @@ function cmiDetect(name, head) {
   if ((has('billno') || has('invoiceno') || has('billnumber')) && (has('supplier') || has('vendor'))) return { type: 'bills' };
   if (has('category') && has('amount') && !has('orderid') && !has('sku') && (has('date') || has('expensedate'))) return { type: 'expenses' };
   const orderish = has('orderid') || has('orderdate') || has('amazonorderid') || has('ordernumber') || has('suborderno') || has('orderitemid');
+  if (/\(edit\)/i.test(nm) && has('sku')) return { type: 'pedit' };
   if (orderish) return { type: 'orders', channel: /amazon/.test(nm) || has('amazonfee') || has('amazonorderid') ? 'Amazon' : /flipkart/.test(nm) || has('orderitemid') || has('fsn') ? 'Flipkart' : /meesho/.test(nm) || has('suborderno') || has('reasonforcreditentry') || has('meeshocommissioninclgst') ? 'Meesho' : /whatsapp/.test(nm) ? 'WhatsApp' : has('channel') ? '' : 'Website' };
   if (has('sku') && (has('sellingprice') || has('price') || has('currentstock') || has('stock') || has('mrp') || has('productname'))) return { type: 'products' };
   if (/dashboard|summary|readme|instructions/.test(nm)) return { type: '' };
@@ -10311,6 +10315,7 @@ function cmiFromWorkbook(wb) { return wb.SheetNames.map(n => cmiSheet(n, window.
 const cmiNum = v => { const s2 = String(v == null ? '' : v).replace(/[₹,\s]|rs\.?|inr/gi, ''); if (s2 === '' || s2 === '-') return ''; const n = Number(s2.replace(/[^\d.-]/g, '')); return isFinite(n) && /\d/.test(s2) ? n : ''; };
 const CMI_ST = [[/rto|return.?to.?origin|undeliver/i, 'RTO'], [/ready.?to.?ship|approved|packed|pending/i, 'Processing'], [/deliver|complete|fulfil/i, 'Delivered'], [/refund/i, 'Refunded'], [/return/i, 'Returned'], [/exchang/i, 'Exchange'], [/cancel/i, 'Cancelled'], [/ship|transit|dispatch|out for/i, 'Shipped'], [/process|pending|unshipped|placed|packed/i, 'Processing'], [/confirm/i, 'Confirmed'], [/cod/i, 'COD'], [/paid/i, 'Paid'], [/new/i, 'New']];
 function cmiRows(sh) {
+  if (sh.type === 'pedit') return peditRows(sh);
   if (FIN_IMP[sh.type]) return finImpRows(sh);
   const out = [], bad = []; const val = (r, f) => { const i = sh.map.indexOf(f); return i < 0 ? '' : String(r[i] == null ? '' : r[i]).trim(); };
   sh.rows.forEach((r, ri) => {
@@ -10373,32 +10378,33 @@ function cmiLoaded(sheets, src) {
   drawCmImport();
 }
 function drawCmImport() {
-  const tl = Object.assign({ products: 'Products', orders: 'Orders', ads: 'Ad spend' }, v27() ? { returns: 'Returns & RTO' } : {}, finOk() ? { expenses: 'Expenses', bills: 'Purchase bills', payouts: 'Payouts / settlement', cod: 'COD remittance', charges: 'Other charges & income' } : {});
+  const tl = Object.assign({ products: 'Products', pedit: 'Update products (edit file)', orders: 'Orders', ads: 'Ad spend' }, v27() ? { returns: 'Returns & RTO' } : {}, finOk() ? { expenses: 'Expenses', bills: 'Purchase bills', payouts: 'Payouts / settlement', cod: 'COD remittance', charges: 'Other charges & income' } : {});
   $('#cmiBody').innerHTML = `<div class="cmi-h"><b>${esc(CMI.src)}</b> · ${CMI.sheets.length} tab${CMI.sheets.length > 1 ? 's' : ''} — check what each tab is</div>${CMI.sheets.map((s2, i) => {
-    const pl = s2.type ? cmiRows(s2) : null, req = FIN_IMP[s2.type] ? FIN_IMP[s2.type].f.filter(f => /\*$/.test(f[1])).every(f => s2.map.includes(f[0])) : s2.type === 'products' ? s2.map.includes('sku') : s2.type === 'ads' ? s2.map.includes('spend') : s2.type === 'orders' ? s2.map.some(f => ['extId', 'sku', 'productName', 'amount'].includes(f)) : true, mapped = s2.map.map((f, j) => f ? `${esc(s2.head[j])} → ${esc((CMI_FIELDS[s2.type].find(x => x[0] === f) || [0, f])[1].replace(' *', ''))}` : '').filter(Boolean);
+    const pl = s2.type ? cmiRows(s2) : null, req = s2.type === 'pedit' ? s2.map.includes('sku') : FIN_IMP[s2.type] ? FIN_IMP[s2.type].f.filter(f => /\*$/.test(f[1])).every(f => s2.map.includes(f[0])) : s2.type === 'products' ? s2.map.includes('sku') : s2.type === 'ads' ? s2.map.includes('spend') : s2.type === 'orders' ? s2.map.some(f => ['extId', 'sku', 'productName', 'amount'].includes(f)) : true, mapped = s2.map.map((f, j) => f ? `${esc(s2.head[j])} → ${esc((CMI_FIELDS[s2.type].find(x => x[0] === f) || [0, f])[1].replace(' *', ''))}` : '').filter(Boolean);
     return `<div class="cmi-s glass ${s2.type ? '' : 'off'}"><div class="cmi-sh"><b title="${esc(s2.name)}">${esc(s2.name)}</b><small class="muted">${s2.rows.length} rows</small><div class="grow"></div>
       <select class="input sm" data-cmitype="${i}"><option value="">Skip this tab</option>${Object.entries(tl).map(([k, n]) => `<option value="${k}" ${s2.type === k ? 'selected' : ''}>${n}</option>`).join('')}</select>
       ${s2.type === 'orders' ? `<select class="input sm" data-cmich="${i}"><option value="">Channel from a column</option>${CM_CH.map(c => `<option ${s2.channel === c ? 'selected' : ''}>${c}</option>`).join('')}</select>` : ''}</div>
-      ${s2.type ? `<div class="cmi-sum">${req ? `<span class="ok">${pl.rows.length} ${tl[s2.type].toLowerCase()} ready</span>` : `<span class="imp-bad">${FIN_IMP[s2.type] ? 'Choose the columns marked * — ' + FIN_IMP[s2.type].f.filter(f => /\*$/.test(f[1])).map(f => f[1].replace(' *', '')).join(', ') : s2.type === 'products' ? 'Choose the SKU column' : s2.type === 'ads' ? 'Choose the Amount spent column' : 'Choose at least Order ID, SKU, Product or Revenue'}</span>`}${pl.bad ? ` · <span class="muted">${pl.bad} rows skipped (missing ${FIN_IMP[s2.type] ? 'a column marked *' : s2.type === 'products' ? 'SKU' : s2.type === 'ads' ? 'spend' : 'order details'})</span>` : ''} · <a class="bc-link" data-cmiopen="${i}">${s2.open ? 'Hide columns' : 'Edit columns'}</a></div>
+      ${s2.type ? `<div class="cmi-sum">${req && s2.type === 'pedit' ? peditSum(pl) : req ? `<span class="ok">${pl.rows.length} ${tl[s2.type].toLowerCase()} ready</span>` : `<span class="imp-bad">${FIN_IMP[s2.type] ? 'Choose the columns marked * — ' + FIN_IMP[s2.type].f.filter(f => /\*$/.test(f[1])).map(f => f[1].replace(' *', '')).join(', ') : s2.type === 'products' ? 'Choose the SKU column' : s2.type === 'ads' ? 'Choose the Amount spent column' : 'Choose at least Order ID, SKU, Product or Revenue'}</span>`}${pl.bad ? ` · <span class="muted">${pl.bad} rows skipped (missing ${FIN_IMP[s2.type] ? 'a column marked *' : s2.type === 'products' ? 'SKU' : s2.type === 'ads' ? 'spend' : 'order details'})</span>` : ''} · <a class="bc-link" data-cmiopen="${i}">${s2.open ? 'Hide columns' : 'Edit columns'}</a></div>
       <div class="cmi-m">${mapped.length ? mapped.map(x => `<span>${x}</span>`).join('') : '<span class="muted">No columns matched yet</span>'}</div>
       ${s2.open ? `<div class="imp-map">${s2.head.map((h, j) => `<div class="imp-col"><div class="imp-h" title="${esc(h)}">${esc(h || 'Column ' + (j + 1))}</div><select class="input sm" data-cmicol="${i}|${j}"><option value="">— Skip —</option>${CMI_FIELDS[s2.type].map(([k, n]) => `<option value="${k}" ${s2.map[j] === k ? 'selected' : ''}>${n}</option>`).join('')}</select><div class="imp-s">${s2.rows.slice(0, 2).map(r => `<span>${esc(String(r[j] || '').slice(0, 30)) || '<i class="muted">empty</i>'}</span>`).join('')}</div></div>`).join('')}</div>` : ''}` : '<div class="cmi-sum muted">Skipped — pick Products, Orders or Ad spend to import it.</div>'}</div>`; }).join('')}
     ${CMI.sheets.some(s2 => s2.type === 'ads' && !s2.map.includes('day')) ? `<label class="imp-batch"><span>Date for ad spend rows without a date</span><input class="input sm" type="date" id="cmiAdDay" value="${esc(CMI.adDay || todayStr())}"></label>` : ''}`;
   const ready = CMI.sheets.filter(s2 => s2.type).map(s2 => cmiRows(s2).rows.length).reduce((a, b) => a + b, 0);
-  $('#cmiGo').disabled = !ready; $('#cmiGo').textContent = ready ? `Import ${ready} rows` : 'Import';
+  $('#cmiGo').disabled = !ready; $('#cmiGo').textContent = !ready ? 'Import' : CMI.sheets.filter(s2 => s2.type).every(s2 => s2.type === 'pedit') ? `Update ${ready} products` : `Import ${ready} rows`;
 }
 async function runCmImport() {
   const btn = $('#cmiGo'), jobs = CMI.sheets.filter(s2 => s2.type).map(s2 => ({ s2, rows: cmiRows(s2).rows })).filter(j => j.rows.length);
-  const ORDER = ['products', 'orders', 'ads', 'returns', 'expenses', 'bills', 'payouts', 'cod', 'charges']; jobs.sort((a, b) => ORDER.indexOf(a.s2.type) - ORDER.indexOf(b.s2.type));   // products first so orders pick up names and costs
-  const total = jobs.reduce((a, j) => a + j.rows.length, 0); let done = 0; const res = { products: 0, orders: 0, ads: 0, returns: 0, expenses: 0, bills: 0, payouts: 0, cod: 0, charges: 0 }, max = cloud ? 20000 : 2000; let miss = 0, billRows = [];
+  const ORDER = ['pedit', 'products', 'orders', 'ads', 'returns', 'expenses', 'bills', 'payouts', 'cod', 'charges']; jobs.sort((a, b) => ORDER.indexOf(a.s2.type) - ORDER.indexOf(b.s2.type));   // products first so orders pick up names and costs
+  const total = jobs.reduce((a, j) => a + j.rows.length, 0); let done = 0; const res = { pedit: 0, products: 0, orders: 0, ads: 0, returns: 0, expenses: 0, bills: 0, payouts: 0, cod: 0, charges: 0 }, max = cloud ? 20000 : 2000; let miss = 0, billRows = [];
   if (total > max) return toast(`Too many rows at once (${total}) — import up to ${max} rows per file`, true);
   btn.disabled = true; $('#cmiProg').hidden = false; if (cloud) await impStart(jobs.some(j => FIN_IMP[j.s2.type] && j.s2.type !== 'returns') && !jobs.some(j => ['products', 'orders', 'ads'].includes(j.s2.type)) ? 'finance' : 'store', CMI.src || 'Sheet');
   const prog = () => { $('#cmiBar').style.width = Math.round(done / total * 100) + '%'; $('#cmiTxt').textContent = `${done} / ${total}`; };
   try {
     for (const j of jobs) { const k = j.s2.type, act = { products: 'importProducts', orders: 'importOrders', ads: 'importAds' }[k];
+      if (k === 'pedit') { res.pedit += await peditApply(j.rows); done += j.rows.length; prog(); continue; }
       if (k === 'returns') { const r = await finImportReturns(j.rows); res.returns += r.count; miss += r.miss; done += j.rows.length; prog(); continue; }
       if (FIN_IMP[k]) { for (let i = 0; i < j.rows.length; i += 400) { const part = j.rows.slice(i, i + 400); res[k] += (await finCall('import', { kind: k, rows: part })).count; done += part.length; prog(); } if (k === 'bills') billRows = billRows.concat(j.rows); continue; }
       for (let i = 0; i < j.rows.length; i += 500) { const part = j.rows.slice(i, i + 500); res[k] += (await api(act, { rows: part })).count; done += part.length; prog(); } }
-    const impId = await impEnd(); hideModal('#leadModal'); if (impId) setTimeout(() => impUndoToast(impId), 2700); toast(`✓ Imported ${[res.products && res.products + ' products', res.orders && res.orders + ' orders', res.ads && res.ads + ' ad spend rows', res.returns && res.returns + ' returns updated', res.expenses && res.expenses + ' expenses', res.bills && res.bills + ' bill lines', res.payouts && res.payouts + ' payout lines', res.cod && res.cod + ' COD remittances', res.charges && res.charges + ' charges'].filter(Boolean).join(' · ') || 'nothing new'}${miss ? ` · ${miss} returns had no matching order` : ''}`);
+    const impId = await impEnd(); hideModal('#leadModal'); if (impId) setTimeout(() => impUndoToast(impId), 2700); toast(`✓ Imported ${[res.pedit && res.pedit + ' products updated', res.products && res.products + ' products', res.orders && res.orders + ' orders', res.ads && res.ads + ' ad spend rows', res.returns && res.returns + ' returns updated', res.expenses && res.expenses + ' expenses', res.bills && res.bills + ' bill lines', res.payouts && res.payouts + ' payout lines', res.cod && res.cod + ' COD remittances', res.charges && res.charges + ' charges'].filter(Boolean).join(' · ') || 'nothing new'}${miss ? ` · ${miss} returns had no matching order` : ''}`);
     if (billRows.length && billRows.some(b => b.sku && crProd(b.sku)) && confirm('Update the cost of these products to the landed cost of their newest bill (price + transport share' + (finGstOn() ? '' : ' + GST') + ')?')) { const n = await finLandedUpdate(billRows); toast(`✓ ${n} product costs updated`); }
     const fin = jobs.find(j => FIN_IMP[j.s2.type] && j.s2.type !== 'returns');
     await refreshData(); if (fin) { if (activeView() !== 'finance') go('finance/' + fin.s2.type); else renderFinance(); } else if (activeView() !== 'commerce') go(jobs.some(j => j.s2.type === 'returns') ? 'commerce/returns' : 'commerce');
@@ -13550,6 +13556,7 @@ const HELP_GUIDE = [
   ['templates', 'WhatsApp templates', 'template templates create approve meta pending rejected sync draft submit', '**Templates**: **⟳ Sync from WhatsApp** brings your approved templates. **New template**: name (lowercase_with_underscores), category (Marketing / Utility), language, use case, header, body with {{1}} variables, footer, buttons → **Submit to Meta for approval** (minutes to 24 h). Drafts show **Edit & submit to Meta**. **Library** sets use case, best segment, tags and notes so your team picks the right one.'],
   ['builder', 'Template builder: content, buttons, actions, flows', 'builder button buttons action flow next template image video pdf catalog payment order cart call website map multi step', 'In **Templates → + New template** pick a ready-made template or start blank. Choose a **Message type** (Text, Image, Video, PDF, Location, Payment link; Catalog / Product card need a Meta catalog — contact cards are not allowed in templates). Add up to 10 **buttons** (max 1 Call, max 2 link buttons, keep reply buttons together). Under each reply button, **⚡ When a customer taps → + Add step**: Reply with text, Send next template, image / PDF, link, payment link, tag, stage, assign, task, order, Ask a question, Wait, hand over, AI reply. Chaining templates with **Send next template** builds a multi-step chatbot.\n\nFor an already-approved template just click its card (or **Edit**) — change the auto-replies and press **Save changes**; no new Meta review needed. **▶ Test chat** lets you tap the buttons like a customer.'],
   ['nav-spaces', 'Finding your way: sidebar, Insights, Settings, Admin', 'sidebar menu navigation collapse expand insights settings admin back workspace switch profile sign out dark mode breadcrumb link', 'The **left sidebar** is your workspace: Home, Inbox, Tasks & Calls, then **Sales**, **Commerce** and **Marketing**. Items with an arrow open their pages underneath (e.g. **Products & Stock → Reorder**). **Insights** and **Settings** at the bottom open their own menus — press **← Back to workspace** to return. Platform team: **🛡 Admin**. The small line above every page title shows where you are. Press the panel button at the bottom (or **Ctrl + \\**) to shrink the sidebar to icons — hover an icon to see its pages. Your name at the bottom: profile, dark / light mode, sign out. The workspace name at the top: switch workspace and plan. On a phone, press **☰** (or **More**). Every page has its own link (e.g. …#commerce/reorder) and the browser Back button works.'],
+  ['pedit', 'Fill cost, packaging & GST for many products', 'export products excel edit cost price packaging gst hsn bulk update', 'Store → **Products** → **⬇ Export for editing** gives every product in Excel (products with missing cost / packaging / GST on top, a “Missing details” column). Fill the empty cells — do not change SKU — save, then **Import Excel / Sheet** → choose the same file. The tab is recognised as **Update products (edit file)**: it only updates products with the same SKU (never adds or deletes), an empty cell changes nothing, and the window shows what will change before you press **Update N products**. Wrong numbers? **Past imports → Undo** puts the old values back. Stock is never changed from this file.'],
   ['bulk', 'Select many & delete / undo an import', 'select all bulk delete many tick checkbox remove undo import wrong file past imports', 'Every list has tick boxes: **Leads, Customers, Checkouts, Tasks, Calls, Orders, Store channel orders, Products, Suppliers, Purchase orders (drafts), Ad spend, Team, Logins, Templates, Scheduled campaigns and Finance lists**. Tick rows (hold **Shift** to tick a range, the top box ticks the whole page) → a bar shows **N selected · Select all · actions** (Delete, Change stage, Assign, Mark done, Change status…). Delete always asks first; more than 100 rows need you to type DELETE. **Esc** clears. Wrong Excel / Sheet uploaded? After an import press **Undo import**, or open **Past imports** (in the import window or Ctrl+K) → **Undo** — it deletes only the rows that import added. History (stock movements, goods received, messages, payments) is never bulk-deleted.'],
   ['landing', 'Landing page (before login)', 'landing page home page website visitors before login sign up pricing hero features faq edit admin', 'New visitors first see the **landing page**: top bar (Pricing · Log in · Sign up), headline, buttons, pictures of the app, features, 3 start steps, pricing, questions. People who signed in before on that browser go straight to Log in (the login page has **← Back to the home page**). Platform team: **Admin → Website → Landing page** — change every text, picture (upload or https link), feature, step and question, **Preview**, then **Save & publish**. Use {brand}, {trial} and {year} in texts.'],
   ['flipkart', 'Connect Flipkart Seller Hub', 'flipkart seller hub api connect orders returns rto ekart application id secret self access stock sync', '**Settings → Connections → Store channels → Flipkart Seller Hub**. In Seller Hub open your name → **Manage profile → Developer access → Create new access → Self access application**, copy the **Application ID** and **Application secret**, paste them, press **Test connection** → **Connect**. Orders, packed / shipped / delivered / cancelled status, customer returns and RTO come in every 15 minutes; each order item is one order. Selling takes stock out, returns put it back. Optional: **Send my stock to Flipkart** keeps your listings in step (with “Keep back” units). Fees: type an estimate %, or import the settlement report for the real fee of each order. See it all in **Store → Flipkart**.'],
@@ -14948,11 +14955,66 @@ function demoRetCond(o) {
   o.retOff = want; if ((S.settings || {}).stockAuto === 'off' || !(S.products || []).some(x => x.sku === o.sku)) return;
   dApply(o.sku, -d, want ? (o.returnCondition === 'missing' ? 'Return missing' : 'Return damaged') : 'Return condition changed', o.channel || '', o.extId || o.orderId || '', me() || 'You', null, '');
 }
+/* ================= Products → "Export for editing" → fill in Excel → import the same file (update only) =================
+   The file's tab is called "Products (edit)", so the import knows it: it only UPDATES products with the same SKU, never creates or
+   deletes one, an empty cell changes nothing, the import window shows what will change, and Undo import puts the old values back (SQL 30). */
+const PEDIT_COLS = [['sku', 'SKU'], ['name', 'Product Name'], ['category', 'Category'], ['price', 'Selling Price'], ['cost', 'Per Unit Cost'], ['packagingCost', 'Packaging Cost'], ['gstPct', 'GST %'], ['hsn', 'HSN'], ['reorderLevel', 'Reorder Level'], ['moq', 'MOQ'], ['barcode', 'Barcode'], ['unit', 'Unit']];
+const PEDIT_NUM = ['price', 'cost', 'packagingCost', 'gstPct', 'reorderLevel', 'moq'];
+CMI_FIELDS.pedit = CMI_FIELDS.products.filter(([k]) => k !== 'stock');
+CMI_GUESS.pedit = Object.fromEntries(Object.entries(CMI_GUESS.products).filter(([, v]) => v !== 'stock'));
+const peditMissing = p => [['cost', 'cost'], ['packagingCost', 'packaging'], ['gstPct', 'GST %']].filter(([k]) => p[k] === '' || p[k] == null || (k === 'cost' && !cmN(p[k]))).map(x => x[1]);
+async function productsEditExport() {
+  const P = (S.products || []).filter(p => p.kind !== 'bundle').slice().sort((a, b) => peditMissing(b).length - peditMissing(a).length || String(a.name).localeCompare(String(b.name)));
+  if (!P.length) return toast('No products yet — add or import products first.', true);
+  try {
+    await loadScriptOnce(XLSX_SRC);
+    const head = PEDIT_COLS.map(c => c[1]).concat(['Missing details', 'Stock now (info only)']);
+    const rows = [head].concat(P.map(p => PEDIT_COLS.map(([k]) => { const v = p[k]; return v == null ? '' : PEDIT_NUM.includes(k) && v !== '' ? +v : String(v); }).concat([peditMissing(p).join(', ') || '✓', cmN(p.stock)])));
+    const wb = window.XLSX.utils.book_new(), ws = window.XLSX.utils.aoa_to_sheet(rows);
+    ws['!cols'] = head.map((h, i) => ({ wch: i === 1 ? 32 : i === head.length - 2 ? 22 : 14 })); ws['!autofilter'] = { ref: window.XLSX.utils.encode_range({ s: { r: 0, c: 0 }, e: { r: rows.length - 1, c: head.length - 1 } }) };
+    window.XLSX.utils.book_append_sheet(wb, ws, 'Products (edit)');
+    const how = window.XLSX.utils.aoa_to_sheet([['How to use this file'], ['1. Fill the empty cells — rows with “Missing details” are on top (cost, packaging, GST % are needed for the right profit).'], ['2. Do not change the SKU column — it is how Nodevers finds each product.'], ['3. An empty cell changes nothing. New rows are ignored (add new products with Import products).'], ['4. Stock is not changed from this file — use Inventory → Update stock.'], ['5. Save, then Nodevers → Store → Import Excel / Sheet → choose this file → check “what will change” → Import.'], ['6. Wrong numbers? Import window → Past imports → Undo puts the old values back.']]);
+    how['!cols'] = [{ wch: 110 }]; window.XLSX.utils.book_append_sheet(wb, how, 'How to use');
+    window.XLSX.writeFile(wb, `nodevers-products-edit-${todayStr()}.xlsx`);
+    toast(`✓ ${P.length} products exported — fill the file, then import it back`);
+  } catch (e) { toast('Could not make the file: ' + e.message, true); }
+}
+function peditRows(sh) {
+  const out = [], bad = [], nf = [], cnt = {}; const iOf = f => sh.map.indexOf(f);
+  sh.rows.forEach((r, ri) => {
+    const sku = String(r[iOf('sku')] == null ? '' : r[iOf('sku')]).trim(); if (!sku) return bad.push(ri);
+    const p = (S.products || []).find(x => String(x.sku).toLowerCase() === sku.toLowerCase()); if (!p) return nf.push(sku);
+    const set = {}, old = {};
+    CMI_FIELDS.pedit.forEach(([f]) => { if (f === 'sku') return; const i = iOf(f); if (i < 0) return; const raw = String(r[i] == null ? '' : r[i]).trim(); if (raw === '') return;   // empty cell = no change
+      let v = raw; if (PEDIT_NUM.includes(f) || ['price', 'cost'].includes(f)) { v = cmiNum(raw); if (v === '') return; if (['reorderLevel', 'moq'].includes(f)) v = Math.round(v); }
+      else v = raw.slice(0, f === 'name' ? 200 : f === 'notes' ? 1000 : f === 'imageUrl' || f === 'websiteUrl' ? 500 : 80);
+      const cur = p[f] == null ? '' : p[f]; if (PEDIT_NUM.includes(f) ? cur !== '' && +cur === +v : String(cur) === String(v)) return;
+      set[f] = v; old[f] = cur; cnt[f] = (cnt[f] || 0) + 1; });
+    if (Object.keys(set).length) out.push({ sku: p.sku, set, old });
+  });
+  return { rows: out, bad: bad.length, nf, cnt };
+}
+function peditSum(pl) {
+  const L = { name: 'name', category: 'category', price: 'price', cost: 'cost', packagingCost: 'packaging', gstPct: 'GST %', hsn: 'HSN', reorderLevel: 'reorder level', moq: 'MOQ', barcode: 'barcode', unit: 'unit', imageUrl: 'image', amazonAsin: 'ASIN', websiteUrl: 'link', notes: 'notes' };
+  const parts = Object.entries(pl.cnt).sort((a, b) => b[1] - a[1]).map(([k, n]) => `${L[k] || k} ${n}`);
+  return (pl.rows.length ? `<span class="ok">${pl.rows.length} products will change</span> · <span>${esc(parts.join(' · '))}</span>` : '<span class="muted">Nothing changes — the file has the same values</span>') + (pl.nf.length ? ` · <span class="imp-bad" title="${esc(pl.nf.slice(0, 20).join(', '))}">${pl.nf.length} SKUs not found (skipped — new products are not added from this file)</span>` : '') + ' · <span class="muted">empty cells change nothing</span>';
+}
+async function peditApply(changes) {
+  if (!changes.length) return 0;
+  const snake = { packagingCost: 'packaging_cost', gstPct: 'gst_pct', reorderLevel: 'reorder_level', imageUrl: 'image_url', amazonAsin: 'amazon_asin', websiteUrl: 'website_url' }, sn = k => snake[k] || k;
+  IMX.before = { products: changes.map(c => Object.assign({ sku: c.sku }, Object.fromEntries(Object.entries(c.old).map(([k, v]) => [sn(k), v === '' ? null : v])))) };
+  if (!cloud) { changes.forEach(c => { const p = (S.products || []).find(x => x.sku === c.sku); if (p) Object.assign(p, c.set); }); return changes.length; }
+  const groups = new Map(); changes.forEach(c => { const k = Object.keys(c.set).sort().join(','); if (!groups.has(k)) groups.set(k, []); groups.get(k).push(Object.assign({ workspace_id: AUTH.ws, sku: c.sku }, Object.fromEntries(Object.entries(c.set).map(([f, v]) => [sn(f), v])))); });
+  let n = 0;
+  for (const rows of groups.values()) for (let i = 0; i < rows.length; i += 400) n += (await sbq(AUTH.client.from('products').upsert(rows.slice(i, i + 400), { onConflict: 'workspace_id,sku' }).select('sku'))).length;
+  return n;
+}
+
 /* ================= Bulk select on every list (tick rows → one bar with actions) + Undo an import =================
    One bar for every list: "N selected · Select all M · actions · ✕". Shift-click ticks a range, Esc clears.
    Deleting always asks first (over 100 rows: type DELETE). View-only people never see the boxes; the database checks every right again.
    History is never bulk-deleted: stock movements, goods received, messages, payments, audit log. */
-const IMX = { cur: '' };
+const IMX = { cur: '', before: null };
 async function impStart(kind, label) {
   IMX.cur = ''; if (!cloud || AUTH.v29 === false) return '';
   const id = 'IM' + Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
@@ -14961,13 +15023,14 @@ async function impStart(kind, label) {
   return IMX.cur;
 }
 async function impEnd() {
-  const id = IMX.cur; IMX.cur = ''; if (!id) return '';
+  const id = IMX.cur, before = IMX.before; IMX.cur = ''; IMX.before = null; if (!id) return '';
+  if (before) { try { await sbq(AUTH.client.from('imports').update({ before }).eq('id', id)); } catch (e) { } }
   let n = 0;
   for (const t of ['leads', 'orders', 'products', 'ad_spend', 'expenses', 'fin_entries', 'payouts', 'cod_remits', 'purchase_bills']) {
     try { const r = await AUTH.client.from(t).select('*', { count: 'exact', head: true }).eq('workspace_id', AUTH.ws).eq('import_id', id); if (!r.error) n += r.count || 0; } catch (e) { }
   }
   try { await sbq(AUTH.client.from('imports').update({ rows_added: n }).eq('id', id)); } catch (e) { }
-  return n ? id : '';
+  return n || before ? id : '';
 }
 function impUndoToast(id, txt) {
   const t = document.createElement('div'); t.className = 'toast bk-toast';
@@ -14976,8 +15039,8 @@ function impUndoToast(id, txt) {
 }
 async function impUndo(id, btn) {
   let row = null; try { row = (await sbq(AUTH.client.from('imports').select('*').eq('id', id)))[0]; } catch (e) { }
-  const n = row ? row.rows_added : 0;
-  if (!confirm(`Undo this import${row && row.label ? ' (' + row.label + ')' : ''}? The ${n ? n.toLocaleString('en-IN') + ' ' : ''}rows it added will be deleted. Rows that already existed and were only updated stay as they are.`)) return;
+  const n = row ? row.rows_added : 0, upd = row && row.before && row.before.products ? row.before.products.length : 0;
+  if (!confirm(`Undo this import${row && row.label ? ' (' + row.label + ')' : ''}?${n ? ` The ${n.toLocaleString('en-IN')} rows it added will be deleted.` : ''}${upd ? ` The old values of ${upd} products come back.` : ' Rows that already existed and were only updated stay as they are.'}`)) return;
   if (btn) btn.disabled = true;
   try { const r = await sbq(AUTH.client.rpc('import_undo', { p_ws: AUTH.ws, p_id: id })); toast(`✓ Import undone — ${(+r || 0).toLocaleString('en-IN')} rows removed`); $$('.bk-toast').forEach(x => x.remove()); if ($('#stageModal').classList.contains('show') && $('#impList')) openImports(); if ($('#leadModal').classList.contains('show')) hideModal('#leadModal'); await refreshData(); }
   catch (e) { toast(/import_undo|function/i.test(e.message) ? 'Run the database update 29_bulk_imports.sql first.' : e.message, true); if (btn) btn.disabled = false; }
@@ -14989,9 +15052,9 @@ async function openImports() {
   const KIND = { leads: 'Leads', store: 'Store', finance: 'Finance' }, del = bkCanW() && can('delete');
   $('#stageBox').innerHTML = `<div class="m-head"><h2>Past imports</h2><button class="ibtn" data-close>${I.x}</button></div>
     <p class="help" style="margin-bottom:12px">Uploaded the wrong file? <b>Undo</b> deletes exactly the rows that import added. Rows that already existed and were only updated stay as they are.</p>
-    <div class="tblwrap" id="impList"><table class="tbl"><thead><tr><th>When</th><th>What</th><th>File / batch</th><th class="num">Rows added</th><th>By</th><th></th></tr></thead><tbody>
-    ${L.map(r => `<tr style="cursor:default"><td class="muted" style="white-space:nowrap">${esc(new Date(r.created_at).toLocaleString('en-IN', { day: 'numeric', month: 'short', hour: 'numeric', minute: '2-digit' }))}</td><td>${esc(KIND[r.kind] || r.kind || '—')}</td><td>${esc(r.label || '—')}</td><td class="num">${(+r.rows_added || 0).toLocaleString('en-IN')}</td><td class="muted">${esc(r.by_name || '')}</td>
-      <td class="num">${r.undone_at ? `<span class="pill lost">Undone</span>` : del && +r.rows_added ? `<button class="btn sm danger" data-impundo="${esc(r.id)}">Undo</button>` : ''}</td></tr>`).join('') || '<tr><td colspan="6" class="muted" style="padding:16px">No imports yet.</td></tr>'}
+    <div class="tblwrap" id="impList"><table class="tbl"><thead><tr><th>When</th><th>What</th><th>File / batch</th><th class="num">Rows</th><th>By</th><th></th></tr></thead><tbody>
+    ${L.map(r => `<tr style="cursor:default"><td class="muted" style="white-space:nowrap">${esc(new Date(r.created_at).toLocaleString('en-IN', { day: 'numeric', month: 'short', hour: 'numeric', minute: '2-digit' }))}</td><td>${esc(KIND[r.kind] || r.kind || '—')}</td><td>${esc(r.label || '—')}</td><td class="num">${(+r.rows_added || 0).toLocaleString('en-IN')}${r.before && r.before.products ? `<br><small class="muted">${r.before.products.length} updated</small>` : ''}</td><td class="muted">${esc(r.by_name || '')}</td>
+      <td class="num">${r.undone_at ? `<span class="pill lost">Undone</span>` : del && (+r.rows_added || (r.before && r.before.products)) ? `<button class="btn sm danger" data-impundo="${esc(r.id)}">Undo</button>` : ''}</td></tr>`).join('') || '<tr><td colspan="6" class="muted" style="padding:16px">No imports yet.</td></tr>'}
     </tbody></table></div>
     <div class="m-foot"><div class="grow"></div><button class="btn" data-close>Close</button></div>`;
   showModal('#stageModal');
@@ -15095,6 +15158,7 @@ let bkT = 0; const bkSoon = () => { cancelAnimationFrame(bkT); bkT = requestAnim
 new MutationObserver(muts => { if (muts.some(m => m.target.id !== 'bkBar' && !(m.target.closest && m.target.closest('#bkBar')))) bkSoon(); }).observe(document.body, { childList: true, subtree: true });
 document.addEventListener('click', async e => {
   const t = e.target;
+  if (t.closest('[data-pedexp]')) { e.preventDefault(); return productsEditExport(); }
   const ui2 = t.closest('[data-impundo]'); if (ui2) { e.preventDefault(); return impUndo(ui2.dataset.impundo, ui2); }
   if (t.closest('[data-impopen]')) { e.preventDefault(); return openImports(); }
   const cell = t.closest('.bk-cell, .bk-cb');
