@@ -2487,7 +2487,7 @@ html.ld-lock,html.ld-lock body{overflow:hidden}
   <div class="seg"><button class="segb" data-stab="brand">Branding</button><button class="segb" data-stab="conn">Connection</button><button class="segb" data-stab="acct">Accounts</button><button class="segb" data-stab="wl">White label</button></div>
   <div class="stab" id="stab-brand">
     <div class="brand-row" id="brandRowSite"><div id="upLogo"></div><div class="field"><label>Website name</label><input class="input" id="bName" maxlength="40" placeholder="Nodevers"></div></div>
-    <div class="brand-row"><div id="upPhoto"></div><div class="field"><label>Your name (profile)</label><input class="input" id="pName" maxlength="40" placeholder="Shivam"></div></div>
+    <div class="brand-row"><div id="upPhoto"></div><div class="field"><label>Your name (profile)</label><input class="input" id="pName" maxlength="40"></div></div>
     <p class="help" id="brandHelp">Pick a logo and photo from your gallery. They are saved to your Google Sheet (Settings tab) and Drive, so every device shows the same.</p>
     <div class="m-foot"><div class="grow"></div><button class="btn primary" id="bSave">Save</button></div>
   </div>
@@ -2565,8 +2565,8 @@ html.ld-lock,html.ld-lock body{overflow:hidden}
       <h2 id="authTitle">Welcome back</h2><p class="muted" id="authSub">Sign in to your workspace</p>
       <div class="seg" id="authTabs"><button class="segb active" data-auth="in">Sign in</button><button class="segb" data-auth="up">Create account</button></div>
       <form id="authForm" autocomplete="on" novalidate>
-        <div class="field auth-up" hidden><label>Business name</label><input class="input" id="auBiz" autocomplete="organization" placeholder="Diya Seating Solutions"></div>
-        <div class="field auth-up" hidden><label>Your name</label><input class="input" id="auName" autocomplete="name" placeholder="Shivam Waghmare"></div>
+        <div class="field auth-up" hidden><label>Business name</label><input class="input" id="auBiz" autocomplete="organization"></div>
+        <div class="field auth-up" hidden><label>Your name</label><input class="input" id="auName" autocomplete="name"></div>
         <div class="field auth-mail"><label>Email</label><input class="input" id="auEmail" type="email" autocomplete="email" placeholder="you@business.com"></div>
         <div class="field auth-pass"><label>Password <a href="#" class="auth-forgot" id="authForgot">Forgot?</a></label><div class="pw"><input class="input" id="auPass" type="password" autocomplete="current-password" placeholder="At least 8 characters"><button type="button" class="pw-eye" id="auEye" title="Show password">Show</button></div></div>
         <div class="auth-msg" id="authMsg"></div>
@@ -2638,6 +2638,7 @@ const I = {
   chat: '<svg class="i" viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"/></svg>',
 };
 function toast(msg, err) { const t = document.createElement('div'); t.className = 'toast' + (err ? ' err' : ''); t.textContent = msg; $('#toasts').appendChild(t); setTimeout(() => t.remove(), err ? 4500 : 2600); }
+const DEMO_ME = 'Rahul Mehra';   // the sample owner in demo mode (not a real person)
 const store = { get(k) { try { return JSON.parse(localStorage.getItem(k)); } catch (e) { return null; } }, set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { try { localStorage.removeItem(k); } catch (e2) { } } }, del(k) { try { localStorage.removeItem(k); } catch (e) { } } };
 
 /* ================= state ================= */
@@ -2651,7 +2652,7 @@ const ui = { tab: 'all', q: '', stage: '', pfilter: '', openId: null, expanded: 
 /* ================= demo data ================= */
 function demoData() {
   const t = todayStr(); const ago = n => { const d = new Date(); d.setDate(d.getDate() - n); return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); };
-  const L = (id, name, phone, biz, type, city, src, budget, stage, tag, fu, lc, notes, created) => ({ leadId: id, createdOn: created, name, phone, businessName: biz, businessType: type, city, source: src, budget, stage, tag, assignedTo: 'Shivam', followUpDate: fu, lastContact: lc, notes });
+  const L = (id, name, phone, biz, type, city, src, budget, stage, tag, fu, lc, notes, created) => ({ leadId: id, createdOn: created, name, phone, businessName: biz, businessType: type, city, source: src, budget, stage, tag, assignedTo: DEMO_ME, followUpDate: fu, lastContact: lc, notes });
   const leads = [
     L('L001', 'Aarav Mehta', '919800000001', 'Brew & Bites Cafe', 'Cafe', 'Kalyan', 'Instagram', 250000, 'Interested', 'Hot', t, ago(1), 'Wants 20 cafe chairs, sample chair sent', ago(3)),
     L('L002', 'Priya Sharma', '919800000002', 'Spice Garden', 'Restaurant', 'Thane', 'Meta Ad', 500000, 'Contacted', 'Warm', ago(-2), ago(2), 'Asked for catalogue', ago(2)),
@@ -2662,7 +2663,7 @@ function demoData() {
     L('L007', 'Vikram Joshi', '919800000007', 'Hotel Sagar', 'Hotel', 'Alibaug', 'Website', 900000, 'New Lead', 'Warm', ago(-1), '', 'Banquet chairs, 150 pcs', ago(0)),
     L('L008', 'Anjali Desai', '919800000008', 'Salt & Fire', 'Restaurant', 'Mumbai', 'Meta Ad', 400000, 'Lost', 'Cold', '', ago(9), 'Went with local vendor (price)', ago(25)),
   ];
-  let aid = 0; const A = (lead, days, type, details) => ({ activityId: 'A' + pad(++aid).padStart(3, '0'), leadId: lead, dateTime: ago(days) + ' 11:30', type, details, doneBy: 'Shivam' });
+  let aid = 0; const A = (lead, days, type, details) => ({ activityId: 'A' + pad(++aid).padStart(3, '0'), leadId: lead, dateTime: ago(days) + ' 11:30', type, details, doneBy: DEMO_ME });
   const acts = [
     A('L001', 3, 'Lead Added', 'Came from Instagram DM'), A('L001', 2, 'WhatsApp Sent', 'Catalogue shared'), A('L001', 1, 'Call', 'Interested in 20 chairs'), A('L001', 1, 'Sample Sent', 'Sample chair delivered'), A('L001', 1, 'Stage Changed', 'Contacted → Interested'),
     A('L002', 2, 'Lead Added', 'Meta ad lead form'), A('L002', 2, 'WhatsApp Sent', 'Hello message'),
@@ -2674,13 +2675,13 @@ function demoData() {
     A('L008', 25, 'Lead Added', 'Meta ad'), A('L008', 9, 'Stage Changed', 'Quotation Sent → Lost'),
   ];
   ['aarav@brewbites.in', 'priya@spicegarden.in', '', 'sneha@theloungebar.in', 'karan@urbanbeans.in', 'meera@chaiadda.in', 'vikram@hotelsagar.com', ''].forEach((e, i) => { if (leads[i]) leads[i].email = e; });
-  const AREA = { Kalyan: 'Thane', Thane: 'Thane', Mumbai: 'Mumbai', 'Navi Mumbai': 'Thane', Pune: 'Pune', Alibaug: 'Raigad' }, OWN = ['Riya Patil', 'Riya Patil', 'Amit Rao', 'Riya Patil', 'Amit Rao', 'Shivam', 'Amit Rao', 'Riya Patil'];
+  const AREA = { Kalyan: 'Thane', Thane: 'Thane', Mumbai: 'Mumbai', 'Navi Mumbai': 'Thane', Pune: 'Pune', Alibaug: 'Raigad' }, OWN = ['Riya Patil', 'Riya Patil', 'Amit Rao', 'Riya Patil', 'Amit Rao', DEMO_ME, 'Amit Rao', 'Riya Patil'];
   leads.forEach((l, i) => { l.state = 'Maharashtra'; l.district = AREA[l.city] || l.city; l.assignedTo = OWN[i] || l.assignedTo; });
   leads.push(Object.assign(L('L009', 'Hardik Shah', '919800000009', 'Café Mocha', 'Cafe', 'Ahmedabad', 'Meta Ad', 220000, 'Contacted', 'Warm', ago(-1), ago(1), 'Wants catalogue for 15 chairs', ago(4)), { state: 'Gujarat', district: 'Ahmedabad', assignedTo: 'Amit Rao', email: '' }));
-  const who = ['Riya Patil', 'Amit Rao', 'Shivam']; acts.forEach((a, i) => { if (a.type !== 'Lead Added') a.doneBy = (leads.find(l => l.leadId === a.leadId) || {}).assignedTo || who[i % 3]; });
+  const who = ['Riya Patil', 'Amit Rao', DEMO_ME]; acts.forEach((a, i) => { if (a.type !== 'Lead Added') a.doneBy = (leads.find(l => l.leadId === a.leadId) || {}).assignedTo || who[i % 3]; });
   for (let i = 0; i < 26; i++) { const l = leads[i % leads.length]; acts.push(A(l.leadId, i % 12, i % 3 ? 'WhatsApp Sent' : 'Email Sent', i % 3 ? 'Follow-up message' : 'Catalogue email')); acts[acts.length - 1].doneBy = l.assignedTo; }
   const cm = demoCommerce(), checkouts = demoCustomers(leads, cm.orders);
-  return demoGrowth({ checkouts, messages: demoMessages(), broadcasts: [], leads, activities: acts, calls: demoCalls(), tasks: demoTasks(), orders: (() => { return [{ orderId: 'O001', leadId: 'L006', items: '20 × Cafe chair (walnut)', amount: 120000, status: 'Delivered', payment: 'UPI', trackingUrl: '', source: 'Team', createdAt: new Date(Date.now() - 6 * 864e5).toISOString() }, { orderId: 'O002', leadId: 'L005', items: '30 × Cafe chair', amount: 180000, status: 'COD', payment: 'COD', trackingUrl: 'https://track.example/abc', source: 'WhatsApp · order_menu', createdAt: new Date(Date.now() - 864e5).toISOString() }, { orderId: 'O003', leadId: 'L009', items: 'Order Now', amount: '', status: 'New', payment: '', trackingUrl: '', source: 'WhatsApp · order_menu', createdAt: new Date(Date.now() - 36e5).toISOString() }].map(o => Object.assign({ channel: 'WhatsApp', orderDate: dOnly(o.createdAt), qty: (/^(\d+) ×/.exec(o.items) || [0, 1])[1] * 1, customerState: 'Maharashtra' }, /Cafe chair/.test(o.items) ? { sku: 'CH-WAL-01', productName: 'Cafe chair (walnut)', productCost: 1350 * ((/^(\d+) ×/.exec(o.items) || [0, 1])[1] * 1), shippingFee: 2500 } : {}, o)).concat(cm.orders); })(), products: cm.products, adSpend: cm.adSpend, stockMoves: cm.stockMoves, team: [{ memberId: 'T001', name: 'Shivam', role: 'Admin', active: true, team: 'Head office' }, { memberId: 'T002', name: 'Riya Patil', role: 'Sales', active: true, team: 'Mumbai Team' }, { memberId: 'T003', name: 'Amit Rao', role: 'Sales', active: true, team: 'Pune Team' }], lists: DEFAULT_LISTS, templates: demoTemplates(), flows: store.get('leadnode.demoFlows') || [] });
+  return demoGrowth({ checkouts, messages: demoMessages(), broadcasts: [], leads, activities: acts, calls: demoCalls(), tasks: demoTasks(), orders: (() => { return [{ orderId: 'O001', leadId: 'L006', items: '20 × Cafe chair (walnut)', amount: 120000, status: 'Delivered', payment: 'UPI', trackingUrl: '', source: 'Team', createdAt: new Date(Date.now() - 6 * 864e5).toISOString() }, { orderId: 'O002', leadId: 'L005', items: '30 × Cafe chair', amount: 180000, status: 'COD', payment: 'COD', trackingUrl: 'https://track.example/abc', source: 'WhatsApp · order_menu', createdAt: new Date(Date.now() - 864e5).toISOString() }, { orderId: 'O003', leadId: 'L009', items: 'Order Now', amount: '', status: 'New', payment: '', trackingUrl: '', source: 'WhatsApp · order_menu', createdAt: new Date(Date.now() - 36e5).toISOString() }].map(o => Object.assign({ channel: 'WhatsApp', orderDate: dOnly(o.createdAt), qty: (/^(\d+) ×/.exec(o.items) || [0, 1])[1] * 1, customerState: 'Maharashtra' }, /Cafe chair/.test(o.items) ? { sku: 'CH-WAL-01', productName: 'Cafe chair (walnut)', productCost: 1350 * ((/^(\d+) ×/.exec(o.items) || [0, 1])[1] * 1), shippingFee: 2500 } : {}, o)).concat(cm.orders); })(), products: cm.products, adSpend: cm.adSpend, stockMoves: cm.stockMoves, team: [{ memberId: 'T001', name: DEMO_ME, role: 'Admin', active: true, team: 'Head office' }, { memberId: 'T002', name: 'Riya Patil', role: 'Sales', active: true, team: 'Mumbai Team' }, { memberId: 'T003', name: 'Amit Rao', role: 'Sales', active: true, team: 'Pune Team' }], lists: DEFAULT_LISTS, templates: demoTemplates(), flows: store.get('leadnode.demoFlows') || [] });
 }
 /** demo: website / walk-in buyers become one customer profile each (as the database does), with WhatsApp status, offers permission and a few abandoned checkouts */
 function demoCustomers(leads, orders) {
@@ -2692,7 +2693,7 @@ function demoCustomers(leads, orders) {
     if (shift) os.forEach(o => { const d = new Date(o.orderDate); d.setDate(d.getDate() - shift); o.orderDate = d.toISOString().slice(0, 10); o.createdAt = o.orderDate + 'T10:00:00'; });
     if (ci % 6 === 3) { os.sort((x, y) => String(x.orderDate).localeCompare(String(y.orderDate))); os.splice(1).forEach(o => { o.customerName = ''; }); const d = new Date(); d.setDate(d.getDate() - 45 - ci); os[0].orderDate = d.toISOString().slice(0, 10); os[0].createdAt = os[0].orderDate + 'T10:00:00'; }
     const id = 'L' + String(10 + ci).padStart(3, '0'), ph = '9198765' + String(43210 + ci * 7).slice(-5), first = os.reduce((m, o) => o.orderDate < m ? o.orderDate : m, os[0].orderDate), mk = MK[ci % MK.length];
-    leads.push({ leadId: id, createdOn: first, name: nm, phone: ph, email: nm.toLowerCase().replace(/[^a-z]+/g, '.') + '@gmail.com', businessName: '', businessType: '', city: os[0].customerCity || '', state: os[0].customerState || '', district: '', source: os.some(o => o.channel === 'Website') ? 'Shopify' : 'Walk-in', budget: '', stage: 'Won', tag: '', assignedTo: 'Shivam', followUpDate: '', lastContact: '', notes: '',
+    leads.push({ leadId: id, createdOn: first, name: nm, phone: ph, email: nm.toLowerCase().replace(/[^a-z]+/g, '.') + '@gmail.com', businessName: '', businessType: '', city: os[0].customerCity || '', state: os[0].customerState || '', district: '', source: os.some(o => o.channel === 'Website') ? 'Shopify' : 'Walk-in', budget: '', stage: 'Won', tag: '', assignedTo: DEMO_ME, followUpDate: '', lastContact: '', notes: '',
       waStatus: WA[ci % WA.length], mktOk: mk, mktSrc: mk === true ? (ci % 2 ? 'button' : 'checkout') : mk === false ? 'button' : '' });
     os.forEach(o => { o.leadId = id; o.customerPhone = ph; o.orderRef = o.extId; }); ci++;
   });
@@ -2782,7 +2783,7 @@ function demoTemplates() {
 }
 function demoTasks() {
   const t = Date.now(), K = (id, lid, title, dh, pr, who, src, st) => ({ taskId: id, leadId: lid, title, dueAt: new Date(t + dh * 36e5).toISOString(), priority: pr, assignedTo: who, status: st || 'Open', source: src, stage: '', remind: true, createdAt: new Date(t - 864e5).toISOString() });
-  return [K('K001', 'L001', 'Call back and share catalogue / prices', -5, 'High', 'Riya Patil', 'auto'), K('K002', 'L005', 'Follow up on the quotation', 3, 'High', 'Amit Rao', 'auto'), K('K003', 'L004', 'Close the deal — agree the final price', 26, 'High', 'Riya Patil', 'auto'), K('K004', 'L009', 'Send catalogue PDF', 50, 'Medium', 'Amit Rao', 'manual'), K('K005', 'L006', 'Arrange delivery date', -30, 'Low', 'Shivam', 'manual', 'Done')];
+  return [K('K001', 'L001', 'Call back and share catalogue / prices', -5, 'High', 'Riya Patil', 'auto'), K('K002', 'L005', 'Follow up on the quotation', 3, 'High', 'Amit Rao', 'auto'), K('K003', 'L004', 'Close the deal — agree the final price', 26, 'High', 'Riya Patil', 'auto'), K('K004', 'L009', 'Send catalogue PDF', 50, 'Medium', 'Amit Rao', 'manual'), K('K005', 'L006', 'Arrange delivery date', -30, 'Low', DEMO_ME, 'manual', 'Done')];
 }
 function nextId(arr, key, prefix) { let m = 0; arr.forEach(o => { const x = String(o[key] || '').match(new RegExp('^' + prefix + '(\\d+)$')); if (x) m = Math.max(m, +x[1]); }); return prefix + String(m + 1).padStart(3, '0'); }
 function demoApi(action, d) {
@@ -4909,8 +4910,8 @@ function n8Seed() {
         [['Every Monday 9am', '⚙ Client Settings'], ['⚙ Client Settings', 'Get ad insights'], ['Get ad insights', 'Summarise'], ['Summarise', 'Send report']]) },
   ];
   const clients = [
-    { id: 'C1', name: 'Diya Seating Solutions', owner: 'Shivam', url: 'https://diyaseating.app.n8n.cloud', plan: 'Starter', status: 'connected', used: 1840, limit: 2500, keyOk: true },
-    { id: 'C2', name: 'Moutix', owner: 'Moutix team', url: 'https://moutix.app.n8n.cloud', plan: 'Starter', status: 'connected', used: 2310, limit: 2500, keyOk: true },
+    { id: 'C1', name: 'Urban Seating Co', owner: DEMO_ME, url: 'https://urbanseating.app.n8n.cloud', plan: 'Starter', status: 'connected', used: 1840, limit: 2500, keyOk: true },
+    { id: 'C2', name: 'Gleam Jewels', owner: 'Gleam team', url: 'https://gleamjewels.app.n8n.cloud', plan: 'Starter', status: 'connected', used: 2310, limit: 2500, keyOk: true },
     { id: 'C3', name: 'Brew & Bites Cafe', owner: 'Aarav Mehta', url: 'https://n8n.brewbites.in', plan: 'Self-hosted', status: 'key-error', used: 420, limit: 0, keyOk: false },
     { id: 'C4', name: 'Urban Beans', owner: 'Priya Sharma', url: '', plan: '—', status: 'not-connected', used: 0, limit: 0, keyOk: false },
   ];
@@ -6120,7 +6121,7 @@ function fillAcct() {
 })();
 
 /* ================= actions ================= */
-const me = () => (cloud && AUTH.access && AUTH.access.name) || brand().userName || settings.name || 'Shivam';
+const me = () => (cloud && AUTH.access && AUTH.access.name) || brand().userName || settings.name || (cloud ? 'You' : DEMO_ME);
 /* ---------- teams, areas & permissions ---------- */
 const IN_STATES = ['Andhra Pradesh', 'Arunachal Pradesh', 'Assam', 'Bihar', 'Chhattisgarh', 'Goa', 'Gujarat', 'Haryana', 'Himachal Pradesh', 'Jharkhand', 'Karnataka', 'Kerala', 'Madhya Pradesh', 'Maharashtra', 'Manipur', 'Meghalaya', 'Mizoram', 'Nagaland', 'Odisha', 'Punjab', 'Rajasthan', 'Sikkim', 'Tamil Nadu', 'Telangana', 'Tripura', 'Uttar Pradesh', 'Uttarakhand', 'West Bengal', 'Delhi', 'Jammu and Kashmir', 'Ladakh', 'Chandigarh', 'Puducherry', 'Andaman and Nicobar Islands', 'Dadra and Nagar Haveli and Daman and Diu', 'Lakshadweep'];
 const areaValues = k => [...new Set((S.leads || []).map(l => String(l[k] || '').trim()).filter(Boolean))].sort();
@@ -6270,14 +6271,14 @@ function openLeadModal(lead, presetStage) {
         <div class="field"><label>Business photo (card cover image)</label>${uploaderHTML('lead', 'businessPhoto', 'business', 1200, 'wide', 'Shop / cafe photo from gallery')}</div>
         <div class="field"><label>Client photo / logo</label>${uploaderHTML('lead', 'clientPhoto', 'client', 400, 'round', 'Photo')}</div>
       </div>
-      <div class="field"><label>Full name *</label><input class="input" name="name" required value="${esc(l.name || '')}" placeholder="Aarav Mehta"></div>
+      <div class="field"><label>Full name *</label><input class="input" name="name" required value="${esc(l.name || '')}"></div>
       <div class="field"><label>WhatsApp number</label><input class="input" name="phone" inputmode="tel" value="${esc(l.phone ? '+' + l.phone : '')}" placeholder="+91 98765 43210"></div>
       <div class="field"><label>Email</label><input class="input" name="email" type="email" inputmode="email" value="${esc(l.email || '')}" placeholder="name@business.com"></div>
-      <div class="field"><label>Business name</label><input class="input" name="businessName" value="${esc(l.businessName || '')}" placeholder="Brew & Bites Cafe"></div>
+      <div class="field"><label>Business name</label><input class="input" name="businessName" value="${esc(l.businessName || '')}"></div>
       <div class="field"><label>Business type</label><select class="input" name="businessType">${opt(S.lists.businessTypes || [], l.businessType)}</select></div>
-      <div class="field"><label>City</label><input class="input" name="city" value="${esc(l.city || '')}" placeholder="Mumbai"></div>
-      <div class="field"><label>District</label><input class="input" name="district" list="dlDistricts" value="${esc(l.district || '')}" placeholder="Mumbai Suburban"></div>
-      <div class="field"><label>State</label><input class="input" name="state" list="dlStates" value="${esc(l.state || '')}" placeholder="Maharashtra"></div>
+      <div class="field"><label>City</label><input class="input" name="city" value="${esc(l.city || '')}"></div>
+      <div class="field"><label>District</label><input class="input" name="district" list="dlDistricts" value="${esc(l.district || '')}"></div>
+      <div class="field"><label>State</label><input class="input" name="state" list="dlStates" value="${esc(l.state || '')}"></div>
       <datalist id="dlStates">${IN_STATES.concat(areaValues('state')).filter((v, i, a) => a.indexOf(v) === i).map(x => `<option value="${esc(x)}">`).join('')}</datalist><datalist id="dlDistricts">${areaValues('district').map(x => `<option value="${esc(x)}">`).join('')}</datalist>
       <div class="field"><label>Source</label><select class="input" name="source">${opt(S.lists.sources || [], l.source)}</select></div>
       <div class="field"><label>Budget (₹)</label><input class="input" name="budget" type="number" min="0" step="1000" value="${esc(l.budget || '')}" placeholder="250000"></div>
@@ -6759,10 +6760,10 @@ function openAccess(uid) {
   };
   $('#stageBox').innerHTML = `<div class="m-head"><h2>Access for ${esc(m.name)}</h2><button class="ibtn" data-close>${I.x}</button></div>
     <p class="help" style="margin-bottom:12px">Decide what <b>${esc(m.name)}</b> sees and can do. The database enforces it — even a direct link cannot open other areas' leads.</p>
-    <div class="field"><label>Team</label><input class="input" id="accTeam" list="dlTeams" maxlength="60" value="${esc(m.team_name || '')}" placeholder="e.g. Mumbai Team, Pune Sales"><datalist id="dlTeams">${teams.map(t => `<option value="${esc(t)}">`).join('')}</datalist></div>
+    <div class="field"><label>Team</label><input class="input" id="accTeam" list="dlTeams" maxlength="60" value="${esc(m.team_name || '')}"><datalist id="dlTeams">${teams.map(t => `<option value="${esc(t)}">`).join('')}</datalist></div>
     <div class="field"><label>Which leads can they see?</label><div class="acc-opts" id="accScope"></div></div>
     <div class="field" id="accAreaBox"><label>Their areas (State, District or City)</label><div class="acc-areas" id="accAreas"></div>
-      <div style="display:flex;gap:8px;margin-top:8px"><input class="input" id="accIn" list="dlAccStates" placeholder="Type e.g. Maharashtra or Mumbai, press Enter"><datalist id="dlAccStates">${IN_STATES.map(x => `<option value="${esc(x)}">`).join('')}</datalist><button type="button" class="btn" id="accAddBtn">Add</button></div>
+      <div style="display:flex;gap:8px;margin-top:8px"><input class="input" id="accIn" list="dlAccStates" placeholder="Type a state, district or city and press Enter"><datalist id="dlAccStates">${IN_STATES.map(x => `<option value="${esc(x)}">`).join('')}</datalist><button type="button" class="btn" id="accAddBtn">Add</button></div>
       <div class="chips" id="accSugg" style="margin-top:8px"></div></div>
     <div class="field"><label>What can they do?</label><div class="acc-perms" id="accPerms"></div></div>
     <div class="m-foot"><div class="grow"></div><button class="btn" data-close>Cancel</button><button class="btn primary" id="accSave">Save access</button></div>`;
@@ -6791,7 +6792,7 @@ function openInvite() {
     <p class="help" style="margin-bottom:12px">Create a link and send it on WhatsApp or email. They open it, create a login, and join <b>${esc(AUTH.wsName)}</b> with the role you pick. Links work once and expire in 7 days.</p>
     <div class="field"><label>Role</label><div class="lg-roles">${['member', 'admin', 'client'].map((r, i) => `<label class="lg-r"><input type="radio" name="lgr" value="${r}" ${i === 0 ? 'checked' : ''}><span><b>${ROLE_LABEL[r]}</b><small>${ROLE_INFO[r].split('— ')[1]}</small></span></label>`).join('')}</div></div>
     <div class="field"><label>Their email (optional — locks the link to this email)</label><input class="input" id="lgEmail" type="email" placeholder="name@business.com" autocomplete="off"></div>
-    <div class="field"><label>Note (optional)</label><input class="input" id="lgNote" maxlength="120" placeholder="e.g. Riya — sales"></div>
+    <div class="field"><label>Note (optional)</label><input class="input" id="lgNote" maxlength="120"></div>
     <div id="lgOut"></div>
     <div class="m-foot"><div class="grow"></div><button class="btn primary" id="lgCreate">Create invite link</button></div>`;
   $('#lgCreate').onclick = async () => {
@@ -7362,7 +7363,7 @@ function inspMsgWa() {
     ${n ? `<label class="bc-lbl">Fill the variables for each lead</label><div class="bc-vars">${BC.vars.slice(0, n).map((v, i) => `<div class="bc-var"><span class="pill stage">{{${i + 1}}}</span><select class="input sm" data-bcvar="${i}">${VAR_SRC.map(([k, lb]) => `<option value="${k}" ${v.src === k ? 'selected' : ''}>${lb}</option>`).join('')}</select>${v.src === 'custom' ? `<input class="input sm" data-bcvtext="${i}" value="${esc(v.text)}" placeholder="Text for everyone">` : ''}</div>`).join('')}</div>` : ''}`;
 }
 function inspMsgEmail() {
-  return `<div class="field"><label>Subject</label><input class="input" id="bcSubj" value="${esc(BC.subject)}" maxlength="200" placeholder="e.g. {{first_name}}, our new cafe chairs are here"></div>
+  return `<div class="field"><label>Subject</label><input class="input" id="bcSubj" value="${esc(BC.subject)}" maxlength="200"></div>
     <div class="field"><label>Message <span class="muted">— empty line = new paragraph; links work as they are</span></label><textarea class="input" id="bcBody" rows="10">${esc(BC.body)}</textarea></div>
     <div class="bc-chips"><span class="muted">Insert:</span>${['first_name', 'name', 'business', 'city'].map(k => `<button class="chip" data-bcins="{{${k}}}">{{${k}}}</button>`).join('')}</div>`;
 }
@@ -7673,8 +7674,8 @@ function tbContentHTML(e) {
   const c = e.content || 'text';
   return `<div class="tb-cts">${TB_CONTENT.map(([k, n, ic]) => `<button type="button" class="tb-ct ${c === k ? 'on' : ''} ${k === 'contact' ? 'dis' : ''}" data-tbct="${k}"><span>${ic}</span>${n}</button>`).join('')}</div>
     ${['image', 'video', 'pdf'].includes(c) ? `<div class="form" style="grid-template-columns:1fr ${c === 'pdf' ? '1fr' : ''};margin-top:8px"><div class="field"><label>${c === 'pdf' ? 'PDF' : c === 'video' ? 'Video (MP4 ≤16 MB)' : 'Image (JPG/PNG ≤5 MB)'} — public https link</label><input class="input" id="tbMedia" value="${esc(e.mediaUrl || '')}" placeholder="https://…/file.${c === 'pdf' ? 'pdf' : c === 'video' ? 'mp4' : 'jpg'}"></div>${c === 'pdf' ? `<div class="field"><label>File name customers see</label><input class="input" id="tbFile" value="${esc(e.fileName || '')}" placeholder="Catalogue-2026.pdf"></div>` : ''}</div><p class="help">Used as Meta's sample for approval and in every message. Tip: upload to Google Drive / your website and paste a direct link.</p>` : ''}
-    ${c === 'location' ? `<div class="form" style="grid-template-columns:1fr 1fr;margin-top:8px"><div class="field"><label>Latitude</label><input class="input" id="tbLat" value="${esc(e.location.lat || '')}" placeholder="19.0760"></div><div class="field"><label>Longitude</label><input class="input" id="tbLng" value="${esc(e.location.lng || '')}" placeholder="72.8777"></div><div class="field"><label>Place name</label><input class="input" id="tbLname" value="${esc(e.location.name || '')}" placeholder="Our showroom"></div><div class="field"><label>Address</label><input class="input" id="tbLaddr" value="${esc(e.location.address || '')}" placeholder="Shop 4, Andheri West, Mumbai"></div></div>` : ''}
-    ${c === 'catalog' || c === 'product' ? `<div class="field" style="margin-top:8px"><label>${c === 'product' ? 'Product' : 'Thumbnail product'} ID from your Meta catalog (Content ID / SKU)</label><input class="input" id="tbProd" value="${esc(e.productId || '')}" placeholder="SKU-CHAIR-01"></div><p class="help">Needs a Meta Commerce catalog connected to this WhatsApp number (WhatsApp Manager → Catalog). The template gets one “View catalog” button.</p>` : ''}
+    ${c === 'location' ? `<div class="form" style="grid-template-columns:1fr 1fr;margin-top:8px"><div class="field"><label>Latitude</label><input class="input" id="tbLat" value="${esc(e.location.lat || '')}" placeholder="19.0760"></div><div class="field"><label>Longitude</label><input class="input" id="tbLng" value="${esc(e.location.lng || '')}" placeholder="72.8777"></div><div class="field"><label>Place name</label><input class="input" id="tbLname" value="${esc(e.location.name || '')}"></div><div class="field"><label>Address</label><input class="input" id="tbLaddr" value="${esc(e.location.address || '')}"></div></div>` : ''}
+    ${c === 'catalog' || c === 'product' ? `<div class="field" style="margin-top:8px"><label>${c === 'product' ? 'Product' : 'Thumbnail product'} ID from your Meta catalog (Content ID / SKU)</label><input class="input" id="tbProd" value="${esc(e.productId || '')}"></div><p class="help">Needs a Meta Commerce catalog connected to this WhatsApp number (WhatsApp Manager → Catalog). The template gets one “View catalog” button.</p>` : ''}
     ${c === 'payment' ? '<p class="help" style="margin-top:8px">A <b>Pay Now</b> link button is added. Paste your Razorpay / UPI / Stripe payment link in it.</p>' : ''}
     ${c === 'contact' ? '<p class="bc-warn" style="margin-top:8px">WhatsApp does not allow contact cards inside templates. You can send a contact card in a normal chat (within 24 hours of the customer\'s message).</p>' : ''}`;
 }
@@ -7790,7 +7791,7 @@ function openTplLib(name) {
     <p class="help" style="margin-bottom:12px">Tell your team when to use this template. Broadcast shows it first for the matching segment, and campaign analytics suggests it for follow-ups.</p>
     <div class="form" style="grid-template-columns:1fr 1fr"><div class="field"><label>Use case</label><select class="input" id="tlUse"><option value="">—</option>${USE_CASES.map(u => `<option ${u === t.useCase ? 'selected' : ''}>${esc(u)}</option>`).join('')}</select></div>
       <div class="field"><label>Best for segment</label><select class="input" id="tlSeg"><option value="">Any audience</option>${segments().map(g => `<option ${g.name === t.segment ? 'selected' : ''}>${esc(g.name)}</option>`).join('')}</select></div>
-      <div class="field full"><label>Tags <span class="muted">(comma separated)</span></label><input class="input" id="tlTags" maxlength="200" value="${esc(t.tags || '')}" placeholder="diwali, cafes, hindi"></div>
+      <div class="field full"><label>Tags <span class="muted">(comma separated)</span></label><input class="input" id="tlTags" maxlength="200" value="${esc(t.tags || '')}"></div>
       <div class="field full"><label>Notes for the team</label><textarea class="input" id="tlNotes" rows="2" maxlength="1000" placeholder="e.g. Send 2 days after the quotation">${esc(t.notes || '')}</textarea></div></div>
     <div class="m-foot"><div class="grow"></div><button class="btn" data-close>Cancel</button><button class="btn primary" id="tlSave">Save</button></div>`;
   $('#tlSave').onclick = async () => { try { await api('saveTplInfo', { templateName: name, useCase: $('#tlUse').value, segment: $('#tlSeg').value, tags: $('#tlTags').value.trim(), notes: $('#tlNotes').value.trim() }); hideModal('#stageModal'); toast('✓ Saved to the library'); if (demo) renderTemplates(); else load(true); } catch (e) { toast(/use_case|segment|column/i.test(e.message) ? 'Run the database update 07_teams_tasks_calls.sql first.' : e.message, true); } };
@@ -8005,7 +8006,7 @@ function tpeFormHTML(e) {
     : `<div class="field"><label>Message type</label>${tbContentHTML(e)}</div>
       ${(e.content || 'text') === 'text' ? `<div class="field"><label>Header <span class="muted">(optional, 60)</span></label><input class="input" id="teHead" maxlength="60" value="${esc(e.header)}" placeholder="🎉 Diwali Sale"></div>` : ''}
       <div class="field"><label class="tpe-lab">Body <span class="muted">— *bold*, _italic_, {{1}} for a name</span><button class="btn sm" type="button" data-teaddvar>+ Add variable</button></label><textarea class="input" id="teBody" rows="5" maxlength="1024">${esc(e.body)}</textarea><small class="tpe-cnt">${e.body.length}/1024</small></div>
-      ${n ? `<div class="field"><label>Sample values <span class="muted">— Meta needs examples to approve</span></label><div class="bc-vars">${Array.from({ length: n }, (_, i) => `<div class="bc-var"><span class="pill stage">{{${i + 1}}}</span><input class="input sm" data-teex="${i}" value="${esc(e.examples[i] || '')}" placeholder="${['Aarav', 'Diwali Sale', '20%', 'Mumbai'][i] || 'sample'}"></div>`).join('')}</div></div>` : ''}
+      ${n ? `<div class="field"><label>Sample values <span class="muted">— Meta needs examples to approve</span></label><div class="bc-vars">${Array.from({ length: n }, (_, i) => `<div class="bc-var"><span class="pill stage">{{${i + 1}}}</span><input class="input sm" data-teex="${i}" value="${esc(e.examples[i] || '')}" placeholder="Sample for {{${i + 1}}}"></div>`).join('')}</div></div>` : ''}
       <div class="field"><label>Footer <span class="muted">(optional)</span></label><input class="input" id="teFoot" maxlength="60" value="${esc(e.footer)}" placeholder="Reply STOP to unsubscribe"></div>`;
   const qrN = e.buttons.filter(b => b.type === 'QUICK_REPLY').length;
   const btns = `<div class="tpe-btns">${e.buttons.map((b, i) => tpeBtnHTML(e, b, i)).join('') || '<div class="tpe-none big">No buttons yet. Add a <b>reply button</b> (Interested, Order Now, Price List…) — then choose what happens when a customer taps it.</div>'}</div>
@@ -8179,12 +8180,13 @@ function readTplEditor() {
 })();
 
 /* ================= branding (logo, name, profile) ================= */
-const DEFAULT_BRAND = { brandName: 'Nodevers', logoUrl: '', userName: 'Shivam', userPhoto: '' };
+const DEFAULT_BRAND = { brandName: 'Nodevers', logoUrl: '', userName: '', userPhoto: '' };
 /** website name + logo belong to the platform (Admin Console) in the cloud; the profile (name, photo) belongs to the workspace */
 const platBrand = () => cloud || (!demo && !settings.url) || (demo && !(S.settings || {}).brandName);
 function brand() {
   const b = Object.assign({}, DEFAULT_BRAND), src = S.settings || {}, ps = PLAT.s || {};
   ['userName', 'userPhoto'].forEach(k => { if (src[k]) b[k] = String(src[k]); });
+  if (!b.userName && !cloud) b.userName = DEMO_ME;
   ['brandName', 'logoUrl'].forEach(k => { const v = platBrand() ? ps[k] : src[k]; if (v) b[k] = String(v); });
   return b;
 }
@@ -8219,7 +8221,7 @@ function setFill(tab) {
 }
 $('#bSave').onclick = async () => {
   if (upBusy) return toast('Photo is still uploading, wait 2 seconds…', true);
-  const site = { brandName: $('#bName').value.trim() || 'Nodevers', logoUrl: upStore.brand.logoUrl || '' }, prof = { userName: $('#pName').value.trim() || 'Shivam', userPhoto: upStore.brand.userPhoto || '' };
+  const site = { brandName: $('#bName').value.trim() || 'Nodevers', logoUrl: upStore.brand.logoUrl || '' }, prof = { userName: $('#pName').value.trim(), userPhoto: upStore.brand.userPhoto || '' };
   const data = cloud ? prof : Object.assign({}, site, prof);
   const btn = $('#bSave'); btn.disabled = true; btn.textContent = 'Saving…';
   try {
@@ -9522,7 +9524,7 @@ function openMemberModal(m) {
   const x = m || {};
   $('#memBox').innerHTML = `<div class="m-head"><h2>${m ? 'Edit Member' : 'Add Team Member'}</h2><button class="ibtn" data-close>${I.x}</button></div>
     <div class="form" style="grid-template-columns:1fr 1fr">
-      <div class="field full"><label>Name *</label><input class="input" id="mName" value="${esc(x.name || '')}" placeholder="Riya Patil"></div>
+      <div class="field full"><label>Name *</label><input class="input" id="mName" value="${esc(x.name || '')}"></div>
       <div class="field"><label>Role</label><select class="input" id="mRole">${['Admin', 'Sales', 'Support', 'Marketing'].map(r => `<option ${r === x.role ? 'selected' : ''}>${r}</option>`).join('')}</select></div>
       <div class="field"><label>Phone</label><input class="input" id="mPhone" value="${esc(x.phone || '')}" placeholder="+91 98765 43210"></div>
       <div class="field full"><label>Email</label><input class="input" id="mEmail" type="email" value="${esc(x.email || '')}" placeholder="name@gmail.com"></div>
@@ -9687,7 +9689,7 @@ function openOrder(o, leadId) {
       <div class="field"><label>Order ID on the channel <span class="muted">(Amazon / website)</span></label><input class="input" id="odExt" maxlength="80" value="${esc(x.extId || '')}"></div>` : ''}
       <div class="field ${v9 ? '' : 'full'}"><label>Customer (lead)</label><input class="input" id="odLead" list="dlLeadsO" value="${ln ? esc(ln.name + ' · ' + (ln.phone ? '+' + ln.phone : ln.leadId)) : ''}" placeholder="Type a name — optional"><datalist id="dlLeadsO">${S.leads.slice(0, 800).map(l => `<option value="${esc(l.name + ' · ' + (l.phone ? '+' + l.phone : l.leadId))}">`).join('')}</datalist></div>
       ${v9 ? `<div class="field"><label>Product (SKU)</label><input class="input" id="odSku" list="dlSkus" maxlength="80" value="${esc(x.sku || '')}" placeholder="Pick or type"><datalist id="dlSkus">${(S.products || []).map(p => `<option value="${esc(p.sku)}">${esc(p.name)}</option>`).join('')}</datalist></div><div class="field"><label>Qty</label><input class="input" id="odQty" type="number" min="0" step="1" value="${esc(x.qty === '' || x.qty == null ? 1 : x.qty)}"></div>${v25() && invLocs().filter(invOn).length > 1 ? `<div class="field"><label>Ship from</label><select class="input" id="odLoc"><option value="">${esc((invMain() || {}).name || 'Main place')} (main)</option>${invLocs().filter(l => invOn(l) && !invIsMain(l)).map(l => `<option value="${esc(l.id)}" ${String(x.locationId) === String(l.id) ? 'selected' : ''}>${esc(l.name)}</option>`).join('')}</select></div>` : ''}<div class="inv-oav" id="odAvail"></div>` : ''}
-      <div class="field full"><label>Items <span class="muted">— filled from the product if empty</span></label><textarea class="input" id="odItems" rows="2" placeholder="20 × Cafe chair (walnut)">${esc(x.items || '')}</textarea></div>
+      <div class="field full"><label>Items <span class="muted">— filled from the product if empty</span></label><textarea class="input" id="odItems" rows="2">${esc(x.items || '')}</textarea></div>
       <div class="field"><label>Amount / revenue (₹) <span class="muted">— empty = qty × price</span></label><input class="input" id="odAmt" type="number" min="0" step="0.01" value="${esc(x.amount == null ? '' : x.amount)}"></div>
       <div class="field"><label>Status</label><select class="input" id="odSt">${ORD_ST.map(s2 => `<option ${s2 === x.status ? 'selected' : ''}>${s2}</option>`).join('')}</select></div>
       <div class="field"><label>Payment</label><input class="input" id="odPay" list="dlPay" maxlength="40" value="${esc(x.payment || '')}"><datalist id="dlPay">${['COD', 'Prepaid', 'Paid', 'Pending', 'link', 'UPI', 'Bank transfer', 'Cash'].map(p2 => `<option value="${p2}">`).join('')}</datalist></div>
@@ -9927,7 +9929,7 @@ function invProdBind(p) {
 function openWriteOff(sku) {
   invPrep();
   $('#stageBox').innerHTML = invBox('⚠ Damaged / lost stock', 'Takes units out of stock and keeps the reason in the log', `${invDl()}<div class="form" style="grid-template-columns:1fr 1fr"><div class="field full"><label>Product</label><input class="input" id="woSku" list="dlInvSku" value="${esc(sku || '')}" placeholder="SKU or pick"></div><div class="field"><label>How many</label><input class="input" id="woQty" type="number" min="1" step="1" value="1"></div>
-    <div class="field"><label>Reason</label><select class="input" id="woWhy"><option>Damaged / lost</option><option>Returned to supplier</option></select></div>${(S.locations || []).length ? `<div class="field"><label>From</label>${invLocSel('id="woLoc"', (invMain() || {}).id, { cls: 'input' })}</div>` : ''}<div class="field ${(S.locations || []).length ? '' : 'full'}"><label>Note</label><input class="input" id="woNote" maxlength="200" placeholder="e.g. leg broken in transit"></div></div>`,
+    <div class="field"><label>Reason</label><select class="input" id="woWhy"><option>Damaged / lost</option><option>Returned to supplier</option></select></div>${(S.locations || []).length ? `<div class="field"><label>From</label>${invLocSel('id="woLoc"', (invMain() || {}).id, { cls: 'input' })}</div>` : ''}<div class="field ${(S.locations || []).length ? '' : 'full'}"><label>Note</label><input class="input" id="woNote" maxlength="200"></div></div>`,
     `<div class="grow"></div><button class="btn" data-close>Cancel</button><button class="btn danger" id="woGo">Remove from stock</button>`);
   $('#woGo').onclick = e => invBusy(e.currentTarget, async () => { const p = cmProd($('#woSku').value.trim()), n = Math.round(+$('#woQty').value || 0), why = $('#woWhy').value; if (!p) throw new Error('Pick a product from the list'); if (n < 1) throw new Error('How many?');
     await inv('stockAdjust', { loc: ($('#woLoc') || {}).value || '', lines: [{ sku: p.sku, change: -n }], reason: why, note: $('#woNote').value.trim() }); await invDone(`✓ ${n} × ${p.name || p.sku} removed (${why.toLowerCase()})`); });
@@ -10080,8 +10082,8 @@ function openProduct(sku, pre = {}) {
   const p = sku ? cmProd(sku) : null, x = p || Object.assign({ sku: '', name: '', category: '', price: '', cost: '', stock: 0, reorderLevel: 5, imageUrl: '', amazonAsin: '', websiteUrl: '', notes: '', active: true, kind: 'simple', unit: 'pcs', barcode: '', supplierId: '', leadDays: '', moq: '', safetyDays: '', reorderAuto: false }, pre), cats = [...new Set((S.products || []).map(q => q.category).filter(Boolean))];
   const canW = !document.body.classList.contains('ro') && !document.body.classList.contains('np-commerce');
   $('#stageBox').innerHTML = `<div class="m-head"><h2>${p ? esc(p.name || p.sku) : 'New product'}</h2><button class="ibtn" data-close>${I.x}</button></div>
-    <div class="form" style="grid-template-columns:1fr 1fr"><div class="field"><label>SKU *</label><input class="input" id="cpSku" maxlength="80" value="${esc(x.sku)}" placeholder="CH-WAL-01"></div><div class="field"><label>Category</label><input class="input" id="cpCat" list="cpCats" maxlength="80" value="${esc(x.category)}"><datalist id="cpCats">${cats.map(c => `<option value="${esc(c)}">`).join('')}</datalist></div>
-      <div class="field full"><label>Product name</label><input class="input" id="cpName" maxlength="200" value="${esc(x.name)}" placeholder="Cafe chair (walnut)"></div>
+    <div class="form" style="grid-template-columns:1fr 1fr"><div class="field"><label>SKU *</label><input class="input" id="cpSku" maxlength="80" value="${esc(x.sku)}"></div><div class="field"><label>Category</label><input class="input" id="cpCat" list="cpCats" maxlength="80" value="${esc(x.category)}"><datalist id="cpCats">${cats.map(c => `<option value="${esc(c)}">`).join('')}</datalist></div>
+      <div class="field full"><label>Product name</label><input class="input" id="cpName" maxlength="200" value="${esc(x.name)}"></div>
       <div class="field"><label>Selling price (₹)</label><input class="input" id="cpPrice" type="number" min="0" step="0.01" value="${esc(x.price)}"></div><div class="field"><label>Cost per unit (₹)</label><input class="input" id="cpCost" type="number" min="0" step="0.01" value="${esc(x.cost)}"></div>
       <div class="field"><label>${invKind(x) === 'bundle' ? 'Stock <span class="muted">— comes from its parts</span>' : p && (S.locations || []).length ? `In stock — total <span class="muted">(a change goes to ${esc((invMain() || {}).name || 'main place')})</span>` : 'In stock'}</label><input class="input" id="cpStock" type="number" step="1" value="${esc(invKind(x) === 'bundle' ? invSetQty(x.sku) : x.stock)}" ${invKind(x) === 'bundle' ? 'disabled' : ''}></div><div class="field"><label>Reorder when stock is at</label><input class="input" id="cpRe" type="number" min="0" step="1" value="${esc(x.reorderLevel === '' ? 5 : x.reorderLevel)}"></div>${v23() ? `<div class="field full"><label>Remind buyers to reorder after <span class="muted">(days — optional, e.g. 30 for a monthly product; used by Auto messages → Reorder reminder)</span></label><input class="input" id="cpReDays" type="number" min="1" max="365" step="1" value="${esc(x.reorderDays || '')}" placeholder="—"></div>` : ''}
       <div class="field full"><label>Image link <span class="muted">(optional)</span></label><input class="input" id="cpImg" maxlength="500" value="${esc(x.imageUrl)}" placeholder="https://…/photo.jpg"></div>
@@ -10568,23 +10570,23 @@ function demoInv(d) {
   d.locations = [{ id: 1, name: 'Bhiwandi godown', kind: 'warehouse', address: 'Gala 12, Bhiwandi, Thane', isDefault: true, active: true, createdAt: T(150) }, { id: 2, name: 'Pune showroom', kind: 'shop', address: 'FC Road, Pune', isDefault: false, active: true, createdAt: T(90) }];
   const shop = { 'CH-WAL-01': 8, 'CH-BLK-02': 2, 'TB-RND-60': 3, 'TB-SQ-75': 1, 'SF-2S-01': 2, 'CU-SET-04': 12, 'BN-OUT-01': 0 }, road = { 'CH-BLK-02': 2 };
   d.levels = []; P.forEach(p => { if (p.kind === 'bundle') return; const s = cmN(p.stock), a = Math.min(shop[p.sku] || 0, Math.max(0, s)), r = Math.min(road[p.sku] || 0, Math.max(0, s - a)); d.levels.push({ sku: p.sku, locationId: 1, qty: s - a - r }); if (a) d.levels.push({ sku: p.sku, locationId: 2, qty: a }); });
-  d.transfers = [{ id: 1, code: 'TR001', fromLoc: 1, toLoc: 2, fromName: 'Bhiwandi godown', toName: 'Pune showroom', status: 'received', note: 'Showroom opening', byName: 'Shivam', units: 18, sentAt: T(88, 10), receivedAt: T(87, 16) },
+  d.transfers = [{ id: 1, code: 'TR001', fromLoc: 1, toLoc: 2, fromName: 'Bhiwandi godown', toName: 'Pune showroom', status: 'received', note: 'Showroom opening', byName: DEMO_ME, units: 18, sentAt: T(88, 10), receivedAt: T(87, 16) },
     { id: 2, code: 'TR002', fromLoc: 1, toLoc: 2, fromName: 'Bhiwandi godown', toName: 'Pune showroom', status: 'received', note: '', byName: 'Riya Patil', units: 6, sentAt: T(30, 11), receivedAt: T(29, 15) },
-    { id: 3, code: 'TR003', fromLoc: 1, toLoc: 2, fromName: 'Bhiwandi godown', toName: 'Pune showroom', status: 'in_transit', note: 'Tempo MH-04 · driver Ramesh', byName: 'Shivam', units: 2, sentAt: T(0, 9), receivedAt: '' }];
+    { id: 3, code: 'TR003', fromLoc: 1, toLoc: 2, fromName: 'Bhiwandi godown', toName: 'Pune showroom', status: 'in_transit', note: 'Tempo MH-04 · driver Ramesh', byName: DEMO_ME, units: 2, sentAt: T(0, 9), receivedAt: '' }];
   d.trLines = [{ id: 1, transferId: 1, sku: 'CH-WAL-01', name: 'Cafe chair (walnut)', qty: 10 }, { id: 2, transferId: 1, sku: 'CU-SET-04', name: 'Seat cushion set of 4', qty: 8 }, { id: 3, transferId: 2, sku: 'TB-RND-60', name: 'Round table 60 cm', qty: 3 }, { id: 4, transferId: 2, sku: 'TB-SQ-75', name: 'Square table 75 cm', qty: 3 }, { id: 5, transferId: 3, sku: 'CH-BLK-02', name: 'Cafe chair (black metal)', qty: 2 }];
-  d.pos = [{ id: 1, code: 'PO001', supplierId: 1, supplierName: 'Sharma Timber Works', locationId: 1, status: 'received', orderDate: day(26), expectedDate: day(14), notes: '', extraCost: 1500, taxPct: 18, total: 0, createdBy: 'Shivam', sentAt: T(26, 11), receivedAt: T(13, 15), createdAt: T(26, 11) },
-    { id: 2, code: 'PO002', supplierId: 3, supplierName: 'Mumbai Foam & Fabric', locationId: 1, status: 'partial', orderDate: day(7), expectedDate: day(2), notes: 'Foam: 2 inch HD only', extraCost: 400, taxPct: 12, total: 0, createdBy: 'Shivam', sentAt: T(7, 12), receivedAt: '', createdAt: T(7, 12) },
+  d.pos = [{ id: 1, code: 'PO001', supplierId: 1, supplierName: 'Sharma Timber Works', locationId: 1, status: 'received', orderDate: day(26), expectedDate: day(14), notes: '', extraCost: 1500, taxPct: 18, total: 0, createdBy: DEMO_ME, sentAt: T(26, 11), receivedAt: T(13, 15), createdAt: T(26, 11) },
+    { id: 2, code: 'PO002', supplierId: 3, supplierName: 'Mumbai Foam & Fabric', locationId: 1, status: 'partial', orderDate: day(7), expectedDate: day(2), notes: 'Foam: 2 inch HD only', extraCost: 400, taxPct: 12, total: 0, createdBy: DEMO_ME, sentAt: T(7, 12), receivedAt: '', createdAt: T(7, 12) },
     { id: 3, code: 'PO003', supplierId: 2, supplierName: 'Jaipur Cane Craft', locationId: 2, status: 'sent', orderDate: day(5), expectedDate: day(-3), notes: 'Natural cane, no polish', extraCost: 2200, taxPct: 12, total: 0, createdBy: 'Riya Patil', sentAt: T(5, 10), receivedAt: '', createdAt: T(5, 10) },
-    { id: 4, code: 'PO004', supplierId: 4, supplierName: 'MetalArt Fabricators', locationId: 1, status: 'draft', orderDate: day(0), expectedDate: day(-10), notes: '', extraCost: 0, taxPct: 18, total: 0, createdBy: 'Shivam', sentAt: '', receivedAt: '', createdAt: T(0, 9) }];
+    { id: 4, code: 'PO004', supplierId: 4, supplierName: 'MetalArt Fabricators', locationId: 1, status: 'draft', orderDate: day(0), expectedDate: day(-10), notes: '', extraCost: 0, taxPct: 18, total: 0, createdBy: DEMO_ME, sentAt: '', receivedAt: '', createdAt: T(0, 9) }];
   d.poLines = [[1, 'TEAK-PLK', 40, 40, 920], [1, 'TB-RND-60', 6, 6, 3050], [2, 'FOAM-HD', 20, 10, 640], [2, 'FAB-LIN', 50, 50, 280], [3, 'ST-BAR-01', 12, 0, 1750], [4, 'CH-BLK-02', 30, 0, 1020]]
     .map(([poId, sku, qty, qtyReceived, unitCost], i) => ({ id: i + 1, poId, sku, name: (P.find(p => p.sku === sku) || {}).name || sku, qty, qtyReceived, unitCost }));
   d.pos.forEach(po => { const ls = d.poLines.filter(l => l.poId === po.id), sub = ls.reduce((a, l) => a + l.qty * l.unitCost, 0); po.total = Math.round((sub * (1 + po.taxPct / 100) + po.extraCost) * 100) / 100; });
   d.grns = [{ id: 1, code: 'GRN001', poId: 1, poCode: 'PO001', supplierId: 1, supplierName: 'Sharma Timber Works', locationId: 1, invoiceNo: 'STW/2291', note: '', byName: 'Amit Rao', units: 46, damaged: 0, value: 55100, at: T(13, 15) },
     { id: 2, code: 'GRN002', poId: 2, poCode: 'PO002', supplierId: 3, supplierName: 'Mumbai Foam & Fabric', locationId: 1, invoiceNo: 'MFF-0871', note: '2 foam sheets torn — supplier will replace', byName: 'Amit Rao', units: 60, damaged: 2, value: 20400, at: T(3, 14) }];
   d.grnLines = [{ id: 1, grnId: 1, sku: 'TEAK-PLK', name: 'Teak plank 6 ft', qty: 40, damaged: 0, unitCost: 920 }, { id: 2, grnId: 1, sku: 'TB-RND-60', name: 'Round table 60 cm', qty: 6, damaged: 0, unitCost: 3050 }, { id: 3, grnId: 2, sku: 'FOAM-HD', name: 'HD foam sheet 2 inch', qty: 10, damaged: 2, unitCost: 640 }, { id: 4, grnId: 2, sku: 'FAB-LIN', name: 'Linen fabric (beige)', qty: 50, damaged: 0, unitCost: 280 }];
-  d.runs = [{ id: 1, code: 'MK001', sku: 'SF-2S-01', name: '2-seater cafe sofa', qty: 2, locationId: 1, unitCost: 5590, extraCost: 1500, note: 'Order for Café Mocha', byName: 'Shivam', at: T(10, 17) }, { id: 2, code: 'MK002', sku: 'BN-OUT-01', name: 'Outdoor bench (teak)', qty: 3, locationId: 1, unitCost: 4560, extraCost: 800, note: '', byName: 'Amit Rao', at: T(4, 17) }];
+  d.runs = [{ id: 1, code: 'MK001', sku: 'SF-2S-01', name: '2-seater cafe sofa', qty: 2, locationId: 1, unitCost: 5590, extraCost: 1500, note: 'Order for Café Mocha', byName: DEMO_ME, at: T(10, 17) }, { id: 2, code: 'MK002', sku: 'BN-OUT-01', name: 'Outdoor bench (teak)', qty: 3, locationId: 1, unitCost: 4560, extraCost: 800, note: '', byName: 'Amit Rao', at: T(4, 17) }];
   d.counts = [{ id: 1, code: 'CNT001', locationId: 2, locationName: 'Pune showroom', items: 6, diffUnits: -1, diffValue: -1350, note: 'Month-end count', byName: 'Riya Patil', at: T(7, 18), lines: [] }];
-  const mv = (sku, change, reason, ref, loc, note, k, h) => d.stockMoves.push({ sku, change, stockAfter: '', reason, channel: '', orderId: ref, byName: 'Shivam', at: T(k, h), locationId: loc, note: note || '' });
+  const mv = (sku, change, reason, ref, loc, note, k, h) => d.stockMoves.push({ sku, change, stockAfter: '', reason, channel: '', orderId: ref, byName: DEMO_ME, at: T(k, h), locationId: loc, note: note || '' });
   mv('TEAK-PLK', 40, 'Purchase received', 'PO001', 1, 'GRN001 · Sharma Timber Works', 13, 15); mv('TB-RND-60', 6, 'Purchase received', 'PO001', 1, 'GRN001 · Sharma Timber Works', 13, 15);
   mv('FOAM-HD', 10, 'Purchase received', 'PO002', 1, 'GRN002 · Mumbai Foam & Fabric', 3, 14); mv('FAB-LIN', 50, 'Purchase received', 'PO002', 1, 'GRN002 · Mumbai Foam & Fabric', 3, 14);
   mv('TEAK-PLK', -6, 'Used to make', 'MK001', 1, '2 × 2-seater cafe sofa', 10, 17); mv('FOAM-HD', -4, 'Used to make', 'MK001', 1, '2 × 2-seater cafe sofa', 10, 17); mv('FAB-LIN', -9, 'Used to make', 'MK001', 1, '2 × 2-seater cafe sofa', 10, 17); mv('SF-2S-01', 2, 'Made', 'MK001', 1, '', 10, 17);
@@ -10839,7 +10841,7 @@ function openSupplier(id, opt = {}) {
   const s = id ? invSup(id) : null, x = s || { name: '', contact: '', phone: '', email: '', gstin: '', address: '', leadDays: 7, paymentTerms: '', notes: '', active: true }, canW = invW(), st = s ? invSupStats(s) : null;
   const f = (k, l, attrs = '', full) => `<div class="field ${full ? 'full' : ''}"><label>${l}</label><input class="input" id="su_${k}" value="${esc(k === 'phone' && x.phone ? '+' + x.phone : x[k] == null ? '' : x[k])}" ${attrs} ${canW ? '' : 'disabled'}></div>`;
   $('#stageBox').innerHTML = invBox(s ? esc(s.name) : 'New supplier', s ? `${st.products.length} products · ${st.pos.length} purchase orders${st.avg !== null ? ` · delivers in ${st.avg} days on average` : ''}` : 'Who you buy from',
-    `<div class="form" style="grid-template-columns:1fr 1fr">${f('name', 'Business name *', 'maxlength="120" placeholder="Sharma Timber Works"')}${f('contact', 'Contact person', 'maxlength="120"')}${f('phone', 'Phone / WhatsApp', 'inputmode="tel" maxlength="20" placeholder="+91 98…"')}${f('email', 'Email', 'type="email" maxlength="160"')}
+    `<div class="form" style="grid-template-columns:1fr 1fr">${f('name', 'Business name *', 'maxlength="120"')}${f('contact', 'Contact person', 'maxlength="120"')}${f('phone', 'Phone / WhatsApp', 'inputmode="tel" maxlength="20" placeholder="+91 98…"')}${f('email', 'Email', 'type="email" maxlength="160"')}
       ${f('leadDays', 'Delivers in (days)', 'type="number" min="0" max="365" step="1"')}${f('paymentTerms', 'Payment terms', 'maxlength="80" placeholder="30 days credit"')}${f('gstin', 'GSTIN', 'maxlength="20"')}${f('address', 'Address', 'maxlength="400"')}${f('notes', 'Notes', 'maxlength="1000"', true)}
       ${s ? `<label class="field full" style="flex-direction:row;align-items:center;gap:8px"><input type="checkbox" id="su_active" ${x.active === false ? '' : 'checked'} ${canW ? '' : 'disabled'}> Active (shown when you create purchase orders)</label>` : ''}</div>
       ${st && st.products.length ? `<div class="inv-parts" style="margin-top:6px">${st.products.slice(0, 20).map(p => `<span class="inv-part">${esc(p.name || p.sku)}</span>`).join('')}</div>` : ''}`,
@@ -10855,7 +10857,7 @@ function openSupplier(id, opt = {}) {
 function openLoc(id) {
   const l = id ? invLoc(id) : null, first = !(S.locations || []).length, canW = invW(), x = l || { name: first ? 'Main godown' : '', kind: 'warehouse', address: '', active: true };
   $('#stageBox').innerHTML = invBox(l ? esc(l.name) : first ? 'Your main place' : 'Add a place', first ? 'All the stock you have now will be counted here. You can add more places after this.' : l ? (invIsMain(l) ? 'Main place — sales, imports and hand changes use it' : '') : 'Shop, godown, factory or any place you keep stock',
-    `<div class="form"><div class="field"><label>Name *</label><input class="input" id="lcName" maxlength="60" value="${esc(x.name)}" placeholder="Bhiwandi godown"></div>
+    `<div class="form"><div class="field"><label>Name *</label><input class="input" id="lcName" maxlength="60" value="${esc(x.name)}"></div>
       <div class="field"><label>Type</label><div class="inv-kinds">${Object.entries(LOC_KIND).map(([k, [n, ic]]) => `<label class="inv-kc ${x.kind === k ? 'on' : ''}"><input type="radio" name="lcKind" value="${k}" ${x.kind === k ? 'checked' : ''}><span>${ic}</span><b>${esc(n)}</b></label>`).join('')}</div></div>
       <div class="field"><label>Address <span class="muted">(printed on purchase orders)</span></label><input class="input" id="lcAddr" maxlength="300" value="${esc(x.address || '')}"></div>
       ${l && !invIsMain(l) ? `<label class="field" style="flex-direction:row;align-items:center;gap:8px"><input type="checkbox" id="lcMain"> Make this the main place</label><label class="field" style="flex-direction:row;align-items:center;gap:8px"><input type="checkbox" id="lcAct" ${invOn(l) ? 'checked' : ''}> Active</label>` : ''}</div>`,
@@ -12248,7 +12250,7 @@ function alertsReadUI() {
     if (t.closest('[data-alsave]')) { try { await alertsSave(alertsReadUI()); renderConnections(); } catch (er) { toast(er.message, true); } return; }
     const ts = t.closest('[data-altest]'); if (ts) { const c = alertsReadUI(); if (!c.emails.length && !c.phones.length) return toast('Add an email or WhatsApp number first', true); if (demo) return toast('Demo: a test alert would be sent to ' + c.emails.concat(c.phones.map(p => '+' + p)).join(', '));
       ts.disabled = true; try { await alertsSave(c, true); const r = await fnCall('alerts', { action: 'test' }); connMsg('alerts', '✓ ' + esc(r.message || 'Test alert sent')); } catch (er) { connMsg('alerts', esc(er.message), true); } ts.disabled = false; return; }
-    const tp = t.closest('[data-altpl]'); if (tp) { tp.disabled = true; try { await fnCall('wa-templates', { action: 'create', name: 'nodevers_alert', category: 'UTILITY', language: 'en', content: 'text', body: 'Alert for {{1}}: {{2}}. Open Nodevers for details.', footer: 'Sent by Nodevers', buttons: [], examples: ['Moutix', 'New order O123 for Rs 1,499 on your website'] }); connMsg('alerts', '✓ Template “nodevers_alert” sent to Meta — usually approved within minutes.'); } catch (er) { connMsg('alerts', esc(er.message), true); } tp.disabled = false; return; }
+    const tp = t.closest('[data-altpl]'); if (tp) { tp.disabled = true; try { await fnCall('wa-templates', { action: 'create', name: 'nodevers_alert', category: 'UTILITY', language: 'en', content: 'text', body: 'Alert for {{1}}: {{2}}. Open Nodevers for details.', footer: 'Sent by Nodevers', buttons: [], examples: ['your shop', 'New order O123 for Rs 1,499 on your website'] }); connMsg('alerts', '✓ Template “nodevers_alert” sent to Meta — usually approved within minutes.'); } catch (er) { connMsg('alerts', esc(er.message), true); } tp.disabled = false; return; }
   });
   v.addEventListener('input', e => { if (e.target.id === 'connQ') { CONN.q = e.target.value; connFilter(); } });
   v.addEventListener('change', e => { const m = e.target.closest('[data-cfmap]'); if (m) { const [pfx, f] = m.dataset.cfmap.split('|'), key = pfx === 'o' ? 'map' : 'pmap'; CONN.draft[key] = Object.assign({}, CONN.draft[key] || (((CONN.list || {}).custom || {}).config || {})[key] || {}, { [f]: m.value }); } });
@@ -13127,7 +13129,7 @@ function openCallLog(leadId) {
       : `<div class="field"><label>Lead</label><input class="input" id="clLead" list="dlLeadsAll" placeholder="Type a name or number"><datalist id="dlLeadsAll">${S.leads.slice(0, 800).map(x => `<option value="${esc(x.name + ' · ' + (x.phone ? '+' + x.phone : x.leadId))}">`).join('')}</datalist></div>`}
     <div class="field"><label>What happened?</label><div class="cl-outs">${CALL_OUT.map(([o, k, ic]) => `<button type="button" class="cl-o ${k}" data-clout="${esc(o)}"><span>${ic}</span>${esc(o)}</button>`).join('')}</div></div>
     <div class="form" style="grid-template-columns:140px 1fr;margin-top:6px"><div class="field"><label>Duration (min)</label><input class="input" id="clDur" type="number" min="0" step="1" placeholder="3"></div>
-      <div class="field"><label>Notes</label><input class="input" id="clNotes" maxlength="400" placeholder="e.g. wants price list for 30 chairs"></div></div>
+      <div class="field"><label>Notes</label><input class="input" id="clNotes" maxlength="400"></div></div>
     <label class="check" id="clTaskWrap" hidden><input type="checkbox" id="clTask" checked> Create a follow-up task in <input class="input sm" id="clDays" type="number" min="0" max="60" value="1" style="width:64px;display:inline-block"> day(s)</label>
     <label class="check" id="clLostWrap" hidden><input type="checkbox" id="clLost"> Mark this lead as <b>Lost</b></label>
     <div class="m-foot"><div class="grow"></div><button class="btn" data-close>Cancel</button><button class="btn primary" id="clSave">Save call</button></div>`;
@@ -13157,7 +13159,7 @@ function openTask(t, leadId) {
   const ln = x.leadId ? leadById(x.leadId) : null;
   $('#stageBox').innerHTML = `<div class="m-head"><h2>${t ? 'Edit task' : 'New task'}</h2><button class="ibtn" data-close>${I.x}</button></div>
     <div class="form" style="grid-template-columns:1fr 1fr">
-      <div class="field full"><label>Task</label><input class="input" id="tkTitle" maxlength="200" value="${esc(x.title)}" placeholder="e.g. Send quotation for 30 chairs"></div>
+      <div class="field full"><label>Task</label><input class="input" id="tkTitle" maxlength="200" value="${esc(x.title)}"></div>
       <div class="field full"><label>Lead (optional)</label><input class="input" id="tkLead" list="dlLeadsT" value="${ln ? esc(ln.name + ' · ' + (ln.phone ? '+' + ln.phone : ln.leadId)) : ''}" placeholder="Type a name"><datalist id="dlLeadsT">${S.leads.slice(0, 800).map(l => `<option value="${esc(l.name + ' · ' + (l.phone ? '+' + l.phone : l.leadId))}">`).join('')}</datalist></div>
       <div class="field"><label>Due</label><input class="input" id="tkDue" type="datetime-local" value="${local}"></div>
       <div class="field"><label>Priority</label><select class="input" id="tkPrio">${PRIO.map(p => `<option ${p === x.priority ? 'selected' : ''}>${p}</option>`).join('')}</select></div>
