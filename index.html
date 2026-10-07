@@ -1160,6 +1160,13 @@ body.ro [data-add],body.ro .addcard,body.ro #addMember,body.ro [data-lginvite],b
 .lg-p{display:flex;gap:10px;align-items:center}.lg-p>div:last-child{display:flex;flex-direction:column}.lg-p small{font-size:12px}.input.sm{padding:6px 8px;font-size:12.5px;height:auto;width:auto}
 .lg-sub{margin:16px 0 8px;font-size:13px}.lg-inv{display:flex;flex-direction:column;gap:8px}.lg-i{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:8px 10px;border:1px solid var(--line);border-radius:10px;font-size:13px}
 .lg-roles{display:flex;flex-direction:column;gap:8px}.lg-r{display:flex;gap:10px;align-items:flex-start;padding:10px;border:1px solid var(--line);border-radius:10px;cursor:pointer}.lg-r:has(input:checked){border-color:var(--blue-2);background:var(--blue-soft)}.lg-r span{display:flex;flex-direction:column;gap:2px}.lg-r small{color:var(--muted);font-size:12px}
+.lg-invm .field{margin:0 0 16px}.lg-invm .field>label{display:block;margin-bottom:7px}
+.lg-invm .lg-roles{gap:10px}.lg-invm .lg-r{align-items:center;gap:12px;padding:12px 14px;margin:0}.lg-invm .lg-r input{margin:0;flex:none}
+.lg-invm .lg-r b{font-size:14px;line-height:1.3}.lg-invm .lg-r small{line-height:1.4}
+.lg-linkrow{display:flex;gap:8px;align-items:center}.lg-linkrow .input{flex:1;min-width:0}
+.lg-send{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 16px}.lg-send .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px}
+.lg-invm .help{margin:0 0 16px}.lg-invm .m-foot{margin-top:4px;padding-top:16px;border-top:1px solid var(--line)}
+@media (max-width:600px){.lg-send .btn{flex:1 1 100%}.lg-invm .m-foot .grow{display:none}.lg-invm .m-foot .btn{flex:1}}
 .cmo-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:4px 0 12px}.cmo{display:flex;gap:10px;align-items:flex-start;text-align:left;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:var(--glass-2);cursor:pointer;color:var(--text);font:inherit;transition:border-color .15s,box-shadow .15s}.cmo:hover{border-color:var(--line-2)}.cmo.on{border-color:var(--primary);box-shadow:0 0 0 3px var(--blue-soft)}.cmo-d{flex:none;width:16px;height:16px;border-radius:50%;border:2px solid var(--line-2);margin-top:2px}.cmo.on .cmo-d{border-color:var(--primary);background:radial-gradient(var(--primary) 40%,transparent 46%)}.cmo b{display:block;font-size:13.5px}.cmo small{display:block;color:var(--muted);font-size:12px;line-height:1.4;margin-top:2px}@media(max-width:640px){.cmo-bar{grid-template-columns:1fr}}
 .wa-hook a{color:var(--blue-2);font-weight:600}.wa-hook{margin-top:12px;padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--glass-2)}.wa-hh{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin-bottom:8px}.wa-hs{font-size:12px;padding:3px 10px;border-radius:999px;line-height:1.35}.wa-hs.ok{background:var(--green-soft);color:var(--green)}.wa-hs.wait{background:var(--yellow-soft);color:#B45309}.wa-hs.bad{background:var(--coral-soft);color:var(--coral)}.wa-copy{display:flex;gap:8px}.wa-copy .input{min-width:0;flex:1;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px}.wa-steps{margin:0 0 8px 18px;padding:0;font-size:13px;line-height:1.65}.wa-warn{border:0;background:var(--yellow-soft);color:#B45309;border-radius:999px;padding:3px 10px;font-size:12px;cursor:pointer;font-family:inherit}
 .cmx{border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin-top:10px;background:var(--glass-2)}.cmx-h{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap;margin-bottom:4px}.cmx-r{display:flex;gap:12px;align-items:flex-start;padding:10px 0 4px;border-top:1px dashed var(--line)}.cmx-r .grow{min-width:0}.cmx-t{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:2px}.cmx-t .input{max-width:260px;flex:1 1 160px}.cmx-l{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);min-width:96px}.cmx-f{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;margin-top:8px}.cmx-envs{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:8px;font-size:12px;color:var(--muted)}.cmx-env{padding:2px 8px;border-radius:999px;background:var(--glass-3);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px}.cmx-env.ok{background:var(--green-soft);color:var(--green)}.cmx-env.no{background:var(--coral-soft);color:var(--coral)}.cmx-chk{display:flex;gap:6px;align-items:center;font-size:13px;align-self:end;padding-bottom:8px}.cmx .help{margin:6px 0 0}.cmx .help code{word-break:break-all}
@@ -6846,7 +6853,7 @@ function openAccess(uid) {
 async function inviteEmail(token, to, btn) {
   if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(to)) return toast('Enter their email first', true);
   if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
-  const done = (ok, t) => { if (btn) { btn.disabled = false; btn.textContent = ok ? '✓ Sent' : '✉ Send invite email'; } toast(t, !ok); };
+  const done = (ok, t) => { if (btn) { btn.disabled = false; btn.innerHTML = ok ? '✓ Sent' : CONN_IC.mail + 'Send invite email'; } toast(t, !ok); };
   try { await fnCall('email', { action: 'invite', token, to, link: inviteLink(token), by: (authUser() || {}).name || '' }); return done(true, '✓ Invite email sent to ' + to); }
   catch (e) {
     if (!/sender|connect your email|not set up/i.test(e.message || '')) return done(false, e.message);
@@ -6855,13 +6862,13 @@ async function inviteEmail(token, to, btn) {
   }
 }
 function openInvite() {
-  $('#stageBox').innerHTML = `<div class="m-head"><h2>Invite someone</h2><button class="ibtn" data-close>${I.x}</button></div>
+  $('#stageBox').innerHTML = `<div class="lg-invm"><div class="m-head"><h2>Invite someone</h2><button class="ibtn" data-close>${I.x}</button></div>
     <p class="help" style="margin-bottom:12px">Create a link and send it on WhatsApp or email. They open it, create a login, and join <b>${esc(AUTH.wsName)}</b> with the role you pick. Links work once and expire in 7 days.</p>
     <div class="field"><label>Role</label><div class="lg-roles">${['member', 'admin', 'client'].map((r, i) => `<label class="lg-r"><input type="radio" name="lgr" value="${r}" ${i === 0 ? 'checked' : ''}><span><b>${ROLE_LABEL[r]}</b><small>${ROLE_INFO[r].split('— ')[1]}</small></span></label>`).join('')}</div></div>
     <div class="field"><label>Their email (optional — locks the link to this email)</label><input class="input" id="lgEmail" type="email" placeholder="name@business.com" autocomplete="off"></div>
     <div class="field"><label>Note (optional)</label><input class="input" id="lgNote" maxlength="120"></div>
     <div id="lgOut"></div>
-    <div class="m-foot"><div class="grow"></div><button class="btn primary" id="lgCreate">Create invite link</button></div>`;
+    <div class="m-foot"><div class="grow"></div><button class="btn primary" id="lgCreate">Create invite link</button></div></div>`;
   $('#lgCreate').onclick = async () => {
     const email = $('#lgEmail').value.trim().toLowerCase(), role = ($('input[name="lgr"]:checked') || {}).value || 'member';
     if (email && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return toast('Enter a valid email or leave it empty', true);
@@ -6869,8 +6876,8 @@ function openInvite() {
     try {
       const r = await sbq(AUTH.client.from('invites').insert({ workspace_id: AUTH.ws, role, email, note: $('#lgNote').value.trim() }).select('token').single());
       const link = inviteLink(r.token), msg = `You're invited to join ${AUTH.wsName} on Nodevers. Open this link to create your login: ${link}`;
-      $('#lgOut').innerHTML = `<div class="field"><label>Invite link</label><div style="display:flex;gap:8px"><input class="input" readonly value="${esc(link)}"><button class="btn" data-lgcopy="${esc(r.token)}">Copy</button></div></div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:6px"><a class="btn wa" target="_blank" rel="noopener" href="https://wa.me/?text=${encodeURIComponent(msg)}">${I.wa}Send on WhatsApp</a>${email ? `<button type="button" class="btn primary" data-lgsend="${esc(r.token)}" data-lgto="${esc(email)}">✉ Send invite email</button>` : `<a class="btn" href="mailto:?subject=${encodeURIComponent('Invite to ' + AUTH.wsName)}&body=${encodeURIComponent(msg)}">Open in my email app</a>`}</div>
+      $('#lgOut').innerHTML = `<div class="field"><label>Invite link</label><div class="lg-linkrow"><input class="input" readonly value="${esc(link)}"><button class="btn" data-lgcopy="${esc(r.token)}">Copy</button></div></div>
+        <div class="lg-send"><a class="btn wa" target="_blank" rel="noopener" href="https://wa.me/?text=${encodeURIComponent(msg)}">${I.wa}Send on WhatsApp</a>${email ? `<button type="button" class="btn primary" data-lgsend="${esc(r.token)}" data-lgto="${esc(email)}">${CONN_IC.mail}Send invite email</button>` : `<a class="btn" href="mailto:?subject=${encodeURIComponent('Invite to ' + AUTH.wsName)}&body=${encodeURIComponent(msg)}">Open in my email app</a>`}</div>
         ${email ? '' : '<p class="help">Add their email above to send the invite straight from Nodevers.</p>'}`;
       b.textContent = 'Create another'; renderLogins();
     } catch (e) { toast('Could not create invite: ' + e.message, true); } finally { b.disabled = false; }
