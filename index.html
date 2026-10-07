@@ -2167,6 +2167,24 @@ html.ld-lock,html.ld-lock body{overflow:hidden}
 @keyframes finUp{from{transform:scaleY(0)}to{transform:scaleY(1)}}@media (prefers-reduced-motion:reduce){.fin-fb i{animation:none}}
 @media (max-width:900px){.cm-pq{grid-template-columns:repeat(2,minmax(0,1fr))}.cr-gst,.cr-nums{grid-template-columns:minmax(0,1fr)}.cm-wfr{grid-template-columns:minmax(110px,1fr) minmax(0,1.2fr) 92px;}.cm-wfr small{display:none}}
 @media (max-width:560px){.cm-pq{grid-template-columns:minmax(0,1fr)}.cm-setup{flex-direction:column;align-items:flex-start}}
+/* ---- bulk select ---- */
+.bk-cell{width:34px;padding-left:12px!important;padding-right:0!important;vertical-align:middle}
+.bk-cell input,.bk-cb input{width:16px;height:16px;margin:0;cursor:pointer;accent-color:var(--blue-2)}
+.bk-inl{display:flex;align-items:center;justify-content:center;flex:none;width:28px;align-self:center;cursor:pointer}
+.bk-row{display:flex;align-items:center}
+tr.bk-sel>td{background:color-mix(in srgb,var(--blue-2) 7%,transparent)}
+.bk-row.bk-sel,.bk-host.bk-sel{background:color-mix(in srgb,var(--blue-2) 7%,var(--glass-3))}
+.bk-host{position:relative}
+.bk-cb{position:absolute;top:-9px;left:-9px;z-index:3;width:26px;height:26px;border-radius:9px;display:grid;place-items:center;background:var(--glass-3);box-shadow:0 1px 3px rgba(0,0,0,.12);opacity:0;transition:opacity .15s var(--ease);cursor:pointer}
+.bk-host:hover .bk-cb,.bk-any .bk-cb,.bk-cb:has(input:checked),.bk-cb:focus-within{opacity:1}
+@media (hover:none){.bk-cb{opacity:1}}
+.bk-bar{position:fixed;left:50%;bottom:22px;z-index:90;display:flex;align-items:center;gap:8px;flex-wrap:wrap;max-width:min(860px,calc(100vw - 32px));padding:10px 12px 10px 18px;border-radius:16px;background:var(--glass-3);box-shadow:0 18px 50px -12px rgba(0,0,0,.35),0 0 0 1px var(--line);transform:translate(-50%,24px);opacity:0;pointer-events:none;transition:transform .2s var(--ease),opacity .2s var(--ease)}
+.bk-bar.show{transform:translate(-50%,0);opacity:1;pointer-events:auto}
+.bk-bar.busy{opacity:.7;pointer-events:none}
+.bk-bar b{font-size:14px;font-variant-numeric:tabular-nums;white-space:nowrap}.bk-sp{flex:1;min-width:8px}
+.bk-toast{display:flex;align-items:center;gap:12px}
+@media (max-width:820px){.bk-bar{bottom:84px;left:16px;right:16px;max-width:none;transform:translateY(24px);border-radius:14px}.bk-bar.show{transform:none}.bk-sp{display:none}}
+@media (prefers-reduced-motion:reduce){.bk-bar{transition:none}}
 </style>
 </head>
 <body>
@@ -2843,6 +2861,12 @@ function demoApi(action, d) {
     case 'moveStage': { const l = find(d.id); const old = l.stage; l.stage = d.stage; l.lastContact = todayStr(); log(d.id, 'Stage Changed', old + ' → ' + d.stage, d.by); demoAutoTask(l, old); return l; }
     case 'addActivity': { const a = log(d.leadId, d.type, d.details, d.doneBy); try { find(d.leadId).lastContact = todayStr(); } catch (e) { } return a; }
     case 'deleteLead': { S.leads = S.leads.filter(l => l.leadId !== d.id); return { deleted: d.id }; }
+    case 'bulkDelete': { const one = { leads: 'deleteLead', tasks: 'deleteTask', calls: 'deleteCall', orders: 'deleteOrder', products: 'deleteProduct', adspend: 'deleteAdSpend' }[d.kind];
+      if (one) { d.ids.forEach(id => demoApi(one, { id, sku: id })); return { deleted: d.ids.length }; }
+      if (d.kind === 'team') { const before = S.team.length; S.team = S.team.filter(m => !d.ids.includes(m.memberId)); return { deleted: before - S.team.length }; }
+      if (d.kind === 'checkouts') { S.checkouts = (S.checkouts || []).filter(c => !d.ids.includes(String(c.checkoutId))); return { deleted: d.ids.length }; }
+      if (d.kind === 'schedules') { S.schedules = (S.schedules || []).filter(c => !d.ids.includes(String(c.id))); return { deleted: d.ids.length }; }
+      throw new Error('Not supported here'); }
     case 'saveBroadcast': { S.broadcasts = S.broadcasts || []; const b = Object.assign({}, d); if (!b.broadcastId) b.broadcastId = nextId(S.broadcasts, 'broadcastId', 'B'); const i = S.broadcasts.findIndex(x => x.broadcastId === b.broadcastId); if (i > -1) S.broadcasts[i] = b; else S.broadcasts.push(b); return b; }
     case 'addTeamMember': { const m = Object.assign({ active: true }, d, { memberId: nextId(S.team, 'memberId', 'T') }); S.team.push(m); return m; }
     case 'saveFlow': { const f = Object.assign({}, d, { updatedOn: nowStr() }); if (!f.flowId) f.flowId = nextId(S.flows, 'flowId', 'F'); const i = S.flows.findIndex(x => String(x.flowId) === String(f.flowId)); if (i > -1) S.flows[i] = f; else S.flows.push(f); store.set('leadnode.demoFlows', S.flows.filter(x => ['preset', 'script', 'node', 'toolset'].includes(x.trigger))); return f; }
@@ -6592,6 +6616,7 @@ async function sbApi(action, d = {}) {
       const rows = (d.leads || []).map(x => { const r = toRow('leads', Object.assign({}, blank, base, x)); delete r.lead_id; delete r.email_opt_out; delete r.wa_opt_out; r.phone = cleanPhone(r.phone); r.workspace_id = ws; return r; });
       if (rows.length && rows.every(r => !r.email)) rows.forEach(r => delete r.email);          // works before the email update too
       if (!AUTH.v7) rows.forEach(r => { delete r.state; delete r.district; });
+      if (IMX.cur) rows.forEach(r => { r.import_id = IMX.cur; });
       const ins = await sbq(T('leads').insert(rows).select());
       if (ins.length) await sbq(T('activities').insert(ins.map(l => ({ workspace_id: ws, lead_id: l.lead_id, type: 'Lead Added', details: 'Imported from file' + (l.source ? ' · ' + l.source : ''), done_by: String(d.by || '') }))));
       return ins.map(fromRow);
@@ -6610,6 +6635,13 @@ async function sbApi(action, d = {}) {
       const old = await sbq(T('leads').select('stage').eq('workspace_id', ws).eq('lead_id', d.id).maybeSingle()); if (!old) throw new Error('Lead not found');
       const r = await sbq(T('leads').update({ stage: d.stage, last_contact: todayStr() }).eq('workspace_id', ws).eq('lead_id', d.id).select().single());
       await sbLog(d.id, 'Stage Changed', old.stage + ' → ' + d.stage, d.by); return fromRow(r);
+    }
+    case 'bulkDelete': {
+      const M = { leads: ['leads', 'lead_id'], tasks: ['tasks', 'task_id'], calls: ['calls', 'call_id'], orders: ['orders', 'order_id'], products: ['products', 'sku'], adspend: ['ad_spend', 'id'], team: ['team', 'member_id'], checkouts: ['checkouts', 'checkout_id'], schedules: ['campaign_schedules', 'id'] }[d.kind];
+      if (!M) throw new Error('Not supported here');
+      let n = 0; const ids = (d.ids || []).map(String);
+      for (let i = 0; i < ids.length; i += 200) { let q = T(M[0]).delete().eq('workspace_id', ws).in(M[1], ids.slice(i, i + 200)); if (d.kind === 'team') q = q.is('user_id', null); n += (await sbq(q.select(M[1]))).length; }
+      return { deleted: n };
     }
     case 'deleteLead': { const r = await sbq(T('leads').delete().eq('workspace_id', ws).eq('lead_id', d.id).select('lead_id')); if (AUTH.v7 && !r.length) throw new Error('You do not have permission to delete this lead.'); return { deleted: d.id }; }
     case 'logCall': {
@@ -6654,7 +6686,7 @@ async function sbApi(action, d = {}) {
       if (!AUTH.v9) throw new Error('Run the database update 09_commerce.sql first.');
       const tb = { importProducts: 'products', importOrders: 'orders', importAds: 'ad_spend' }[action], keys = new Set();
       (d.rows || []).forEach(x => Object.keys(x).forEach(k => keys.add(k)));
-      const rows = (d.rows || []).map(x => { const r = toRow(tb, Object.fromEntries([...keys].map(k => [k, x[k] === undefined ? '' : x[k]]))); r.workspace_id = ws; if (tb === 'orders') { delete r.order_id; r.lead_id = null; if (!r.ext_id) r.ext_id = null; } return r; });
+      const rows = (d.rows || []).map(x => { const r = toRow(tb, Object.fromEntries([...keys].map(k => [k, x[k] === undefined ? '' : x[k]]))); r.workspace_id = ws; if (tb === 'orders') { delete r.order_id; r.lead_id = null; if (!r.ext_id) r.ext_id = null; } if (IMX.cur) r.import_id = IMX.cur; return r; });
       if (tb === 'products') return { count: (await sbq(T('products').upsert(rows, { onConflict: 'workspace_id,sku' }).select('sku'))).length };
       if (tb === 'ad_spend') return { count: (await sbq(T('ad_spend').upsert(rows, { onConflict: 'workspace_id,day,platform,campaign' }).select('id'))).length };
       const withId = rows.filter(r => r.ext_id), noId = rows.filter(r => !r.ext_id); let n = 0;
@@ -6788,7 +6820,7 @@ async function renderLogins() {
     const canPause = m => AUTH.v28 && admin && m.role !== 'owner' && m.user_id !== me && (m.role !== 'admin' || myRole === 'owner');
     box.innerHTML = `<div class="glass lg-card"><div class="lg-h"><div><h3>Logins & access</h3><p class="muted">People who can sign in to <b>${esc(AUTH.wsName || 'this workspace')}</b>. Each workspace's data is private.</p></div>${admin ? `<button class="btn primary" data-lginvite>${I.users}Invite</button>` : ''}</div>
       <div class="tblwrap"><table class="tbl"><thead><tr><th>Person</th><th>Role</th><th>Team & area</th><th>${AUTH.v28 ? 'Last login' : 'Joined'}</th><th></th></tr></thead><tbody>
-      ${mem.map(m => `<tr style="cursor:default"><td><div class="lg-p">${avatar(m.name)}<div><b>${esc(m.name)}${m.user_id === me ? ' <span class="muted">(you)</span>' : ''}</b><small class="muted">${esc(m.email)}</small></div></div></td>
+      ${mem.map(m => `<tr style="cursor:default" ${admin && m.role !== 'owner' && m.user_id !== me && (m.role !== 'admin' || myRole === 'owner') ? `data-bkid="${esc(m.user_id)}"` : ''}><td><div class="lg-p">${avatar(m.name)}<div><b>${esc(m.name)}${m.user_id === me ? ' <span class="muted">(you)</span>' : ''}</b><small class="muted">${esc(m.email)}</small></div></div></td>
         <td>${admin && m.role !== 'owner' && m.user_id !== me ? `<select class="input sm" data-lgrole="${esc(m.user_id)}">${['admin', 'member', 'client'].map(r => `<option value="${r}" ${r === m.role ? 'selected' : ''}>${ROLE_LABEL[r]}</option>`).join('')}</select>` : `<span class="pill ${m.role === 'owner' ? 'won' : 'stage'}">${ROLE_LABEL[m.role] || esc(m.role)}</span>`}</td>
         <td>${accessCell(m, admin && m.user_id !== me)}</td>
         <td class="muted">${lastTxt(m)}</td>
@@ -7259,7 +7291,7 @@ async function openImport(file) {
     <div class="imp-map" id="impMap"></div>
     <label class="imp-batch"><span>Batch name <small>— saved as the lead's Source. In Broadcast → Audience → Source pick this name to message only these leads.</small></span><input class="input sm" id="impSrc" maxlength="40" value="${esc('Excel ' + new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'short' }))}"></label>
     <div class="imp-sum" id="impSum"></div><div class="imp-prog" id="impProg" hidden><div class="imp-bar"><i id="impBar"></i></div><span id="impTxt"></span></div>
-    <div class="m-foot"><button class="btn" data-impsample>Download sample file</button><div class="grow"></div><button class="btn" data-close>Cancel</button><button class="btn primary" id="impGo">Import leads</button></div>`;
+    <div class="m-foot"><button class="btn" data-impsample>Download sample file</button>${cloud ? '<button class="btn" data-impopen>Past imports</button>' : ''}<div class="grow"></div><button class="btn" data-close>Cancel</button><button class="btn primary" id="impGo">Import leads</button></div>`;
   $('#impMap').addEventListener('change', e => { const s = e.target.closest('[data-impcol]'); if (!s) return; const i = +s.dataset.impcol; if (s.value) IMP.map = IMP.map.map((k, j) => j !== i && k === s.value ? '' : k); IMP.map[i] = s.value; drawImport(); });
   $('#impGo').onclick = runImport;
   drawImport(); showModal('#leadModal');
@@ -7267,7 +7299,7 @@ async function openImport(file) {
 async function runImport() {
   const p = importPlan(), max = demo || !cloud ? 300 : 5000, list = p.list.slice(0, max), btn = $('#impGo'), batch = ($('#impSrc') ? $('#impSrc').value : '').trim();
   if (batch) list.forEach(d => { d.source = batch; });
-  btn.disabled = true; $('#impProg').hidden = false;
+  btn.disabled = true; $('#impProg').hidden = false; if (cloud) await impStart('leads', batch || 'Leads file');
   const prog = n => { $('#impBar').style.width = Math.round(n / list.length * 100) + '%'; $('#impTxt').textContent = `${n} / ${list.length}`; };
   let ok = 0, fail = 0;
   try {
@@ -7277,6 +7309,7 @@ async function runImport() {
       for (const d of list) { try { await api('addLead', Object.assign({ by: me() }, d)); ok++; } catch (e) { fail++; } if ((ok + fail) % 5 === 0) prog(ok + fail); }
       prog(list.length);
     }
+    const impId = await impEnd();
     const msg = `${ok} leads imported${p.dup ? ` · ${p.dup} already existed` : ''}${p.bad ? ` · ${p.bad} skipped` : ''}${fail ? ` · ${fail} failed` : ''}`;
     if (demo) renderAll(); else await load(true);
     if (!ok) { hideModal('#leadModal'); return toast(msg, true); }
@@ -7284,9 +7317,9 @@ async function runImport() {
     if (IMP.fromBc && batch) { const ch = IMP.fromBc; IMP.fromBc = ''; hideModal('#leadModal'); bcUseBatch(ch, batch); return toast(`✓ ${msg} — selected for this broadcast`); }
     $('#leadBox').innerHTML = `<div class="m-head"><h2>Import done</h2><button class="ibtn" data-close>${I.x}</button></div>
       <div class="imp-done"><div class="imp-ok">✓</div><b>${esc(msg)}</b>${batch ? `<p class="help">Batch name: <b>${esc(batch)}</b>. Send them a WhatsApp template or an email now — the audience is already set to this batch.</p>` : ''}</div>
-      <div class="m-foot"><div class="grow"></div><button class="btn" data-close>Done</button>${batch ? `<button class="btn" data-impbc="email">Send email</button><button class="btn primary" data-impbc="whatsapp">Send WhatsApp broadcast</button>` : ''}</div>`;
+      <div class="m-foot">${impId ? `<button class="btn danger" data-impundo="${esc(impId)}">Undo this import</button>` : ''}<div class="grow"></div><button class="btn" data-close>Done</button>${batch ? `<button class="btn" data-impbc="email">Send email</button><button class="btn primary" data-impbc="whatsapp">Send WhatsApp broadcast</button>` : ''}</div>`;
     return;
-  } catch (e) { toast('Import stopped: ' + e.message, true); btn.disabled = false; }
+  } catch (e) { toast('Import stopped: ' + e.message, true); btn.disabled = false; const id = await impEnd(); if (id) impUndoToast(id, 'Part of the file was imported'); }
   if (demo) renderAll(); else load(true);
 }
 async function downloadSample() {
@@ -8541,7 +8574,7 @@ function cuBulkHTML(total) {
   return `<div class="cu-bulk glass"><b>${n.toLocaleString('en-IN')} selected</b>${!CU.all && total > CU.sel.size ? `<button class="btn-link" data-cuall>Select all ${total.toLocaleString('en-IN')} matching</button>` : ''}<span class="grow"></span>
     <button class="btn sm wa" data-cubulk="whatsapp">${I.wa}WhatsApp campaign</button><button class="btn sm" data-cubulk="email">✉ Email campaign</button>
     <button class="btn sm" data-cubulk="mktyes" title="Only when they agreed — e.g. ticked a box or asked for offers">✓ Mark: said yes to offers</button><button class="btn sm" data-cubulk="mktno">✕ Mark: no offers</button>
-    <button class="btn sm" data-cubulk="csv">Export</button><button class="btn sm" data-cubulk="meta" title="Customer list for Meta ads">Meta audience</button>${v24() ? '<button class="btn sm" data-cusched>📅 Schedule</button>' : ''}<button class="ibtn" data-cubulk="clear" title="Clear selection">${I.x}</button></div>`;
+    <button class="btn sm" data-cubulk="csv">Export</button><button class="btn sm" data-cubulk="meta" title="Customer list for Meta ads">Meta audience</button>${v24() ? '<button class="btn sm" data-cusched>📅 Schedule</button>' : ''}${bkCanW() && can('delete') ? '<button class="btn sm danger" data-cubulk="delete">Delete</button>' : ''}<button class="ibtn" data-cubulk="clear" title="Clear selection">${I.x}</button></div>`;
 }
 function cuEmptyHTML() {
   return `<div class="cu-empty glass"><div class="cu-empty-ic">🛍</div><h3>Your customers show up here</h3><p class="muted">Everyone who orders becomes a customer profile — one per phone number or email, from every place you sell.</p>
@@ -8620,6 +8653,7 @@ async function cuBulk(kind) {
   if (kind === 'clear') { CU.sel.clear(); CU.all = false; return renderCustomers(); }
   const ids = await cuSelectedIds(); if (!ids.length) return;
   const segName = CU.seg ? (CU_SEGS.find(x => x[0] === CU.seg) || [0, ''])[1] : 'Customers', label = `${segName} · ${ids.length.toLocaleString('en-IN')} people`;
+  if (kind === 'delete') { try { if (await bkDel('leads', ids, 'customers', 'Their orders stay; the customer profile, timeline and chats go.')) { CU.sel.clear(); CU.all = false; await refreshData(); } } catch (e) { toast(e.message, true); } return; }
   if (kind === 'whatsapp' || kind === 'email') { CU.sel.clear(); CU.all = false; return bcUseIds(kind, ids, label, 'you'); }
   if (kind === 'csv') { const rows = ids.map(id => leadById(id)).filter(Boolean); return cuExport(rows); }
   if (kind === 'meta') { const rows = (await sbLeadsByIdsMaybe(ids)).filter(Boolean); return metaCsv(metaFromLeads(rows), `meta-audience-${CU.seg || 'customers'}-${todayStr()}.csv`); }
@@ -8682,7 +8716,7 @@ function renderCheckouts(anim) {
     ${!all.length ? `<div class="cu-empty glass"><div class="cu-empty-ic">🛒</div><h3>No abandoned checkouts yet</h3><p class="muted">They come from the website tracking code (any website) or your Shopify connection — as soon as a shopper types a phone number or email and leaves without paying.</p><div class="row" style="justify-content:center;gap:8px"><button class="btn primary" data-cutrack>Set up the tracking code</button><button class="btn" data-go="connections">Connect Shopify</button></div></div>` : `
     <div class="cu-segs ck-segs" role="tablist">${[['open', 'Waiting to pay', 'Left at checkout — remind them', 'var(--coral)'], ['recovered', 'Recovered', 'Ordered after leaving', 'var(--green)'], ['lost', 'Lost', 'Marked lost — no more reminders', 'var(--muted)'], ['all', 'All checkouts', 'Everything the tracking caught', 'var(--blue-2)']].map(([k, n, d, c]) => `<button class="cu-sg ${CK.st === k ? 'on' : ''}" data-ckst="${k}" style="--c:${c}"><b>${stN(k).toLocaleString('en-IN')}</b><span>${n}</span><small>${stV(k) ? inrShort(stV(k)) + ' · ' : ''}${d}</small></button>`).join('')}</div>
     ${ckToolsHTML()}
-    ${CK.sel.size ? `<div class="cu-bulk glass"><b>${CK.sel.size} selected</b><span class="grow"></span><button class="btn sm wa" data-ckbulk="whatsapp">${I.wa}Send a reminder</button><button class="btn sm" data-ckbulk="email">✉ Email them</button><button class="btn sm" data-ckbulk="meta">Meta audience</button><button class="btn sm" data-ckbulk="lost">Mark lost</button><button class="ibtn" data-ckbulk="clear" title="Clear selection">${I.x}</button></div>` : ''}
+    ${CK.sel.size ? `<div class="cu-bulk glass"><b>${CK.sel.size} selected</b><span class="grow"></span><button class="btn sm wa" data-ckbulk="whatsapp">${I.wa}Send a reminder</button><button class="btn sm" data-ckbulk="email">✉ Email them</button><button class="btn sm" data-ckbulk="meta">Meta audience</button><button class="btn sm" data-ckbulk="lost">Mark lost</button>${bkCanW() ? '<button class="btn sm danger" data-ckbulk="delete">Delete</button>' : ''}<button class="ibtn" data-ckbulk="clear" title="Clear selection">${I.x}</button></div>` : ''}
     <div class="table-wrap glass"><table class="tbl cu-tbl"><thead><tr><th class="cu-ck"><input type="checkbox" data-ckselall aria-label="Select all"></th><th>Shopper</th><th>WhatsApp</th><th>Cart</th><th class="num">Value</th><th>Started</th><th>Reminders</th><th>Status</th><th></th></tr></thead><tbody>
     ${list.slice(0, 300).map((c, i) => { const l = c.leadId ? leadById(c.leadId) : null, st = CK_ST[c.status] || CK_ST.open; return `<tr ${c.leadId ? `data-open="${esc(c.leadId)}"` : ''} style="--i:${anim ? Math.min(i, 25) : 0}">
       <td class="cu-ck"><input type="checkbox" data-cksel="${esc(c.checkoutId)}" ${CK.sel.has(c.checkoutId) ? 'checked' : ''} ${c.leadId ? '' : 'disabled'} aria-label="Select"></td>
@@ -8725,7 +8759,7 @@ async function ckSetStatus(ids, status) {
   let qT = null;
   v.addEventListener('input', e => { if (e.target.id === 'ckQ') { CK.q = e.target.value; clearTimeout(qT); qT = setTimeout(() => { const p = ($('#ckQ') || {}).selectionStart; renderCheckouts(); const q = $('#ckQ'); if (q) { q.focus(); try { q.setSelectionRange(p, p); } catch (er) { } } }, 120); } });
   v.addEventListener('change', e => { const f = e.target.closest('[data-ckf]'); if (f) { CK[f.dataset.ckf] = f.value; CK.sel.clear(); renderCheckouts(); } });
-  v.addEventListener('click', e => {
+  v.addEventListener('click', async e => {
     const t = e.target;
     const ck = t.closest('.cu-ck'); if (ck) { e.stopPropagation(); const b = ck.querySelector('input'); if (!b || b.disabled) return; if (t !== b) b.checked = !b.checked;
       if (b.dataset.ckselall != null) { const ids = $$('#v-checkouts [data-cksel]:not([disabled])').map(x => x.dataset.cksel); ids.forEach(id => b.checked ? CK.sel.add(id) : CK.sel.delete(id)); } else if (b.checked) CK.sel.add(b.dataset.cksel); else CK.sel.delete(b.dataset.cksel);
@@ -8739,6 +8773,7 @@ async function ckSetStatus(ids, status) {
       const k = bk.dataset.ckbulk, rows = (S.checkouts || []).filter(c => CK.sel.has(c.checkoutId));
       if (k === 'clear') { CK.sel.clear(); return renderCheckouts(); }
       if (k === 'lost') { const ids = rows.map(c => c.checkoutId); CK.sel.clear(); return ckSetStatus(ids, 'lost'); }
+      if (k === 'delete') { try { if (await bkDel('checkouts', rows.map(c => c.checkoutId), 'checkouts')) { CK.sel.clear(); await refreshData(); } } catch (e) { toast(e.message, true); } return; }
       if (k === 'meta') return metaCsv(metaFromCheckouts(rows), `meta-audience-checkouts-${todayStr()}.csv`);
       const ids = [...new Set(rows.map(c => c.leadId).filter(Boolean))]; CK.sel.clear();
       return bcUseIds(k, ids, `Abandoned checkouts · ${ids.length} people`, 'you');
@@ -9477,7 +9512,7 @@ function bcSchedHTML() {
   const L = (S.schedules || []).slice().sort((a, b) => (b.active === true) - (a.active === true) || (tsOf(a.nextRunAt) || 9e15) - (tsOf(b.nextRunAt) || 9e15)), cs = canSched();
   const head = `<div class="sc-top"><div class="grow"><b>Scheduled campaigns</b><small class="muted">Once, every day, every week or every month — e.g. “every Monday 10 AM to At-risk customers”. Who gets it is worked out again before every send.</small></div>${cs ? '<button class="btn primary" data-scnew>＋ New schedule</button>' : ''}</div>`;
   if (!L.length) return head + `<div class="cu-empty glass"><div class="cu-empty-ic">📅</div><h3>Nothing scheduled yet</h3><p class="muted">Set it once and it goes out by itself. Ideas: a weekly offer to <b>At-risk</b> customers, a monthly “new arrivals” to <b>Loyal</b> customers, a festival offer on a date.</p>${cs ? `<div class="row" style="justify-content:center;gap:8px;flex-wrap:wrap"><button class="btn primary" data-scnew data-cseg="risk">Every Monday to At-risk customers</button><button class="btn" data-scnew data-cseg="loyal" data-rep="monthly">Every month to Loyal customers</button></div>` : ''}</div>`;
-  return head + `<div class="sc-grid">${L.map(s => { const on = s.active === true || s.active === 'true', nx = tsOf(s.nextRunAt), tpl = s.channel === 'email' ? s.subject : s.tpl; return `<div class="sc-card glass ${on ? 'on' : ''}">
+  return head + `<div class="sc-grid">${L.map(s => { const on = s.active === true || s.active === 'true', nx = tsOf(s.nextRunAt), tpl = s.channel === 'email' ? s.subject : s.tpl; return `<div class="sc-card glass ${on ? 'on' : ''}" data-bkid="${esc(String(s.id))}">
     <div class="sc-ch"><span class="sc-ic">${s.channel === 'email' ? '✉' : I.wa}</span><div class="grow"><b>${esc(s.name || 'Scheduled campaign')}</b><small class="muted">${esc(tpl || '—')}</small></div><label class="sw" title="${on ? 'On' : 'Paused'}"><input type="checkbox" data-sctoggle="${s.id}" ${on ? 'checked' : ''} ${cs ? '' : 'disabled'}><i></i></label></div>
     <div class="sc-when">⏰ ${esc(schedWhen(s))}</div><div class="sc-aud">👥 ${esc(schedAudTxt(s.audience))}</div>
     <div class="sc-next">${on && nx ? `Next: <b>${esc(istFmt(nx))}</b>` : s.repeat === 'once' && s.lastRunAt ? '<span class="tp-st ok"><i></i>Sent</span>' : '<span class="tp-st wait"><i></i>Paused</span>'}${s.lastRunAt ? `<small class="muted">Last: ${esc(istFmt(tsOf(s.lastRunAt)))} · ${(+s.lastCount || 0).toLocaleString('en-IN')} people · ${+s.runs || 0} run${+s.runs === 1 ? '' : 's'}</small>` : ''}</div>
@@ -9591,7 +9626,7 @@ function renderTeam(anim) {
   const g = $('#tgrid'); stagger(g, anim);
   g.innerHTML = S.team.map((m, i) => {
     const st = memberStats(m.name), on = m.active !== false && m.active !== 'FALSE';
-    return `<div class="tcard glass" style="--i:${i}">
+    return `<div class="tcard glass" style="--i:${i}" data-bkid="${esc(m.memberId)}">
       <div class="r1">${avatar(m.name, 'lg', memberPhoto(m.name))}<div class="t"><b>${esc(m.name)}</b><span>${esc(m.role || 'Member')}</span></div>
         <span class="pill ${on ? 'won' : 'lost'}">${on ? 'Active' : 'Inactive'}</span></div>
       <div class="tstats"><div><b>${st.total}</b><small>Leads</small></div><div><b>${st.open}</b><small>Open</small></div><div><b>${st.won}</b><small>Won</small></div></div>
@@ -9752,7 +9787,7 @@ function renderOrders(anim) {
   const inCh = all.filter(o => !ORD.ch || (o.channel || 'WhatsApp') === ORD.ch);
   const risky = inCh.filter(o => rtoOpen(o) && rtoLvl(o.rtoRisk) === 'hi');
   const list = inCh.filter(o => (!ORD.st || o.status === ORD.st) && (!ORD.risk || (rtoOpen(o) && (ORD.risk === 'high' ? rtoLvl(o.rtoRisk) === 'hi' : rtoLvl(o.rtoRisk) !== 'lo'))) && (!q || [o.orderId, o.extId, o.items, o.productName, o.sku, o.customerName, leadName(o.leadId), o.payment].some(v => String(v || '').toLowerCase().includes(q)))).sort((a, b) => cmDate(b).localeCompare(cmDate(a)) || String(b.orderId).localeCompare(String(a.orderId), undefined, { numeric: true }));
-  const open = inCh.filter(o => !['Delivered', 'Cancelled', 'Cart', 'Refunded', 'RTO', 'Returned'].includes(o.status)), val = a => a.reduce((s2, o) => s2 + (+o.amount || 0), 0);
+  const open = inCh.filter(o => !['Delivered', 'Cancelled', 'Cart', 'Refunded', 'RTO', 'Returned'].includes(o.status)), val = a => a.reduce((s2, o) => s2 + (+o.amount || 0), 0); BK.list.orders = list.map(o => o.orderId);
   const tile = (n, l, c) => `<div class="n8l-k glass"><b style="${c ? 'color:' + c : ''}">${n}</b><small class="muted">${l}</small></div>`;
   box.innerHTML = `<div class="adm-ks">${tile(open.length, 'Open orders')}${tile(inrShort(val(open)), 'Open value', 'var(--blue-2)')}${tile(inCh.filter(o => o.status === 'COD' || /cod/i.test(o.payment || '')).length, 'Cash on delivery' + (risky.length ? ` · <span class="rto-tx">${risky.length} high risk</span>` : ''))}${tile(inCh.filter(o => o.status === 'Delivered').length, 'Delivered', 'var(--green)')}${tile(inCh.filter(o => CM_DEAD.includes(o.status) && o.status !== 'Cart').length, 'Cancelled / returned', 'var(--coral)')}</div>
     ${chs.length > 1 ? `<div class="tp-chips" style="margin-top:14px">${[''].concat(chs).map(c => `<button class="chip ${ORD.ch === c ? 'on' : ''}" data-ordch="${esc(c)}">${c ? esc(c) : 'All channels'} <span class="n">${c ? all.filter(o => (o.channel || 'WhatsApp') === c).length : all.length}</span></button>`).join('')}</div>` : ''}
@@ -9957,7 +9992,7 @@ function cmOverview() {
 function cmProducts() {
   const P = S.products || [], cats = [...new Set(P.map(p => p.category).filter(Boolean))].sort(), q = CM.pq.toLowerCase();
   const sold = new Map(cmBySku(cmOrders(null, true)).map(r => [r.sku, r]));
-  const list = P.filter(p => (!CM.cat || p.category === CM.cat) && (!q || [p.sku, p.name, p.category].some(x => String(x || '').toLowerCase().includes(q))));
+  const list = P.filter(p => (!CM.cat || p.category === CM.cat) && (!q || [p.sku, p.name, p.category].some(x => String(x || '').toLowerCase().includes(q)))); BK.list.products = list.map(p => p.sku);
   return `<div class="toolbar glass cm-fb"><input class="input sm" id="cmPq" placeholder="Search name, SKU, category" value="${esc(CM.pq)}" style="max-width:260px">
       <select class="input sm" data-cmf="cat"><option value="">All categories</option>${cats.map(c => `<option ${CM.cat === c ? 'selected' : ''}>${esc(c)}</option>`).join('')}</select>
       <select class="input sm" data-cmf="range">${[[30, 'Sales: last 30 days'], [90, 'Sales: last 90 days'], [365, 'Sales: last 12 months'], [0, 'Sales: all time']].map(([v, l]) => `<option value="${v}" ${CM.range === v ? 'selected' : ''}>${l}</option>`).join('')}</select>
@@ -10047,7 +10082,7 @@ function cmStockFlow() {
     </tbody></table></div>`;
 }
 function cmOrderTable(list, cols) {
-  const q = CM.oq.toLowerCase(), L = list.filter(o => !q || [o.orderId, o.extId, o.productName, o.items, o.sku, o.customerName, o.customerState, leadName(o.leadId)].some(x => String(x || '').toLowerCase().includes(q)));
+  const q = CM.oq.toLowerCase(), L = BK.list.chorders = list.filter(o => !q || [o.orderId, o.extId, o.productName, o.items, o.sku, o.customerName, o.customerState, leadName(o.leadId)].some(x => String(x || '').toLowerCase().includes(q)));
   return `<div class="table-wrap glass"><div class="cm-th"><b>Orders</b><span class="muted">${L.length} shown${L.length > 300 ? ' · latest 300' : ''} · click a row to edit</span><div class="grow"></div><input class="input sm" id="cmOq" placeholder="Search order, product, customer" value="${esc(CM.oq)}" style="max-width:240px"></div>
     <table class="tbl cm-tbl"><thead><tr><th>Date</th><th>Order</th>${cols.ch ? '<th>Channel</th>' : ''}<th>Product</th><th class="num">Qty</th><th class="num">Revenue</th><th class="num">Fees</th><th class="num">Net profit</th><th>Status</th><th>Customer</th></tr></thead><tbody>
     ${L.slice().sort((a, b) => cmDate(b).localeCompare(cmDate(a))).slice(0, 300).map(o => { const pr = cmProfit(o); return `<tr data-ordedit="${esc(o.orderId)}"><td>${esc(fmtDate(cmDate(o)))}</td><td><b>${esc(o.extId || o.orderId)}</b>${o.extId ? `<br><small class="muted">${esc(o.orderId)}</small>` : ''}</td>${cols.ch ? `<td>${cmChTag(o.channel)}</td>` : ''}<td>${esc(o.productName || o.items || o.sku || '-')}</td><td class="num">${cmN(o.qty) || 1}</td><td class="num">${inr(cmRev(o))}</td><td class="num">${inr(ordCalc(o).fee)}</td><td class="num" style="color:${pr < 0 ? 'var(--coral)' : 'var(--green)'}">${ordCalc(o).est.size ? estTag(1) : ''}${inrS(pr)}</td><td>${cmStBadge(o.status)}</td><td>${o.leadId ? `<a data-open="${esc(o.leadId)}">${esc(leadName(o.leadId) || o.leadId)}</a>` : esc(o.customerName || '-')}${o.customerState ? `<br><small class="muted">${esc(o.customerState)}</small>` : ''}</td></tr>`; }).join('') || '<tr><td colspan="10" class="muted" style="text-align:center;padding:20px">No orders in this period</td></tr>'}
@@ -10319,7 +10354,7 @@ function openCmImport(kind, ch) {
       <div class="cmi-g glass"><b>…or a Google Sheet link</b><small class="muted">Share → “Anyone with the link” (Viewer) first</small><div style="display:flex;gap:6px;margin-top:6px"><input class="input sm" id="cmiUrl" placeholder="https://docs.google.com/spreadsheets/d/…"><button class="btn sm" id="cmiFetch" ${cloud ? '' : 'disabled title="Works after you sign in"'}>Load</button></div></div></div>
     <div id="cmiBody"></div>
     <div class="imp-prog" id="cmiProg" hidden><div class="imp-bar"><i id="cmiBar"></i></div><span id="cmiTxt"></span></div>
-    <div class="m-foot"><button class="btn" data-cmisample>Download sample file</button><div class="grow"></div><button class="btn" data-close>Cancel</button><button class="btn primary" id="cmiGo" disabled>Import</button></div>`;
+    <div class="m-foot"><button class="btn" data-cmisample>Download sample file</button>${cloud ? '<button class="btn" data-impopen>Past imports</button>' : ''}<div class="grow"></div><button class="btn" data-close>Cancel</button><button class="btn primary" id="cmiGo" disabled>Import</button></div>`;
   $('#cmiFile').onchange = async e => { const f = e.target.files[0]; if (!f) return; try { cmiLoaded(await cmiFromFile(f), f.name); } catch (er) { toast('Could not read this file: ' + er.message, true); } };
   $('#cmiFetch').onclick = async () => { const u = $('#cmiUrl').value.trim(); if (!/docs\.google\.com\/spreadsheets\/d\//.test(u)) return toast('Paste the Google Sheet link (docs.google.com/spreadsheets/d/…)', true);
     const b = $('#cmiFetch'); b.disabled = true; b.textContent = 'Loading…';
@@ -10356,18 +10391,18 @@ async function runCmImport() {
   const ORDER = ['products', 'orders', 'ads', 'returns', 'expenses', 'bills', 'payouts', 'cod', 'charges']; jobs.sort((a, b) => ORDER.indexOf(a.s2.type) - ORDER.indexOf(b.s2.type));   // products first so orders pick up names and costs
   const total = jobs.reduce((a, j) => a + j.rows.length, 0); let done = 0; const res = { products: 0, orders: 0, ads: 0, returns: 0, expenses: 0, bills: 0, payouts: 0, cod: 0, charges: 0 }, max = cloud ? 20000 : 2000; let miss = 0, billRows = [];
   if (total > max) return toast(`Too many rows at once (${total}) — import up to ${max} rows per file`, true);
-  btn.disabled = true; $('#cmiProg').hidden = false;
+  btn.disabled = true; $('#cmiProg').hidden = false; if (cloud) await impStart(jobs.some(j => FIN_IMP[j.s2.type] && j.s2.type !== 'returns') && !jobs.some(j => ['products', 'orders', 'ads'].includes(j.s2.type)) ? 'finance' : 'store', CMI.src || 'Sheet');
   const prog = () => { $('#cmiBar').style.width = Math.round(done / total * 100) + '%'; $('#cmiTxt').textContent = `${done} / ${total}`; };
   try {
     for (const j of jobs) { const k = j.s2.type, act = { products: 'importProducts', orders: 'importOrders', ads: 'importAds' }[k];
       if (k === 'returns') { const r = await finImportReturns(j.rows); res.returns += r.count; miss += r.miss; done += j.rows.length; prog(); continue; }
       if (FIN_IMP[k]) { for (let i = 0; i < j.rows.length; i += 400) { const part = j.rows.slice(i, i + 400); res[k] += (await finCall('import', { kind: k, rows: part })).count; done += part.length; prog(); } if (k === 'bills') billRows = billRows.concat(j.rows); continue; }
       for (let i = 0; i < j.rows.length; i += 500) { const part = j.rows.slice(i, i + 500); res[k] += (await api(act, { rows: part })).count; done += part.length; prog(); } }
-    hideModal('#leadModal'); toast(`✓ Imported ${[res.products && res.products + ' products', res.orders && res.orders + ' orders', res.ads && res.ads + ' ad spend rows', res.returns && res.returns + ' returns updated', res.expenses && res.expenses + ' expenses', res.bills && res.bills + ' bill lines', res.payouts && res.payouts + ' payout lines', res.cod && res.cod + ' COD remittances', res.charges && res.charges + ' charges'].filter(Boolean).join(' · ') || 'nothing new'}${miss ? ` · ${miss} returns had no matching order` : ''}`);
+    const impId = await impEnd(); hideModal('#leadModal'); if (impId) setTimeout(() => impUndoToast(impId), 2700); toast(`✓ Imported ${[res.products && res.products + ' products', res.orders && res.orders + ' orders', res.ads && res.ads + ' ad spend rows', res.returns && res.returns + ' returns updated', res.expenses && res.expenses + ' expenses', res.bills && res.bills + ' bill lines', res.payouts && res.payouts + ' payout lines', res.cod && res.cod + ' COD remittances', res.charges && res.charges + ' charges'].filter(Boolean).join(' · ') || 'nothing new'}${miss ? ` · ${miss} returns had no matching order` : ''}`);
     if (billRows.length && billRows.some(b => b.sku && crProd(b.sku)) && confirm('Update the cost of these products to the landed cost of their newest bill (price + transport share' + (finGstOn() ? '' : ' + GST') + ')?')) { const n = await finLandedUpdate(billRows); toast(`✓ ${n} product costs updated`); }
     const fin = jobs.find(j => FIN_IMP[j.s2.type] && j.s2.type !== 'returns');
     await refreshData(); if (fin) { if (activeView() !== 'finance') go('finance/' + fin.s2.type); else renderFinance(); } else if (activeView() !== 'commerce') go(jobs.some(j => j.s2.type === 'returns') ? 'commerce/returns' : 'commerce');
-  } catch (e) { toast('Import stopped: ' + e.message, true); btn.disabled = false; await refreshData(); }
+  } catch (e) { toast('Import stopped: ' + e.message, true); btn.disabled = false; const id = await impEnd(); if (id) impUndoToast(id, 'Part of the file was imported'); await refreshData(); }
 }
 async function cmSample() {
   const day = k => { const d = new Date(); d.setDate(d.getDate() - k); return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); };
@@ -12535,7 +12570,7 @@ function openModules(host) {
 /* ================= Ctrl + K: search anything ================= */
 const PAL = { open: false, i: 0, items: [] };
 const PAL_PAGES = [['home', 'Home', 'today tasks setup'], ['leads', 'Leads', 'list contacts customers'], ['pipeline', 'Pipeline', 'stages canvas deals'], ['tasks', 'Tasks', 'follow ups reminders'], ['calls', 'Calls', 'call log'], ['orders', 'Orders', 'amazon website whatsapp cod'], ['commerce:overview', 'Store overview', 'sales revenue profit'], ['commerce:products', 'Products', 'sku price cost'], ['commerce:inventory', 'Inventory', 'stock low reorder reserved available on hand'], ['commerce:returns', 'Returns & RTO', 'return rto damaged claim'], ['commerce:costs', 'Cost rules', 'fees shipping packaging rto cod gst rules'], ['commerce:reorder', 'Reorder planner', 'reorder point what to buy low stock how much order quantity moq'], ['commerce:purchases', 'Purchase orders & suppliers', 'po purchase order supplier vendor grn goods received buy'], ['commerce:places', 'Warehouses & transfers', 'warehouse godown shop location move stock transfer multi'], ['commerce:make', 'Sets & making', 'bom bundle combo set kit manufacture make raw material production'], ['commerce:amazon', 'Amazon', 'fees'], ['commerce:website', 'Website sales', 'shopify woocommerce'], ['whatsapp', 'Inbox', 'whatsapp chats'], ['broadcast', 'Broadcast', 'bulk whatsapp email campaign'], ['templates', 'Templates', 'whatsapp template buttons flow'], ['automation', 'Automation', 'flows ai'], ['n8n', 'n8n Services', 'workflows'], ['ads', 'Ads Manager', 'meta facebook instagram spend roas'], ['insights', 'Insights', 'analytics dashboard kpi'], ['insales', 'Sales & Store analytics', 'profit products states customers'], ['analytics', 'Pipeline analytics', 'conversion bottleneck'], ['inmarketing', 'Marketing analytics', 'ads campaigns roas'], ['performance', 'Team performance', 'calls messages per person'], ['reports', 'Reports', 'daily monthly export'], ['customers', 'Customers', 'buyers repeat loyal champions at risk lost segments rfm remarketing'], ['checkouts', 'Abandoned checkouts', 'cart recovery reminder left without paying'], ['remarket', 'Auto messages', 'thank you cod confirmation shipped delivered review reorder win back back in stock remarketing approve waiting pay online prepaid rating'], ['results', 'Results', 'remarketing revenue roi recovered money brought back campaigns earned'], ['referrals', 'Referrals', 'refer a friend referral code reward invite'], ['feedback', 'Feedback & ratings', 'rating stars review unhappy complaint nps'], ['connections', 'Connections', 'whatsapp email shopify woocommerce api alerts n8n'], ['team', 'Team', 'members invite access'], ['industry', 'Industry Kits', 'setup templates']];
-const PAL_ACTS = [['Add lead', 'new lead contact', () => openLeadModal(null, '')], ['Add expense', 'expense rent salary bill cost finance', () => { go('finance/expenses'); setTimeout(() => finEdit('expenses'), 60); }], ['Price calculator', 'price margin calculator break even roas selling price', () => openPriceCalc('')], ['Import settlement / payouts', 'settlement payout amazon flipkart meesho payment report', () => { go('finance/payouts'); setTimeout(() => openCmImport('payouts'), 60); }], ['Import leads (Excel / CSV)', 'upload sheet', () => $('#csvFile').click()], ['New order', 'create order', () => openOrder(null, '')], ['Add product', 'new product sku', () => { go('commerce'); openProduct(''); }], ['Import store data', 'excel google sheet amazon orders', () => openCmImport()], ['Scan barcode', 'barcode scanner camera find product stock in', () => { CM.tab = 'inventory'; go('commerce'); openScan(); }], ['New purchase order', 'po buy supplier vendor', () => { CM.tab = 'purchases'; go('commerce'); openPO(null); }], ['Add supplier', 'vendor supplier', () => { CM.tab = 'purchases'; INV.pt = 'suppliers'; go('commerce'); openSupplier(null); }], ['Move stock between places', 'transfer warehouse godown shop', () => { CM.tab = 'places'; go('commerce'); openTransfer(); }], ['Count stock', 'stock count audit physical stocktake', () => { CM.tab = 'inventory'; go('commerce'); openCount(); }], ['Print barcode labels', 'label sticker barcode print', () => { CM.tab = 'inventory'; go('commerce'); openLabels(); }], ['New task', 'task reminder', () => typeof openTask === 'function' && openTask(null)], ['Log a call', 'call', () => typeof openCallLog === 'function' && openCallLog()], ['New WhatsApp template', 'template', () => { go('templates'); openTplEditor(null); }], ['Store alerts', 'notifications email whatsapp', () => { CONN.open = 'alerts'; store.set('nv.connOpen', 'alerts'); go('connections'); }], ['Website tracking code', 'abandoned checkout pixel script shopify woocommerce', () => { CONN.open = 'tracking'; store.set('nv.connOpen', 'tracking'); go('connections'); }], ['Schedule a campaign', 'weekly monthly daily repeat every monday broadcast later', () => schedOpen({ from: 'new', cseg: 'risk' })], ['Risky COD orders', 'rto risk cash on delivery call', () => { ORD.risk = 'high'; ORD.st = ''; go('orders'); }], ['Settings', 'branding password workspace', () => openSettings()], ['Modules', 'business type sections', () => openModules()], ['Dark / light theme', 'theme', () => $('#themeBtn').click()]];
+const PAL_ACTS = [['Add lead', 'new lead contact', () => openLeadModal(null, '')], ['Past imports & undo', 'undo import wrong file excel sheet delete imported rows', () => openImports()], ['Add expense', 'expense rent salary bill cost finance', () => { go('finance/expenses'); setTimeout(() => finEdit('expenses'), 60); }], ['Price calculator', 'price margin calculator break even roas selling price', () => openPriceCalc('')], ['Import settlement / payouts', 'settlement payout amazon flipkart meesho payment report', () => { go('finance/payouts'); setTimeout(() => openCmImport('payouts'), 60); }], ['Import leads (Excel / CSV)', 'upload sheet', () => $('#csvFile').click()], ['New order', 'create order', () => openOrder(null, '')], ['Add product', 'new product sku', () => { go('commerce'); openProduct(''); }], ['Import store data', 'excel google sheet amazon orders', () => openCmImport()], ['Scan barcode', 'barcode scanner camera find product stock in', () => { CM.tab = 'inventory'; go('commerce'); openScan(); }], ['New purchase order', 'po buy supplier vendor', () => { CM.tab = 'purchases'; go('commerce'); openPO(null); }], ['Add supplier', 'vendor supplier', () => { CM.tab = 'purchases'; INV.pt = 'suppliers'; go('commerce'); openSupplier(null); }], ['Move stock between places', 'transfer warehouse godown shop', () => { CM.tab = 'places'; go('commerce'); openTransfer(); }], ['Count stock', 'stock count audit physical stocktake', () => { CM.tab = 'inventory'; go('commerce'); openCount(); }], ['Print barcode labels', 'label sticker barcode print', () => { CM.tab = 'inventory'; go('commerce'); openLabels(); }], ['New task', 'task reminder', () => typeof openTask === 'function' && openTask(null)], ['Log a call', 'call', () => typeof openCallLog === 'function' && openCallLog()], ['New WhatsApp template', 'template', () => { go('templates'); openTplEditor(null); }], ['Store alerts', 'notifications email whatsapp', () => { CONN.open = 'alerts'; store.set('nv.connOpen', 'alerts'); go('connections'); }], ['Website tracking code', 'abandoned checkout pixel script shopify woocommerce', () => { CONN.open = 'tracking'; store.set('nv.connOpen', 'tracking'); go('connections'); }], ['Schedule a campaign', 'weekly monthly daily repeat every monday broadcast later', () => schedOpen({ from: 'new', cseg: 'risk' })], ['Risky COD orders', 'rto risk cash on delivery call', () => { ORD.risk = 'high'; ORD.st = ''; go('orders'); }], ['Settings', 'branding password workspace', () => openSettings()], ['Modules', 'business type sections', () => openModules()], ['Dark / light theme', 'theme', () => $('#themeBtn').click()]];
 function cmdkItems(q) {
   q = q.trim().toLowerCase(); const hit = s => !q || s.toLowerCase().includes(q), out = [];
   PAL_PAGES.forEach(([v, n, kw]) => { const [view] = v.split(':'); if (!document.getElementById('v-' + view) || !famAllowedPal(view)) return; if (hit(n + ' ' + kw)) out.push({ g: 'Pages', t: n, run: () => { const [vv, tab] = v.split(':'); if (tab) { CM.tab = tab; store.set('nv.cmTab', tab); } go(vv); } }); });
@@ -13309,7 +13344,7 @@ async function doneTask(id, done) {
   try { await api('saveTask', { taskId: id, status: done ? 'Done' : 'Open', doneAt: done ? new Date().toISOString() : '', doneBy: done ? me() : '' }); if (done && t.leadId) await api('addActivity', { leadId: t.leadId, type: 'Task Done', details: t.title, doneBy: me() }).catch(() => { }); toast(done ? '✓ Task done' : 'Task re-opened'); await refreshData(); if (ui.openId) renderPanel(ui.openId); }
   catch (e) { toast(e.message, true); }
 }
-const taskRow = t => { const s = taskState(t), l = t.leadId && leadById(t.leadId); return `<div class="tk-r ${s}">
+const taskRow = t => { const s = taskState(t), l = t.leadId && leadById(t.leadId); return `<div class="tk-r ${s}" data-bkid="${esc(t.taskId)}">
   <button class="tk-c ${t.status !== 'Open' ? 'on' : ''}" data-tkdone="${esc(t.taskId)}" title="${t.status === 'Open' ? 'Mark done' : 'Re-open'}">${t.status !== 'Open' ? '✓' : ''}</button>
   <div class="grow"><b data-tkedit="${esc(t.taskId)}">${esc(t.title)}</b><small class="muted">${l ? `<a data-open="${esc(l.leadId)}">${esc(l.name)}</a> · ` : ''}${s === 'overdue' ? '<span class="tk-late">Overdue · </span>' : ''}${t.status === 'Open' ? 'Due ' + esc(fmtWhen(t.dueAt)) : esc(t.status) + (t.doneBy ? ' · ' + esc(t.doneBy) : '')}${t.source === 'auto' ? ' · <span class="tk-auto">auto</span>' : ''}</small></div>
   <span class="pill tk-p ${String(t.priority || '').toLowerCase()}">${esc(t.priority || 'Medium')}</span><span class="tk-who">${avatar(t.assignedTo || '?', 'sm')}<small>${esc(t.assignedTo || '—')}</small></span></div>`; };
@@ -13320,6 +13355,7 @@ function renderTasks(anim) {
   const all = myTasks(S.tasks || []), by = k => all.filter(t => taskState(t) === k);
   const groups = { open: all.filter(t => t.status === 'Open'), overdue: by('overdue'), today: by('today'), upcoming: by('upcoming'), done: all.filter(t => t.status !== 'Open') };
   const list = groups[SALES.taskTab].slice().sort((a, b) => SALES.taskTab === 'done' ? tsOf(b.doneAt) - tsOf(a.doneAt) : tsOf(a.dueAt) - tsOf(b.dueAt) || PRIO.indexOf(a.priority) - PRIO.indexOf(b.priority));
+  BK.list.tasks = list.map(t => t.taskId);
   const kpi = (k, n, l, c) => `<button class="tk-k glass ${SALES.taskTab === k ? 'on' : ''}" data-tktab="${k}"><b style="${c ? 'color:' + c : ''}">${n}</b><small>${l}</small></button>`;
   box.innerHTML = `<div class="tk-ks">${kpi('open', groups.open.length, 'All open')}${kpi('overdue', groups.overdue.length, 'Overdue', groups.overdue.length ? 'var(--coral)' : '')}${kpi('today', groups.today.length, 'Due today', 'var(--blue-2)')}${kpi('upcoming', groups.upcoming.length, 'Upcoming')}${kpi('done', groups.done.length, 'Done')}</div>
     <div class="toolbar glass" style="margin-top:14px"><select class="input" id="tkWhoF" style="width:auto"><option value="__me" ${SALES.taskWho === '__me' ? 'selected' : ''}>My tasks</option><option value="" ${SALES.taskWho === '' ? 'selected' : ''}>Everyone</option>${teamNames().map(n => `<option ${SALES.taskWho === n ? 'selected' : ''}>${esc(n)}</option>`).join('')}</select><div class="grow"></div>
@@ -13375,7 +13411,7 @@ function renderCalls(anim) {
         <select class="input sm" id="clP" style="max-width:120px">${[[1, 'Today'], [7, '7 days'], [30, '30 days'], [90, '90 days'], [0, 'All time']].map(([v, n]) => `<option value="${v}" ${SALES.callP === v ? 'selected' : ''}>${n}</option>`).join('')}</select>
         <select class="input sm" id="clWho" style="max-width:150px"><option value="">Everyone</option>${members.map(n => `<option ${n === SALES.callWho ? 'selected' : ''}>${esc(n)}</option>`).join('')}</select>
         <select class="input sm" id="clOut" style="max-width:150px"><option value="">Any result</option>${CALL_OUT.map(([o]) => `<option ${o === SALES.callOut ? 'selected' : ''}>${esc(o)}</option>`).join('')}</select></div>
-        <div class="n8l-list" style="max-height:560px">${list.map(c => `<div class="n8l-r cl-row ${callKind(c.outcome)}"><span class="n8l-i">${(CALL_OUT.find(x => x[0] === c.outcome) || [0, 0, '•'])[2]}</span><div class="grow"><b>${c.leadId ? `<a data-open="${esc(c.leadId)}">${esc(leadName(c.leadId) || c.leadId)}</a>` : esc(c.phone || 'Unknown')}</b><small class="muted">${esc(c.outcome || '-')} · ${esc(c.member || '-')} · ${esc(fmtWhen(c.calledAt))}${+c.durationSec ? ' · ' + Math.round(c.durationSec / 60) + ' min' : ''}${c.notes ? ' · ' + esc(c.notes) : ''}</small></div></div>`).join('') || '<p class="muted">No calls yet. Open a lead → Call, then save what happened.</p>'}</div></div>
+        <div class="n8l-list" style="max-height:560px">${list.map(c => `<div class="n8l-r cl-row ${callKind(c.outcome)}" data-bkid="${esc(c.callId)}"><span class="n8l-i">${(CALL_OUT.find(x => x[0] === c.outcome) || [0, 0, '•'])[2]}</span><div class="grow"><b>${c.leadId ? `<a data-open="${esc(c.leadId)}">${esc(leadName(c.leadId) || c.leadId)}</a>` : esc(c.phone || 'Unknown')}</b><small class="muted">${esc(c.outcome || '-')} · ${esc(c.member || '-')} · ${esc(fmtWhen(c.calledAt))}${+c.durationSec ? ' · ' + Math.round(c.durationSec / 60) + ' min' : ''}${c.notes ? ' · ' + esc(c.notes) : ''}</small></div></div>`).join('') || '<p class="muted">No calls yet. Open a lead → Call, then save what happened.</p>'}</div></div>
       <div class="rcard glass"><h3>Results</h3><p class="sub muted">What happened on the calls</p>${oc.map(([o, k, n]) => `<div class="cl-bar ${k}"><span>${esc(o)}</span><div class="bar-track"><div class="bar" style="width:${n / mx * 100}%"></div></div><b>${n}</b></div>`).join('')}
         <p class="help" style="margin-top:10px">Talk time: <b>${Math.round(dur / 60)} min</b></p></div></div>`;
   stagger(box, anim);
@@ -13514,6 +13550,7 @@ const HELP_GUIDE = [
   ['templates', 'WhatsApp templates', 'template templates create approve meta pending rejected sync draft submit', '**Templates**: **⟳ Sync from WhatsApp** brings your approved templates. **New template**: name (lowercase_with_underscores), category (Marketing / Utility), language, use case, header, body with {{1}} variables, footer, buttons → **Submit to Meta for approval** (minutes to 24 h). Drafts show **Edit & submit to Meta**. **Library** sets use case, best segment, tags and notes so your team picks the right one.'],
   ['builder', 'Template builder: content, buttons, actions, flows', 'builder button buttons action flow next template image video pdf catalog payment order cart call website map multi step', 'In **Templates → + New template** pick a ready-made template or start blank. Choose a **Message type** (Text, Image, Video, PDF, Location, Payment link; Catalog / Product card need a Meta catalog — contact cards are not allowed in templates). Add up to 10 **buttons** (max 1 Call, max 2 link buttons, keep reply buttons together). Under each reply button, **⚡ When a customer taps → + Add step**: Reply with text, Send next template, image / PDF, link, payment link, tag, stage, assign, task, order, Ask a question, Wait, hand over, AI reply. Chaining templates with **Send next template** builds a multi-step chatbot.\n\nFor an already-approved template just click its card (or **Edit**) — change the auto-replies and press **Save changes**; no new Meta review needed. **▶ Test chat** lets you tap the buttons like a customer.'],
   ['nav-spaces', 'Finding your way: sidebar, Insights, Settings, Admin', 'sidebar menu navigation collapse expand insights settings admin back workspace switch profile sign out dark mode breadcrumb link', 'The **left sidebar** is your workspace: Home, Inbox, Tasks & Calls, then **Sales**, **Commerce** and **Marketing**. Items with an arrow open their pages underneath (e.g. **Products & Stock → Reorder**). **Insights** and **Settings** at the bottom open their own menus — press **← Back to workspace** to return. Platform team: **🛡 Admin**. The small line above every page title shows where you are. Press the panel button at the bottom (or **Ctrl + \\**) to shrink the sidebar to icons — hover an icon to see its pages. Your name at the bottom: profile, dark / light mode, sign out. The workspace name at the top: switch workspace and plan. On a phone, press **☰** (or **More**). Every page has its own link (e.g. …#commerce/reorder) and the browser Back button works.'],
+  ['bulk', 'Select many & delete / undo an import', 'select all bulk delete many tick checkbox remove undo import wrong file past imports', 'Every list has tick boxes: **Leads, Customers, Checkouts, Tasks, Calls, Orders, Store channel orders, Products, Suppliers, Purchase orders (drafts), Ad spend, Team, Logins, Templates, Scheduled campaigns and Finance lists**. Tick rows (hold **Shift** to tick a range, the top box ticks the whole page) → a bar shows **N selected · Select all · actions** (Delete, Change stage, Assign, Mark done, Change status…). Delete always asks first; more than 100 rows need you to type DELETE. **Esc** clears. Wrong Excel / Sheet uploaded? After an import press **Undo import**, or open **Past imports** (in the import window or Ctrl+K) → **Undo** — it deletes only the rows that import added. History (stock movements, goods received, messages, payments) is never bulk-deleted.'],
   ['landing', 'Landing page (before login)', 'landing page home page website visitors before login sign up pricing hero features faq edit admin', 'New visitors first see the **landing page**: top bar (Pricing · Log in · Sign up), headline, buttons, pictures of the app, features, 3 start steps, pricing, questions. People who signed in before on that browser go straight to Log in (the login page has **← Back to the home page**). Platform team: **Admin → Website → Landing page** — change every text, picture (upload or https link), feature, step and question, **Preview**, then **Save & publish**. Use {brand}, {trial} and {year} in texts.'],
   ['flipkart', 'Connect Flipkart Seller Hub', 'flipkart seller hub api connect orders returns rto ekart application id secret self access stock sync', '**Settings → Connections → Store channels → Flipkart Seller Hub**. In Seller Hub open your name → **Manage profile → Developer access → Create new access → Self access application**, copy the **Application ID** and **Application secret**, paste them, press **Test connection** → **Connect**. Orders, packed / shipped / delivered / cancelled status, customer returns and RTO come in every 15 minutes; each order item is one order. Selling takes stock out, returns put it back. Optional: **Send my stock to Flipkart** keeps your listings in step (with “Keep back” units). Fees: type an estimate %, or import the settlement report for the real fee of each order. See it all in **Store → Flipkart**.'],
   ['meesho', 'Meesho orders (Supplier Panel report)', 'meesho supplier panel import orders payments report sub order commission', 'Meesho does not give API keys to sellers yet, so use its reports: Supplier Panel → **Orders → Download** (or **Payments → Download payment file** for commission and shipping). In Nodevers: **Store → Meesho → Import Meesho report** (or Settings → Connections → Meesho). Columns like Sub Order No, SKU, status, price, commission and shipping are found by themselves; the same order is never added twice, so import the newest report any time. RTO and returns put stock back. When Meesho opens API access for your account, the same card will connect directly.'],
@@ -14731,7 +14768,7 @@ async function finCall(a, d) {
   const cl = AUTH.client, tb = cl.from(T.table);
   if (a === 'save') { const row = finToDb(d.kind, d.row); row.workspace_id = AUTH.ws; const r = d.row.id ? await sbq(tb.update(row).eq('workspace_id', AUTH.ws).eq('id', d.row.id).select().single()) : await sbq(tb.insert(row).select().single()); const L = S[T.s] = S[T.s] || [], i = L.findIndex(x => String(x.id) === String(r.id)), o = finFromDb(r); if (i >= 0) L[i] = o; else L.unshift(o); return o; }
   if (a === 'delete') { await sbq(tb.delete().eq('workspace_id', AUTH.ws).eq('id', d.id)); S[T.s] = (S[T.s] || []).filter(x => String(x.id) !== String(d.id)); return; }
-  if (a === 'import') { let n = 0; for (let i = 0; i < d.rows.length; i += 400) { const rows = d.rows.slice(i, i + 400).map(r => Object.assign(finToDb(d.kind, r), { workspace_id: AUTH.ws })); n += (await sbq(tb.upsert(rows, { onConflict: 'workspace_id,ext_id' }).select('id'))).length; } return { count: n }; }
+  if (a === 'import') { let n = 0; for (let i = 0; i < d.rows.length; i += 400) { const rows = d.rows.slice(i, i + 400).map(r => Object.assign(finToDb(d.kind, r), { workspace_id: AUTH.ws }, IMX.cur ? { import_id: IMX.cur } : {})); n += (await sbq(tb.upsert(rows, { onConflict: 'workspace_id,ext_id' }).select('id'))).length; } return { count: n }; }
 }
 /** returns sheet → orders get condition, received date and claims (matched by order ID) */
 async function finImportReturns(rows) {
@@ -14911,6 +14948,179 @@ function demoRetCond(o) {
   o.retOff = want; if ((S.settings || {}).stockAuto === 'off' || !(S.products || []).some(x => x.sku === o.sku)) return;
   dApply(o.sku, -d, want ? (o.returnCondition === 'missing' ? 'Return missing' : 'Return damaged') : 'Return condition changed', o.channel || '', o.extId || o.orderId || '', me() || 'You', null, '');
 }
+/* ================= Bulk select on every list (tick rows → one bar with actions) + Undo an import =================
+   One bar for every list: "N selected · Select all M · actions · ✕". Shift-click ticks a range, Esc clears.
+   Deleting always asks first (over 100 rows: type DELETE). View-only people never see the boxes; the database checks every right again.
+   History is never bulk-deleted: stock movements, goods received, messages, payments, audit log. */
+const IMX = { cur: '' };
+async function impStart(kind, label) {
+  IMX.cur = ''; if (!cloud || AUTH.v29 === false) return '';
+  const id = 'IM' + Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+  try { await sbq(AUTH.client.from('imports').insert({ id, workspace_id: AUTH.ws, kind, label: String(label || '').slice(0, 200), by_name: String(me() || '').slice(0, 120) })); AUTH.v29 = true; IMX.cur = id; }
+  catch (e) { AUTH.v29 = false; }
+  return IMX.cur;
+}
+async function impEnd() {
+  const id = IMX.cur; IMX.cur = ''; if (!id) return '';
+  let n = 0;
+  for (const t of ['leads', 'orders', 'products', 'ad_spend', 'expenses', 'fin_entries', 'payouts', 'cod_remits', 'purchase_bills']) {
+    try { const r = await AUTH.client.from(t).select('*', { count: 'exact', head: true }).eq('workspace_id', AUTH.ws).eq('import_id', id); if (!r.error) n += r.count || 0; } catch (e) { }
+  }
+  try { await sbq(AUTH.client.from('imports').update({ rows_added: n }).eq('id', id)); } catch (e) { }
+  return n ? id : '';
+}
+function impUndoToast(id, txt) {
+  const t = document.createElement('div'); t.className = 'toast bk-toast';
+  t.innerHTML = `<span>${esc(txt || 'Import saved')}</span><button type="button" class="btn sm" data-impundo="${esc(id)}">Undo import</button>`;
+  $('#toasts').appendChild(t); setTimeout(() => t.remove(), 12000);
+}
+async function impUndo(id, btn) {
+  let row = null; try { row = (await sbq(AUTH.client.from('imports').select('*').eq('id', id)))[0]; } catch (e) { }
+  const n = row ? row.rows_added : 0;
+  if (!confirm(`Undo this import${row && row.label ? ' (' + row.label + ')' : ''}? The ${n ? n.toLocaleString('en-IN') + ' ' : ''}rows it added will be deleted. Rows that already existed and were only updated stay as they are.`)) return;
+  if (btn) btn.disabled = true;
+  try { const r = await sbq(AUTH.client.rpc('import_undo', { p_ws: AUTH.ws, p_id: id })); toast(`✓ Import undone — ${(+r || 0).toLocaleString('en-IN')} rows removed`); $$('.bk-toast').forEach(x => x.remove()); if ($('#stageModal').classList.contains('show') && $('#impList')) openImports(); if ($('#leadModal').classList.contains('show')) hideModal('#leadModal'); await refreshData(); }
+  catch (e) { toast(/import_undo|function/i.test(e.message) ? 'Run the database update 29_bulk_imports.sql first.' : e.message, true); if (btn) btn.disabled = false; }
+}
+async function openImports() {
+  if (!cloud) return toast('Import history works in the cloud (signed in).', true);
+  let L = []; try { L = await sbq(AUTH.client.from('imports').select('*').eq('workspace_id', AUTH.ws).order('created_at', { ascending: false }).limit(60)); AUTH.v29 = true; }
+  catch (e) { return toast(/imports/i.test(e.message) ? 'Run the database update 29_bulk_imports.sql first.' : e.message, true); }
+  const KIND = { leads: 'Leads', store: 'Store', finance: 'Finance' }, del = bkCanW() && can('delete');
+  $('#stageBox').innerHTML = `<div class="m-head"><h2>Past imports</h2><button class="ibtn" data-close>${I.x}</button></div>
+    <p class="help" style="margin-bottom:12px">Uploaded the wrong file? <b>Undo</b> deletes exactly the rows that import added. Rows that already existed and were only updated stay as they are.</p>
+    <div class="tblwrap" id="impList"><table class="tbl"><thead><tr><th>When</th><th>What</th><th>File / batch</th><th class="num">Rows added</th><th>By</th><th></th></tr></thead><tbody>
+    ${L.map(r => `<tr style="cursor:default"><td class="muted" style="white-space:nowrap">${esc(new Date(r.created_at).toLocaleString('en-IN', { day: 'numeric', month: 'short', hour: 'numeric', minute: '2-digit' }))}</td><td>${esc(KIND[r.kind] || r.kind || '—')}</td><td>${esc(r.label || '—')}</td><td class="num">${(+r.rows_added || 0).toLocaleString('en-IN')}</td><td class="muted">${esc(r.by_name || '')}</td>
+      <td class="num">${r.undone_at ? `<span class="pill lost">Undone</span>` : del && +r.rows_added ? `<button class="btn sm danger" data-impundo="${esc(r.id)}">Undo</button>` : ''}</td></tr>`).join('') || '<tr><td colspan="6" class="muted" style="padding:16px">No imports yet.</td></tr>'}
+    </tbody></table></div>
+    <div class="m-foot"><div class="grow"></div><button class="btn" data-close>Close</button></div>`;
+  showModal('#stageModal');
+}
+
+const BK = { sel: {}, last: {}, list: {}, view: '' };
+const bkCanW = () => !document.body.classList.contains('ro') && (demo || !cloud || !['client', 'platform'].includes(AUTH.role));
+const bkCom = () => bkCanW() && !document.body.classList.contains('np-commerce');
+function bkConfirm(n, noun, extra) {
+  const txt = `Delete ${n.toLocaleString('en-IN')} ${noun}? This can not be undone.${extra ? '\n' + extra : ''}`;
+  if (n > 100) { const v = prompt(txt + '\n\nType DELETE to confirm.'); return String(v || '').trim().toUpperCase() === 'DELETE'; }
+  return confirm(txt);
+}
+async function bkEach(ids, fn, conc = 5) { let ok = 0, fail = 0, err = ''; for (let i = 0; i < ids.length; i += conc) await Promise.all(ids.slice(i, i + conc).map(id => fn(id).then(() => ok++, e => { fail++; err = e.message; }))); return { ok, fail, err }; }
+async function bkDel(kind, ids, noun, extra) {
+  if (!bkConfirm(ids.length, noun, extra)) return false;
+  const r = await api('bulkDelete', { kind, ids }); const n = r.deleted || 0;
+  if (n < ids.length) toast(`✓ ${n} deleted · ${ids.length - n} could not be deleted${kind === 'team' ? ' — people with a login: remove them in Logins & access first' : ' (your access)'}`, n === 0); else toast(`✓ ${n.toLocaleString('en-IN')} ${noun} deleted`);
+  return true;
+}
+const bkPick = (title, opts) => new Promise(res => {
+  $('#stageBox').innerHTML = `<div class="m-head"><h2>${esc(title)}</h2><button class="ibtn" data-close>${I.x}</button></div><div class="field"><select class="input" id="bkPick">${opts.map(o => `<option>${esc(o)}</option>`).join('')}</select></div>
+    <div class="m-foot"><div class="grow"></div><button class="btn" data-close>Cancel</button><button class="btn primary" id="bkPickOk">Apply</button></div>`;
+  $('#bkPickOk').onclick = () => { const v = $('#bkPick').value; hideModal('#stageModal'); res(v); };
+  $('#stageBox').addEventListener('click', e => { if (e.target.closest('[data-close]')) res(null); }, { once: true });
+  showModal('#stageModal');
+});
+const FIN_TB = { expenses: 'expenses', bills: 'bills', payouts: 'payouts', cod: 'cod', charges: 'charges' };
+const BK_DEFS = [
+  { s: 'leads', rows: '#ltable tbody tr[data-open]', id: r => r.dataset.open, noun: 'leads', ok: () => bkCanW(),
+    all: async () => S.big && cloud ? (await bigLeadsAll(ui.lf)).map(l => l.leadId) : (ui.leadList || []).map(l => l.leadId),
+    acts: [['stage', 'Change stage', 0, async ids => { const st = await bkPick('Move to stage', stages()); if (!st) return false; const r = await bkEach(ids, id => api('moveStage', { id, stage: st, by: me() })); toast(`✓ ${r.ok} moved to ${st}${r.fail ? ` · ${r.fail} failed` : ''}`, !r.ok); }, () => can('edit')],
+      ['assign', 'Assign to', 0, async ids => { const who = await bkPick('Assign to', (S.team || []).filter(m => m.active !== false).map(m => m.name)); if (!who) return false; const r = await bkEach(ids, id => api('updateLead', { id, assignedTo: who })); toast(`✓ ${r.ok} assigned to ${who}${r.fail ? ` · ${r.fail} failed` : ''}`, !r.ok); }, () => can('edit')],
+      ['delete', 'Delete', 1, ids => bkDel('leads', ids, 'leads', 'Their timeline and chats go too. Tip: "Mark as Lost" keeps the history.'), () => can('delete')]] },
+  { s: 'tasks', rows: '#tasksBody .tk-r[data-bkid]', id: r => r.dataset.bkid, noun: 'tasks', ok: () => bkCanW(), all: () => BK.list.tasks || [],
+    acts: [['done', 'Mark done', 0, async ids => { const r = await bkEach(ids, id => { const t = (S.tasks || []).find(x => x.taskId === id); return t && t.status === 'Open' ? api('saveTask', Object.assign({}, t, { status: 'Done', doneAt: sbLocal(new Date().toISOString()) || todayStr(), doneBy: me() })) : Promise.resolve(); }); toast(`✓ ${r.ok} tasks done`); }],
+      ['delete', 'Delete', 1, ids => bkDel('tasks', ids, 'tasks')]] },
+  { s: 'calls', rows: '#v-calls .cl-row[data-bkid]', id: r => r.dataset.bkid, noun: 'call logs', ok: () => bkCanW(), acts: [['delete', 'Delete', 1, ids => bkDel('calls', ids, 'call logs')]] },
+  { s: 'orders', rows: '#ordersBody tbody tr[data-ordedit]', id: r => r.dataset.ordedit, noun: 'orders', ok: () => bkCom(), all: () => BK.list.orders || [],
+    acts: [['status', 'Change status', 0, async ids => { const st = await bkPick('New status', ORD_ST); if (!st) return false; const r = await bkEach(ids, id => { const o = (S.orders || []).find(x => x.orderId === id); return o ? api('saveOrder', Object.assign({}, o, { status: st })) : Promise.resolve(); }); toast(`✓ ${r.ok} orders → ${st}${r.fail ? ` · ${r.fail} failed` : ''}`, !r.ok); }],
+      ['delete', 'Delete', 1, ids => bkDel('orders', ids, 'orders', 'Stock of these orders goes back.')]] },
+  { s: 'chorders', rows: '#v-commerce tbody tr[data-ordedit]', id: r => r.dataset.ordedit, noun: 'orders', ok: () => bkCom() && ['amazon', 'flipkart', 'meesho', 'website'].includes(CM.tab), all: () => (BK.list.chorders || []).map(o => o.orderId),
+    acts: [['delete', 'Delete', 1, ids => bkDel('orders', ids, 'orders', 'Stock of these orders goes back.')]] },
+  { s: 'products', rows: '#v-commerce tbody tr[data-cmprod]', id: r => r.dataset.cmprod, noun: 'products', ok: () => bkCom() && CM.tab === 'products', all: () => BK.list.products || [],
+    acts: [['delete', 'Delete', 1, ids => bkDel('products', ids, 'products', 'Orders keep their history. Sets that use them lose these parts.')]] },
+  { s: 'adspend', rows: 'tbody tr[data-cmad]', id: r => r.dataset.cmad, noun: 'ad spend rows', ok: () => bkCanW(), acts: [['delete', 'Delete', 1, ids => bkDel('adspend', ids, 'ad spend rows')]] },
+  { s: 'pos', rows: 'tbody tr[data-ipo]', id: r => r.dataset.ipo, noun: 'purchase orders', ok: () => bkCom(),
+    acts: [['delete', 'Delete drafts', 1, async ids => { const d = ids.filter(id => ((S.pos || []).find(p => String(p.id) === String(id)) || {}).status === 'draft'); if (!d.length) { toast('Only draft purchase orders can be deleted — cancel or close the others.', true); return false; } if (!bkConfirm(d.length, 'draft purchase orders', d.length < ids.length ? `${ids.length - d.length} are not drafts and stay.` : '')) return false; const r = await bkEach(d, id => inv('poDelete', { id })); toast(`✓ ${r.ok} deleted${r.fail ? ' · ' + r.err : ''}`, !r.ok); }]] },
+  { s: 'suppliers', rows: '.inv-sup[data-isup]', id: r => r.dataset.isup, noun: 'suppliers', card: 1, ok: () => bkCom(),
+    acts: [['delete', 'Delete', 1, async ids => { if (!bkConfirm(ids.length, 'suppliers', 'Purchase orders keep the supplier name.')) return false; const r = await bkEach(ids, id => inv('supDelete', { id })); toast(`✓ ${r.ok} deleted${r.fail ? ` · ${r.fail} still have open purchase orders` : ''}`, !r.ok); }]] },
+  { s: 'team', rows: '#tgrid .tcard[data-bkid]', id: r => r.dataset.bkid, noun: 'team members', card: 1, ok: () => bkCanW() && (canAdmin() || demo),
+    acts: [['delete', 'Delete', 1, ids => bkDel('team', ids, 'team members', 'Their leads stay — they are still shown with the old name.')]] },
+  { s: 'logins', rows: '#logins tbody tr[data-bkid]', id: r => r.dataset.bkid, noun: 'people', ok: () => cloud && canAdmin(),
+    acts: [['pause', 'Pause', 0, async ids => { if (!AUTH.v28) { toast('Run the database update 28_team_login.sql first.', true); return false; } if (!confirm(`Pause ${ids.length} people? They can not open this workspace until you press Resume.`)) return false; const r = await bkEach(ids, id => sbq(AUTH.client.rpc('member_pause', { p_ws: AUTH.ws, p_user: id }))); toast(`✓ ${r.ok} paused${r.fail ? ' · ' + r.err : ''}`, !r.ok); renderLogins(); }],
+      ['remove', 'Remove', 1, async ids => { if (!confirm(`Remove ${ids.length} people? They lose access right away. Their leads and history stay.`)) return false; const r = await bkEach(ids, id => sbq(AUTH.client.rpc('remove_member', { p_ws: AUTH.ws, p_user: id }))); toast(`✓ ${r.ok} removed${r.fail ? ' · ' + r.err : ''}`, !r.ok); renderLogins(); }]] },
+  { s: 'templates', rows: '#v-templates .tp[data-tpopen]', id: r => r.dataset.tpopen, noun: 'templates', card: 1, ok: () => bkCanW() && can('whatsapp'),
+    acts: [['delete', 'Delete', 1, async ids => { const onMeta = ids.filter(n => { const x = (S.templates || []).find(y => y.templateName === n) || {}; return x.metaId || /approved|pending|rejected|paused/i.test(x.metaStatus || ''); }).length; if (!bkConfirm(ids.length, 'templates', onMeta ? `${onMeta} of them are deleted on Meta too.` : '')) return false; const r = await bkEach(ids, tplDeleteOne, 3); toast(`✓ ${r.ok} deleted${r.fail ? ' · ' + r.fail + ' failed: ' + r.err : ''}`, !r.ok); }]] },
+  { s: 'schedules', rows: '.sc-card[data-bkid]', id: r => r.dataset.bkid, noun: 'scheduled campaigns', card: 1, ok: () => bkCanW(),
+    acts: [['delete', 'Delete', 1, async ids => { if (!(await bkDel('schedules', ids, 'scheduled campaigns', 'Messages already sent stay in History.'))) return false; if (cloud) await schedReload(); }]] },
+  ...Object.keys(FIN_TB).map(k => ({ s: 'fin-' + k, rows: `tbody tr[data-finedit^="${k}|"]`, id: r => r.dataset.finedit.split('|')[1], noun: { expenses: 'expenses', bills: 'bill lines', payouts: 'payout lines', cod: 'COD lines', charges: 'lines' }[k], ok: () => typeof finW === 'function' && finW(),
+    acts: [['delete', 'Delete', 1, async ids => { if (!bkConfirm(ids.length, { expenses: 'expenses', bills: 'bill lines', payouts: 'payout lines', cod: 'COD lines', charges: 'lines' }[k])) return false; const r = await bkEach(ids, id => finCall('delete', { kind: k, id })); toast(`✓ ${r.ok} deleted${r.fail ? ' · ' + r.err : ''}`, !r.ok); renderFinance(); }]] }))
+];
+async function tplDeleteOne(name) {
+  const x = (S.templates || []).find(y => y.templateName === name) || {}, onMeta = x.metaId || /approved|pending|rejected|paused/i.test(x.metaStatus || '');
+  if (cloud && onMeta) await fnCall('wa-templates', { action: 'delete', name }); else if (cloud) await sbq(AUTH.client.from('templates').delete().eq('workspace_id', AUTH.ws).eq('template_name', name));
+  S.templates = (S.templates || []).filter(y => y.templateName !== name);
+}
+const bkSet = s => BK.sel[s] || (BK.sel[s] = new Set());
+function bkDecorate() {
+  const v = typeof activeView === 'function' ? activeView() : ''; if (v !== BK.view) { BK.view = v; Object.values(BK.sel).forEach(x => x.clear()); }
+  BK_DEFS.forEach(d => {
+    const rows = $$(d.rows); if (!rows.length) return; const on = d.ok(), set = bkSet(d.s);
+    rows.forEach(r => {
+      if (r.dataset.bks === (on ? '1' : '0')) { const c = r.querySelector(':scope > .bk-cell input, :scope > .bk-cb input'); if (c) { const id = d.id(r); c.checked = set.has(id); r.classList.toggle('bk-sel', c.checked); } return; }
+      r.dataset.bks = on ? '1' : '0'; if (!on) return;
+      const id = d.id(r); if (!id) return;
+      if (d.card) { r.classList.add('bk-host'); r.insertAdjacentHTML('afterbegin', `<label class="bk-cb" title="Select"><input type="checkbox" data-bk="${d.s}" value="${esc(id)}" ${set.has(id) ? 'checked' : ''}></label>`); }
+      else if (r.tagName === 'TR') { r.insertAdjacentHTML('afterbegin', `<td class="bk-cell"><input type="checkbox" data-bk="${d.s}" value="${esc(id)}" ${set.has(id) ? 'checked' : ''} aria-label="Select"></td>`);
+        const tb = r.closest('table'), hr = tb && tb.querySelector('thead tr'); if (hr && !hr.querySelector('.bk-cell')) hr.insertAdjacentHTML('afterbegin', `<th class="bk-cell"><input type="checkbox" data-bkpage="${d.s}" aria-label="Select all on this page"></th>`); }
+      else { r.classList.add('bk-row'); r.insertAdjacentHTML('afterbegin', `<label class="bk-cell bk-inl"><input type="checkbox" data-bk="${d.s}" value="${esc(id)}" ${set.has(id) ? 'checked' : ''} aria-label="Select"></label>`); }
+      r.classList.toggle('bk-sel', set.has(id));
+    });
+    if (on) new Set(rows.map(r => r.closest('table')).filter(Boolean)).forEach(tb => $$('tbody tr', tb).forEach(x => { if (!x.dataset.bks && !x.dataset.bkcs && x.children.length === 1 && x.firstElementChild.colSpan > 1) { x.firstElementChild.colSpan++; x.dataset.bkcs = 1; } }));
+    $$(`[data-bkpage="${d.s}"]`).forEach(h => { const ids = rows.map(d.id); h.checked = ids.length > 0 && ids.every(x => set.has(x)); h.indeterminate = !h.checked && ids.some(x => set.has(x)); });
+  });
+  bkBar();
+}
+function bkActive() { return BK_DEFS.find(d => bkSet(d.s).size && $$(d.rows).some(r => r.offsetParent !== null)) || null; }
+async function bkBar() {
+  let bar = $('#bkBar'); const d = bkActive();
+  document.body.classList.toggle('bk-any', !!d);
+  if (!d) { if (bar) bar.classList.remove('show'); return; }
+  if (!bar) { bar = document.createElement('div'); bar.id = 'bkBar'; bar.className = 'bk-bar'; document.body.appendChild(bar); }
+  const set = bkSet(d.s), n = set.size, allIds = d.all ? (BK.allCache && BK.allCache.s === d.s ? BK.allCache.n : null) : null;
+  const acts = d.acts.filter(a => !a[4] || a[4]());
+  bar.innerHTML = `<b>${n.toLocaleString('en-IN')} selected</b>${d.all ? `<button type="button" class="btn sm ghost" data-bkall="${d.s}">Select all${allIds ? ' ' + allIds.toLocaleString('en-IN') : ' matching'}</button>` : ''}<span class="bk-sp"></span>
+    ${acts.map(a => `<button type="button" class="btn sm ${a[2] ? 'danger' : ''}" data-bkact="${d.s}|${a[0]}">${esc(a[1])}</button>`).join('')}<button type="button" class="ibtn" data-bkclear="${d.s}" title="Clear (Esc)">${I.x}</button>`;
+  bar.classList.add('show');
+}
+let bkT = 0; const bkSoon = () => { cancelAnimationFrame(bkT); bkT = requestAnimationFrame(bkDecorate); };
+new MutationObserver(muts => { if (muts.some(m => m.target.id !== 'bkBar' && !(m.target.closest && m.target.closest('#bkBar')))) bkSoon(); }).observe(document.body, { childList: true, subtree: true });
+document.addEventListener('click', async e => {
+  const t = e.target;
+  const ui2 = t.closest('[data-impundo]'); if (ui2) { e.preventDefault(); return impUndo(ui2.dataset.impundo, ui2); }
+  if (t.closest('[data-impopen]')) { e.preventDefault(); return openImports(); }
+  const cell = t.closest('.bk-cell, .bk-cb');
+  if (cell) {
+    e.stopPropagation();
+    const pg = cell.querySelector('[data-bkpage]');
+    if (pg) { if (t !== pg) { e.preventDefault(); pg.checked = !pg.checked; } const d = BK_DEFS.find(x => x.s === pg.dataset.bkpage), set = bkSet(d.s); $$(d.rows).filter(r => r.closest('table') === pg.closest('table')).forEach(r => { const id = d.id(r); if (pg.checked) set.add(id); else set.delete(id); }); return bkDecorate(); }
+    const cb = cell.querySelector('input[data-bk]'); if (!cb) return;
+    if (t !== cb) { e.preventDefault(); cb.checked = !cb.checked; }
+    const d = BK_DEFS.find(x => x.s === cb.dataset.bk), set = bkSet(d.s), rows = $$(d.rows), ids = rows.map(d.id), i = ids.indexOf(cb.value);
+    if (e.shiftKey && BK.last[d.s] != null && i >= 0) { const [a, b] = [Math.min(i, BK.last[d.s]), Math.max(i, BK.last[d.s])]; ids.slice(a, b + 1).forEach(x => cb.checked ? set.add(x) : set.delete(x)); }
+    else if (cb.checked) set.add(cb.value); else set.delete(cb.value);
+    BK.last[d.s] = i; return bkDecorate();
+  }
+  const all = t.closest('[data-bkall]'); if (all) { const d = BK_DEFS.find(x => x.s === all.dataset.bkall); all.disabled = true; try { const ids = await d.all(); ids.forEach(x => bkSet(d.s).add(String(x))); BK.allCache = { s: d.s, n: ids.length }; } catch (er) { toast(er.message, true); } return bkDecorate(); }
+  const cl = t.closest('[data-bkclear]'); if (cl) { bkSet(cl.dataset.bkclear).clear(); BK.allCache = null; return bkDecorate(); }
+  const ac = t.closest('[data-bkact]'); if (ac) {
+    const [s, k] = ac.dataset.bkact.split('|'), d = BK_DEFS.find(x => x.s === s), a = d.acts.find(x => x[0] === k), ids = [...bkSet(s)];
+    if (!ids.length) return; ac.disabled = true; $('#bkBar').classList.add('busy');
+    try { const r = await a[3](ids); if (r !== false) { bkSet(s).clear(); BK.allCache = null; await refreshData(); } }
+    catch (er) { toast(er.message, true); }
+    finally { const b = $('#bkBar'); if (b) b.classList.remove('busy'); bkDecorate(); }
+  }
+}, true);
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && document.body.classList.contains('bk-any') && !document.querySelector('.modal.show')) { Object.values(BK.sel).forEach(x => x.clear()); BK.allCache = null; bkDecorate(); } });
+
 /* ================= start ================= */
 (function grabInvite() { const m = location.hash.match(/^#invite=([a-f0-9]{20,80})$/i); if (m) { store.set('leadnode.invite', { t: m[1], at: Date.now() }); history.replaceState(null, '', location.pathname + '#dashboard'); return; }
   const q = (location.search.match(/[?&]invite=([a-f0-9]{20,80})/i) || [])[1]; if (q) { store.set('leadnode.invite', { t: q, at: Date.now() }); history.replaceState(null, '', location.pathname + location.hash); } })();
