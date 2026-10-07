@@ -179,7 +179,7 @@ body.nav-mini:not(.nav-peek) .nv-me-row{flex-direction:column}
 .brand{cursor:pointer}
 .nav .mob{display:none}
 .avatar.img{background:var(--line) center/cover no-repeat}
-.avatar{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:13px;color:#fff;flex:none;border:2px solid var(--glass-3)}
+.avatar{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;justify-content:center;align-items:center;text-align:center;font-weight:700;font-size:13px;color:#fff;flex:none;border:2px solid var(--glass-3)}
 .avatar.sm{width:28px;height:28px;font-size:11px}
 .avatar.lg{width:56px;height:56px;font-size:19px}
 .stack{display:flex}.stack .avatar{margin-left:-8px}.stack .avatar:first-child{margin-left:0}
@@ -6312,7 +6312,7 @@ function openLeadModal(lead, presetStage) {
         <div class="field"><label>Client photo / logo</label>${uploaderHTML('lead', 'clientPhoto', 'client', 400, 'round', 'Photo')}</div>
       </div>
       <div class="field"><label>Full name *</label><input class="input" name="name" required value="${esc(l.name || '')}"></div>
-      <div class="field"><label>WhatsApp number</label><input class="input" name="phone" inputmode="tel" value="${esc(l.phone ? '+' + l.phone : '')}" placeholder="+91 98765 43210"></div>
+      <div class="field"><label>WhatsApp number</label><input class="input" name="phone" inputmode="tel" value="${esc(l.phone ? '+' + l.phone : '')}"></div>
       <div class="field"><label>Email</label><input class="input" name="email" type="email" inputmode="email" value="${esc(l.email || '')}" placeholder="name@business.com"></div>
       <div class="field"><label>Business name</label><input class="input" name="businessName" value="${esc(l.businessName || '')}"></div>
       <div class="field"><label>Business type</label><select class="input" name="businessType">${opt(S.lists.businessTypes || [], l.businessType)}</select></div>
@@ -7418,7 +7418,7 @@ function emailPreview(l) {
 }
 function inspTest(ch) {
   if (ch === 'email') return `<p class="help">Sends this email to you with sample values, marked [Test].</p><div class="field"><label>Send test to</label><input class="input" id="bcTestTo" type="email" value="${esc(BC.testTo || (AUTH.session ? AUTH.session.user.email : ''))}"></div><button class="btn primary" data-bctest="email" ${(BC.email || {}).connected ? '' : 'disabled'}>Send test email</button>`;
-  return `<p class="help">Sends the template to one number with the first lead's values, so you see exactly what customers get. Counts as one template message.</p><div class="field"><label>Your WhatsApp number</label><input class="input" id="bcTestTo" inputmode="tel" value="${esc(BC.testTo)}" placeholder="+91 98765 43210"></div><button class="btn wa" data-bctest="whatsapp" ${BC.tpl ? '' : 'disabled'}>${I.wa}Send test</button>`;
+  return `<p class="help">Sends the template to one number with the first lead's values, so you see exactly what customers get. Counts as one template message.</p><div class="field"><label>Your WhatsApp number</label><input class="input" id="bcTestTo" inputmode="tel" value="${esc(BC.testTo)}"></div><button class="btn wa" data-bctest="whatsapp" ${BC.tpl ? '' : 'disabled'}>${I.wa}Send test</button>`;
 }
 function inspSend(ch) {
   const s = bcState(ch), row = (ok, txt, node) => `<li class="${ok ? 'ok' : 'no'}" data-bcnode="${node}"><span>${ok ? '✓' : '!'}</span>${txt}</li>`;
@@ -9559,7 +9559,7 @@ function renderTeam(anim) {
       <div class="r1">${avatar(m.name, 'lg', memberPhoto(m.name))}<div class="t"><b>${esc(m.name)}</b><span>${esc(m.role || 'Member')}</span></div>
         <span class="pill ${on ? 'won' : 'lost'}">${on ? 'Active' : 'Inactive'}</span></div>
       <div class="tstats"><div><b>${st.total}</b><small>Leads</small></div><div><b>${st.open}</b><small>Open</small></div><div><b>${st.won}</b><small>Won</small></div></div>
-      <div class="contact"><span>${I.phone.replace('class="i"', 'class="i" style="width:13px;height:13px;vertical-align:-2px"')} ${m.phone ? '+' + esc(String(m.phone).replace(/^\+/, '')) : '-'}</span><span>✉ ${esc(m.email || '-')}</span><span>🏆 Won value: <b>${inr(st.wonVal)}</b></span></div>
+      <div class="contact"><span>${I.phone.replace('class="i"', 'class="i" style="width:13px;height:13px;vertical-align:-2px"')} ${m.phone ? '+' + esc((d => d.length === 10 ? '91 ' + d.slice(0, 5) + ' ' + d.slice(5) : d)(String(m.phone).replace(/\D/g, ''))) : '-'}</span><span>✉ ${esc(m.email || '-')}</span><span>🏆 Won value: <b>${inr(st.wonVal)}</b></span></div>
       <div class="r3"><button class="switch ${on ? 'on' : ''}" data-memtoggle="${esc(m.memberId)}" data-tip="${on ? 'Make inactive' : 'Make active'}"></button><span class="muted" style="font-size:12.5px;flex:1">Active</span>
         <button class="btn sm" data-mem="${esc(m.memberId)}">${I.edit}Edit</button></div></div>`;
   }).join('') || '<div class="empty glass">No team members yet.</div>';
@@ -9570,7 +9570,7 @@ function openMemberModal(m) {
     <div class="form" style="grid-template-columns:1fr 1fr">
       <div class="field full"><label>Name *</label><input class="input" id="mName" value="${esc(x.name || '')}"></div>
       <div class="field"><label>Role</label><select class="input" id="mRole">${['Admin', 'Sales', 'Support', 'Marketing'].map(r => `<option ${r === x.role ? 'selected' : ''}>${r}</option>`).join('')}</select></div>
-      <div class="field"><label>Phone</label><input class="input" id="mPhone" value="${esc(x.phone || '')}" placeholder="+91 98765 43210"></div>
+      <div class="field"><label>Phone</label><input class="input" id="mPhone" value="${esc(x.phone || '')}"></div>
       <div class="field full"><label>Email</label><input class="input" id="mEmail" type="email" value="${esc(x.email || '')}" placeholder="name@gmail.com"></div>
     </div>
     <div class="m-foot"><div class="grow"></div><button class="btn" data-close>Cancel</button><button class="btn primary" id="mSave">${m ? 'Save Changes' : 'Add Member'}</button></div>`;
@@ -9740,7 +9740,7 @@ function openOrder(o, leadId) {
       <div class="field"><label>Status</label><select class="input" id="odSt">${ORD_ST.map(s2 => `<option ${s2 === x.status ? 'selected' : ''}>${s2}</option>`).join('')}</select></div>
       <div class="field"><label>Payment</label><input class="input" id="odPay" list="dlPay" maxlength="40" value="${esc(x.payment || '')}"><datalist id="dlPay">${['COD', 'Prepaid', 'Paid', 'Pending', 'link', 'UPI', 'Bank transfer', 'Cash'].map(p2 => `<option value="${p2}">`).join('')}</datalist></div>
       <div class="field"><label>Tracking link</label><input class="input" id="odTrack" value="${esc(x.trackingUrl || '')}" placeholder="https://…"></div>
-      ${v9 ? `<div class="field"><label>Customer name <span class="muted">(if not a lead)</span></label><input class="input" id="odCust" maxlength="120" value="${esc(x.customerName || '')}"></div>${v23() ? `<div class="field"><label>Customer phone <span class="muted">(links the customer)</span></label><input class="input" id="odPh" inputmode="tel" maxlength="20" value="${esc(x.customerPhone ? '+' + x.customerPhone : '')}" placeholder="+91 98765 43210"></div><div class="field"><label>Customer email</label><input class="input" id="odEm" type="email" maxlength="160" value="${esc(x.customerEmail || '')}"></div>` : ''}<div class="field"><label>Customer state</label><input class="input" id="odState" list="dlStates" maxlength="60" value="${esc(x.customerState || '')}"><datalist id="dlStates">${(typeof IN_STATES !== 'undefined' ? IN_STATES : []).map(s2 => `<option value="${esc(s2)}">`).join('')}</datalist></div>
+      ${v9 ? `<div class="field"><label>Customer name <span class="muted">(if not a lead)</span></label><input class="input" id="odCust" maxlength="120" value="${esc(x.customerName || '')}"></div>${v23() ? `<div class="field"><label>Customer phone <span class="muted">(links the customer)</span></label><input class="input" id="odPh" inputmode="tel" maxlength="20" value="${esc(x.customerPhone ? '+' + x.customerPhone : '')}"></div><div class="field"><label>Customer email</label><input class="input" id="odEm" type="email" maxlength="160" value="${esc(x.customerEmail || '')}"></div>` : ''}<div class="field"><label>Customer state</label><input class="input" id="odState" list="dlStates" maxlength="60" value="${esc(x.customerState || '')}"><datalist id="dlStates">${(typeof IN_STATES !== 'undefined' ? IN_STATES : []).map(s2 => `<option value="${esc(s2)}">`).join('')}</datalist></div>
       <div class="field"><label>Customer city</label><input class="input" id="odCity" maxlength="60" value="${esc(x.customerCity || '')}"></div>${v24() ? `<div class="field"><label>Pincode</label><input class="input" id="odPin" inputmode="numeric" maxlength="12" value="${esc(x.pincode || '')}" placeholder="400001"></div>` : ''}<div class="field"><label>Courier</label><input class="input" id="odCour" maxlength="60" value="${esc(x.courier || '')}"></div>
       <details class="field full cm-costs" ${o ? 'open' : ''}><summary>Costs → net profit <span class="muted" id="odProfit"></span></summary><div class="form" style="grid-template-columns:1fr 1fr;margin-top:8px">
         ${num('odPc', 'Product cost (total) <span class="muted">— empty = qty × product cost</span>', x.productCost)}${ocNum('odFee', 'Marketplace / payment fee', 'marketplaceFee')}${ocNum('odShip', 'Shipping (courier cost)', 'shippingFee')}${ocNum('odPack', 'Packaging', 'packagingCost')}${ocNum('odRto', 'RTO / return charges', 'rtoCharges')}${v27() ? ocNum('odCod', 'COD charge', 'codCharge') : ''}${num('odAds', 'Ad spend for this order', x.adSpend)}${num('odOther', 'Other cost', x.otherCost)}
@@ -13788,7 +13788,7 @@ const NAV = {
   settings: { name: 'Settings', acc: '#636366', back: true, find: true, items: [
     { g: 'Account' }, { r: 'settings/profile', l: 'My profile', ic: 'user', kw: 'name photo logo branding website name' }, { r: 'settings/login', l: 'Password & login', ic: 'key', kw: 'password email sign out workspace name switch logins supabase' },
     { g: 'Workspace' }, { r: 'settings/plan', l: 'Plan & billing', ic: 'card', kw: 'plan billing payment renew trial days left usage' }, { r: 'settings/modules', l: 'Modules & setup', ic: 'grid', kw: 'modules sections business type hide' },
-    { r: 'industry', l: 'Industry Kits', ic: 'kit', kw: 'templates industry starter' }, { r: 'settings/sheet', l: 'Google Sheet (old)', ic: 'sheet', kw: 'apps script sheet web app url', when: () => !!settings.url || !cloud },
+    { r: 'industry', l: 'Industry Kits', ic: 'kit', kw: 'templates industry starter' }, { r: 'settings/sheet', l: 'Google Sheet (old)', ic: 'sheet', kw: 'apps script sheet web app url', when: () => !!settings.url },
     { r: 'settings/wl', l: 'White label', ic: 'palette', kw: 'colours colors domain login page powered by', when: () => !cloud },
     { g: 'Team' }, { r: 'team', l: 'Team & access', ic: 'team', kw: 'members invite roles permissions territories' },
     { g: 'Connections' }, { r: 'connections', l: 'All connections', ic: 'link', kw: 'integrations' }, { r: 'connections/msg', l: 'Messaging', ic: 'msg', dot: 'msg', kw: 'whatsapp email welcome' },
