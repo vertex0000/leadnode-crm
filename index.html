@@ -113,19 +113,23 @@ svg.i{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8;stro
 .nv-av .avatar{width:30px;height:30px;font-size:12px}
 .nv-col{width:32px;height:32px;border:0;border-radius:8px;background:transparent;color:var(--faint);display:grid;place-items:center;flex:none;transition:background .15s,color .15s}
 .nv-col:hover{background:color-mix(in srgb,var(--text) 6%,transparent);color:var(--text)}
-body.nav-mini .nv-col svg{transform:scaleX(-1)}
-/* collapsed rail (desktop only) */
+.nv-col.on{color:var(--acc);background:color-mix(in srgb,var(--acc) 12%,transparent)}.nv-col.on svg{fill:currentColor;fill-opacity:.25}
+/* icon rail (desktop default) — hover opens the full panel over the page, 📌 pin keeps it open */
 @media (min-width:821px){
 body.nav-mini{--sw:68px}
-body.nav-mini .side .nv-l,body.nav-mini .side .nv-chev,body.nav-mini .side .nv-kids,body.nav-mini .side .nv-kh,body.nav-mini .side kbd,body.nav-mini .side .nv-wst,body.nav-mini .side .nv-ud,body.nav-mini .side .nv-find,body.nav-mini .side .nv-dot,body.nav-mini .side .nv-lk{display:none!important}
-body.nav-mini .side .nv-it,body.nav-mini .side .nv-ws,body.nav-mini .side .nv-me{justify-content:center;padding:0}
-body.nav-mini .side .nv-it{height:38px}
-body.nav-mini .side .nv-g{font-size:0;padding:0;height:1px;margin:10px 12px;background:var(--line)}
-body.nav-mini .side .nv-g:first-child{display:none}
-body.nav-mini .side .nv-bd{position:absolute;top:4px;right:8px;min-width:8px;width:8px;height:8px;padding:0;font-size:0;background:var(--acc)}
-body.nav-mini .side .nv-sp{justify-content:center;padding:8px 0}
-body.nav-mini .nv-me-row{flex-direction:column}
+body.nav-mini.nav-peek .side{width:252px;box-shadow:0 24px 60px -12px rgba(15,23,42,.28),0 0 0 1px var(--line);border-right-color:transparent}
+body.nav-mini.nav-peek .side .nv-l,body.nav-mini.nav-peek .side .nv-chev,body.nav-mini.nav-peek .side .nv-g,body.nav-mini.nav-peek .side .nv-kids,body.nav-mini.nav-peek .side .nv-wst,body.nav-mini.nav-peek .side kbd,body.nav-mini.nav-peek .side .nv-col{animation:nvFade .2s var(--ease) both}
+body.nav-mini:not(.nav-peek) .nv-col{display:none}
+body.nav-mini:not(.nav-peek) .side .nv-l,body.nav-mini:not(.nav-peek) .side .nv-chev,body.nav-mini:not(.nav-peek) .side .nv-kids,body.nav-mini:not(.nav-peek) .side .nv-kh,body.nav-mini:not(.nav-peek) .side kbd,body.nav-mini:not(.nav-peek) .side .nv-wst,body.nav-mini:not(.nav-peek) .side .nv-ud,body.nav-mini:not(.nav-peek) .side .nv-find,body.nav-mini:not(.nav-peek) .side .nv-dot,body.nav-mini:not(.nav-peek) .side .nv-lk{display:none!important}
+body.nav-mini:not(.nav-peek) .side .nv-it,body.nav-mini:not(.nav-peek) .side .nv-ws,body.nav-mini:not(.nav-peek) .side .nv-me{justify-content:center;padding:0}
+body.nav-mini:not(.nav-peek) .side .nv-it{height:38px}
+body.nav-mini:not(.nav-peek) .side .nv-g{font-size:0;padding:0;height:1px;margin:10px 12px;background:var(--line)}
+body.nav-mini:not(.nav-peek) .side .nv-g:first-child{display:none}
+body.nav-mini:not(.nav-peek) .side .nv-bd{position:absolute;top:4px;right:8px;min-width:8px;width:8px;height:8px;padding:0;font-size:0;background:var(--acc)}
+body.nav-mini:not(.nav-peek) .side .nv-sp{justify-content:center;padding:8px 0}
+body.nav-mini:not(.nav-peek) .nv-me-row{flex-direction:column}
 }
+@keyframes nvFade{from{opacity:0}}
 .nv-fly{position:fixed;z-index:90;pointer-events:none;opacity:0;transform:translateX(-4px);transition:opacity .15s var(--ease),transform .15s var(--ease)}
 .nv-fly.show{opacity:1;transform:none;pointer-events:auto}
 .nv-fly.tip{background:var(--primary);color:var(--on-primary);font-size:12px;font-weight:600;padding:6px 9px;border-radius:7px;pointer-events:none;white-space:nowrap}
@@ -2023,6 +2027,29 @@ h2,h3{font-weight:650}
 .cf-steps{margin:10px 0;padding-left:20px;display:flex;flex-direction:column;gap:6px;font-size:13px;line-height:1.5}
 .cf-soon{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:12px 0 4px;padding:12px 14px;border-radius:12px;background:color-mix(in srgb,var(--text) 4%,transparent)}
 .cf-soon b{font-size:13.5px}.cf-soon small{flex:1 1 260px;font-size:12.5px;line-height:1.45}
+/* Home v3 — clean header, key numbers, charts */
+.hm-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin:6px 2px 18px}
+.hm-date{font-size:12.5px;font-weight:600;color:var(--muted)}
+.hm-head h1{margin:4px 0 4px;font-size:32px}
+.hm-head p{margin:0;font-size:14px}
+.hm-acts{display:flex;gap:8px;flex-wrap:wrap}
+.hm-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.hm-k{display:flex;flex-direction:column;align-items:flex-start;gap:4px;text-align:left;padding:16px 18px 12px;border-radius:16px;border:1px solid var(--line);background:var(--glass-2);color:var(--text);font:inherit;cursor:pointer;min-width:0;position:relative;overflow:hidden;transition:transform .2s var(--ease),box-shadow .2s var(--ease)}
+.hm-k:hover{transform:translateY(-2px);box-shadow:0 16px 32px -22px rgba(15,23,42,.45)}
+.hm-kl{font-size:12.5px;font-weight:600;color:var(--muted)}
+.hm-kv{display:flex;align-items:baseline;gap:8px}.hm-kv b{font-size:28px;font-weight:700;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.hm-k small{font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.hm-bad{color:var(--coral);font-weight:600}
+.hm-sp{width:100%;height:30px;margin-top:6px;display:block}
+.hm-setup{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:12px 14px 12px 18px;border-radius:14px;position:relative}
+.hm-st{display:flex;flex-direction:column;min-width:140px}.hm-st b{font-size:14px}.hm-st span{font-size:12px}
+.hm-bar{flex:1 1 160px;height:6px;border-radius:999px;background:color-mix(in srgb,var(--text) 8%,transparent);overflow:hidden}.hm-bar i{display:block;height:100%;border-radius:999px;background:var(--green);transition:width .4s var(--ease)}
+.hm-next{display:flex;gap:6px;flex-wrap:wrap}
+.hm-chip{border:1px solid var(--line);background:var(--glass-3);color:var(--text);font:inherit;font-size:12.5px;font-weight:500;padding:5px 10px;border-radius:999px;cursor:pointer;transition:background .15s}.hm-chip:hover{background:color-mix(in srgb,var(--text) 6%,var(--glass-3))}
+.hm-x{width:30px;height:30px}
+.hm-ch .cm-ch-h{margin-bottom:8px}
+@media (max-width:1100px){.hm-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.hm-head h1{font-size:26px}.hm-kv b{font-size:24px}.hm-k{padding:14px 14px 10px}.hm-setup .btn{flex:1}}
 /* remarket split into 3 pages */
 .rm-onepage .rm-top{grid-template-columns:minmax(0,1fr) 320px}
 /* smooth & light motion: transform / opacity only, short, one easing, only the first items stagger */
@@ -2040,6 +2067,67 @@ h2,h3{font-weight:650}
   .acc-b{transition-duration:.22s}
 }
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+/* ---------- Landing page (before login) — always light, minimal ---------- */
+.landing{position:fixed;inset:0;z-index:95;overflow-y:auto;overflow-x:hidden;background:#fff;color:#1d1d1f;-webkit-overflow-scrolling:touch;scroll-behavior:smooth;--lt:#1d1d1f;--lm:#6e6e73;--lb:#f5f5f7;--ll:rgba(0,0,0,.08);font-size:16px;letter-spacing:-.01em}
+html.ld-lock,html.ld-lock body{overflow:hidden}
+.landing .grow{flex:1}
+.ld-wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+.ld-narrow{max-width:760px}
+.ld-pv{position:sticky;top:0;z-index:5;display:flex;align-items:center;justify-content:center;gap:12px;padding:8px;background:#8E5CF6;color:#fff;font-size:13px;font-weight:600}
+.ld-nav{position:sticky;top:0;z-index:4;background:rgba(255,255,255,.82);backdrop-filter:saturate(180%) blur(18px);-webkit-backdrop-filter:saturate(180%) blur(18px);border-bottom:1px solid transparent;transition:border-color .2s}
+.ld-nav.sc{border-bottom-color:var(--ll)}
+.ld-nav .ld-wrap{display:flex;align-items:center;gap:22px;height:64px}
+.ld-brand{display:flex;align-items:center;gap:10px;cursor:pointer;color:var(--lt);text-decoration:none}.ld-brand b{font-size:17px;font-weight:700;letter-spacing:-.02em}
+.ld-logo{width:30px;height:30px;border-radius:8px;background:#1d1d1f;color:#fff;display:grid;place-items:center;overflow:hidden}.ld-logo img{width:100%;height:100%;object-fit:cover}.ld-logo svg{width:17px!important;height:17px!important}
+.ld-links{display:flex;gap:22px}.ld-links a{font-size:14px;color:var(--lm);cursor:pointer;text-decoration:none;transition:color .15s}.ld-links a:hover{color:var(--lt)}
+.ld-btn{border:0;border-radius:999px;background:#1d1d1f;color:#fff;font:inherit;font-size:14px;font-weight:600;padding:9px 18px;cursor:pointer;transition:transform .15s var(--ease),background .15s,opacity .15s;white-space:nowrap}
+.ld-btn:hover{background:#000}.ld-btn:active{transform:scale(.97)}
+.ld-btn.ghost{background:transparent;color:var(--lt);box-shadow:inset 0 0 0 1px rgba(0,0,0,.16)}.ld-btn.ghost:hover{background:rgba(0,0,0,.04)}
+.ld-btn.lg{font-size:16px;padding:13px 26px}.ld-btn.sm{font-size:12.5px;padding:6px 12px;background:#fff;color:#1d1d1f}
+.ld-hero{padding:88px 0 40px;text-align:center}
+.ld-eb{display:inline-block;font-size:13px;font-weight:600;color:var(--lm);padding:6px 14px;border-radius:999px;background:var(--lb);margin-bottom:22px}
+.ld-hero h1{font-size:clamp(38px,6.2vw,68px);line-height:1.04;letter-spacing:-.04em;font-weight:700;margin:0 auto 18px;max-width:880px}
+.ld-lead{font-size:clamp(17px,2vw,21px);line-height:1.5;color:var(--lm);max-width:680px;margin:0 auto 30px}
+.ld-cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.ld-note{margin:18px 0 0;font-size:13.5px;color:var(--lm)}.ld-note a{color:#0066cc;cursor:pointer;text-decoration:none}.ld-note a:hover{text-decoration:underline}
+.ld-shot{border-radius:18px;overflow:hidden;background:var(--lb);box-shadow:0 0 0 1px var(--ll),0 30px 80px -34px rgba(0,0,0,.35)}
+.ld-shot img{display:block;width:100%;height:auto}
+.ld-heroimg{margin:56px auto 0;max-width:1080px;border-radius:22px}
+.ld-strip{padding:26px 0 8px}.ld-strip .ld-wrap{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 28px}
+.ld-strip span{font-size:14px;font-weight:600;color:var(--lm);display:flex;align-items:center;gap:8px}.ld-strip span::before{content:'';width:6px;height:6px;border-radius:50%;background:#34c759}
+.ld-sec{padding:96px 0}.ld-alt{background:var(--lb)}
+.ld-sh{text-align:center;margin:0 auto 56px;max-width:720px}.ld-sh h2{font-size:clamp(30px,4.2vw,46px);line-height:1.08;letter-spacing:-.035em;font-weight:700;margin:0 0 12px}.ld-sh p{font-size:18px;color:var(--lm);margin:0;line-height:1.5}
+.ld-f{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.25fr);gap:64px;align-items:center;padding:36px 0}
+.ld-f.rev .ld-ft{order:2}
+.ld-fn{font-size:13px;font-weight:700;color:#0066cc;letter-spacing:.02em}
+.ld-ft h3{font-size:clamp(24px,2.8vw,34px);line-height:1.12;letter-spacing:-.03em;font-weight:700;margin:8px 0 12px}
+.ld-ft p{font-size:17px;line-height:1.55;color:var(--lm);margin:0 0 18px}
+.ld-ft ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:9px}.ld-ft li{font-size:15px;font-weight:500;display:flex;gap:10px;align-items:baseline}.ld-ft li::before{content:'✓';color:#34c759;font-weight:700}
+.ld-steps{display:grid;grid-template-columns:repeat(var(--n,3),minmax(0,1fr));gap:20px}
+.ld-step{background:#fff;border-radius:22px;padding:28px 26px;display:flex;flex-direction:column;gap:8px;box-shadow:0 0 0 1px var(--ll)}
+.ld-sn{width:34px;height:34px;border-radius:50%;background:#1d1d1f;color:#fff;display:grid;place-items:center;font-weight:700;font-size:15px;margin-bottom:6px}
+.ld-step h3{font-size:20px;letter-spacing:-.02em;margin:0}.ld-step p{font-size:15px;line-height:1.5;color:var(--lm);margin:0 0 10px}
+.ld-step .ld-shot{margin-top:auto;border-radius:14px;box-shadow:0 0 0 1px var(--ll)}
+.ld-pr .pr{background:transparent!important;box-shadow:none!important;padding:0!important}.ld-pr .pr-glow{display:none}
+.ld-q{border-bottom:1px solid var(--ll);padding:4px 0}
+.ld-q summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;gap:16px;padding:18px 0;font-size:18px;font-weight:600;letter-spacing:-.01em}
+.ld-q summary::-webkit-details-marker{display:none}.ld-q summary::after{content:'+';font-size:22px;font-weight:400;color:var(--lm);transition:transform .2s var(--ease)}.ld-q[open] summary::after{transform:rotate(45deg)}
+.ld-q p{margin:0 0 18px;font-size:16px;line-height:1.55;color:var(--lm)}
+.ld-final{padding:110px 0;text-align:center}.ld-final h2{font-size:clamp(32px,4.6vw,52px);letter-spacing:-.04em;line-height:1.05;margin:0 0 14px}.ld-final p{font-size:18px;color:var(--lm);margin:0 0 30px}
+.ld-foot{border-top:1px solid var(--ll);padding:26px 0 34px;font-size:13px;color:var(--lm)}.ld-foot .ld-wrap{display:flex;gap:20px;align-items:center;flex-wrap:wrap}.ld-foot a{color:var(--lm);text-decoration:none}.ld-foot a:hover{color:var(--lt)}
+.ld-rv{opacity:0;transform:translateY(16px);transition:opacity .55s var(--ease),transform .55s var(--ease)}.ld-rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.ld-rv{opacity:1;transform:none}.landing{scroll-behavior:auto}}
+@media (max-width:860px){.ld-f,.ld-f.rev{grid-template-columns:minmax(0,1fr);gap:28px;padding:28px 0}.ld-f.rev .ld-ft{order:0}.ld-steps{grid-template-columns:minmax(0,1fr)}.ld-sec{padding:68px 0}.ld-hero{padding:56px 0 24px}.ld-heroimg{margin-top:36px;border-radius:14px}}
+@media (max-width:560px){.ld-links{gap:0}.ld-links [data-ld=features]{display:none}.ld-nav .ld-wrap{gap:10px;height:58px}.ld-btn{padding:8px 14px;font-size:13.5px}.ld-wrap{padding:0 18px}.ld-brand b{display:none}.ld-cta .ld-btn{flex:1 1 100%}}
+/* Admin → Landing page editor */
+.ld-edtop{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:14px 16px!important}
+.ld-ed{margin-top:14px}.ld-edh{display:flex;align-items:baseline;gap:10px;margin-bottom:12px}.ld-edh h3{margin:0;font-size:16px}
+.ld-g2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 14px}.ld-g3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px 14px}
+.ld-wide{grid-column:1/-1}
+.ld-imf{display:grid;grid-template-columns:minmax(0,1fr) 220px;gap:14px;align-items:end;margin-top:10px}.ld-imf .uploader{height:110px}
+.ld-row{padding:12px 14px;border-radius:14px;margin-bottom:10px;border:1px solid var(--line)}.ld-rh{display:flex;align-items:center;gap:6px;margin-bottom:8px}.ld-rh b{font-size:13.5px}
+.ld-savebar{position:sticky;bottom:0;padding-right:84px!important;background:var(--glass-3);margin-top:16px;padding:12px 16px;border-radius:14px;border:1px solid var(--line);z-index:2}
+@media (max-width:760px){.ld-g2,.ld-g3,.ld-imf{grid-template-columns:minmax(0,1fr)}}
 </style>
 </head>
 <body>
@@ -2456,6 +2544,7 @@ h2,h3{font-weight:650}
 </div></div>
 
 <!-- LOGIN -->
+<div class="landing" id="landing" hidden></div>
 <div class="auth" id="auth" hidden>
   <div class="auth-side">
     <div class="auth-brand"><div class="logo brand-logo"></div><span class="brandTxt">Nodevers</span></div>
@@ -2487,6 +2576,7 @@ h2,h3{font-weight:650}
       <button class="btn auth-google" id="authGoogle" type="button"><svg viewBox="0 0 24 24" width="18" height="18"><path fill="#4285F4" d="M22.6 12.2c0-.8-.1-1.5-.2-2.2H12v4.2h5.9a5 5 0 0 1-2.2 3.3v2.7h3.6c2.1-1.9 3.3-4.8 3.3-8Z"/><path fill="#34A853" d="M12 23c3 0 5.5-1 7.3-2.7l-3.6-2.8c-1 .7-2.2 1.1-3.7 1.1-2.9 0-5.3-1.9-6.2-4.5H2.1v2.8A11 11 0 0 0 12 23Z"/><path fill="#FBBC05" d="M5.8 14.1a6.6 6.6 0 0 1 0-4.2V7.1H2.1a11 11 0 0 0 0 9.8l3.7-2.8Z"/><path fill="#EA4335" d="M12 5.4c1.6 0 3.1.6 4.2 1.7l3.2-3.2A11 11 0 0 0 2.1 7.1l3.7 2.8C6.7 7.3 9.1 5.4 12 5.4Z"/></svg>Continue with Google</button>
       <p class="auth-foot muted">By continuing you agree to the <a href="terms.html" target="_blank" rel="noopener">Terms</a> and <a href="privacy.html" target="_blank" rel="noopener">Privacy Policy</a>.</p>
       <button class="btn ghost auth-demo" id="authDemo" type="button">Explore the demo first →</button>
+      <button class="btn ghost auth-demo auth-home" id="authHome" type="button" hidden>← Back to the home page</button>
       <p class="powered auth-pow">Powered by <b>Nodevers</b></p>
     </div>
   </div>
@@ -5812,10 +5902,11 @@ const PLAT = { s: {}, loaded: false, plans: null };
 async function platLoad() {
   const c = sbConf(); if (!c.url || !c.key) return;
   try { const r = await fetch(c.url.replace(/\/$/, '') + '/rest/v1/platform_settings?select=key,value', { headers: { apikey: c.key } }); if (!r.ok) return; const rows = await r.json(); if (!Array.isArray(rows)) return;
-    PLAT.s = Object.fromEntries(rows.map(x => [x.key, x.value])); PLAT.loaded = true; applyBranding(); authBrand(); } catch (e) { }
+    PLAT.s = Object.fromEntries(rows.map(x => [x.key, x.value])); PLAT.loaded = true; store.set('nv.landC', PLAT.s.landingJson || ''); applyBranding(); authBrand(); } catch (e) { }
   try { const r = await fetch(c.url.replace(/\/$/, '') + '/rest/v1/plans?select=*&order=sort', { headers: { apikey: c.key } }); if (r.ok) { const rows = await r.json(); if (Array.isArray(rows)) PLAT.plans = rows; } } catch (e) { }
   try { pricingBtnSync(); } catch (e) { }
   if (typeof activeView === 'function' && activeView() === 'home' && typeof renderHome === 'function' && S && S.leads) renderHome();
+  { const ld = $('#landing'); if (ld && !ld.hidden && !LAND.preview) { if (!landOn()) showAuth('in'); else if (LAND.raw !== landRaw()) showLanding(); else { const pr = $('#ld-pricing .ld-pr'); if (pr) pr.innerHTML = pricingHTML(); } } else if (!$('#auth').hidden && $('#authHome')) $('#authHome').hidden = !!AUTH.preview || !landOn(); }   // landing text came from the server
 }
 /* ================= White label (agencies resell Nodevers as their own platform) ================= */
 const WL_KEYS = ['accentColor', 'buttonColor', 'loginHeadline', 'loginSub', 'hidePowered', 'subdomain', 'customDomain'];
@@ -5917,7 +6008,7 @@ async function authInit() {
   const fallback = (settings.url && settings.key) || demoChosen();      // your Google Sheet on this browser, or the demo
   const urlErr = new URLSearchParams(location.hash.slice(1)).get('error_description');
   if (urlErr) { history.replaceState(null, '', location.pathname + '#dashboard'); showAuth('in'); authMsg(/expired|invalid/i.test(urlErr) ? 'This email link has expired or was already used. Ask for a new one.' : urlErr); return false; }
-  if (!hasSbSession() && !/access_token=|[?&]code=|type=recovery/.test(location.href)) { if (fallback && !pendingInvite()) return true; showAuth(pendingInvite() ? 'up' : 'in'); return false; }
+  if (!hasSbSession() && !/access_token=|[?&]code=|type=recovery/.test(location.href)) { if (fallback && !pendingInvite()) return true; showEntry(); return false; }
   try { const cl = await authClient(); const { data } = await cl.auth.getSession(); AUTH.session = data.session; }
   catch (e) { toast('Login service unavailable: ' + e.message, true); return true; }
   if (AUTH.session) {
@@ -5925,13 +6016,13 @@ async function authInit() {
     catch (e) { toast(e.message, true); cloudStop(); if (settings.url && settings.key) return true; showAuth('in'); authMsg(e.message); return false; }
   }
   if (fallback && !pendingInvite()) return true;
-  showAuth(pendingInvite() ? 'up' : 'in'); return false;
+  showEntry(); return false;
 }
 function authUser() { const u = AUTH.session && AUTH.session.user; return u ? { email: u.email, name: (u.user_metadata && (u.user_metadata.full_name || u.user_metadata.name)) || u.email } : null; }
 function authBrand() { const b = brand(); $$('#auth .brandTxt').forEach(e => e.textContent = b.brandName); $$('#auth .brand-logo').forEach(e => { const u = safeUrl(b.logoUrl); e.style.backgroundImage = u ? `url('${u}')` : ''; e.innerHTML = u ? '' : LOGO_DEFAULT; }); }
 function showAuth(mode, preview) {
-  AUTH.mode = mode || 'in'; AUTH.preview = !!preview;
-  authBrand();
+  AUTH.mode = mode || 'in'; AUTH.preview = !!preview; if (typeof hideLanding === 'function') hideLanding();
+  authBrand(); { const h = $('#authHome'); if (h) h.hidden = !!preview || !(typeof landOn === 'function' && landOn() && sbConf().url); }
   $('#authExit').hidden = !preview; $('#auth').hidden = false; closePanel(); $$('.modal.show').forEach(m => hideModal('#' + m.id));
   drawAuth();
 }
@@ -6242,7 +6333,7 @@ async function saveLead(lead) {
 }
 
 /* ================= photos (gallery upload) ================= */
-const upStore = { lead: {}, brand: {} };
+const upStore = { lead: {}, brand: {}, land: {} };
 let upBusy = 0, pendingUp = null;
 /** Shrink photos in the browser (faster upload, less Drive space) */
 function compressImage(file, max, png) {
@@ -6580,6 +6671,7 @@ async function cloudStart() {
   try { AUTH.wsList = (await cl.rpc('my_workspaces')).data || []; } catch (e) { AUTH.wsList = []; }
   const pref = store.get('leadnode.ws'), w = AUTH.wsList.find(x => x.workspace_id === pref); if (w) pick = w;
   AUTH.ws = pick.workspace_id; AUTH.role = pick.role; AUTH.wsName = pick.name;
+  store.set('nv.known', 1);   // signed in on this browser before → next time straight to Log in
   cloud = true; demo = false; WA.status = null; document.body.classList.toggle('ro', AUTH.role === 'client' || AUTH.role === 'platform'); liveStart();
   if (/[?&]state=st[a-f0-9]{40}/.test(location.search)) setTimeout(() => { oauthReturn().catch(e => toast(e.message, true)); }, 1500);   // back from Shopify / Amazon / Facebook
 }
@@ -11216,11 +11308,27 @@ function renderHome(anim) {
   const hr = now.getHours(), greet = hr < 12 ? 'Good morning' : hr < 17 ? 'Good afternoon' : 'Good evening', who = (typeof me === 'function' && me()) || brand().userName || '';
   const card = (ic, color, title, n, sub, go, btn, extra) => `<div class="home-c glass" style="--c:${color}"><div class="home-ch"><span class="home-ci">${ic}</span><span>${esc(title)}</span></div><div class="home-cn"><b>${n}</b>${extra || ''}</div><p>${sub}</p><button class="btn sm" ${go}>${esc(btn)} →</button></div>`;
   const todo = overdue.concat(dueToday).sort((a, b) => String(a.dueAt).localeCompare(String(b.dueAt))).slice(0, 6);
+  const days = [...Array(14)].map((_, i) => ymd(new Date(Date.now() - (13 - i) * 864e5))), d7 = days.slice(-7), yest = d7[5];
+  const mods = modulesCfg(), modOn = k => !featOff(k) && mods[k] !== false, storeOn = modOn('store') && (ord.some(o => o.channel && o.channel !== 'WhatsApp') || (S.products || []).length > 0 || ord.length > 0);
+  const byDay = (list, dateOf, val) => { const m = new Map(days.map(d => [d, 0])); list.forEach(x => { const d = dateOf(x); if (m.has(d)) m.set(d, m.get(d) + (val ? val(x) : 1)); }); return days.map(d => m.get(d)); };
+  const leadDays = byDay(S.leads, l => dOnly(l.createdOn)), revDays = byDay(ord, cmDate, cmRev), inDays = byDay(typeof msgs === 'function' ? msgs().filter(m => m.direction === 'in') : [], m => dOnly(m.time));
+  const unreadN = typeof convos === 'function' ? convos().reduce((a, c) => a + (c.unread || 0), 0) : 0, wonDays = byDay(S.leads.filter(l => l.stage === 'Won'), l => dOnly(l.updatedAt || l.createdOn));
+  const spark = (arr, col) => { const a = arr.slice(-7), mx = Math.max(1, ...a), pts = a.map((v, i) => `${(i / (a.length - 1) * 100).toFixed(1)},${(30 - v / mx * 26 - 2).toFixed(1)}`).join(' '); return `<svg class="hm-sp" viewBox="0 0 100 30" preserveAspectRatio="none" aria-hidden="true"><polygon points="0,30 ${pts} 100,30" fill="${col}" opacity=".1"/><polyline points="${pts}" fill="none" stroke="${col}" stroke-width="2" vector-effect="non-scaling-stroke" stroke-linejoin="round" stroke-linecap="round"/></svg>`; };
+  const kpi = (label, val, sub, delta, sp, go, col) => `<button type="button" class="hm-k glass" ${go}><span class="hm-kl">${label}</span><span class="hm-kv"><b>${val}</b>${delta || ''}</span><small>${sub}</small>${sp ? spark(sp, col) : ''}</button>`;
   const W = {
-    setup: () => done < items.length ? `<div class="home-setup glass"><div class="home-ring" style="--p:${pctDone}"><svg viewBox="0 0 44 44"><circle cx="22" cy="22" r="19"/><circle cx="22" cy="22" r="19" class="on" stroke-dasharray="${(pctDone / 100 * 119.4).toFixed(1)} 119.4"/></svg><b>${done}/${items.length}</b></div>
-      <div class="home-st"><b>Set up your business</b><span>${done} of ${items.length} done</span><small class="muted">Finish setup to unlock every feature.</small></div>
-      <div class="home-steps">${items.map(([k, n, ok, sub, to]) => `<button class="home-step ${ok ? 'ok' : ''}" data-homego="${to}" title="${esc(n)} — ${esc(sub)}"><span class="home-sd">${ok ? '✓' : ''}</span><b>${esc(n)}</b><small>${esc(sub)}</small></button>`).join('')}</div>
-      <button class="btn primary" data-homego="${(items.find(x => !x[2]) || [])[4] || 'connections'}">Complete setup →</button>${!document.body.classList.contains('ro') && (demo || (cloud && canAdmin())) ? '<button type="button" class="ibtn home-setx" data-setuphide title="Hide the setup guide (bring it back from ✎ Customize)">' + I.x + '</button>' : ''}<div class="home-sbar"><i style="width:${pctDone}%"></i></div></div>` : '',
+    kpis: () => `<div class="hm-kpis">${storeOn ? kpi('Sales today', inr(revDays[13]), `${ordT.length} order${ordT.length === 1 ? '' : 's'} · ${inrShort(d7.reduce((a, d, i) => a + revDays[7 + i], 0))} this week`, insDelta(revDays[13], revDays[12]), revDays, 'data-go="commerce/overview"', 'var(--green)')
+        : kpi('Deals won', wonDays.slice(-7).reduce((a, b) => a + b, 0), 'in the last 7 days', '', wonDays, 'data-go="pipeline"', 'var(--green)')}
+      ${kpi('New leads today', leadDays[13], `${leadDays.slice(-7).reduce((a, b) => a + b, 0)} in the last 7 days`, insDelta(leadDays[13], leadDays[12]), leadDays, 'data-go="leads"', 'var(--blue-2)')}
+      ${kpi('Unread chats', unreadN, unread.length ? `${unread.length} customer${unread.length === 1 ? ' is' : 's are'} waiting` : 'Everyone has an answer', '', inDays, 'data-go="whatsapp"', 'var(--wa)')}
+      ${modOn('tasks') ? kpi('Tasks for today', overdue.length + dueToday.length, overdue.length ? `<span class="hm-bad">${overdue.length} overdue</span> · ${dueToday.length} due today` : dueToday.length ? `${dueToday.length} due today` : 'Nothing due — nice work', '', null, 'data-go="tasks"', '')
+        : kpi('Hot leads', hot.length, 'Hot or follow-up due', '', null, 'data-go="leads"', '')}</div>`,
+    trend: () => storeOn ? `<div class="rcard glass hm-ch"><div class="cm-ch-h"><div><h3>Sales — last 14 days</h3><p class="sub muted">${inr(revDays.reduce((a, b) => a + b, 0))} revenue · ${ord.filter(o => days.includes(cmDate(o))).length} orders</p></div><a class="bc-link" data-go="insales">Details →</a></div>${cmTrend(days.map(d => { const L2 = ord.filter(o => cmDate(o) === d); return { k: d, rev: cmSum(L2, cmRev), profit: cmSum(L2, cmProfit), orders: L2.length }; }), 'day')}</div>`
+      : `<div class="rcard glass hm-ch"><div class="cm-ch-h"><div><h3>New leads — last 14 days</h3><p class="sub muted">${leadDays.reduce((a, b) => a + b, 0)} new leads</p></div><a class="bc-link" data-go="analytics">Details →</a></div>${cmCols(days.map((d, i) => ({ label: cmLabel(d, 'day'), value: leadDays[i] })), v => String(v))}</div>`,
+    sources: () => { const src = {}; S.leads.filter(l => dOnly(l.createdOn) >= daysAgo(29)).forEach(l => { const k = l.source || 'Other'; src[k] = (src[k] || 0) + 1; }); const rows = Object.entries(src).sort((a, b) => b[1] - a[1]).slice(0, 6);
+      return `<div class="rcard glass hm-ch"><div class="cm-ch-h"><div><h3>Where new leads come from</h3><p class="sub muted">Last 30 days</p></div><a class="bc-link" data-go="inmarketing">Details →</a></div>${rows.length ? cmBars(rows.map(([k, v]) => ({ label: k, value: v })), v => String(v), 'var(--blue-2)') : '<div class="cm-empty">No new leads in the last 30 days</div>'}</div>`; },
+    setup: () => done < items.length ? `<div class="hm-setup glass"><div class="hm-st"><b>Finish setting up</b><span class="muted">${done} of ${items.length} done</span></div><div class="hm-bar"><i style="width:${pctDone}%"></i></div>
+      <div class="hm-next">${items.filter(x => !x[2]).slice(0, 3).map(([k, n, ok, sub, to]) => `<button type="button" class="hm-chip" data-homego="${to}" title="${esc(sub)}">${esc(n)}</button>`).join('')}</div>
+      <button class="btn sm primary" data-homego="${(items.find(x => !x[2]) || [])[4] || 'connections'}">Continue →</button>${!document.body.classList.contains('ro') && (demo || (cloud && canAdmin())) ? '<button type="button" class="ibtn hm-x" data-setuphide title="Hide (bring it back from ✎ Customize)">' + I.x + '</button>' : ''}</div>` : '',
     tasks: () => card('<svg class="i" viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3h6v1M9 11l2 2 4-4M9 17h6"/></svg>', 'var(--coral)', 'Overdue tasks', overdue.length, overdue.length ? `${dueToday.length} more due today` : dueToday.length ? `${dueToday.length} due today` : 'Nothing overdue 🎉', 'data-go="tasks"', 'View tasks'),
     hot: () => card(INS_IC.leads, '#F97316', 'Hot leads', hot.length, 'Hot or follow-up due — reply first', 'data-go="leads"', 'View leads'),
     orders: () => card(INS_IC.orders, 'var(--green)', 'New orders', ordT.length, `${inr(cmSum(ordT, cmRev))} revenue today`, 'data-go="orders"', 'View orders', ordY.length ? insDelta(ordT.length, ordY.length) : ''),
@@ -11236,7 +11344,10 @@ function renderHome(anim) {
     chats: () => unread.length ? `<div class="rcard glass home-chats"><div class="cm-ch-h"><h3>Unread WhatsApp chats</h3><a class="bc-link" data-go="whatsapp">Open inbox →</a></div><div class="home-av">${unread.map(c => `<button class="home-chat" data-homechat="${esc(c.key)}">${avatar(c.name || '')}<b>${esc(String(c.name || '').split(' ')[0])}</b><small>${esc(String((c.last && c.last.text) || '').slice(0, 28))}</small></button>`).join('')}</div></div>` : '',
   };
   const canHL = !document.body.classList.contains('ro') && (demo || (cloud && canAdmin()));
-  box.innerHTML = `${homeHero()}<div class="home-hi"><div><h1>${greet}${who ? ', ' + esc(String(who).split(' ')[0]) : ''} 👋</h1><p class="muted">${now.toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'long' })} — here is what needs you today.</p></div>${canHL && !HL.edit ? '<button class="btn sm" data-hlstart title="Move, hide and add cards on this page">✎ Customize</button>' : ''}</div>${homeGrid(W)}`;
+  const need = [overdue.length ? `${overdue.length} overdue task${overdue.length === 1 ? '' : 's'}` : '', unread.length ? `${unread.length} unread chat${unread.length === 1 ? '' : 's'}` : '', hot.length ? `${hot.length} hot lead${hot.length === 1 ? '' : 's'}` : ''].filter(Boolean);
+  const ro = document.body.classList.contains('ro'), acts = ro ? '' : `<button type="button" class="btn sm" data-add="">+ Lead</button>${modOn('orders') && (demo || (cloud && AUTH.v8)) ? '<button type="button" class="btn sm" data-ordnew="">+ Order</button>' : ''}${modOn('campaigns') ? '<button type="button" class="btn sm primary" data-go="broadcast/new">New broadcast</button>' : ''}`;
+  box.innerHTML = `<div class="hm-head"><div class="hm-hl"><span class="hm-date">${now.toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'long' })}</span><h1>${greet}${who ? ', ' + esc(String(who).split(' ')[0]) : ''}</h1><p class="muted">${need.length ? esc(need.join(' · ')) + ' — start here.' : 'All caught up — nothing urgent today.'}</p></div>
+    <div class="hm-acts">${acts}${canHL && !HL.edit ? '<button class="btn sm ghost" data-hlstart title="Move, hide and add cards on this page">✎ Customize</button>' : ''}</div></div>${homeGrid(W)}`;
   stagger(box, anim);
 }
 /* ================= AI Advisor: daily tips from the business's own numbers + one-click actions =================
@@ -11425,8 +11536,9 @@ document.addEventListener('click', e => {
 
 /* ================= Home layout: drag cards, hide / show, own blocks (owner & admins); default layout from the platform team ================= */
 // [id, name, size, section that must be in the plan]
-const HOME_W = [['setup', 'Set up your business', 'full'], ['advisor', 'AI Advisor', 'full', 'advisor'], ['tasks', 'Overdue tasks', 'small', 'tasks'], ['hot', 'Hot leads', 'small'], ['orders', 'New orders', 'small', 'orders'], ['stock', 'Low stock', 'small', 'store'],
+const HOME_W = [['kpis', 'Key numbers', 'full'], ['trend', 'Sales / new leads — 14 days', 'half'], ['sources', 'Where new leads come from', 'half'], ['setup', 'Set up your business', 'full'], ['advisor', 'AI Advisor', 'full', 'advisor'], ['tasks', 'Overdue tasks', 'small', 'tasks'], ['hot', 'Hot leads', 'small'], ['orders', 'New orders', 'small', 'orders'], ['stock', 'Low stock', 'small', 'store'],
   ['unreadc', 'Unread chats', 'small'], ['calls', 'Calls today', 'small', 'tasks'], ['todo', 'Do this now', 'half', 'tasks'], ['recent', 'Recent orders / newest leads', 'half'], ['chats', 'Unread WhatsApp chats', 'full']];
+const HOME_ORDER = ['kpis', 'setup', 'todo', 'trend', 'advisor', 'sources', 'recent', 'chats', 'tasks', 'hot', 'orders', 'stock', 'unreadc', 'calls'], HOME_SMALL = ['tasks', 'hot', 'orders', 'stock', 'unreadc', 'calls'];
 const HL_TYPES = [['note', 'Note', 'A message for your team — targets, offers, rules'], ['link', 'Link / button', 'Open a website, form, price list or a page in Nodevers'], ['image', 'Image', 'A banner, poster or price list picture (https link)'], ['video', 'YouTube video', 'Training or product video']];
 const HL_SIZES = [['small', 'Small (¼)'], ['half', 'Half (½)'], ['full', 'Full width']];
 const HL = { edit: false, target: 'ws', draft: null, drag: '' };
@@ -11435,8 +11547,8 @@ const hlParse = v => { try { const o = JSON.parse(v || 'null'); return o && Arra
 function homeLayout(target) {
   const own = target === 'platform' ? null : hlParse((S.settings || {}).homeLayoutJson), plat = hlParse((PLAT.s || {}).homeLayoutJson), base = own || plat;
   const store = (S.products || []).length > 0 || (S.orders || []).some(o => o.channel && o.channel !== 'WhatsApp');
-  const L = base ? { order: base.order.slice(), hidden: (base.hidden || []).slice(), blocks: Object.assign({}, base.blocks || {}) } : { order: HOME_W.map(w => w[0]), hidden: store ? ['unreadc', 'calls'] : ['orders', 'stock'], blocks: {} };
-  HOME_W.forEach(([id]) => { if (!L.order.includes(id)) { if (id === 'advisor') L.order.splice(L.order.indexOf('setup') + 1, 0, id); else { L.order.push(id); if (base) L.hidden.push(id); } } });           // cards added in a later update (the Advisor shows near the top)
+  const L = base ? { order: base.order.slice(), hidden: (base.hidden || []).slice(), blocks: Object.assign({}, base.blocks || {}) } : { order: HOME_ORDER.slice(), hidden: HOME_SMALL.slice(), blocks: {} };   // key numbers on top; the small cards can be switched on in ✎ Customize
+  HOME_W.forEach(([id]) => { if (!L.order.includes(id)) { if (id === 'kpis') L.order.unshift(id); else if (id === 'trend' || id === 'sources') { const at = L.order.indexOf('recent'); L.order.splice(at < 0 ? L.order.length : at, 0, id); } else if (id === 'advisor') L.order.splice(L.order.indexOf('setup') + 1, 0, id); else { L.order.push(id); if (base) L.hidden.push(id); } } });           // cards added in a later update (the Advisor shows near the top)
   L.order = L.order.filter((id, i, a) => a.indexOf(id) === i && (HOME_W.some(w => w[0] === id) || L.blocks[id]));
   L.src = own ? 'ws' : plat ? 'platform' : 'default'; return L;
 }
@@ -12376,7 +12488,7 @@ function moreSheet() {
 /* ================= platform admin console ================= */
 /* ================= platform owner: Admin Console v2 (clients, plans, payments, team, brand, audit) ================= */
 const ADM2 = { tab: store.get('nv.admTab') || 'clients', rows: null, at: 0, q: '', f: '', plans: null, pays: null, team: null, audit: null, err: '' };
-const ADM_TABS = [['overview', 'Overview', ['super', 'admin']], ['clients', 'Clients', ['super', 'admin', 'support', 'finance']], ['plans', 'Plans & pricing', ['super', 'admin', 'finance']], ['payments', 'Payments', ['super', 'admin', 'finance']], ['home', 'Home page', ['super', 'admin']], ['team', 'Platform team', ['super', 'admin']], ['texts', 'Messages & buttons', ['super', 'admin']], ['brand', 'Settings', ['super', 'admin']], ['audit', 'Audit log', ['super', 'admin']]];
+const ADM_TABS = [['overview', 'Overview', ['super', 'admin']], ['landing', 'Landing page', ['super', 'admin']], ['clients', 'Clients', ['super', 'admin', 'support', 'finance']], ['plans', 'Plans & pricing', ['super', 'admin', 'finance']], ['payments', 'Payments', ['super', 'admin', 'finance']], ['home', 'Home page', ['super', 'admin']], ['team', 'Platform team', ['super', 'admin']], ['texts', 'Messages & buttons', ['super', 'admin']], ['brand', 'Settings', ['super', 'admin']], ['audit', 'Audit log', ['super', 'admin']]];
 const PLAT_ROLES = [['super', 'Super admin', 'Everything, including the platform team'], ['admin', 'Admin', 'Clients, plans, payments, brand'], ['support', 'Support', 'See clients and open their data (read-only)'], ['finance', 'Finance', 'Subscriptions and payments']];
 const SUB_ST = { trial: ['Trial', 'wait'], active: ['Active', 'ok'], past_due: ['Payment due', 'wait'], suspended: ['Suspended', 'bad'], cancelled: ['Cancelled', 'bad'], free: ['Free', ''] };
 const admCan = (...roles) => cloud && roles.includes(AUTH.platRole);
@@ -12403,7 +12515,8 @@ async function renderAdmin(anim) {
   await admLoad();
   if (ADM2.err) { box.innerHTML = `<div class="tp-empty glass"><b>Could not load</b><p class="muted">${esc(ADM2.err)}</p></div>`; return; }
   if (ADM2.tab === 'brand') store.set('nv.admAcc2', '');   // settings open as their own page, not as a pop-up
-  box.innerHTML = ({ overview: admOverview, clients: admClients, plans: admPlans, payments: admPayments, home: admHome, team: admTeam, texts: admTexts, brand: admBrand, audit: admAudit }[ADM2.tab] || admClients)();
+  { const sp = $('#v-admin .head .sub'); if (sp) sp.textContent = ({ overview: 'How the platform is doing — clients, money and what needs you.', landing: 'What new visitors see before they log in — every text, picture and question. Only the platform team can change it.', clients: 'Every client business — plans, time left, payments, usage and one-click view of their data.', plans: 'The plans clients can buy — prices, limits and what is included.', payments: 'Payments from clients.', home: 'The pricing pop-up and the default Home layout for new clients.', team: 'Who can open the Admin Console and what each person can do.', texts: 'Words and buttons clients see in the app.', audit: 'Every change the platform team made.' })[ADM2.tab] || 'Platform settings for every client.'; }
+  box.innerHTML = ({ overview: admOverview, landing: admLanding, clients: admClients, plans: admPlans, payments: admPayments, home: admHome, team: admTeam, texts: admTexts, brand: admBrand, audit: admAudit }[ADM2.tab] || admClients)();
   if (ADM2.tab === 'brand') { const L = box.querySelector('.acc-list'); if (L) { const pm = ADM2.pm || 'b-brand'; L.classList.add('pm'); L.querySelectorAll(':scope > .acc').forEach(a => { a.classList.remove('open'); a.classList.toggle('pm-on', a.dataset.acc === pm); }); const on = L.querySelector('.acc.pm-on'); L.classList.toggle('pm-nofoot', !(on && on.dataset.accsave)); } }
   if (ADM2.tab === 'texts') utPrev();
   stagger(box, anim);
@@ -12929,9 +13042,7 @@ function admHome() {
       <p class="help">Visitors go to “Create account”. Clients go to your support WhatsApp (or renew link / email) with the plan name filled in. Prices, features and the badge are edited in <a class="bc-link" data-admtab="plans">Plans & pricing</a>.</p></div></div>
     <div class="cf-foot"><div class="grow"></div><button class="btn primary" id="prSave">Save pricing</button></div>`;
   setTimeout(() => { admHeroBtns(); admHeroPrev(); }, 0);
-  return `<div class="ah-prev-h"><b>Live preview</b><span class="muted">This is exactly what appears at the top of Home. Changes show here as you type — press Save to publish. Pricing opens from the “Pricing” button next to the search box.</span></div>
-    <div id="admHeroPrev"></div>
-    <div class="acc-list acc-grid" data-accmtitle="Home page" style="margin-top:14px">${accItem('h-hero', { attrs: 'data-accwith="#admHeroPrev"', desc: 'Banner image, headline, text and buttons on the Home page.', title: 'Header (top banner)', icon: '<svg class="i" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="m3 15 5-5 4 4 3-3 6 6"/></svg>', color: '#3B82F6', dot: c.on !== false ? 'ok' : 'off', status: c.on !== false ? `On · ${c.image ? 'your image' : 'built-in artwork'} · ${(c.buttons || []).filter(b => b.on !== false).length} buttons` : 'Hidden', open: open === 'h-hero', body: heroBody })}
+  return `<div class="acc-list acc-grid" data-accmtitle="Pricing & Home layout">
       ${accItem('h-price', { attrs: 'data-accwith="#admPrPrev"', desc: 'Pricing pop-up: plans, intro offer and trial box.', title: 'Pricing pop-up', icon: '<svg class="i" viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>', color: '#F97316', dot: p.show !== 'off' ? 'ok' : 'off', status: (PRICING_SHOW.find(x => x[0] === p.show) || PRICING_SHOW[0])[1], open: open === 'h-price', body: prBody })}
       ${accItem('h-layout', { desc: "Default card order for every client's Home.", title: 'Client Home layout (default)', icon: '<svg class="i" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="18" height="7" rx="1.5"/></svg>', color: '#10B981', dot: hlParse(PLAT.s.homeLayoutJson) ? 'ok' : '', status: hlParse(PLAT.s.homeLayoutJson) ? 'Your own default layout' : 'Built-in layout', open: open === 'h-layout',
         body: `<p class="help" style="margin-top:0">The Home cards every client sees until they press <b>✎ Customize</b> on their own Home: which cards, in which order, and your own blocks (a welcome note, a training video, a link to support). Clients who already changed their Home keep their layout.</p>
@@ -13271,6 +13382,7 @@ const HELP_GUIDE = [
   ['templates', 'WhatsApp templates', 'template templates create approve meta pending rejected sync draft submit', '**Templates**: **⟳ Sync from WhatsApp** brings your approved templates. **New template**: name (lowercase_with_underscores), category (Marketing / Utility), language, use case, header, body with {{1}} variables, footer, buttons → **Submit to Meta for approval** (minutes to 24 h). Drafts show **Edit & submit to Meta**. **Library** sets use case, best segment, tags and notes so your team picks the right one.'],
   ['builder', 'Template builder: content, buttons, actions, flows', 'builder button buttons action flow next template image video pdf catalog payment order cart call website map multi step', 'In **Templates → + New template** pick a ready-made template or start blank. Choose a **Message type** (Text, Image, Video, PDF, Location, Payment link; Catalog / Product card need a Meta catalog — contact cards are not allowed in templates). Add up to 10 **buttons** (max 1 Call, max 2 link buttons, keep reply buttons together). Under each reply button, **⚡ When a customer taps → + Add step**: Reply with text, Send next template, image / PDF, link, payment link, tag, stage, assign, task, order, Ask a question, Wait, hand over, AI reply. Chaining templates with **Send next template** builds a multi-step chatbot.\n\nFor an already-approved template just click its card (or **Edit**) — change the auto-replies and press **Save changes**; no new Meta review needed. **▶ Test chat** lets you tap the buttons like a customer.'],
   ['nav-spaces', 'Finding your way: sidebar, Insights, Settings, Admin', 'sidebar menu navigation collapse expand insights settings admin back workspace switch profile sign out dark mode breadcrumb link', 'The **left sidebar** is your workspace: Home, Inbox, Tasks & Calls, then **Sales**, **Commerce** and **Marketing**. Items with an arrow open their pages underneath (e.g. **Products & Stock → Reorder**). **Insights** and **Settings** at the bottom open their own menus — press **← Back to workspace** to return. Platform team: **🛡 Admin**. The small line above every page title shows where you are. Press the panel button at the bottom (or **Ctrl + \\**) to shrink the sidebar to icons — hover an icon to see its pages. Your name at the bottom: profile, dark / light mode, sign out. The workspace name at the top: switch workspace and plan. On a phone, press **☰** (or **More**). Every page has its own link (e.g. …#commerce/reorder) and the browser Back button works.'],
+  ['landing', 'Landing page (before login)', 'landing page home page website visitors before login sign up pricing hero features faq edit admin', 'New visitors first see the **landing page**: top bar (Pricing · Log in · Sign up), headline, buttons, pictures of the app, features, 3 start steps, pricing, questions. People who signed in before on that browser go straight to Log in (the login page has **← Back to the home page**). Platform team: **Admin → Website → Landing page** — change every text, picture (upload or https link), feature, step and question, **Preview**, then **Save & publish**. Use {brand}, {trial} and {year} in texts.'],
   ['flipkart', 'Connect Flipkart Seller Hub', 'flipkart seller hub api connect orders returns rto ekart application id secret self access stock sync', '**Settings → Connections → Store channels → Flipkart Seller Hub**. In Seller Hub open your name → **Manage profile → Developer access → Create new access → Self access application**, copy the **Application ID** and **Application secret**, paste them, press **Test connection** → **Connect**. Orders, packed / shipped / delivered / cancelled status, customer returns and RTO come in every 15 minutes; each order item is one order. Selling takes stock out, returns put it back. Optional: **Send my stock to Flipkart** keeps your listings in step (with “Keep back” units). Fees: type an estimate %, or import the settlement report for the real fee of each order. See it all in **Store → Flipkart**.'],
   ['meesho', 'Meesho orders (Supplier Panel report)', 'meesho supplier panel import orders payments report sub order commission', 'Meesho does not give API keys to sellers yet, so use its reports: Supplier Panel → **Orders → Download** (or **Payments → Download payment file** for commission and shipping). In Nodevers: **Store → Meesho → Import Meesho report** (or Settings → Connections → Meesho). Columns like Sub Order No, SKU, status, price, commission and shipping are found by themselves; the same order is never added twice, so import the newest report any time. RTO and returns put stock back. When Meesho opens API access for your account, the same card will connect directly.'],
   ['store', 'Store: overview, Amazon, Flipkart, Meesho, Website', 'store commerce ecommerce amazon website flipkart meesho revenue profit margin rto return fees overview channel sales dashboard', '**Store** (sidebar) shows revenue, net profit and margin, orders, units, ad spend (ROAS, profit after ads), return / RTO rate, inventory value and stock alerts — filter by period, channel, state and status. The **Amazon**, **Flipkart**, **Meesho** and **Website** pages show the same for one channel plus fees, shipping, “where every ₹ goes”, top products and return reasons. Detailed analytics are in **Insights → Sales & Store**. Net profit = revenue − product cost − fees − shipping − packaging − RTO − ad spend.'],
@@ -13602,14 +13714,14 @@ const NAV = {
   admin: { name: 'Admin', acc: '#8E5CF6', back: true, items: [
     { r: 'admin/overview', l: 'Overview', ic: 'overview', adm: 'overview' },
     { g: 'Business' }, { r: 'admin/clients', l: 'Clients', ic: 'team', bd: 'aclients', adm: 'clients' }, { r: 'admin/payments', l: 'Payments', ic: 'money', bd: 'apays', adm: 'payments' }, { r: 'admin/plans', l: 'Plans & pricing', ic: 'tag', adm: 'plans' },
-    { g: 'Website' }, { r: 'admin/home', l: 'Home page', ic: 'page', adm: 'home' }, { r: 'admin/texts', l: 'Messages & buttons', ic: 'text', adm: 'texts' }, { r: 'admin/set/b-brand', l: 'Name & logo', ic: 'palette', adm: 'set/b-brand' }, { r: 'settings/wl', l: 'White label', ic: 'grid', adm: 'set/b-brand' },
+    { g: 'Website' }, { r: 'admin/landing', l: 'Landing page', ic: 'page', adm: 'landing', kw: 'landing home page before login visitors website hero features pricing faq' }, { r: 'admin/home', l: 'Pricing & Home layout', ic: 'tag', adm: 'home', kw: 'pricing pop-up client home layout default cards' }, { r: 'admin/texts', l: 'Messages & buttons', ic: 'text', adm: 'texts' }, { r: 'admin/set/b-brand', l: 'Name & logo', ic: 'palette', adm: 'set/b-brand' }, { r: 'settings/wl', l: 'White label', ic: 'grid', adm: 'set/b-brand' },
     { g: 'Settings' }, { r: 'admin/set/b-trial', l: 'Free trial & expiry', ic: 'clock', adm: 'set/b-trial' }, { r: 'admin/set/b-support', l: 'Support contact & renew link', ic: 'phone', adm: 'set/b-support' },
     { r: 'admin/set/b-ai', l: 'AI for the website', ic: 'spark', adm: 'set/b-ai' }, { r: 'admin/set/b-connect', l: 'Connect methods', ic: 'plug', adm: 'set/b-connect' }, { r: 'admin/set/b-advisor', l: 'AI Advisor defaults', ic: 'star', adm: 'set/b-advisor' },
     { g: 'Team & security' }, { r: 'admin/team', l: 'Platform team', ic: 'shield', adm: 'team' }, { r: 'admin/audit', l: 'Audit log', ic: 'audit', adm: 'audit' },
   ] },
 };
 const NAV_ORDER = ['work', 'insights', 'settings', 'admin'];
-const NAVS = { space: 'work', cur: '', last: store.get('nv.navLast') || {}, pl: store.get('nv.navPl') || {}, open: '', mini: !!store.get('nv.navMini'), ready: false, dirty: false, vis: null, bd: {}, q: '' };
+const NAVS = { space: 'work', cur: '', last: store.get('nv.navLast') || {}, pl: store.get('nv.navPl') || {}, open: '', mini: !store.get('nv.navPin'), pin: !!store.get('nv.navPin'), ready: false, dirty: false, vis: null, bd: {}, q: '' };
 const SETP = { sec: 'profile' };
 const SET_ACC = { profile: 's-brand', login: 's-acct', plan: 's-plan', modules: 's-more', sheet: 's-conn', wl: 's-wl', help: 's-help' };
 const SET_OF_TAB = { brand: 'profile', acct: 'login', plan: 'plan', conn: 'sheet', wl: 'wl', help: 'help', more: 'modules' };
@@ -13678,7 +13790,7 @@ function navBuild() {
   const foot = [['insights', 'Insights', 'chart'], ['settings', 'Settings', 'gear'], ['admin', 'Admin', 'shield']].map(([k, l, ic]) => `<button type="button" class="nv-it ${k === 'admin' ? 'plat-only' : ''}" data-nvspace="${k}" data-nvtip="${l}">${nic(ic)}<span class="nv-l">${l}</span></button>`).join('')
     + `<button type="button" class="nv-it" data-nvhelp data-nvtip="Help & guide">${nic('help')}<span class="nv-l">Help & guide</span></button>`;
   side.innerHTML = `<div class="nv-top">${top}</div><nav class="nv-scroll" aria-label="${esc(S2.name)}">${S2.items.map(it => navItemHTML(it, sp)).join('')}</nav>
-    <div class="nv-foot">${foot}<div class="nv-me-row"><button type="button" class="nv-me" id="nvMe" data-nvtip="Profile"><span class="nv-av" id="nvAv"></span><span class="nv-wst nv-l"><b id="nvMeName"></b><small id="nvMeRole"></small></span></button><button type="button" class="nv-col" id="nvCol" title="Collapse sidebar (Ctrl \\)" aria-label="Collapse sidebar">${nic('collapse')}</button></div></div>
+    <div class="nv-foot">${foot}<div class="nv-me-row"><button type="button" class="nv-me" id="nvMe" data-nvtip="Profile"><span class="nv-av" id="nvAv"></span><span class="nv-wst nv-l"><b id="nvMeName"></b><small id="nvMeRole"></small></span></button><button type="button" class="nv-col ${NAVS.mini ? '' : 'on'}" id="nvCol" title="${NAVS.mini ? 'Pin the menu open' : 'Unpin — show icons only'} (Ctrl \\)" aria-label="${NAVS.mini ? 'Pin the menu open' : 'Unpin the menu'}">${PIN_IC}</button></div></div>
     <div hidden id="sideCompat"><button id="themeBtn"></button><button id="sideSettings"></button><span id="tasksBadge"></span><span class="powered"></span></div>`;
   $('#themeBtn').onclick = () => setTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark');
   $('#sideSettings').onclick = () => openSettings();
@@ -13781,7 +13893,12 @@ function navLeaveOk(target) {
 function navPop() { const h = decodeURIComponent(location.hash.slice(1)); if (!h || authInUrl() || /^invite=/.test(h) || h === NAVS.cur) return; if (!navLeaveOk(h)) { history.pushState(null, '', '#' + NAVS.cur); return; } go(h, true); }
 
 /* ---------- collapse, fly-outs, menus, drawer ---------- */
-function navMini(on) { NAVS.mini = on; store.set('nv.navMini', on ? 1 : ''); document.body.classList.toggle('nav-mini', on); navFlyHide(); const c = $('#nvCol'); if (c) { c.title = on ? 'Expand sidebar (Ctrl \\)' : 'Collapse sidebar (Ctrl \\)'; c.setAttribute('aria-label', c.title); } }
+const PIN_IC = '<svg class="i" viewBox="0 0 24 24"><path d="M9 4h6l-1 6 3 3v2H7v-2l3-3-1-6Z"/><path d="M12 15v6"/></svg>';
+function navMini(railOn) { NAVS.mini = railOn; NAVS.pin = !railOn; store.set('nv.navPin', railOn ? '' : 1); document.body.classList.toggle('nav-mini', railOn); navPeek(false); navFlyHide(); const c = $('#nvCol'); if (c) { c.title = railOn ? 'Pin the menu open (Ctrl \\)' : 'Unpin — show icons only (Ctrl \\)'; c.setAttribute('aria-label', c.title); c.classList.toggle('on', !railOn); } }
+/** icon rail: the full menu opens over the page while the mouse is on it */
+let navPeekT = 0;
+function navPeek(on, delay) { clearTimeout(navPeekT); const run = () => document.body.classList.toggle('nav-peek', !!on && NAVS.mini && innerWidth > 820); if (delay) navPeekT = setTimeout(run, delay); else run(); }
+const navRail = () => NAVS.mini && !document.body.classList.contains('nav-peek') && innerWidth > 820;
 let navFlyT = 0;
 function navFly(el) {
   clearTimeout(navFlyT); let f = $('#nvFly'); if (!f) { f = document.createElement('div'); f.id = 'nvFly'; f.className = 'nv-fly'; document.body.appendChild(f); f.addEventListener('mouseenter', () => clearTimeout(navFlyT)); f.addEventListener('mouseleave', () => { navFlyT = setTimeout(navFlyHide, 120); }); f.addEventListener('click', e => { const a = e.target.closest('[data-nvr]'); if (a) { e.preventDefault(); navFlyHide(); if (navLeaveOk(a.dataset.nvr)) go(a.dataset.nvr); } }); }
@@ -13822,7 +13939,7 @@ function navFilter(q) {
     const a = t.closest('[data-nvr]'); if (a) { e.preventDefault(); if (!navLeaveOk(a.dataset.nvr)) return; go(a.dataset.nvr); return; }
     const ph = t.closest('[data-nvpar]'); if (ph) {
       const p = ph.closest('.nv-p'), id = ph.dataset.nvpar;
-      if (p.classList.contains('open') && !NAVS.mini) { p.classList.remove('open'); NAVS.open = '__closed'; navBadges(); return; }
+      if (p.classList.contains('open') && !navRail()) { p.classList.remove('open'); NAVS.open = '__closed'; navBadges(); return; }
       const kids = [...p.querySelectorAll('.nv-k')].filter(k => !k.hidden), last = NAVS.pl[id], to = kids.find(k => k.dataset.nvr === last) || kids[0];
       if (p.querySelector('.nv-k.nv-on')) { side.querySelectorAll('.nv-p').forEach(x => x.classList.toggle('open', x === p)); NAVS.open = id; navBadges(); setTimeout(() => navReveal(p.querySelector('.nv-kids'), ph), 240); return; }
       if (to && navLeaveOk(to.dataset.nvr)) go(to.dataset.nvr); return;
@@ -13837,8 +13954,9 @@ function navFilter(q) {
   });
   side.addEventListener('input', e => { if (e.target.id === 'nvFind') navFilter(e.target.value); });
   side.addEventListener('keydown', e => { if (e.target.id === 'nvFind' && e.key === 'Enter') { const a = side.querySelector('.nv-scroll [data-nvr]:not([hidden]):not(.nv-miss)'); if (a) go(a.dataset.nvr); } });
-  side.addEventListener('mouseover', e => { if (!NAVS.mini || document.body.classList.contains('nav-open')) return; const el = e.target.closest('.nv-it,.nv-ws,.nv-me'); if (el && !el.contains(e.relatedTarget)) navFly(el); });
-  side.addEventListener('mouseout', e => { if (!NAVS.mini) return; const el = e.target.closest('.nv-it,.nv-ws,.nv-me'); if (el && !el.contains(e.relatedTarget)) { clearTimeout(navFlyT); navFlyT = setTimeout(navFlyHide, 140); } });
+  side.addEventListener('mouseenter', () => { if (NAVS.mini && !document.body.classList.contains('nav-open')) navPeek(true, 120); });
+  side.addEventListener('mouseleave', e => { if (e.relatedTarget && e.relatedTarget.closest && e.relatedTarget.closest('#nvMenu')) return; if (NAVS.mini) navPeek(false, 250); });
+  document.addEventListener('mouseover', e => { if (!document.body.classList.contains('nav-peek') || !$('#nvMenu.show')) return; if (!e.target.closest('#side,#nvMenu')) navPeek(false, 250); else clearTimeout(navPeekT); });
   document.addEventListener('click', e => {
     const t = e.target, m = $('#nvMenu');
     if (m && m.classList.contains('show') && !t.closest('#nvMenu')) navMenuHide();
@@ -13851,7 +13969,7 @@ function navFilter(q) {
     if (t.id === 'navScrim') { document.body.classList.remove('nav-open'); return; }
     if (t.closest('[data-cmtab],[data-bctab],[data-ipt],[data-admtab],[data-adtab],[data-rmview],[data-cgall]')) requestAnimationFrame(navRefresh);
   });
-  document.addEventListener('keydown', e => { if ((e.ctrlKey || e.metaKey) && e.key === '\\') { e.preventDefault(); navMini(!NAVS.mini); } if (e.key === 'Escape') { navMenuHide(); document.body.classList.remove('nav-open'); } });
+  document.addEventListener('keydown', e => { if ((e.ctrlKey || e.metaKey) && e.key === '\\') { e.preventDefault(); navMini(!NAVS.mini); } if (e.key === 'Escape') { navMenuHide(); navPeek(false); document.body.classList.remove('nav-open'); } });
   // unsaved changes: typing in a Settings / Admin form, cleared by any save button
   document.addEventListener('input', e => { const t = e.target; if (!t.matches || !t.matches('input:not([type=checkbox]):not([type=radio]):not([type=search]):not([type=file]),textarea') || t.id === 'nvFind' || t.id === 'admQ') return; if (t.closest('#v-settings,#v-admin')) NAVS.dirty = true; });
   document.addEventListener('click', e => { if (NAVS.dirty && e.target.closest('#v-settings .btn.primary,#v-admin .btn.primary,#v-settings [id$="Save"],#v-admin [id$="Save"]')) NAVS.dirty = false; }, true);
@@ -13877,6 +13995,143 @@ function renderSettingsPage() {
   const pg = $('#v-settings .set-pg'); if (pg) { pg.classList.remove('set-in'); void pg.offsetWidth; pg.classList.add('set-in'); }
 }
 
+/* ================= Landing page — what a new visitor sees before Log in / Sign up =================
+   Every word, image and list is edited only by the platform team in Admin → Website → Landing page (platform_settings landingJson — public, never secrets).
+   {brand} = the platform's website name (white label). Shown to first-time visitors; people who signed in before on this browser go straight to Log in. */
+const LAND_IMG = n => 'assets/landing/' + n + '.webp';
+const LAND_DEF = {
+  on: true,
+  nav: { pricing: 'Pricing', login: 'Log in', signup: 'Sign up' },
+  hero: { eyebrow: 'CRM · WhatsApp · Store · Marketing', title: 'Run your whole business from one place.', text: 'Leads, WhatsApp chats, orders, stock and marketing — together in {brand}. Set up in minutes. No technical skills needed.', cta1: 'Start free trial', cta2: 'See how it works', note: '{trial}-day free trial · No card needed', demo: 'Explore the demo', image: LAND_IMG('hero') },
+  highlights: ['WhatsApp team inbox', 'Amazon · Flipkart · Meesho · Shopify', 'Auto messages & broadcasts', 'Stock & purchase orders', 'AI Advisor'],
+  featTitle: 'Everything your team needs. Nothing it doesn’t.', featText: 'One simple workspace instead of five different apps.',
+  features: [
+    { title: 'Every chat in one inbox', text: 'Reply to customers on WhatsApp from one screen with your team. AI writes the first draft, templates and buttons do the rest.', points: ['Shared team inbox', 'AI reply drafts', 'Approved templates & broadcasts'], image: LAND_IMG('inbox') },
+    { title: 'Never lose a lead again', text: 'Every lead from your website, Meta ads and WhatsApp lands in one list. Follow-up tasks are made for you.', points: ['Drag-and-drop pipeline', 'Follow-up reminders', 'Website forms & lead ads'], image: LAND_IMG('leads') },
+    { title: 'Your store and stock, always right', text: 'Amazon, Flipkart, Meesho and your website in one place — with profit after every fee and ad.', points: ['Orders from every channel', 'Profit per product', 'Stock, reorder & purchase orders'], image: LAND_IMG('store') },
+    { title: 'Marketing that runs by itself', text: 'Order updates, cash-on-delivery checks, cart reminders and win-back messages go out on their own.', points: ['COD confirmation & RTO risk', 'Cart & reorder reminders', 'Referrals & ratings'], image: LAND_IMG('auto') },
+    { title: 'Know what works', text: 'Sales, marketing and team numbers on one screen — and an AI Advisor that tells you what to do next.', points: ['Live dashboards', 'AI Advisor tips', 'Export any report'], image: LAND_IMG('insights') },
+  ],
+  stepsTitle: 'Start in 3 simple steps',
+  steps: [
+    { title: 'Create your account', text: 'Sign up with your email. Your free trial starts at once.', image: LAND_IMG('step1') },
+    { title: 'Connect WhatsApp & your store', text: 'Follow the guided steps — WhatsApp, email, Shopify, Amazon or Flipkart.', image: LAND_IMG('step2') },
+    { title: 'Bring your leads and products', text: 'Import an Excel sheet or let new leads come in by themselves.', image: LAND_IMG('step3') },
+  ],
+  pricingOn: true,
+  faqTitle: 'Questions',
+  faq: [
+    { q: 'Do I need a credit card to start?', a: 'No. Start the free trial with your email. Pick a plan only when you are happy.' },
+    { q: 'Can my team use it too?', a: 'Yes. Invite your team, choose what each person can see and do, and work together in one inbox.' },
+    { q: 'Can I use my own WhatsApp number?', a: 'Yes. Connect your WhatsApp Business number — the guide shows every step.' },
+    { q: 'Is my data safe?', a: 'Every business has its own private workspace. Only people you invite can see it.' },
+  ],
+  final: { title: 'Ready to grow your business?', text: 'Join in a minute — your workspace is ready right away.', cta: 'Create free account' },
+  footer: '© {year} {brand}. All rights reserved.',
+};
+const LAND = { d: null, preview: false };
+const landRaw = () => PLAT.loaded ? ((PLAT.s || {}).landingJson || '') : (store.get('nv.landC') || '');
+function landCfg() { let c = {}; try { c = JSON.parse(landRaw() || '{}') || {}; } catch (e) { c = {}; } const d = JSON.parse(JSON.stringify(LAND_DEF)); ['nav', 'hero', 'final'].forEach(k => { d[k] = Object.assign(d[k], c[k] || {}); }); Object.keys(c).forEach(k => { if (!['nav', 'hero', 'final'].includes(k)) d[k] = c[k]; }); return d; }
+const landOn = () => landCfg().on !== false;
+const landWanted = () => landOn() && !store.get('nv.known');
+const landT = t => String(t == null ? '' : t).replace(/\{brand\}/g, brand().brandName).replace(/\{year\}/g, new Date().getFullYear()).replace(/\{trial\}/g, (PLAT.s || {}).trialDays || 14);
+const landE = t => esc(landT(t));
+const landImg = u => { const v = String(u || ''); return /^(https:\/\/|assets\/)/.test(v) ? v : ''; };
+function landingHTML(c) {
+  const b = brand(), logo = safeUrl(b.logoUrl), img = (u, alt, cls) => landImg(u) ? `<div class="ld-shot ${cls || ''}"><img src="${esc(landImg(u))}" alt="${esc(alt)}" loading="lazy" decoding="async"></div>` : '';
+  const F = (c.features || []).filter(f => f && (f.title || f.text)), St = (c.steps || []).filter(x => x && (x.title || x.text)), Q = (c.faq || []).filter(x => x && x.q), H = (c.highlights || []).filter(Boolean);
+  return `<div class="ld-in">
+    ${LAND.preview ? '<div class="ld-pv"><span>Preview — not saved yet</span><button type="button" class="ld-btn sm" data-ld="closepv">Close preview</button></div>' : ''}
+    <header class="ld-nav"><div class="ld-wrap"><a class="ld-brand" data-ld="top"><span class="ld-logo">${logo ? `<img src="${esc(logo)}" alt="" referrerpolicy="no-referrer">` : LOGO_DEFAULT}</span><b>${esc(b.brandName)}</b></a>
+      <nav class="ld-links">${F.length ? '<a data-ld="features">Features</a>' : ''}${c.pricingOn !== false ? `<a data-ld="pricing">${landE(c.nav.pricing)}</a>` : ''}</nav><span class="grow"></span>
+      <button type="button" class="ld-btn ghost" data-ld="login">${landE(c.nav.login)}</button><button type="button" class="ld-btn" data-ld="signup">${landE(c.nav.signup)}</button></div></header>
+    <section class="ld-hero"><div class="ld-wrap">
+      ${c.hero.eyebrow ? `<span class="ld-eb ld-rv">${landE(c.hero.eyebrow)}</span>` : ''}<h1 class="ld-rv">${landE(c.hero.title)}</h1>${c.hero.text ? `<p class="ld-lead ld-rv">${landE(c.hero.text)}</p>` : ''}
+      <div class="ld-cta ld-rv">${c.hero.cta1 ? `<button type="button" class="ld-btn lg" data-ld="signup">${landE(c.hero.cta1)}</button>` : ''}${c.hero.cta2 ? `<button type="button" class="ld-btn lg ghost" data-ld="features">${landE(c.hero.cta2)} ↓</button>` : ''}</div>
+      ${c.hero.note || c.hero.demo ? `<p class="ld-note ld-rv">${landE(c.hero.note)}${c.hero.note && c.hero.demo ? ' · ' : ''}${c.hero.demo ? `<a data-ld="demo">${landE(c.hero.demo)} →</a>` : ''}</p>` : ''}
+      ${img(c.hero.image, 'The ' + b.brandName + ' dashboard', 'ld-heroimg ld-rv')}</div></section>
+    ${H.length ? `<section class="ld-strip"><div class="ld-wrap">${H.map(h => `<span>${landE(h)}</span>`).join('')}</div></section>` : ''}
+    ${F.length ? `<section class="ld-sec" id="ld-features"><div class="ld-wrap"><div class="ld-sh ld-rv"><h2>${landE(c.featTitle)}</h2>${c.featText ? `<p>${landE(c.featText)}</p>` : ''}</div>
+      ${F.map((f, i) => `<div class="ld-f ${i % 2 ? 'rev' : ''}"><div class="ld-ft ld-rv"><span class="ld-fn">${String(i + 1).padStart(2, '0')}</span><h3>${landE(f.title)}</h3><p>${landE(f.text)}</p>${(f.points || []).filter(Boolean).length ? `<ul>${f.points.filter(Boolean).map(x => `<li>${landE(x)}</li>`).join('')}</ul>` : ''}</div>${img(f.image, f.title, 'ld-rv')}</div>`).join('')}</div></section>` : ''}
+    ${St.length ? `<section class="ld-sec ld-alt"><div class="ld-wrap"><div class="ld-sh ld-rv"><h2>${landE(c.stepsTitle)}</h2></div><div class="ld-steps" style="--n:${St.length}">${St.map((x, i) => `<div class="ld-step ld-rv"><span class="ld-sn">${i + 1}</span><h3>${landE(x.title)}</h3><p>${landE(x.text)}</p>${img(x.image, x.title, 'sm')}</div>`).join('')}</div></div></section>` : ''}
+    ${c.pricingOn !== false ? `<section class="ld-sec" id="ld-pricing"><div class="ld-wrap ld-pr">${pricingHTML()}</div></section>` : ''}
+    ${Q.length ? `<section class="ld-sec ld-alt"><div class="ld-wrap ld-narrow"><div class="ld-sh ld-rv"><h2>${landE(c.faqTitle)}</h2></div>${Q.map(x => `<details class="ld-q"><summary>${landE(x.q)}</summary><p>${landE(x.a)}</p></details>`).join('')}</div></section>` : ''}
+    ${c.final.title ? `<section class="ld-final"><div class="ld-wrap ld-rv"><h2>${landE(c.final.title)}</h2>${c.final.text ? `<p>${landE(c.final.text)}</p>` : ''}<div class="ld-cta"><button type="button" class="ld-btn lg" data-ld="signup">${landE(c.final.cta || 'Sign up')}</button><button type="button" class="ld-btn lg ghost" data-ld="login">${landE(c.nav.login)}</button></div></div></section>` : ''}
+    <footer class="ld-foot"><div class="ld-wrap"><span>${landE(c.footer)}</span><span class="grow"></span><a href="privacy.html" target="_blank" rel="noopener">Privacy</a><a href="terms.html" target="_blank" rel="noopener">Terms</a></div></footer></div>`;
+}
+function showLanding(opt) {
+  opt = opt || {}; const el = $('#landing'); if (!el) return showAuth('in');
+  LAND.preview = !!opt.preview; LAND.raw = opt.cfg ? null : landRaw(); el.innerHTML = landingHTML(opt.cfg || landCfg()); el.hidden = false; el.scrollTop = 0; document.documentElement.classList.add('ld-lock');
+  $('#auth').hidden = true; closePanel(); $$('.modal.show').forEach(m => hideModal('#' + m.id));
+  const ro = 'IntersectionObserver' in window ? new IntersectionObserver(es => es.forEach(x => { if (x.isIntersecting) { x.target.classList.add('in'); ro.unobserve(x.target); } }), { root: el, threshold: .12 }) : null;
+  el.querySelectorAll('.ld-rv').forEach(x => ro ? ro.observe(x) : x.classList.add('in'));
+}
+function hideLanding() { const el = $('#landing'); if (el) { el.hidden = true; el.innerHTML = ''; } LAND.preview = false; document.documentElement.classList.remove('ld-lock'); }
+function showEntry() { if (pendingInvite()) return showAuth('up'); if (landWanted()) return showLanding(); showAuth('in'); }
+function enterDemo() { try { sessionStorage.setItem('leadnode.demo', '1'); } catch (e) { } hideLanding(); hideAuth(); if (!cloud && !(settings.url && settings.key)) { demo = true; view.fitted = false; layout = null; load(); } }
+(function landEvents() {
+  const el = $('#landing'); if (!el) return;
+  el.addEventListener('click', e => {
+    const a = e.target.closest('[data-ld]'); if (!a) return; e.preventDefault(); const k = a.dataset.ld;
+    if (k === 'closepv') return hideLanding();
+    if (LAND.preview && /login|signup|demo/.test(k)) return toast('Preview — buttons work for visitors');
+    if (k === 'login' || k === 'signup') { hideLanding(); return showAuth(k === 'signup' ? 'up' : 'in'); }
+    if (k === 'demo') return enterDemo();
+    const to = k === 'top' ? el.querySelector('.ld-in') : el.querySelector('#ld-' + k); if (to) el.scrollTo({ top: Math.max(0, to.offsetTop - (k === 'top' ? 0 : 64)), behavior: 'smooth' });
+  });
+  el.addEventListener('scroll', () => { const n = el.querySelector('.ld-nav'); if (n) n.classList.toggle('sc', el.scrollTop > 8); }, { passive: true });
+})();
+
+/* ---- Admin → Website → Landing page (platform team only) ---- */
+function admLanding() {
+  const c = LAND.d = LAND.d || landCfg(); upStore.land = upStore.land || {};
+  const f = (path, label, val, o = {}) => { const id = 'ld_' + path.replace(/\W/g, '_'); return `<div class="field ${o.wide ? 'ld-wide' : ''}"><label for="${id}">${label}</label>${o.area ? `<textarea class="input" id="${id}" data-lk="${path}" rows="${o.rows || 2}" maxlength="${o.max || 400}" ${o.lines ? 'data-lines' : ''}>${esc(o.lines ? (val || []).join('\n') : val || '')}</textarea>` : `<input class="input" id="${id}" data-lk="${path}" maxlength="${o.max || 140}" value="${esc(val || '')}" ${o.ph ? `placeholder="${esc(o.ph)}"` : ''}>`}</div>`; };
+  const im = (path, val) => { upStore.land[path] = landImg(val); return `<div class="ld-imf"><div class="field"><label>Image <span class="muted">— upload or paste a link (https://)</span></label><input class="input" data-lk="${path}" value="${esc(val || '')}" placeholder="https://…"></div>${uploaderHTML('land', path, 'landing', 2000, 'wide', 'Upload image')}</div>`; };
+  const list = (key, max, row) => `${(c[key] || []).map((x, i) => `<div class="ld-row glass"><div class="ld-rh"><b>${key === 'faq' ? 'Question' : key === 'steps' ? 'Step' : 'Feature'} ${i + 1}</b><span class="grow"></span><button type="button" class="ibtn" data-ldmove="${key}|${i}|-1" title="Move up" ${i ? '' : 'disabled'}>↑</button><button type="button" class="ibtn" data-ldmove="${key}|${i}|1" title="Move down" ${i < c[key].length - 1 ? '' : 'disabled'}>↓</button><button type="button" class="ibtn" data-lddel="${key}|${i}" title="Remove">${I.x}</button></div>${row(x, i)}</div>`).join('')}
+    <button type="button" class="btn sm" data-ldadd="${key}" ${(c[key] || []).length >= max ? 'disabled' : ''}>+ Add</button>`;
+  const sec = (t, sub, body) => `<div class="rcard glass ld-ed"><div class="ld-edh"><h3>${t}</h3>${sub ? `<small class="muted">${sub}</small>` : ''}</div>${body}</div>`;
+  return `<div class="ld-edtop rcard glass"><label class="mod-row adm-sw" style="flex:1"><div><b>Show the landing page to new visitors</b><small class="muted">Off = visitors go straight to Log in. People who signed in before on that browser always go to Log in.</small></div><span class="sw"><input type="checkbox" data-lk="on" ${c.on !== false ? 'checked' : ''}><i></i></span></label>
+      <button type="button" class="btn" data-ldpreview>Preview</button><button type="button" class="btn" data-ldreset>Reset to default</button><button type="button" class="btn primary" id="ldSave">Save & publish</button></div>
+    <p class="help">Use <b>{brand}</b> for your website name, <b>{trial}</b> for the free-trial days and <b>{year}</b> for this year. Everything here is public — never put passwords or keys in it.</p>
+    ${sec('Top bar', 'Logo and name come from Name & logo', `<div class="ld-g3">${f('nav.pricing', 'Pricing link', c.nav.pricing, { max: 24 })}${f('nav.login', 'Log in button', c.nav.login, { max: 24 })}${f('nav.signup', 'Sign up button', c.nav.signup, { max: 24 })}</div>`)}
+    ${sec('Hero (first screen)', '', `<div class="ld-g2">${f('hero.eyebrow', 'Small line on top', c.hero.eyebrow, { max: 80 })}${f('hero.title', 'Headline', c.hero.title, { max: 90 })}${f('hero.text', 'Text under the headline', c.hero.text, { area: 1, wide: 1, max: 260 })}${f('hero.cta1', 'Main button (opens Sign up)', c.hero.cta1, { max: 30 })}${f('hero.cta2', 'Second button (scrolls to features)', c.hero.cta2, { max: 30 })}${f('hero.note', 'Small note under the buttons', c.hero.note, { max: 90 })}${f('hero.demo', 'Demo link text (empty = hidden)', c.hero.demo, { max: 30 })}</div>${im('hero.image', c.hero.image)}`)}
+    ${sec('Highlights strip', 'Short words in one line under the hero (up to 6)', `<div class="ld-g3">${[0, 1, 2, 3, 4, 5].map(i => f('highlights.' + i, 'Item ' + (i + 1), (c.highlights || [])[i], { max: 40 })).join('')}</div>`)}
+    ${sec('Features', 'Text on one side, picture on the other (up to 8)', `<div class="ld-g2">${f('featTitle', 'Section title', c.featTitle, { max: 90 })}${f('featText', 'Line under the title', c.featText, { max: 160 })}</div>${list('features', 8, (x, i) => `<div class="ld-g2">${f(`features.${i}.title`, 'Title', x.title, { max: 70 })}${f(`features.${i}.points`, 'Points (one per line)', x.points, { area: 1, lines: 1, rows: 3 })}${f(`features.${i}.text`, 'Text', x.text, { area: 1, wide: 1, max: 260 })}</div>${im(`features.${i}.image`, x.image)}`)}`)}
+    ${sec('Steps', 'How a new customer starts (up to 4)', `${f('stepsTitle', 'Section title', c.stepsTitle, { max: 70 })}${list('steps', 4, (x, i) => `<div class="ld-g2">${f(`steps.${i}.title`, 'Title', x.title, { max: 60 })}${f(`steps.${i}.text`, 'Text', x.text, { max: 160 })}</div>${im(`steps.${i}.image`, x.image)}`)}`)}
+    ${sec('Pricing', '', `<label class="mod-row adm-sw"><div><b>Show the pricing section</b><small class="muted">Plans come from <a class="bc-link" data-nvgo="admin/plans">Plans & pricing</a>; its heading and button texts from <a class="bc-link" data-nvgo="admin/home">Pricing & Home layout</a>.</small></div><span class="sw"><input type="checkbox" data-lk="pricingOn" ${c.pricingOn !== false ? 'checked' : ''}><i></i></span></label>`)}
+    ${sec('Questions (FAQ)', 'Up to 10', `${f('faqTitle', 'Section title', c.faqTitle, { max: 60 })}${list('faq', 10, (x, i) => `<div class="ld-g2">${f(`faq.${i}.q`, 'Question', x.q, { max: 120 })}${f(`faq.${i}.a`, 'Answer', x.a, { area: 1, max: 400 })}</div>`)}`)}
+    ${sec('Last call-to-action & footer', '', `<div class="ld-g2">${f('final.title', 'Title', c.final.title, { max: 80 })}${f('final.text', 'Text', c.final.text, { max: 160 })}${f('final.cta', 'Button', c.final.cta, { max: 30 })}${f('footer', 'Footer line', c.footer, { max: 120 })}</div>`)}
+    <div class="cf-foot ld-savebar"><span class="cf-safe">Visitors see the change right after you save.</span><div class="grow"></div><button type="button" class="btn" data-ldpreview>Preview</button><button type="button" class="btn primary" data-ldsave>Save & publish</button></div>`;
+}
+function landSet(o, path, v) { const k = path.split('.'); let x = o; for (let i = 0; i < k.length - 1; i++) { const n = /^\d+$/.test(k[i + 1]); if (x[k[i]] == null) x[k[i]] = n ? [] : {}; x = x[k[i]]; } x[k[k.length - 1]] = v; }
+function landRead() {
+  const c = LAND.d || landCfg();
+  $$('#adminBody [data-lk]').forEach(i => { const v = i.type === 'checkbox' ? i.checked : 'lines' in i.dataset ? i.value.split('\n').map(x => x.trim()).filter(Boolean).slice(0, 6) : i.value.trim(); landSet(c, i.dataset.lk, v); });
+  c.highlights = (c.highlights || []).map(x => String(x || '').trim()).filter(Boolean);
+  return c;
+}
+(function landAdminEvents() {
+  const v = $('#v-admin'); if (!v) return;
+  v.addEventListener('click', async e => {
+    const t = e.target; if (!t.closest('#adminBody') || ADM2.tab !== 'landing') return;
+    const ad = t.closest('[data-ldadd]'); if (ad) { const c = landRead(), k = ad.dataset.ldadd; c[k] = c[k] || []; c[k].push(k === 'faq' ? { q: 'New question', a: '' } : k === 'steps' ? { title: 'New step', text: '', image: '' } : { title: 'New feature', text: '', points: [], image: '' }); return renderAdmin(); }
+    const dl = t.closest('[data-lddel]'); if (dl) { const c = landRead(), [k, i] = dl.dataset.lddel.split('|'); c[k].splice(+i, 1); return renderAdmin(); }
+    const mv = t.closest('[data-ldmove]'); if (mv) { const c = landRead(), [k, i, d] = mv.dataset.ldmove.split('|'), a = +i, b = a + +d, L = c[k]; [L[a], L[b]] = [L[b], L[a]]; return renderAdmin(); }
+    if (t.closest('[data-ldpreview]')) return showLanding({ preview: true, cfg: landRead() });
+    if (t.closest('[data-ldreset]')) { if (!confirm('Reset the landing page to the built-in text and pictures? (Press Save & publish to make it live.)')) return; LAND.d = JSON.parse(JSON.stringify(LAND_DEF)); return renderAdmin(); }
+    if (t.closest('[data-ldsave]') || t.id === 'ldSave') {
+      if (upBusy) return toast('Image is still uploading…', true);
+      const c = landRead(), bad = JSON.stringify(c).match(/"image":"(?!https:\/\/|assets\/|")[^"]*"/); if (bad) return toast('Images must be https:// links or uploads', true);
+      if (!String(c.hero.title || '').trim()) return toast('Write a headline', true);
+      const btn = t.closest('button'); btn.disabled = true;
+      const js = JSON.stringify(c); if (js.length > 19500) { btn.disabled = false; return toast('The page has too much text (' + js.length + ' / 19,500 characters). Shorten some texts or remove a question.', true); }
+      try { await platSave('landingJson', js); NAVS.dirty = false; toast('✓ Landing page published'); } catch (er) { toast(er.message, true); } btn.disabled = false; return;
+    }
+  });
+  document.addEventListener('nv-uploaded', e => { const d = e.detail || {}; if (d.scope !== 'land') return; const i = $(`#adminBody input[data-lk="${CSS.escape(d.key)}"]`); if (i) { i.value = upStore.land[d.key] || ''; NAVS.dirty = true; } });
+})();
+
+$('#authHome').onclick = () => { hideAuth(); showLanding(); };
 /* ================= start ================= */
 (function grabInvite() { const m = location.hash.match(/^#invite=([a-f0-9]{20,80})$/i); if (m) { store.set('leadnode.invite', { t: m[1], at: Date.now() }); history.replaceState(null, '', location.pathname + '#dashboard'); } })();
 famInit(); settingsAccordion(); mobileBar(); applyModules();
