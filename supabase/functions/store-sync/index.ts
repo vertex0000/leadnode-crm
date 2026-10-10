@@ -398,6 +398,11 @@ async function store(ws: string, platform: string, got: Got, cfg: any = {}) {
   if (got.products.length) {
     const seen = new Set<string>(), rows = got.products.filter((p) => !seen.has(p.sku) && seen.add(p.sku)).map((p) => { const r: any = { workspace_id: ws, sku: p.sku, name: p.name || p.sku }; for (const k of ['category', 'price', 'image_url', 'website_url']) if (p[k] !== undefined && p[k] !== null && p[k] !== '') r[k] = p[k]; if (p.cost != null) r.cost = p.cost; if (p.stock != null) r.stock = Math.round(Number(p.stock)); return r; });
     // upsert in groups that share the same columns (so missing values never wipe what the client typed)
+    if (cfg?.stock_master === 'nodevers') {                     // Nodevers keeps the count: the store's stock only fills a product that is new here
+      const have = new Set<string>(), skus = rows.map((r) => r.sku);
+      for (let i = 0; i < skus.length; i += 200) { const { data } = await db.from('products').select('sku').eq('workspace_id', ws).in('sku', skus.slice(i, i + 200)); (data ?? []).forEach((x: any) => have.add(x.sku)); }
+      rows.forEach((r) => { if (have.has(r.sku)) delete r.stock; });
+    }
     const groups = new Map<string, any[]>(); rows.forEach((r) => { const k = Object.keys(r).sort().join(','); (groups.get(k) ?? groups.set(k, []).get(k)!).push(r); });
     for (const g of groups.values()) for (let i = 0; i < g.length; i += 500) { const { error, count } = await db.from('products').upsert(g.slice(i, i + 500), { onConflict: 'workspace_id,sku', count: 'exact' }); if (error) throw new Error('Saving products: ' + error.message); np += count ?? 0; }
   }
@@ -445,7 +450,8 @@ async function store(ws: string, platform: string, got: Got, cfg: any = {}) {
   return { orders: no, products: np, ads: na };
 }
 /** orders whose stock is kept by the store itself (Shopify / WooCommerce / your API with stock / Amazon FBA) do not change your stock again */
-const stockSkip = (platform: string, cfg: any) => platform === 'shopify' || platform === 'woocommerce' || (platform === 'custom' && !!(cfg?.products_url && cfg?.pmap?.stock));
+// "Who keeps the stock count?" = Nodevers (config.stock_master) → store orders take stock here like any other order, and the store's stock number is not copied over yours
+const stockSkip = (platform: string, cfg: any) => cfg?.stock_master !== 'nodevers' && (platform === 'shopify' || platform === 'woocommerce' || (platform === 'custom' && !!(cfg?.products_url && cfg?.pmap?.stock)));
 async function syncOne(row: any) {
   const startedAt = new Date().toISOString();
   try {
@@ -591,9 +597,18 @@ Deno.serve(async (req) => {
     const { data: cur } = await db.from('store_connections').select('*').eq('workspace_id', ws).eq('platform', platform).maybeSingle();
     if (b.action === 'delete') { await db.from('store_connections').delete().eq('workspace_id', ws).eq('platform', platform); return json({ ok: true }); }
     if (b.action === 'oauth_start') return await oauthStart(ws, u.user.id, platform, b);
+    if (b.action === 'stock_master') {                          // who keeps the stock count for this store: 'store' (its number is copied here) or 'nodevers'
+      if (!cur) return json({ error: 'Connect it first.' }, 400);
+      if (!['shopify', 'woocommerce', 'custom'].includes(platform)) return json({ error: 'Only Shopify, WooCommerce and your own website API send stock.' }, 400);
+      const v = b.value === 'nodevers' ? 'nodevers' : 'store';
+      const { error } = await db.from('store_connections').update({ config: { ...(cur.config ?? {}), stock_master: v }, updated_at: new Date().toISOString() }).eq('workspace_id', ws).eq('platform', platform);
+      if (error) return json({ error: error.message }, 400);
+      return json({ ok: true, stock_master: v });
+    }
     if (b.action === 'sync') { if (!cur) return json({ error: 'Connect it first.' }, 400); const { data: wst } = await db.rpc('ws_state', { ws }); if (wst === 'locked') return json({ error: 'Your plan has ended — this workspace is view-only. Renew it in Settings → Plan & billing.' }, 402);  return json({ ok: true, ...(await syncOne(cur)) }); }
     const cfgIn = (b.config && typeof b.config === 'object') ? b.config : {};
     const config: any = { sync_minutes: [0, 15, 60, 360, 1440].includes(Number(cfgIn.sync_minutes)) ? Number(cfgIn.sync_minutes) : 15 };
+    if (['shopify', 'woocommerce', 'custom'].includes(platform)) config.stock_master = (cfgIn.stock_master ?? cur?.config?.stock_master) === 'nodevers' ? 'nodevers' : 'store';
     if (platform === 'shopify') config.store_url = cut(String(cfgIn.store_url ?? '').toLowerCase().replace(/^https?:\/\//, '').replace(/\/.*$/, ''), 120);
     if (platform === 'woocommerce') config.site_url = cut(String(cfgIn.site_url ?? '').replace(/\/+$/, ''), 300);
     if (platform === 'amazon') { config.marketplace = AMZ_MKT[cfgIn.marketplace] ? String(cfgIn.marketplace) : 'A21TBJUM6AAA2I'; config.marketplace_name = AMZ_MKT[config.marketplace][0]; config.fba = cfgIn.fba !== false; config.seller_id = cut(String(cfgIn.seller_id ?? '').replace(/[^A-Za-z0-9]/g, ''), 30); }

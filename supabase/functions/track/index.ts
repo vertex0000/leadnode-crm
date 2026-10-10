@@ -96,6 +96,9 @@ Deno.serve(async (req) => {
       // the store's own sync brings the order (with its real number) — only websites without a store connection save it from here
       const { data: conn } = await db.from('store_connections').select('platform').eq('workspace_id', ws).in('platform', ['shopify', 'woocommerce', 'custom']).limit(1);
       if (conn?.length || !orderId || (!phone && !email)) return json({ ok: true });
+      // the team may have added this order by hand with its website order number → do not add it (and take stock) twice
+      const { data: had } = await db.from('orders').select('order_id').eq('workspace_id', ws).eq('channel', 'Website').or(`order_ref.eq.${JSON.stringify(cut(orderId, 80))},order_ref.eq.${JSON.stringify(cut(orderId.replace(/^#/, ''), 80))},ext_id.eq.${JSON.stringify(cut('T-' + orderId, 80))},ext_id.eq.${JSON.stringify(cut(orderId.replace(/^#/, ''), 80))}`).limit(1);
+      if (had?.length) return json({ ok: true, saved: 0, duplicate: true });
       const pin = cut(String(o.pincode ?? b.pincode ?? '').replace(/[^A-Za-z0-9-]/g, ''), 12);
       const pay = cut(o.payment ?? b.payment, 40), status = /cod|cash/i.test(pay) ? 'COD' : /pending|unpaid/i.test(String(o.status ?? '')) ? 'New' : 'Paid';
       const lines = items.length ? items : [{ sku: '', name: 'Website order', qty: 1, price: value }];
